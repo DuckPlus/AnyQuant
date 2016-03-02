@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='ISO-8859-1'  ?>
+<!DOCTYPE toc
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN"
+         "http://java.sun.com/products/javahelp/toc_1_0.dtd">
+<toc version="1.0">
+  <tocitem text="History of Jewish Holidays">
+    <tocitem text="Rosh Hashanah" target="rosh"/>
+    <tocitem text="Yom Kippur" target="yom"/>
+    <tocitem text="Chanukah" target="chanukah"/>
+    <tocitem text="Passover" target="passover"/>
+  </tocitem>
+</toc>
+
+
