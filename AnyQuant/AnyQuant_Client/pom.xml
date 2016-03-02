@@ -7,9 +7,7 @@
     <artifactId>AnyQuant</artifactId>
     <version>1.0.0</version>
   </parent>
-  <groupId>Duck_Plus</groupId>
   <artifactId>AnyQuant_Client</artifactId>
-  <version>1.0.0</version>
   <name>AnyQuant_Client</name>
   <url>http://maven.apache.org</url>
   <properties>
