@@ -1,5 +1,7 @@
 package ui.listui;
 
+import java.awt.Graphics;
+
 import org.dom4j.Element;
 
 import ui.tool.MyPanel;
@@ -16,7 +18,14 @@ public class BenchMarkListPanel extends MyPanel {
 		super(config);
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		// TODO Auto-generated method stub
+		super.paintComponent(g);
+		g.drawString("this is BenchMarkListPanel", 200, 200);
+	}
+	
 	@Override
 	protected void initWhitePanels(Element e) {
 		// TODO Auto-generated method stub

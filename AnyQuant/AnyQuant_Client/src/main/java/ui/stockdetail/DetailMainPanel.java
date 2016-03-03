@@ -23,7 +23,7 @@ public class DetailMainPanel extends MyPanel{
 	public void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
-		
+		g.drawString("this is DetailMainPanel", 200, 200);
 	}
 	
 	@Override
