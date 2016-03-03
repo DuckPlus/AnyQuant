@@ -1,9 +1,5 @@
 package ui.guideui;
 
-import java.awt.Color;
-
-import javax.swing.JButton;
-
 import org.dom4j.Element;
 
 import ui.config.CompomentType;
@@ -31,10 +27,12 @@ public class MainController extends PanelController {
 	private final static String stockDetailPanelStr = "stockDetailPanel";
 	private final static String stockListPanelStr = "stockListPanel";
 	private final static String benchmarkPanelStr = "benchmarkPanel";
+	private final static String guidePanelStr = "guidePanel";
 
 	private DetailMainPanel stockDetailPanel;
 	private BenchMarkListPanel benchMarkListPanel;
 	private StockListPanel stockListPanel;
+	private GuidePanel guidePanel;
 
 	public MainController(MyPanel initialPanel, Element root) {
 		super(initialPanel, root);
@@ -47,19 +45,18 @@ public class MainController extends PanelController {
 		addListeners();
 		addToMap();
 		this.setAllButtonVisable(true);
-		panelManager.show(changePanel, stockDetailPanelStr);
+		panelManager.show(changePanel, guidePanelStr);
 		changePanel.setVisible(true);
-		mainPanel.setVisible(true);
 
 	}
 
 	@Override
 	protected void initPanel(Element e) {
 		stockDetailPanel = new DetailMainPanel(e.element(stockDetailPanelStr));
-		stockDetailPanel.setLocation(0, 0);
 		stockListPanel = new StockListPanel(e.element(stockListPanelStr));
 		benchMarkListPanel = new BenchMarkListPanel(
 				e.element(benchmarkPanelStr));
+		guidePanel = new GuidePanel(e.element(guidePanelStr));
 
 	}
 
@@ -83,7 +80,7 @@ public class MainController extends PanelController {
 		changePanel.add(benchMarkListPanel, benchmarkPanelStr);
 		changePanel.add(stockDetailPanel, stockDetailPanelStr);
 		changePanel.add(stockListPanel, stockListPanelStr);
-
+		changePanel.add(guidePanel, guidePanelStr);
 	}
 
 	@Override

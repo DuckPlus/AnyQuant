@@ -2,24 +2,26 @@
 <AnyQuant width="1080" height="720">
 
 	<initialpanel x="0" y="0" width="1080" height="720">
-		
-			<BUTTONS>
-				<StockDetail text="股票详细信息" x="0" y="267" />
-				<StockList text="股票列表" x="0" y="317" />
-				<BenchMark text="大盘指数" x="0" y="367" />
-			</BUTTONS>
-			<stockDetailPanel x="232" y="54" width="300" height="300">
-			</stockDetailPanel>
-			<stockListPanel x="232" y="54" width="300" height="300">
-			</stockListPanel>
-			<benchmarkPanel x="232" y="54" width="300" height="300">
-			</benchmarkPanel>
-						
 
-					
+		<BUTTONS>
+			<StockDetail text="股票详细信息" x="0" y="267" />
+			<StockList text="股票列表" x="0" y="317" />
+			<BenchMark text="大盘指数" x="0" y="367" />
+		</BUTTONS>
+		<guidePanel x="232" y="54" width="300" height="300">
+		</guidePanel>
+		<stockDetailPanel x="232" y="54" width="300" height="300">
+		</stockDetailPanel>
+		<stockListPanel x="232" y="54" width="300" height="300">
+		</stockListPanel>
+		<benchmarkPanel x="232" y="54" width="300" height="300">
+		</benchmarkPanel>
 
 
-					
-				
+
+
+
+
+
 	</initialpanel>
 </AnyQuant>
