@@ -146,5 +146,11 @@ public class APIInterfaceImpl implements APIInterface{
 	    return stockCollection.getTrading_info();
 		
 	}
+	
+	@Override
+	public List<StockPO> getStockMes(String stockCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
