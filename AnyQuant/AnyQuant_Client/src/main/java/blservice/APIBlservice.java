@@ -12,8 +12,8 @@ import enumeration.Stock_Attribute;
  * @author czq
  * @date 2016年3月4日
  */
+
 public interface APIBlservice {
-	
 	 /**
 	  * 获得所有股票的所有数据
 	  */
@@ -49,5 +49,6 @@ public interface APIBlservice {
 	/**
 	 * 
 	 */
-	
+
 }
+
