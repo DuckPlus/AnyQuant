@@ -1,12 +1,9 @@
 package dataservice;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import po.StockPO;
 import enumeration.Exchange;
 import enumeration.MyDate;
-import enumeration.Stock_Attribute;
 /**
  * API接口定义
  * @author ss,czq

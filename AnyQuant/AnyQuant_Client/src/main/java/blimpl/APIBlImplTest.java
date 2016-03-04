@@ -25,24 +25,26 @@ public class APIBlImplTest extends TestCase {
 		
 	}
 
-	public void testGetAllStocks() {
-		Iterator<StockVO> stocks = api.getAllStocks();
-		while(stocks.hasNext()){
-			System.out.println(stocks.next().high);
-		}
-	}
-
+//	public void testGetAllStocks() {
+//		Iterator<StockVO> stocks = api.getAllStocks();
+//		while(stocks.hasNext()){
+//			System.out.println(stocks.next().high);
+//		}
+//	}
+//
 	public void testGetSortStocks() {
 		double rate = -100;
+		System.out.println("--------------------");
 		Iterator<StockVO> stocksWithZhangFU = api.getSortStocks(true, Stock_Attribute.changeRate);
 		while(stocksWithZhangFU.hasNext()){
 			System.out.println(stocksWithZhangFU.next().changeRate);
 		}
-		
-		
-		
-		
 	}
+//		
+//		
+//		
+//		
+//	}
 
 //	public void testGetSortStocksInScope() {
 //		fail("Not yet implemented");

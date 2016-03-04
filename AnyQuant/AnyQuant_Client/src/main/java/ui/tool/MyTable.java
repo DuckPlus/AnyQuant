@@ -13,6 +13,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 public class MyTable extends JPanel{
 	/**
@@ -150,4 +151,21 @@ public class MyTable extends JPanel{
 		    ex.printStackTrace();
 		   }
 		}
+	/**
+	 * 设置列宽
+	 */
+	public void setColumn(int[] nums){
+		for(int i=0;i<nums.length;i++){
+			Table.getColumnModel().getColumn(i).setPreferredWidth(nums[i]);
+		}
+	}
+	/**
+	 * 设置行宽
+	 */
+	public void setRow(int num){
+		Table.setRowHeight(num);
+	}
+	public TableColumnModel getColumnModel(){
+		return Table.getColumnModel();
+	}
 }

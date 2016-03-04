@@ -1,6 +1,7 @@
 package util;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import enumeration.MyDate;
 /**
@@ -27,5 +28,24 @@ public class MyTime {
                 MyDate date  = new MyDate(year, month, day);
                 return date;  
 	    }  
+	    
+	    public static MyDate getAnotherDay(MyDate date , int offset) {  
+            Calendar calendar = Calendar.getInstance();  
+            calendar.set(date.getYear(),date.getMonth()-1, date.getDay());
+            calendar.add(Calendar.DAY_OF_MONTH, offset);  
+            int year = calendar.get(Calendar.YEAR);
+            int month =  calendar.get(Calendar.MONTH)+1;
+            int day = calendar.get(Calendar.DATE);
+            MyDate myDate  = new MyDate(year, month, day);
+            return myDate;  
+    }  
+	    
+	    public static void main (String a[]){
+	    	  MyDate date = new MyDate(2016, 3, 4);
+	    	  date = MyTime.getAnotherDay(date, 4);
+	    	  System.out.println(date.DateToString());
+	    	
+	    }
+
 	   
 }

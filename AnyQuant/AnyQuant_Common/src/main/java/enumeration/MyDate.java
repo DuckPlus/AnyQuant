@@ -5,7 +5,7 @@ import java.util.Date;
 
 
 public class MyDate {
-            int year , month ,day ;
+            private  int year , month ,day ;
             public MyDate (int year ,int  month ,int  day){
             	  this.year = year;
             	  this.month = month ;
@@ -33,5 +33,30 @@ public class MyDate {
             public static final MyDate getNowDate(){
             	return new MyDate(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
             }
+            
+            public void setYear(int y){
+            	  this.year = y;
+            }
+            
+            public void setMonth(int m){
+          	  this.month = m;
+            }
+            
+            public void setDay(int d){
+          	  this.day = d;
+          }
+            
+            public int getYear(){
+            	return this.year;
+            }
+            
+            public int getMonth(){
+            	return this.month;
+            }
+            
+            public int getDay(){
+            	return this.day;
+            }
+            
             
 }

@@ -5,11 +5,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
+import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import po.StockCollectionPO;
@@ -132,29 +137,45 @@ public class APIInterfaceImpl implements APIInterface{
 		return stockCode;
 	}
 
-
+  /**
+   * 获取指定代码的股票的最新数据
+   * 
+   */
 	public StockPO getStockMes(String stockCode) {
 		// TODO Auto-generated method stub
-		return   (StockPO)(getStockMes(stockCode, MyTime.getAnotherDay(-1),MyTime.getToDay()).get(0));
+		
+        return  getStockMes(stockCode, MyTime.getAnotherDay(-2), MyTime.getToDay()).get(0);
+  
 	}
 	
-
+	  /**
+	   * 根据日期获取指定代码的股票的数据
+	   * 
+	   */
 	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end) {
 		// TODO Auto-generated method stub
 		String labels = "open+close+high+low+volume+turnover+pb";
+	//	MyDate  preStart = 
 		String startTime = start.DateToString();
 		String endTime = end.DateToString();
 		String url = "http://121.41.106.89:8010/api/stock/"+stockCode+"/?start="+startTime +"&end="+endTime+"&fields="+labels ;
-	//	System.out.println(SendGET(url, ""));
-		String result="";
+	    System.out.println(SendGET(url, ""));
 		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
 		JSONObject data = jo.getJSONObject("data");
+		JSONArray trading_info = data.getJSONArray("trading_info");
+		List<StockPO> stocks =  new  ArrayList<>();
+		for(int i=0;i<trading_info.size();i++){
+			StockPO stock  = MyJSONObject.toBean(trading_info.getJSONObject(i), StockPO.class);
+			stocks.add(stock);
+		}
+
 		
-		Map<String, Class> classMap = new HashMap<String, Class>();
-		classMap.put("trading_info", StockPO.class);
-		StockCollectionPO   stockCollection  =  (StockCollectionPO)  
-				JSONObject.toBean(data,StockCollectionPO.class , classMap);
-	    return stockCollection.getTrading_info();
+//		Map<String, Class> classMap = new HashMap<String, Class>();
+//		classMap.put("trading_info", StockPO.class);
+//		StockCollectionPO   stockCollection  =  (StockCollectionPO)  
+//				JSONObject.toBean(data,StockCollectionPO.class , classMap);
+        	   
+	    return   stocks;
 		
 	}
 
