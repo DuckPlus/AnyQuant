@@ -2,8 +2,8 @@
 <AnyQuant width="1160" height="750">
 
 	<initialpanel x="0" y="0" width="1080" height="720">
-
-		<BUTTONS>
+    <changepanel x="204" y="0" width="875" height="635"/>
+	 	<BUTTONS>
 			<StockDetail text="股票详细信息" x="0" y="267" />
 			<StockList text="股票列表" x="0" y="317" />
 			<BenchMark text="大盘指数" x="0" y="367" />
@@ -18,6 +18,7 @@
 		        <startDate 	x="450" y="30" width="100" height="30"/>	
 		        <endDate 	x="580" y="30" width="100" height="30"/>     
 		     </TEXTFIELDS>
+		     <Table x="90" y="130" width="700" height="300"/>
 		     <LABELS>
 		        <stockCode x="135" y="15" width="100" height="20" size="12"/>
 		        <stockName x="30" y="5" width="100" height="30"  size="25"/>
@@ -49,7 +50,10 @@
 		     </LABELS>
 		     
 		</stockDetailPanel>
-		<stockListPanel x="232" y="54" width="300" height="300">
+		<stockListPanel x="204" y="0" width="880" height="624">
+			<stocklistTable x="10" y="94" width="860" height="540"/>
+			<stockCodeInput x="10" y="30" width="300" height="35"/>
+			<searchBtn x="320" y="300" width="100" height ="30" normal="element//Btn" enter="element//Btn" clicked="element//Btn" text="查询股票"/>
 		</stockListPanel>
 		<benchmarkPanel x="232" y="54" width="300" height="300">
 		</benchmarkPanel>
