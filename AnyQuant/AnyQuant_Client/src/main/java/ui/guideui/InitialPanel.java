@@ -63,7 +63,7 @@ public class InitialPanel extends MyPanel{
 	}
 
 	@Override
-	protected void addCompoment() {
+	protected void addComponent() {
 		
 	}
 
