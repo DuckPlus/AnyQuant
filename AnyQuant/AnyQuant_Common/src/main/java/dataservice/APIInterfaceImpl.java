@@ -145,7 +145,7 @@ public class APIInterfaceImpl implements APIInterface{
 		String startTime = start.DateToString();
 		String endTime = end.DateToString();
 		String url = "http://121.41.106.89:8010/api/stock/"+stockCode+"/?start="+startTime +"&end="+endTime+"&fields="+labels ;
-		System.out.println(SendGET(url, ""));
+	//	System.out.println(SendGET(url, ""));
 		String result="";
 		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
 		JSONObject data = jo.getJSONObject("data");
