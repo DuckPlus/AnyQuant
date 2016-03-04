@@ -1,13 +1,13 @@
 package po;
 
 public class StockPO {
-	 private String date;
-	 private String high ,low;
-	 private String open,close;
-	 private String adj_Price;
-	 private String volume;
-	 private String turnover;
-	 private String pb;
+	 private String date ,name;
+	 private double high ,low;
+	 private double open,close;
+	 private double adj_Price;
+	 private long volume;
+	 private double turnover;
+	 private double pb;
 	
     public StockPO(){
              super();
@@ -23,69 +23,78 @@ public class StockPO {
 		this.date = date;
 	}
 
-	public String getLow() {
+	public double getLow() {
 		return low;
 	}
 
-	public void setLow(String low) {
+	public void setLow(double low) {
 		this.low = low;
 	}
 
-	public String getClose() {
-		return close;
-	}
-
-	public void setClose(String close) {
-		this.close = close;
-	}
-
-	public String getHigh() {
+	public double getHigh() {
 		return high;
 	}
 
-	public void setHigh(String high) {
+	public void setHigh(double high) {
 		this.high = high;
 	}
 
-	public String getAdj_Price() {
-		return adj_Price;
+	public double getClose() {
+		return close;
 	}
 
-	public void setAdj_Price(String adj_Price) {
-		this.adj_Price = adj_Price;
+	public void setClose(double close) {
+		this.close = close;
 	}
 
-	public String getOpen() {
+	public double getOpen() {
 		return open;
 	}
 
-	public void setOpen(String open) {
+	public void setOpen(double open) {
 		this.open = open;
 	}
 
-	public String getVolume() {
+	public double getAdj_Price() {
+		return adj_Price;
+	}
+
+	public void setAdj_Price(double adj_Price) {
+		this.adj_Price = adj_Price;
+	}
+
+	public long getVolume() {
 		return volume;
 	}
 
-	public void setVolume(String volume) {
+	public void setVolume(long volume) {
 		this.volume = volume;
 	}
 
-	public String getTurnover() {
+	public double getTurnover() {
 		return turnover;
 	}
 
-	public void setTurnover(String turnover) {
+	public void setTurnover(double turnover) {
 		this.turnover = turnover;
 	}
 
-	public String getPb() {
+	public double getPb() {
 		return pb;
 	}
 
-	public void setPb(String pb) {
+	public void setPb(double pb) {
 		this.pb = pb;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	
 	
 }
