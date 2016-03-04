@@ -15,41 +15,62 @@ import enumeration.Stock_Attribute;
  */
 
 public interface APIBlservice {
-	 /**
-	  * 获得所有股票的所有数据
-	  */
-	 public Iterator<StockVO> getAllStocks();
 	/**
-	 * 按照 代码、成交量、振幅、涨跌幅进行排序
+	 * 获得所有股票的所有数据
+	 * @return 股票集合的迭代器
 	 */
-	public Iterator<StockVO> getSortStocks(boolean isUp , Stock_Attribute attr);
+	public Iterator<StockVO> getAllStocks();
+
 	/**
-	 * 按照 代码、成交量、振幅、涨跌幅进行排序 在给定的股票代码中进行排序
-	 * @param isUp  true表示升序
+	 * 
+	 * @param isUp 是否为升序
+	 * @param attr 排序标准：代码、涨跌幅、振幅、成交量
+	 * @return
 	 */
-	public Iterator<StockVO> getSortStocksInScope(boolean isUp , Stock_Attribute attr , List<String> stocksCode);
-	
-	
-	
+	public Iterator<StockVO> getSortStocks(boolean isUp, Stock_Attribute attr);
+
+	/**
+	 * 对于给定的排序范围 获得经过排序的股票 
+	 * @param isUp 是否为升序
+	 * @param attr 排序标准：代码、涨跌幅、振幅、成交量
+	 * @param stocksCode 排序范围（股票列表）
+	 * @return
+	 */
+	public Iterator<StockVO> getSortStocksInScope(boolean isUp,
+			Stock_Attribute attr, List<String> stocksCode);
+
 	/**
 	 * 获得所有大盘的所有数据
 	 */
-	public Iterator<BenchMarkVO> getAllBenchMarks ();
-	/**
-	 * 获得某只股票最近一个月的数据
-	 */
-	public Iterator<StockVO> getRecentStocks(String stockCode);
-	/**
-	 * 获得某只股票某段时间的数据
-	 */
-	public Iterator<StockVO> getStocksByTime(MyDate start , MyDate end);
-	/**
-	 * 获得含该代码序列的股票的代号、名字
-	 */
-	public Iterator<StockVO> getStocksByStockCode(String code);
+	public Iterator<BenchMarkVO> getAllBenchMarks();
+
 	/**
 	 * 
 	 */
+	/**
+	 * 获得某只股票最近一个月的数据
+	 * @param stockCode
+	 * @return
+	 */
+	public Iterator<StockVO> getRecentStocks(String stockCode);
+
+	/**
+	 * 获得某只股票一段时间内的数据
+	 * @param stockCode 股票代码
+ 	 * @param start 起始日期
+	 * @param end 结束日期
+	 * @return    若没有，返回<b>NULL</b>
+	 */
+	public Iterator<StockVO> getStocksByTime(String stockCode, MyDate start,
+			MyDate end);
+
+	
+	/**
+	 * 获得包含该股票代码序列的股票的数据
+	 * @param code
+	 * @return  注意：最多返回10只搜索到的股票
+	 * TODO 后期将支持 中文搜索
+	 */
+	public Iterator<StockVO> getStocksByStockCode(String code);
 
 }
-

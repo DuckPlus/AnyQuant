@@ -1,5 +1,8 @@
 package enumeration;
 
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class MyDate {
             int year , month ,day ;
@@ -26,4 +29,9 @@ public class MyDate {
   
             	   return ""+year+"-"+month+"-"+day;
             }
+            
+            public static final MyDate getNowDate(){
+            	return new MyDate(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
+            }
+            
 }
