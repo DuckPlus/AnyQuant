@@ -43,6 +43,7 @@ public class APIBlImpl implements APIBlservice {
 		stocks = new ArrayList<StockVO>(stocksCode.size());
 //		benchMarkVOs = APIDataSer.
 		for (String string : stocksCode) {
+			
 			stockMap.put(string, (StockVO) VOPOchange.POtoVO(APIDataSer.getStockMes(string)));
 		}
 		

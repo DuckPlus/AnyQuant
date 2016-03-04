@@ -5,22 +5,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.sql.Time;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
-import enumeration.Exchange;
-import enumeration.MyDate;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import po.StockCollectionPO;
 import po.StockPO;
 import util.MyTime;
+import enumeration.Exchange;
+import enumeration.MyDate;
 
 /**
  * API接口的实现类
