@@ -32,15 +32,10 @@ public class InitialPanel extends MyPanel{
 	public void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
-		g.drawImage(GraphicsUtils.getImage("bg//bg"), 0, 0, null);
 		
 	}
 	
-	@Override
-	protected void initWhitePanels(Element e) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
 	protected void initButtons(Element e) {

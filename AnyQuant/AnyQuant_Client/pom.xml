@@ -20,5 +20,10 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+    	<groupId>Duck_Plus</groupId>
+    	<artifactId>AnyQuant_Common</artifactId>
+    	<version>1.0.0</version>
+    </dependency>
   </dependencies>
 </project>

@@ -16,8 +16,12 @@ import javax.swing.JPanel;
  *
  */
 class CountLines {
+	static final String path = "src";
+	static final String clientPath = "AnyQuant_Client/src";
+	static final String commonPath = "AnyQuant_Common/src";
+	static final String serverPath = "AnyQuant_Server/src";
 	public static void main(String[] args) throws FileNotFoundException {
-		final String path = "src";
+		
 		final CountLines count = new CountLines(path);
 		JFrame frame = new JFrame();
 		frame.add(new JPanel() {
@@ -51,6 +55,9 @@ class CountLines {
 	public CountLines(String filePath) {
 		try {
 			getAllLines(filePath);
+			getAllLines(clientPath);
+			getAllLines(commonPath);
+			getAllLines(serverPath);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

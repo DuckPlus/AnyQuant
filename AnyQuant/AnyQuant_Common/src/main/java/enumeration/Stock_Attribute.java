@@ -7,5 +7,13 @@ package enumeration;
  *
  */
 public enum Stock_Attribute {
-	high,low,open,close,adj_Price,volume,turnover,pe,pb
+	high,
+	low,
+	open,
+	close,
+	adj_Price,
+	volume,
+	turnover,
+	pe,
+	pb
 }

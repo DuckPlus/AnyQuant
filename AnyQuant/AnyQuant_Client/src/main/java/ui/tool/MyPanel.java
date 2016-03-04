@@ -1,13 +1,12 @@
 package ui.tool;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
 import org.dom4j.Element;
  /** 
- * panel 父类
+ * panel 父类, 定义 写代码的一些流程
  * @author czq 
  * @version 2015年11月22日 下午8:25:12 
  */
@@ -17,7 +16,6 @@ public abstract class MyPanel extends JPanel{
 	public MyPanel(Element config) {
 		super();
 		this.setLayout(null);
-	//	System.out.println(config.attributeValue("x"));
 //		this.setBackground(new Color(241, 241, 241));
 		this.setBounds(Integer.parseInt(config.attributeValue("x")) , Integer.parseInt(config.attributeValue("y")) , Integer.parseInt(config.attributeValue("width")) , Integer.parseInt(config.attributeValue("height")));
 		setVisible(true);
@@ -35,10 +33,6 @@ public abstract class MyPanel extends JPanel{
 		super.paintComponent(g);
 	}
 
-	/**
-	 * 初始化 若干 白色矩形panel
-	 */
-	protected abstract void initWhitePanels(Element e);
 	
 	/**
 	 * 初始化按钮
@@ -66,8 +60,7 @@ public abstract class MyPanel extends JPanel{
 	 */
 	protected abstract void addListener();
 
-//	public  void refresh() {
-//		
+	
 
 	
 	

@@ -26,11 +26,6 @@ public class BenchMarkListPanel extends MyPanel {
 		g.drawString("this is BenchMarkListPanel", 200, 200);
 	}
 	
-	@Override
-	protected void initWhitePanels(Element e) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	protected void initButtons(Element e) {
