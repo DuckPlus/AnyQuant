@@ -1,5 +1,6 @@
 package ui.guideui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import org.dom4j.Element;
@@ -15,7 +16,9 @@ import ui.tool.MyPanel;
 public class GuidePanel extends MyPanel{
 
 	public GuidePanel(Element config) {
+		
 		super(config);
+		this.setBackground(Color.BLUE);
 		// TODO Auto-generated constructor stub
 	}
 	

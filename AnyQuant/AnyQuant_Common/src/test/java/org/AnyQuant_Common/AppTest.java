@@ -1,7 +1,5 @@
 package org.AnyQuant_Common;
 
-import dataservice.APIInterface;
-import dataservice.APIInterfaceImpl;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

@@ -167,7 +167,8 @@ public abstract class PanelController {
 			System.err.println("-----------配置文件出错");
 		}
 		changePanel.setVisible(false);
-		changePanel.setBounds(232,54,
+		changePanel.setBounds(232,
+				0,
 				Integer.parseInt(e.attributeValue("width")),
 				Integer.parseInt(e.attributeValue("height")));
 		this.mainPanel.add(changePanel);
