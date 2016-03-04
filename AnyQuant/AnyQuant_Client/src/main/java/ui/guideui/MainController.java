@@ -1,5 +1,7 @@
 package ui.guideui;
 
+import javax.swing.JPanel;
+
 import org.dom4j.Element;
 
 import ui.config.CompomentType;
@@ -33,9 +35,10 @@ public class MainController extends PanelController {
 	private BenchMarkListPanel benchMarkListPanel;
 	private StockListPanel stockListPanel;
 	private GuidePanel guidePanel;
+	private JPanel leftPanel;
 
 	public MainController(MyPanel initialPanel, Element root) {
-		super(initialPanel, root);
+		super(initialPanel, root.element("changepanel"));
 
 		initialBL();
 		initButtons(root.element(CompomentType.BUTTONS.name()));
@@ -57,7 +60,8 @@ public class MainController extends PanelController {
 		benchMarkListPanel = new BenchMarkListPanel(
 				e.element(benchmarkPanelStr));
 		guidePanel = new GuidePanel(e.element(guidePanelStr));
-
+		leftPanel = new JPanel();
+		leftPanel.setBounds(x, y, width, height);
 	}
 
 	@Override
