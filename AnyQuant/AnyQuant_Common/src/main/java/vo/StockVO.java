@@ -20,6 +20,10 @@ public class StockVO {
 	public double amplitude;
 	// 尚未实现
 	public double changeRate;
+	
+	public StockVO() {
+	}
+	
 	public StockVO(String date, String name, double high, double low,
 			double open, double close, double adj_Price, long volume,
 			double turnover, double pe, double pb, double amplitude,
