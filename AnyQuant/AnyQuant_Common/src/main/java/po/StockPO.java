@@ -12,7 +12,9 @@ public class StockPO {
     public StockPO(){
              super();
     }
-
+    
+    
+    
 	public String getDate() {
 		return date;
 	}
