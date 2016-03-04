@@ -40,6 +40,9 @@ public class APITest extends TestCase {
         	System.out.println("code: "+stock.getCode());
         	System.out.println("open: "+stock.getOpen());
           	System.out.println("close: "+stock.getClose());
+          	System.out.println("preClose:"+stock.getPreClose());
+          	System.out.println("high: "+stock.getHigh());
+          	System.out.println("low: "+stock.getLow());
         	System.out.println("changeRate: "+stock.getChangeRate());
         	System.out.println("amp: "+stock.getAmplitude());	
         	}

@@ -155,8 +155,8 @@ public class APIInterfaceImpl implements APIInterface{
 	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end) {
 		// TODO Auto-generated method stub
 		String labels = "open+close+high+low+volume+turnover+pb";
-	//	MyDate  preStart = 
-		String startTime = start.DateToString();
+	    MyDate  preStart = MyTime.getAnotherDay(start, -1);
+		String startTime = preStart.DateToString();
 		String endTime = end.DateToString();
 		String url = "http://121.41.106.89:8010/api/stock/"+stockCode+"/?start="+startTime +"&end="+endTime+"&fields="+labels ;
 	    System.out.println(SendGET(url, ""));
@@ -168,13 +168,11 @@ public class APIInterfaceImpl implements APIInterface{
 			StockPO stock  = MyJSONObject.toBean(trading_info.getJSONObject(i), StockPO.class);
 			stocks.add(stock);
 		}
-
-		
-//		Map<String, Class> classMap = new HashMap<String, Class>();
-//		classMap.put("trading_info", StockPO.class);
-//		StockCollectionPO   stockCollection  =  (StockCollectionPO)  
-//				JSONObject.toBean(data,StockCollectionPO.class , classMap);
-        	   
+		for(int i=1;i<stocks.size();i++){
+			stocks.get(i).setPreClose( stocks.get(i-1).getClose() );
+			stocks.get(i).computeAmplitude();
+		}
+        stocks.remove(0);
 	    return   stocks;
 		
 	}
