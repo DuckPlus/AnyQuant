@@ -1,7 +1,6 @@
 package blimpl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -59,7 +58,7 @@ public class APIBlImpl implements APIBlservice {
 			}
 		}
 		
-//		stocks = new ArrayList<StockVO>(stockMap.values());
+		stocks = new ArrayList<StockVO>(stockMap.values());
 		
 	}
 	
