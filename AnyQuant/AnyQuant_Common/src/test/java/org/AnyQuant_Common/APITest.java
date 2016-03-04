@@ -15,14 +15,20 @@ import po.StockPO;
 
 public class APITest extends TestCase {
 
-         public void getAllstocks(){
+         public void getAllstocksMessage(){
         	 APIInterface api = new APIInterfaceImpl();
-        	 MyDate start = new MyDate(2015, 1, 1);
-        	 MyDate end = new MyDate(2015, 1, 30);
-        	 List<StockPO> stockCodes =  api.getStockMes("sh600000", start, end);
-        	 for (StockPO temp : stockCodes){
-        		 System.out.println(temp.getDate()+"||"+temp.getOpen()+"|| "+temp.getClose()+" ||"+temp.getHigh());
-        	 }
+        	 MyDate start = new MyDate(2016, 3, 2);
+        	 MyDate end = new MyDate(2016, 3, 3);
+        	 List<String>  stockCodes = api.getAllStocks();
+        //	 List<StockPO> stockMess = api.getStockMes("sh600126", start, end);
+        	  for(int i=0;i<stockCodes.size();i++){
+        		    System.out.println(stockCodes.get(i)+"------------------------------");
+//        		    List<StockPO> stockMess = api.getStockMes(stockCodes.get(i), start, end);
+        	//	    for (StockPO temp : stockMess){
+           //		            System.out.println
+          // 		               (temp.getDate()+"||"+temp.getOpen()+"|| "+temp.getClose()+" ||"+temp.getHigh());
+           //         }
+             }
          }
-
 }
+

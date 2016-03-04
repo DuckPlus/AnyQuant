@@ -5,18 +5,22 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.sql.Time;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import enumeration.Exchange;
 import enumeration.MyDate;
-import enumeration.Stock_Attribute;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import po.StockCollectionPO;
 import po.StockPO;
+import util.MyTime;
 
 /**
  * API接口的实现类
@@ -30,7 +34,7 @@ public class APIInterfaceImpl implements APIInterface{
 	 *此方法用来建立url-connection并返回API所提供的全部初始数据 
 	 */
 	private  String SendGET(String url,String param){
-		String result="";//访问返回结果
+		   String result="";//访问返回结果
 		   BufferedReader read=null;//读取访问结果
 		    
 		   try {
@@ -38,11 +42,11 @@ public class APIInterfaceImpl implements APIInterface{
 		    URL realurl=new URL(url);
 		    //打开连接
 		    URLConnection connection=realurl.openConnection();
-		     // 设置通用的请求属性
-//		             connection.setRequestProperty("accept", "*/*");
-//		             connection.setRequestProperty("connection", "Keep-Alive");
-//		             connection.setRequestProperty("user-agent",
-//		                     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+		      //设置通用的请求属性
+		             connection.setRequestProperty("accept", "*/*");
+		             connection.setRequestProperty("connection", "Keep-Alive");
+		             connection.setRequestProperty("user-agent",
+		                     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
 		             connection.setRequestProperty("X-Auth-Code", "0d4cb00bb416d44daea6fb74f5bfcfc2");
 		             //建立连接
 		             connection.connect();
@@ -60,7 +64,9 @@ public class APIInterfaceImpl implements APIInterface{
 		                 result += line;
 		             }
 		   } catch (IOException e) {
-		    e.printStackTrace();
+		            // e.printStackTrace();
+		             return "";
+			         
 		   }finally{
 		       if(read!=null){//关闭流
 		             try {
@@ -74,28 +80,37 @@ public class APIInterfaceImpl implements APIInterface{
 		   return result; 
 		 }
     /**
-     * 默认返回2016年，上海交易所
+     * 默认返回2015年，上海交易所
      */
-	public ArrayList<String> getAllStocks() {
+	public List<String> getAllStocks() {
 		// TODO Auto-generated method stub
-		return  getAllStocks(2016,Exchange.sh);
+		List<String > sh = getAllStocks(2015,Exchange.sh);
+		List<String > sz = getAllStocks(2015,Exchange.sz);
+		sh.addAll(sz);
+		return sh;
 	}
 	  /**
        * 默认返回上海交易所
        */
-	public ArrayList<String> getAllStocks(int year) {
+	public List<String> getAllStocks(int year) {
 		// TODO Auto-generated method stub
-		return  getAllStocks(year,Exchange.sh);
+		if(year<2007||year>2015){
+			year =2015;
+		}
+		List<String > sh = getAllStocks(year,Exchange.sh);
+		List<String > sz = getAllStocks(year,Exchange.sz);
+		sh.addAll(sz);
+		return sh;
 	}
 	 /**
-       * 默认返回2016年
+       * 默认返回2015年
        */
-	public ArrayList<String> getAllStocks(Exchange exchange) {
+	public List<String> getAllStocks(Exchange exchange) {
 		// TODO Auto-generated method stub
-		return  getAllStocks(2016,Exchange.sh);
+		return  getAllStocks(2015, exchange);
 	}
 
-	public ArrayList<String> getAllStocks(int year, Exchange exchange) {
+	public List<String> getAllStocks(int year, Exchange exchange) {
 		// TODO Auto-generated method stub
 		String exchangeStr = "";
 		if(exchange==Exchange.sh){
@@ -104,15 +119,15 @@ public class APIInterfaceImpl implements APIInterface{
 			exchangeStr="sz";
 		}
 		String url = "http://121.41.106.89:8010/api/stocks/?year="+year+"&exchange="+exchangeStr ;
-		System.out.println(SendGET(url, ""));
+		//System.out.println(SendGET(url, ""));
 		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
 		JSONArray ja = jo.getJSONArray("data");
 		int length = ja.size();
-		ArrayList<String> stockCode = new ArrayList<String>();
+	    ArrayList<String> stockCode = new  ArrayList<>();
 		for(int i=0;i<length;i++){
 			JSONObject tempJo = ja.getJSONObject(i);
-		   stockCode.add(tempJo.getString("name")) ;
-		   System.out.println(tempJo.getString("name"));
+		    stockCode.add(tempJo.getString("name")) ;
+		  // System.out.println(tempJo.getString("name"));
 		}
 		return stockCode;
 	}
@@ -120,7 +135,7 @@ public class APIInterfaceImpl implements APIInterface{
 
 	public List<StockPO> getStockMes(String stockCode) {
 		// TODO Auto-generated method stub
-		return null;
+		return getStockMes(stockCode, MyTime.getToDay(),MyTime.getToDay());
 	}
 	
 
@@ -130,7 +145,8 @@ public class APIInterfaceImpl implements APIInterface{
 		String startTime = start.DateToString();
 		String endTime = end.DateToString();
 		String url = "http://121.41.106.89:8010/api/stock/"+stockCode+"/?start="+startTime +"&end="+endTime+"&fields="+labels ;
-		System.out.println(SendGET(url, ""));
+		//System.out.println(SendGET(url, ""));
+		String result="";
 		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
 		JSONObject data = jo.getJSONObject("data");
 		
