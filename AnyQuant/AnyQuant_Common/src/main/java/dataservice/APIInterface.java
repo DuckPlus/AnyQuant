@@ -33,6 +33,7 @@ public interface APIInterface {
 	 * @param fields   属性
 	 * @return  
 	 */
+	public List<StockPO> getStockMes(String stockCode);
 	public List<StockPO> getStockMes(String stockCode , Stock_Attribute... fields);
 	public List<StockPO> getStockMes(String stockCode , MyDate start , MyDate end , Stock_Attribute... fields);
 	
