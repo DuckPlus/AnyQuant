@@ -5,14 +5,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import enumeration.Exchange;
 import enumeration.MyDate;
-import enumeration.Stock_Attribute;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import po.StockCollectionPO;
@@ -74,28 +76,31 @@ public class APIInterfaceImpl implements APIInterface{
 		   return result; 
 		 }
     /**
-     * 默认返回2016年，上海交易所
+     * 默认返回2015年，上海交易所
      */
-	public ArrayList<String> getAllStocks() {
+	public List<String> getAllStocks() {
 		// TODO Auto-generated method stub
-		return  getAllStocks(2016,Exchange.sh);
+		return  getAllStocks(2015,Exchange.sh);
 	}
 	  /**
        * 默认返回上海交易所
        */
-	public ArrayList<String> getAllStocks(int year) {
+	public List<String> getAllStocks(int year) {
 		// TODO Auto-generated method stub
+		if(year<2007||year>2015){
+			year =2015;
+		}
 		return  getAllStocks(year,Exchange.sh);
 	}
 	 /**
-       * 默认返回2016年
+       * 默认返回2015年
        */
-	public ArrayList<String> getAllStocks(Exchange exchange) {
+	public List<String> getAllStocks(Exchange exchange) {
 		// TODO Auto-generated method stub
-		return  getAllStocks(2016,Exchange.sh);
+		return  getAllStocks(2015,Exchange.sh);
 	}
 
-	public ArrayList<String> getAllStocks(int year, Exchange exchange) {
+	public List<String> getAllStocks(int year, Exchange exchange) {
 		// TODO Auto-generated method stub
 		String exchangeStr = "";
 		if(exchange==Exchange.sh){
@@ -108,11 +113,11 @@ public class APIInterfaceImpl implements APIInterface{
 		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
 		JSONArray ja = jo.getJSONArray("data");
 		int length = ja.size();
-		ArrayList<String> stockCode = new ArrayList<String>();
+	    ArrayList<String> stockCode = new  ArrayList<>();
 		for(int i=0;i<length;i++){
 			JSONObject tempJo = ja.getJSONObject(i);
-		   stockCode.add(tempJo.getString("name")) ;
-		   System.out.println(tempJo.getString("name"));
+		    stockCode.add(tempJo.getString("name")) ;
+		    System.out.println(tempJo.getString("name"));
 		}
 		return stockCode;
 	}

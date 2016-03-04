@@ -19,13 +19,13 @@ public interface APIInterface {
 	 * Exchange 为交易所枚举类型
 	 * @return
 	 */
-	public ArrayList<String> getAllStocks();
+	public List<String> getAllStocks();
 	
-	public ArrayList<String> getAllStocks(int year);
+	public List<String> getAllStocks(int year);
 	
-	public ArrayList<String> getAllStocks(Exchange exchange);
+	public List<String> getAllStocks(Exchange exchange);
 	
-	public ArrayList<String> getAllStocks(int year , Exchange exchange);
+	public List<String> getAllStocks(int year , Exchange exchange);
 	
 	/**
 	 * 下列方法用于获取某只股票的具体信息，参数的个数为任意多的Stock_Attribute枚举类型
