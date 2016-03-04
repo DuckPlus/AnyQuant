@@ -122,16 +122,20 @@ public class APIInterfaceImpl implements APIInterface{
 	    ArrayList<String> stockCode = new  ArrayList<>();
 		for(int i=0;i<length;i++){
 			JSONObject tempJo = ja.getJSONObject(i);
+			
+			if(tempJo.getString("name").equals("sh000300")){
+				         continue;
+			}
 		    stockCode.add(tempJo.getString("name")) ;
-		  // System.out.println(tempJo.getString("name"));
+		   // System.out.println(tempJo.getString("name"));
 		}
 		return stockCode;
 	}
 
 
-	public List<StockPO> getStockMes(String stockCode) {
+	public StockPO getStockMes(String stockCode) {
 		// TODO Auto-generated method stub
-		return getStockMes(stockCode, MyTime.getToDay(),MyTime.getToDay());
+		return   (StockPO)(getStockMes(stockCode, MyTime.getToDay(),MyTime.getToDay()).get(0));
 	}
 	
 
