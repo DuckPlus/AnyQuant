@@ -44,7 +44,7 @@ public interface APIInterface {
     * @param stockCode
     * @return
     */
-	public List<StockPO> getStockMes(String stockCode);
+	public StockPO getStockMes(String stockCode);
 	/**
 	 * 增加了时间限制
 	 * @param stockCode
