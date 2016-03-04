@@ -101,6 +101,16 @@ public class DetailMainPanel extends MyPanel{
 		this.add(search_btn);
 		this.add(stockCode_label);
 		this.add(stockName_label);
+		this.add(date_label);
+		this.add(stockPriceNow_label);
+		this.add(stockName_label);
+		this.add(search_btn);
+		this.add(stockCode_label);
+		this.add(stockName_label);
+		
+		this.add(search_btn);
+		this.add(stockCode_label);
+		this.add(stockName_label);
 	}
 
 	@Override
@@ -115,7 +125,7 @@ public class DetailMainPanel extends MyPanel{
 	}
 	private String stockCode,stockName;
 	private MyPictureButton search_btn;
-	private MyLabel stockCode_label,stockName_label,date_label,stockPriceNow_label,amplitude_label,historyData_label,
+	private MyLabel stockCode_label,stockName_label,date_label,stockPriceNow_label,changeRate_label,historyData_label,
 	                todayData_label,todayOpen_label,yestodayClose_label,highest_label,lowest_label,
 	                deal_label;
 
