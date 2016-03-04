@@ -2,6 +2,7 @@ package ui.stockdetail;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Vector;
 
 import org.dom4j.Element;
 
@@ -9,6 +10,7 @@ import ui.config.CompomentType;
 import ui.tool.MyLabel;
 import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
+import ui.tool.MyTable;
 import ui.tool.MyTextField;
 import blimpl.APIBlImpl;
 import blservice.APIBlservice;
@@ -32,7 +34,7 @@ public class DetailMainPanel extends MyPanel{
 		initButtons(config.element(CompomentType.BUTTONS.name()));
 		initLabels(config.element(CompomentType.LABELS.name()));
 		initTextFields(config.element(CompomentType.TEXTFIELDS.name()));
-		
+		initOtherCompoment(config.element("Table"));
 	}
 
 	@Override
@@ -85,12 +87,33 @@ public class DetailMainPanel extends MyPanel{
 
 	@Override
 	protected void initOtherCompoment(Element e) {
-		// TODO Auto-generated method stub
-		
+		Vector<String> vhead = new Vector<String>();
+		vhead.add("日期");
+		vhead.add("开盘");
+		vhead.add("收盘");
+		vhead.add("最高");
+		vhead.add("最低");
+		vhead.add("成交量");
+		vhead.add("成交额");
+		vhead.add("振幅");
+		vhead.add("涨跌幅");
+		table= new MyTable(Integer.valueOf(e.attributeValue("x")), 
+				Integer.valueOf(e.attributeValue("y")), 
+				Integer.valueOf(e.attributeValue("width")), 
+				Integer.valueOf(e.attributeValue("height")), vhead);
+		Vector<String>vd = new Vector<String>();
+		vd.add("data1");
+		vd.add("data1");
+		vd.add("data1");
+		vd.add("data1");
+		for(int i=0;i<30;i++){
+			table.addRow(vd);
+		}
 	}
 
 	@Override
 	protected void addComponent() {
+		this.add(table);
 		this.add(search_btn);
 		this.add(stockCode_label);
 		this.add(stockName_label);
@@ -140,4 +163,5 @@ public class DetailMainPanel extends MyPanel{
 	                deal_label;
 	private MyLabel todayOpen,yestodayClose,highest,lowest,dealAmount;
 	private MyTextField startDate,endDate;
+	private MyTable table;
 }
