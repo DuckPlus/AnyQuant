@@ -2,11 +2,13 @@ package blimpl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import po.StockPO;
+import util.MyTime;
 import vo.BenchMarkVO;
 import vo.StockVO;
 import blservice.APIBlservice;
@@ -42,12 +44,22 @@ public class APIBlImpl implements APIBlservice {
 		List<String> stocksCode = APIDataSer.getAllStocks();
 		stocks = new ArrayList<StockVO>(stocksCode.size());
 //		benchMarkVOs = APIDataSer.
+		stockMap = new HashMap<String, StockVO>(3000);
+		System.out.println(stocksCode.size());
+		int count = 0;
 		for (String string : stocksCode) {
-			
-			stockMap.put(string, (StockVO) VOPOchange.POtoVO(APIDataSer.getStockMes(string)));
+//			System.out.println(string);
+//			System.out.println(APIDataSer.getStockMes(string));
+//			System.out.println(APIDataSer.getStockMes(string).getHigh());
+			StockVO tmp =  (StockVO) VOPOchange.POtoVO(APIDataSer.getStockMes(string));
+			stockMap.put(string, tmp);
+			count ++;
+			if(count > 100){
+				break;
+			}
 		}
 		
-		stocks = new ArrayList<StockVO>(stockMap.values());
+//		stocks = new ArrayList<StockVO>(stockMap.values());
 		
 	}
 	
@@ -86,16 +98,9 @@ public class APIBlImpl implements APIBlservice {
 		return null;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public Iterator<StockVO> getRecentStocks(String stockCode) {
-		Date date  = new Date();
-		if(date.getMonth() == 1){
-			date.setYear(date.getYear() - 1);
-		}else{
-			date.setMonth(date.getMonth() - 1);
-		}
-		return getStocksByTime(stockCode, new MyDate(date.getYear(), date.getMonth(), date.getDay()), MyDate.getNowDate());
+		return getStocksByTime(stockCode, MyTime.getAnotherDay(-30) , MyTime.getToDay());
 	}
 
 	@Override
@@ -129,5 +134,8 @@ public class APIBlImpl implements APIBlservice {
 		return result.iterator();
 	}
 
-
+	public static void main(String[] args) {
+		APIBlImpl imp = new APIBlImpl();
+		imp.getAllStocks();
+	}
 }

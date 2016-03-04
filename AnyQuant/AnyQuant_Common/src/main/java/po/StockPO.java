@@ -18,125 +18,143 @@ public class StockPO {
     public StockPO(){
              super();
     }
-    
-    
-    
+
+	public StockPO(String date, String name, String code, double high,
+			double low, double open, double close, double adj_Price,
+			long volume, double turnover, double pe, double pb,
+			double amplitude, double changeRate) {
+		super();
+		this.date = date;
+		this.name = name;
+		this.code = code;
+		this.high = high;
+		this.low = low;
+		this.open = open;
+		this.close = close;
+		this.adj_Price = adj_Price;
+		this.volume = volume;
+		this.turnover = turnover;
+		this.pe = pe;
+		this.pb = pb;
+		this.amplitude = amplitude;
+		this.changeRate = changeRate;
+	}
+
 	public String getDate() {
 		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-	public double getLow() {
-		return low;
-	}
-
-	public void setLow(double low) {
-		this.low = low;
-	}
-
-	public double getHigh() {
-		return high;
-	}
-
-	public void setHigh(double high) {
-		this.high = high;
-	}
-
-	public double getClose() {
-		return close;
-	}
-
-	public void setClose(double close) {
-		this.close = close;
-	}
-
-	public double getOpen() {
-		return open;
-	}
-
-	public void setOpen(double open) {
-		this.open = open;
-	}
-
-	public double getAdj_Price() {
-		return adj_Price;
-	}
-
-	public void setAdj_Price(double adj_Price) {
-		this.adj_Price = adj_Price;
-	}
-
-	public long getVolume() {
-		return volume;
-	}
-
-	public void setVolume(long volume) {
-		this.volume = volume;
-	}
-
-	public double getTurnover() {
-		return turnover;
-	}
-
-	public void setTurnover(double turnover) {
-		this.turnover = turnover;
-	}
-
-	public double getPb() {
-		return pb;
-	}
-
-	public void setPb(double pb) {
-		this.pb = pb;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String getCode() {
+		return code;
 	}
 
-	public double getAmplitude() {
-		return amplitude;
+	public double getHigh() {
+		return high;
 	}
 
-	public void setAmplitude(double amplitude) {
-		this.amplitude = amplitude;
+	public double getLow() {
+		return low;
 	}
 
-	public double getChangeRate() {
-		return changeRate;
+	public double getOpen() {
+		return open;
 	}
 
-	public void setChangeRate(double changeRate) {
-		this.changeRate = changeRate;
+	public double getClose() {
+		return close;
+	}
+
+	public double getAdj_Price() {
+		return adj_Price;
+	}
+
+	public long getVolume() {
+		return volume;
+	}
+
+	public double getTurnover() {
+		return turnover;
 	}
 
 	public double getPe() {
 		return pe;
 	}
 
-	public void setPe(double pe) {
-		this.pe = pe;
+	public double getPb() {
+		return pb;
 	}
 
-
-
-	public String getCode() {
-		return code;
+	public double getAmplitude() {
+		return amplitude;
 	}
 
+	public double getChangeRate() {
+		return changeRate;
+	}
 
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public void setCode(String code) {
 		this.code = code;
 	}
 
+	public void setHigh(double high) {
+		this.high = high;
+	}
+
+	public void setLow(double low) {
+		this.low = low;
+	}
+
+	public void setOpen(double open) {
+		this.open = open;
+	}
+
+	public void setClose(double close) {
+		this.close = close;
+	}
+
+	public void setAdj_Price(double adj_Price) {
+		this.adj_Price = adj_Price;
+	}
+
+	public void setVolume(long volume) {
+		this.volume = volume;
+	}
+
+	public void setTurnover(double turnover) {
+		this.turnover = turnover;
+	}
+
+	public void setPe(double pe) {
+		this.pe = pe;
+	}
+
+	public void setPb(double pb) {
+		this.pb = pb;
+	}
+
+	public void setAmplitude(double amplitude) {
+		this.amplitude = amplitude;
+	}
+
+	public void setChangeRate(double changeRate) {
+		this.changeRate = changeRate;
+	}
+    
+    
+    
+	
 	
 	
 }
