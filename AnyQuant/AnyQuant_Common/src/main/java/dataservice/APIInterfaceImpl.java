@@ -123,18 +123,10 @@ public class APIInterfaceImpl implements APIInterface{
 		return null;
 	}
 	
-	public List<StockPO> getStockMes(String stockCode, Stock_Attribute... fields) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end, Stock_Attribute... fields) {
+	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end) {
 		// TODO Auto-generated method stub
-		String labels = "";
-		for (int i= 0 ; i<fields.length-1;i++){
-			labels+=fields[i].toString()+'+';
-		}
-		labels +=fields[fields.length-1].toString();
+		String labels = "open+close+high+low+volume+turnover+pb";
 		String startTime = start.DateToString();
 		String endTime = end.DateToString();
 		String url = "http://121.41.106.89:8010/api/stock/"+stockCode+"/?start="+startTime +"&end="+endTime+"&fields="+labels ;

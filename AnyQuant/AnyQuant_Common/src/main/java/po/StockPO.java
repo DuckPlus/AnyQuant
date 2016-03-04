@@ -4,10 +4,16 @@ public class StockPO {
 	 private String date ,name;
 	 private double high ,low;
 	 private double open,close;
+	 //目前获取adj_Price会出错
 	 private double adj_Price;
 	 private long volume;
 	 private double turnover;
-	 private double pb;
+	 //目前获取pe会出错
+	 private double pe,pb;
+	 //尚未实现
+	 private double amplitude;
+	 //尚未实现
+	 private double changeRate;
 	
     public StockPO(){
              super();
@@ -91,6 +97,30 @@ public class StockPO {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public double getAmplitude() {
+		return amplitude;
+	}
+
+	public void setAmplitude(double amplitude) {
+		this.amplitude = amplitude;
+	}
+
+	public double getChangeRate() {
+		return changeRate;
+	}
+
+	public void setChangeRate(double changeRate) {
+		this.changeRate = changeRate;
+	}
+
+	public double getPe() {
+		return pe;
+	}
+
+	public void setPe(double pe) {
+		this.pe = pe;
 	}
 
 	
