@@ -133,6 +133,12 @@ public class APIBlImpl implements APIBlservice {
 		return result.iterator();
 	}
 
+	
+	
+	
+	
+	
+	
 	public static void main(String[] args) {
 		APIBlImpl imp = new APIBlImpl();
 		imp.getAllStocks();
