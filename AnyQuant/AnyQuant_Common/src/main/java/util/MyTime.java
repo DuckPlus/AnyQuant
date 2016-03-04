@@ -8,7 +8,7 @@ import enumeration.MyDate;
  * @author ss14
  *
  */
-public class Time {
+public class MyTime {
 	    public static MyDate getAnotherDay(int offset) {  
                  Calendar calendar = Calendar.getInstance();  
                  calendar.add(Calendar.DAY_OF_MONTH, offset);  
@@ -27,14 +27,5 @@ public class Time {
                 MyDate date  = new MyDate(year, month, day);
                 return date;  
 	    }  
-	    
-
-	    
-	    
-	    public static void main(String args [] ){
-	    	
-	    	MyDate date = Time.getAnotherDay(-4);
-	         System.out.println(date.DateToString());
-	    	
-	    }
+	   
 }

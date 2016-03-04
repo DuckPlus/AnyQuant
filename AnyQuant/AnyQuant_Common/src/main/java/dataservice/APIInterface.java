@@ -19,6 +19,11 @@ public interface APIInterface {
 	 * Exchange 为交易所枚举类型
 	 * @return
 	 */
+	
+	/**
+	 * 返回2015年上海和深圳的全部股票代码
+	 * @return
+	 */
 	public List<String> getAllStocks();
 	
 	public List<String> getAllStocks(int year);

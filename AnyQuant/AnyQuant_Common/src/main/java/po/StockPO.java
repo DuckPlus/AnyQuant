@@ -1,7 +1,7 @@
 package po;
 
 public class StockPO {
-	 private String date ,name;
+	 private String date ,name,code;
 	 private double high ,low;
 	 private double open,close;
 	 //目前获取adj_Price会出错
@@ -123,6 +123,18 @@ public class StockPO {
 
 	public void setPe(double pe) {
 		this.pe = pe;
+	}
+
+
+
+	public String getCode() {
+		return code;
+	}
+
+
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	
