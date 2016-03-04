@@ -61,7 +61,7 @@ public class MainController extends PanelController {
 				e.element(benchmarkPanelStr));
 		guidePanel = new GuidePanel(e.element(guidePanelStr));
 		leftPanel = new JPanel();
-		leftPanel.setBounds(x, y, width, height);
+		leftPanel.setBounds(0, 0, 234, 665);
 	}
 
 	@Override
