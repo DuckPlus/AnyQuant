@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<AnyQuant width="1080" height="720">
+<AnyQuant width="1160" height="750">
 
 	<initialpanel x="0" y="0" width="1080" height="720">
-
+		<changepanel x="204" y="0" width="875" height="635"/>
 		<BUTTONS>
 			<StockDetail text="股票详细信息" x="0" y="267" />
 			<StockList text="股票列表" x="0" y="317" />
 			<BenchMark text="大盘指数" x="0" y="367" />
 		</BUTTONS>
-		<guidePanel x="232" y="54" width="300" height="300">
+		<guidePanel x="204" y="0" width="880" height="624">
 		</guidePanel>
-		<stockDetailPanel x="232" y="54" width="300" height="300">
+		<stockDetailPanel x="204" y="0" width="880" height="624">
 		</stockDetailPanel>
-		<stockListPanel x="232" y="54" width="300" height="300">
+		<stockListPanel x="204" y="0" width="880" height="624">
+			<stocklistTable x="10" y="94" width="860" height="540"/>
+			<stockCodeInput x="10" y="30" width="300" height="35"/>
+			<searchBtn x="320" y="300" width="100" height ="30" normal="element//Btn" enter="element//Btn" clicked="element//Btn" text="查询股票"/>
 		</stockListPanel>
-		<benchmarkPanel x="232" y="54" width="300" height="300">
+		<benchmarkPanel x="204" y="0" width="880" height="624">
 		</benchmarkPanel>
 
 
