@@ -2,6 +2,9 @@ package ui.stockdetail;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Iterator;
 import java.util.Vector;
 
 import org.dom4j.Element;
@@ -12,6 +15,7 @@ import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
 import ui.tool.MyTable;
 import ui.tool.MyTextField;
+import vo.StockVO;
 import blimpl.APIBlImpl;
 import blservice.APIBlservice;
 
@@ -25,6 +29,7 @@ public class DetailMainPanel extends MyPanel{
 
 	public DetailMainPanel(Element config) {
 		super(config);
+		ctr=MockAPIBlImpl.getAPIBLService();
 		getStockInfo();
 		initComponent(config);
 		addComponent();
@@ -41,20 +46,16 @@ public class DetailMainPanel extends MyPanel{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 	}
-	
-
 	@Override
 	protected void initButtons(Element e) {//TODO
 		search_btn=new MyPictureButton(e.element("search"));
 				
 	}
-
 	@Override
 	protected void initTextFields(Element e) {
 		 startDate=new MyTextField(e.element("startDate"));
 		 endDate=new MyTextField(e.element("endDate"));
 	}
-
 	@Override
 	protected void initLabels(Element e) {
 		stockCode_label=new MyLabel(e.element("stockCode"),stockCode);
@@ -94,21 +95,39 @@ public class DetailMainPanel extends MyPanel{
 		vhead.add("最高");
 		vhead.add("最低");
 		vhead.add("成交量");
-		vhead.add("成交额");
+		vhead.add("换手率");
 		vhead.add("振幅");
 		vhead.add("涨跌幅");
 		table= new MyTable(Integer.valueOf(e.attributeValue("x")), 
 				Integer.valueOf(e.attributeValue("y")), 
 				Integer.valueOf(e.attributeValue("width")), 
 				Integer.valueOf(e.attributeValue("height")), vhead);
-		Vector<String>vd = new Vector<String>();
-		vd.add("data1");
-		vd.add("data1");
-		vd.add("data1");
-		vd.add("data1");
-		for(int i=0;i<30;i++){
+		table.setColumn(new int[]{100,50,50,50,50,50,50,50,50});
+		
+		while(itr.hasNext()){
+			StockVO vo=itr.next();
+			Vector<String>vd = new Vector<String>();
+			System.out.println(vo.date);
+			vd.add(vo.date);
+			vd.add(vo.open+"");
+			vd.add(vo.close+"");
+			vd.add(vo.high+"");
+			vd.add(vo.low+"");
+			vd.add(vo.volume+"");
+			vd.add(vo.turnover+"");
+			vd.add(vo.amplitude+"");
+			vd.add(vo.changeRate+"");
 			table.addRow(vd);
 		}
+		/*
+		 * stockPriceNow = 5.96;
+		changeRate = -5.70;
+		todayOpen_num = 6.11;
+		yestodayClose_num = 6.32;
+		highest_num = 6.11;
+		lowest_num = 5.75;
+		dealAmount_num = 5.84;
+		 */
 	}
 
 	@Override
@@ -140,13 +159,21 @@ public class DetailMainPanel extends MyPanel{
 
 	@Override
 	protected void addListener() {
-		// TODO Auto-generated method stub
-		
+		search_btn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
 	}
 	private void getStockInfo(){
-		//TODO
+		
+		itr=ctr.getRecentStocks(stockCode);//今天是最后一个
+		
+		//TODO code和name从上一界面获得
 		stockCode = "600871";
 		stockName = "石化油服";
+		
 		stockPriceNow = 5.96;
 		changeRate = -5.70;
 		todayOpen_num = 6.11;
@@ -164,4 +191,6 @@ public class DetailMainPanel extends MyPanel{
 	private MyLabel todayOpen,yestodayClose,highest,lowest,dealAmount;
 	private MyTextField startDate,endDate;
 	private MyTable table;
+	private APIBlservice ctr;
+	private Iterator<StockVO> itr;
 }
