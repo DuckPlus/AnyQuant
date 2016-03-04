@@ -33,7 +33,19 @@ public interface APIInterface {
 	 * @param fields   属性
 	 * @return  
 	 */
-	public List<StockPO> getStockMes(String stockCode , Stock_Attribute... fields);
-	public List<StockPO> getStockMes(String stockCode , MyDate start , MyDate end , Stock_Attribute... fields);
+	
+   /**
+    * 只需要传入股票的代码，返回当天的全部信息
+    * @param stockCode
+    * @return
+    */
+	public List<StockPO> getStockMes(String stockCode);
+	/**
+	 * 增加了时间限制
+	 * @param stockCode
+	 * @param fields
+	 * @return
+	 */
+	public List<StockPO> getStockMes(String stockCode , MyDate start , MyDate end );
 	
 }

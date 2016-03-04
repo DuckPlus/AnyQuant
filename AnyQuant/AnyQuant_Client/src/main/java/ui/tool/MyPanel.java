@@ -53,7 +53,7 @@ public abstract class MyPanel extends JPanel{
 	/**
 	 * 将组件加到面板上去
 	 */
-	protected abstract void addCompoment();
+	protected abstract void addComponent();
 	
 	/**
 	 * 增加监听（内部类机制）

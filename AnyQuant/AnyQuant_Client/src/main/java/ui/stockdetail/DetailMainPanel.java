@@ -1,10 +1,14 @@
 package ui.stockdetail;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import org.dom4j.Element;
 
+import ui.config.CompomentType;
+import ui.tool.MyLabel;
 import ui.tool.MyPanel;
+import ui.tool.MyPictureButton;
 
 /**
  * 股票详细界面
@@ -16,33 +20,42 @@ public class DetailMainPanel extends MyPanel{
 
 	public DetailMainPanel(Element config) {
 		super(config);
-		// TODO Auto-generated constructor stub
+		getStockInfo();
+		initComponent(config);
+		addComponent();
 	}
 	
+	private void initComponent(Element config) {
+		initButtons(config.element(CompomentType.BUTTONS.name()));
+		initLabels(config.element(CompomentType.LABELS.name()));
+		
+	}
+
 	@Override
 	public void paintComponent(Graphics g) {
-		// TODO Auto-generated method stub
 		super.paintComponent(g);
-		g.drawString("this is DetailMainPanel", 200, 200);
 	}
 	
 
 	@Override
-	protected void initButtons(Element e) {
-		// TODO Auto-generated method stub
-		
+	protected void initButtons(Element e) {//TODO
+		search_btn=new MyPictureButton(e.element("search"));
+				
 	}
 
 	@Override
 	protected void initTextFields(Element e) {
-		// TODO Auto-generated method stub
-		
+		 //TODO
 	}
 
 	@Override
 	protected void initLabels(Element e) {
-		// TODO Auto-generated method stub
+		stockCode_label=new MyLabel(e.element("stockCode"),stockCode);
+		stockName_label=new MyLabel(e.element("stockName"),stockName);
 		
+//		 date_label,stockPriceNow_label,amplitude_label,historyData_label,
+//        todayData_label,todayOpen_label,yestodayClose_label,highest_label,lowest_label,
+//        deal_label
 	}
 
 	@Override
@@ -52,9 +65,10 @@ public class DetailMainPanel extends MyPanel{
 	}
 
 	@Override
-	protected void addCompoment() {
-		// TODO Auto-generated method stub
-		
+	protected void addComponent() {
+		this.add(search_btn);
+		this.add(stockCode_label);
+		this.add(stockName_label);
 	}
 
 	@Override
@@ -62,5 +76,14 @@ public class DetailMainPanel extends MyPanel{
 		// TODO Auto-generated method stub
 		
 	}
-
+	private void getStockInfo(){
+		//TODO
+		stockCode="600871";
+		stockName="石化油服";
+	}
+	private String stockCode,stockName;
+	private MyPictureButton search_btn;
+	private MyLabel stockCode_label,stockName_label,date_label,stockPriceNow_label,amplitude_label,historyData_label,
+	                todayData_label,todayOpen_label,yestodayClose_label,highest_label,lowest_label,
+	                deal_label;
 }

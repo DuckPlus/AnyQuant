@@ -1,4 +1,4 @@
-package dataimpl;
+package dataservice;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import dataservice.APIInterface;
 import enumeration.Exchange;
 import enumeration.MyDate;
 import enumeration.Stock_Attribute;
@@ -18,6 +17,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import po.StockCollectionPO;
 import po.StockPO;
+
 /**
  * API接口的实现类
  * @author shishuo
@@ -30,7 +30,7 @@ public class APIInterfaceImpl implements APIInterface{
 	 *此方法用来建立url-connection并返回API所提供的全部初始数据 
 	 */
 	private  String SendGET(String url,String param){
-		   String result="";//访问返回结果
+		String result="";//访问返回结果
 		   BufferedReader read=null;//读取访问结果
 		    
 		   try {
@@ -117,18 +117,16 @@ public class APIInterfaceImpl implements APIInterface{
 		return stockCode;
 	}
 
-	public List<StockPO> getStockMes(String stockCode, Stock_Attribute... fields) {
+
+	public List<StockPO> getStockMes(String stockCode) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 
-	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end, Stock_Attribute... fields) {
+	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end) {
 		// TODO Auto-generated method stub
-		String labels = "";
-		for (int i= 0 ; i<fields.length-1;i++){
-			labels+=fields[i].toString()+'+';
-		}
-		labels +=fields[fields.length-1].toString();
+		String labels = "open+close+high+low+volume+turnover+pb";
 		String startTime = start.DateToString();
 		String endTime = end.DateToString();
 		String url = "http://121.41.106.89:8010/api/stock/"+stockCode+"/?start="+startTime +"&end="+endTime+"&fields="+labels ;
@@ -140,12 +138,9 @@ public class APIInterfaceImpl implements APIInterface{
 		classMap.put("trading_info", StockPO.class);
 		StockCollectionPO   stockCollection  =  (StockCollectionPO)  
 				JSONObject.toBean(data,StockCollectionPO.class , classMap);
-		System.out.println(stockCollection.getName());
-		for(int i=0;i<stockCollection.getTrading_info().size();i++){
-			System.out.println(stockCollection.getTrading_info().get(i).getOpen());
-		}
 	    return stockCollection.getTrading_info();
 		
 	}
+
 
 }

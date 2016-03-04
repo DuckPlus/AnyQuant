@@ -93,7 +93,7 @@ public class StockListPanel extends MyPanel {
 	}
 
 	@Override
-	protected void addCompoment() {
+	protected void addComponent() {
 		// TODO Auto-generated method stub
 
 	}
