@@ -1,4 +1,4 @@
-package dataimpl;
+package dataservice;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,14 +10,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import dataservice.APIInterface;
-import enumeration.Exchange;
-import enumeration.MyDate;
-import enumeration.Stock_Attribute;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import po.StockCollectionPO;
 import po.StockPO;
+import enumeration.Exchange;
+import enumeration.MyDate;
+import enumeration.Stock_Attribute;
 /**
  * API接口的实现类
  * @author shishuo
@@ -146,11 +145,6 @@ public class APIInterfaceImpl implements APIInterface{
 		}
 	    return stockCollection.getTrading_info();
 		
-	}
-	@Override
-	public List<StockPO> getStockMes(String stockCode) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
