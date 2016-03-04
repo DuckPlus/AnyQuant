@@ -1,4 +1,4 @@
-package dataservice;
+package dataimpl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,13 +6,17 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import dataservice.APIInterface;
 import enumeration.Exchange;
 import enumeration.MyDate;
 import enumeration.Stock_Attribute;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import po.StockCollectionPO;
 import po.StockPO;
 /**
  * API接口的实现类
@@ -74,18 +78,21 @@ public class APIInterfaceImpl implements APIInterface{
      */
 	public ArrayList<String> getAllStocks() {
 		// TODO Auto-generated method stub
-		
-		return null;
+		return  getAllStocks(2016,Exchange.sh);
 	}
-
+	  /**
+       * 默认返回上海交易所
+       */
 	public ArrayList<String> getAllStocks(int year) {
 		// TODO Auto-generated method stub
-		return null;
+		return  getAllStocks(year,Exchange.sh);
 	}
-
+	 /**
+       * 默认返回2016年
+       */
 	public ArrayList<String> getAllStocks(Exchange exchange) {
 		// TODO Auto-generated method stub
-		return null;
+		return  getAllStocks(2016,Exchange.sh);
 	}
 
 	public ArrayList<String> getAllStocks(int year, Exchange exchange) {
@@ -101,11 +108,13 @@ public class APIInterfaceImpl implements APIInterface{
 		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
 		JSONArray ja = jo.getJSONArray("data");
 		int length = ja.size();
+		ArrayList<String> stockCode = new ArrayList<String>();
 		for(int i=0;i<length;i++){
 			JSONObject tempJo = ja.getJSONObject(i);
-			System.out.println(tempJo.getString("link")+"||"+tempJo.getString("name"));
+		   stockCode.add(tempJo.getString("name")) ;
+		   System.out.println(tempJo.getString("name"));
 		}
-		return null;
+		return stockCode;
 	}
 
 	public List<StockPO> getStockMes(String stockCode, Stock_Attribute... fields) {
@@ -115,7 +124,28 @@ public class APIInterfaceImpl implements APIInterface{
 
 	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end, Stock_Attribute... fields) {
 		// TODO Auto-generated method stub
-		return null;
+		String labels = "";
+		for (int i= 0 ; i<fields.length-1;i++){
+			labels+=fields[i].toString()+'+';
+		}
+		labels +=fields[fields.length-1].toString();
+		String startTime = start.DateToString();
+		String endTime = end.DateToString();
+		String url = "http://121.41.106.89:8010/api/stock/"+stockCode+"/?start="+startTime +"&end="+endTime+"&fields="+labels ;
+		System.out.println(SendGET(url, ""));
+		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
+		JSONObject data = jo.getJSONObject("data");
+		
+		Map<String, Class> classMap = new HashMap<String, Class>();
+		classMap.put("trading_info", StockPO.class);
+		StockCollectionPO   stockCollection  =  (StockCollectionPO)  
+				JSONObject.toBean(data,StockCollectionPO.class , classMap);
+		System.out.println(stockCollection.getName());
+		for(int i=0;i<stockCollection.getTrading_info().size();i++){
+			System.out.println(stockCollection.getTrading_info().get(i).getOpen());
+		}
+	    return stockCollection.getTrading_info();
+		
 	}
 
 }
