@@ -2,11 +2,13 @@
 <AnyQuant width="1160" height="750">
 
 	<initialpanel x="0" y="0" width="1080" height="720">
-    <changepanel x="204" y="0" width="875" height="635"/>
+        <changepanel x="204" y="0" width="875" height="635"/>
 	 	<BUTTONS>
 			<StockDetail text="股票详细信息" x="0" y="267" />
 			<StockList text="股票列表" x="0" y="317" />
 			<BenchMark text="大盘指数" x="0" y="367" />
+			<Shrink  x="1110" y="10" width="25" height="25" normal="element//shrink" enter="element//shrink_clicked" clicked="element//shrink_clicked"/>
+		    <Exit  x="1135" y="10" width="25" height="25" normal="element//exit" enter="element//exit_clicked" clicked="element//exit_clicked"/>
 		</BUTTONS>
 		<guidePanel x="232" y="54" width="300" height="300">
 		</guidePanel>

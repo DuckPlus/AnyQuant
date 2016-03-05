@@ -194,7 +194,7 @@ public class DetailMainPanel extends MyPanel{
 					if(MyTime.ifEarlier(startDate, endDate)
 							||MyTime.ifSame(startDate, endDate)){
 						itr=ctr.getStocksByTime(stockCode, startDate,endDate);
-						
+						System.out.println("MouseListener "+itr.hasNext());
 						refreshTable();
 					}else {
 						feedBack("起止日期填反");
