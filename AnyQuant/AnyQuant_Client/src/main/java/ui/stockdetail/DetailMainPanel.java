@@ -9,6 +9,7 @@ import java.util.Vector;
 
 import org.dom4j.Element;
 
+import enumeration.MyDate;
 import ui.config.CompomentType;
 import ui.tool.MyLabel;
 import ui.tool.MyPanel;
@@ -21,7 +22,7 @@ import blservice.APIBlservice;
 
 /**
  * 股票详细界面
- * @author czq
+ * @author dsn14
  * @date 2016年3月2日
  */
 @SuppressWarnings("serial")
@@ -40,6 +41,7 @@ public class DetailMainPanel extends MyPanel{
 		initLabels(config.element(CompomentType.LABELS.name()));
 		initTextFields(config.element(CompomentType.TEXTFIELDS.name()));
 		initOtherCompoment(config.element("Table"));
+		addListener();
 	}
 
 	@Override
@@ -53,8 +55,8 @@ public class DetailMainPanel extends MyPanel{
 	}
 	@Override
 	protected void initTextFields(Element e) {
-		 startDate=new MyTextField(e.element("startDate"));
-		 endDate=new MyTextField(e.element("endDate"));
+		 startDate_txt=new MyTextField(e.element("startDate"));
+		 endDate_txt=new MyTextField(e.element("endDate"));
 	}
 	@Override
 	protected void initLabels(Element e) {
@@ -107,7 +109,6 @@ public class DetailMainPanel extends MyPanel{
 		while(itr.hasNext()){
 			StockVO vo=itr.next();
 			Vector<String>vd = new Vector<String>();
-			System.out.println(vo.date);
 			vd.add(vo.date);
 			vd.add(vo.open+"");
 			vd.add(vo.close+"");
@@ -148,8 +149,8 @@ public class DetailMainPanel extends MyPanel{
 		this.add(lowest_label);
 		this.add(deal_label);
 
-		this.add(startDate);
-		this.add(endDate);
+		this.add(startDate_txt);
+		this.add(endDate_txt);
 		this.add(todayOpen);
 		this.add(yestodayClose);
 		this.add(highest);
@@ -162,7 +163,19 @@ public class DetailMainPanel extends MyPanel{
 		search_btn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				String[] startD=startDate_txt.getText().split("-");
+				String[] endD=endDate_txt.getText().split("-");
+				System.out.println(startD[0]);
+				System.out.println(endD[0]);
+				startDate=new MyDate(Integer.parseInt(startD[0]), 
+						Integer.parseInt(startD[1]),
+						Integer.parseInt(startD[2]));
+				endDate=new MyDate(Integer.parseInt(endD[0]),
+						Integer.parseInt(endD[1]),
+				        Integer.parseInt(endD[2]));
+				ctr.getStocksByTime(stockCode, startDate,endDate);
+				System.out.println("点击查询");
+				System.out.println(startDate.DateToString()+" -- "+endDate.DateToString());
 			}
 		});
 	}
@@ -183,13 +196,14 @@ public class DetailMainPanel extends MyPanel{
 		dealAmount_num = 5.84;
 	}
 	private String stockCode,stockName;
+	private MyDate startDate,endDate;
 	private double changeRate,stockPriceNow,todayOpen_num,yestodayClose_num,highest_num,lowest_num,dealAmount_num;
 	private MyPictureButton search_btn;
 	private MyLabel stockCode_label,stockName_label,date_label,stockPriceNow_label,changeRate_label,historyData_label,
 	                todayData_label,todayOpen_label,yestodayClose_label,highest_label,lowest_label,
 	                deal_label;
 	private MyLabel todayOpen,yestodayClose,highest,lowest,dealAmount;
-	private MyTextField startDate,endDate;
+	private MyTextField startDate_txt,endDate_txt;
 	private MyTable table;
 	private APIBlservice ctr;
 	private Iterator<StockVO> itr;

@@ -1,5 +1,7 @@
 package util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -39,11 +41,43 @@ public class MyTime {
             MyDate myDate  = new MyDate(year, month, day);
             return myDate;  
     }  
+	    /**
+	     * @author dsn
+	     * 判断A是否早于B 等于或晚于则返回false
+	     * @param dateA
+	     * @param dateB
+	     * @return
+	     */
+	    public static Boolean ifEarlier(MyDate dateA,MyDate dateB){
+	    	SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+	    	Date a=new Date();
+	    	Date b=new Date();
+	    	try {
+				a=df.parse(dateA.DateToString());
+				b=df.parse(dateB.DateToString());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+	    	return a.before(b);
+	    }
+	    /**
+	     * @author dsn
+	     * 判断两个日期是否相等
+	     * @param dateA
+	     * @param dateB
+	     * @return
+	     */
+	    public static Boolean ifSame(MyDate dateA,MyDate dateB){
+	    	if(!ifEarlier(dateA, dateB)&&!ifEarlier(dateB, dateA)){
+	    		return true;
+	    	}
+	    	return false;
+	    }
 	    
 	    public static void main (String a[]){
-	    	  MyDate date = new MyDate(2016, 3, 4);
-	    	  date = MyTime.getAnotherDay(date, 4);
-	    	  System.out.println(date.DateToString());
+	    	  MyDate dateA = new MyDate(2016, 3, 5);
+	    	  MyDate dateB=new MyDate(2016, 4, 5);
+	    	  System.out.println(MyTime.ifSame(dateA, dateB));
 	    	
 	    }
 
