@@ -18,7 +18,7 @@ public class GuidePanel extends MyPanel{
 	public GuidePanel(Element config) {
 		
 		super(config);
-		this.setBackground(Color.BLUE);
+		this.setBackground(Color.black);
 		// TODO Auto-generated constructor stub
 	}
 	

@@ -75,18 +75,25 @@ public class MockAPIBlImpl implements APIBlservice{
 	public Iterator<StockVO> getRecentStocks(String stockCode) {
 		List<StockVO> vos=new ArrayList<StockVO>();
 		StockVO vo;
-		for(int i=0;i<30;i++){
+		for(int i=0;i<29;i++){
 			vo=new StockVO("2015-1-"+(i+1), "石化油服", 50, 10.00, 23.12, 24.15, 2, 25330, 0.015, 10, 10, 0.04, 0.03);
 			vos.add(vo);
 		}
+		vo=new StockVO("2015-1-"+(30), "石化油服", 26, 18.00, 25.89, 22.95, 3, 283, 0.015, 10, 10, 0.54, -0.18);
+		vos.add(vo);
 		return vos.iterator();
 	}
 
 	@Override
 	public Iterator<StockVO> getStocksByTime(String stockCode, MyDate start,
 			MyDate end) {
-		// TODO Auto-generated method stub
-		return null;
+		List<StockVO> vos=new ArrayList<StockVO>();
+		StockVO vo;
+		for(int i=0;i<5;i++){
+			vo=new StockVO("2015-1-"+(2*i+1), "石化油服", 50, 10.00, 23.12, 24.15, 2, 25330, 0.015, 10, 10, 0.04, 0.03);
+			vos.add(vo);
+		}
+		return vos.iterator();
 	}
 
 	@Override
