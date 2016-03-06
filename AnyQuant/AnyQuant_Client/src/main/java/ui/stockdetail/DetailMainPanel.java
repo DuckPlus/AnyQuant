@@ -9,7 +9,6 @@ import java.util.Vector;
 
 import org.dom4j.Element;
 
-import enumeration.MyDate;
 import ui.config.CompomentType;
 import ui.tool.MyLabel;
 import ui.tool.MyPanel;
@@ -20,6 +19,7 @@ import util.MyTime;
 import vo.StockVO;
 import blimpl.APIBlImpl;
 import blservice.APIBlservice;
+import enumeration.MyDate;
 
 /**
  * 股票详细界面
@@ -32,6 +32,15 @@ public class DetailMainPanel extends MyPanel{
 	public DetailMainPanel(Element config) {
 		super(config);
 		ctr=MockAPIBlImpl.getAPIBLService();
+		getStockInfo();
+		initComponent(config);
+		
+	}
+	public DetailMainPanel(Element config,String stockCode,String stockName) {
+		super(config);
+		this.stockCode=stockCode;
+		this.stockName=stockName;
+		ctr=APIBlImpl.getAPIBLService();
 		getStockInfo();
 		initComponent(config);
 		
@@ -223,9 +232,10 @@ public class DetailMainPanel extends MyPanel{
 		System.out.println(message);
 	}
 	private void getStockInfo(){
+		stockCode = "sh600050";
 		itr=ctr.getRecentStocks(stockCode);//今天是最后一个
 		//TODO code和name从上一界面获得
-		stockCode = "600871";
+		
 		stockName = "石化油服";
 		
 	}

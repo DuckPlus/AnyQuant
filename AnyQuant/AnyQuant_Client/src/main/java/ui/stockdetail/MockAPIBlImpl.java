@@ -49,8 +49,9 @@ public class MockAPIBlImpl implements APIBlservice{
 	}
 	@Override
 	public Iterator<StockVO> getAllStocks() {
-		// TODO Auto-generated method stub
-		return null;
+		List<StockVO> vos=new ArrayList<StockVO>();
+		vos=TestData.getOne_Stock_VOs(7);
+		return vos.iterator();
 	}
 
 	@Override
