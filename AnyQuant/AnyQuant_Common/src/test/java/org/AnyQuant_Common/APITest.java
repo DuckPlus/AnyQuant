@@ -18,12 +18,13 @@ import po.StockPO;
 
 public class APITest extends TestCase {
          public static void main(String a[]){
-        	    getAllstocksMessage();
+        	  //  getAllstocksMessage();
         	 //getBenchMes();
-        	// getStockCodes();
+        	   // getStockCode();
+        	 getAllMesByCache();
         	 
          }
-         public  static void getAllstocksMessage(){
+         public  static void getAllstocksMessageByAPI(){
         	 APIInterface api = new APIInterfaceImpl();
         	 MyDate start = new MyDate(2016, 3, 3);
         	 MyDate end = new MyDate(2016, 3, 6);
@@ -64,7 +65,7 @@ public class APITest extends TestCase {
         		        
          }
          
-         public static void getStockCodes(){
+         public static void getStockCode(){
         	 APIInterface api = new APIDataFactory().getAPIDataService();
         	 List<String > codes = api.getAllStocks();
         	 if(codes!=null){
@@ -73,6 +74,25 @@ public class APITest extends TestCase {
         	   }
         	 }else{
         		 System.out.println("null");
+        	 }
+         }
+         
+         
+         public static void getAllMesByCache(){
+        	 APIInterface api = new APIDataFactory().getAPIDataService();
+        	 List<StockPO > stocks = api.getAllStockMes();
+        	 for(StockPO stock : stocks){
+           	    System.out.print("name: "+stock.getName()+"  " );
+             	System.out.print("code: "+stock.getCode()+"  ");
+             	System.out.print("open: "+stock.getOpen()+"  ");
+               	System.out.print("close: "+stock.getClose()+"  ");
+               	System.out.print("preClose:"+stock.getPreClose()+"  ");
+               	System.out.print("high: "+stock.getHigh()+"  ");
+               	System.out.print("low: "+stock.getLow()+"  ");
+             	System.out.print("changeRate: "+stock.getChangeRate()+"  ");
+             	System.out.print("amp: "+stock.getAmplitude()+"  ");	
+             	System.out.print("turnover: "+stock.getTurnover()+"  ");
+             	System.out.print("date: "+stock.getDate()+'\n');
         	 }
          }
 }

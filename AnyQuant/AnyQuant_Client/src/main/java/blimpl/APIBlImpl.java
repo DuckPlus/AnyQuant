@@ -45,7 +45,7 @@ public class APIBlImpl implements APIBlservice {
 		APIDataSer = new APIInterfaceImpl();
 		List<String> stocksCode = APIDataSer.getAllStocks();
 		stockMap = new TreeMap<String, StockVO>();
-		List<String> benchCodes = APIDataSer.getAllBenchMatks();
+		List<String> benchCodes = APIDataSer.getAllBenchMarks();
 		
 		
 		System.out.println("Reading Data-----------");

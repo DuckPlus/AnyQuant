@@ -61,12 +61,19 @@ public interface APIInterface {
 	 */
 	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end);
 	
+	/**
+	 * 返回当天的全部股票具体信息
+	 * @return
+	 */
+	public List<StockPO> getAllStockMes();
+	
+	
 	
 	/**
 	 * 返回所有可用的大盘的代号
 	 * @return
 	 */
-	public List<String> getAllBenchMatks();
+	public List<String> getAllBenchMarks();
 	/**
 	 * 只需要传入大盘的代码例如"hs300"，返回当天的全部信息
 	 * 

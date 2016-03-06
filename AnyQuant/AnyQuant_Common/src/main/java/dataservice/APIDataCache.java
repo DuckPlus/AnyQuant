@@ -59,13 +59,19 @@ public class APIDataCache implements APIInterface{
 	@Override
 	public StockPO getStockMes(String stockCode) {
 		// TODO Auto-generated method stub
-		return null;
+		return  null;
 	}
 
 	@Override
 	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end) {
 		// TODO Auto-generated method stub
-		return null;
+		return   null;
+	}
+	
+	@Override
+	public List<StockPO> getAllStockMes() {
+		// TODO Auto-generated method stub
+		return readAllMes();
 	}
 
 	@Override
@@ -155,9 +161,16 @@ public class APIDataCache implements APIInterface{
             }else{
                       System.out.println("找不到指定的文件,创建新文件");
                       List<StockPO> result =    new ArrayList<>();
-                   //   for()
-                //      writeAllCodes(data);
-                //      return data;
+                      List<String> stockCodes = getAllStocks();
+                 
+                      for(String code : stockCodes){
+                    	  
+                    	         result .add(api.getStockMes(code));
+                    	
+                    
+                      }
+                      writeAllMes(result);
+                      return result;
             }
       } catch (Exception e) {
              System.out.println("读取文件内容出错");
@@ -191,10 +204,14 @@ public class APIDataCache implements APIInterface{
 	}
 
 	@Override
-	public List<String> getAllBenchMatks() {
+	public List<String> getAllBenchMarks() {
 		// TODO Auto-generated method stub
-		return null;
+		List <String> list =  new ArrayList<>();
+		list.add("hs300");
+		return list;
 	}
+
+
 	    
 	    
 
