@@ -1,25 +1,32 @@
 package ui.listui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JLabel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.MouseInputAdapter;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
 import org.dom4j.Element;
 
+import blimpl.APIBlImpl;
+import blservice.APIBlservice;
+import enumeration.Stock_Attribute;
 import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
 import ui.tool.MyTable;
 import ui.tool.MyTextField;
+import ui.tool.PanelController;
 import vo.StockVO;
-import blimpl.APIBlImpl;
-import blservice.APIBlservice;
 
 /**
  * 股票列表
@@ -31,10 +38,15 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 	MyTable stocklistTable; 
 	MyTextField stockCodeInput;
 	MyPictureButton searchBtn;
+	PanelController panelController;
+	
+	JLabel sortVolumeBtn;
+	
+	
 	APIBlservice apiBl;// = APIBlImpl.getAPIBLService();
-	public StockListPanel(Element config) {
+	public StockListPanel(Element config,PanelController panelController) {
 		super(config);
-
+		this.panelController = panelController;
 		initBl();
 		initTable(config.element("stocklistTable"));
 		initTextFields(config.element("stockCodeInput"));
@@ -59,6 +71,11 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 				Integer.valueOf(e.element("searchBtn").attributeValue("width")), 
 				Integer.valueOf(e.element("searchBtn").attributeValue("height")));
 		
+		sortVolumeBtn = new JLabel();
+		sortVolumeBtn.setOpaque(true);
+		sortVolumeBtn.setBounds(675, 0, 10, 25);
+		sortVolumeBtn.setBackground(Color.red);
+		
 		
 	}
 
@@ -69,7 +86,6 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 				Integer.valueOf(e.attributeValue("y")), 
 				Integer.valueOf(e.attributeValue("width")), 
 				Integer.valueOf(e.attributeValue("height")));
-		
 	}
 
 	@Override
@@ -106,6 +122,7 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 		this.add(searchBtn);
 		this.add(stockCodeInput);
 		this.add(stocklistTable);
+		stocklistTable.getTable().getTableHeader().add(sortVolumeBtn);
 	}
 
 	@Override
@@ -122,10 +139,33 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 				super.mousePressed(e);
 			}
 		});
-
+		
+		stocklistTable.getTable().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				int row = stocklistTable.getSelectRow();
+				if(row!=-1){
+				String stockCode = stocklistTable.getValue(row, 1);
+				String stockName = stocklistTable.getValue(row, 0);
+				panelController.getCardLayout().show(panelController.getChangePanel(),"stockDetailPanel" );
+				
+				}
+				super.mousePressed(e);
+			}
+		});
 		
 		Document doc = stockCodeInput.getDocument();
 		doc.addDocumentListener(this);
+		
+		sortVolumeBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				//升序排列
+				System.out.println(stocklistTable.getRowCount());
+				sortStockTable(true, Stock_Attribute.volume);
+				super.mousePressed(e);
+			}
+		});
 	}
 	private void initBl(){
 		apiBl =APIBlImpl.getAPIBLService();
@@ -155,6 +195,44 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 		Iterator<StockVO> itr = apiBl.getAllStocks();
 		
 		while(itr.hasNext()){
+			StockVO temp = itr.next();
+			Vector<String>vData = new Vector<String>();
+			vData.add(temp.name);
+			vData.add(temp.code);
+			vData.add(String.valueOf(temp.open));
+			vData.add(String.valueOf(temp.close));
+			vData.add(String.valueOf(temp.high));
+			vData.add(String.valueOf(temp.low));
+			vData.add(String.valueOf(temp.turnover));
+			vData.add(String.valueOf(temp.volume));
+			vData.add(String.valueOf(temp.amplitude));
+			vData.add(String.valueOf(temp.changeRate));
+			stocklistTable.addRow(vData);
+		}
+	}
+	private List<String>getCurrentStock(){
+//		System.out.println("get in");
+		List<String>result = new ArrayList<String>();
+		int totalRow = stocklistTable.getRowCount();
+//		System.out.println("TOTAL"+totalRow);
+		for(int i=0;i<totalRow;i++){
+//			System.out.println("i:"+i);
+//			System.out.println("total:"+totalRow);
+			String code = stocklistTable.getValue(i, 1);
+			System.out.println("add:"+code);
+			result.add(code);
+		}
+		return result;
+	}
+	
+	private void sortStockTable(Boolean isUp, Stock_Attribute attr){
+		
+		List<String>CodeList = getCurrentStock();
+		System.out.println(CodeList.size());
+		Iterator<StockVO>itr = apiBl.getSortStocksInScope(isUp, attr, CodeList);
+		stocklistTable.removeAllItem();
+		while(itr.hasNext()){
+			System.out.println("get a value!");
 			StockVO temp = itr.next();
 			Vector<String>vData = new Vector<String>();
 			vData.add(temp.name);
