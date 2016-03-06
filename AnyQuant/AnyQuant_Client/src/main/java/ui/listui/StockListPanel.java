@@ -37,11 +37,12 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 	APIBlservice apiBl;// = APIBlImpl.getAPIBLService();
 	public StockListPanel(Element config) {
 		super(config);
-		initBl();
+//		initBl();
 		initOtherCompoment(config.element("stocklistTable"));
 		initTextFields(config.element("stockCodeInput"));
 		initButtons(config);
 		addListener();
+		addComponent();
 	}
 	
 	@Override
@@ -59,7 +60,7 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 				Integer.valueOf(e.element("searchBtn").attributeValue("y")), 
 				Integer.valueOf(e.element("searchBtn").attributeValue("width")), 
 				Integer.valueOf(e.element("searchBtn").attributeValue("height")));
-		this.add(searchBtn);
+		
 		
 	}
 
@@ -70,7 +71,7 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 				Integer.valueOf(e.attributeValue("y")), 
 				Integer.valueOf(e.attributeValue("width")), 
 				Integer.valueOf(e.attributeValue("height")));
-		this.add(stockCodeInput);
+		
 	}
 
 	@Override
@@ -97,14 +98,16 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 				Integer.valueOf(e.attributeValue("y")), 
 				Integer.valueOf(e.attributeValue("width")), 
 				Integer.valueOf(e.attributeValue("height")), vhead);
-		searchAllStock();
-		this.add(stocklistTable);
+//		searchAllStock();
+		
 	}
 
 	@Override
 	protected void addComponent() {
 		// TODO Auto-generated method stub
-
+		this.add(searchBtn);
+		this.add(stockCodeInput);
+		this.add(stocklistTable);
 	}
 
 	@Override
