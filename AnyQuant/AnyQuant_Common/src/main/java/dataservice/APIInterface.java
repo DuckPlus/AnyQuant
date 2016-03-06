@@ -1,6 +1,8 @@
 package dataservice;
 
 import java.util.List;
+
+import po.BenchMarkPO;
 import po.StockPO;
 import enumeration.Exchange;
 import enumeration.MyDate;
@@ -37,7 +39,7 @@ public interface APIInterface {
 	 */
 	
    /**
-    * 只需要传入股票的代码，返回当天的全部信息
+    * 只需要传入股票的代码例如"sh600126"，返回当天的全部信息
     * @param stockCode
     * @return
     */
@@ -49,5 +51,21 @@ public interface APIInterface {
 	 * @return
 	 */
 	public List<StockPO> getStockMes(String stockCode , MyDate start , MyDate end );
+	
+	   /**
+	    * 只需要传入大盘的代码例如"hs300"，返回当天的全部信息
+	    * @param benchCode
+	    * @return
+	    */
+	public BenchMarkPO getBenchMes(String benchCode);
+	
+	/**
+	 * 增加了时间限制
+	 * @param benchCode
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public List<BenchMarkPO> getBenchMes(String benchCode , MyDate start , MyDate end );
 	
 }

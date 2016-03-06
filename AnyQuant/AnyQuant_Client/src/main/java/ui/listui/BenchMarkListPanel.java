@@ -1,13 +1,18 @@
 package ui.listui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.Vector;
+
+import javax.swing.JLabel;
 
 import org.dom4j.Element;
 
 import ui.tool.MyPanel;
+import ui.tool.MyPictureButton;
 import ui.tool.MyTable;
+import ui.tool.MyTextField;
 
 /**
  * 大盘列表
@@ -18,15 +23,21 @@ import ui.tool.MyTable;
 public class BenchMarkListPanel extends MyPanel {
 	
 	MyTable BenchmarkListTable;
+	MyTextField beginDate;
+	MyTextField endDate;
+	MyPictureButton searchBtn;
+	JLabel dateInterval_word;
+	
 	public BenchMarkListPanel(Element config) {
 		super(config);
 		this.setBackground(Color.lightGray);
 		initOtherCompoment(config.element("benchmarklistTable"));
+		initLabels(config);
+		initButtons(config);
 	}
 	
 	@Override
 	public void paintComponent(Graphics g) {
-		// TODO Auto-generated method stub
 		super.paintComponent(g);
 		g.drawString("this is BenchMarkListPanel", 200, 200);
 	}
@@ -34,8 +45,8 @@ public class BenchMarkListPanel extends MyPanel {
 
 	@Override
 	protected void initButtons(Element e) {
-		// TODO Auto-generated method stub
-
+		searchBtn = new MyPictureButton(e.element("searchBtn"));
+		this.add(searchBtn);
 	}
 
 	@Override
@@ -46,8 +57,12 @@ public class BenchMarkListPanel extends MyPanel {
 
 	@Override
 	protected void initLabels(Element e) {
-		// TODO Auto-generated method stub
-
+		dateInterval_word = new JLabel("日期");
+		dateInterval_word.setBounds(0, 0, 80, 40);
+		dateInterval_word.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+		dateInterval_word.setOpaque(true);
+		dateInterval_word.setBackground(Color.red);
+		this.add(dateInterval_word);
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import java.util.List;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import po.BenchMarkPO;
 import po.StockPO;
 import util.MyTime;
 import enumeration.Exchange;
@@ -76,7 +77,7 @@ public class APIInterfaceImpl implements APIInterface{
      * 默认返回2015年，上海交易所
      */
 	public List<String> getAllStocks() {
-		// TODO Auto-generated method stub
+		
 		List<String > sh = getAllStocks(2015,Exchange.sh);
 		List<String > sz = getAllStocks(2015,Exchange.sz);
 		sh.addAll(sz);
@@ -86,7 +87,7 @@ public class APIInterfaceImpl implements APIInterface{
        * 默认返回上海交易所
        */
 	public List<String> getAllStocks(int year) {
-		// TODO Auto-generated method stub
+	
 		if(year<2007||year>2015){
 			year =2015;
 		}
@@ -99,12 +100,12 @@ public class APIInterfaceImpl implements APIInterface{
        * 默认返回2015年
        */
 	public List<String> getAllStocks(Exchange exchange) {
-		// TODO Auto-generated method stub
+	
 		return  getAllStocks(2015, exchange);
 	}
 
 	public List<String> getAllStocks(int year, Exchange exchange) {
-		// TODO Auto-generated method stub
+		
 		String exchangeStr = "";
 		if(exchange==Exchange.sh){
 			exchangeStr="sh";
@@ -134,7 +135,7 @@ public class APIInterfaceImpl implements APIInterface{
    * 
    */
 	public StockPO getStockMes(String stockCode) {
-		// TODO Auto-generated method stub
+		
 		
         return  getStockMes(stockCode, MyTime.getAnotherDay(-2), MyTime.getToDay()).get(0);
   
@@ -145,7 +146,7 @@ public class APIInterfaceImpl implements APIInterface{
 	   * 
 	   */
 	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end) {
-		// TODO Auto-generated method stub
+		
 		String labels = "open+close+high+low+volume+turnover+pb";
 	    MyDate  preStart = MyTime.getAnotherDay(start, -1);
 		String startTime = preStart.DateToString();
@@ -168,6 +169,30 @@ public class APIInterfaceImpl implements APIInterface{
         stocks.remove(0);
 	    return   stocks;
 		
+	}
+	@Override
+	public BenchMarkPO getBenchMes(String benchCode) {
+		
+		return null;
+	}
+	@Override
+	public List<BenchMarkPO> getBenchMes(String benchCode, MyDate start, MyDate end) {
+		String labels = "open+close+high+low+volume+adj_price";
+		String startTime = start.DateToString();
+		String endTime = end.DateToString();
+		String url = "http://121.41.106.89:8010/api/benchmark/"+benchCode+"/?start="+startTime +"&end="+endTime+"&fields="+labels ;
+	  //  System.out.println(SendGET(url, ""));
+		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
+		JSONObject data = jo.getJSONObject("data");
+		JSONArray trading_info = data.getJSONArray("trading_info");
+		List<BenchMarkPO> benchs =  new  ArrayList<>();
+		for(int i=0;i<trading_info.size();i++){
+			BenchMarkPO  bench  = MyJSONObject.toBean(trading_info.getJSONObject(i), BenchMarkPO.class);
+			bench.setCode(benchCode);
+			benchs.add(bench);
+		}
+		
+		return benchs;
 	}
 
 

@@ -162,7 +162,7 @@ public class MyTable extends JPanel{
 		     public Component getTableCellRendererComponent(JTable table,
 		       Object value, boolean isSelected, boolean hasFocus,
 		       int row, int column) {
-		 		System.out.println("I'm making face!");
+//		 		System.out.println("I'm making face!");
 		      if (row % 2 == 0)
 		       setBackground(Color.white); 
 		      else if (row % 2 == 1)
