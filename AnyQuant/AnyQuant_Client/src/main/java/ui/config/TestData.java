@@ -44,15 +44,18 @@ public class TestData {
 		for(int i=0;i<k;i++){
 				if(i>=total) i=total-1;//以防越界。。
 				vo=new StockVO(dates[i], "石化油服", "600121",
-						25+Math.random()*5,
-						20+Math.random()*5, 
-						20+Math.random()*10,//open
-						20+Math.random()*10,//close
-						20+Math.random()*10,
+						Double.parseDouble(df.format(25+Math.random()*5)),
+						Double.parseDouble(df.format(20+Math.random()*5)), 
+						Double.parseDouble(df.format(20+Math.random()*10)),//open
+						Double.parseDouble(df.format(20+Math.random()*10)),//close
+						Double.parseDouble(df.format(20+Math.random()*10)),
 						2, 
 						20000+(long)(Math.random()*10000),
-						Math.random(), Math.random() ,Math.random(), 
-						Math.random(), Math.random());
+						Double.parseDouble(df.format(Math.random())),
+						Double.parseDouble(df.format(Math.random())),
+						Double.parseDouble(df.format(Math.random())), 
+						Double.parseDouble(df.format(Math.random())),
+						Double.parseDouble(df.format(Math.random())));
 				vos.add(vo);
 		}
 		return vos;
@@ -69,13 +72,15 @@ public class TestData {
 			if(i>=total) i=total-1;//以防越界。。
 			vo=new StockVO(dates[i], "我是A股~", (600000+i)+"",
 					Double.parseDouble(df.format(25+Math.random()*5)),
-					20+Math.random()*5, 
-					20+Math.random()*10,//open
-					20+Math.random()*10,//close
-					20+Math.random()*10,
+					Double.parseDouble(df.format(20+Math.random()*5)), 
+					Double.parseDouble(df.format(20+Math.random()*10)),//open
+					Double.parseDouble(df.format(20+Math.random()*10)),//close
+					Double.parseDouble(df.format(20+Math.random()*10)),
 					2, 
 					20000+(long)(Math.random()*10000),
-					Math.random(), Math.random() ,Math.random(), 
+					Double.parseDouble(df.format(Math.random())),
+					Double.parseDouble(df.format(Math.random())) ,
+					Double.parseDouble(df.format(Math.random())), 
 					Math.random(), Math.random());
 
 			vos.add(vo);
@@ -87,7 +92,7 @@ public class TestData {
 	public static void main(String[] args) {
 		List<StockVO> vos=TestData.getDiffer_Stock_VOs(60);
 		for(StockVO vo:vos){
-			System.out.println(vo.high);
+			System.out.println(vo.close);
 		}
 	}
 }

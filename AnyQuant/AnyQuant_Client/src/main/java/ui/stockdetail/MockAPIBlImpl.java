@@ -93,5 +93,18 @@ public class MockAPIBlImpl implements APIBlservice{
 		return null;
 	}
 
+	@Override
+	public Iterator<BenchMarkVO> getRecentBenchMarks(String BenchMarkCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterator<BenchMarkVO> getBenchMarkByTime(String BenchMarkCode,
+			MyDate start, MyDate end) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
 
