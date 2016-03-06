@@ -44,6 +44,7 @@ public class APIBlImpl implements APIBlservice {
 		APIDataSer = new APIInterfaceImpl();
 		List<String> stocksCode = APIDataSer.getAllStocks();
 		stocks = new ArrayList<StockVO>(stocksCode.size());
+//		benchMarkVOs = APIDataSer.
 //		benchMarkVOs = APIDataSer
 		/*
 		 * 使用TreeMap支持自动排序
@@ -136,6 +137,19 @@ public class APIBlImpl implements APIBlservice {
 		}
 		
 		return result.iterator();
+	}
+
+	@Override
+	public Iterator<BenchMarkVO> getRecentBenchMarks(String BenchMarkCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterator<BenchMarkVO> getBenchMarkByTime(String BenchMarkCode,
+			MyDate start, MyDate end) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

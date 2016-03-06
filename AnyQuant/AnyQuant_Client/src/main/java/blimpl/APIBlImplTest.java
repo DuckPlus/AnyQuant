@@ -36,21 +36,20 @@ public class APIBlImplTest extends TestCase {
 	 * pass 部分
 	 */
 	public void testGetSortStocks() {
-		//TODO 代码排序还有问题
 		System.out.println("---------------------接下来是代码排序----------------");
 		Iterator<StockVO> stocksWithCode = api.getAllStocks();
 		while(stocksWithCode.hasNext()){
 			System.out.println(stocksWithCode.next().code);
 		}
 		System.out.println("---------------------接下来是涨跌幅排序----------------");
-		double rate;
+		StockVO vo;
 		Iterator<StockVO> stocksWithZhangFU = api.getSortStocks(true, Stock_Attribute.changeRate);
 		while(stocksWithZhangFU.hasNext()){
-			rate = stocksWithZhangFU.next().changeRate;
-			System.out.println(rate);
-			if(rate > 0.1){
-				System.err.println("该股票数据存在异常：涨跌幅大于10%");
-				System.out.println();
+			vo = stocksWithZhangFU.next();
+			System.out.println(vo);
+			if(vo.changeRate > 0.1){
+				System.out.println("该股票数据存在异常：涨跌幅大于10%");
+				System.out.println("Code:" + vo.code + " 收盘：" + vo.close + " 昨收盘："+vo.preClose );
 			}
 		}
 		
