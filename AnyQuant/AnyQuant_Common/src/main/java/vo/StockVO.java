@@ -9,7 +9,7 @@ package vo;
 public class StockVO {
 	public String date ,name,code;
 	public double high ,low;
-	public double open,close;
+	public double open,close,preClose;
 	 //目前获取adj_Price会出错
 	public double adj_Price;
 	public long volume;
@@ -22,10 +22,11 @@ public class StockVO {
 	public double changeRate;
 	
 	public StockVO() {
+		super();
 	}
 	
 	public StockVO(String date, String name, double high, double low,
-			double open, double close, double adj_Price, long volume,
+			double open, double close,double preClose, double adj_Price, long volume,
 			double turnover, double pe, double pb, double amplitude,
 			double changeRate) {
 		super();
@@ -35,6 +36,7 @@ public class StockVO {
 		this.low = low;
 		this.open = open;
 		this.close = close;
+		this.preClose = preClose;
 		this.adj_Price = adj_Price;
 		this.volume = volume;
 		this.turnover = turnover;

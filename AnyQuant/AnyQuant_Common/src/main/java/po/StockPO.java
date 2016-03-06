@@ -22,7 +22,7 @@ public class StockPO implements InitialBean {
     }
 
 	public StockPO(String date, String name, String code, double high,
-			double low, double open, double close, double adj_Price,
+			double low, double open, double close, double preClose,double adj_Price,
 			long volume, double turnover, double pe, double pb,
 			double amplitude, double changeRate) {
 		super();
@@ -33,6 +33,7 @@ public class StockPO implements InitialBean {
 		this.low = low;
 		this.open = open;
 		this.close = close;
+		this.preClose = preClose;
 		this.adj_Price = adj_Price;
 		this.volume = volume;
 		this.turnover = turnover;
