@@ -9,7 +9,8 @@ import po.StockPO;
 import vo.StockVO;
 
 /** 
- * @author ymc 
+ * VOPO互换类
+ * @author ymc，czq 
  * @version 创建时间：2015年11月18日 下午7:39:11 
  *
  */
@@ -34,38 +35,15 @@ public class VOPOchange {
 		
 		try {
 			voClass = Class.forName(voName);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
 			vo = voClass.newInstance();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
+			System.err.println("VOPO名字不对应！！！ OR  VO不存在空的构造器");
 			e.printStackTrace();
 		}
+		
 		Field[] fields = poClass.getDeclaredFields();
 		
-		if(poClass.getSuperclass().toString().endsWith("DocPO")){
-			setSuperField(vo, o, "ID");
-			setSuperField(vo, o, "type");
-			setSuperField(vo, o, "date");
-			setSuperField(vo, o, "state");
-			
-			
-		}
-		if(poClass.getSuperclass().toString().endsWith("CostPO")){
-			setSuperField(vo, o, "ID");
-			setSuperField(vo, o, "startDate");
-			setSuperField(vo, o, "endDate");
-			setSuperField(vo, o, "money");
-			setSuperField(vo, o, "costType");
-			
-		}
-		
+				
 		for(Field f : fields){
 			Field tmp = null;
 			if(f.getName().equals("serialVersionUID"))
@@ -317,31 +295,5 @@ public class VOPOchange {
 		}
 		return null;
 	}
-	@SuppressWarnings("unchecked")
-	public static void main(String[] args) {
-//		CostVO  vo = new CostVO(1000, "freigt");		
-//		CostPO po = (CostPO) VOtoPO(vo);
-//		System.out.println(po.getMoney()+ " "+ po.getType());
-//		
-//		
-//		AccountVO voa= DataTool.getAccountVO();
-//		AccountPO poa = (AccountPO) VOtoPO(voa);
-//		
-//		System.out.println(poa.getID()+" "+ poa.getPassword());
-//		
-//		AccountVO voav = (AccountVO)POtoVO(poa);
-//		System.out.println(voav.ID+" "+voav.password);
-		
-//		ArrayList<DriverVO> vod = DataTool.getDriverList();
-//		DriverVO vo1 = vod.get(0);
-//		System.out.println(vo1.ID+" "+vo1.IDcard+" "+vo1.licenseYear+" "+vo1.name);
-//		DriverPO po1 = (DriverPO) VOtoPO(vo1);
-//		System.out.println(po1.getID()+" "+po1.getIDcard()+" "+po1.getLicenseYear()+" "+po1.getName());
-		StockVO vo = new StockVO("22" , "22" , null, 22.1 , 3.2 , 2.5 , 4,3, 2000 , 0,5 ,0,3,0, 0);
-		StockPO po = (StockPO) VOPOchange.VOtoPO(vo);
-		StockVO anvo = (StockVO) VOPOchange.POtoVO(po);
-		System.out.println(anvo.high);
-
-	}
-
+	
 }

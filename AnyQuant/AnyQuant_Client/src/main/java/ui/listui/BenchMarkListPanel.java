@@ -3,16 +3,20 @@ package ui.listui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.JLabel;
 
 import org.dom4j.Element;
 
+import blimpl.APIBlImpl;
+import blservice.APIBlservice;
 import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
 import ui.tool.MyTable;
 import ui.tool.MyTextField;
+import vo.BenchMarkVO;
 
 /**
  * 大盘列表
@@ -21,7 +25,7 @@ import ui.tool.MyTextField;
  */
 @SuppressWarnings("serial")
 public class BenchMarkListPanel extends MyPanel {
-	
+	APIBlservice apiService;
 	MyTable BenchmarkListTable;
 	MyTextField beginDate;
 	MyTextField endDate;
@@ -31,9 +35,10 @@ public class BenchMarkListPanel extends MyPanel {
 	public BenchMarkListPanel(Element config) {
 		super(config);
 		this.setBackground(Color.lightGray);
-		initOtherCompoment(config.element("benchmarklistTable"));
+		initTable(config.element("benchmarklistTable"));
 		initLabels(config);
 		initButtons(config);
+		initTextFields(config);
 	}
 	
 	@Override
@@ -51,53 +56,35 @@ public class BenchMarkListPanel extends MyPanel {
 
 	@Override
 	protected void initTextFields(Element e) {
-		// TODO Auto-generated method stub
-
+		beginDate = new MyTextField(80,40,100,35);
+		endDate = new MyTextField(200,40,100,35);
+		this.add(beginDate);
+		this.add(endDate);
 	}
 
 	@Override
 	protected void initLabels(Element e) {
-		dateInterval_word = new JLabel("日期");
-		dateInterval_word.setBounds(0, 0, 80, 40);
-		dateInterval_word.setFont(new Font("微软雅黑", Font.PLAIN, 20));
-		dateInterval_word.setOpaque(true);
-		dateInterval_word.setBackground(Color.red);
+		dateInterval_word = new JLabel("日期",JLabel.CENTER);
+		dateInterval_word.setBounds(0, 35, 60, 40);
+		dateInterval_word.setFont(new Font("华文细黑", Font.PLAIN, 25));
 		this.add(dateInterval_word);
 	}
 
 	@Override
-	protected void initOtherCompoment(Element e) {
+	protected void initTable(Element e) {
 		Vector<String> vhead = new Vector<String>();
 		vhead.add("日期");
 		vhead.add("开盘价");
 		vhead.add("收盘价");
 		vhead.add("最高价");
 		vhead.add("最低价");
-		vhead.add("换手率");
 		vhead.add("成交量");
-		vhead.add("振幅");
-		vhead.add("变化率");
 		
-//		Element eBenchmark = e.element("benchmarklistTable")
 		BenchmarkListTable= new MyTable(Integer.valueOf(e.attributeValue("x")), 
 				Integer.valueOf(e.attributeValue("y")), 
 				Integer.valueOf(e.attributeValue("width")), 
 				Integer.valueOf(e.attributeValue("height")), vhead);
-		System.out.println(BenchmarkListTable.getBounds().getX());
-		System.out.println(BenchmarkListTable.getBounds().getY());
-		System.out.println(BenchmarkListTable.getBounds().getWidth());
-		System.out.println(BenchmarkListTable.getBounds().getHeight());
-		Vector<String>vd = new Vector<String>();
-		vd.add("data1");
-		vd.add("data1");
-		vd.add("data1");
-		vd.add("data1");
 		
-		BenchmarkListTable.addRow(vd);
-		BenchmarkListTable.addRow(vd);
-		BenchmarkListTable.addRow(vd);
-		BenchmarkListTable.addRow(vd);
-		BenchmarkListTable.addRow(vd);
 		this.add(BenchmarkListTable);
 
 	}
@@ -113,5 +100,26 @@ public class BenchMarkListPanel extends MyPanel {
 		// TODO Auto-generated method stub
 
 	}
-
+	private void initBl(){
+		apiService = APIBlImpl.getAPIBLService();
+	}
+	
+	private void searchAllBenchmark(){
+		Iterator<BenchMarkVO> itr = apiService.getAllBenchMarks();
+		while(itr.hasNext()){
+			Vector<String>vData = new Vector<String>();
+			BenchMarkVO temp = itr.next();
+			vData.add(temp.date);
+			vData.add(String.valueOf(temp.open));
+			vData.add(String.valueOf(temp.close));
+			vData.add(String.valueOf(temp.high));
+			vData.add(String.valueOf(temp.low));
+			vData.add(String.valueOf(temp.volume));
+			BenchmarkListTable.addRow(vData);
+		}
+	}
+	private void searchBenchmark(){
+		
+	}
+	
 }

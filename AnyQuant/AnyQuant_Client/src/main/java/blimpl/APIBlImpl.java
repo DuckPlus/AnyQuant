@@ -43,7 +43,7 @@ public class APIBlImpl implements APIBlservice {
 	private APIBlImpl() {
 		APIDataSer = new APIInterfaceImpl();
 		List<String> stocksCode = APIDataSer.getAllStocks();
-		System.out.println("-----------");
+		System.out.println("Reading Data-----------");
 		stocks = new ArrayList<StockVO>(stocksCode.size());
 //		benchMarkVOs = APIDataSer.
 //		benchMarkVOs = APIDataSer
@@ -59,9 +59,13 @@ public class APIBlImpl implements APIBlservice {
 //			System.out.println(APIDataSer.getStockMes(string).getHigh());
 			StockVO tmp =  (StockVO) VOPOchange.POtoVO(APIDataSer.getStockMes(string));
 			stockMap.put(string, tmp);
+			
+			if(count > 100){
+				break;
+			}
 			count ++;
 		}
-		
+		System.out.println("Reading Finish-----------");
 		stocks = new ArrayList<StockVO>(stockMap.values());
 		
 	}

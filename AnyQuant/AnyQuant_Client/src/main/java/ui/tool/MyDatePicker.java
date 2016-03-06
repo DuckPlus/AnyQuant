@@ -57,7 +57,7 @@ public class MyDatePicker extends JLabel {
 				Integer.parseInt(config.attributeValue("width")),
 				Integer.parseInt(config.attributeValue("height")));
 		datePicker = new DatePicker(date, DefaultFormat, font, new Dimension(
-				200, 50));
+				100, 25));
 
 		button = datePicker.getInnerButton();
 		dateField = datePicker.getInnerTextField();
@@ -66,7 +66,7 @@ public class MyDatePicker extends JLabel {
 		dateField.setEditable(false);
 		button.addMouseListener(new MyDateButtonListener(button));
 
-		datePicker.setBounds(0, 0, getWidth(), getHeight());
+//		datePicker.setBounds(0, 0, getWidth(), getHeight());
 		add(datePicker);
 	}
 
