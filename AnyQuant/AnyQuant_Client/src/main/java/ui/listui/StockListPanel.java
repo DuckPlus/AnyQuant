@@ -13,12 +13,12 @@ import javax.swing.text.Document;
 
 import org.dom4j.Element;
 
-import ui.stockdetail.MockAPIBlImpl;
 import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
 import ui.tool.MyTable;
 import ui.tool.MyTextField;
 import vo.StockVO;
+import blimpl.APIBlImpl;
 import blservice.APIBlservice;
 
 /**
@@ -128,7 +128,7 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 		doc.addDocumentListener(this);
 	}
 	private void initBl(){
-		apiBl =MockAPIBlImpl.getAPIBLService();
+		apiBl =APIBlImpl.getAPIBLService();
 	}
 	private void searchStock(String input){
 		stocklistTable.removeAllItem();

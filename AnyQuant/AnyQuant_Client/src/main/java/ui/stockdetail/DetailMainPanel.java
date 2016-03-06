@@ -19,6 +19,7 @@ import ui.tool.MyTable;
 import ui.tool.TipsDialog;
 import util.MyTime;
 import vo.StockVO;
+import blimpl.APIBlImpl;
 import blservice.APIBlservice;
 import enumeration.MyDate;
 
@@ -32,7 +33,7 @@ public class DetailMainPanel extends MyPanel{
 
 	public DetailMainPanel(Element config) {
 		super(config);
-		ctr=MockAPIBlImpl.getAPIBLService();
+		ctr=APIBlImpl.getAPIBLService();
 		initComponent(config);
 		
 	}
@@ -66,6 +67,7 @@ public class DetailMainPanel extends MyPanel{
 	}
 	@Override
 	protected void initLabels(Element e) {
+		line_label=new MyLabel(e.element("line"),"---");
 		stockCode_label=new MyLabel(e.element("stockCode"),stockCode);
 		stockName_label=new MyLabel(e.element("stockName"),stockName);
 		System.out.println("Code"+stockCode);
@@ -170,6 +172,7 @@ public class DetailMainPanel extends MyPanel{
 		this.add(highest_label);
 		this.add(lowest_label);
 		this.add(deal_label);
+		this.add(line_label);
 
 		this.add(todayOpen);
 		this.add(yestodayClose);
@@ -250,7 +253,7 @@ public class DetailMainPanel extends MyPanel{
 	private MyPictureButton search_btn;
 	private MyLabel stockCode_label,stockName_label,date_label,stockPriceNow_label,changeRate_label,historyData_label,
 	                todayData_label,todayOpen_label,yestodayClose_label,highest_label,lowest_label,
-	                deal_label;
+	                deal_label,line_label;
 	private MyLabel todayOpen,yestodayClose,highest,lowest,dealAmount;
 	private MyDatePicker start_datePicker,end_datePicker;
 	private MyTable table;

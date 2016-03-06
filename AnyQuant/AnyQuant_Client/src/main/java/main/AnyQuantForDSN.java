@@ -21,7 +21,7 @@ public class AnyQuantForDSN {
 			org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
 
 			Properties prop = System.getProperties();
-			if (prop.getProperty("os name").contains("Mac")) {
+			if (prop.getProperty("os.name").contains("Mac")) {
 				UIManager.put("RootPaneUI", temp);
 			} else {
 				UIManager.put("RootPaneUI", null);

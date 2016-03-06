@@ -26,11 +26,11 @@
 		     </TEXTFIELDS>
 		     <Table x="90" y="130" width="700" height="300"/>
 		     <DatePicker>
-		          <start x="450" y="32" width="100" height="25" size_word="12"/>
-		          <end x="580" y="32" width="100" height="25" size_word="12"/>
+		          <start x="450" y="32" width="100" height="25" size_word="12" buttonName="little_calendar"/>
+		          <end x="580" y="32" width="100" height="25" size_word="12" buttonName="little_calendar"/>
 		     </DatePicker>
 		     <LABELS>
-		        <line x="570" y="32" width="100" height="20" />
+		        <line x="560" y="32" width="100" height="20" />
 		        <stockCode x="135" y="15" width="100" height="20" size="12"/>
 		        <stockName x="30" y="5" width="100" height="30"  size="25"/>
 		        <date_label x="370" y="32" width="100" height="20" />

@@ -67,7 +67,7 @@ public class MyDatePicker extends JLabel {
 		dateField.setFont(font);
 		dateField.setBackground(Color.WHITE);
 		dateField.setEditable(false);
-		button.addMouseListener(new MyDateButtonListener(button));
+		button.addMouseListener(new MyDateButtonListener(button,config.attributeValue("buttonName")));
 
 //		datePicker.setBounds(0, 0, getWidth(), getHeight());
 		add(datePicker);
@@ -89,7 +89,7 @@ public class MyDatePicker extends JLabel {
 		dateField.setFont(font);
 		dateField.setEditable(false);
 
-		button.addMouseListener(new MyDateButtonListener(button));
+		button.addMouseListener(new MyDateButtonListener(button,config.attributeValue("buttonName")));
 
 		try {
 			datePicker.setBounds(Integer.parseInt(config.attributeValue("x")),
@@ -120,10 +120,10 @@ public class MyDatePicker extends JLabel {
 		private Icon enter;
 		private Icon clicked;
 
-		public MyDateButtonListener(JButton button) {
+		public MyDateButtonListener(JButton button,String name) {
 			this.button = button;
 			ButtonOrLabelPicture pics = GraphicsUtils
-					.getButtonLabelPic("calendar");
+					.getButtonLabelPic(name);
 			normal = pics.getNormal();
 			enter = pics.getEnter();
 			clicked = pics.getClicked();
