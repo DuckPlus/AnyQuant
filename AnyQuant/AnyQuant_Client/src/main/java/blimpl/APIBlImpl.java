@@ -12,6 +12,7 @@ import util.MyTime;
 import vo.BenchMarkVO;
 import vo.StockVO;
 import blservice.APIBlservice;
+import dataservice.APIDataFactory;
 import dataservice.APIInterface;
 import dataservice.APIInterfaceImpl;
 import enumeration.MyDate;
@@ -42,7 +43,7 @@ public class APIBlImpl implements APIBlservice {
 	 * 为了加快测试速度，在开发阶段只引入100只股票
 	 */
 	private APIBlImpl() {
-		APIDataSer = new APIInterfaceImpl();
+		APIDataSer = APIDataFactory.getAPIDataService();
 		List<String> stocksCode = APIDataSer.getAllStocks();
 		stockMap = new TreeMap<String, StockVO>();
 		List<String> benchCodes = APIDataSer.getAllBenchMarks();
