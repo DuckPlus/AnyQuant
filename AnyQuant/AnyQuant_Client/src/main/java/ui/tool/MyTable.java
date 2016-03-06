@@ -13,6 +13,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 public class MyTable extends JPanel{
 	/**
@@ -128,17 +129,44 @@ public class MyTable extends JPanel{
 //		ListModel.get
 		return Table;
 	}
-	
+	/**
+	 * 设置某一行的背景颜色
+	 * 现在还不行，，，全是bug..
+	 * @param row0
+	 * @param color
+	 */
+	public void setRowColor(int row0,Color color){
+		System.out.println("MyTable.setRowColor");
+		 try {
+			    DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
+			     public Component getTableCellRendererComponent(JTable table,
+			       Object value, boolean isSelected, boolean hasFocus,
+			       int row, int column) {
+			    	 System.out.println(row0+"行");
+			      if (row == row0)
+			       setBackground(color); 
+			      return super.getTableCellRendererComponent(table, value,
+			        isSelected, hasFocus, row, column);
+			     }
+			    };
+			    for (int i = 0; i < Table.getColumnCount(); i++) {
+				     Table.getColumn(Table.getColumnName(i)).setCellRenderer(tcr);
+				    }
+			   } catch (Exception ex) {
+			    ex.printStackTrace();
+			   }
+	}
 	private void makeFace(JTable table) {
 		   try {
 		    DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
 		     public Component getTableCellRendererComponent(JTable table,
 		       Object value, boolean isSelected, boolean hasFocus,
 		       int row, int column) {
+		 		System.out.println("I'm making face!");
 		      if (row % 2 == 0)
-		       setBackground(Color.white); // ���������е�ɫ
+		       setBackground(Color.white); 
 		      else if (row % 2 == 1)
-		       setBackground(new Color(240, 240, 240)); // ����ż���е�ɫ
+		       setBackground(new Color(240,240,240)); 
 		      return super.getTableCellRendererComponent(table, value,
 		        isSelected, hasFocus, row, column);
 		     }
@@ -150,4 +178,21 @@ public class MyTable extends JPanel{
 		    ex.printStackTrace();
 		   }
 		}
+	/**
+	 * 设置列宽
+	 */
+	public void setColumn(int[] nums){
+		for(int i=0;i<nums.length;i++){
+			Table.getColumnModel().getColumn(i).setPreferredWidth(nums[i]);
+		}
+	}
+	/**
+	 * 设置行宽
+	 */
+	public void setRow(int num){
+		Table.setRowHeight(num);
+	}
+	public TableColumnModel getColumnModel(){
+		return Table.getColumnModel();
+	}
 }

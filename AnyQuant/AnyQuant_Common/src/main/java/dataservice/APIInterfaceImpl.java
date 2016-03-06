@@ -5,22 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.sql.Time;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
 
-import enumeration.Exchange;
-import enumeration.MyDate;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import po.StockCollectionPO;
 import po.StockPO;
 import util.MyTime;
+import enumeration.Exchange;
+import enumeration.MyDate;
 
 /**
  * API接口的实现类
@@ -126,35 +119,53 @@ public class APIInterfaceImpl implements APIInterface{
 	    ArrayList<String> stockCode = new  ArrayList<>();
 		for(int i=0;i<length;i++){
 			JSONObject tempJo = ja.getJSONObject(i);
+			
+			if(tempJo.getString("name").equals("sh000300")){
+				         continue;
+			}
 		    stockCode.add(tempJo.getString("name")) ;
-		  // System.out.println(tempJo.getString("name"));
+		   // System.out.println(tempJo.getString("name"));
 		}
 		return stockCode;
 	}
 
-
-	public List<StockPO> getStockMes(String stockCode) {
+  /**
+   * 获取指定代码的股票的最新数据
+   * 
+   */
+	public StockPO getStockMes(String stockCode) {
 		// TODO Auto-generated method stub
-		return getStockMes(stockCode, MyTime.getToDay(),MyTime.getToDay());
+		
+        return  getStockMes(stockCode, MyTime.getAnotherDay(-2), MyTime.getToDay()).get(0);
+  
 	}
 	
-
+	  /**
+	   * 根据日期获取指定代码的股票的数据
+	   * 
+	   */
 	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end) {
 		// TODO Auto-generated method stub
 		String labels = "open+close+high+low+volume+turnover+pb";
-		String startTime = start.DateToString();
+	    MyDate  preStart = MyTime.getAnotherDay(start, -1);
+		String startTime = preStart.DateToString();
 		String endTime = end.DateToString();
 		String url = "http://121.41.106.89:8010/api/stock/"+stockCode+"/?start="+startTime +"&end="+endTime+"&fields="+labels ;
-		//System.out.println(SendGET(url, ""));
-		String result="";
+	    System.out.println(SendGET(url, ""));
 		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
 		JSONObject data = jo.getJSONObject("data");
-		
-		Map<String, Class> classMap = new HashMap<String, Class>();
-		classMap.put("trading_info", StockPO.class);
-		StockCollectionPO   stockCollection  =  (StockCollectionPO)  
-				JSONObject.toBean(data,StockCollectionPO.class , classMap);
-	    return stockCollection.getTrading_info();
+		JSONArray trading_info = data.getJSONArray("trading_info");
+		List<StockPO> stocks =  new  ArrayList<>();
+		for(int i=0;i<trading_info.size();i++){
+			StockPO stock  = MyJSONObject.toBean(trading_info.getJSONObject(i), StockPO.class);
+			stocks.add(stock);
+		}
+		for(int i=1;i<stocks.size();i++){
+			stocks.get(i).setPreClose( stocks.get(i-1).getClose() );
+			stocks.get(i).computeAmplitude();
+		}
+        stocks.remove(0);
+	    return   stocks;
 		
 	}
 

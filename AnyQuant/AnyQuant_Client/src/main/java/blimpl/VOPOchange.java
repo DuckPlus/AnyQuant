@@ -1,10 +1,12 @@
 package blimpl;
 
 
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+
+import po.StockPO;
+import vo.StockVO;
 
 /** 
  * @author ymc 
@@ -335,8 +337,10 @@ public class VOPOchange {
 //		System.out.println(vo1.ID+" "+vo1.IDcard+" "+vo1.licenseYear+" "+vo1.name);
 //		DriverPO po1 = (DriverPO) VOtoPO(vo1);
 //		System.out.println(po1.getID()+" "+po1.getIDcard()+" "+po1.getLicenseYear()+" "+po1.getName());
-		
-		
+		StockVO vo = new StockVO("22" , "22" , null, 22.1 , 3.2 , 2.5 , 4,3, 2000 , 0,5 ,0,3,0, 0);
+		StockPO po = (StockPO) VOPOchange.VOtoPO(vo);
+		StockVO anvo = (StockVO) VOPOchange.POtoVO(po);
+		System.out.println(anvo.high);
 
 	}
 

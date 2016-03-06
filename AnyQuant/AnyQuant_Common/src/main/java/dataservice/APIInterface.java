@@ -1,12 +1,9 @@
 package dataservice;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import po.StockPO;
 import enumeration.Exchange;
 import enumeration.MyDate;
-import enumeration.Stock_Attribute;
 /**
  * API接口定义
  * @author ss,czq
@@ -44,7 +41,7 @@ public interface APIInterface {
     * @param stockCode
     * @return
     */
-	public List<StockPO> getStockMes(String stockCode);
+	public StockPO getStockMes(String stockCode);
 	/**
 	 * 增加了时间限制
 	 * @param stockCode
