@@ -44,7 +44,7 @@ public class APIBlImpl implements APIBlservice {
 	 */
 	private APIBlImpl() {
 		APIDataSer = APIDataFactory.getAPIDataService();
-		List<String> stocksCode = APIDataSer.getAllStocks();
+		List<StockPO> stocksCode = APIDataSer.getAllStockMes();
 		stockMap = new TreeMap<String, StockVO>();
 		List<String> benchCodes = APIDataSer.getAllBenchMarks();
 		
@@ -58,13 +58,8 @@ public class APIBlImpl implements APIBlservice {
 		System.out.println("股票数量："+stocksCode.size());
 		int count = 0;
 		stocks = new ArrayList<StockVO>(stocksCode.size());
-		for (String string : stocksCode) {
-			stockMap.put(string, (StockVO) VOPOchange.POtoVO(APIDataSer.getStockMes(string)));
-
-			if(count > 100){
-				break;
-			}
-			count ++;
+		for(StockPO po : stocksCode){
+			stockMap.put(po.getCode(), (StockVO) VOPOchange.POtoVO(po));
 		}
 		stocks = new ArrayList<StockVO>(stockMap.values());
 		
