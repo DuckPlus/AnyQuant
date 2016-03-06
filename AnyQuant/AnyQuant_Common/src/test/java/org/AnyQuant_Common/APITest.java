@@ -5,6 +5,7 @@ package org.AnyQuant_Common;
 import java.util.ArrayList;
 import java.util.List;
 
+import dataservice.APIDataFactory;
 import dataservice.APIInterface;
 import dataservice.APIInterfaceImpl;
 import enumeration.Exchange;
@@ -17,40 +18,31 @@ import po.StockPO;
 
 public class APITest extends TestCase {
          public static void main(String a[]){
-        	  //  getAllstocksMessage();
+        	    getAllstocksMessage();
         	 //getBenchMes();
-        	 getStockCodes();
+        	// getStockCodes();
         	 
          }
          public  static void getAllstocksMessage(){
         	 APIInterface api = new APIInterfaceImpl();
         	 MyDate start = new MyDate(2016, 3, 3);
         	 MyDate end = new MyDate(2016, 3, 6);
-//        	 List<String>  stockCodes = api.getAllStocks();
-//        	  for(int i=0;i<stockCodes.size();i++){
-//        		    System.out.println(stockCodes.get(i)+"------------------------------");
-//        		    List<StockPO> stockMess = api.getStockMes(stockCodes.get(i), start, end);
-//        		    for (StockPO temp : stockMess){
-//           		            System.out.println
-//           		               (temp.getDate()+"||"+temp.getOpen()+"|| "+temp.getClose()+" ||"+temp.getHigh());
-//                    }
-//             }
         	List<StockPO>  stocks =  api.getStockMes("sh600126",start,end);
         	//  api.getStockMes("sh600126");
         	for(StockPO stock : stocks){
-     
+               System.out.println(stock.toString());
         	
   //      	System.out.println("name: "+stock.getName());
-        	System.out.print("code: "+stock.getCode()+" ");
-        	System.out.print("open: "+stock.getOpen()+" ");
-          	System.out.print("close: "+stock.getClose()+" ");
-          	System.out.print("preClose:"+stock.getPreClose()+" ");
-          	System.out.print("high: "+stock.getHigh()+" ");
-          	System.out.print("low: "+stock.getLow()+" ");
-        	System.out.print("changeRate: "+stock.getChangeRate()+" ");
-        	System.out.print("amp: "+stock.getAmplitude()+" ");	
-        	System.out.println("turnover: "+stock.getTurnover()+" ");
-        	System.out.print("date: "+stock.getDate()+'\n');
+//        	System.out.print("code: "+stock.getCode()+" ");
+//        	System.out.print("open: "+stock.getOpen()+" ");
+//          	System.out.print("close: "+stock.getClose()+" ");
+//          	System.out.print("preClose:"+stock.getPreClose()+" ");
+//          	System.out.print("high: "+stock.getHigh()+" ");
+//          	System.out.print("low: "+stock.getLow()+" ");
+//        	System.out.print("changeRate: "+stock.getChangeRate()+" ");
+//        	System.out.print("amp: "+stock.getAmplitude()+" ");	
+//        	System.out.println("turnover: "+stock.getTurnover()+" ");
+//        	System.out.print("date: "+stock.getDate()+'\n');
         	}
          }
 
@@ -73,10 +65,14 @@ public class APITest extends TestCase {
          }
          
          public static void getStockCodes(){
-        	 APIInterface api = new APIInterfaceImpl();
-        	 List<String > codes =   api.getAllStocks(2014);
-        	 for(String temp : codes ){
-        		 System.out.println(temp);
+        	 APIInterface api = new APIDataFactory().getAPIDataService();
+        	 List<String > codes = api.getAllStocks();
+        	 if(codes!=null){
+        	   for(String temp : codes ){
+        		   System.out.println(temp);
+        	   }
+        	 }else{
+        		 System.out.println("null");
         	 }
          }
 }
