@@ -5,6 +5,7 @@ package org.AnyQuant_Common;
 import java.util.ArrayList;
 import java.util.List;
 
+import dataservice.APIDataFactory;
 import dataservice.APIInterface;
 import dataservice.APIInterfaceImpl;
 import enumeration.Exchange;
@@ -73,10 +74,14 @@ public class APITest extends TestCase {
          }
          
          public static void getStockCodes(){
-        	 APIInterface api = new APIInterfaceImpl();
-        	 List<String > codes =   api.getAllStocks(2014);
-        	 for(String temp : codes ){
-        		 System.out.println(temp);
+        	 APIInterface api = new APIDataFactory().getAPIDataService();
+        	 List<String > codes = api.getAllStocks();
+        	 if(codes!=null){
+        	   for(String temp : codes ){
+        		   System.out.println(temp);
+        	   }
+        	 }else{
+        		 System.out.println("null");
         	 }
          }
 }
