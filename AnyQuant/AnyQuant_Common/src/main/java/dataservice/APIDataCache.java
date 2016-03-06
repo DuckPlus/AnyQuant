@@ -1,6 +1,5 @@
 package dataservice;
 
-import java.awt.Button;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -8,14 +7,20 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import enumeration.Exchange;
 import enumeration.MyDate;
 import po.BenchMarkPO;
 import po.StockPO;
+import util.MyTime;
 
 /**
  *这个类在逻辑层和数据层交互时可以起到缓冲作用
@@ -31,6 +36,8 @@ public class APIDataCache implements APIInterface{
     
     public  APIDataCache(APIInterface api) {
 		  this.api = api;
+		  getAllStocks();
+		  updateAllMes();
 	}
     
 	@Override
@@ -145,7 +152,7 @@ public class APIDataCache implements APIInterface{
                      InputStreamReader read = new InputStreamReader(
                                                                     new FileInputStream(file),encoding);//考虑到编码格式
                      BufferedReader bufferedReader = new BufferedReader(read);
-                     String temp="";
+                     String temp=bufferedReader.readLine();
                      String [] attrs = null;
                      List<StockPO> result = new ArrayList<StockPO>();
                      
@@ -162,11 +169,12 @@ public class APIDataCache implements APIInterface{
                       System.out.println("找不到指定的文件,创建新文件");
                       List<StockPO> result =    new ArrayList<>();
                       List<String> stockCodes = getAllStocks();
-                 
+                     int i = 0;
                       for(String code : stockCodes){
-                    	  
+                    	    if(i<5){
                     	         result .add(api.getStockMes(code));
-                    	
+                    	    }
+                    	    i++;
                     
                       }
                       writeAllMes(result);
@@ -189,8 +197,10 @@ public class APIDataCache implements APIInterface{
 	         }
 
 	         //true = append file
-	         FileWriter fileWritter = new FileWriter(file,true);
+	         FileWriter fileWritter = new FileWriter(file,false);
 	         BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+	         //开头记录日期
+	         bufferWritter.write(stocks.get(0).getDate()+'\n');
 	         for(StockPO stock: stocks){
 	        	    String temp = stock.MyToString(',')+'\n';
 	        	    System.out.println("write: "+temp);
@@ -202,6 +212,84 @@ public class APIDataCache implements APIInterface{
 	            e.printStackTrace();
 	    }		    
 	}
+	
+	
+	//每次启动应该调用此方法来更新当日数据
+	private void updateAllMes(){
+		try{
+			
+			 String encoding="utf-8";
+             String filePath = fileName2;
+             File file=new File(filePath);
+             if(file.isFile() && file.exists()){ //判断文件是否存在
+            	      //先读取第一行
+                      InputStreamReader read = new InputStreamReader(
+                                                                     new FileInputStream(file),encoding);//考虑到编码格式
+                      BufferedReader bufferedReader = new BufferedReader(read);
+                      String preDate = bufferedReader.readLine();
+                      read.close();
+                      //判断是否需要更新
+                      if(needUpdate(preDate)){
+                    	  System.out.println("更新stockMes.txt---------");
+                    	  List<StockPO> result =    new ArrayList<>();
+                          List<String> stockCodes = getAllStocks();
+                     
+                          for(String code : stockCodes){
+                        	         result .add(api.getStockMes(code));
+                          }
+                          //覆盖写入
+                          writeAllMes(result);
+                      }else{
+                    	  System.out.println("不需要更新文件");
+                      }
+                
+             }else{
+            	 
+                       System.out.println("找不到指定的文件,创建新文件");
+                 	   List<StockPO> result =    new ArrayList<>();
+                       List<String> stockCodes = getAllStocks();
+                  
+                       for(String code : stockCodes){
+                     	         result .add(api.getStockMes(code));
+                       }
+                       //覆盖写入
+                       writeAllMes(result);
+             }
+	        
+	    }catch(IOException e){
+	            e.printStackTrace();
+	    }		    
+	}
+	
+	
+	private boolean needUpdate(String preDate){
+		//如果当天日期与上次纪录不符并且当天不是周末
+		String today = MyTime.getToDay().DateToString();
+		if(!preDate.equals(today)&& !isWeekend(today)){
+			   return true ;
+		}
+		return false;
+	}
+	
+	private  boolean isWeekend (String bDate){
+		DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");        
+		Date bdate;
+		try {
+			bdate = format1.parse(bDate);
+			Calendar cal = Calendar.getInstance();
+		    cal.setTime(bdate);
+		    if(cal.get(Calendar.DAY_OF_WEEK)==Calendar.SATURDAY||
+		    		cal.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY){
+		      return true;
+		    }
+		     return false;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		    return false;
+	}
+
 
 	@Override
 	public List<String> getAllBenchMarks() {
