@@ -66,11 +66,7 @@ public class APIBlImplTest extends TestCase {
 		}
 		
 	}
-//		
-//		
-//		
-//		
-//	}
+
 
 	public void testGetSortStocksInScope() {
 		
