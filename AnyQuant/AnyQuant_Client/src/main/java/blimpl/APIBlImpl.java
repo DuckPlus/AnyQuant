@@ -37,7 +37,7 @@ public class APIBlImpl implements APIBlservice {
 	 */
 	private List<BenchMarkVO> benchMarkVOs;
 	
-	/**
+	/*
 	 * 为了加快测试速度，在开发阶段只引入100只股票
 	 */
 	private APIBlImpl() {
