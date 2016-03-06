@@ -11,12 +11,14 @@ import enumeration.Exchange;
 import enumeration.MyDate;
 import enumeration.Stock_Attribute;
 import junit.framework.TestCase;
+import po.BenchMarkPO;
 import po.StockPO;
 
 
 public class APITest extends TestCase {
          public static void main(String a[]){
-        	    getAllstocksMessage();
+        	   // getAllstocksMessage();
+        	 getBenchMes();
          }
          public  static void getAllstocksMessage(){
         	 APIInterface api = new APIInterfaceImpl();
@@ -48,5 +50,24 @@ public class APITest extends TestCase {
         	System.out.print("date: "+stock.getDate()+'\n');
         	}
          }
+
+         public static void getBenchMes(){
+        	 APIInterface api = new APIInterfaceImpl();
+        	 MyDate start = new MyDate(2015, 3, 2);
+        	 MyDate end = new MyDate(2016, 3, 3);
+        	 List<BenchMarkPO> benchs = api.getBenchMes("hs300", start, end);
+        	 for(BenchMarkPO stock : benchs){
+        		            System.out.print("date: "+stock.getDate()+" ");
+        		        	System.out.print("code: "+stock.getCode()+" ");
+        		        	System.out.print("open: "+stock.getOpen()+" ");
+        		          	System.out.print("close: "+stock.getClose()+" ");
+        		          	System.out.print("high: "+stock.getHigh()+" ");
+        		          	System.out.print("low: "+stock.getLow()+" ");
+        		          	System.out.print("adj_price: "+stock.getAdj_price()+'\n');
+        		        	
+        		 }
+        		        
+         }
+
 }
 
