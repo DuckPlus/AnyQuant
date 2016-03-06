@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import po.BenchMarkPO;
 import po.StockPO;
 import util.MyTime;
 import vo.BenchMarkVO;
@@ -43,30 +44,39 @@ public class APIBlImpl implements APIBlservice {
 	private APIBlImpl() {
 		APIDataSer = new APIInterfaceImpl();
 		List<String> stocksCode = APIDataSer.getAllStocks();
-		System.out.println("-----------");
-		stocks = new ArrayList<StockVO>(stocksCode.size());
-//		benchMarkVOs = APIDataSer.
-//		benchMarkVOs = APIDataSer
+		stockMap = new TreeMap<String, StockVO>();
+		List<String> benchCodes = APIDataSer.getAllBenchMarks();
+		
+		
+		System.out.println("Reading Data-----------");
+		
 		/*
 		 * 使用TreeMap支持自动排序
 		 */
-		stockMap = new TreeMap<String, StockVO>();
-		System.out.println(stocksCode.size());
+		
+		System.out.println("股票数量："+stocksCode.size());
 		int count = 0;
+		stocks = new ArrayList<StockVO>(stocksCode.size());
 		for (String string : stocksCode) {
-//			System.out.println(string);
-//			System.out.println(APIDataSer.getStockMes(string));
-//			System.out.println(APIDataSer.getStockMes(string).getHigh());
-			StockVO tmp =  (StockVO) VOPOchange.POtoVO(APIDataSer.getStockMes(string));
-			stockMap.put(string, tmp);
-			
+			stockMap.put(string, (StockVO) VOPOchange.POtoVO(APIDataSer.getStockMes(string)));
+
 			if(count > 100){
 				break;
 			}
 			count ++;
 		}
-		
 		stocks = new ArrayList<StockVO>(stockMap.values());
+		
+//		for (String string : benchCodes) {
+//			benchMarkVOs.add( (BenchMarkVO) VOPOchange.POtoVO(APIDataSer.getBenchMes(string)));
+//		}
+		
+		
+		
+		
+		
+		System.out.println("Reading Finish-----------");
+		
 		
 	}
 	
@@ -99,11 +109,7 @@ public class APIBlImpl implements APIBlservice {
 		return StockSortHelper.sortStocks(stocks, attr, isUp);
 	}
 
-	@Override
-	public Iterator<BenchMarkVO> getAllBenchMarks() {
-		// TODO Auto-generated methsod stub
-		return null;
-	}
+	
 
 	@Override
 	public Iterator<StockVO> getRecentStocks(String stockCode) {
@@ -140,18 +146,32 @@ public class APIBlImpl implements APIBlservice {
 		
 		return result.iterator();
 	}
-
+	
+	@Override
+	public Iterator<BenchMarkVO> getAllBenchMarks() {
+		
+		return benchMarkVOs.iterator();
+	}
+	
+	
 	@Override
 	public Iterator<BenchMarkVO> getRecentBenchMarks(String BenchMarkCode) {
-		// TODO Auto-generated method stub
-		return null;
+		return getBenchMarkByTime(BenchMarkCode, MyTime.getAnotherDay(-30), MyTime.getToDay());
 	}
 
 	@Override
 	public Iterator<BenchMarkVO> getBenchMarkByTime(String BenchMarkCode,
 			MyDate start, MyDate end) {
-		// TODO Auto-generated method stub
-		return null;
+		List<BenchMarkPO> pos = APIDataSer.getBenchMes(BenchMarkCode, start, end);
+		if(pos != null){
+			List<BenchMarkVO> result = new ArrayList<BenchMarkVO>(pos.size());
+			for (BenchMarkVO benchMarkVO : result) {
+				result.add((BenchMarkVO) VOPOchange.POtoVO(benchMarkVO));
+			}
+			return result.iterator();
+		}else{
+			return null;
+		}
 	}
 
 	

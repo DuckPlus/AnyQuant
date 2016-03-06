@@ -170,6 +170,13 @@ public class APIInterfaceImpl implements APIInterface{
 	    return   stocks;
 		
 	}
+	
+	@Override
+	public List<StockPO> getAllStockMes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	@Override
 	public BenchMarkPO getBenchMes(String benchCode) {
 		
@@ -194,6 +201,12 @@ public class APIInterfaceImpl implements APIInterface{
 		
 		return benchs;
 	}
+	@Override
+	public List<String> getAllBenchMarks() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }

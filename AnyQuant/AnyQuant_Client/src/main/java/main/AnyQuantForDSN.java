@@ -1,6 +1,9 @@
 package main;
 
 import java.awt.EventQueue;
+import java.util.Properties;
+
+import javax.swing.UIManager;
 
 import ui.config.ParseXML;
 import ui.guideui.MainFrame;
@@ -14,7 +17,15 @@ public class AnyQuantForDSN {
 	
 	public AnyQuantForDSN() {
 		try {
+			Object temp = UIManager.getDefaults().get("RootPaneUI");
 			org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
+
+			Properties prop = System.getProperties();
+			if (prop.getProperty("os.name").contains("Mac")) {
+				UIManager.put("RootPaneUI", temp);
+			} else {
+				UIManager.put("RootPaneUI", null);
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
