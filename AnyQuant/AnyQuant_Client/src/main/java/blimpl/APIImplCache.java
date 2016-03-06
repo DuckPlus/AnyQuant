@@ -7,21 +7,22 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import po.StockPO;
+import dataservice.APIInterface;
+import dataservice.APIInterfaceImpl;
 import util.MyTime;
 import vo.BenchMarkVO;
 import vo.StockVO;
-import blservice.APIBlservice;
-import dataservice.APIInterface;
-import dataservice.APIInterfaceImpl;
 import enumeration.MyDate;
 import enumeration.Stock_Attribute;
+import blservice.APIBlservice;
 
 /**
- * API逻辑层实现
+ *
  * @author czq
- * @date 2016年3月4日
+ * @date 2016年3月6日
  */
-public class APIBlImpl implements APIBlservice {
+public class APIImplCache implements APIBlservice {
+
 	/**
 	 * 单例模式
 	 */
@@ -40,10 +41,9 @@ public class APIBlImpl implements APIBlservice {
 	/*
 	 * 为了加快测试速度，在开发阶段只引入100只股票
 	 */
-	private APIBlImpl() {
+	private APIImplCache() {
 		APIDataSer = new APIInterfaceImpl();
 		List<String> stocksCode = APIDataSer.getAllStocks();
-		System.out.println("-----------");
 		stocks = new ArrayList<StockVO>(stocksCode.size());
 //		benchMarkVOs = APIDataSer.
 //		benchMarkVOs = APIDataSer
@@ -60,6 +60,9 @@ public class APIBlImpl implements APIBlservice {
 			StockVO tmp =  (StockVO) VOPOchange.POtoVO(APIDataSer.getStockMes(string));
 			stockMap.put(string, tmp);
 			count ++;
+			if(count > 100){
+				break;
+			}
 		}
 		
 		stocks = new ArrayList<StockVO>(stockMap.values());
@@ -68,7 +71,7 @@ public class APIBlImpl implements APIBlservice {
 	
 	public static APIBlservice getAPIBLService(){
 		if(APIBlservice == null){
-			APIBlservice = new APIBlImpl();
+			APIBlservice = new APIImplCache();
 		}
 		return APIBlservice;
 	}
@@ -150,11 +153,5 @@ public class APIBlImpl implements APIBlservice {
 		return null;
 	}
 
-	
-	
-	
-	
-	
-	
 
 }

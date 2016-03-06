@@ -25,6 +25,7 @@
 	<classpathentry kind="lib" path="library/SwingSets3(BeautyEyeLNFDemo).jar"/>
 	<classpathentry kind="lib" path="library/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="library/jython-standalone-2.7.0.jar"/>
+	<classpathentry kind="lib" path="library/DatePicker-V0.99-2006.09.01.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
