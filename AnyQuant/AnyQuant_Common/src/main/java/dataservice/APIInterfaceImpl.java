@@ -136,7 +136,6 @@ public class APIInterfaceImpl implements APIInterface{
    */
 	public StockPO getStockMes(String stockCode) {
 		
-		
         return  getStockMes(stockCode, MyTime.getAnotherDay(-2), MyTime.getToDay()).get(0);
   
 	}
@@ -182,6 +181,7 @@ public class APIInterfaceImpl implements APIInterface{
 		
 		return null;
 	}
+	
 	@Override
 	public List<BenchMarkPO> getBenchMes(String benchCode, MyDate start, MyDate end) {
 		String labels = "open+close+high+low+volume+adj_price";
@@ -201,10 +201,14 @@ public class APIInterfaceImpl implements APIInterface{
 		
 		return benchs;
 	}
+	
+	
 	@Override
 	public List<String> getAllBenchMarks() {
-		// TODO Auto-generated method stub
-		return null;
+		
+				List <String> list =  new ArrayList<>();
+				list.add("hs300");
+				return list;
 	}
 
 

@@ -47,31 +47,31 @@ public class APIDataCache implements APIInterface{
 	@Override
 	public List<String> getAllStocks(int year) {
 		// TODO Auto-generated method stub
-		return null;
+		return api.getAllStocks(year);
 	}
 
 	@Override
 	public List<String> getAllStocks(Exchange exchange) {
 		// TODO Auto-generated method stub
-		return null;
+		return api.getAllStocks(exchange);
 	}
 
 	@Override
 	public List<String> getAllStocks(int year, Exchange exchange) {
 		// TODO Auto-generated method stub
-		return null;
+		return api.getAllStocks(year, exchange);
 	}
 
 	@Override
 	public StockPO getStockMes(String stockCode) {
 		// TODO Auto-generated method stub
-		return  null;
+		return  api.getStockMes(stockCode);
 	}
 
 	@Override
 	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end) {
 		// TODO Auto-generated method stub
-		return   null;
+		return   api.getStockMes(stockCode, start, end);
 	}
 	
 	@Override
@@ -83,13 +83,13 @@ public class APIDataCache implements APIInterface{
 	@Override
 	public BenchMarkPO getBenchMes(String benchCode) {
 		// TODO Auto-generated method stub
-		return null;
+		return api.getBenchMes(benchCode);
 	}
 
 	@Override
 	public List<BenchMarkPO> getBenchMes(String benchCode, MyDate start, MyDate end) {
 		// TODO Auto-generated method stub
-		return null;
+		return api.getBenchMes(benchCode, start, end);
 	}
 	
 	
@@ -292,10 +292,7 @@ public class APIDataCache implements APIInterface{
 
 	@Override
 	public List<String> getAllBenchMarks() {
-		// TODO Auto-generated method stub
-		List <String> list =  new ArrayList<>();
-		list.add("hs300");
-		return list;
+		return api.getAllBenchMarks();
 	}
 
 
