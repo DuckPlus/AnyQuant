@@ -1,9 +1,6 @@
 package ui.listui;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
@@ -16,13 +13,13 @@ import javax.swing.text.Document;
 
 import org.dom4j.Element;
 
-import blimpl.APIBlImpl;
-import blservice.APIBlservice;
 import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
 import ui.tool.MyTable;
 import ui.tool.MyTextField;
 import vo.StockVO;
+import blimpl.APIBlImpl;
+import blservice.APIBlservice;
 
 /**
  * 股票列表
@@ -37,8 +34,9 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 	APIBlservice apiBl;// = APIBlImpl.getAPIBLService();
 	public StockListPanel(Element config) {
 		super(config);
-//		initBl();
-		initOtherCompoment(config.element("stocklistTable"));
+
+		initBl();
+		initTable(config.element("stocklistTable"));
 		initTextFields(config.element("stockCodeInput"));
 		initButtons(config);
 		addListener();
@@ -81,7 +79,7 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 	}
 
 	@Override
-	protected void initOtherCompoment(Element e) {
+	protected void initTable(Element e) {
 		Vector<String> vhead = new Vector<String>();
 		vhead.add("股票名称");
 		vhead.add("股票代码");
@@ -130,7 +128,7 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 		doc.addDocumentListener(this);
 	}
 	private void initBl(){
-		apiBl = APIBlImpl.getAPIBLService();
+		apiBl =APIBlImpl.getAPIBLService();
 	}
 	private void searchStock(String input){
 		stocklistTable.removeAllItem();
