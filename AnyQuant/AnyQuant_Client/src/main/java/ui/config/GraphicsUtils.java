@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
@@ -21,39 +23,24 @@ public class GraphicsUtils {
 //	/**
 //	 * 用来存储一组按钮的图片，这组图片可以被反复使用，只需要在xml文件中注明类型即可
 //	 */
-//	private static Map<String, ButtonOrLabelPicture> labelPictureMap = new HashMap<String, ButtonOrLabelPicture>(30);
+	private static Map<String, ButtonOrLabelPicture> labelPictureMap = new HashMap<String, ButtonOrLabelPicture>(30);
 //	
 //	
-//	static{
-//		labelPictureMap.put("rectangle", new ButtonOrLabelPicture("element//rectangle", "element//rectangle-enter", "element//rectangle-clicked"));
-//		/**
-//		 * 日历图
-//		 */
-//		labelPictureMap.put("calendar", new ButtonOrLabelPicture("element//calendar", "element//calendar-enter", "element//calendar-clicked"));
-//		
-//		labelPictureMap.put("confirm", new ButtonOrLabelPicture("element//confirm", "element//confirm-enter", "element//confirm-clicked"));
-//		
-//		labelPictureMap.put("cancel", new ButtonOrLabelPicture("element//cancel", "element//cancel-enter", "element//cancel-clicked"));
-//
-//		labelPictureMap.put("add", new ButtonOrLabelPicture("element//add","element//add-enter","element//add-clicked"));
-//		
-//		labelPictureMap.put("delete", new ButtonOrLabelPicture("element//delete","element//delete-enter","element//delete-clicked"));
-//		
-//		labelPictureMap.put("modify", new ButtonOrLabelPicture("element//modify","element//modify-enter","element//modify-clicked"));
-//		
-//		labelPictureMap.put("back", new ButtonOrLabelPicture("element//back","element//back-enter","element//back-clicked"));
-//		
-//		labelPictureMap.put("other", new ButtonOrLabelPicture("element//other","element//other-enter","element//other-clicked"));
-//	}
-//	
-//	public static final ButtonOrLabelPicture getButtonLabelPic(String type){
-//		ButtonOrLabelPicture pics  = labelPictureMap.get(type);
-//		if(pics == null){
-//			return labelPictureMap.get("rectangle");
-//		}
-//		return pics;
-//		
-//	}
+	static{
+		/**
+		 * 日历图
+		 */
+		labelPictureMap.put("calendar", new ButtonOrLabelPicture("element//calendar", "element//calendar-enter", "element//calendar-clicked"));
+	}
+	
+	public static final ButtonOrLabelPicture getButtonLabelPic(String type){
+		ButtonOrLabelPicture pics  = labelPictureMap.get(type);
+		if(pics == null){
+			return labelPictureMap.get("rectangle");
+		}
+		return pics;
+		
+	}
 	
 	
 		public static final Font getFont(Element config){

@@ -17,13 +17,15 @@ import po.StockPO;
 
 public class APITest extends TestCase {
          public static void main(String a[]){
-        	   // getAllstocksMessage();
-        	 getBenchMes();
+        	  //  getAllstocksMessage();
+        	 //getBenchMes();
+        	 getStockCodes();
+        	 
          }
          public  static void getAllstocksMessage(){
         	 APIInterface api = new APIInterfaceImpl();
-        	 MyDate start = new MyDate(2015, 3, 2);
-        	 MyDate end = new MyDate(2016, 3, 3);
+        	 MyDate start = new MyDate(2016, 3, 3);
+        	 MyDate end = new MyDate(2016, 3, 6);
 //        	 List<String>  stockCodes = api.getAllStocks();
 //        	  for(int i=0;i<stockCodes.size();i++){
 //        		    System.out.println(stockCodes.get(i)+"------------------------------");
@@ -47,6 +49,7 @@ public class APITest extends TestCase {
           	System.out.print("low: "+stock.getLow()+" ");
         	System.out.print("changeRate: "+stock.getChangeRate()+" ");
         	System.out.print("amp: "+stock.getAmplitude()+" ");	
+        	System.out.println("turnover: "+stock.getTurnover()+" ");
         	System.out.print("date: "+stock.getDate()+'\n');
         	}
          }
@@ -68,6 +71,12 @@ public class APITest extends TestCase {
         		 }
         		        
          }
-
+         
+         public static void getStockCodes(){
+        	 APIInterface api = new APIInterfaceImpl();
+        	 List<String > codes =   api.getAllStocks(2014);
+        	 for(String temp : codes ){
+        		 System.out.println(temp);
+        	 }
+         }
 }
-

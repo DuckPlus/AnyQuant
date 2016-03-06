@@ -98,7 +98,7 @@ public class APIBlImplTest extends TestCase {
 //	}
 
 	public void testGetStocksByStockCode() {
-		/*测试通过股票代码获得相关股票*/
+		System.out.println("测试通过股票代码获得相关股票");
 		Iterator<StockVO> vos = api.getStocksByStockCode("600");
 		while(vos.hasNext()){
 			StockVO vo = vos.next();
