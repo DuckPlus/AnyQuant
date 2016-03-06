@@ -158,6 +158,7 @@ public class APIInterfaceImpl implements APIInterface{
 		List<StockPO> stocks =  new  ArrayList<>();
 		for(int i=0;i<trading_info.size();i++){
 			StockPO stock  = MyJSONObject.toBean(trading_info.getJSONObject(i), StockPO.class);
+			stock.setCode(stockCode);
 			stocks.add(stock);
 		}
 		for(int i=1;i<stocks.size();i++){

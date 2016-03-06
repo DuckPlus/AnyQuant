@@ -164,7 +164,6 @@ public class StockPO implements InitialBean {
 
 	public void  computeAmplitude(){
 		   double temp = Math.abs(high - low)/preClose;
-		   System.out.println("temp: "+temp);
 		   this.amplitude =    (int)(temp*10000)/10000.0;
 	}
 	
