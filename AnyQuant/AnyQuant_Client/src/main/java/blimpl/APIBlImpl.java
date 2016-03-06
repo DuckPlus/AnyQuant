@@ -59,6 +59,10 @@ public class APIBlImpl implements APIBlservice {
 //			System.out.println(APIDataSer.getStockMes(string).getHigh());
 			StockVO tmp =  (StockVO) VOPOchange.POtoVO(APIDataSer.getStockMes(string));
 			stockMap.put(string, tmp);
+			
+			if(count > 100){
+				break;
+			}
 			count ++;
 		}
 		

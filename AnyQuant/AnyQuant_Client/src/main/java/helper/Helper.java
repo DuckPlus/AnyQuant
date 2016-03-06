@@ -17,8 +17,6 @@ import java.util.List;
 import vo.StockVO;
 import blimpl.APIBlImpl;
 import blservice.APIBlservice;
-import dataservice.APIInterface;
-import dataservice.APIInterfaceImpl;
 import enumeration.CacheData;
 
 /**
@@ -51,7 +49,7 @@ public class Helper {
 		
 		
 		
-		
+		return null;
 		
 	}
 	/**
@@ -180,6 +178,6 @@ public class Helper {
 		}
 		
 		return document;
-	}//#close the method
+	}
 	
 }
