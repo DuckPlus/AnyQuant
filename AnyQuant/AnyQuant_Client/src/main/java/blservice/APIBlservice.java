@@ -20,7 +20,22 @@ public interface APIBlservice {
 	 * @return 股票集合的迭代器
 	 */
 	public Iterator<StockVO> getAllStocks();
-
+	
+	/**
+	 * 获得某只大盘最近一个月的所有数据
+	 * @param BenchMarkCode
+	 * @return  最近一个月数据集合的迭代器
+	 */
+	public Iterator<BenchMarkVO> getRecentBenchMarks(String BenchMarkCode);
+	/**
+	 * 获得某只大盘某段时间内的所有数据
+	 * @param BenchMarkCode
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public Iterator<BenchMarkVO> getBenchMarkByTime(String BenchMarkCode, MyDate start,
+			MyDate end);
 	/**
 	 * 
 	 * @param isUp 是否为升序
@@ -44,9 +59,6 @@ public interface APIBlservice {
 	 */
 	public Iterator<BenchMarkVO> getAllBenchMarks();
 
-	/**
-	 * 
-	 */
 	/**
 	 * 获得某只股票最近一个月的数据
 	 * @param stockCode
