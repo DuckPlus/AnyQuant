@@ -6,18 +6,58 @@
 		<BUTTONS>
 			<StockDetail text="股票详细信息" x="0" y="267" />
 			<StockList text="股票列表" x="0" y="317" />
-			<BenchMark text="大盘指数" x="0" y="367" />
+			<BenchMark text="大盘列表" x="0" y="367" />
 		</BUTTONS>
 		<guidePanel x="204" y="0" width="880" height="624">
 		</guidePanel>
-		<stockDetailPanel x="204" y="0" width="880" height="624">
+		<stockDetailPanel x="232" y="54" width="300" height="300">
+		     <BUTTONS>
+		        <search text="查询" x="700" y="24" height="53" width="53" clicked="element/sidebar-clicked" enter="element/sidebar-enter" normal="element/sidebar-now" />
+		     </BUTTONS>
+		     <TEXTFIELDS>
+		        <startDate 	x="450" y="30" width="100" height="30"/>	
+		        <endDate 	x="580" y="30" width="100" height="30"/>     
+		     </TEXTFIELDS>
+		     <Table x="90" y="130" width="700" height="300"/>
+		     <LABELS>
+		        <stockCode x="135" y="15" width="100" height="20" size="12"/>
+		        <stockName x="30" y="5" width="100" height="30"  size="25"/>
+		        <date_label x="372" y="30" width="100" height="20" />
+		        
+		       
+		        <stockPriceNow x="35" y="50" width="100" height="40" size="30" />
+		        <changeRate x="90" y="75" width="50" height="25" size="12"/>
+		      
+		      
+		        <historyData_label x="90" y="100" width="100" height="20"  />
+		       
+		        <todayData_label x="90" y="450" width="100" height="20" />
+		       
+		        <todayOpen_label x="160" y="480" width="100" height="25" size="20" />
+		        <todayOpen x="160" y="510" width="100" height="20" size="22"/>
+		       
+		        <yestodayClose_label x="270" y="480" width="100" height="25" size="20" />
+		        <yestodayClose x="270" y="510" width="100" height="20" size="22"/>
+		       
+		        <highest_label x="380" y="480" width="100" height="25" size="20"  />
+		        <highest x="380" y="510" width="100" height="20" size="22"/>
+		        <lowest_label x="490" y="480" width="100" height="25" size="20" />
+		        <lowest x="490" y="510" width="100" height="20" size="22"/>
+		        <deal_label x="600" y="480" width="100" height="25" size="20" />
+		        <deal x="600" y="510" width="100" height="25" size="22"/>
+		       
+
+		     </LABELS>
+		     
 		</stockDetailPanel>
 		<stockListPanel x="204" y="0" width="880" height="624">
 			<stocklistTable x="10" y="94" width="860" height="540"/>
 			<stockCodeInput x="10" y="30" width="300" height="35"/>
-			<searchBtn x="320" y="300" width="100" height ="30" normal="element//Btn" enter="element//Btn" clicked="element//Btn" text="查询股票"/>
+			<searchBtn x="320" y="30" width="100" height ="35" normal="element//Btn" enter="element//Btn" clicked="element//Btn" text="查询股票"/>
 		</stockListPanel>
 		<benchmarkPanel x="204" y="0" width="880" height="624">
+		
+		<benchmarklistTable x="10" y="94" width="860" height="540"/>
 		</benchmarkPanel>
 
 
