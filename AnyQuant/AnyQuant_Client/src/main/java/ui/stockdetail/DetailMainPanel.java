@@ -10,6 +10,7 @@ import java.util.Vector;
 import org.dom4j.Element;
 
 import ui.config.CompomentType;
+import ui.tool.MyDatePicker;
 import ui.tool.MyLabel;
 import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
@@ -31,7 +32,7 @@ public class DetailMainPanel extends MyPanel{
 
 	public DetailMainPanel(Element config) {
 		super(config);
-		ctr=MockAPIBlImpl.getAPIBLService();
+		ctr=APIBlImpl.getAPIBLService();
 		getStockInfo();
 		initComponent(config);
 		
@@ -49,13 +50,15 @@ public class DetailMainPanel extends MyPanel{
 	private void initComponent(Element config) {
 		initButtons(config.element(CompomentType.BUTTONS.name()));
 		initTextFields(config.element(CompomentType.TEXTFIELDS.name()));
-		initOtherCompoment(config.element("Table"));
+		initDatePicker(config.element("DatePicker"));
+		initTable(config.element("Table"));
 		//label必须在table后面初始化
 		initLabels(config.element(CompomentType.LABELS.name()));
 		addListener();
 		addComponent();
 	}
 
+	
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -110,9 +113,12 @@ public class DetailMainPanel extends MyPanel{
 			 changeRate_label.setForeground((new Color(255,0,0)));
 		 }
 	}
-
-	@Override
-	protected void initOtherCompoment(Element e) {
+	protected void initDatePicker(Element e) {
+		start_datePicker=new MyDatePicker(e);
+		end_datePicker=new MyDatePicker(e);
+		
+	}
+	protected void initTable(Element e) {
 		Vector<String> vhead = new Vector<String>();
 		vhead.add("日期");
 		vhead.add("开盘");
@@ -128,6 +134,7 @@ public class DetailMainPanel extends MyPanel{
 				Integer.valueOf(e.attributeValue("width")), 
 				Integer.valueOf(e.attributeValue("height")), vhead);
 		table.setColumn(new int[]{100,50,50,50,50,50,50,50,50});
+		
 		
 		refreshTable();
 		
@@ -165,6 +172,7 @@ public class DetailMainPanel extends MyPanel{
 
 	@Override
 	protected void addComponent() {
+		this.add(start_datePicker);
 		this.add(table);
 		this.add(search_btn);
 		this.add(stockCode_label);
@@ -181,8 +189,6 @@ public class DetailMainPanel extends MyPanel{
 		this.add(lowest_label);
 		this.add(deal_label);
 
-		this.add(startDate_txt);
-		this.add(endDate_txt);
 		this.add(todayOpen);
 		this.add(yestodayClose);
 		this.add(highest);
@@ -248,6 +254,7 @@ public class DetailMainPanel extends MyPanel{
 	                deal_label;
 	private MyLabel todayOpen,yestodayClose,highest,lowest,dealAmount;
 	private MyTextField startDate_txt,endDate_txt;
+	private MyDatePicker start_datePicker,end_datePicker;
 	private MyTable table;
 	private APIBlservice ctr;
 	private Iterator<StockVO> itr;

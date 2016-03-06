@@ -49,7 +49,7 @@ public abstract class MyPanel extends JPanel{
 	/**
 	 * 初始化其他组件
 	 */
-	protected abstract void initOtherCompoment(Element e);
+	protected abstract void initTable(Element e);
 	/**
 	 * 将组件加到面板上去
 	 */

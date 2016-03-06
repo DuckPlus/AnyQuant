@@ -10,7 +10,13 @@
 		</BUTTONS>
 		<guidePanel x="204" y="0" width="880" height="624">
 		</guidePanel>
-		<stockDetailPanel x="232" y="54" width="300" height="300">
+		
+		<stockListPanel x="204" y="0" width="880" height="624">
+			<stocklistTable x="10" y="94" width="860" height="540"/>
+			<stockCodeInput x="10" y="30" width="300" height="35"/>
+			<searchBtn x="320" y="30" width="100" height ="35" normal="element//Btn" enter="element//Btn" clicked="element//Btn" text="查询股票"/>
+	   
+	        <stockDetailPanel x="232" y="54" width="300" height="300">
 		     <BUTTONS>
 		        <search text="查询" x="700" y="24" height="53" width="53" clicked="element/sidebar-clicked" enter="element/sidebar-enter" normal="element/sidebar-now" />
 		     </BUTTONS>
@@ -45,15 +51,11 @@
 		        <lowest x="490" y="510" width="100" height="20" size="22"/>
 		        <deal_label x="600" y="480" width="100" height="25" size="20" />
 		        <deal x="600" y="510" width="100" height="25" size="22"/>
-		       
 
 		     </LABELS>
 		     
 		</stockDetailPanel>
-		<stockListPanel x="204" y="0" width="880" height="624">
-			<stocklistTable x="10" y="94" width="860" height="540"/>
-			<stockCodeInput x="10" y="30" width="300" height="35"/>
-			<searchBtn x="320" y="30" width="100" height ="35" normal="element//Btn" enter="element//Btn" clicked="element//Btn" text="查询股票"/>
+	
 		</stockListPanel>
 		<benchmarkPanel x="204" y="0" width="880" height="624">
 		

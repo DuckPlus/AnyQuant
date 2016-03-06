@@ -49,7 +49,7 @@ public class GuidePanel extends MyPanel{
 	}
 
 	@Override
-	protected void initOtherCompoment(Element e) {
+	protected void initTable(Element e) {
 		// TODO Auto-generated method stub
 		
 	}
