@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -15,10 +16,9 @@ import ui.tool.MyLabel;
 import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
 import ui.tool.MyTable;
-import ui.tool.MyTextField;
+import ui.tool.TipsDialog;
 import util.MyTime;
 import vo.StockVO;
-import blimpl.APIBlImpl;
 import blservice.APIBlservice;
 import enumeration.MyDate;
 
@@ -32,27 +32,20 @@ public class DetailMainPanel extends MyPanel{
 
 	public DetailMainPanel(Element config) {
 		super(config);
-		ctr=APIBlImpl.getAPIBLService();
-		getStockInfo();
+		ctr=MockAPIBlImpl.getAPIBLService();
 		initComponent(config);
 		
 	}
-	public DetailMainPanel(Element config,String stockCode,String stockName) {
-		super(config);
-		this.stockCode=stockCode;
-		this.stockName=stockName;
-		ctr=APIBlImpl.getAPIBLService();
-		getStockInfo();
-		initComponent(config);
-		
+	/**
+	 * 设置数据
+	 */
+	public void setData(String stockCode,String stock_name){
+		refreshStockInfo(stockCode, stock_name);
 	}
-	
 	private void initComponent(Element config) {
 		initButtons(config.element(CompomentType.BUTTONS.name()));
-		initTextFields(config.element(CompomentType.TEXTFIELDS.name()));
 		initDatePicker(config.element("DatePicker"));
 		initTable(config.element("Table"));
-		//label必须在table后面初始化
 		initLabels(config.element(CompomentType.LABELS.name()));
 		addListener();
 		addComponent();
@@ -70,23 +63,12 @@ public class DetailMainPanel extends MyPanel{
 	}
 	@Override
 	protected void initTextFields(Element e) {
-		 startDate_txt=new MyTextField(e.element("startDate"));
-		 endDate_txt=new MyTextField(e.element("endDate"));
 	}
 	@Override
 	protected void initLabels(Element e) {
-		stockPriceNow = Double.parseDouble(table.getValue(table.getRowCount()-1, 1));
-		todayOpen_num = Double.parseDouble(table.getValue(table.getRowCount()-1, 1));
-		//昨收
-		yestodayClose_num = Double.parseDouble(table.getValue(table.getRowCount()-2, 2));
-		highest_num =Double.parseDouble(table.getValue(table.getRowCount()-1, 3));
-		lowest_num = Double.parseDouble(table.getValue(table.getRowCount()-1, 4));
-		dealAmount_num =Double.parseDouble(table.getValue(table.getRowCount()-1, 5));
-		changeRate =Double.parseDouble(table.getValue(table.getRowCount()-1, 8));
-				
-		
 		stockCode_label=new MyLabel(e.element("stockCode"),stockCode);
 		stockName_label=new MyLabel(e.element("stockName"),stockName);
+		System.out.println("Code"+stockCode);
 		 date_label=new MyLabel(e.element("date_label"), "选择日期");
 		 stockPriceNow_label=new MyLabel(e.element("stockPriceNow"),stockPriceNow+"");
 		 changeRate_label=new MyLabel(e.element("changeRate"),changeRate+"%");
@@ -104,8 +86,10 @@ public class DetailMainPanel extends MyPanel{
 		 lowest=new MyLabel(e.element("lowest"),lowest_num+"");
 		 //TODO 单位转换
 		 dealAmount=new MyLabel(e.element("deal"),dealAmount_num+"");
-		 
-		 if(changeRate<=0){
+		 changeColor();
+	}
+	private void changeColor() {
+		if(changeRate<=0){
 			 stockPriceNow_label.setForeground((new Color(0,139,0)));
 			 changeRate_label.setForeground((new Color(0,139,0)));
 		 }else{
@@ -114,8 +98,8 @@ public class DetailMainPanel extends MyPanel{
 		 }
 	}
 	protected void initDatePicker(Element e) {
-		start_datePicker=new MyDatePicker(e);
-		end_datePicker=new MyDatePicker(e);
+		start_datePicker=new MyDatePicker(e.element("start"));
+		end_datePicker=new MyDatePicker(e.element("end"));
 		
 	}
 	protected void initTable(Element e) {
@@ -133,10 +117,7 @@ public class DetailMainPanel extends MyPanel{
 				Integer.valueOf(e.attributeValue("y")), 
 				Integer.valueOf(e.attributeValue("width")), 
 				Integer.valueOf(e.attributeValue("height")), vhead);
-		table.setColumn(new int[]{100,50,50,50,50,50,50,50,50});
-		
-		
-		refreshTable();
+		table.setColumn(new int[]{100,45,45,45,45,70,50,50,50});
 		
 	}
 	/**
@@ -155,8 +136,8 @@ public class DetailMainPanel extends MyPanel{
 			vd.add(vo.low+"");
 			vd.add(vo.volume+"");
 			vd.add(vo.turnover+"");
-			vd.add(vo.amplitude+"");
-			vd.add(vo.changeRate+"");
+			vd.add(df.format(vo.amplitude*100)+"%");
+			vd.add(df.format(vo.changeRate*100)+"%");
 			table.addRow(vd);
 //			if(vo.changeRate<=0){
 //				table.setRowColor(i,Color.green);
@@ -173,6 +154,7 @@ public class DetailMainPanel extends MyPanel{
 	@Override
 	protected void addComponent() {
 		this.add(start_datePicker);
+		this.add(end_datePicker);
 		this.add(table);
 		this.add(search_btn);
 		this.add(stockCode_label);
@@ -201,16 +183,11 @@ public class DetailMainPanel extends MyPanel{
 		search_btn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				setData("", "");
 				System.out.println("点击查询");
-				String[] startD=startDate_txt.getText().split("-");
-				String[] endD=endDate_txt.getText().split("-");
-				try{
-					startDate=new MyDate(Integer.parseInt(startD[0]), 
-							Integer.parseInt(startD[1]),
-							Integer.parseInt(startD[2]));
-					endDate=new MyDate(Integer.parseInt(endD[0]),
-							Integer.parseInt(endD[1]),
-					        Integer.parseInt(endD[2]));
+				System.out.println(start_datePicker.getDate());
+					startDate=start_datePicker.getDate();
+					endDate=end_datePicker.getDate();
 					System.out.println(startDate.DateToString()+" -- "+endDate.DateToString());
 					if(MyTime.ifEarlier(startDate, endDate)
 							||MyTime.ifSame(startDate, endDate)){
@@ -219,14 +196,7 @@ public class DetailMainPanel extends MyPanel{
 					}else {
 						feedBack("起止日期填反");
 					}
-				}catch(Exception exp){
-					feedBack("输入格式不正确");
-				}
-				
-				
 			}
-
-			
 		});
 	}
 	/**
@@ -234,18 +204,47 @@ public class DetailMainPanel extends MyPanel{
 	 * @param message
 	 */
 	private void feedBack(String message) {
-		//TODO
-		System.out.println(message);
+		new TipsDialog(message);
 	}
-	private void getStockInfo(){
-		stockCode = "sh600050";
+	private void refreshStockInfo(String stockCode,String stockName){
+		System.out.println("refreshStockInfo");
+		this.stockCode = stockCode;
+		this.stockName=stockName;
 		itr=ctr.getRecentStocks(stockCode);//今天是最后一个
-		//TODO code和name从上一界面获得
-		
-		stockName = "石化油服";
-		
+		//刷新表格数据
+		refreshTable();
+		// label上的数据
+		stockPriceNow = Double.parseDouble(table.getValue(
+				table.getRowCount() - 1, 1));
+		todayOpen_num = Double.parseDouble(table.getValue(
+				table.getRowCount() - 1, 1));
+		yestodayClose_num = Double.parseDouble(table.getValue(
+				table.getRowCount() - 2, 2));
+		highest_num = Double.parseDouble(table.getValue(
+				table.getRowCount() - 1, 3));
+		lowest_num = Double.parseDouble(table.getValue(table.getRowCount() - 1,
+				4));
+		dealAmount_num = Double.parseDouble(table.getValue(
+				table.getRowCount() - 1, 5));
+		String temp=table.getValue(table.getRowCount() - 1,8);
+		changeRate = Double.parseDouble(temp.substring(0, temp.length()-1))/100;
+		changeRate_str=temp;
+		refreshLabels();
+//		this.repaint();
 	}
-	private String stockCode,stockName;
+	private void refreshLabels() {
+		stockPriceNow_label.setText(stockPriceNow+"");
+		changeRate_label.setText(changeRate_str);
+		stockCode_label.setText(stockCode+"");
+		stockName_label.setText(stockName+"");
+		todayOpen.setText(todayOpen_num+"");
+		yestodayClose.setText(yestodayClose_num+"");
+		highest.setText(highest_num+"");
+		lowest.setText(lowest_num+"");
+		dealAmount.setText(dealAmount_num+"");
+		changeColor();
+	}
+	private String stockCode="sh600050",stockName,changeRate_str;
 	private MyDate startDate,endDate;
 	private double changeRate,stockPriceNow,todayOpen_num,yestodayClose_num,highest_num,lowest_num,dealAmount_num;
 	private MyPictureButton search_btn;
@@ -253,9 +252,9 @@ public class DetailMainPanel extends MyPanel{
 	                todayData_label,todayOpen_label,yestodayClose_label,highest_label,lowest_label,
 	                deal_label;
 	private MyLabel todayOpen,yestodayClose,highest,lowest,dealAmount;
-	private MyTextField startDate_txt,endDate_txt;
 	private MyDatePicker start_datePicker,end_datePicker;
 	private MyTable table;
 	private APIBlservice ctr;
 	private Iterator<StockVO> itr;
+	private static DecimalFormat   df   =new DecimalFormat("#.00");  
 }
