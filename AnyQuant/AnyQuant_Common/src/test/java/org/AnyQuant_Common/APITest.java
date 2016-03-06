@@ -35,7 +35,7 @@ public class APITest extends TestCase {
         	//  api.getStockMes("sh600126");
         	for(StockPO stock : stocks){
      
-        	System.out.println("date: "+stock.getDate());
+        	
   //      	System.out.println("name: "+stock.getName());
         	System.out.print("code: "+stock.getCode()+" ");
         	System.out.print("open: "+stock.getOpen()+" ");
@@ -45,6 +45,7 @@ public class APITest extends TestCase {
           	System.out.print("low: "+stock.getLow()+" ");
         	System.out.print("changeRate: "+stock.getChangeRate()+" ");
         	System.out.print("amp: "+stock.getAmplitude()+" ");	
+        	System.out.print("date: "+stock.getDate()+'\n');
         	}
          }
 }
