@@ -186,7 +186,6 @@ public class DetailMainPanel extends MyPanel{
 		search_btn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				setData("", "");
 				System.out.println("点击查询");
 				System.out.println(start_datePicker.getDate());
 					startDate=start_datePicker.getDate();
@@ -195,6 +194,7 @@ public class DetailMainPanel extends MyPanel{
 					if(MyTime.ifEarlier(startDate, endDate)
 							||MyTime.ifSame(startDate, endDate)){
 						itr=ctr.getStocksByTime(stockCode, startDate,endDate);
+						
 						refreshTable();
 					}else {
 						feedBack("起止日期填反");
