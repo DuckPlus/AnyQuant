@@ -43,9 +43,15 @@ public class APIBlImplTest extends TestCase {
 			System.out.println(stocksWithCode.next().code);
 		}
 		System.out.println("---------------------接下来是涨跌幅排序----------------");
+		double rate;
 		Iterator<StockVO> stocksWithZhangFU = api.getSortStocks(true, Stock_Attribute.changeRate);
 		while(stocksWithZhangFU.hasNext()){
-			System.out.println(stocksWithZhangFU.next().changeRate);
+			rate = stocksWithZhangFU.next().changeRate;
+			System.out.println(rate);
+			if(rate > 0.1){
+				System.err.println("该股票数据存在异常：涨跌幅大于10%");
+				System.out.println();
+			}
 		}
 		
 		System.out.println("---------------------接下来是振幅排序----------------");
@@ -67,14 +73,17 @@ public class APIBlImplTest extends TestCase {
 //		
 //	}
 
-//	public void testGetSortStocksInScope() {
-//		fail("Not yet implemented");
-//	}
-//
-//	public void testGetAllBenchMarks() {
-//		fail("Not yet implemented");
-//	}
-//
+	public void testGetSortStocksInScope() {
+		
+		//pass
+		
+	}
+
+	public void testGetAllBenchMarks() {
+		// TODO
+		fail("Not yet implemented");
+	}
+
 	public void testGetRecentStocks() {
 		Iterator<StockVO> vos = api.getRecentStocks("sh600791");
 		while(vos.hasNext()){
@@ -85,9 +94,9 @@ public class APIBlImplTest extends TestCase {
 		}
 	}
 
-	public void testGetStocksByTime() {
-		fail("Not yet implemented");
-	}
+//	public void testGetStocksByTime() {
+//		fail("Not yet implemented");
+//	}
 
 	public void testGetStocksByStockCode() {
 		/*测试通过股票代码获得相关股票*/

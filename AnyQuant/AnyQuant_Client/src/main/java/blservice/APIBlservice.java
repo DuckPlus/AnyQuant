@@ -45,9 +45,6 @@ public interface APIBlservice {
 	public Iterator<BenchMarkVO> getAllBenchMarks();
 
 	/**
-	 * 
-	 */
-	/**
 	 * 获得某只股票最近一个月的数据
 	 * @param stockCode
 	 * @return
