@@ -24,7 +24,7 @@ public interface APIBlservice {
 	/**
 	 * 获得某只大盘最近一个月的所有数据
 	 * @param BenchMarkCode
-	 * @return  最近一个月数据集合的迭代器
+	 * @return  最近一个月数据集合的迭代器,如果该大盘不存在，返回null
 	 */
 	public Iterator<BenchMarkVO> getRecentBenchMarks(String BenchMarkCode);
 	/**
@@ -32,7 +32,7 @@ public interface APIBlservice {
 	 * @param BenchMarkCode
 	 * @param start
 	 * @param end
-	 * @return
+	 * @return 如果该大盘不存在，返回null
 	 */
 	public Iterator<BenchMarkVO> getBenchMarkByTime(String BenchMarkCode, MyDate start,
 			MyDate end);
