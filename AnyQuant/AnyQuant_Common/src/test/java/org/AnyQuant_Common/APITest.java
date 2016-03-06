@@ -20,8 +20,8 @@ public class APITest extends TestCase {
          public static void main(String a[]){
         	  //  getAllstocksMessage();
         	 //getBenchMes();
-        	    getStockCode();
-        	// getAllMesByCache();
+        	   // getStockCode();
+        	 getAllMesByCache();
         	 
          }
          public  static void getAllstocksMessageByAPI(){
