@@ -31,6 +31,8 @@ public class GraphicsUtils {
 		 * 日历图
 		 */
 		labelPictureMap.put("calendar", new ButtonOrLabelPicture("element//calendar", "element//calendar-enter", "element//calendar-clicked"));
+		labelPictureMap.put("little_calendar", new ButtonOrLabelPicture("element//little_calendar", "element//little_calendar-enter", "element//little_calendar-clicked"));
+		
 	}
 	
 	public static final ButtonOrLabelPicture getButtonLabelPic(String type){

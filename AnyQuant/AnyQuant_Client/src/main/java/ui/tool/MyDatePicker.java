@@ -56,6 +56,9 @@ public class MyDatePicker extends JLabel {
 				Integer.parseInt(config.attributeValue("y")),
 				Integer.parseInt(config.attributeValue("width")),
 				Integer.parseInt(config.attributeValue("height")));
+		if (config.attributeValue("size_word") != null) {
+			font=new Font("Times New Roman", Font.BOLD, Integer.parseInt(config.attributeValue("size_word")));		
+		}
 		datePicker = new DatePicker(date, DefaultFormat, font, new Dimension(
 				100, 25));
 
@@ -64,7 +67,7 @@ public class MyDatePicker extends JLabel {
 		dateField.setFont(font);
 		dateField.setBackground(Color.WHITE);
 		dateField.setEditable(false);
-		button.addMouseListener(new MyDateButtonListener(button));
+		button.addMouseListener(new MyDateButtonListener(button,config.attributeValue("buttonName")));
 
 //		datePicker.setBounds(0, 0, getWidth(), getHeight());
 		add(datePicker);
@@ -86,7 +89,7 @@ public class MyDatePicker extends JLabel {
 		dateField.setFont(font);
 		dateField.setEditable(false);
 
-		button.addMouseListener(new MyDateButtonListener(button));
+		button.addMouseListener(new MyDateButtonListener(button,config.attributeValue("buttonName")));
 
 		try {
 			datePicker.setBounds(Integer.parseInt(config.attributeValue("x")),
@@ -117,10 +120,10 @@ public class MyDatePicker extends JLabel {
 		private Icon enter;
 		private Icon clicked;
 
-		public MyDateButtonListener(JButton button) {
+		public MyDateButtonListener(JButton button,String name) {
 			this.button = button;
 			ButtonOrLabelPicture pics = GraphicsUtils
-					.getButtonLabelPic("calendar");
+					.getButtonLabelPic(name);
 			normal = pics.getNormal();
 			enter = pics.getEnter();
 			clicked = pics.getClicked();
@@ -156,6 +159,13 @@ public class MyDatePicker extends JLabel {
 
 	public String getDateString() {
 		return dateField.getText();
+	}
+	/**
+	 */
+	public MyDate getDate(){
+		String[] date=dateField.getText().split("-");
+		MyDate myDate=new MyDate(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
+		return myDate;
 	}
 
 	public void setTime(MyDate date) {
