@@ -23,14 +23,15 @@ public class StockVO {
 	
 	public StockVO() {
 	}
-	
-	public StockVO(String date, String name, double high, double low,
-			double open, double close, double adj_Price, long volume,
-			double turnover, double pe, double pb, double amplitude,
-			double changeRate) {
+
+	public StockVO(String date, String name, String code, double high,
+			double low, double open, double close, double adj_Price,
+			long volume, double turnover, double pe, double pb,
+			double amplitude, double changeRate) {
 		super();
 		this.date = date;
 		this.name = name;
+		this.code = code;
 		this.high = high;
 		this.low = low;
 		this.open = open;
@@ -43,7 +44,8 @@ public class StockVO {
 		this.amplitude = amplitude;
 		this.changeRate = changeRate;
 	}
-
+	
+	
 	
 		
 }
