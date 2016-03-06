@@ -19,8 +19,10 @@ import javax.swing.text.Document;
 import org.dom4j.Element;
 
 import blimpl.APIBlImpl;
+import blimpl.APIImplCache;
 import blservice.APIBlservice;
 import enumeration.Stock_Attribute;
+import ui.stockdetail.DetailMainPanel;
 import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
 import ui.tool.MyTable;
@@ -39,14 +41,15 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 	MyTextField stockCodeInput;
 	MyPictureButton searchBtn;
 	PanelController panelController;
-	
+	DetailMainPanel StockDetailPanel;
 	JLabel sortVolumeBtn;
 	
 	
 	APIBlservice apiBl;// = APIBlImpl.getAPIBLService();
-	public StockListPanel(Element config,PanelController panelController) {
+	public StockListPanel(Element config,PanelController panelController,DetailMainPanel StockDetailPanel) {
 		super(config);
 		this.panelController = panelController;
+		this.StockDetailPanel = StockDetailPanel;
 		initBl();
 		initTable(config.element("stocklistTable"));
 		initTextFields(config.element("stockCodeInput"));
@@ -142,18 +145,19 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 		
 		stocklistTable.getTable().addMouseListener(new MouseAdapter() {
 			@Override
-			public void mousePressed(MouseEvent e) {
-				int row = stocklistTable.getSelectRow();
-				if(row!=-1){
-				String stockCode = stocklistTable.getValue(row, 1);
-				String stockName = stocklistTable.getValue(row, 0);
-				panelController.getCardLayout().show(panelController.getChangePanel(),"stockDetailPanel" );
-				
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount()==2){
+					int row = stocklistTable.getSelectRow();
+					if(row!=-1){
+						String stockCode = stocklistTable.getValue(row, 1);
+						String stockName = stocklistTable.getValue(row, 0);
+						StockDetailPanel.setData(stockCode, stockName);
+						panelController.getCardLayout().show(panelController.getChangePanel(),"stockDetailPanel" );
+					}
 				}
-				super.mousePressed(e);
+				super.mouseClicked(e);
 			}
 		});
-		
 		Document doc = stockCodeInput.getDocument();
 		doc.addDocumentListener(this);
 		
@@ -169,6 +173,7 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 	}
 	private void initBl(){
 		apiBl =APIBlImpl.getAPIBLService();
+//		apiBl = APIImplCache.getAPIBLService();
 	}
 	private void searchStock(String input){
 		stocklistTable.removeAllItem();
