@@ -1,10 +1,10 @@
 package blimpl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import po.StockPO;
 import util.MyTime;
@@ -37,13 +37,19 @@ public class APIBlImpl implements APIBlservice {
 	 */
 	private List<BenchMarkVO> benchMarkVOs;
 	
-	
+	/*
+	 * 为了加快测试速度，在开发阶段只引入100只股票
+	 */
 	private APIBlImpl() {
 		APIDataSer = new APIInterfaceImpl();
 		List<String> stocksCode = APIDataSer.getAllStocks();
 		stocks = new ArrayList<StockVO>(stocksCode.size());
 //		benchMarkVOs = APIDataSer.
-		stockMap = new HashMap<String, StockVO>(3000);
+//		benchMarkVOs = APIDataSer
+		/*
+		 * 使用TreeMap支持自动排序
+		 */
+		stockMap = new TreeMap<String, StockVO>();
 		System.out.println(stocksCode.size());
 		int count = 0;
 		for (String string : stocksCode) {
@@ -133,14 +139,24 @@ public class APIBlImpl implements APIBlservice {
 		return result.iterator();
 	}
 
-	
-	
-	
-	
-	
-	
-	public static void main(String[] args) {
-		APIBlImpl imp = new APIBlImpl();
-		imp.getAllStocks();
+	@Override
+	public Iterator<BenchMarkVO> getRecentBenchMarks(String BenchMarkCode) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public Iterator<BenchMarkVO> getBenchMarkByTime(String BenchMarkCode,
+			MyDate start, MyDate end) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
+	
+	
+	
+	
+
 }
