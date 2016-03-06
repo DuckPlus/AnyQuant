@@ -55,7 +55,7 @@ public class TestData {
 						Double.parseDouble(df.format(Math.random())),
 						Double.parseDouble(df.format(Math.random())), 
 						Double.parseDouble(df.format(Math.random())),
-						Double.parseDouble(df.format(Math.random())));
+						Double.parseDouble(df.format(1-Math.random()*2)));
 				vos.add(vo);
 		}
 		return vos;
@@ -81,7 +81,8 @@ public class TestData {
 					Double.parseDouble(df.format(Math.random())),
 					Double.parseDouble(df.format(Math.random())) ,
 					Double.parseDouble(df.format(Math.random())), 
-					Math.random(), Math.random());
+					Double.parseDouble(df.format(Math.random())),
+					Double.parseDouble(df.format(1-Math.random()*2)));
 
 			vos.add(vo);
 	}

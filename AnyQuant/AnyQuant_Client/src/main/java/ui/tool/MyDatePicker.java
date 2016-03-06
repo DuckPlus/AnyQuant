@@ -56,6 +56,9 @@ public class MyDatePicker extends JLabel {
 				Integer.parseInt(config.attributeValue("y")),
 				Integer.parseInt(config.attributeValue("width")),
 				Integer.parseInt(config.attributeValue("height")));
+		if (config.attributeValue("size_word") != null) {
+			font=new Font("Times New Roman", Font.BOLD, Integer.parseInt(config.attributeValue("size_word")));		
+		}
 		datePicker = new DatePicker(date, DefaultFormat, font, new Dimension(
 				200, 50));
 
@@ -156,6 +159,13 @@ public class MyDatePicker extends JLabel {
 
 	public String getDateString() {
 		return dateField.getText();
+	}
+	/**
+	 */
+	public MyDate getDate(){
+		String[] date=dateField.getText().split("-");
+		MyDate myDate=new MyDate(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
+		return myDate;
 	}
 
 	public void setTime(MyDate date) {
