@@ -145,7 +145,7 @@ public class APIInterfaceImpl implements APIInterface{
 	   * 
 	   */
 	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end) {
-		System.out.println(stockCode+" "+start.DateToString()+" "+end.DateToString());
+		
 		String labels = "open+close+high+low+volume+turnover+pb";
 	    MyDate  preStart = MyTime.getAnotherDay(start, -1);
 		String startTime = preStart.DateToString();
@@ -165,7 +165,6 @@ public class APIInterfaceImpl implements APIInterface{
 			stocks.get(i).setPreClose( stocks.get(i-1).getClose() );
 			stocks.get(i).computeAmplitude();
 		}
-		System.out.println("APIInterface .stocks.size "+stocks.size());
         stocks.remove(0);
 	    return   stocks;
 		
