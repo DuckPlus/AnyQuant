@@ -48,6 +48,7 @@ public class TestData {
 						20+Math.random()*5, 
 						20+Math.random()*10,//open
 						20+Math.random()*10,//close
+						20+Math.random()*10,
 						2, 
 						20000+(long)(Math.random()*10000),
 						Math.random(), Math.random() ,Math.random(), 
@@ -71,6 +72,7 @@ public class TestData {
 					20+Math.random()*5, 
 					20+Math.random()*10,//open
 					20+Math.random()*10,//close
+					20+Math.random()*10,
 					2, 
 					20000+(long)(Math.random()*10000),
 					Math.random(), Math.random() ,Math.random(), 
