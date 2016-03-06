@@ -173,6 +173,13 @@ public class StockPO implements InitialBean {
 		   this.changeRate =     (int)(temp*10000)/10000.0;
 	}
 	
+	
+	public String MyToString(char a){
+		return ""+date+a+name+a+code+a+high+a+low+a+open+a+close+a+preClose+a+adj_Price+a+
+				volume+a+turnover+a+pe+a+pb+a+amplitude+a+changeRate;
+	}
+	
+	
 	@Override
 	public void initialize() {
 		

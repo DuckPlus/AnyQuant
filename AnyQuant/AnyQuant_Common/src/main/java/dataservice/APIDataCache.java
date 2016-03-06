@@ -1,5 +1,6 @@
 package dataservice;
 
+import java.awt.Button;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -35,7 +36,6 @@ public class APIDataCache implements APIInterface{
 	@Override
 	public List<String> getAllStocks() {
 	   return  readAllCodes();
-		
 	}
 
 	@Override
@@ -130,13 +130,45 @@ public class APIDataCache implements APIInterface{
 		    }		    
 	}
 	
-	private void  readAllMes(){
-		
+	private List<StockPO>  readAllMes(){
+		try {
+            String encoding="utf-8";
+            String filePath = fileName2;
+            File file=new File(filePath);
+            if(file.isFile() && file.exists()){ //判断文件是否存在
+                     InputStreamReader read = new InputStreamReader(
+                                                                    new FileInputStream(file),encoding);//考虑到编码格式
+                     BufferedReader bufferedReader = new BufferedReader(read);
+                     String temp="";
+                     String [] attrs = null;
+                     List<StockPO> result = new ArrayList<StockPO>();
+                     
+                     while((temp=bufferedReader.readLine())!=null){
+                    	    attrs = temp.split(",");
+                    	    StockPO stock = new StockPO(attrs[0],attrs[1],attrs[2],Double.parseDouble(attrs[3]),Double.parseDouble(attrs[4]),Double.parseDouble(attrs[5]),
+                    	    		Double.parseDouble(attrs[6]),Double.parseDouble(attrs[7]),Double.parseDouble(attrs[8]),Long.parseLong(attrs[9]),Double.parseDouble(attrs[10]),
+                    	    		Double.parseDouble(attrs[11]),Double.parseDouble(attrs[12]),Double.parseDouble(attrs[13]),Double.parseDouble(attrs[14]));
+                            result .add(stock);
+                     }
+                     read.close();
+                     return result;
+            }else{
+                      System.out.println("找不到指定的文件,创建新文件");
+                      List<StockPO> result =    new ArrayList<>();
+                   //   for()
+                //      writeAllCodes(data);
+                //      return data;
+            }
+      } catch (Exception e) {
+             System.out.println("读取文件内容出错");
+             e.printStackTrace();
+      }
+	  return null;
 	}
 	
-	private void writeAllMes(){
+	private void writeAllMes(List<StockPO> stocks){
 		try{
-	         String data = "content";
+			
 	         File file =new File(fileName2);
 	         //if file doesnt exists, then create it
 	         if(!file.exists()){
@@ -144,9 +176,13 @@ public class APIDataCache implements APIInterface{
 	         }
 
 	         //true = append file
-	         FileWriter fileWritter = new FileWriter(file.getName(),false);
+	         FileWriter fileWritter = new FileWriter(file,true);
 	         BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
-	         bufferWritter.write(data);
+	         for(StockPO stock: stocks){
+	        	    String temp = stock.MyToString(',')+'\n';
+	        	    System.out.println("write: "+temp);
+	        	    bufferWritter.write(temp);
+	         }
 	         bufferWritter.close();
 	         System.out.println("Done");
 	    }catch(IOException e){
