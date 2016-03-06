@@ -52,7 +52,7 @@ public class DetailMainPanel extends MyPanel{
 		super.paintComponent(g);
 	}
 	@Override
-	protected void initButtons(Element e) {//TODO
+	protected void initButtons(Element e) {
 		search_btn=new MyPictureButton(e.element("search"));
 				
 	}
@@ -66,7 +66,7 @@ public class DetailMainPanel extends MyPanel{
 		stockPriceNow = Double.parseDouble(table.getValue(table.getRowCount()-1, 1));
 		todayOpen_num = Double.parseDouble(table.getValue(table.getRowCount()-1, 1));
 		//昨收
-		yestodayClose_num = Double.parseDouble(table.getValue(table.getRowCount()-1, 2));
+		yestodayClose_num = Double.parseDouble(table.getValue(table.getRowCount()-2, 2));
 		highest_num =Double.parseDouble(table.getValue(table.getRowCount()-1, 3));
 		lowest_num = Double.parseDouble(table.getValue(table.getRowCount()-1, 4));
 		dealAmount_num =Double.parseDouble(table.getValue(table.getRowCount()-1, 5));
@@ -91,7 +91,7 @@ public class DetailMainPanel extends MyPanel{
 		 highest=new MyLabel(e.element("highest"),highest_num+"");
 		 lowest=new MyLabel(e.element("lowest"),lowest_num+"");
 		 //TODO 单位转换
-		 dealAmount=new MyLabel(e.element("deal"),dealAmount_num+"亿");
+		 dealAmount=new MyLabel(e.element("deal"),dealAmount_num+"");
 		 
 		 if(changeRate<=0){
 			 stockPriceNow_label.setForeground((new Color(0,139,0)));

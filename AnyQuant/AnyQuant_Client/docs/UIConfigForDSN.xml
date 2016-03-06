@@ -55,9 +55,10 @@
 			<stockCodeInput x="10" y="30" width="300" height="35"/>
 			<searchBtn x="320" y="300" width="100" height ="30" normal="element//Btn" enter="element//Btn" clicked="element//Btn" text="查询股票"/>
 		</stockListPanel>
-		<benchmarkPanel x="232" y="54" width="300" height="300">
+		<benchmarkPanel x="204" y="0" width="880" height="624">
+		
+		<benchmarklistTable x="10" y="94" width="860" height="540"/>
 		</benchmarkPanel>
-
 
 
 
