@@ -16,9 +16,10 @@ import org.dom4j.Element;
 
 import ui.config.ButtonOrLabelPicture;
 import ui.config.GraphicsUtils;
-import util.MyDate;
 
 import com.eltima.components.ui.DatePicker;
+
+import enumeration.MyDate;
 
 /**
  * 日历选择器实现类 包含三个部件：显示日历信息的textfield、按钮button
@@ -144,21 +145,22 @@ public class MyDatePicker extends JLabel {
 
 	}
 
-	// 两个获取日期的方法
-	public MyDate getMyDate() {
-
-		String[] date = dateField.getText().split("-");
-		return new MyDate(Integer.parseInt(date[0]), Integer.parseInt(date[1]),
-				Integer.parseInt(date[2]),MyDate.getNowTime().hour,MyDate.getNowTime().minute,MyDate.getNowTime().second);
-
-	}
+//	// 两个获取日期的方法
+//	public MyDate getMyDate() {
+//
+//		String[] date = dateField.getText().split("-");
+//		return new MyDate(Integer.parseInt(date[0]), Integer.parseInt(date[1]),
+//				Integer.parseInt(date[2]),MyDate.getNowDate().hour,MyDate.getNowTime().minute,MyDate.getNowTime().second);
+//
+//	}
 
 	public String getDateString() {
 		return dateField.getText();
 	}
 
 	public void setTime(MyDate date) {
-		dateField.setText(date.getDay());
+		dateField.setText(
+				date.DateToString());
 	}
 
 }
