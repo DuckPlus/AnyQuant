@@ -3,6 +3,8 @@ package ui.tool;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.JPanel;
@@ -15,6 +17,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
 
 public class MyTable extends JPanel {
 	/**
@@ -27,14 +30,37 @@ public class MyTable extends JPanel {
 	private DefaultTableModel ListModel;
 	private JTable Table;
 
-	public MyTable(int x, int y, int width, int height, Vector<String> vColumns) {
+	private TableRowSorter rowSorter;
+	private Comparator<String> numberComparator ;
+	public MyTable(int x,int y,int width,int height,Vector<String> vColumns) {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-		// 表头
-
-		// 数据
-		// vData.addElement("ccc");
-		// 模型
+		//表头
+		numberComparator= new Comparator<String>() {
+			@Override
+			public int compare(String o1, String o2) {
+				double value1 = Double.valueOf(o1);
+				double value2 = Double.valueOf(o2);
+				System.out.println(value1+"  "+value2);
+				if ( o1 == null ) {  
+                    return -1;  
+                }  
+                if ( o2 == null ) {  
+                    return 1;  
+                }  
+                if ( value1<value2 ) {  
+                    return -1;  
+                }  
+                if ( value1>value2 ) {  
+                    return 1;  
+                }  
+				return 0;
+			}
+		};
+		
+		//数据
+		
+		//模型
 		ListModel = new DefaultTableModel(vData, vColumns);
 
 		// 表格
@@ -45,6 +71,11 @@ public class MyTable extends JPanel {
 				return false;
 			}
 		};
+		//the method "setAutoCreateRowSorter" must called before the method"getRowSorter" 
+		//otherwise the table have no sorter to return
+
+		Table.setAutoCreateRowSorter(true);
+		rowSorter= (TableRowSorter) Table.getRowSorter();
 		Table.getTableHeader().setReorderingAllowed(false);
 		// 设置居中
 		DefaultTableCellRenderer render = new DefaultTableCellRenderer();
@@ -57,17 +88,12 @@ public class MyTable extends JPanel {
 		scrollPane.getViewport().add(Table);
 		Table.setFillsViewportHeight(true);
 
-		// Table.setBackground(new Color(174,174,174));
-		Table.setFont(new Font("微软雅黑", Font.PLAIN, 15));
+
+		Table.setFont(new Font("微软雅黑",Font.PLAIN,15));
 		Table.setForeground(Color.black);
-		Table.getTableHeader().setFont(new Font("微软雅黑", Font.PLAIN, 15));
-		// Table.getTableHeader().setForeground(Color.white);
-		Table.getTableHeader().setBackground(new Color(220, 220, 220));
-		// Table.getTableHeader().set
+		Table.getTableHeader().setFont(new Font("微软雅黑",Font.PLAIN,15));
+		Table.getTableHeader().setBackground(new Color(220,220,220));
 		makeFace(Table);
-		// System.out.println(Table.g);
-		// Table.setBackground(color.LightGray());
-		// Table.getTableHeader().setBackground(Color.gray);
 		scrollPane.setBounds(0, 0, width, height);
 
 		//
@@ -164,6 +190,33 @@ public class MyTable extends JPanel {
 			ex.printStackTrace();
 		}
 	}
+/*
+	 * 根据第k列的数据 
+	 *决定某行的背景颜色（大于0红 反之绿）
+	 * @param k
+	 */
+	public void setRowColorDependOnColomn(int k){
+		System.out.println("MyTable.setRowColor");
+		 try {
+			    DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
+			     public Component getTableCellRendererComponent(JTable table,
+			       Object value, boolean isSelected, boolean hasFocus,
+			       int row, int column) {
+			    	 String changeRateStr=(String)table.getValueAt(row, k);
+						if(Double.parseDouble(changeRateStr.substring(0, changeRateStr.length()-1))<=0)
+							setBackground(Color.green);
+						else setBackground(Color.red);
+			      return super.getTableCellRendererComponent(table, value,
+			        isSelected, hasFocus, row, column);
+			     }
+			    };
+			    for (int i = 0; i < Table.getColumnCount(); i++) {
+				     Table.getColumn(Table.getColumnName(i)).setCellRenderer(tcr);
+				    }
+			   } catch (Exception ex) {
+			    ex.printStackTrace();
+			   }
+	}
 
 
 
@@ -209,6 +262,7 @@ public class MyTable extends JPanel {
 	public TableColumnModel getColumnModel() {
 		return Table.getColumnModel();
 	}
+
 	
 	@SuppressWarnings("serial")
 	private class MyDefaultTableRender extends DefaultTableCellRenderer{
@@ -235,5 +289,18 @@ public class MyTable extends JPanel {
 		}
 		
 	}
-	
+
+	/**
+	 * @author duanzhengmou
+	 * <p>不在集合内的其他列按默认方式排序（似乎是字典序？）</a>
+	 * @param v  包含要按<strong>数值大小</strong>排序的列序号的集合
+	 */
+	public void sortColumnByNum(Vector<Integer>v){
+		Iterator<Integer> itr = v.iterator();
+		while(itr.hasNext()){
+			int c = itr.next();
+			System.out.println(c);
+		rowSorter.setComparator(c, numberComparator);
+		}
+	}
 }

@@ -140,20 +140,9 @@ public class DetailMainPanel extends MyPanel{
 			vd.add(String.format("%.2f",vo.changeRate*100)+"%");
 			table.addRow(vd);
 		}
-		System.out.println("行数 "+table.getRowCount());
-		Color[] colors = new Color[table.getRowCount()];
-		for(int i=0;i<table.getRowCount();i++){
-			String changeRateStr=table.getValue(i, 8);
-			System.out.println(i+"  "+changeRateStr);
-			if(Double.parseDouble(changeRateStr.substring(0, changeRateStr.length()-1))<=0){
-				colors[i] = Color.GREEN;
-				System.out.println("第"+i+"行 用绿色");
-			}else {
-				colors[i] = Color.RED;
-				System.out.println("第"+i+"行 用红色");
-			}
-		}
-		table.setRowColor(colors);
+
+		table.setRowColorDependOnColomn(8);
+
 	}
 
 	@Override
