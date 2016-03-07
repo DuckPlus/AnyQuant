@@ -130,21 +130,21 @@ public class MyTable extends JPanel{
 		return Table;
 	}
 	/**
-	 * 设置某一行的背景颜色
-	 * 现在还不行，，，全是bug..
-	 * @param row0
-	 * @param color
+	 * 根据第k列的数据 
+	 *决定某行的背景颜色（大于0红 反之绿）
+	 * @param k
 	 */
-	public void setRowColor(int row0,Color color){
+	public void setRowColorDependOnColomn(int k){
 		System.out.println("MyTable.setRowColor");
 		 try {
 			    DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
 			     public Component getTableCellRendererComponent(JTable table,
 			       Object value, boolean isSelected, boolean hasFocus,
 			       int row, int column) {
-			    	 System.out.println("MyTabel.setRowColor"+row0+"行");
-			      if (row == row0)
-			       setBackground(color); 
+			    	 String changeRateStr=(String)table.getValueAt(row, k);
+						if(Double.parseDouble(changeRateStr.substring(0, changeRateStr.length()-1))<=0)
+							setBackground(Color.green);
+						else setBackground(Color.red);
 			      return super.getTableCellRendererComponent(table, value,
 			        isSelected, hasFocus, row, column);
 			     }
