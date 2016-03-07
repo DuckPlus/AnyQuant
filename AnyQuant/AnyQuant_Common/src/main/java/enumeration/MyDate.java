@@ -1,8 +1,6 @@
 package enumeration;
 
 import java.util.Calendar;
-import java.util.Date;
-
 
 public class MyDate {
             private  int year , month ,day ;

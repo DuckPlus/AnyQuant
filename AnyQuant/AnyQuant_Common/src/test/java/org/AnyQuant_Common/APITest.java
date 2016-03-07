@@ -18,10 +18,10 @@ import po.StockPO;
 
 public class APITest extends TestCase {
          public static void main(String a[]){
-        	    getAllstocksMessageByAPI();
+        	  //  getAllstocksMessageByAPI();
         	 //getBenchMes();
         	   // getStockCode();
-        	// getAllMesByCache();
+        	 getAllMesByCache();
         	 
          }
          public  static void getAllstocksMessageByAPI(){
