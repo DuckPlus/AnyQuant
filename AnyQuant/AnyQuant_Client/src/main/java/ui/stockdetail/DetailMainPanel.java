@@ -91,8 +91,8 @@ public class DetailMainPanel extends MyPanel{
 	}
 	private void changeColor() {
 		if(changeRate<=0){
-			 stockPriceNow_label.setForeground((new Color(0,139,0)));
-			 changeRate_label.setForeground((new Color(0,139,0)));
+			 stockPriceNow_label.setForeground(Color.GREEN);
+			 changeRate_label.setForeground(Color.GREEN);
 		 }else{
 			 stockPriceNow_label.setForeground((new Color(255,0,0)));
 			 changeRate_label.setForeground((new Color(255,0,0)));
@@ -141,17 +141,19 @@ public class DetailMainPanel extends MyPanel{
 			table.addRow(vd);
 		}
 		System.out.println("行数 "+table.getRowCount());
+		Color[] colors = new Color[table.getRowCount()];
 		for(int i=0;i<table.getRowCount();i++){
 			String changeRateStr=table.getValue(i, 8);
 			System.out.println(i+"  "+changeRateStr);
 			if(Double.parseDouble(changeRateStr.substring(0, changeRateStr.length()-1))<=0){
-				table.setRowColor(i,Color.green);
+				colors[i] = Color.GREEN;
 				System.out.println("第"+i+"行 用绿色");
 			}else {
-				table.setRowColor(i,Color.red);
+				colors[i] = Color.RED;
 				System.out.println("第"+i+"行 用红色");
 			}
 		}
+		table.setRowColor(colors);
 	}
 
 	@Override
