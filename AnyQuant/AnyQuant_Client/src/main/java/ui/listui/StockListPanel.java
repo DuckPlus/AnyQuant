@@ -12,16 +12,11 @@ import java.util.Vector;
 import javax.swing.JLabel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.event.MouseInputAdapter;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
 import org.dom4j.Element;
 
-import blimpl.APIBlImpl;
-import blimpl.APIImplCache;
-import blservice.APIBlservice;
-import enumeration.Stock_Attribute;
 import ui.stockdetail.DetailMainPanel;
 import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
@@ -29,6 +24,9 @@ import ui.tool.MyTable;
 import ui.tool.MyTextField;
 import ui.tool.PanelController;
 import vo.StockVO;
+import blimpl.APIBlImpl;
+import blservice.APIBlservice;
+import enumeration.Stock_Attribute;
 
 /**
  * 股票列表

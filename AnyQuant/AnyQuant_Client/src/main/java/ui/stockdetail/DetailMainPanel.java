@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -127,7 +126,6 @@ public class DetailMainPanel extends MyPanel{
 	 */
 	private void refreshTable() {
 		table.removeAllItem();
-		int i=0;
 		while(itr.hasNext()){
 			StockVO vo=itr.next();
 			Vector<String>vd = new Vector<String>();
@@ -138,18 +136,21 @@ public class DetailMainPanel extends MyPanel{
 			vd.add(vo.low+"");
 			vd.add(vo.volume+"");
 			vd.add(vo.turnover+"");
-			vd.add(df.format(vo.amplitude*100)+"%");
-			vd.add(df.format(vo.changeRate*100)+"%");
+			vd.add(String.format("%.2f",vo.amplitude*100)+"%");
+			vd.add(String.format("%.2f",vo.changeRate*100)+"%");
 			table.addRow(vd);
-//			if(vo.changeRate<=0){
-//				table.setRowColor(i,Color.green);
-//				System.out.println("第"+i+"行 用绿色");
-//			}else {
-//				table.setRowColor(i,Color.red);
-//				System.out.println("第"+i+"行 用红色");
-//			}
-			i++;
-			
+		}
+		System.out.println("行数 "+table.getRowCount());
+		for(int i=0;i<table.getRowCount();i++){
+			String changeRateStr=table.getValue(i, 8);
+			System.out.println(i+"  "+changeRateStr);
+			if(Double.parseDouble(changeRateStr.substring(0, changeRateStr.length()-1))<=0){
+				table.setRowColor(i,Color.green);
+				System.out.println("第"+i+"行 用绿色");
+			}else {
+				table.setRowColor(i,Color.red);
+				System.out.println("第"+i+"行 用红色");
+			}
 		}
 	}
 
@@ -259,5 +260,4 @@ public class DetailMainPanel extends MyPanel{
 	private MyTable table;
 	private APIBlservice ctr;
 	private Iterator<StockVO> itr;
-	private static DecimalFormat   df   =new DecimalFormat("#.00");  
 }

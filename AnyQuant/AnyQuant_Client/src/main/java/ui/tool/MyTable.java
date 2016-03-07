@@ -142,7 +142,7 @@ public class MyTable extends JPanel{
 			     public Component getTableCellRendererComponent(JTable table,
 			       Object value, boolean isSelected, boolean hasFocus,
 			       int row, int column) {
-			    	 System.out.println(row0+"行");
+			    	 System.out.println("MyTabel.setRowColor"+row0+"行");
 			      if (row == row0)
 			       setBackground(color); 
 			      return super.getTableCellRendererComponent(table, value,
