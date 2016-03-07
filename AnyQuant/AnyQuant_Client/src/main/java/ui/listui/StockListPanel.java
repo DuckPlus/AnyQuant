@@ -40,7 +40,7 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 	MyPictureButton searchBtn;
 	PanelController panelController;
 	DetailMainPanel StockDetailPanel;
-	JLabel sortVolumeBtn;
+//	JLabel sortVolumeBtn;
 	
 	
 	APIBlservice apiBl;// = APIBlImpl.getAPIBLService();
@@ -72,10 +72,6 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 				Integer.valueOf(e.element("searchBtn").attributeValue("width")), 
 				Integer.valueOf(e.element("searchBtn").attributeValue("height")));
 		
-		sortVolumeBtn = new JLabel();
-		sortVolumeBtn.setOpaque(true);
-		sortVolumeBtn.setBounds(675, 0, 10, 25);
-		sortVolumeBtn.setBackground(Color.red);
 		
 		
 	}
@@ -113,7 +109,19 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 				Integer.valueOf(e.attributeValue("y")), 
 				Integer.valueOf(e.attributeValue("width")), 
 				Integer.valueOf(e.attributeValue("height")), vhead);
-//		searchAllStock();
+//		stocklistTable.getTable().setAutoCreateRowSorter(true);
+		Vector<Integer>vC = new Vector<Integer>();
+		vC.add(2);
+		vC.add(3);
+		vC.add(4);
+		vC.add(5);
+		vC.add(6);
+		vC.add(7);
+		vC.add(8);
+		vC.add(9);
+		
+		stocklistTable.sortColumnByNum(vC);
+		searchAllStock();
 		
 	}
 
@@ -123,7 +131,6 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 		this.add(searchBtn);
 		this.add(stockCodeInput);
 		this.add(stocklistTable);
-		stocklistTable.getTable().getTableHeader().add(sortVolumeBtn);
 	}
 
 	@Override
@@ -159,15 +166,6 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 		Document doc = stockCodeInput.getDocument();
 		doc.addDocumentListener(this);
 		
-		sortVolumeBtn.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				//升序排列
-				System.out.println(stocklistTable.getRowCount());
-				sortStockTable(true, Stock_Attribute.volume);
-				super.mousePressed(e);
-			}
-		});
 	}
 	private void initBl(){
 		apiBl =APIBlImpl.getAPIBLService();
