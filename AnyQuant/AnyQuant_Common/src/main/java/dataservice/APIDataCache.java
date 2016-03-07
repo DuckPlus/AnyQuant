@@ -262,32 +262,15 @@ public class APIDataCache implements APIInterface{
 	
 	
 	private boolean needUpdate(String preDate){
-		//如果当天日期与上次纪录不符并且当天不是周末
-		String today = MyTime.getToDay().DateToString();
-		if(!preDate.equals(today)&& !isWeekend(today)){
+		//如果昨天日期与上次纪录不符并且昨天不是周末
+		MyDate yesterday = MyTime.getAnotherDay(-1);
+		if(!preDate.equals(yesterday)&& !MyTime.isWeekend(yesterday)){
 			   return true ;
 		}
 		return false;
 	}
 	
-	private  boolean isWeekend (String bDate){
-		DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");        
-		Date bdate;
-		try {
-			bdate = format1.parse(bDate);
-			Calendar cal = Calendar.getInstance();
-		    cal.setTime(bdate);
-		    if(cal.get(Calendar.DAY_OF_WEEK)==Calendar.SATURDAY||
-		    		cal.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY){
-		      return true;
-		    }
-		     return false;
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		    return false;
-	}
+	
 
 
 	@Override

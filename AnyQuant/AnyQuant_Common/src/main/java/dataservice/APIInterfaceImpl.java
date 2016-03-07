@@ -8,6 +8,8 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.transform.Templates;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import po.BenchMarkPO;
@@ -136,7 +138,7 @@ public class APIInterfaceImpl implements APIInterface{
    */
 	public StockPO getStockMes(String stockCode) {
 		
-        return  getStockMes(stockCode, MyTime.getAnotherDay(-2), MyTime.getToDay()).get(0);
+        return  getStockMes(stockCode, MyTime.getToDay(), MyTime.getToDay()).get(0);
   
 	}
 	
@@ -147,27 +149,28 @@ public class APIInterfaceImpl implements APIInterface{
 	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end) {
 		
 		String labels = "open+close+high+low+volume+turnover+pb";
-	    MyDate  preStart = MyTime.getAnotherDay(start, -1);
+	    MyDate  preStart = MyTime.getFirstPreWookDay(start);
 		String startTime = preStart.DateToString();
 		String endTime = end.DateToString();
 		String url = "http://121.41.106.89:8010/api/stock/"+stockCode+"/?start="+startTime +"&end="+endTime+"&fields="+labels ;
-	  //  System.out.println(SendGET(url, ""));
+	    System.out.println(SendGET(url, ""));
 		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
 		JSONObject data = jo.getJSONObject("data");
 		JSONArray trading_info = data.getJSONArray("trading_info");
-		List<StockPO> stocks =  new  ArrayList<>();
-		for(int i=0;i<trading_info.size();i++){
-			StockPO stock  = MyJSONObject.toBean(trading_info.getJSONObject(i), StockPO.class);
-			stock.setCode(stockCode);
-			stocks.add(stock);
-		}
-		for(int i=1;i<stocks.size();i++){
-			stocks.get(i).setPreClose( stocks.get(i-1).getClose() );
-			stocks.get(i).computeAmplitude();
-		}
-        stocks.remove(0);
-	    return   stocks;
-		
+		//System.out.println("size: "+trading_info.size());
+
+			List<StockPO> stocks =  new  ArrayList<>();
+			for(int i=0;i<trading_info.size();i++){
+				StockPO stock  = MyJSONObject.toBean(trading_info.getJSONObject(i), StockPO.class);
+				stock.setCode(stockCode);
+				stocks.add(stock);
+			}
+			for(int i=1;i<stocks.size();i++){
+				stocks.get(i).setPreClose( stocks.get(i-1).getClose() );
+				stocks.get(i).computeAmplitude();
+			}
+	        stocks.remove(0);
+	        return   stocks;
 	}
 	
 	@Override
@@ -211,6 +214,6 @@ public class APIInterfaceImpl implements APIInterface{
 				return list;
 	}
 
-
+   
 
 }

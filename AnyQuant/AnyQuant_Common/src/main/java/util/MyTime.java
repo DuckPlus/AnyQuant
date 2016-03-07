@@ -1,5 +1,6 @@
 package util;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -74,6 +75,45 @@ public class MyTime {
 	    	return false;
 	    }
 	    
+	    /**
+	     * 判断某日期是不是周末
+	     * @param date
+	     * @return
+	     */
+		public static  boolean isWeekend (MyDate date){
+			DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");        
+			Date bdate;
+			try {
+				bdate = format1.parse(date.DateToString());
+				Calendar cal = Calendar.getInstance();
+			    cal.setTime(bdate);
+			    if(cal.get(Calendar.DAY_OF_WEEK)==Calendar.SATURDAY||
+			    		cal.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY){
+			      return true;
+			    }
+			     return false;
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			    return false;
+		}
+	    
+		/**
+		 * 返回参数日期之前的第一个工作日
+		 * @param date
+		 * @return
+		 */
+		public static  MyDate  getFirstPreWookDay(MyDate date){
+			   int i=-1;
+			   boolean bool =MyTime.isWeekend(MyTime.getAnotherDay(date, i)) ;
+			   while(bool){
+				   i--;
+				   bool = MyTime.isWeekend(MyTime.getAnotherDay(date, i));
+			   }
+			   return MyTime.getAnotherDay(date, i);
+		   }
+		
 	    public static void main (String a[]){
 	    	  MyDate dateA = new MyDate(2016, 3, 5);
 	    	  MyDate dateB=new MyDate(2016, 4, 5);

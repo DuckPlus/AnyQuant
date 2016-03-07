@@ -18,32 +18,34 @@ import po.StockPO;
 
 public class APITest extends TestCase {
          public static void main(String a[]){
-        	  //  getAllstocksMessage();
+        	    getAllstocksMessageByAPI();
         	 //getBenchMes();
         	   // getStockCode();
-        	 getAllMesByCache();
+        	// getAllMesByCache();
         	 
          }
          public  static void getAllstocksMessageByAPI(){
         	 APIInterface api = new APIInterfaceImpl();
-        	 MyDate start = new MyDate(2016, 3, 3);
-        	 MyDate end = new MyDate(2016, 3, 6);
+        	 MyDate start = new MyDate(2016, 2, 29);
+        	 MyDate end = new MyDate(2016, 3, 7);
         	List<StockPO>  stocks =  api.getStockMes("sh600126",start,end);
-        	//  api.getStockMes("sh600126");
+        	//StockPO stock =   api.getStockMes("sh600126");
+//        	if(stock==null){
+//        		System.out.println("stock is null");
+//        	}
         	for(StockPO stock : stocks){
-               System.out.println(stock.toString());
-        	
-  //      	System.out.println("name: "+stock.getName());
-//        	System.out.print("code: "+stock.getCode()+" ");
-//        	System.out.print("open: "+stock.getOpen()+" ");
-//          	System.out.print("close: "+stock.getClose()+" ");
-//          	System.out.print("preClose:"+stock.getPreClose()+" ");
-//          	System.out.print("high: "+stock.getHigh()+" ");
-//          	System.out.print("low: "+stock.getLow()+" ");
-//        	System.out.print("changeRate: "+stock.getChangeRate()+" ");
-//        	System.out.print("amp: "+stock.getAmplitude()+" ");	
-//        	System.out.println("turnover: "+stock.getTurnover()+" ");
-//        	System.out.print("date: "+stock.getDate()+'\n');
+             
+        	System.out.print("name: "+stock.getName()+"  ");
+        	System.out.print("code: "+stock.getCode()+"  ");
+        	System.out.print("open: "+stock.getOpen()+"  ");
+          	System.out.print("close: "+stock.getClose()+"  ");
+          	System.out.print("preClose:"+stock.getPreClose()+"  ");
+          	System.out.print("high: "+stock.getHigh()+"  ");
+          	System.out.print("low: "+stock.getLow()+"  ");
+        	System.out.print("changeRate: "+stock.getChangeRate()+"  ");
+        	System.out.print("amp: "+stock.getAmplitude()+"  ");	
+        	System.out.println("turnover: "+stock.getTurnover()+"  ");
+        	System.out.print("date: "+stock.getDate()+'\n');
         	}
          }
 
