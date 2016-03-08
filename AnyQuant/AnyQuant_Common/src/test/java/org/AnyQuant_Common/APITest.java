@@ -28,12 +28,12 @@ public class APITest extends TestCase {
         	 APIInterface api = new APIInterfaceImpl();
         	 MyDate start = new MyDate(2016, 2, 29);
         	 MyDate end = new MyDate(2016, 3, 7);
-        	List<StockPO>  stocks =  api.getStockMes("sh600126",start,end);
-        	//StockPO stock =   api.getStockMes("sh600126");
-//        	if(stock==null){
-//        		System.out.println("stock is null");
-//        	}
-        	for(StockPO stock : stocks){
+       // 	List<StockPO>  stocks =  api.getStockMes("sh600126",start,end);
+        	StockPO stock =   api.getStockMes("sh600126");
+        	if(stock==null){
+        		System.out.println("stock is null");
+        	}
+  //      	for(StockPO stock : stocks){
              
         	System.out.print("name: "+stock.getName()+"  ");
         	System.out.print("code: "+stock.getCode()+"  ");
@@ -47,7 +47,7 @@ public class APITest extends TestCase {
         	System.out.println("turnover: "+stock.getTurnover()+"  ");
         	System.out.print("date: "+stock.getDate()+'\n');
         	}
-         }
+   //      }
 
          public static void getBenchMes(){
         	 APIInterface api = new APIInterfaceImpl();

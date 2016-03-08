@@ -168,12 +168,12 @@ public class APIDataCache implements APIInterface{
                       System.out.println("找不到指定的文件,创建新文件");
                       List<StockPO> result =    new ArrayList<>();
                       List<String> stockCodes = getAllStocks();
-                     int i = 0;
+                    
                       for(String code : stockCodes){
-                    	    if(i<5){
+                    	    
                     	         result .add(api.getStockMes(code));
-                    	    }
-                    	    i++;
+                    	    
+                    	    
                     
                       }
                       writeAllMes(result);
