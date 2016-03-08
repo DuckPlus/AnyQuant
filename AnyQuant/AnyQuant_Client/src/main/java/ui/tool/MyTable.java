@@ -182,13 +182,12 @@ public class MyTable extends JPanel {
 						int row, int column) {
 					// System.out.println("I'm making face!");
 
-					if (rowColor_map == null) {
 						if (row % 2 == 0)
 							setBackground(Color.white);
 						else if (row % 2 == 1)
 							setBackground(new Color(240, 240, 240));
-					} else
-						setBackground(rowColor_map.get(row));
+					if(rowColor_map!=null)
+						setForeground(rowColor_map.get(row));
 					return super.getTableCellRendererComponent(table, value,
 							isSelected, hasFocus, row, column);
 				}

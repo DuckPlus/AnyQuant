@@ -15,6 +15,7 @@ import javax.swing.text.Document;
 
 import org.dom4j.Element;
 
+import ui.config.GraphicsUtils;
 import ui.stockdetail.DetailMainPanel;
 import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
@@ -58,6 +59,8 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawString("this is StockListPanel", 200, 200);
+		g.drawImage(GraphicsUtils.getImage("bg//bg_s"),0,0,null);
+		
 	}
 	
 

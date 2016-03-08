@@ -12,6 +12,7 @@ import org.dom4j.Element;
 
 import blimpl.APIBlImpl;
 import blservice.APIBlservice;
+import ui.config.GraphicsUtils;
 import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
 import ui.tool.MyTable;
@@ -45,6 +46,7 @@ public class BenchMarkListPanel extends MyPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawString("this is BenchMarkListPanel", 200, 200);
+		g.drawImage(GraphicsUtils.getImage("bg//bg_s"),0,0,null);
 	}
 	
 

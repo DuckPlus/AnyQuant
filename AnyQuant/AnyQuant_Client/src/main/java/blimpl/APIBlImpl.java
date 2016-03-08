@@ -112,7 +112,7 @@ public class APIBlImpl implements APIBlservice {
 		return getStocksByTime(stockCode, MyTime.getAnotherDay(-30) , MyTime.getToDay());
 	}
 
-	@Override
+	@Override//TODO
 	public Iterator<StockVO> getStocksByTime(String stockCode , MyDate start, MyDate end) {
 		List<StockPO> pos = APIDataSer.getStockMes(stockCode, start, end);
 		if(pos != null){

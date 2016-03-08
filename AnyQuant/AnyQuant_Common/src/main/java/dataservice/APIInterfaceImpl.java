@@ -153,16 +153,11 @@ public class APIInterfaceImpl implements APIInterface{
 	   * 
 	   */
 	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end) {
-		if( (end.DateToString().equals(MyTime.getToDay().DateToString()) )  && (
+		if( (end.DateToString().equals(MyTime.getToDay().DateToString()) )  && ( start.DateToString().equals(end.DateToString())||
 				 MyTime.getAnotherDay(start,1 ).DateToString().equals(end.DateToString())  ) ){
 			List<StockPO> stocks = new ArrayList<>();
 			stocks.add(getStockMes(stockCode));
 			return  stocks;
-		}
-		
-		if( ( start.DateToString().equals(end.DateToString()) )
-				&&end.DateToString().equals(MyTime.getToDay().DateToString()) ){
-			   return null;
 		}
 		
 		//拿到第一天的前一天有效数据

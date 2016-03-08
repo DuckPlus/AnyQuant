@@ -1,9 +1,8 @@
 package ui.guideui;
 
-import javax.swing.JPanel;
-
 import org.dom4j.Element;
 
+import ui.blockui.BlockPanel;
 import ui.config.CompomentType;
 import ui.listui.BenchMarkListPanel;
 import ui.listui.StockListPanel;
@@ -22,20 +21,21 @@ import ui.tool.PanelController;
  */
 public class MainController extends PanelController {
 
-//	private MySideBarButton StockDetailButton;
+	private MySideBarButton BlockButton;
 	private MySideBarButton StockListButton;
 	private MySideBarButton BenchmarkButton;
 
 	private final static String stockDetailPanelStr = "stockDetailPanel";
 	private final static String stockListPanelStr = "stockListPanel";
 	private final static String benchmarkPanelStr = "benchmarkPanel";
+	private final static String blockPanelStr = "blockPanel";
 	private final static String guidePanelStr = "guidePanel";
 
 	private DetailMainPanel stockDetailPanel;
 	private BenchMarkListPanel benchMarkListPanel;
 	private StockListPanel stockListPanel;
 	private GuidePanel guidePanel;
-	private JPanel leftPanel;
+	private BlockPanel blockPanel;
 
 	public MainController(MyPanel initialPanel, Element root) {
 		super(initialPanel, root.element("changepanel"));
@@ -60,13 +60,13 @@ public class MainController extends PanelController {
 		benchMarkListPanel = new BenchMarkListPanel(
 				e.element(benchmarkPanelStr));
 		guidePanel = new GuidePanel(e.element(guidePanelStr));
-		leftPanel = new JPanel();
-//		leftPanel.setBounds(x, y, width, height);
+		guidePanel = new GuidePanel(e.element(guidePanelStr));
+		blockPanel=new BlockPanel(e.element(blockPanelStr));
 	}
 
 	@Override
 	protected void initButtons(Element e) {
-//		StockDetailButton = new MySideBarButton(e.element("StockDetail"));
+		BlockButton = new MySideBarButton(e.element("Block"));
 		StockListButton = new MySideBarButton(e.element("StockList"));
 		BenchmarkButton = new MySideBarButton(e.element("BenchMark"));
 
@@ -75,7 +75,7 @@ public class MainController extends PanelController {
 	@Override
 	protected void addButtons() {
 		mainPanel.add(BenchmarkButton);
-//		mainPanel.add(StockDetailButton);
+		mainPanel.add(BlockButton);
 		mainPanel.add(StockListButton);
 	}
 
@@ -84,6 +84,7 @@ public class MainController extends PanelController {
 		changePanel.add(benchMarkListPanel, benchmarkPanelStr);
 		changePanel.add(stockDetailPanel, stockDetailPanelStr);
 		changePanel.add(stockListPanel, stockListPanelStr);
+		changePanel.add(blockPanel,blockPanelStr);
 		changePanel.add(guidePanel, guidePanelStr);
 	}
 
@@ -91,8 +92,8 @@ public class MainController extends PanelController {
 	protected void addListeners() {
 		BenchmarkButton.addMouseListener(new MySideBarListener(BenchmarkButton,
 				this, benchmarkPanelStr));
-//		StockDetailButton.addMouseListener(new MySideBarListener(
-//				StockDetailButton, this, stockDetailPanelStr));
+		BlockButton.addMouseListener(new MySideBarListener(
+				BlockButton, this, blockPanelStr));
 		StockListButton.addMouseListener(new MySideBarListener(StockListButton,
 				this, stockListPanelStr));
 
@@ -101,7 +102,7 @@ public class MainController extends PanelController {
 	@Override
 	public void setAllButtonUnClicked() {
 		BenchmarkButton.setMyIcon(ButtonState.NORMAL);
-//		StockDetailButton.setMyIcon(ButtonState.NORMAL);
+		BlockButton.setMyIcon(ButtonState.NORMAL);
 		StockListButton.setMyIcon(ButtonState.NORMAL);
 
 	}
@@ -117,7 +118,7 @@ public class MainController extends PanelController {
 	@Override
 	protected void addToMap() {
 		buttonMap.put(benchmarkPanelStr, BenchmarkButton);
-//		buttonMap.put(stockDetailPanelStr, StockDetailButton);
+		buttonMap.put(blockPanelStr, BlockButton);
 		buttonMap.put(stockListPanelStr, StockListButton);
 
 	}

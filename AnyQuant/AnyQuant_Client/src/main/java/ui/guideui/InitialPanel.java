@@ -1,5 +1,6 @@
 package ui.guideui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -9,6 +10,7 @@ import javax.swing.JFrame;
 
 import org.dom4j.Element;
 
+import ui.config.GraphicsUtils;
 import ui.tool.ButtonState;
 import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
@@ -43,6 +45,7 @@ public class InitialPanel extends MyPanel{
 	public void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
+		g.drawImage(GraphicsUtils.getImage("bg//bg01"),0,0,null);
 		
 	}
 	

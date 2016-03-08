@@ -1,35 +1,23 @@
+/**
+ *@author dsn
+ *@version 2016年3月8日    下午11:59:19
+ */
+
 package ui.guideui;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
 import org.dom4j.Element;
 
-import ui.config.GraphicsUtils;
 import ui.tool.MyPanel;
 
-/**
- * 起始panel
- * @author czq
- * @date 2016年3月2日
- */
-@SuppressWarnings("serial")
-public class GuidePanel extends MyPanel{
+public class LeftPanel extends MyPanel{
 
-	public GuidePanel(Element config) {
-		
+	public LeftPanel(Element config) {
 		super(config);
-		setBackground(new Color(0,0,0,0));
+		setBackground(new Color(205,105,201));
 		// TODO Auto-generated constructor stub
 	}
-	
-	@Override
-	public void paintComponent(Graphics g) {
-		
-		super.paintComponent(g);
-		g.drawImage(GraphicsUtils.getImage("bg//bg_s"),0,0,null);
-	}
-	
 
 	@Override
 	protected void initButtons(Element e) {
@@ -68,3 +56,4 @@ public class GuidePanel extends MyPanel{
 	}
 
 }
+
