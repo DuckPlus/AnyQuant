@@ -42,8 +42,7 @@ public class TestData {
 		List<StockVO> vos=new ArrayList<StockVO>();
 		StockVO vo;
 		for(int i=0;i<k;i++){
-				if(i>=total) i=total-1;//以防越界。。
-				vo=new StockVO(dates[i], "石化油服", "600121",
+				vo=new StockVO(dates[0], "石化油服", "600121",
 						Double.parseDouble(df.format(25+Math.random()*5)),
 						Double.parseDouble(df.format(20+Math.random()*5)), 
 						Double.parseDouble(df.format(20+Math.random()*10)),//open

@@ -1,6 +1,5 @@
 package ui.listui;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -9,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import javax.swing.JLabel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
@@ -18,13 +16,13 @@ import javax.swing.text.Document;
 import org.dom4j.Element;
 
 import ui.stockdetail.DetailMainPanel;
+import ui.stockdetail.MockAPIBlImpl;
 import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
 import ui.tool.MyTable;
 import ui.tool.MyTextField;
 import ui.tool.PanelController;
 import vo.StockVO;
-import blimpl.APIBlImpl;
 import blservice.APIBlservice;
 import enumeration.Stock_Attribute;
 
@@ -168,7 +166,7 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 		
 	}
 	private void initBl(){
-		apiBl =APIBlImpl.getAPIBLService();
+		apiBl =MockAPIBlImpl.getAPIBLService();
 //		apiBl = APIImplCache.getAPIBLService();
 	}
 	private void searchStock(String input){

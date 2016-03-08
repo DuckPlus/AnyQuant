@@ -77,7 +77,7 @@ public class MockAPIBlImpl implements APIBlservice{
 	public Iterator<StockVO> getRecentStocks(String stockCode) {
 		List<StockVO> vos=new ArrayList<StockVO>();
 
-		vos=TestData.getOne_Stock_VOs(30);
+		vos=TestData.getOne_Stock_VOs(1000);
 		return vos.iterator();
 	}
 
