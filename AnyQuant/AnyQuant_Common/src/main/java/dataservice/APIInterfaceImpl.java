@@ -160,9 +160,15 @@ public class APIInterfaceImpl implements APIInterface{
 			return  stocks;
 		}
 		
-		if( ( start.DateToString().equals(end.DateToString()) )
+		if(  start.DateToString().equals(end.DateToString()) 
 				&&end.DateToString().equals(MyTime.getToDay().DateToString()) ){
-			   return null;
+			  List<StockPO> stocks = new ArrayList<>();
+			   return stocks;
+		}
+		
+		if(MyTime.ifEarlier(MyTime.getToDay(), start)){
+			   List<StockPO> stocks = new ArrayList<>();
+			   return stocks;
 		}
 		
 		//拿到第一天的前一天有效数据
