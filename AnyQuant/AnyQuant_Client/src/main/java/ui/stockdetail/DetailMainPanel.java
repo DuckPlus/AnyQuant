@@ -90,8 +90,8 @@ public class DetailMainPanel extends MyPanel{
 	}
 	private void changeColor() {
 		if(changeRate<=0){
-			 stockPriceNow_label.setForeground((new Color(0,139,0)));
-			 changeRate_label.setForeground((new Color(0,139,0)));
+			 stockPriceNow_label.setForeground(Color.GREEN);
+			 changeRate_label.setForeground(Color.GREEN);
 		 }else{
 			 stockPriceNow_label.setForeground((new Color(255,0,0)));
 			 changeRate_label.setForeground((new Color(255,0,0)));
@@ -150,6 +150,12 @@ public class DetailMainPanel extends MyPanel{
 			}
 			i++;
 		}
+<<<<<<< HEAD
+=======
+
+		table.setRowColorDependOnColomn(8);
+
+>>>>>>> de6e54e8266bef06d4ec3b3dfa6f5f9eabd1d6a6
 	}
 
 	@Override

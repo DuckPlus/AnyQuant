@@ -133,7 +133,7 @@ public class APIDataCache implements APIInterface{
 		         BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
 		         for(String line : codes){
 		        	 bufferWritter.write(line+',');
-		        	 System.out.println("write: "+line);
+		        //	 System.out.println("write: "+line);
 		         }
 		         bufferWritter.close();
 		         System.out.println("Done");
@@ -168,12 +168,12 @@ public class APIDataCache implements APIInterface{
                       System.out.println("找不到指定的文件,创建新文件");
                       List<StockPO> result =    new ArrayList<>();
                       List<String> stockCodes = getAllStocks();
-                     int i = 0;
+                    
                       for(String code : stockCodes){
-                    	    if(i<5){
+                    	    
                     	         result .add(api.getStockMes(code));
-                    	    }
-                    	    i++;
+                    	    
+                    	    
                     
                       }
                       writeAllMes(result);
@@ -202,7 +202,7 @@ public class APIDataCache implements APIInterface{
 	         bufferWritter.write(stocks.get(0).getDate()+'\n');
 	         for(StockPO stock: stocks){
 	        	    String temp = stock.MyToString(',')+'\n';
-	        	    System.out.println("write: "+temp);
+	        	  //  System.out.println("write: "+temp);
 	        	    bufferWritter.write(temp);
 	         }
 	         bufferWritter.close();
@@ -264,7 +264,8 @@ public class APIDataCache implements APIInterface{
 	private boolean needUpdate(String preDate){
 		//如果昨天日期与上次纪录不符并且昨天不是周末
 		MyDate yesterday = MyTime.getAnotherDay(-1);
-		if(!preDate.equals(yesterday)&& !MyTime.isWeekend(yesterday)){
+		System.out.println(yesterday.DateToString());
+		if(!preDate.equals(yesterday.DateToString())&& !MyTime.isWeekend(yesterday)){
 			   return true ;
 		}
 		return false;

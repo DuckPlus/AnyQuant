@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,7 +139,12 @@ public class APIInterfaceImpl implements APIInterface{
    */
 	public StockPO getStockMes(String stockCode) {
 		
-        return  getStockMes(stockCode, MyTime.getToDay(), MyTime.getToDay()).get(0);
+		 //当天可能没有数据
+		 MyDate end = MyTime.getToDay();
+		 MyDate  temp = MyTime.getFirstPreWookDay(end);
+		 MyDate    start =   MyTime.getFirstPreWookDay(temp);
+		 List<StockPO>  stocks = getManyMesFunc(stockCode, start, end);
+        return  stocks.get(stocks.size()-1);
   
 	}
 	
@@ -147,31 +153,66 @@ public class APIInterfaceImpl implements APIInterface{
 	   * 
 	   */
 	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end) {
+		if( (end.DateToString().equals(MyTime.getToDay().DateToString()) )  && ( start.DateToString().equals(end.DateToString())||
+				 MyTime.getAnotherDay(start,1 ).DateToString().equals(end.DateToString())  ) ){
+			List<StockPO> stocks = new ArrayList<>();
+			stocks.add(getStockMes(stockCode));
+			return  stocks;
+		}
 		
+		//拿到第一天的前一天有效数据
+		start = MyTime.getFirstPreWookDay(start);
+		
+		if(getMesCount(stockCode, start, end)>=2){
+			return  getManyMesFunc(stockCode, start, end);
+		}else{
+			start = MyTime.getFirstPreWookDay(start);
+			return  getManyMesFunc(stockCode, start, end);
+		}
+		
+	}
+	
+	
+	//确保至少有两个数据再调用该方法，返回的数据不包含第一个（没有preclose）
+	private List<StockPO>   getManyMesFunc(String stockCode, MyDate start , MyDate end){
 		String labels = "open+close+high+low+volume+turnover+pb";
-	    MyDate  preStart = MyTime.getFirstPreWookDay(start);
-		String startTime = preStart.DateToString();
+		String startTime = start.DateToString();
 		String endTime = end.DateToString();
 		String url = "http://121.41.106.89:8010/api/stock/"+stockCode+"/?start="+startTime +"&end="+endTime+"&fields="+labels ;
-	    System.out.println(SendGET(url, ""));
+	    //System.out.println(SendGET(url, ""));
 		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
 		JSONObject data = jo.getJSONObject("data");
 		JSONArray trading_info = data.getJSONArray("trading_info");
 		//System.out.println("size: "+trading_info.size());
-
-			List<StockPO> stocks =  new  ArrayList<>();
+		List<StockPO> stocks =  new  ArrayList<>();
 			for(int i=0;i<trading_info.size();i++){
 				StockPO stock  = MyJSONObject.toBean(trading_info.getJSONObject(i), StockPO.class);
 				stock.setCode(stockCode);
 				stocks.add(stock);
 			}
+			
 			for(int i=1;i<stocks.size();i++){
 				stocks.get(i).setPreClose( stocks.get(i-1).getClose() );
 				stocks.get(i).computeAmplitude();
 			}
-	        stocks.remove(0);
-	        return   stocks;
+			stocks.remove(0);
+		return stocks;
 	}
+	
+	//不确定会有几个数据调用该方法，返回数据个数
+	private  int    getMesCount(String stockCode, MyDate start , MyDate end){
+		String labels = "open+close+high+low+volume+turnover+pb";
+		String startTime = start.DateToString();
+		String endTime = end.DateToString();
+		String url = "http://121.41.106.89:8010/api/stock/"+stockCode+"/?start="+startTime +"&end="+endTime+"&fields="+labels ;
+	    //System.out.println(SendGET(url, ""));
+		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
+		JSONObject data = jo.getJSONObject("data");
+		JSONArray trading_info = data.getJSONArray("trading_info");
+		//System.out.println("size: "+trading_info.size());
+		return trading_info.size();
+	}
+	
 	
 	@Override
 	public List<StockPO> getAllStockMes() {

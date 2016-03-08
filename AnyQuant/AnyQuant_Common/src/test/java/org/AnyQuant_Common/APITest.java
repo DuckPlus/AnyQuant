@@ -1,16 +1,11 @@
 package org.AnyQuant_Common;
 
-
-
-import java.util.ArrayList;
 import java.util.List;
 
 import dataservice.APIDataFactory;
 import dataservice.APIInterface;
 import dataservice.APIInterfaceImpl;
-import enumeration.Exchange;
 import enumeration.MyDate;
-import enumeration.Stock_Attribute;
 import junit.framework.TestCase;
 import po.BenchMarkPO;
 import po.StockPO;
@@ -29,10 +24,8 @@ public class APITest extends TestCase {
         	 MyDate start = new MyDate(2016, 2, 29);
         	 MyDate end = new MyDate(2016, 3, 7);
         	List<StockPO>  stocks =  api.getStockMes("sh600126",start,end);
-        	//StockPO stock =   api.getStockMes("sh600126");
-//        	if(stock==null){
-//        		System.out.println("stock is null");
-//        	}
+        //	StockPO stock =   api.getStockMes("sh600126");
+
         	for(StockPO stock : stocks){
              
         	System.out.print("name: "+stock.getName()+"  ");
