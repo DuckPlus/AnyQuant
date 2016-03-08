@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.JPanel;
@@ -24,7 +26,7 @@ public class MyTable extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	// MyColor color = new MyColor();
+	Map<Integer ,Color> rowColor_map=new HashMap<>();
 	Vector<String> VColumns = new Vector<String>();
 	Vector<String> vData = new Vector<String>();
 	private DefaultTableModel ListModel;
@@ -172,24 +174,33 @@ public class MyTable extends JPanel {
 		return Table;
 	}
 
-	/**
-	 * 设置表格每一行的背景颜色
-	 * 
-	 * 
-	 * @param row0
-	 * @param color
-	 */
-	public void setRowColor(Color[] colors) {
-		System.out.println("MyTable.setRowColor");
-		TableCellRenderer render = new MyDefaultTableRender(colors);
+	private void makeFace(JTable table) {
 		try {
-			for (int i = 0; i < Table.getColumnCount(); i++) {
-				Table.getColumnModel().getColumn(i).setCellRenderer(render);
+			DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
+				public Component getTableCellRendererComponent(JTable table,
+						Object value, boolean isSelected, boolean hasFocus,
+						int row, int column) {
+					// System.out.println("I'm making face!");
+
+					if (rowColor_map == null) {
+						if (row % 2 == 0)
+							setBackground(Color.white);
+						else if (row % 2 == 1)
+							setBackground(new Color(240, 240, 240));
+					} else
+						setBackground(rowColor_map.get(row));
+					return super.getTableCellRendererComponent(table, value,
+							isSelected, hasFocus, row, column);
+				}
+			};
+			for (int i = 0; i < table.getColumnCount(); i++) {
+				table.getColumn(table.getColumnName(i)).setCellRenderer(tcr);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
+
 /*
 	 * 根据第k列的数据 
 	 *决定某行的背景颜色（大于0红 反之绿）
@@ -218,30 +229,6 @@ public class MyTable extends JPanel {
 			   }
 	}
 
-
-
-	private void makeFace(JTable table) {
-		try {
-			DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
-				public Component getTableCellRendererComponent(JTable table,
-						Object value, boolean isSelected, boolean hasFocus,
-						int row, int column) {
-					// System.out.println("I'm making face!");
-					if (row % 2 == 0)
-						setBackground(Color.white);
-					else if (row % 2 == 1)
-						setBackground(new Color(240, 240, 240));
-					return super.getTableCellRendererComponent(table, value,
-							isSelected, hasFocus, row, column);
-				}
-			};
-			for (int i = 0; i < table.getColumnCount(); i++) {
-				table.getColumn(table.getColumnName(i)).setCellRenderer(tcr);
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
 
 	/**
 	 * 设置列宽
@@ -302,5 +289,8 @@ public class MyTable extends JPanel {
 			System.out.println(c);
 		rowSorter.setComparator(c, numberComparator);
 		}
+	}
+	public void setRowColor(int row, Color color) {
+		rowColor_map.put(row, color);
 	}
 }

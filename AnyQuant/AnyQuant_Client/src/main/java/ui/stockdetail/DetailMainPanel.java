@@ -126,6 +126,7 @@ public class DetailMainPanel extends MyPanel{
 	 */
 	private void refreshTable() {
 		table.removeAllItem();
+		int i=0;
 		while(itr.hasNext()){
 			StockVO vo=itr.next();
 			Vector<String>vd = new Vector<String>();
@@ -139,10 +140,17 @@ public class DetailMainPanel extends MyPanel{
 			vd.add(String.format("%.2f",vo.amplitude*100)+"%");
 			vd.add(String.format("%.2f",vo.changeRate*100)+"%");
 			table.addRow(vd);
+			String changeRateStr=table.getValue(i, 8);
+			System.out.println(i+"  "+changeRateStr);
+			if(Double.parseDouble(changeRateStr.substring(0, changeRateStr.length()-1))<=0){
+				table.setRowColor(i,new Color(50,205,50));
+				System.out.println("第"+i+"行 用绿色");
+			}else {
+				table.setRowColor(i,new Color(238,44,44));
+				System.out.println("第"+i+"行 用红色");
+			}
+			i++;
 		}
-
-		table.setRowColorDependOnColomn(8);
-
 	}
 
 	@Override

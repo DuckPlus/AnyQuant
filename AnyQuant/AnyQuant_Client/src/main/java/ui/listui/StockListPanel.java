@@ -1,6 +1,5 @@
 package ui.listui;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -9,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import javax.swing.JLabel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
