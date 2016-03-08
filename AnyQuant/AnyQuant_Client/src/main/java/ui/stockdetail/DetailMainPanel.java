@@ -18,6 +18,7 @@ import ui.tool.MyTable;
 import ui.tool.TipsDialog;
 import util.MyTime;
 import vo.StockVO;
+import blimpl.APIBlImpl;
 import blservice.APIBlservice;
 import enumeration.MyDate;
 
@@ -31,7 +32,7 @@ public class DetailMainPanel extends MyPanel{
 
 	public DetailMainPanel(Element config) {
 		super(config);
-		ctr=MockAPIBlImpl.getAPIBLService();
+		ctr=APIBlImpl.getAPIBLService();
 		initComponent(config);
 		
 	}
@@ -150,12 +151,6 @@ public class DetailMainPanel extends MyPanel{
 			}
 			i++;
 		}
-<<<<<<< HEAD
-=======
-
-		table.setRowColorDependOnColomn(8);
-
->>>>>>> de6e54e8266bef06d4ec3b3dfa6f5f9eabd1d6a6
 	}
 
 	@Override
