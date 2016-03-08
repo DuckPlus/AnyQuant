@@ -159,6 +159,16 @@ public class APIInterfaceImpl implements APIInterface{
 			stocks.add(getStockMes(stockCode));
 			return  stocks;
 		}
+		if(  start.DateToString().equals(end.DateToString()) 
+				&&end.DateToString().equals(MyTime.getToDay().DateToString()) ){
+			  List<StockPO> stocks = new ArrayList<>();
+			   return stocks;
+		}
+		
+		if(MyTime.ifEarlier(MyTime.getToDay(), start)){
+			   List<StockPO> stocks = new ArrayList<>();
+			   return stocks;
+		}
 		
 		//拿到第一天的前一天有效数据
 		start = MyTime.getFirstPreWookDay(start);
