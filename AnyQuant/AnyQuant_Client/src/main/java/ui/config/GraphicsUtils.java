@@ -20,9 +20,9 @@ import org.dom4j.Element;
  * @version 2015年11月23日 上午10:52:51 
  */
 public class GraphicsUtils {
-//	/**
-//	 * 用来存储一组按钮的图片，这组图片可以被反复使用，只需要在xml文件中注明类型即可
-//	 */
+	/**
+	 * 用来存储一组按钮的图片，这组图片可以被反复使用，只需要在xml文件中注明类型即可
+	 */
 	private static Map<String, ButtonOrLabelPicture> labelPictureMap = new HashMap<String, ButtonOrLabelPicture>(30);
 //	
 //	
