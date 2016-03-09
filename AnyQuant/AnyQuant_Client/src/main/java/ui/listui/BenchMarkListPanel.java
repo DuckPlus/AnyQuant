@@ -3,6 +3,8 @@ package ui.listui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -19,6 +21,8 @@ import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
 import ui.tool.MyTable;
 import ui.tool.MyTextField;
+import ui.tool.TipsDialog;
+import util.MyTime;
 import vo.BenchMarkVO;
 
 /**
@@ -44,6 +48,9 @@ public class BenchMarkListPanel extends MyPanel {
 		initLabels(config);
 		initButtons(config);
 		initTextFields(config);
+		initDatePicker(config);
+		addComponent();
+		addListener();
 //		searchAllBenchmark();
 	}
 	
@@ -63,10 +70,11 @@ public class BenchMarkListPanel extends MyPanel {
 
 	@Override
 	protected void initTextFields(Element e) {
-		beginDate = new MyTextField(80,40,100,35);
-		endDate = new MyTextField(200,40,100,35);
-		this.add(beginDate);
-		this.add(endDate);
+		//TODO useless currently
+//		beginDate = new MyTextField(80,40,100,35);
+//		endDate = new MyTextField(200,40,100,35);
+//		this.add(beginDate);
+//		this.add(endDate);
 	}
 
 	@Override
@@ -98,19 +106,24 @@ public class BenchMarkListPanel extends MyPanel {
 
 	@Override
 	protected void addComponent() {
-		// TODO Auto-generated method stub
-
+		this.add(beginDatePicker);
+		this.add(endDatePicker);
 	}
 
 	@Override
 	protected void addListener() {
-		// TODO Auto-generated method stub
-
+		searchBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				searchBenchmark("sh300");
+				super.mousePressed(e);
+			}
+		});
 	}
 	private void initDatePicker(Element e){
 		
-		beginDatePicker = new MyDatePicker(e);
-		endDatePicker = new MyDatePicker(e);
+		beginDatePicker = new MyDatePicker(e.element("beginDatePicker"));
+		endDatePicker = new MyDatePicker(e.element("endDatePicker"));
 	}
 	private void initBl(){
 		apiService = APIBlImpl.getAPIBLService();
@@ -121,9 +134,23 @@ public class BenchMarkListPanel extends MyPanel {
 		showTableData(itr);
 	}
 	private void searchBenchmark(String benchMarkCode){
-		MyDate beginDate = new MyDate(2016, 1, 1);
-		MyDate endDate = new MyDate(2017, 1, 1);
-		Iterator<BenchMarkVO>itr = apiService.getBenchMarkByTime(benchMarkCode, beginDate, endDate);
+		MyDate beginDate = beginDatePicker.getDate();
+		MyDate endDate = endDatePicker.getDate();
+		if(MyTime.ifEarlier(beginDate, endDate)||MyTime.ifSame(beginDate, endDate)){
+//			Iterator<BenchMarkVO>itr = apiService.getBenchMarkByTime(benchMarkCode, beginDate, endDate);
+//			showTableData(itr);	
+			feedBack("查询！此处调用缺失");
+		}else{
+			feedBack("起始日期不能晚于截止日期📅");
+		}
+		
+	}
+	/**
+	 * 反馈提示信息
+	 * @param message
+	 */
+	private void feedBack(String message) {
+		new TipsDialog(message);
 	}
 	private void showTableData(Iterator<BenchMarkVO>itr){
 		BenchmarkListTable.removeAllItem();
