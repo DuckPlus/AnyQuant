@@ -12,7 +12,9 @@ import org.dom4j.Element;
 
 import blimpl.APIBlImpl;
 import blservice.APIBlservice;
+import enumeration.MyDate;
 import ui.config.GraphicsUtils;
+import ui.tool.MyDatePicker;
 import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
 import ui.tool.MyTable;
@@ -31,15 +33,18 @@ public class BenchMarkListPanel extends MyPanel {
 	MyTextField beginDate;
 	MyTextField endDate;
 	MyPictureButton searchBtn;
+	MyDatePicker beginDatePicker;
+	MyDatePicker endDatePicker;
 	JLabel dateInterval_word;
 	
 	public BenchMarkListPanel(Element config) {
 		super(config);
-		this.setBackground(Color.lightGray);
+		initBl();
 		initTable(config.element("benchmarklistTable"));
 		initLabels(config);
 		initButtons(config);
 		initTextFields(config);
+//		searchAllBenchmark();
 	}
 	
 	@Override
@@ -102,12 +107,26 @@ public class BenchMarkListPanel extends MyPanel {
 		// TODO Auto-generated method stub
 
 	}
+	private void initDatePicker(Element e){
+		
+		beginDatePicker = new MyDatePicker(e);
+		endDatePicker = new MyDatePicker(e);
+	}
 	private void initBl(){
 		apiService = APIBlImpl.getAPIBLService();
 	}
 	
 	private void searchAllBenchmark(){
 		Iterator<BenchMarkVO> itr = apiService.getAllBenchMarks();
+		showTableData(itr);
+	}
+	private void searchBenchmark(String benchMarkCode){
+		MyDate beginDate = new MyDate(2016, 1, 1);
+		MyDate endDate = new MyDate(2017, 1, 1);
+		Iterator<BenchMarkVO>itr = apiService.getBenchMarkByTime(benchMarkCode, beginDate, endDate);
+	}
+	private void showTableData(Iterator<BenchMarkVO>itr){
+		BenchmarkListTable.removeAllItem();
 		while(itr.hasNext()){
 			Vector<String>vData = new Vector<String>();
 			BenchMarkVO temp = itr.next();
@@ -120,8 +139,4 @@ public class BenchMarkListPanel extends MyPanel {
 			BenchmarkListTable.addRow(vData);
 		}
 	}
-	private void searchBenchmark(){
-		
-	}
-	
 }
