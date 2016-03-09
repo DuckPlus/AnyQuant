@@ -15,6 +15,7 @@ import javax.swing.text.Document;
 
 import org.dom4j.Element;
 
+import ui.config.GraphicsUtils;
 import ui.stockdetail.DetailMainPanel;
 import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
@@ -58,6 +59,8 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawString("this is StockListPanel", 200, 200);
+		g.drawImage(GraphicsUtils.getImage("bg//bg_s"),0,0,null);
+		
 	}
 	
 
@@ -170,53 +173,19 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 //		apiBl = APIImplCache.getAPIBLService();
 	}
 	private void searchStock(String input){
-		stocklistTable.removeAllItem();
+//		stocklistTable.removeAllItem();
 		Iterator<StockVO> itr = apiBl.getStocksByStockCode(input);
-		
-		while(itr.hasNext()){
-			StockVO temp = itr.next();
-			Vector<String>vData = new Vector<String>();
-			vData.add(temp.name);
-			vData.add(temp.code);
-			vData.add(String.valueOf(temp.open));
-			vData.add(String.valueOf(temp.close));
-			vData.add(String.valueOf(temp.high));
-			vData.add(String.valueOf(temp.low));
-			vData.add(String.valueOf(temp.turnover));
-			vData.add(String.valueOf(temp.volume));
-			vData.add(String.valueOf(temp.amplitude));
-			vData.add(String.valueOf(temp.changeRate));
-			stocklistTable.addRow(vData);
-		}
+		showTableData(itr);
 	}
 	private void searchAllStock(){
-		stocklistTable.removeAllItem();
+//		stocklistTable.removeAllItem();
 		Iterator<StockVO> itr = apiBl.getAllStocks();
-		
-		while(itr.hasNext()){
-			StockVO temp = itr.next();
-			Vector<String>vData = new Vector<String>();
-			vData.add(temp.name);
-			vData.add(temp.code);
-			vData.add(String.valueOf(temp.open));
-			vData.add(String.valueOf(temp.close));
-			vData.add(String.valueOf(temp.high));
-			vData.add(String.valueOf(temp.low));
-			vData.add(String.valueOf(temp.turnover));
-			vData.add(String.valueOf(temp.volume));
-			vData.add(String.valueOf(temp.amplitude));
-			vData.add(String.valueOf(temp.changeRate));
-			stocklistTable.addRow(vData);
-		}
+		showTableData(itr);
 	}
 	private List<String>getCurrentStock(){
-//		System.out.println("get in");
 		List<String>result = new ArrayList<String>();
 		int totalRow = stocklistTable.getRowCount();
-//		System.out.println("TOTAL"+totalRow);
 		for(int i=0;i<totalRow;i++){
-//			System.out.println("i:"+i);
-//			System.out.println("total:"+totalRow);
 			String code = stocklistTable.getValue(i, 1);
 			System.out.println("add:"+code);
 			result.add(code);
@@ -227,11 +196,28 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 	private void sortStockTable(Boolean isUp, Stock_Attribute attr){
 		
 		List<String>CodeList = getCurrentStock();
-		System.out.println(CodeList.size());
 		Iterator<StockVO>itr = apiBl.getSortStocksInScope(isUp, attr, CodeList);
 		stocklistTable.removeAllItem();
 		while(itr.hasNext()){
-			System.out.println("get a value!");
+			StockVO temp = itr.next();
+			Vector<String>vData = new Vector<String>();
+			vData.add(temp.name);
+			vData.add(temp.code);
+			vData.add(String.valueOf(temp.open));
+			vData.add(String.valueOf(temp.close));
+			vData.add(String.valueOf(temp.high));
+			vData.add(String.valueOf(temp.low));
+			vData.add(String.valueOf(temp.turnover));
+			vData.add(String.valueOf(temp.volume));
+			vData.add(String.valueOf(temp.amplitude));
+			vData.add(String.valueOf(temp.changeRate));
+			stocklistTable.addRow(vData);
+		}
+	}
+	
+	private void showTableData(Iterator<StockVO>itr){
+		stocklistTable.removeAllItem();
+		while(itr.hasNext()){
 			StockVO temp = itr.next();
 			Vector<String>vData = new Vector<String>();
 			vData.add(temp.name);

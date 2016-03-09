@@ -1,5 +1,6 @@
 package ui.tool;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
@@ -16,9 +17,9 @@ public abstract class MyPanel extends JPanel{
 	public MyPanel(Element config) {
 		super();
 		this.setLayout(null);
-//		this.setBackground(new Color(241, 241, 241));
 		this.setBounds(Integer.parseInt(config.attributeValue("x")) , Integer.parseInt(config.attributeValue("y")) , Integer.parseInt(config.attributeValue("width")) , Integer.parseInt(config.attributeValue("height")));
 		setVisible(true);
+		setBackground(new Color(0,0,0,0));
 //		initLables(config.element(CompomentType.LABLES.name()));
 //		initButtons(config.element(CompomentType.BUTTONS.name()));
 //		initTextFields(config.element(CompomentType.TEXTFIELDS.name()));

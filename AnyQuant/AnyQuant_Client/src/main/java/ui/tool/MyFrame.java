@@ -31,7 +31,7 @@ public class MyFrame extends JFrame{
 		this.setResizable(false);
 		this.moveFrame();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		this.setBackground(new Color(0,0,0,0));
 		// TODO 
 //		this.setIconImage(GraphicsUtils.getImage("element//icon"));
 		//居中放置

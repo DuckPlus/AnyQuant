@@ -10,6 +10,7 @@ import java.util.Vector;
 import org.dom4j.Element;
 
 import ui.config.CompomentType;
+import ui.config.GraphicsUtils;
 import ui.tool.MyDatePicker;
 import ui.tool.MyLabel;
 import ui.tool.MyPanel;
@@ -55,6 +56,8 @@ public class DetailMainPanel extends MyPanel{
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		g.drawImage(GraphicsUtils.getImage("bg//bg_s"),0,0,null);
+		
 	}
 	@Override
 	protected void initButtons(Element e) {
@@ -144,10 +147,8 @@ public class DetailMainPanel extends MyPanel{
 			System.out.println(i+"  "+changeRateStr);
 			if(Double.parseDouble(changeRateStr.substring(0, changeRateStr.length()-1))<=0){
 				table.setRowColor(i,new Color(50,205,50));
-				System.out.println("第"+i+"行 用绿色");
 			}else {
 				table.setRowColor(i,new Color(238,44,44));
-				System.out.println("第"+i+"行 用红色");
 			}
 			i++;
 		}

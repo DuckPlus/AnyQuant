@@ -1,6 +1,10 @@
-package ui.guideui;
+/**
+ *@author dsn
+ *@version 2016年3月8日    上午8:46:10
+ */
 
-import java.awt.Color;
+package ui.blockui;
+
 import java.awt.Graphics;
 
 import org.dom4j.Element;
@@ -8,28 +12,18 @@ import org.dom4j.Element;
 import ui.config.GraphicsUtils;
 import ui.tool.MyPanel;
 
-/**
- * 起始panel
- * @author czq
- * @date 2016年3月2日
- */
-@SuppressWarnings("serial")
-public class GuidePanel extends MyPanel{
+public class BlockPanel extends MyPanel{
 
-	public GuidePanel(Element config) {
-		
+	public BlockPanel(Element config) {
 		super(config);
-		setBackground(new Color(0,0,0,0));
 		// TODO Auto-generated constructor stub
 	}
-	
 	@Override
-	public void paintComponent(Graphics g) {
-		
-		super.paintComponent(g);
+	public void paint(Graphics g) {
+		super.paint(g);
 		g.drawImage(GraphicsUtils.getImage("bg//bg_s"),0,0,null);
+		g.drawString("Im BlockPanel",200,200);
 	}
-	
 
 	@Override
 	protected void initButtons(Element e) {
@@ -68,3 +62,4 @@ public class GuidePanel extends MyPanel{
 	}
 
 }
+
