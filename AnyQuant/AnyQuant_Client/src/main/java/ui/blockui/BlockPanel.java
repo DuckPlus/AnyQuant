@@ -9,6 +9,7 @@ import java.awt.Graphics;
 
 import org.dom4j.Element;
 
+import ui.config.GraphicsUtils;
 import ui.tool.MyPanel;
 
 public class BlockPanel extends MyPanel{
@@ -20,6 +21,7 @@ public class BlockPanel extends MyPanel{
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+		g.drawImage(GraphicsUtils.getImage("bg//bg_s"),0,0,null);
 		g.drawString("Im BlockPanel",200,200);
 	}
 

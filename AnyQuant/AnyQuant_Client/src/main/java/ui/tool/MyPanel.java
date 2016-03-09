@@ -19,6 +19,7 @@ public abstract class MyPanel extends JPanel{
 		this.setLayout(null);
 		this.setBounds(Integer.parseInt(config.attributeValue("x")) , Integer.parseInt(config.attributeValue("y")) , Integer.parseInt(config.attributeValue("width")) , Integer.parseInt(config.attributeValue("height")));
 		setVisible(true);
+		setBackground(new Color(0,0,0,0));
 //		initLables(config.element(CompomentType.LABLES.name()));
 //		initButtons(config.element(CompomentType.BUTTONS.name()));
 //		initTextFields(config.element(CompomentType.TEXTFIELDS.name()));

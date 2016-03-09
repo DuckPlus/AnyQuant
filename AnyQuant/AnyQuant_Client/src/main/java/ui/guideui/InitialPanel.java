@@ -45,7 +45,7 @@ public class InitialPanel extends MyPanel{
 	public void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
-		g.drawImage(GraphicsUtils.getImage("bg//bg01"),0,0,null);
+		g.drawImage(GraphicsUtils.getImage("bg//bg0"),0,0,null);
 		
 	}
 	
