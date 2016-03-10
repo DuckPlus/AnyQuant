@@ -11,4 +11,14 @@ public class DealVO {
 	public double dealAmount;
 	public long volume;
 	public MyDate date;
+	
+	public DealVO (){
+		
+	}
+	
+	public DealVO(double dealAmont , long volume ,MyDate date){
+		    this.dealAmount = dealAmont;
+		    this.volume = volume;
+		    this.date=date;
+	}
 }

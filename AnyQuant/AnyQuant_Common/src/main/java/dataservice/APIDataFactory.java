@@ -6,7 +6,7 @@ package dataservice;
  */
 public class APIDataFactory {
         public static APIInterface getAPIDataService(){
-        	   APIInterface  api = new APIInterfaceImpl();
+        	   APIInterface  api = APIInterfaceImpl.getAPIInterfaceImpl();
         	   APIInterface  dataService = new APIDataCache(api);
         	   return dataService;
         }
