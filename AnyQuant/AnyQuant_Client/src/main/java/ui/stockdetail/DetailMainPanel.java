@@ -228,7 +228,7 @@ public class DetailMainPanel extends MyPanel{
 				table.getRowCount() - 1, 3));
 		lowest_num = Double.parseDouble(table.getValue(table.getRowCount() - 1,
 				4));
-		dealAmount_num = Double.parseDouble(table.getValue(
+		dealAmount_num = Long.parseLong(table.getValue(
 				table.getRowCount() - 1, 5));
 		String temp=table.getValue(table.getRowCount() - 1,8);
 		changeRate = Double.parseDouble(temp.substring(0, temp.length()-1))/100;
