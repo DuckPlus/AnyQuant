@@ -79,6 +79,12 @@ public class APIDataCache implements APIInterface{
 		// TODO Auto-generated method stub
 		return readAllMes();
 	}
+	
+	
+	@Override
+	public List<String> getAllBenchMarks() {
+		return api.getAllBenchMarks();
+	}
 
 	@Override
 	public BenchMarkPO getBenchMes(String benchCode) {
@@ -91,7 +97,13 @@ public class APIDataCache implements APIInterface{
 		// TODO Auto-generated method stub
 		return api.getBenchMes(benchCode, start, end);
 	}
-	
+
+
+	@Override
+	public List<BenchMarkPO> getAllBenchMes() {
+		// TODO Auto-generated method stub
+		return api.getAllBenchMes();
+	}
 	
 	private List<String> readAllCodes(){
 		try {
@@ -154,7 +166,7 @@ public class APIDataCache implements APIInterface{
                      String temp=bufferedReader.readLine();
                      String [] attrs = null;
                      List<StockPO> result = new ArrayList<StockPO>();
-                     
+                                                 
                      while((temp=bufferedReader.readLine())!=null){
                     	    attrs = temp.split(",");
                     	    StockPO stock = new StockPO(attrs[0],attrs[1],attrs[2],Double.parseDouble(attrs[3]),Double.parseDouble(attrs[4]),Double.parseDouble(attrs[5]),
@@ -168,13 +180,11 @@ public class APIDataCache implements APIInterface{
                       System.out.println("找不到指定的文件,创建新文件");
                       List<StockPO> result =    new ArrayList<>();
                       List<String> stockCodes = getAllStocks();
-                    
+                 
                       for(String code : stockCodes){
-                    	    
-                    	         result .add(api.getStockMes(code));
-                    	    
-                    	    
-                    
+                   
+                    	              result .add(api.getStockMes(code));
+  
                       }
                       writeAllMes(result);
                       return result;
@@ -274,10 +284,7 @@ public class APIDataCache implements APIInterface{
 	
 
 
-	@Override
-	public List<String> getAllBenchMarks() {
-		return api.getAllBenchMarks();
-	}
+
 
 
 	    

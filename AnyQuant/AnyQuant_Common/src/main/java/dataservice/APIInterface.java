@@ -74,6 +74,7 @@ public interface APIInterface {
 	 * @return
 	 */
 	public List<String> getAllBenchMarks();
+	
 	/**
 	 * 只需要传入大盘的代码例如"hs300"，返回当天的全部信息
 	 * 
@@ -81,7 +82,12 @@ public interface APIInterface {
 	 * @return
 	 */
 	public BenchMarkPO getBenchMes(String benchCode);
-
+	
+    /**
+     * 返回全部大盘的当日数据
+     * @return
+     */
+	public List<BenchMarkPO>  getAllBenchMes();
 	/**
 	 * 增加了时间限制
 	 * 

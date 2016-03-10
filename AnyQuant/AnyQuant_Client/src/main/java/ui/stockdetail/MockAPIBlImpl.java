@@ -70,11 +70,6 @@ public class MockAPIBlImpl implements StockBLService{
 		return null;
 	}
 
-	@Override
-	public Iterator<BenchMarkVO> getAllBenchMarks() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Iterator<StockVO> getRecentStocks(String stockCode) {

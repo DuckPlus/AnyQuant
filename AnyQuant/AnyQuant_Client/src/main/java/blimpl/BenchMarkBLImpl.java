@@ -3,12 +3,18 @@ package blimpl;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import po.BenchMarkPO;
+import po.StockPO;
 import util.MyTime;
 import vo.BenchMarkVO;
+import vo.StockVO;
 import enumeration.MyDate;
 import blservice.BenchMarkBLService;
+import dataservice.APIDataFactory;
+import dataservice.APIInterface;
 
 /**
  *
@@ -20,10 +26,21 @@ public class BenchMarkBLImpl implements BenchMarkBLService {
 	 * 大盘数据
 	 */
 	private List<BenchMarkVO> benchMarkVOs;
+	private Map<String , BenchMarkVO> benchMap;
+	private APIInterface APIDataSer; 
 	
 	public BenchMarkBLImpl() {
 		// TODO Auto-generated constructor stub
+		APIDataSer = APIDataFactory.getAPIDataService();
 		List<String> benchCodes = APIDataSer.getAllBenchMarks();
+		benchMarkVOs = new ArrayList<>(benchCodes.size());
+		benchMap = new TreeMap<String, BenchMarkVO>();
+		List<BenchMarkPO>  benchMarkPOs = APIDataSer.getAllBenchMes();
+		for(BenchMarkPO po : benchMarkPOs){
+		
+			benchMap.put(po.getCode(), (BenchMarkVO) VOPOchange.POtoVO(po));
+		}
+		benchMarkVOs = new ArrayList<BenchMarkVO>(benchMap.values());
 	}
 	
 	
@@ -45,8 +62,8 @@ public class BenchMarkBLImpl implements BenchMarkBLService {
 		List<BenchMarkPO> pos = APIDataSer.getBenchMes(BenchMarkCode, start, end);
 		if(pos != null){
 			List<BenchMarkVO> result = new ArrayList<BenchMarkVO>(pos.size());
-			for (BenchMarkVO benchMarkVO : result) {
-				result.add((BenchMarkVO) VOPOchange.POtoVO(benchMarkVO));
+			for (BenchMarkPO benchMarkPO : pos) {
+				result.add((BenchMarkVO) VOPOchange.POtoVO(benchMarkPO));
 			}
 			return result.iterator();
 		}else{

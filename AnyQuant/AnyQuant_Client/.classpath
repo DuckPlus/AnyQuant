@@ -27,5 +27,7 @@
 	<classpathentry kind="lib" path="library/jython-standalone-2.7.0.jar"/>
 	<classpathentry kind="lib" path="library/datepicker.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="library/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="library/jfreechart-1.0.19.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -12,7 +12,9 @@ import javax.swing.JLabel;
 
 import org.dom4j.Element;
 
+import blimpl.BenchMarkBLImpl;
 import blimpl.StockBLImpl;
+import blservice.BenchMarkBLService;
 import blservice.StockBLService;
 import enumeration.MyDate;
 import ui.config.GraphicsUtils;
@@ -32,7 +34,7 @@ import vo.BenchMarkVO;
  */
 @SuppressWarnings("serial")
 public class BenchMarkListPanel extends MyPanel {
-	StockBLService apiService;
+	BenchMarkBLService apiService;
 	MyTable BenchmarkListTable;
 	MyTextField beginDate;
 	MyTextField endDate;
@@ -101,7 +103,7 @@ public class BenchMarkListPanel extends MyPanel {
 				Integer.valueOf(e.attributeValue("height")), vhead);
 		
 		this.add(BenchmarkListTable);
-
+		searchAllBenchmark();
 	}
 
 	@Override
@@ -115,7 +117,8 @@ public class BenchMarkListPanel extends MyPanel {
 		searchBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				searchBenchmark("sh300");
+				System.out.println("search benchmark");
+				searchBenchmark("hs300");
 				super.mousePressed(e);
 			}
 		});
@@ -126,7 +129,8 @@ public class BenchMarkListPanel extends MyPanel {
 		endDatePicker = new MyDatePicker(e.element("endDatePicker"));
 	}
 	private void initBl(){
-		apiService = StockBLImpl.getAPIBLService();
+//		apiService = StockBLImpl.getAPIBLService();
+		apiService = new BenchMarkBLImpl();
 	}
 	
 	private void searchAllBenchmark(){
@@ -136,12 +140,16 @@ public class BenchMarkListPanel extends MyPanel {
 	private void searchBenchmark(String benchMarkCode){
 		MyDate beginDate = beginDatePicker.getDate();
 		MyDate endDate = endDatePicker.getDate();
+		System.out.println(beginDate.DateToString());
+		System.out.println(endDate.DateToString());
+		
 		if(MyTime.ifEarlier(beginDate, endDate)||MyTime.ifSame(beginDate, endDate)){
-//			Iterator<BenchMarkVO>itr = apiService.getBenchMarkByTime(benchMarkCode, beginDate, endDate);
-//			showTableData(itr);	
-			feedBack("查询！此处调用缺失");
+			Iterator<BenchMarkVO>itr = apiService.getBenchMarkByTime(benchMarkCode, beginDate, endDate);
+			System.out.println(itr.hasNext());
+			showTableData(itr);	
+//			feedBack("查询！此处调用缺失");
 		}else{
-			feedBack("起始日期不能晚于截止日期📅");
+			feedBack("起始日期不能晚于截止日期");
 		}
 		
 	}
@@ -153,8 +161,10 @@ public class BenchMarkListPanel extends MyPanel {
 		new TipsDialog(message);
 	}
 	private void showTableData(Iterator<BenchMarkVO>itr){
+		System.out.println("SHOW DATA");
 		BenchmarkListTable.removeAllItem();
 		while(itr.hasNext()){
+			System.out.println("show 1");
 			Vector<String>vData = new Vector<String>();
 			BenchMarkVO temp = itr.next();
 			vData.add(temp.date);

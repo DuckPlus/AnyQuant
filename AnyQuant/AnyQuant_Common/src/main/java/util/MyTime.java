@@ -13,35 +13,60 @@ import enumeration.MyDate;
  *
  */
 public class MyTime {
-	    public static MyDate getAnotherDay(int offset) {  
-                 Calendar calendar = Calendar.getInstance();  
-                 calendar.add(Calendar.DAY_OF_MONTH, offset);  
-                 int year = calendar.get(Calendar.YEAR);
-                 int month =  calendar.get(Calendar.MONTH)+1;
-                 int day = calendar.get(Calendar.DATE);
-                 MyDate date  = new MyDate(year, month, day);
-                return date;  
-        }  
-	    
+	
+	
+	
+	     
+
+	   /**
+	    * 返回当前时期包括时间
+	    * @return
+	    */
 	    public static MyDate getToDay() {  
 	            Calendar calendar = Calendar.getInstance();  
-                int year = calendar.get(Calendar.YEAR);
-                int month =  calendar.get(Calendar.MONTH)+1;
-                int day = calendar.get(Calendar.DATE);
-                MyDate date  = new MyDate(year, month, day);
+	            MyDate date  = MyTime.CreateMyDate(calendar);
                 return date;  
 	    }  
 	    
+	    /**
+	     * 以某个日期为基准，偏移量的单位为天
+	     * @param date
+	     * @param offset
+	     * @return
+	     */
 	    public static MyDate getAnotherDay(MyDate date , int offset) {  
             Calendar calendar = Calendar.getInstance();  
             calendar.set(date.getYear(),date.getMonth()-1, date.getDay());
             calendar.add(Calendar.DAY_OF_MONTH, offset);  
-            int year = calendar.get(Calendar.YEAR);
-            int month =  calendar.get(Calendar.MONTH)+1;
-            int day = calendar.get(Calendar.DATE);
-            MyDate myDate  = new MyDate(year, month, day);
-            return myDate;  
-    }  
+            MyDate date1  = MyTime.CreateMyDate(calendar);
+            return date1;  
+        }  
+	    
+	    /**
+	     * 参数为距离今天的天数偏移量，-1表示昨天，1表示明天
+	     * @param offset
+	     * @return
+	     */
+	    public static MyDate getAnotherDay(int offset) {  
+                 Calendar calendar = Calendar.getInstance();  
+                 calendar.add(Calendar.DAY_OF_MONTH, offset);  
+                 MyDate date  = MyTime.CreateMyDate(calendar);
+                 return date;  
+        }  
+	    
+	    
+	     private static MyDate  CreateMyDate(Calendar calendar){
+	    	 int year = calendar.get(Calendar.YEAR);
+             int month =  calendar.get(Calendar.MONTH)+1;
+             int day = calendar.get(Calendar.DATE);
+             int hour = calendar.get(Calendar.HOUR_OF_DAY);
+             int min = calendar.get(Calendar.MINUTE);
+             int second = calendar.get(Calendar.SECOND);
+             MyDate date  = new MyDate(year, month, day,hour,min,second);
+             return date;
+	     }
+	     
+	     
 	    /**
 	     * @author dsn
 	     * 判断A是否早于B 等于或晚于则返回false
@@ -54,8 +79,8 @@ public class MyTime {
 	    	Date a=new Date();
 	    	Date b=new Date();
 	    	try {
-				a=df.parse(dateA.DateToString());
-				b=df.parse(dateB.DateToString());
+				a=df.parse(dateA.AllToString());
+				b=df.parse(dateB.AllToString());
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -104,7 +129,7 @@ public class MyTime {
 		 * @param date
 		 * @return
 		 */
-		public static  MyDate  getFirstPreWookDay(MyDate date){
+		public static  MyDate  getFirstPreWorkDay(MyDate date){
 			   int i=-1;
 			   boolean bool =MyTime.isWeekend(MyTime.getAnotherDay(date, i)) ;
 			   while(bool){
