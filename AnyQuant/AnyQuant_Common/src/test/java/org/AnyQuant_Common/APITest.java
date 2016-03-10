@@ -23,7 +23,7 @@ public class APITest extends TestCase {
 //            System.out.println(MyTime.getAnotherDay(0).AllToString());
          }
          public  static void getAllstocksMessageByAPI(){
-        	 APIInterface api = new APIInterfaceImpl();
+        	 APIInterface api =  APIInterfaceImpl.getAPIInterfaceImpl();
         	 MyDate start = new MyDate(2016, 2, 29);
         	 MyDate end = new MyDate(2016, 3, 7);
         	List<StockPO>  stocks =  api.getStockMes("sh600126",start,end);
@@ -46,7 +46,7 @@ public class APITest extends TestCase {
          }
 
          public static void getBenchMes(){
-        	 APIInterface api = new APIInterfaceImpl();
+        	 APIInterface api =  APIInterfaceImpl.getAPIInterfaceImpl();
         	 BenchMarkPO stock = api.getBenchMes("hs300");
 //        	 MyDate start = new MyDate(2016, 3, 9);
 //        	 MyDate end = new MyDate(2016, 3, 10);

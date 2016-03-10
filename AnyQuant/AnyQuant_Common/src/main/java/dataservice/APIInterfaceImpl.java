@@ -28,6 +28,20 @@ import enumeration.MyDate;
  */
 public class APIInterfaceImpl implements APIInterface{
     
+	 private static  APIInterfaceImpl apiInterfaceImpl;
+	 private APIInterfaceImpl(){
+		
+	 }
+	 
+	 public static APIInterface getAPIInterfaceImpl(){
+		 if(apiInterfaceImpl==null){
+			 return new APIInterfaceImpl();
+		 }else{
+			 return apiInterfaceImpl;
+		 }
+	 }
+	 
+	
 	
 	/**
 	 *此方法用来建立url-connection并返回API所提供的全部初始数据 
