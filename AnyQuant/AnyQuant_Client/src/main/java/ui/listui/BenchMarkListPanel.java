@@ -117,6 +117,7 @@ public class BenchMarkListPanel extends MyPanel {
 		searchBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				System.out.println("search benchmark");
 				searchBenchmark("sh300");
 				super.mousePressed(e);
 			}
@@ -140,9 +141,9 @@ public class BenchMarkListPanel extends MyPanel {
 		MyDate beginDate = beginDatePicker.getDate();
 		MyDate endDate = endDatePicker.getDate();
 		if(MyTime.ifEarlier(beginDate, endDate)||MyTime.ifSame(beginDate, endDate)){
-//			Iterator<BenchMarkVO>itr = apiService.getBenchMarkByTime(benchMarkCode, beginDate, endDate);
-//			showTableData(itr);	
-			feedBack("查询！此处调用缺失");
+			Iterator<BenchMarkVO>itr = apiService.getBenchMarkByTime(benchMarkCode, beginDate, endDate);
+			showTableData(itr);	
+//			feedBack("查询！此处调用缺失");
 		}else{
 			feedBack("起始日期不能晚于截止日期📅");
 		}
