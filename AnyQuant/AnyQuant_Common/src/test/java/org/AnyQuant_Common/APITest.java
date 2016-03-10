@@ -15,7 +15,7 @@ import util.MyTime;
 public class APITest extends TestCase {
          public static void main(String a[]){
         	  //  getAllstocksMessageByAPI();
-        	 //getBenchMes();
+        	 getBenchMes();
         	   // getStockCode();
         	// getAllMesByCache();
         //	 System.out.println(MyTime.getToDay().DateToString()+" "+MyTime.getToDay().TimeToString());
@@ -46,12 +46,13 @@ public class APITest extends TestCase {
          }
 
          public static void getBenchMes(){
+        	 
         	 APIInterface api =  APIInterfaceImpl.getAPIInterfaceImpl();
-        	 BenchMarkPO stock = api.getBenchMes("hs300");
-//        	 MyDate start = new MyDate(2016, 3, 9);
-//        	 MyDate end = new MyDate(2016, 3, 10);
-//        	 List<BenchMarkPO> benchs = api.getBenchMes("hs300", start, end);
-//        	 for(BenchMarkPO stock : benchs){
+        	// BenchMarkPO stock = api.getBenchMes("hs300");
+        	 MyDate start = new MyDate(2016, 3, 1);
+        	 MyDate end = new MyDate(2016, 3, 10);
+        	 List<BenchMarkPO> benchs = api.getBenchMes("hs300", start, end);
+        	 for(BenchMarkPO  stock: benchs){
         		            System.out.print("date: "+stock.getDate()+" ");
         		        	System.out.print("code: "+stock.getCode()+" ");
         		        	System.out.print("open: "+stock.getOpen()+" ");
@@ -59,8 +60,8 @@ public class APITest extends TestCase {
         		          	System.out.print("high: "+stock.getHigh()+" ");
         		          	System.out.print("low: "+stock.getLow()+" ");
         		          	System.out.print("adj_price: "+stock.getAdj_price()+'\n');
-//        		        	
-//        		 }
+        		        	
+        		 }
         		        
          }
          
@@ -75,6 +76,7 @@ public class APITest extends TestCase {
         		 System.out.println("null");
         	 }
          }
+         
          
          
          public static void getAllMesByCache(){
