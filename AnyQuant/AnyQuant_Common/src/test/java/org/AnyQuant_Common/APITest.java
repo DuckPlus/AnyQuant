@@ -9,15 +9,18 @@ import enumeration.MyDate;
 import junit.framework.TestCase;
 import po.BenchMarkPO;
 import po.StockPO;
+import util.MyTime;
 
 
 public class APITest extends TestCase {
          public static void main(String a[]){
         	  //  getAllstocksMessageByAPI();
-        	 getBenchMes();
+        	 //getBenchMes();
         	   // getStockCode();
         	// getAllMesByCache();
-        	 
+        //	 System.out.println(MyTime.getToDay().DateToString()+" "+MyTime.getToDay().TimeToString());
+            System.out.println(MyTime.getAnotherDay(-1).AllToString());
+            System.out.println(MyTime.getAnotherDay(0).AllToString());
          }
          public  static void getAllstocksMessageByAPI(){
         	 APIInterface api = new APIInterfaceImpl();
