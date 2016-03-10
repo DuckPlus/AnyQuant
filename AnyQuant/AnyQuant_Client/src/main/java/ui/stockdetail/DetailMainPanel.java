@@ -20,7 +20,7 @@ import ui.tool.TipsDialog;
 import util.MyTime;
 import vo.StockVO;
 import blimpl.APIBlImpl;
-import blservice.APIBlservice;
+import blservice.StockBLService;
 import enumeration.MyDate;
 
 /**
@@ -258,6 +258,6 @@ public class DetailMainPanel extends MyPanel{
 	private MyLabel todayOpen,yestodayClose,highest,lowest,dealAmount;
 	private MyDatePicker start_datePicker,end_datePicker;
 	private MyTable table;
-	private APIBlservice ctr;
+	private StockBLService ctr;
 	private Iterator<StockVO> itr;
 }

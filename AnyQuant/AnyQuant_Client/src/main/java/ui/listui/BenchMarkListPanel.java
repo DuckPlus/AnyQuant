@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import org.dom4j.Element;
 
 import blimpl.APIBlImpl;
-import blservice.APIBlservice;
+import blservice.StockBLService;
 import enumeration.MyDate;
 import ui.config.GraphicsUtils;
 import ui.tool.MyDatePicker;
@@ -28,7 +28,7 @@ import vo.BenchMarkVO;
  */
 @SuppressWarnings("serial")
 public class BenchMarkListPanel extends MyPanel {
-	APIBlservice apiService;
+	StockBLService apiService;
 	MyTable BenchmarkListTable;
 	MyTextField beginDate;
 	MyTextField endDate;

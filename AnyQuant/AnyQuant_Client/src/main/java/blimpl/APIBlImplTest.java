@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import enumeration.Stock_Attribute;
 import vo.StockVO;
-import blservice.APIBlservice;
+import blservice.StockBLService;
 import junit.framework.TestCase;
 
 /**
@@ -14,7 +14,7 @@ import junit.framework.TestCase;
  */
 public class APIBlImplTest extends TestCase {
 	
-	APIBlservice api;
+	StockBLService api;
 	
 	protected void setUp() throws Exception {
 		super.setUp();

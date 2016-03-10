@@ -4,7 +4,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import vo.BenchMarkVO;
+import vo.DealVO;
+import vo.OHLC_VO;
 import vo.StockVO;
+import vo.TimeSharingVO;
 import enumeration.MyDate;
 import enumeration.Stock_Attribute;
 
@@ -14,28 +17,32 @@ import enumeration.Stock_Attribute;
  * @date 2016年3月4日
  */
 
-public interface APIBlservice {
+public interface StockBLService {
+	
+	public List<OHLC_VO> getDayOHLC_Data(String stockCode, MyDate start,
+			MyDate end );
+	
+	public List<OHLC_VO> getWeekOHLC_Data(String stockCode, MyDate start,
+			int weekNum);
+	
+	public List<OHLC_VO> getMonthOHLC_Data(String stockCode, MyDate start,
+			MyDate end );
+	
+	public List<TimeSharingVO> getSharingVOs(String stockCode);
+	
+	public List<DealVO> getDealVOs(String stockCode, MyDate start,
+			MyDate end);
+	
+	
+	
+	
 	/**
 	 * 获得所有股票的所有数据
 	 * @return 股票集合的迭代器
 	 */
 	public Iterator<StockVO> getAllStocks();
 	
-	/**
-	 * 获得某只大盘最近一个月的所有数据
-	 * @param BenchMarkCode
-	 * @return  最近一个月数据集合的迭代器,如果该大盘不存在，返回null
-	 */
-	public Iterator<BenchMarkVO> getRecentBenchMarks(String BenchMarkCode);
-	/**
-	 * 获得某只大盘某段时间内的所有数据
-	 * @param BenchMarkCode
-	 * @param start
-	 * @param end
-	 * @return 如果该大盘不存在，返回null
-	 */
-	public Iterator<BenchMarkVO> getBenchMarkByTime(String BenchMarkCode, MyDate start,
-			MyDate end);
+	
 	/**
 	 * 
 	 * @param isUp 是否为升序

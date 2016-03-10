@@ -24,7 +24,7 @@ import ui.tool.MyTextField;
 import ui.tool.PanelController;
 import vo.StockVO;
 import blimpl.APIBlImpl;
-import blservice.APIBlservice;
+import blservice.StockBLService;
 import enumeration.Stock_Attribute;
 
 /**
@@ -42,7 +42,7 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 //	JLabel sortVolumeBtn;
 	
 	
-	APIBlservice apiBl;// = APIBlImpl.getAPIBLService();
+	StockBLService apiBl;// = APIBlImpl.getAPIBLService();
 	public StockListPanel(Element config,PanelController panelController,DetailMainPanel StockDetailPanel) {
 		super(config);
 		this.panelController = panelController;
