@@ -6,11 +6,10 @@ public class StockPO implements InitialBean {
 	 private String date ,name,code;
 	 private double high ,low;
 	 private double open,close,preClose;
-	 private double adj_price;
 	 private long volume;
-	 private double turnover;
-	 private double pe_ttm;
-	 private double pb;
+	 private double turnover;	
+	 private double pb,pe_ttm;
+	 private double adj_price;
 	 //尚未实现
 	 private double amplitude;
 	 //尚未实现
@@ -41,7 +40,7 @@ public class StockPO implements InitialBean {
 		this.amplitude = amplitude;
 		this.changeRate = changeRate;
 	}
-
+  
 	public String getDate() {
 		return date;
 	}
@@ -53,7 +52,15 @@ public class StockPO implements InitialBean {
 	public String getCode() {
 		return code;
 	}
-
+    
+	public double getPe_ttm(){
+		return this.pe_ttm;
+	}
+	
+	public double getAdj_price(){
+		return this.adj_price;
+	}
+	
 	public double getHigh() {
 		return high;
 	}
@@ -70,9 +77,7 @@ public class StockPO implements InitialBean {
 		return close;
 	}
 
-	public double getAdj_Price() {
-		return adj_price;
-	}
+
 
 	public long getVolume() {
 		return volume;
@@ -82,9 +87,7 @@ public class StockPO implements InitialBean {
 		return turnover;
 	}
 
-	public double getPe() {
-		return pe_ttm;
-	}
+
 
 	public double getPb() {
 		return pb;
@@ -109,6 +112,14 @@ public class StockPO implements InitialBean {
 	public void setCode(String code) {
 		this.code = code;
 	}
+	
+	public void setPe_ttm(double pe_ttm){
+		this.pe_ttm=pe_ttm;
+	}
+	
+	public void setAdj_price(double adj_price){
+		this.adj_price=adj_price;
+	}
 
 	public void setHigh(double high) {
 		this.high = high;
@@ -126,9 +137,7 @@ public class StockPO implements InitialBean {
 		this.close = close;
 	}
 
-	public void setAdj_Price(double adj_Price) {
-		this.adj_price = adj_Price;
-	}
+
 
 	public void setVolume(long volume) {
 		this.volume = volume;
@@ -138,9 +147,7 @@ public class StockPO implements InitialBean {
 		this.turnover = turnover;
 	}
 
-	public void setPe(double pe) {
-		this.pe_ttm = pe;
-	}
+
 
 	public void setPb(double pb) {
 		this.pb = pb;

@@ -179,14 +179,14 @@ public class APIDataCache implements APIInterface{
             }else{
                       System.out.println("找不到指定的文件,创建新文件");
                       List<StockPO> result =    new ArrayList<>();
-                      List<String> stockCodes = getAllStocks();
-                    
-                      for(String code : stockCodes){
-                    	    
-                    	         result .add(api.getStockMes(code));
-                    	    
-                    	    
-                    
+                 //     List<String> stockCodes = getAllStocks();
+                      List<String> temp = new ArrayList<>();
+                      temp.add("sh600001");   temp.add("sh600126");
+                      
+                      for(String code : temp){
+                   
+                    	              result .add(api.getStockMes(code));
+  
                       }
                       writeAllMes(result);
                       return result;
