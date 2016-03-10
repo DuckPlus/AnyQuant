@@ -19,7 +19,7 @@ import ui.tool.MyTable;
 import ui.tool.TipsDialog;
 import util.MyTime;
 import vo.StockVO;
-import blimpl.APIBlImpl;
+import blimpl.StockBLImpl;
 import blservice.StockBLService;
 import enumeration.MyDate;
 
@@ -33,7 +33,7 @@ public class DetailMainPanel extends MyPanel{
 
 	public DetailMainPanel(Element config) {
 		super(config);
-		ctr=APIBlImpl.getAPIBLService();
+		ctr=StockBLImpl.getAPIBLService();
 		initComponent(config);
 		
 	}

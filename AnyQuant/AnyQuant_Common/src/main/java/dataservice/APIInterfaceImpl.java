@@ -223,7 +223,10 @@ public class APIInterfaceImpl implements APIInterface{
 		return trading_info.size();
 	}
 	
-	
+	/**
+	 * 获取所有股票的最新信息列表
+	 * 在APIDataCache中实现
+	 */
 	@Override
 	public List<StockPO> getAllStockMes() {
 		// TODO Auto-generated method stub
@@ -232,8 +235,8 @@ public class APIInterfaceImpl implements APIInterface{
 	
 	@Override
 	public BenchMarkPO getBenchMes(String benchCode) {
-		
-		return null;
+		List<BenchMarkPO> benchs =getBenchMes(benchCode, MyTime.getAnotherDay(-1),MyTime.getToDay());
+		return benchs.get(benchs.size()-1);
 	}
 	
 	@Override
@@ -242,7 +245,7 @@ public class APIInterfaceImpl implements APIInterface{
 		String startTime = start.DateToString();
 		String endTime = end.DateToString();
 		String url = "http://121.41.106.89:8010/api/benchmark/"+benchCode+"/?start="+startTime +"&end="+endTime+"&fields="+labels ;
-	  //  System.out.println(SendGET(url, ""));
+	    System.out.println(SendGET(url, ""));
 		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
 		JSONObject data = jo.getJSONObject("data");
 		JSONArray trading_info = data.getJSONArray("trading_info");
@@ -256,7 +259,9 @@ public class APIInterfaceImpl implements APIInterface{
 		return benchs;
 	}
 	
-	
+	/**
+	 * 返回所有大盘代码,目前只有hs300
+	 */
 	@Override
 	public List<String> getAllBenchMarks() {
 		

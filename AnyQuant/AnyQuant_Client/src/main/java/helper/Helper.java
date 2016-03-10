@@ -15,7 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import vo.StockVO;
-import blimpl.APIBlImpl;
+import blimpl.StockBLImpl;
 import blservice.StockBLService;
 import enumeration.CacheData;
 
@@ -58,7 +58,7 @@ public class Helper {
 	 */
 	public static void updateCache(CacheData data){
 		StockBLService api;
-		api = APIBlImpl.getAPIBLService();
+		api = StockBLImpl.getAPIBLService();
 		Iterator<StockVO> datas = api.getAllStocks();
 		
 		

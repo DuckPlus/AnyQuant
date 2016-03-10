@@ -18,7 +18,7 @@ public class APIBlImplTest extends TestCase {
 	
 	protected void setUp() throws Exception {
 		super.setUp();
-		api = APIBlImpl.getAPIBLService();
+		api = StockBLImpl.getAPIBLService();
 	}
 
 	public void testGetAPIBLService() {
