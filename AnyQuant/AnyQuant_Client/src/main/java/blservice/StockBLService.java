@@ -3,7 +3,6 @@ package blservice;
 import java.util.Iterator;
 import java.util.List;
 
-import vo.BenchMarkVO;
 import vo.DealVO;
 import vo.OHLC_VO;
 import vo.StockVO;
@@ -12,24 +11,52 @@ import enumeration.MyDate;
 import enumeration.Stock_Attribute;
 
 /**
- *
+ * 股票相关逻辑层接口
  * @author czq
  * @date 2016年3月4日
  */
 
 public interface StockBLService {
-	
+	/**
+	 * 
+	 * @param stockCode
+	 * @param start
+	 * @param end
+	 * @return
+	 */
 	public List<OHLC_VO> getDayOHLC_Data(String stockCode, MyDate start,
 			MyDate end );
-	
+	/**
+	 * 
+	 * @param stockCode
+	 * @param start
+	 * @param weekNum
+	 * @return
+	 */
 	public List<OHLC_VO> getWeekOHLC_Data(String stockCode, MyDate start,
 			int weekNum);
-	
+	/**
+	 * 
+	 * @param stockCode
+	 * @param start
+	 * @param end
+	 * @return
+	 */
 	public List<OHLC_VO> getMonthOHLC_Data(String stockCode, MyDate start,
 			MyDate end );
-	
+	/**
+	 * 
+	 * @param stockCode
+	 * @return
+	 */
 	public List<TimeSharingVO> getSharingVOs(String stockCode);
-	
+	/**
+	 * 
+	 * @param stockCode
+	 * @param start
+	 * @param end
+	 * @return
+	 */
 	public List<DealVO> getDealVOs(String stockCode, MyDate start,
 			MyDate end);
 	
@@ -61,10 +88,7 @@ public interface StockBLService {
 	public Iterator<StockVO> getSortStocksInScope(boolean isUp,
 			Stock_Attribute attr, List<String> stocksCode);
 
-	/**
-	 * 获得所有大盘的所有数据
-	 */
-	public Iterator<BenchMarkVO> getAllBenchMarks();
+	
 
 	/**
 	 * 获得某只股票最近一个月的数据

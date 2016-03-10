@@ -26,7 +26,7 @@ import enumeration.Stock_Attribute;
  * @author czq
  * @date 2016年3月4日
  */
-public class APIBlImpl implements StockBLService {
+public class StockBLImpl implements StockBLService {
 	/**
 	 * 单例模式
 	 */
@@ -45,7 +45,7 @@ public class APIBlImpl implements StockBLService {
 	/*
 	 * 为了加快测试速度，在开发阶段只引入100只股票
 	 */
-	private APIBlImpl() {
+	private StockBLImpl() {
 		APIDataSer = APIDataFactory.getAPIDataService();
 		List<StockPO> stocksCode = APIDataSer.getAllStockMes();
 		stockMap = new TreeMap<String, StockVO>();
@@ -81,7 +81,7 @@ public class APIBlImpl implements StockBLService {
 	
 	public static StockBLService getAPIBLService(){
 		if(APIBlservice == null){
-			APIBlservice = new APIBlImpl();
+			APIBlservice = new StockBLImpl();
 		}
 		return APIBlservice;
 	}

@@ -6,11 +6,15 @@ import vo.BenchMarkVO;
 import enumeration.MyDate;
 
 /**
- *
+ * 大盘接口
  * @author czq
  * @date 2016年3月10日
  */
 public interface BenchMarkBLService {
+	/**
+	 * 获得所有大盘的所有数据
+	 */
+	public Iterator<BenchMarkVO> getAllBenchMarks();
 	/**
 	 * 获得某只大盘最近一个月的所有数据
 	 * @param BenchMarkCode

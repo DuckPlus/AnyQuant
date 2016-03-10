@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 
 import org.dom4j.Element;
 
-import blimpl.APIBlImpl;
+import blimpl.StockBLImpl;
 import blservice.StockBLService;
 import enumeration.MyDate;
 import ui.config.GraphicsUtils;
@@ -126,7 +126,7 @@ public class BenchMarkListPanel extends MyPanel {
 		endDatePicker = new MyDatePicker(e.element("endDatePicker"));
 	}
 	private void initBl(){
-		apiService = APIBlImpl.getAPIBLService();
+		apiService = StockBLImpl.getAPIBLService();
 	}
 	
 	private void searchAllBenchmark(){
