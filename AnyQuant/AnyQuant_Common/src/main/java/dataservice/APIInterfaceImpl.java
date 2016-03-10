@@ -11,6 +11,8 @@ import java.util.List;
 
 import javax.xml.transform.Templates;
 
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import po.BenchMarkPO;
@@ -268,6 +270,15 @@ public class APIInterfaceImpl implements APIInterface{
 				List <String> list =  new ArrayList<>();
 				list.add("hs300");
 				return list;
+	}
+	@Override
+	public List<BenchMarkPO> getAllBenchMes() {
+		 List<String>  benchCodes = this.getAllBenchMarks();
+		 List<BenchMarkPO>  list = new ArrayList<>();
+		 for(String BenchCode : benchCodes){
+			 list.add(this.getBenchMes(BenchCode));
+		 }
+		return list;
 	}
 
    
