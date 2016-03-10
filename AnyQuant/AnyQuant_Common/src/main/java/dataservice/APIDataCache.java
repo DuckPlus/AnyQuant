@@ -79,6 +79,12 @@ public class APIDataCache implements APIInterface{
 		// TODO Auto-generated method stub
 		return readAllMes();
 	}
+	
+	
+	@Override
+	public List<String> getAllBenchMarks() {
+		return api.getAllBenchMarks();
+	}
 
 	@Override
 	public BenchMarkPO getBenchMes(String benchCode) {
@@ -91,7 +97,13 @@ public class APIDataCache implements APIInterface{
 		// TODO Auto-generated method stub
 		return api.getBenchMes(benchCode, start, end);
 	}
-	
+
+
+	@Override
+	public List<BenchMarkPO> getAllBenchMes() {
+		// TODO Auto-generated method stub
+		return api.getAllBenchMes();
+	}
 	
 	private List<String> readAllCodes(){
 		try {
@@ -274,10 +286,7 @@ public class APIDataCache implements APIInterface{
 	
 
 
-	@Override
-	public List<String> getAllBenchMarks() {
-		return api.getAllBenchMarks();
-	}
+
 
 
 	    
