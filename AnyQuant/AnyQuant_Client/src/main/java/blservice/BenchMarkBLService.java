@@ -6,7 +6,7 @@ import vo.BenchMarkVO;
 import enumeration.MyDate;
 
 /**
- * 大盘接口
+ * 大盘逻辑层接口
  * @author czq
  * @date 2016年3月10日
  */
