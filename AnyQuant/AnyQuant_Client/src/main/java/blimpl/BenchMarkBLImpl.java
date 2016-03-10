@@ -9,6 +9,8 @@ import util.MyTime;
 import vo.BenchMarkVO;
 import enumeration.MyDate;
 import blservice.BenchMarkBLService;
+import dataservice.APIDataFactory;
+import dataservice.APIInterface;
 
 /**
  *
@@ -20,10 +22,13 @@ public class BenchMarkBLImpl implements BenchMarkBLService {
 	 * 大盘数据
 	 */
 	private List<BenchMarkVO> benchMarkVOs;
+	private APIInterface APIDataSer; 
 	
 	public BenchMarkBLImpl() {
 		// TODO Auto-generated constructor stub
+		APIDataSer = APIDataFactory.getAPIDataService();
 		List<String> benchCodes = APIDataSer.getAllBenchMarks();
+		
 	}
 	
 	

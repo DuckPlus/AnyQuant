@@ -49,7 +49,6 @@ public class StockBLImpl implements StockBLService {
 		APIDataSer = APIDataFactory.getAPIDataService();
 		List<StockPO> stocksCode = APIDataSer.getAllStockMes();
 		stockMap = new TreeMap<String, StockVO>();
-		List<String> benchCodes = APIDataSer.getAllBenchMarks();
 		
 		
 		System.out.println("Reading Data-----------");
@@ -146,32 +145,7 @@ public class StockBLImpl implements StockBLService {
 		return result.iterator();
 	}
 	
-	@Override
-	public Iterator<BenchMarkVO> getAllBenchMarks() {
-		
-		return benchMarkVOs.iterator();
-	}
-	
-	
-	@Override
-	public Iterator<BenchMarkVO> getRecentBenchMarks(String BenchMarkCode) {
-		return getBenchMarkByTime(BenchMarkCode, MyTime.getAnotherDay(-30), MyTime.getToDay());
-	}
 
-	@Override
-	public Iterator<BenchMarkVO> getBenchMarkByTime(String BenchMarkCode,
-			MyDate start, MyDate end) {
-		List<BenchMarkPO> pos = APIDataSer.getBenchMes(BenchMarkCode, start, end);
-		if(pos != null){
-			List<BenchMarkVO> result = new ArrayList<BenchMarkVO>(pos.size());
-			for (BenchMarkVO benchMarkVO : result) {
-				result.add((BenchMarkVO) VOPOchange.POtoVO(benchMarkVO));
-			}
-			return result.iterator();
-		}else{
-			return null;
-		}
-	}
 
 	@Override
 	public List<OHLC_VO> getDayOHLC_Data(String stockCode, MyDate start,
