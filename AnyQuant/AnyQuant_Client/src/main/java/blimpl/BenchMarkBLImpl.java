@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import po.BenchMarkPO;
 import po.StockPO;
@@ -33,8 +34,10 @@ public class BenchMarkBLImpl implements BenchMarkBLService {
 		APIDataSer = APIDataFactory.getAPIDataService();
 		List<String> benchCodes = APIDataSer.getAllBenchMarks();
 		benchMarkVOs = new ArrayList<>(benchCodes.size());
+		benchMap = new TreeMap<String, BenchMarkVO>();
 		List<BenchMarkPO>  benchMarkPOs = APIDataSer.getAllBenchMes();
 		for(BenchMarkPO po : benchMarkPOs){
+		
 			benchMap.put(po.getCode(), (BenchMarkVO) VOPOchange.POtoVO(po));
 		}
 		benchMarkVOs = new ArrayList<BenchMarkVO>(benchMap.values());
