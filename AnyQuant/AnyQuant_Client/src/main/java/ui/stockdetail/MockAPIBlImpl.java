@@ -14,18 +14,21 @@ import dataservice.APIInterface;
 import dataservice.APIInterfaceImpl;
 import ui.config.TestData;
 import vo.BenchMarkVO;
+import vo.DealVO;
+import vo.OHLC_VO;
 import vo.StockVO;
+import vo.TimeSharingVO;
 import enumeration.MyDate;
 import enumeration.Stock_Attribute;
 import blimpl.APIBlImpl;
 import blimpl.VOPOchange;
-import blservice.APIBlservice;
+import blservice.StockBLService;
 
-public class MockAPIBlImpl implements APIBlservice{
+public class MockAPIBlImpl implements StockBLService{
 	/**
 	 * 单例模式
 	 */
-	private static APIBlservice APIBlservice;
+	private static StockBLService APIBlservice;
 	private APIInterface APIDataSer; 
 	/**
 	 * 两份股票的数据，Collection版便于排序，Map版便于查找
@@ -37,7 +40,7 @@ public class MockAPIBlImpl implements APIBlservice{
 	 */
 	private List<BenchMarkVO> benchMarkVOs;
 	
-	public static APIBlservice getAPIBLService(){
+	public static StockBLService getAPIBLService(){
 		if(APIBlservice == null){
 			APIBlservice = new MockAPIBlImpl();
 		}
@@ -105,6 +108,39 @@ public class MockAPIBlImpl implements APIBlservice{
 
 	public Iterator<BenchMarkVO> getBenchMarkByTime(String BenchMarkCode,
 			MyDate start, MyDate end) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OHLC_VO> getDayOHLC_Data(String stockCode, MyDate start,
+			MyDate end) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OHLC_VO> getWeekOHLC_Data(String stockCode, MyDate start,
+			int weekNum) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OHLC_VO> getMonthOHLC_Data(String stockCode, MyDate start,
+			MyDate end) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<TimeSharingVO> getSharingVOs(String stockCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DealVO> getDealVOs(String stockCode, MyDate start, MyDate end) {
 		// TODO Auto-generated method stub
 		return null;
 	}
