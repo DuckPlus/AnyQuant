@@ -129,7 +129,7 @@ public class MyTime {
 		 * @param date
 		 * @return
 		 */
-		public static  MyDate  getFirstPreWookDay(MyDate date){
+		public static  MyDate  getFirstPreWorkDay(MyDate date){
 			   int i=-1;
 			   boolean bool =MyTime.isWeekend(MyTime.getAnotherDay(date, i)) ;
 			   while(bool){

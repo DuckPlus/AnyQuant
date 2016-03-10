@@ -6,12 +6,11 @@ public class StockPO implements InitialBean {
 	 private String date ,name,code;
 	 private double high ,low;
 	 private double open,close,preClose;
-	 //目前获取adj_Price会出错
-	 private double adj_Price;
+	 private double adj_price;
 	 private long volume;
 	 private double turnover;
-	 //目前获取pe会出错
-	 private double pe,pb;
+	 private double pe_ttm;
+	 private double pb;
 	 //尚未实现
 	 private double amplitude;
 	 //尚未实现
@@ -34,10 +33,10 @@ public class StockPO implements InitialBean {
 		this.open = open;
 		this.close = close;
 		this.preClose = preClose;
-		this.adj_Price = adj_Price;
+		this.adj_price = adj_Price;
 		this.volume = volume;
 		this.turnover = turnover;
-		this.pe = pe;
+		this.pe_ttm = pe;
 		this.pb = pb;
 		this.amplitude = amplitude;
 		this.changeRate = changeRate;
@@ -72,7 +71,7 @@ public class StockPO implements InitialBean {
 	}
 
 	public double getAdj_Price() {
-		return adj_Price;
+		return adj_price;
 	}
 
 	public long getVolume() {
@@ -84,7 +83,7 @@ public class StockPO implements InitialBean {
 	}
 
 	public double getPe() {
-		return pe;
+		return pe_ttm;
 	}
 
 	public double getPb() {
@@ -128,7 +127,7 @@ public class StockPO implements InitialBean {
 	}
 
 	public void setAdj_Price(double adj_Price) {
-		this.adj_Price = adj_Price;
+		this.adj_price = adj_Price;
 	}
 
 	public void setVolume(long volume) {
@@ -140,7 +139,7 @@ public class StockPO implements InitialBean {
 	}
 
 	public void setPe(double pe) {
-		this.pe = pe;
+		this.pe_ttm = pe;
 	}
 
 	public void setPb(double pb) {
@@ -175,8 +174,8 @@ public class StockPO implements InitialBean {
 	
 	
 	public String MyToString(char a){
-		return ""+date+a+name+a+code+a+high+a+low+a+open+a+close+a+preClose+a+adj_Price+a+
-				volume+a+turnover+a+pe+a+pb+a+amplitude+a+changeRate;
+		return ""+date+a+name+a+code+a+high+a+low+a+open+a+close+a+preClose+a+adj_price+a+
+				volume+a+turnover+a+pe_ttm+a+pb+a+amplitude+a+changeRate;
 	}
 	
 	

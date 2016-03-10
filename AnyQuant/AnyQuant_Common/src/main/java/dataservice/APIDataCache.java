@@ -166,7 +166,7 @@ public class APIDataCache implements APIInterface{
                      String temp=bufferedReader.readLine();
                      String [] attrs = null;
                      List<StockPO> result = new ArrayList<StockPO>();
-                     
+                                                 
                      while((temp=bufferedReader.readLine())!=null){
                     	    attrs = temp.split(",");
                     	    StockPO stock = new StockPO(attrs[0],attrs[1],attrs[2],Double.parseDouble(attrs[3]),Double.parseDouble(attrs[4]),Double.parseDouble(attrs[5]),
