@@ -98,19 +98,6 @@ public class MockAPIBlImpl implements StockBLService{
 		return null;
 	}
 
-	@Override
-	public Iterator<BenchMarkVO> getRecentBenchMarks(String BenchMarkCode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-
-	public Iterator<BenchMarkVO> getBenchMarkByTime(String BenchMarkCode,
-			MyDate start, MyDate end) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public List<OHLC_VO> getDayOHLC_Data(String stockCode, MyDate start,
