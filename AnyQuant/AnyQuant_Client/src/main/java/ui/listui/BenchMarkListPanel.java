@@ -12,7 +12,9 @@ import javax.swing.JLabel;
 
 import org.dom4j.Element;
 
+import blimpl.BenchMarkBLImpl;
 import blimpl.StockBLImpl;
+import blservice.BenchMarkBLService;
 import blservice.StockBLService;
 import enumeration.MyDate;
 import ui.config.GraphicsUtils;
@@ -32,7 +34,7 @@ import vo.BenchMarkVO;
  */
 @SuppressWarnings("serial")
 public class BenchMarkListPanel extends MyPanel {
-	StockBLService apiService;
+	BenchMarkBLService apiService;
 	MyTable BenchmarkListTable;
 	MyTextField beginDate;
 	MyTextField endDate;
@@ -101,7 +103,7 @@ public class BenchMarkListPanel extends MyPanel {
 				Integer.valueOf(e.attributeValue("height")), vhead);
 		
 		this.add(BenchmarkListTable);
-
+		searchAllBenchmark();
 	}
 
 	@Override
@@ -126,7 +128,8 @@ public class BenchMarkListPanel extends MyPanel {
 		endDatePicker = new MyDatePicker(e.element("endDatePicker"));
 	}
 	private void initBl(){
-		apiService = StockBLImpl.getAPIBLService();
+//		apiService = StockBLImpl.getAPIBLService();
+		apiService = new BenchMarkBLImpl();
 	}
 	
 	private void searchAllBenchmark(){
