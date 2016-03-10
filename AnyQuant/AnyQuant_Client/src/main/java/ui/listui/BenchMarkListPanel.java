@@ -118,7 +118,7 @@ public class BenchMarkListPanel extends MyPanel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				System.out.println("search benchmark");
-				searchBenchmark("sh300");
+				searchBenchmark("hs300");
 				super.mousePressed(e);
 			}
 		});
@@ -140,12 +140,16 @@ public class BenchMarkListPanel extends MyPanel {
 	private void searchBenchmark(String benchMarkCode){
 		MyDate beginDate = beginDatePicker.getDate();
 		MyDate endDate = endDatePicker.getDate();
+		System.out.println(beginDate.DateToString());
+		System.out.println(endDate.DateToString());
+		
 		if(MyTime.ifEarlier(beginDate, endDate)||MyTime.ifSame(beginDate, endDate)){
 			Iterator<BenchMarkVO>itr = apiService.getBenchMarkByTime(benchMarkCode, beginDate, endDate);
+			System.out.println(itr.hasNext());
 			showTableData(itr);	
 //			feedBack("查询！此处调用缺失");
 		}else{
-			feedBack("起始日期不能晚于截止日期📅");
+			feedBack("起始日期不能晚于截止日期");
 		}
 		
 	}
@@ -157,8 +161,10 @@ public class BenchMarkListPanel extends MyPanel {
 		new TipsDialog(message);
 	}
 	private void showTableData(Iterator<BenchMarkVO>itr){
+		System.out.println("SHOW DATA");
 		BenchmarkListTable.removeAllItem();
 		while(itr.hasNext()){
+			System.out.println("show 1");
 			Vector<String>vData = new Vector<String>();
 			BenchMarkVO temp = itr.next();
 			vData.add(temp.date);

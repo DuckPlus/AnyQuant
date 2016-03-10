@@ -62,8 +62,8 @@ public class BenchMarkBLImpl implements BenchMarkBLService {
 		List<BenchMarkPO> pos = APIDataSer.getBenchMes(BenchMarkCode, start, end);
 		if(pos != null){
 			List<BenchMarkVO> result = new ArrayList<BenchMarkVO>(pos.size());
-			for (BenchMarkVO benchMarkVO : result) {
-				result.add((BenchMarkVO) VOPOchange.POtoVO(benchMarkVO));
+			for (BenchMarkPO benchMarkPO : pos) {
+				result.add((BenchMarkVO) VOPOchange.POtoVO(benchMarkPO));
 			}
 			return result.iterator();
 		}else{
