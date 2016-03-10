@@ -2,22 +2,28 @@
 <AnyQuant width="1160" height="720">
 
 	<initialpanel x="0" y="0" width="1080" height="720">
-        <changepanel x="250" y="53" width="910" height="638"/>
+        <changepanel x="177" y="30" width="985" height="660"/>
 	 	<leftPanel x="0" y="0" width="230" height="720"/>
 	 	<BUTTONS>
-			<Block text="行业板块" x="0" y="267" />
-			<StockList text="股票列表" x="0" y="317" />
-			<BenchMark text="大盘指数" x="0" y="367" />
+			<Block text="行业板块" x="76" y="267" />
+			<StockList text="股票列表" x="76" y="217" />
+			<BenchMark text="大盘指数" x="76" y="367" />
+			<stockList_pic  x="0" y="175" height="130" width="130" clicked="element/stock_btn" enter="element/stock_btn" normal="element/stock_btn" />
+			<benchMark_pic  x="3" y="325" height="130" width="130" clicked="element/benchMark_btn" enter="element/benchMark_btn" normal="element/benchMark_btn" />
 			<Shrink  x="1100" y="10" width="25" height="25" normal="element//shrink" enter="element//shrink_clicked" clicked="element//shrink_clicked"/>
 		    <Exit  x="1130" y="10" width="25" height="25" normal="element//exit" enter="element//exit_clicked" clicked="element//exit_clicked"/>
 		</BUTTONS>
-		<guidePanel x="204" y="0" width="300" height="300">
+		<guidePanel x="204" y="0" width="300" height="300" img="bg//bg_s">
+		   <buttons>
+		      
+		   </buttons>
+		   
 		</guidePanel>
 		
 		<stockListPanel x="204" y="0" width="880" height="624">
-			<stocklistTable x="10" y="94" width="830" height="516"/>
-			<stockCodeInput x="10" y="30" width="300" height="35"/>
-			<searchBtn x="320" y="30" width="100" height ="35" normal="element//Btn" enter="element//Btn" clicked="element//Btn" text="查询股票"/>
+			<stocklistTable x="30" y="94" width="850" height="516"/>
+			<stockCodeInput x="30" y="30" width="300" height="35"/>
+			<searchBtn x="340" y="30" width="100" height ="35" normal="element//Btn" enter="element//Btn" clicked="element//Btn" text="查询股票"/>
 		
 		    <stockDetailPanel x="232" y="54" width="300" height="300">
 		     <BUTTONS>
@@ -27,7 +33,7 @@
 		        <startDate 	x="450" y="50" width="100" height="30"/>	
 		        <endDate 	x="580" y="50" width="100" height="30"/>     
 		     </TEXTFIELDS>
-		     <Table x="30" y="120" width="700" height="455"/>
+		     <Table x="30" y="120" width="700" height="510"/>
 		     <DatePicker>
 		          <start x="450" y="52" width="100" height="25" size_word="12" buttonName="little_calendar"/>
 		          <end x="580" y="52" width="100" height="25" size_word="12" buttonName="little_calendar"/>
@@ -40,24 +46,24 @@
 		        
 		       
 		        <stockPriceNow x="30" y="50" width="100" height="40" size="30" />
-		        <changeRate x="100" y="66" width="50" height="25" size="12"/>
+		        <changeRate x="110" y="66" width="50" height="25" size="12"/>
 		        <historyData_label x="30" y="90" width="100" height="20"  color="255,255,255"/>
 		       
 		      
-		        <todayData_label x="745" y="90" width="100" height="20" color="255,255,255"/>
+		        <todayData_label x="780" y="90" width="100" height="20" color="255,255,255"/>
 		       
-		        <todayOpen_label x="745" y="130" width="100" height="25" size="20" color="255,255,255"/>
-		        <todayOpen x="805" y="130" width="100" height="20" size="22" color="255,255,255"/>
+		        <todayOpen_label x="780" y="130" width="100" height="25" size="20" color="255,255,255"/>
+		        <todayOpen x="850" y="130" width="100" height="20" size="22" color="255,255,255"/>
 		       
-		        <yestodayClose_label x="745" y="170" width="100" height="25" size="20" color="255,255,255"/>
-		        <yestodayClose x="805" y="170" width="100" height="20" size="22" color="255,255,255"/>
+		        <yestodayClose_label x="780" y="190" width="100" height="25" size="20" color="255,255,255"/>
+		        <yestodayClose x="850" y="190" width="100" height="20" size="22" color="255,255,255"/>
 		       
-		        <highest_label x="745" y="210" width="100" height="25" size="20" color="255,255,255" />
-		        <highest x="805" y="210" width="100" height="20" size="22" color="255,255,255"/>
-		        <lowest_label x="745" y="250" width="100" height="25" size="20" color="255,255,255" />
-		        <lowest x="805" y="250" width="100" height="20" size="22" color="255,255,255"/>
-		        <deal_label x="745" y="290" width="100" height="25" size="20" color="255,255,255" />
-		        <deal x="805" y="290" width="200" height="25" size="22" color="255,255,255"/>
+		        <highest_label x="780" y="250" width="100" height="25" size="20" color="255,255,255" />
+		        <highest x="850" y="250" width="100" height="20" size="22" color="255,255,255"/>
+		        <lowest_label x="780" y="310" width="100" height="25" size="20" color="255,255,255" />
+		        <lowest x="850" y="310" width="100" height="20" size="22" color="255,255,255"/>
+		        <deal_label x="780" y="370" width="100" height="25" size="20" color="255,255,255" />
+		        <deal x="850" y="370" width="200" height="25" size="22" color="255,255,255"/>
 		       
 
 		     </LABELS>
@@ -67,13 +73,11 @@
 		</stockListPanel>
 		<benchmarkPanel x="204" y="0" width="880" height="624">
 		
-	    	<benchmarklistTable x="10" y="94" width="830" height="540"/>
+	    	<benchmarklistTable x="30" y="94" width="830" height="540"/>
 	        <searchBtn x="320" y="35" width="100" height ="35" normal="element//Btn" enter="element//Btn" clicked="element//Btn" text="查询大盘"/>
 			<beginDatePicker x="75" y="45" width="200" height="30" size_word="12" buttonName="little_calendar"/>
 			<endDatePicker x="200" y="45" width="200" height="30" size_word="12" buttonName="little_calendar"/>
 		</benchmarkPanel>
-		<blockPanel x="204" y="0" width="880" height="624">
-		</blockPanel>
 
 
 
