@@ -19,8 +19,8 @@ public class APITest extends TestCase {
         	   // getStockCode();
         	// getAllMesByCache();
         //	 System.out.println(MyTime.getToDay().DateToString()+" "+MyTime.getToDay().TimeToString());
-            System.out.println(MyTime.getAnotherDay(-1).AllToString());
-            System.out.println(MyTime.getAnotherDay(0).AllToString());
+//            System.out.println(MyTime.getAnotherDay(-1).AllToString());
+//            System.out.println(MyTime.getAnotherDay(0).AllToString());
          }
          public  static void getAllstocksMessageByAPI(){
         	 APIInterface api = new APIInterfaceImpl();

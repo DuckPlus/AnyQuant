@@ -6,10 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import po.BenchMarkPO;
 import po.StockPO;
 import util.MyTime;
-import vo.BenchMarkVO;
 import vo.DealVO;
 import vo.OHLC_VO;
 import vo.StockVO;
@@ -17,7 +15,6 @@ import vo.TimeSharingVO;
 import blservice.StockBLService;
 import dataservice.APIDataFactory;
 import dataservice.APIInterface;
-import dataservice.APIInterfaceImpl;
 import enumeration.MyDate;
 import enumeration.Stock_Attribute;
 
@@ -37,10 +34,7 @@ public class StockBLImpl implements StockBLService {
 	 */
 	private List<StockVO> stocks;
 	private Map<String , StockVO> stockMap;
-	/**
-	 * 大盘数据
-	 */
-	private List<BenchMarkVO> benchMarkVOs;
+
 	
 	/*
 	 * 为了加快测试速度，在开发阶段只引入100只股票
@@ -58,7 +52,6 @@ public class StockBLImpl implements StockBLService {
 		 */
 		
 		System.out.println("股票数量："+stocksCode.size());
-		int count = 0;
 		stocks = new ArrayList<StockVO>(stocksCode.size());
 		for(StockPO po : stocksCode){
 			stockMap.put(po.getCode(), (StockVO) VOPOchange.POtoVO(po));
