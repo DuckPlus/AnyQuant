@@ -59,7 +59,7 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawString("this is StockListPanel", 200, 200);
-		g.drawImage(GraphicsUtils.getImage("bg//bg_s"),0,0,null);
+//		g.drawImage(GraphicsUtils.getImage("bg//bg_s"),0,0,null);
 		
 	}
 	
