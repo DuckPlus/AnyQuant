@@ -14,9 +14,9 @@ import po.StockPO;
 public class APITest extends TestCase {
          public static void main(String a[]){
         	  //  getAllstocksMessageByAPI();
-        	 //getBenchMes();
+        	 getBenchMes();
         	   // getStockCode();
-        	 getAllMesByCache();
+        	// getAllMesByCache();
         	 
          }
          public  static void getAllstocksMessageByAPI(){
@@ -44,10 +44,11 @@ public class APITest extends TestCase {
 
          public static void getBenchMes(){
         	 APIInterface api = new APIInterfaceImpl();
-        	 MyDate start = new MyDate(2015, 3, 2);
-        	 MyDate end = new MyDate(2016, 3, 3);
-        	 List<BenchMarkPO> benchs = api.getBenchMes("hs300", start, end);
-        	 for(BenchMarkPO stock : benchs){
+        	 BenchMarkPO stock = api.getBenchMes("hs300");
+//        	 MyDate start = new MyDate(2016, 3, 9);
+//        	 MyDate end = new MyDate(2016, 3, 10);
+//        	 List<BenchMarkPO> benchs = api.getBenchMes("hs300", start, end);
+//        	 for(BenchMarkPO stock : benchs){
         		            System.out.print("date: "+stock.getDate()+" ");
         		        	System.out.print("code: "+stock.getCode()+" ");
         		        	System.out.print("open: "+stock.getOpen()+" ");
@@ -55,8 +56,8 @@ public class APITest extends TestCase {
         		          	System.out.print("high: "+stock.getHigh()+" ");
         		          	System.out.print("low: "+stock.getLow()+" ");
         		          	System.out.print("adj_price: "+stock.getAdj_price()+'\n');
-        		        	
-        		 }
+//        		        	
+//        		 }
         		        
          }
          
