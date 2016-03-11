@@ -5,7 +5,6 @@ package vo;
  * @date 2016年3月6日
  */
 public class BenchMarkVO {
-
 	public String code,date;
 	public double open,close,high,low,adj_price;
 	public long volume;
