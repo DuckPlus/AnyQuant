@@ -26,7 +26,6 @@ public class MainController extends PanelController {
 	private MySideBarButton StockListButton;
 	private MySideBarButton BenchmarkButton;
 
-	private MyPictureButton stockList_btn_pic,benchMark_btn_pic;
 	private final static String stockDetailPanelStr = "stockDetailPanel";
 	private final static String stockListPanelStr = "stockListPanel";
 	private final static String benchmarkPanelStr = "benchmarkPanel";
@@ -65,8 +64,6 @@ public class MainController extends PanelController {
 
 	@Override
 	protected void initButtons(Element e) {
-		benchMark_btn_pic=new MyPictureButton(e.element("benchMark_pic"));
-		stockList_btn_pic = new MyPictureButton(e.element("stockList_pic"));
 		StockListButton = new MySideBarButton(e.element("StockList"));
 		BenchmarkButton = new MySideBarButton(e.element("BenchMark"));
 
@@ -76,8 +73,8 @@ public class MainController extends PanelController {
 	protected void addButtons() {
 		mainPanel.add(BenchmarkButton);
 		mainPanel.add(StockListButton);
-		mainPanel.add(stockList_btn_pic);
-		mainPanel.add(benchMark_btn_pic);
+//		mainPanel.add(stockList_btn_pic);
+//		mainPanel.add(benchMark_btn_pic);
 	}
 
 	@Override
@@ -92,10 +89,6 @@ public class MainController extends PanelController {
 	protected void addListeners() {
 		BenchmarkButton.addMouseListener(new MySideBarListener(BenchmarkButton,
 				this, benchmarkPanelStr));
-		benchMark_btn_pic.addMouseListener(new MySideBarListener(BenchmarkButton,
-				this, benchmarkPanelStr));
-		stockList_btn_pic.addMouseListener(new MySideBarListener(StockListButton,
-				this, stockListPanelStr));
 		StockListButton.addMouseListener(new MySideBarListener(StockListButton,
 				this, stockListPanelStr));
 
