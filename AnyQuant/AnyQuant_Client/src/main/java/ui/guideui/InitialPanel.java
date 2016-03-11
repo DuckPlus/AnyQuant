@@ -55,7 +55,6 @@ public class InitialPanel extends MyPanel{
 	protected void initButtons(Element e) {
 		btn_shrink=new MyPictureButton(e.element("Shrink"));
 		btn_exit=new MyPictureButton(e.element("Exit"));
-
 		
 		
 	}
@@ -117,7 +116,6 @@ public class InitialPanel extends MyPanel{
 		});
 	}
 	MainFrame frame;
-	MyPictureButton btn_shrink;
-	MyPictureButton btn_exit;
+	MyPictureButton btn_shrink,btn_exit;
 
 }
