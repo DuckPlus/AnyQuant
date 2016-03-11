@@ -32,13 +32,13 @@ import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import vo.OHLC_VO;
 
 public class MyFreeChart {
+	static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
 	/**
 	 * 画k线图
 	 * @param datas
 	 * @param panel
 	 */
 	public static void kLine(List<OHLC_VO> datas, MyPanel panel) {
-		 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
 	        double highValue = Double.MIN_VALUE;//设置K线数据当中的最大值 
 	        double minValue = Double.MAX_VALUE;//设置K线数据当中的最小值 
 	        double high2Value = Double.MIN_VALUE;//设置成交量的最大值 
