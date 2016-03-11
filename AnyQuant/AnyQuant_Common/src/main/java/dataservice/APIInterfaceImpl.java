@@ -41,6 +41,7 @@ public class APIInterfaceImpl implements APIInterface{
              String encoding="utf-8";
              File file=new File(filePath);
              if(file.isFile() && file.exists()){ //判断文件是否存在
+            	 
                       InputStreamReader read = new InputStreamReader(
                                                                      new FileInputStream(file),encoding);//考虑到编码格式
                       BufferedReader bufferedReader = new BufferedReader(read);
