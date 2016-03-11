@@ -245,7 +245,7 @@ public class DetailMainPanel extends MyPanel{
 		itr=ctr_bl.getRecentStocks(stockCode);//今天是最后一个
 		//刷新表格数据
 		refreshTable();
-		MyFreeChart.kLine(null, this);
+		MyFreeChart.deal(null, this);
 		// label上的数据
 		stockPriceNow = Double.parseDouble(table.getValue(
 				table.getRowCount() - 1, 1));

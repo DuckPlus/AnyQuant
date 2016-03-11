@@ -437,7 +437,7 @@ public class AppTest {
         }catch(Exception e){ 
             e.printStackTrace(); 
         } 
-//        x1Axis.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());//设置时间线显示的规则，用这个方法就摒除掉了周六和周日这些没有交易的日期(很多人都不知道有此方法)，使图形看上去连续
+        x1Axis.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());//设置时间线显示的规则，用这个方法就摒除掉了周六和周日这些没有交易的日期(很多人都不知道有此方法)，使图形看上去连续
         x1Axis.setAutoTickUnitSelection(false);//设置不采用自动选择刻度值 
         x1Axis.setTickMarkPosition(DateTickMarkPosition.MIDDLE);//设置标记的位置 
         x1Axis.setStandardTickUnits(DateAxis.createStandardDateTickUnits());//设置标准的时间刻度单位
