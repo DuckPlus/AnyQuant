@@ -104,7 +104,7 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 		vhead.add("换手率");
 		vhead.add("成交量");
 		vhead.add("振幅");
-		vhead.add("变化率");
+		vhead.add("涨跌幅");
 		
 		stocklistTable= new MyTable(Integer.valueOf(e.attributeValue("x")), 
 				Integer.valueOf(e.attributeValue("y")), 
