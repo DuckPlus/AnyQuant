@@ -55,7 +55,7 @@ public class MainController extends PanelController {
 
 	@Override
 	protected void initPanel(Element e) {
-		stockDetailPanel = new DetailMainPanel(e.element(stockListPanelStr).element(stockDetailPanelStr));
+		stockDetailPanel = new DetailMainPanel(e.element(stockListPanelStr).element(stockDetailPanelStr),this);
 		stockListPanel = new StockListPanel(e.element(stockListPanelStr), this,stockDetailPanel);
 		benchMarkListPanel = new BenchMarkListPanel(
 				e.element(benchmarkPanelStr));
