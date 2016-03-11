@@ -47,7 +47,10 @@ public class APIInterfaceImpl implements APIInterface{
                       BufferedReader bufferedReader = new BufferedReader(read);
                       String temp="";
                       while( (temp=bufferedReader.readLine())!=null){
-                    	    String [] codeAndName = temp.split("[,]");
+                    	    String [] codeAndName = temp.split("\\,");
+                    	    if(codeAndName[1].startsWith("ST")){
+                    	    	codeAndName[1]="*"+codeAndName[1];
+                    	    }
                     	    codeNameMap.put(codeAndName[0], codeAndName[1]);
                       }
                       read.close();

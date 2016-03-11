@@ -34,7 +34,7 @@ public interface StockBLService {
 	 * @return
 	 */
 	public List<OHLC_VO> getWeekOHLC_Data(String stockCode, MyDate start,
-			int weekNum);
+			MyDate end);
 	/**
 	 * 
 	 * @param stockCode
@@ -57,7 +57,13 @@ public interface StockBLService {
 	 * @param end
 	 * @return
 	 */
-	public List<DealVO> getDealVOs(String stockCode, MyDate start,
+	public List<DealVO> getDayDealVOs(String stockCode, MyDate start,
+			MyDate end);
+	
+	public List<DealVO> getWeekDealVOs(String stockCode, MyDate start,
+			MyDate end);
+	
+	public List<DealVO> getMonthDealVOs(String stockCode, MyDate start,
 			MyDate end);
 	
 	
