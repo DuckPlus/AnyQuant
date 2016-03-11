@@ -47,6 +47,7 @@ public interface StockBLService {
 	/**
 	 * 
 	 * @param stockCode
+	 * 分时图
 	 * @return
 	 */
 	public List<TimeSharingVO> getSharingVOs(String stockCode);

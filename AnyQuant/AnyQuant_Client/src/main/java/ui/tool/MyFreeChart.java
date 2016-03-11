@@ -11,7 +11,6 @@ import java.awt.Paint;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import org.AnyQuant_Client.TestFrame;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
@@ -19,6 +18,7 @@ import org.jfree.chart.axis.DateTickMarkPosition;
 import org.jfree.chart.axis.DateTickUnit;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
+import org.jfree.chart.axis.SegmentedTimeline;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
@@ -150,7 +150,7 @@ public class MyFreeChart {
 	        }catch(Exception e){ 
 	            e.printStackTrace(); 
 	        } 
-//	        x1Axis.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());//设置时间线显示的规则，用这个方法就摒除掉了周六和周日这些没有交易的日期(很多人都不知道有此方法)，使图形看上去连续
+	        x1Axis.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());//设置时间线显示的规则，用这个方法就摒除掉了周六和周日这些没有交易的日期(很多人都不知道有此方法)，使图形看上去连续
 	        x1Axis.setAutoTickUnitSelection(false);//设置不采用自动选择刻度值 
 	        x1Axis.setTickMarkPosition(DateTickMarkPosition.MIDDLE);//设置标记的位置 
 	        x1Axis.setStandardTickUnits(DateAxis.createStandardDateTickUnits());//设置标准的时间刻度单位
