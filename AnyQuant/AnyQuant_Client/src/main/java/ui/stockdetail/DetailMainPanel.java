@@ -13,6 +13,7 @@ import ui.config.CompomentType;
 import ui.config.GraphicsUtils;
 import ui.tool.ButtonState;
 import ui.tool.MyDatePicker;
+import ui.tool.MyFreeChart;
 import ui.tool.MyLabel;
 import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
@@ -162,7 +163,7 @@ public class DetailMainPanel extends MyPanel{
 	protected void addComponent() {
 		this.add(start_datePicker);
 		this.add(end_datePicker);
-		this.add(table);
+//		this.add(table);
 		this.add(search_btn);
 		this.add(back_btn);
 		this.add(stockCode_label);
@@ -244,6 +245,7 @@ public class DetailMainPanel extends MyPanel{
 		itr=ctr_bl.getRecentStocks(stockCode);//今天是最后一个
 		//刷新表格数据
 		refreshTable();
+		MyFreeChart.kLine(null, this);
 		// label上的数据
 		stockPriceNow = Double.parseDouble(table.getValue(
 				table.getRowCount() - 1, 1));
