@@ -1,17 +1,17 @@
 package dataservice;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.xml.transform.Templates;
-
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -29,8 +29,37 @@ import enumeration.MyDate;
 public class APIInterfaceImpl implements APIInterface{
     
 	 private static  APIInterfaceImpl apiInterfaceImpl;
+	 private Map<String ,String> codeNameMap;
+	 private static String filePath = "cache//name.txt";
 	 private APIInterfaceImpl(){
-		
+		  SetMapUp();
+	 }
+	 
+	 private void SetMapUp(){
+		 codeNameMap = new  HashMap<>();
+		 try {
+             String encoding="utf-8";
+             File file=new File(filePath);
+             if(file.isFile() && file.exists()){ //判断文件是否存在
+                      InputStreamReader read = new InputStreamReader(
+                                                                     new FileInputStream(file),encoding);//考虑到编码格式
+                      BufferedReader bufferedReader = new BufferedReader(read);
+                      String temp="";
+                      while( (temp=bufferedReader.readLine())!=null){
+                    	    String [] codeAndName = temp.split("[,]");
+                    	    codeNameMap.put(codeAndName[0], codeAndName[1]);
+                      }
+                      read.close();
+               
+             }else{
+                       System.out.println("找不到"+filePath);
+                       file.createNewFile();
+             }
+       } catch (Exception e) {
+              System.out.println("读取文件内容出错");
+              e.printStackTrace();
+       }
+
 	 }
 	 
 	 public static APIInterface getAPIInterfaceImpl(){
@@ -221,7 +250,9 @@ public class APIInterfaceImpl implements APIInterface{
 				stock.setPe_ttm(Double.parseDouble(trading_info.getJSONObject(i).getString("pe_ttm")));
 				stock.setAdj_price(Double.parseDouble(trading_info.getJSONObject(i).getString("adj_price")));
 				stock.setCode(stockCode);
+				stock.setName((String)codeNameMap.get(stockCode));
 				stocks.add(stock);
+				
 			}
 			
 			for(int i=1;i<stocks.size();i++){
