@@ -101,12 +101,7 @@ public class MockAPIBlImpl implements StockBLService{
 		return null;
 	}
 
-	@Override
-	public List<OHLC_VO> getWeekOHLC_Data(String stockCode, MyDate start,
-			int weekNum) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	@Override
 	public List<OHLC_VO> getMonthOHLC_Data(String stockCode, MyDate start,
@@ -121,8 +116,28 @@ public class MockAPIBlImpl implements StockBLService{
 		return null;
 	}
 
+
+
 	@Override
-	public List<DealVO> getDealVOs(String stockCode, MyDate start, MyDate end) {
+	public List<OHLC_VO> getWeekOHLC_Data(String stockCode, MyDate start, MyDate end) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DealVO> getDayDealVOs(String stockCode, MyDate start, MyDate end) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DealVO> getWeekDealVOs(String stockCode, MyDate start, MyDate end) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DealVO> getMonthDealVOs(String stockCode, MyDate start, MyDate end) {
 		// TODO Auto-generated method stub
 		return null;
 	}
