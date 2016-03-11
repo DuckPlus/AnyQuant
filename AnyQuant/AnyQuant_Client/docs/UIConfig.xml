@@ -40,7 +40,7 @@
 		        
 		       
 		        <stockPriceNow x="30" y="50" width="100" height="40" size="30" />
-		        <changeRate x="100" y="66" width="50" height="25" size="12"/>
+		        <changeRate x="120" y="66" width="50" height="25" size="12"/>
 		        <historyData_label x="30" y="90" width="100" height="20"  color="255,255,255"/>
 		       
 		      

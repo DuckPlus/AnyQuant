@@ -59,7 +59,7 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawString("this is StockListPanel", 200, 200);
-//		g.drawImage(GraphicsUtils.getImage("bg//bg_s"),0,0,null);
+		g.drawImage(GraphicsUtils.getImage("bg//bg_s"),0,0,null);
 		
 	}
 	
@@ -104,7 +104,7 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 		vhead.add("换手率");
 		vhead.add("成交量");
 		vhead.add("振幅");
-		vhead.add("变化率");
+		vhead.add("涨跌幅");
 		
 		stocklistTable= new MyTable(Integer.valueOf(e.attributeValue("x")), 
 				Integer.valueOf(e.attributeValue("y")), 
