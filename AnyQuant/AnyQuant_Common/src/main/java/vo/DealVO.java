@@ -3,7 +3,8 @@ package vo;
 import enumeration.MyDate;
 
 /**
- * 成交额及成交量VO
+ * 成交额（dealAmount）
+ * 及成交量(volume)VO
  * @author czq
  * @date 2016年3月10日
  */

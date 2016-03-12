@@ -11,6 +11,8 @@ import java.awt.Paint;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.swing.JLabel;
+
 import org.dom4j.Element;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -19,7 +21,7 @@ import org.jfree.chart.axis.DateTickMarkPosition;
 import org.jfree.chart.axis.DateTickUnit;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.axis.SegmentedTimeline;
+import org.jfree.chart.labels.XYToolTipGenerator;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
@@ -28,7 +30,7 @@ import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeries;
-import org.jfree.data.time.ohlc.OHLCSeriesCollection;
+import org.jfree.data.xy.XYDataset;
 
 import ui.config.GraphicsUtils;
 import util.MyTime;
@@ -94,42 +96,43 @@ public class MyFreeChart {
         
         
 		// 保留K线数据的数据集，必须申明为final，后面要在匿名内部类里面用到
-		final OHLCSeriesCollection seriesCollection = new OHLCSeriesCollection();
-		seriesCollection.addSeries(series_k);
+		final MyOHLCSeriesCollection seriesCollection_k = new MyOHLCSeriesCollection();
+		seriesCollection_k.addSeries(series_k);
 		// 保留成交额数据的数据集
-		TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();// 保留成交量数据的集合
-		timeSeriesCollection.addSeries(series_deal); 
+		MyTimeSeriesCollection seriesCollection_deal = new MyTimeSeriesCollection();// 保留成交量数据的集合
+		seriesCollection_deal.addSeries(series_deal); 
         /*
 		 * 获取K线数据的最高值和最低值
 		 */
 		// 一共有多少个序列，目前为一个
-        int seriesCount_k = seriesCollection.getSeriesCount();
+        int seriesCount_k = seriesCollection_k.getSeriesCount();
         for (int i = 0; i < seriesCount_k; i++) { 
         	//每一个序列有多少个数据项 
-            int itemCount = seriesCollection.getItemCount(i);
+            int itemCount = seriesCollection_k.getItemCount(i);
             for (int j = 0; j < itemCount; j++) { 
-                if (maxValue_k < seriesCollection.getHighValue(i, j)) {//取第i个序列中的第j个数据项的最大值
-                    maxValue_k = seriesCollection.getHighValue(i, j); 
+                if (maxValue_k < seriesCollection_k.getHighValue(i, j)) {//取第i个序列中的第j个数据项的最大值
+                    maxValue_k = seriesCollection_k.getHighValue(i, j); 
                 } 
-                if (minValue_k > seriesCollection.getLowValue(i, j)) {//取第i个序列中的第j个数据项的最小值
-                    minValue_k = seriesCollection.getLowValue(i, j); 
+                if (minValue_k > seriesCollection_k.getLowValue(i, j)) {//取第i个序列中的第j个数据项的最小值
+                    minValue_k = seriesCollection_k.getLowValue(i, j); 
                 } 
+                System.out.println("getVolumeValue   "+seriesCollection_k.getVolumeValue(i, j));
             } 
         } 
         /*
          * 获取最高值和最低值 
          */
         //一共有多少个序列，目前为一个
-        int seriesCount_deal = timeSeriesCollection.getSeriesCount();
+        int seriesCount_deal = seriesCollection_deal.getSeriesCount();
         for (int i = 0; i < seriesCount_deal; i++) { 
         	//每一个序列有多少个数据项 
-            int itemCount = timeSeriesCollection.getItemCount(i);
+            int itemCount = seriesCollection_deal.getItemCount(i);
             for (int j = 0; j < itemCount; j++) { 
-                if (maxValue_deal < timeSeriesCollection.getYValue(i,j)) {//取第i个序列中的第j个数据项的值
-                    maxValue_deal = timeSeriesCollection.getYValue(i,j); 
+                if (maxValue_deal < seriesCollection_deal.getYValue(i,j)) {//取第i个序列中的第j个数据项的值
+                    maxValue_deal = seriesCollection_deal.getYValue(i,j); 
                 } 
-                if (minValue_deal > timeSeriesCollection.getYValue(i, j)) {//取第i个序列中的第j个数据项的值
-                    minValue_deal = timeSeriesCollection.getYValue(i, j); 
+                if (minValue_deal > seriesCollection_deal.getYValue(i, j)) {//取第i个序列中的第j个数据项的值
+                    minValue_deal = seriesCollection_deal.getYValue(i, j); 
                 } 
             } 
         } 
@@ -146,6 +149,7 @@ public class MyFreeChart {
         candlestickRender.setUpPaint(new Color(238,44,44));
       //设置股票下跌的K线图颜色 
         candlestickRender.setDownPaint(new Color(50,205,50));
+        candlestickRender.setToolTipGenerator(new Tooltip_k());
         
 		/*
 		 * 创建成交额图的画笔
@@ -154,7 +158,7 @@ public class MyFreeChart {
 			private static final long serialVersionUID = 1L;// 为了避免出现警告消息，特设定此值
 
 			public Paint getItemPaint(int i, int j) {// 匿名内部类用来处理当日的成交量柱形图的颜色与K线图的颜色保持一致
-				if (seriesCollection.getCloseValue(i, j) > seriesCollection
+				if (seriesCollection_k.getCloseValue(i, j) > seriesCollection_k
 						.getOpenValue(i, j)) {// 收盘价高于开盘价，股票上涨，选用股票上涨的颜色
 					return candlestickRender.getUpPaint();
 				} else {
@@ -163,6 +167,7 @@ public class MyFreeChart {
 			}
 		};
 		xyBarRender.setMargin(0.1);// 设置柱形图之间的间隔
+		xyBarRender.setToolTipGenerator(new Tooltip_deal());
 		/*
 		 * 生成x轴,y轴
 		 */
@@ -170,9 +175,9 @@ public class MyFreeChart {
         yAxis_k=createY_Axis(minValue_k,maxValue_k,10);
 		yAxis_deal = createY_Axis(minValue_deal, maxValue_deal, 4);
 		// 设置k线图画图区域对象
-		plot_k = new XYPlot(seriesCollection, xAxis, yAxis_k, candlestickRender);
+		plot_k = new XYPlot(seriesCollection_k, xAxis, yAxis_k, candlestickRender);
 		// 建立成交额图画图区域对象，x轴设为了null值，因为要与第一个画图区域对象共享x轴
-		plot_deal = new XYPlot(timeSeriesCollection, null, yAxis_deal,xyBarRender);
+		plot_deal = new XYPlot(seriesCollection_deal, null, yAxis_deal,xyBarRender);
 		
 		// 建立一个恰当的联合图形区域对象，以x轴为共享轴
 		CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(xAxis);
@@ -183,14 +188,13 @@ public class MyFreeChart {
 		// 设置两个图形区域对象之间的间隔空间
 		combineddomainxyplot.setGap(10);
 
-		JFreeChart chart = new JFreeChart("k线图", GraphicsUtils.getFont(null),
+		JFreeChart chart = new JFreeChart("", GraphicsUtils.getFont(null),
 				combineddomainxyplot, false);
 		ChartPanel chartPanel = new ChartPanel(chart, false);
 		chartPanel.setBounds(Integer.parseInt(config.attributeValue("x")),
 				Integer.parseInt(config.attributeValue("y")),
 				Integer.parseInt(config.attributeValue("width")),
 				Integer.parseInt(config.attributeValue("height")));
-//				50, 130, 700, 400);
 		panel.add(chartPanel);
 		panel.repaint();
 		System.out.println("嘿！画K线图啦");
@@ -233,8 +237,9 @@ public class MyFreeChart {
         /*
          * 设置时间线显示的规则，
          * 用这个方法就摒除掉了周六和周日这些没有交易的日期，使图形看上去连续
+         * ！这句不好用，，显示出来有点错位！
          */
-        xAxis.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());
+//        xAxis.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());
       //设置不采用自动选择刻度值 
         xAxis.setAutoTickUnitSelection(false);
       //设置标记的位置 
@@ -249,3 +254,31 @@ public class MyFreeChart {
 	}
 
 }
+class Tooltip_k implements XYToolTipGenerator {  
+
+	@Override
+	public String generateToolTip(XYDataset data, int i, int j) {
+		MyOHLCSeriesCollection s=(MyOHLCSeriesCollection)data;
+		double open,high,low,close;
+		MyDate date;
+		open=s.getOpenValue(i, j);
+		high=s.getHighValue(i, j);
+		low=s.getLowValue(i, j);
+		close=s.getCloseValue(i, j);
+		date=s.getDate(i, j);
+		
+		JLabel economy = new JLabel("<html>Economy<br>Regularity</html>");
+		return "<html>"+date.DateToString()+"<br>开盘："+open+"<br>最高："+high
+				+"<br>最低："+low+"<br>收盘："+close+"</html>";
+	}  
+} 
+class Tooltip_deal implements XYToolTipGenerator {  
+
+	@Override
+	public String generateToolTip(XYDataset data, int i, int j) {
+		MyTimeSeriesCollection s=(MyTimeSeriesCollection)data;
+		double num=s.getYValue(i, j);
+		MyDate date=s.getDate(i, j);
+		return "<html>"+date.DateToString()+"<br>成交额:"+num+"</html>";
+	}  
+} 

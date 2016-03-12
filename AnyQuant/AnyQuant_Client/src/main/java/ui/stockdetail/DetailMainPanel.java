@@ -50,25 +50,16 @@ public class DetailMainPanel extends MyPanel{
 		refreshStockInfo(stockCode, stock_name);
 	}
 	private void initComponent(Element config) {
-		initPanel(config.element("panel"));
 		initButtons(config.element(CompomentType.BUTTONS.name()));
 		initDatePicker(config.element("DatePicker"));
-		initTable(config.element("Table"));
+		initOtherComponent(config.element("panel"));
 		initLabels(config.element(CompomentType.LABELS.name()));
 		addListener();
 		addComponent();
 	}
 
 	
-	private void initPanel(Element e) {
-		tabPanel=new JTabbedPane();
-		day_K_panel=new Picture_panel(e.element("tabPanel"));
-		week_k_panel=new Picture_panel(e.element("tabPanel"));
-		month_k_panel=new Picture_panel(e.element("tabPanel"));
-		tabPanel.addTab("日K", day_K_panel);
-		tabPanel.addTab("周K", week_k_panel);
-		tabPanel.addTab("月K", month_k_panel);
-	}
+	
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -89,24 +80,27 @@ public class DetailMainPanel extends MyPanel{
 		line_label=new MyLabel(e.element("line"),"---");
 		stockCode_label=new MyLabel(e.element("stockCode"),stockCode);
 		stockName_label=new MyLabel(e.element("stockName"),stockName);
-		System.out.println("Code"+stockCode);
-		 date_label=new MyLabel(e.element("date_label"), "选择日期");
-		 stockPriceNow_label=new MyLabel(e.element("stockPriceNow"),stockPriceNow+"");
-		 changeRate_label=new MyLabel(e.element("changeRate"),changeRate+"%");
-		 historyData_label=new MyLabel(e.element("historyData_label"),"历史交易");
-		 todayData_label=new MyLabel(e.element("todayData_label"),"今日行情");
-		 todayOpen_label=new MyLabel(e.element("todayOpen_label"),"今开");
-		 yestodayClose_label=new MyLabel(e.element("yestodayClose_label"),"昨收");
-		 highest_label=new MyLabel(e.element("highest_label"),"最高");
-		 lowest_label=new MyLabel(e.element("lowest_label"),"最低");
-		 deal_label=new MyLabel(e.element("deal_label"),"成交量");
-		 
-		 todayOpen=new MyLabel(e.element("todayOpen"),todayOpen_num+"");
-		 yestodayClose=new MyLabel(e.element("yestodayClose"),yestodayClose_num+"");
-		 highest=new MyLabel(e.element("highest"),highest_num+"");
-		 lowest=new MyLabel(e.element("lowest"),lowest_num+"");
-		 dealAmount=new MyLabel(e.element("deal"),dealAmount_num+"");
-		 changeColor();
+		date_label = new MyLabel(e.element("date_label"), "选择日期");
+		stockPriceNow_label = new MyLabel(e.element("stockPriceNow"),
+				stockPriceNow + "");
+		changeRate_label = new MyLabel(e.element("changeRate"), changeRate
+				+ "%");
+		historyData_label = new MyLabel(e.element("historyData_label"), "历史交易");
+		todayData_label = new MyLabel(e.element("todayData_label"), "今日行情");
+		todayOpen_label = new MyLabel(e.element("todayOpen_label"), "今开");
+		yestodayClose_label = new MyLabel(e.element("yestodayClose_label"),
+				"昨收");
+		highest_label = new MyLabel(e.element("highest_label"), "最高");
+		lowest_label = new MyLabel(e.element("lowest_label"), "最低");
+		deal_label = new MyLabel(e.element("deal_label"), "成交量");
+
+		todayOpen = new MyLabel(e.element("todayOpen"), todayOpen_num + "");
+		yestodayClose = new MyLabel(e.element("yestodayClose"),
+				yestodayClose_num + "");
+		highest = new MyLabel(e.element("highest"), highest_num + "");
+		lowest = new MyLabel(e.element("lowest"), lowest_num + "");
+		dealAmount = new MyLabel(e.element("deal"), dealAmount_num + "");
+		changeColor();
 	}
 	private void changeColor() {
 		if(changeRate<=0){
@@ -120,56 +114,16 @@ public class DetailMainPanel extends MyPanel{
 	protected void initDatePicker(Element e) {
 		start_datePicker=new MyDatePicker(e.element("start"));
 		end_datePicker=new MyDatePicker(e.element("end"));
-		endDate=new MyTime().getToDay();
+		endDate=MyTime.getToDay();
 		startDate=MyTime.getAnotherDay(endDate, -30);
 		
 	}
-	protected void initTable(Element e) {
-		Vector<String> vhead = new Vector<String>();
-		vhead.add("日期");
-		vhead.add("开盘");
-		vhead.add("收盘");
-		vhead.add("最高");
-		vhead.add("最低");
-		vhead.add("成交量");
-		vhead.add("换手率");
-		vhead.add("振幅");
-		vhead.add("涨跌幅");
-		table= new MyTable(Integer.valueOf(e.attributeValue("x")), 
-				Integer.valueOf(e.attributeValue("y")), 
-				Integer.valueOf(e.attributeValue("width")), 
-				Integer.valueOf(e.attributeValue("height")), vhead);
-		table.setColumn(new int[]{100,45,45,45,45,70,50,50,50});
-		
-	}
+	
 	/**
-	 * 刷新表格信息
+	 * 刷新图表~
 	 */
-	private void refreshTable() {
-		table.removeAllItem();
-		int i=0;
-		while(itr.hasNext()){
-			StockVO vo=itr.next();
-			Vector<String>vd = new Vector<String>();
-			vd.add(vo.date);
-			vd.add(vo.open+"");
-			vd.add(vo.close+"");
-			vd.add(vo.high+"");
-			vd.add(vo.low+"");
-			vd.add(vo.volume+"");
-			vd.add(vo.turnover+"");
-			vd.add(String.format("%.2f",vo.amplitude*100)+"%");
-			vd.add(String.format("%.2f",vo.changeRate*100)+"%");
-			table.addRow(vd);
-			String changeRateStr=table.getValue(i, 8);
-			System.out.println(i+"  "+changeRateStr);
-			if(Double.parseDouble(changeRateStr.substring(0, changeRateStr.length()-1))<=0){
-				table.setRowColor(i,new Color(50,205,50));
-			}else {
-				table.setRowColor(i,new Color(238,44,44));
-			}
-			i++;
-		}
+	private void refreshPictrue() {
+		//TODO
 	}
 
 	@Override
@@ -224,7 +178,7 @@ public class DetailMainPanel extends MyPanel{
 							||MyTime.ifSame(startDate, endDate)){
 						itr=ctr_bl.getStocksByTime(stockCode, startDate,endDate);
 						System.out.println("MouseListener "+itr.hasNext());
-						refreshTable();
+						refreshPictrue();
 					}else {
 						feedBack("起止日期填反");
 					}
@@ -257,15 +211,16 @@ public class DetailMainPanel extends MyPanel{
 		this.stockCode = stockCode;
 		this.stockName=stockName;
 		itr=ctr_bl.getRecentStocks(stockCode);//今天是最后一个
-		//刷新表格数据
-		refreshTable();
+		/*
+		 * 默认显示日K
+		 */
 		//TODO
 		MyFreeChart.kline_deal(
 				ctr_bl.getDayOHLC_Data(stockCode, startDate, endDate),
 				ctr_bl.getDayDealVOs(stockCode, startDate, endDate), 
 				config.element("panel").element("pic"),
 				this);
-		// label上的数据
+		// label上的数据//TODO
 		stockPriceNow = Double.parseDouble(table.getValue(
 				table.getRowCount() - 1, 1));
 		todayOpen_num = Double.parseDouble(table.getValue(
@@ -282,7 +237,16 @@ public class DetailMainPanel extends MyPanel{
 		changeRate = Double.parseDouble(temp.substring(0, temp.length()-1))/100;
 		changeRate_str=temp;
 		refreshLabels();
-//		this.repaint();
+	}
+	@Override
+	protected void initOtherComponent(Element e) {
+		tabPanel=new JTabbedPane();
+		day_K_panel=new Picture_panel(e.element("tabPanel"));
+		week_k_panel=new Picture_panel(e.element("tabPanel"));
+		month_k_panel=new Picture_panel(e.element("tabPanel"));
+		tabPanel.addTab("日K", day_K_panel);
+		tabPanel.addTab("周K", week_k_panel);
+		tabPanel.addTab("月K", month_k_panel);
 	}
 	private void refreshLabels() {
 		stockPriceNow_label.setText(stockPriceNow+"");
@@ -312,4 +276,5 @@ public class DetailMainPanel extends MyPanel{
 	private Iterator<StockVO> itr;
 	Element config;
 	private PanelController ctr_panel;
+	
 }

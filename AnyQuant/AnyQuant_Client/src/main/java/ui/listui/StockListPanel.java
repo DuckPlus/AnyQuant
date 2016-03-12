@@ -48,7 +48,7 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 		this.panelController = panelController;
 		this.StockDetailPanel = StockDetailPanel;
 		initBl();
-		initTable(config.element("stocklistTable"));
+		initOtherComponent(config.element("stocklistTable"));
 		initTextFields(config.element("stockCodeInput"));
 		initButtons(config);
 		addListener();
@@ -93,7 +93,7 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 	}
 
 	@Override
-	protected void initTable(Element e) {
+	protected void initOtherComponent(Element e) {
 		Vector<String> vhead = new Vector<String>();
 		vhead.add("股票名称");
 		vhead.add("股票代码");
