@@ -41,7 +41,7 @@ public class Picture_panel extends MyPanel{
 	}
 
 	@Override
-	protected void initTable(Element e) {
+	protected void initOtherComponent(Element e) {
 		// TODO Auto-generated method stub
 		
 	}

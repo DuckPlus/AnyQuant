@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
@@ -16,6 +15,7 @@ import org.jfree.chart.axis.DateTickUnit;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.axis.SegmentedTimeline;
+import org.jfree.chart.labels.XYToolTipGenerator;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
@@ -31,7 +31,7 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
-import org.jfree.date.DayOfWeekInMonthRule;
+import org.jfree.data.xy.XYDataset;
 
 import ui.config.GraphicsUtils;
 
@@ -442,6 +442,7 @@ public class AppTest {
         candlestickRender.setAutoWidthGap(0.1);//设置各个K线图之间的间隔 
         candlestickRender.setUpPaint(new Color(238,44,44));//设置股票上涨的K线图颜色 
         candlestickRender.setDownPaint(new Color(50,205,50));//设置股票下跌的K线图颜色 
+        //TODO
         DateAxis x1Axis=new DateAxis();//设置x轴，也就是时间轴 
         x1Axis.setAutoRange(false);//设置不采用自动设置时间范围 
         try{ 
@@ -487,5 +488,6 @@ public class AppTest {
 //            frame.pack(); 
 //            frame.setVisible(true); 
     } 
-
+    
+    
 }

@@ -296,6 +296,11 @@ public class DetailMainPanel extends MyPanel{
 		dealAmount.setText(dealAmount_num+"");
 		changeColor();
 	}
+	@Override
+	protected void initOtherComponent(Element e) {
+		// TODO Auto-generated method stub
+		
+	}
 	private String stockCode="sh600050",stockName,changeRate_str;
 	private MyDate startDate,endDate;
 	private double changeRate,stockPriceNow,todayOpen_num,yestodayClose_num,highest_num,lowest_num,dealAmount_num;
@@ -312,4 +317,5 @@ public class DetailMainPanel extends MyPanel{
 	private Iterator<StockVO> itr;
 	Element config;
 	private PanelController ctr_panel;
+	
 }
