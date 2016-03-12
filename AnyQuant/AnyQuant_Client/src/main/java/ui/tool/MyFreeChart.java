@@ -11,6 +11,7 @@ import java.awt.Paint;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import org.dom4j.Element;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
@@ -29,230 +30,222 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
+import ui.config.GraphicsUtils;
+import util.MyTime;
 import vo.DealVO;
 import vo.OHLC_VO;
 import enumeration.MyDate;
-
 public class MyFreeChart {
 	//设置日期格式
 	static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	/**
-	 * 画成交额的图~
+	 * 画k线图  和成交额的图~
 	 * @param datas
 	 * @param panel
 	 */
-	public static void deal(List<DealVO> datas,MyPanel panel){
-		double highValue_deal = Double.MAX_VALUE;// 设置成交量的最大值
-		double minValue_deal = Double.MIN_VALUE;// 设置成交量的最低值
-		// 对应时间成交额数据
-		TimeSeries series_deal = new TimeSeries("");
-		// 保留成交量数据的集合
-		TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();
-		MyDate date;
-		series_deal.add(new Day(28, 9, 2007), 260659400/100); 
-        series_deal.add(new Day(27, 9, 2007), 119701900/100); 
-        series_deal.add(new Day(26, 9, 2007), 109719000/100); 
-        series_deal.add(new Day(25, 9, 2007), 178492400/100); 
-        series_deal.add(new Day(24, 9, 2007), 269978500/100); 
-        series_deal.add(new Day(21, 9, 2007), 361042300/100); 
-        series_deal.add(new Day(20, 9, 2007), 173912600/100); 
-        series_deal.add(new Day(19, 9, 2007), 154622600/100); 
-        series_deal.add(new Day(18, 9, 2007), 200661600/100); 
-        series_deal.add(new Day(17, 9, 2007), 312799600/100); 
-        series_deal.add(new Day(14, 9, 2007), 141652900/100); 
-        series_deal.add(new Day(13, 9, 2007), 221260400/100); 
-        series_deal.add(new Day(12, 9, 2007), 274795400/100); 
-        series_deal.add(new Day(11, 9, 2007), 289287300/100); 
-        series_deal.add(new Day(10, 9, 2007), 289063600/100); 
-        series_deal.add(new Day(7, 9, 2007), 351575300/100); 
-        series_deal.add(new Day(6, 9, 2007), 451357300/100); 
-        series_deal.add(new Day(5, 9, 2007), 442421200/100); 
-        series_deal.add(new Day(4, 9, 2007), 671942600/100); 
-        series_deal.add(new Day(3, 9, 2007), 349647800/100); 
-        series_deal.add(new Day(31, 8, 2007), 225339300/100); 
-        series_deal.add(new Day(30, 8, 2007), 160048200/100); 
-        series_deal.add(new Day(29, 8, 2007), 247341700/100); 
-        series_deal.add(new Day(28, 8, 2007), 394975400/100); 
-        series_deal.add(new Day(27, 8, 2007), 475797500/100); 
-        series_deal.add(new Day(24, 8, 2007), 297679500/100); 
-        series_deal.add(new Day(23, 8, 2007), 191760600/100); 
-        series_deal.add(new Day(22, 8, 2007), 232570200/100); 
-        series_deal.add(new Day(21, 8, 2007), 215693200/100); 
-        series_deal.add(new Day(20, 8, 2007), 200287500/100); 
-		
+	public static void kline_deal(List<OHLC_VO> datas_k,List<DealVO> datas_deal,Element config,MyPanel panel){
+		XYPlot plot_k,plot_deal;//画图区域对象
+		MyDate startDate,endDate_plus1;
+		MyDate date_temp;
+		//设置K线图的画图器，必须申明为final，后面要在匿名内部类里面用到
+		final CandlestickRenderer candlestickRender=new CandlestickRenderer();
+		//柱状图的画图器，画成交额的
+		XYBarRenderer xyBarRender;
+		DateAxis xAxis=new DateAxis();//设置x轴，也就是时间轴 
+		 NumberAxis yAxis_k,yAxis_deal;//设定y轴，就是数字轴 
+        double maxValue_k = Double.MIN_VALUE;//设置K线数据当中的最大值 
+        double minValue_k = Double.MAX_VALUE;//设置K线数据当中的最小值 
+		double maxValue_deal = Double.MIN_VALUE;// 设置成交量的最大值
+		double minValue_deal = Double.MAX_VALUE;// 设置成交量的最低值
+		/*
+		 * 开高低收数据序列，股票K线图的四个数据，依次是开，高，低，收
+		 */
+		OHLCSeries series_k = new OHLCSeries("");
+		/*
+		 * 对应时间成交量数据
+		 */
+        TimeSeries series_deal=new TimeSeries("");
         
-//        for (DealVO data : datas) {
-//			date = data.date;
-//			series_deal.add(
-//					new Day(date.getDay(), date.getMonth(), date.getYear()),
-//					data.dealAmount);
-//		}
-		timeSeriesCollection.addSeries(series_deal);
-		
-		 //获取最高值和最低值 
-        int seriesCount2 = timeSeriesCollection.getSeriesCount();//一共有多少个序列，目前为一个
-        for (int i = 0; i < seriesCount2; i++) { 
-            int itemCount = timeSeriesCollection.getItemCount(i);//每一个序列有多少个数据项 
+        /*
+         * 添加k线图的数据
+         * 
+         */
+        //得到第一个数据的日期（x轴坐标起点）
+        date_temp=datas_k.get(0).date;
+		startDate=date_temp;
+		//添加k线图数据
+		for (OHLC_VO data : datas_k) {
+			date_temp = data.date;
+			series_k.add(new Day(date_temp.getDay(), date_temp.getMonth(), date_temp.getYear()),
+					data.open, data.high, data.low, data.close);
+		}
+		//得到最后一个数据的日期，再加1天（x轴坐标终点）
+		endDate_plus1=MyTime.getAnotherDay(date_temp, 1);
+        /*
+         * 添加成交额的图的数据
+         */
+        //添加数据
+        for (DealVO data : datas_deal) {
+			date_temp = data.date;
+			series_deal.add(
+					new Day(date_temp.getDay(), date_temp.getMonth(), date_temp.getYear()),
+					data.dealAmount);
+ 		}
+        
+        
+		// 保留K线数据的数据集，必须申明为final，后面要在匿名内部类里面用到
+		final OHLCSeriesCollection seriesCollection = new OHLCSeriesCollection();
+		seriesCollection.addSeries(series_k);
+		// 保留成交额数据的数据集
+		TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();// 保留成交量数据的集合
+		timeSeriesCollection.addSeries(series_deal); 
+        /*
+		 * 获取K线数据的最高值和最低值
+		 */
+		// 一共有多少个序列，目前为一个
+        int seriesCount_k = seriesCollection.getSeriesCount();
+        for (int i = 0; i < seriesCount_k; i++) { 
+        	//每一个序列有多少个数据项 
+            int itemCount = seriesCollection.getItemCount(i);
             for (int j = 0; j < itemCount; j++) { 
-                if (highValue_deal < timeSeriesCollection.getYValue(i,j)) {//取第i个序列中的第j个数据项的值
-                    highValue_deal = timeSeriesCollection.getYValue(i,j); 
+                if (maxValue_k < seriesCollection.getHighValue(i, j)) {//取第i个序列中的第j个数据项的最大值
+                    maxValue_k = seriesCollection.getHighValue(i, j); 
+                } 
+                if (minValue_k > seriesCollection.getLowValue(i, j)) {//取第i个序列中的第j个数据项的最小值
+                    minValue_k = seriesCollection.getLowValue(i, j); 
+                } 
+            } 
+        } 
+        /*
+         * 获取最高值和最低值 
+         */
+        //一共有多少个序列，目前为一个
+        int seriesCount_deal = timeSeriesCollection.getSeriesCount();
+        for (int i = 0; i < seriesCount_deal; i++) { 
+        	//每一个序列有多少个数据项 
+            int itemCount = timeSeriesCollection.getItemCount(i);
+            for (int j = 0; j < itemCount; j++) { 
+                if (maxValue_deal < timeSeriesCollection.getYValue(i,j)) {//取第i个序列中的第j个数据项的值
+                    maxValue_deal = timeSeriesCollection.getYValue(i,j); 
                 } 
                 if (minValue_deal > timeSeriesCollection.getYValue(i, j)) {//取第i个序列中的第j个数据项的值
                     minValue_deal = timeSeriesCollection.getYValue(i, j); 
                 } 
             } 
         } 
-        XYBarRenderer xyBarRender=new XYBarRenderer();
-        xyBarRender.setMargin(0.1);//设置柱形图之间的间隔 
+        /*
+         * 创建k线图的画笔
+         */
+      //设置是否使用自定义的边框线，程序自带的边框线的颜色不符合中国股票市场的习惯
+        candlestickRender.setUseOutlinePaint(true); 
+      //设置如何对K线图的宽度进行设定
+        candlestickRender.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_AVERAGE);
+      //设置各个K线图之间的间隔 
+        candlestickRender.setAutoWidthGap(0.001);
+      //设置股票上涨的K线图颜色 
+        candlestickRender.setUpPaint(new Color(238,44,44));
+      //设置股票下跌的K线图颜色 
+        candlestickRender.setDownPaint(new Color(50,205,50));
         
-        DateAxis x1Axis=new DateAxis();//设置x轴，也就是时间轴 
-        x1Axis.setAutoRange(false);//设置不采用自动设置时间范围 
-        try{ 
-            x1Axis.setRange(dateFormat.parse("2007-08-20"),dateFormat.parse("2007-09-29"));//设置时间范围，注意时间的最大值要比已有的时间最大值要多一天
-        }catch(Exception e){ 
-            e.printStackTrace(); 
-        } 
-        x1Axis.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());//设置时间线显示的规则，用这个方法就摒除掉了周六和周日这些没有交易的日期(很多人都不知道有此方法)，使图形看上去连续
-        x1Axis.setAutoTickUnitSelection(false);//设置不采用自动选择刻度值 
-        x1Axis.setTickMarkPosition(DateTickMarkPosition.MIDDLE);//设置标记的位置 
-        x1Axis.setStandardTickUnits(DateAxis.createStandardDateTickUnits());//设置标准的时间刻度单位
-        x1Axis.setTickUnit(new DateTickUnit(DateTickUnit.DAY,7));//设置时间刻度的间隔，一般以周为单位
-        x1Axis.setDateFormatOverride(dateFormat);//设置显示时间的格式
-        
-        
-        
-        NumberAxis y2Axis=new NumberAxis();//设置Y轴，为数值,后面的设置，参考上面的y轴设置 
-        y2Axis.setAutoRange(false); 
-        y2Axis.setRange(minValue_deal*0.9, highValue_deal*1.1); 
-        y2Axis.setTickUnit(new NumberTickUnit((highValue_deal*1.1-minValue_deal*0.9)/4));
-        CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(x1Axis);//建立一个恰当的联合图形区域对象，以x轴为共享轴
-   //建立第二个画图区域对象，主要此时的x轴设为了null值，因为要与第一个画图区域对象共享x轴
-       XYPlot plot2=new XYPlot(timeSeriesCollection,null,y2Axis,xyBarRender);
-       combineddomainxyplot.add(plot2, 1);//添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域1/3
-       JFreeChart chart = new JFreeChart("k线图", JFreeChart.DEFAULT_TITLE_FONT, combineddomainxyplot, false);
-       ChartPanel chartPanel = new ChartPanel(chart, false); 
-       chartPanel.setBounds(50, 130, 700, 400);
-       panel.add(chartPanel);
-	       
+		/*
+		 * 创建成交额图的画笔
+		 */
+		xyBarRender = new XYBarRenderer() {
+			private static final long serialVersionUID = 1L;// 为了避免出现警告消息，特设定此值
+
+			public Paint getItemPaint(int i, int j) {// 匿名内部类用来处理当日的成交量柱形图的颜色与K线图的颜色保持一致
+				if (seriesCollection.getCloseValue(i, j) > seriesCollection
+						.getOpenValue(i, j)) {// 收盘价高于开盘价，股票上涨，选用股票上涨的颜色
+					return candlestickRender.getUpPaint();
+				} else {
+					return candlestickRender.getDownPaint();
+				}
+			}
+		};
+		xyBarRender.setMargin(0.1);// 设置柱形图之间的间隔
+		/*
+		 * 生成x轴,y轴
+		 */
+        xAxis=createX_Axis(startDate, endDate_plus1);
+        yAxis_k=createY_Axis(minValue_k,maxValue_k,10);
+		yAxis_deal = createY_Axis(minValue_deal, maxValue_deal, 4);
+		// 设置k线图画图区域对象
+		plot_k = new XYPlot(seriesCollection, xAxis, yAxis_k, candlestickRender);
+		// 建立成交额图画图区域对象，x轴设为了null值，因为要与第一个画图区域对象共享x轴
+		plot_deal = new XYPlot(timeSeriesCollection, null, yAxis_deal,xyBarRender);
 		
+		// 建立一个恰当的联合图形区域对象，以x轴为共享轴
+		CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(xAxis);
+		// 添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域2/3
+		combineddomainxyplot.add(plot_k, 2);
+		// 添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域1/3
+		combineddomainxyplot.add(plot_deal, 1);
+		// 设置两个图形区域对象之间的间隔空间
+		combineddomainxyplot.setGap(10);
+
+		JFreeChart chart = new JFreeChart("k线图", GraphicsUtils.getFont(null),
+				combineddomainxyplot, false);
+		ChartPanel chartPanel = new ChartPanel(chart, false);
+		chartPanel.setBounds(Integer.parseInt(config.attributeValue("x")),
+				Integer.parseInt(config.attributeValue("y")),
+				Integer.parseInt(config.attributeValue("width")),
+				Integer.parseInt(config.attributeValue("height")));
+//				50, 130, 700, 400);
+		panel.add(chartPanel);
+		panel.repaint();
+		System.out.println("嘿！画K线图啦");
 	}
-	
-	
-	
 	/**
-	 * 画k线图
-	 * @param datas
-	 * @param panel
+	 * 画Y轴的~
+	 * @param minValue_k
+	 * @param maxValue_k
+	 * @return
 	 */
-	public static void kLine(List<OHLC_VO> datas, MyPanel panel) {
-		MyDate date;
-		// 开高低收数据序列，股票K线图的四个数据，依次是开，高，低，收
-		OHLCSeries series_k = new OHLCSeries("");
-		
-		double highValue = Double.MIN_VALUE;// 设置K线数据当中的最大值
-		double minValue = Double.MAX_VALUE;// 设置K线数据当中的最小值
-/*
- * 测试数据
- */
-//		series_k.add(new Day(28, 9, 2007), 9.2, 9.58, 9.16, 9.34); 
-//        series_k.add(new Day(27, 9, 2007), 8.9, 9.06, 8.83, 8.96); 
-//        series_k.add(new Day(26, 9, 2007), 9.0, 9.1, 8.82, 9.04); 
-//        series_k.add(new Day(25, 9, 2007), 9.25, 9.33, 8.88, 9.00); 
-//        series_k.add(new Day(24, 9, 2007), 9.05, 9.50, 8.91, 9.25); 
-//        series_k.add(new Day(21, 9, 2007), 8.68, 9.05, 8.40, 9.00); 
-//        series_k.add(new Day(20, 9, 2007), 8.68, 8.95, 8.50, 8.69); 
-//        series_k.add(new Day(19, 9, 2007), 8.80, 8.94, 8.50, 8.66); 
-//        series_k.add(new Day(18, 9, 2007), 8.88, 9.17, 8.69, 8.80); 
-//        series_k.add(new Day(17, 9, 2007), 8.26, 8.98, 8.15, 8.89); 
-//        series_k.add(new Day(14, 9, 2007), 8.44, 8.45, 8.13, 8.33); 
-//        series_k.add(new Day(13, 9, 2007), 8.13, 8.46, 7.97, 8.42); 
-//        series_k.add(new Day(12, 9, 2007), 8.2, 8.4, 7.81, 8.13); 
-//        series_k.add(new Day(11, 9, 2007), 9.0, 9.0, 8.1, 8.24); 
-//        series_k.add(new Day(10, 9, 2007), 8.6, 9.03, 8.40, 8.95); 
-//        series_k.add(new Day(7, 9, 2007), 8.89, 9.04, 8.70, 8.73); 
-//        series_k.add(new Day(6, 9, 2007), 8.4, 9.08, 8.33, 8.88); 
-//        series_k.add(new Day(5, 9, 2007), 8.2, 8.74, 8.17, 8.36); 
-//        series_k.add(new Day(4, 9, 2007), 7.7, 8.46, 7.67, 8.27); 
-//        series_k.add(new Day(3, 9, 2007), 7.5, 7.8, 7.48, 7.69); 
-//        series_k.add(new Day(31, 8, 2007), 7.4, 7.6, 7.28, 7.43); 
-//        series_k.add(new Day(30, 8, 2007), 7.42, 7.56, 7.31, 7.40); 
-//        series_k.add(new Day(29, 8, 2007), 7.42, 7.66, 7.22, 7.33); 
-//        series_k.add(new Day(28, 8, 2007), 7.31, 7.70, 7.15, 7.56); 
-//        series_k.add(new Day(27, 8, 2007), 7.05, 7.46, 7.02, 7.41); 
-//        series_k.add(new Day(24, 8, 2007), 7.05, 7.09, 6.90, 6.99); 
-//        series_k.add(new Day(23, 8, 2007), 7.12, 7.16, 7.00, 7.03); 
-//        series_k.add(new Day(22, 8, 2007), 6.96, 7.15, 6.93, 7.11); 
-//        series_k.add(new Day(21, 8, 2007), 7.10, 7.15, 7.02, 7.07); 
-//        series_k.add(new Day(20, 8, 2007), 7.02, 7.19, 6.94, 7.14); 
-
-		
-		
-		
-		for (OHLC_VO data : datas) {
-			date = data.date;
-			series_k.add(new Day(date.getDay(), date.getMonth(), date.getYear()),
-					data.open, data.high, data.low, data.close);
-		}
-		final OHLCSeriesCollection seriesCollection = new OHLCSeriesCollection();// 保留K线数据的数据集，必须申明为final，后面要在匿名内部类里面用到
-		seriesCollection.addSeries(series_k);
-        //获取K线数据的最高值和最低值 
-        int seriesCount = seriesCollection.getSeriesCount();//一共有多少个序列，目前为一个 
-        for (int i = 0; i < seriesCount; i++) { 
-            int itemCount = seriesCollection.getItemCount(i);//每一个序列有多少个数据项 
-            for (int j = 0; j < itemCount; j++) { 
-                if (highValue < seriesCollection.getHighValue(i, j)) {//取第i个序列中的第j个数据项的最大值
-                    highValue = seriesCollection.getHighValue(i, j); 
-                } 
-                if (minValue > seriesCollection.getLowValue(i, j)) {//取第i个序列中的第j个数据项的最小值
-                    minValue = seriesCollection.getLowValue(i, j); 
-                } 
-            } 
-        } 
-        final CandlestickRenderer candlestickRender=new CandlestickRenderer();//设置K线图的画图器，必须申明为final，后面要在匿名内部类里面用到
-        candlestickRender.setUseOutlinePaint(true); //设置是否使用自定义的边框线，程序自带的边框线的颜色不符合中国股票市场的习惯
-        candlestickRender.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_AVERAGE);//设置如何对K线图的宽度进行设定
-        candlestickRender.setAutoWidthGap(0.001);//设置各个K线图之间的间隔 
-        candlestickRender.setUpPaint(Color.RED);//设置股票上涨的K线图颜色 
-        candlestickRender.setDownPaint(Color.GREEN);//设置股票下跌的K线图颜色 
-        DateAxis x1Axis=new DateAxis();//设置x轴，也就是时间轴 
-        x1Axis.setAutoRange(false);//设置不采用自动设置时间范围 
+	private static NumberAxis createY_Axis(double minValue_k, double maxValue_k,double density) {
+		NumberAxis yAxis=new NumberAxis();
+		 //不使用自动设定范围 
+        yAxis.setAutoRange(false);
+      //设定y轴值的范围，比最低值要低一些，比最大值要大一些，这样图形看起来会美观些
+        yAxis.setRange(minValue_k*0.9, maxValue_k*1.1);
+      //设置刻度显示的密度
+        yAxis.setTickUnit(new NumberTickUnit((maxValue_k*1.1-minValue_k*0.9)/density));
+		return yAxis;
+	}
+	/**
+	 * 画x轴的~
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	private static DateAxis createX_Axis(MyDate start,MyDate end){
+		DateAxis xAxis=new DateAxis();
+		//TODO
+		//设置不采用自动设置时间范围 
+        xAxis.setAutoRange(false);
+        System.out.println("HHHHHH----"+start.DateToString()+"~~"+end.DateToString()+"--HHHHHHH");
         try{ 
-            x1Axis.setRange(dateFormat.parse("2007-08-20"),dateFormat.parse("2007-09-29"));//设置时间范围，注意时间的最大值要比已有的时间最大值要多一天
+        	//设置时间范围
+            xAxis.setRange(dateFormat.parse(start.DateToString()),
+            		dateFormat.parse(end.DateToString()));
         }catch(Exception e){ 
             e.printStackTrace(); 
         } 
-        x1Axis.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());//设置时间线显示的规则，用这个方法就摒除掉了周六和周日这些没有交易的日期(很多人都不知道有此方法)，使图形看上去连续
-        x1Axis.setAutoTickUnitSelection(false);//设置不采用自动选择刻度值 
-        x1Axis.setTickMarkPosition(DateTickMarkPosition.MIDDLE);//设置标记的位置 
-        x1Axis.setStandardTickUnits(DateAxis.createStandardDateTickUnits());//设置标准的时间刻度单位
-        x1Axis.setTickUnit(new DateTickUnit(DateTickUnit.DAY,7));//设置时间刻度的间隔，一般以周为单位
-        x1Axis.setDateFormatOverride(new SimpleDateFormat("yyyy-MM-dd"));//设置显示时间的格式
-        NumberAxis y1Axis=new NumberAxis();//设定y轴，就是数字轴 
-        y1Axis.setAutoRange(false);//不不使用自动设定范围 
-        y1Axis.setRange(minValue*0.9, highValue*1.1);//设定y轴值的范围，比最低值要低一些，比最大值要大一些，这样图形看起来会美观些
-        y1Axis.setTickUnit(new NumberTickUnit((highValue*1.1-minValue*0.9)/10));//设置刻度显示的密度
-        XYPlot plot1=new XYPlot(seriesCollection,x1Axis,y1Axis,candlestickRender);//设置画图区域对象
-
-	        
-	        XYBarRenderer xyBarRender=new XYBarRenderer(){ 
-	            private static final long serialVersionUID = 1L;//为了避免出现警告消息，特设定此值 
-	            public Paint getItemPaint(int i, int j){//匿名内部类用来处理当日的成交量柱形图的颜色与K线图的颜色保持一致
-	                if(seriesCollection.getCloseValue(i,j)>seriesCollection.getOpenValue(i,j)){//收盘价高于开盘价，股票上涨，选用股票上涨的颜色
-	                    return candlestickRender.getUpPaint(); 
-	                }else{ 
-	                    return candlestickRender.getDownPaint(); 
-	                } 
-	            }}; 
-
-	            CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(x1Axis);//建立一个恰当的联合图形区域对象，以x轴为共享轴
-	            combineddomainxyplot.add(plot1, 2);//添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域2/3
-//	            combineddomainxyplot.add(plot2, 1);//添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域1/3
-	            combineddomainxyplot.setGap(10);//设置两个图形区域对象之间的间隔空间 
-	            JFreeChart chart = new JFreeChart("k线图", JFreeChart.DEFAULT_TITLE_FONT, combineddomainxyplot, false);
-	            ChartPanel chartPanel = new ChartPanel(chart, false); 
-	            chartPanel.setBounds(50, 130, 700, 400);
-	            panel.add(chartPanel);
-	            System.out.println("嘿！画K线图啦");
+        /*
+         * 设置时间线显示的规则，
+         * 用这个方法就摒除掉了周六和周日这些没有交易的日期，使图形看上去连续
+         */
+        xAxis.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());
+      //设置不采用自动选择刻度值 
+        xAxis.setAutoTickUnitSelection(false);
+      //设置标记的位置 
+        xAxis.setTickMarkPosition(DateTickMarkPosition.MIDDLE);
+      //设置标准的时间刻度单位
+        xAxis.setStandardTickUnits(DateAxis.createStandardDateTickUnits());
+      //设置时间刻度的间隔，一般以周为单位
+        xAxis.setTickUnit(new DateTickUnit(DateTickUnit.DAY,7));
+        //设置显示时间的格式
+        xAxis.setDateFormatOverride(dateFormat);
+		return xAxis;
 	}
 
 }

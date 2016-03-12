@@ -33,6 +33,8 @@ import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import org.jfree.date.DayOfWeekInMonthRule;
 
+import ui.config.GraphicsUtils;
+
 
 public class AppTest { 
     public static void main(String[] args) throws IOException{ 
@@ -331,6 +333,15 @@ public class AppTest {
         double high2Value = Double.MIN_VALUE;//设置成交量的最大值 
         double min2Value = Double.MAX_VALUE;//设置成交量的最低值 
         OHLCSeries series = new OHLCSeries("");//开高低收数据序列，股票K线图的四个数据，依次是开，高，低，收 
+        OHLCSeries se_temp = new OHLCSeries("");//开高低收数据序列，股票K线图的四个数据，依次是开，高，低，收 
+        //TODO
+        se_temp.add(new Day(28, 9, 2007), 16, 9.58, 9.16, 9.34); 
+        se_temp.add(new Day(27, 9, 2007), 8.9, 9.06, 8.83, 8.96); 
+        se_temp.add(new Day(26, 9, 2007), 9.0, 9.1, 8.82, 9.04); 
+        se_temp.add(new Day(25, 9, 2007), 9.25, 9.33, 8.88, 9.00); 
+        se_temp.add(new Day(24, 9, 2007), 9.05, 9.50, 8.91, 9.25); 
+        se_temp.add(new Day(21, 9, 2007), 8.68, 9.05, 8.40, 9.00); 
+        
         series.add(new Day(28, 9, 2007), 9.2, 9.58, 9.16, 9.34); 
         series.add(new Day(27, 9, 2007), 8.9, 9.06, 8.83, 8.96); 
         series.add(new Day(26, 9, 2007), 9.0, 9.1, 8.82, 9.04); 
@@ -363,6 +374,7 @@ public class AppTest {
         series.add(new Day(20, 8, 2007), 7.02, 7.19, 6.94, 7.14); 
         final OHLCSeriesCollection seriesCollection = new OHLCSeriesCollection();//保留K线数据的数据集，必须申明为final，后面要在匿名内部类里面用到
         seriesCollection.addSeries(series); 
+        seriesCollection.addSeries(se_temp); 
         TimeSeries series2=new TimeSeries("");//对应时间成交量数据 
         series2.add(new Day(28, 9, 2007), 260659400/100); 
         series2.add(new Day(27, 9, 2007), 119701900/100); 
@@ -427,9 +439,9 @@ public class AppTest {
         final CandlestickRenderer candlestickRender=new CandlestickRenderer();//设置K线图的画图器，必须申明为final，后面要在匿名内部类里面用到
         candlestickRender.setUseOutlinePaint(true); //设置是否使用自定义的边框线，程序自带的边框线的颜色不符合中国股票市场的习惯
         candlestickRender.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_AVERAGE);//设置如何对K线图的宽度进行设定
-        candlestickRender.setAutoWidthGap(0.001);//设置各个K线图之间的间隔 
-        candlestickRender.setUpPaint(Color.RED);//设置股票上涨的K线图颜色 
-        candlestickRender.setDownPaint(Color.GREEN);//设置股票下跌的K线图颜色 
+        candlestickRender.setAutoWidthGap(0.1);//设置各个K线图之间的间隔 
+        candlestickRender.setUpPaint(new Color(238,44,44));//设置股票上涨的K线图颜色 
+        candlestickRender.setDownPaint(new Color(50,205,50));//设置股票下跌的K线图颜色 
         DateAxis x1Axis=new DateAxis();//设置x轴，也就是时间轴 
         x1Axis.setAutoRange(false);//设置不采用自动设置时间范围 
         try{ 
@@ -469,7 +481,7 @@ public class AppTest {
             combineddomainxyplot.add(plot1, 2);//添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域2/3
             combineddomainxyplot.add(plot2, 1);//添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域1/3
             combineddomainxyplot.setGap(10);//设置两个图形区域对象之间的间隔空间 
-            JFreeChart chart = new JFreeChart("中国联通", JFreeChart.DEFAULT_TITLE_FONT, combineddomainxyplot, false);
+            JFreeChart chart = new JFreeChart("中国联通", GraphicsUtils.getFont(null), combineddomainxyplot, false);
             TestFrame frame=new TestFrame(chart);
 //            ChartFrame frame = new ChartFrame("中国联通股票", chart); 
 //            frame.pack(); 

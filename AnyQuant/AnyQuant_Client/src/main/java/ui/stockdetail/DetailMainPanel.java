@@ -7,6 +7,8 @@ import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.Vector;
 
+import javax.swing.JTabbedPane;
+
 import org.dom4j.Element;
 
 import ui.config.CompomentType;
@@ -22,7 +24,6 @@ import ui.tool.PanelController;
 import ui.tool.TipsDialog;
 import util.MyTime;
 import vo.StockVO;
-import blimpl.StockBLImpl;
 import blservice.StockBLService;
 import enumeration.MyDate;
 
@@ -36,8 +37,9 @@ public class DetailMainPanel extends MyPanel{
 
 	public DetailMainPanel(Element config,PanelController controller) {
 		super(config);
+		this.config=config;
 		ctr_panel=controller;
-		ctr_bl=StockBLImpl.getAPIBLService();
+		ctr_bl=MockStockBLImpl.getAPIBLService();
 		initComponent(config);
 		
 	}
@@ -48,6 +50,7 @@ public class DetailMainPanel extends MyPanel{
 		refreshStockInfo(stockCode, stock_name);
 	}
 	private void initComponent(Element config) {
+		initPanel(config.element("panel"));
 		initButtons(config.element(CompomentType.BUTTONS.name()));
 		initDatePicker(config.element("DatePicker"));
 		initTable(config.element("Table"));
@@ -57,6 +60,15 @@ public class DetailMainPanel extends MyPanel{
 	}
 
 	
+	private void initPanel(Element e) {
+		tabPanel=new JTabbedPane();
+		day_K_panel=new Picture_panel(e.element("tabPanel"));
+		week_k_panel=new Picture_panel(e.element("tabPanel"));
+		month_k_panel=new Picture_panel(e.element("tabPanel"));
+		tabPanel.addTab("日K", day_K_panel);
+		tabPanel.addTab("周K", week_k_panel);
+		tabPanel.addTab("月K", month_k_panel);
+	}
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -93,7 +105,6 @@ public class DetailMainPanel extends MyPanel{
 		 yestodayClose=new MyLabel(e.element("yestodayClose"),yestodayClose_num+"");
 		 highest=new MyLabel(e.element("highest"),highest_num+"");
 		 lowest=new MyLabel(e.element("lowest"),lowest_num+"");
-		 //TODO 单位转换
 		 dealAmount=new MyLabel(e.element("deal"),dealAmount_num+"");
 		 changeColor();
 	}
@@ -109,6 +120,8 @@ public class DetailMainPanel extends MyPanel{
 	protected void initDatePicker(Element e) {
 		start_datePicker=new MyDatePicker(e.element("start"));
 		end_datePicker=new MyDatePicker(e.element("end"));
+		endDate=new MyTime().getToDay();
+		startDate=MyTime.getAnotherDay(endDate, -30);
 		
 	}
 	protected void initTable(Element e) {
@@ -161,6 +174,7 @@ public class DetailMainPanel extends MyPanel{
 
 	@Override
 	protected void addComponent() {
+		this.add(tabPanel);
 		this.add(start_datePicker);
 		this.add(end_datePicker);
 //		this.add(table);
@@ -245,7 +259,12 @@ public class DetailMainPanel extends MyPanel{
 		itr=ctr_bl.getRecentStocks(stockCode);//今天是最后一个
 		//刷新表格数据
 		refreshTable();
-		MyFreeChart.deal(null, this);
+		//TODO
+		MyFreeChart.kline_deal(
+				ctr_bl.getDayOHLC_Data(stockCode, startDate, endDate),
+				ctr_bl.getDayDealVOs(stockCode, startDate, endDate), 
+				config.element("panel").element("pic"),
+				this);
 		// label上的数据
 		stockPriceNow = Double.parseDouble(table.getValue(
 				table.getRowCount() - 1, 1));
@@ -287,7 +306,10 @@ public class DetailMainPanel extends MyPanel{
 	private MyLabel todayOpen,yestodayClose,highest,lowest,dealAmount;
 	private MyDatePicker start_datePicker,end_datePicker;
 	private MyTable table;
+	private JTabbedPane tabPanel;//TODO 为什么3个panel叠加，第三个显示不出？！
+	private Picture_panel day_K_panel,week_k_panel,month_k_panel;
 	private StockBLService ctr_bl;
 	private Iterator<StockVO> itr;
+	Element config;
 	private PanelController ctr_panel;
 }
