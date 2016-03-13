@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import org.dom4j.Element;
 import org.jfree.chart.ChartPanel;
@@ -28,7 +29,6 @@ import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
-import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.xy.XYDataset;
 
@@ -45,7 +45,7 @@ public class MyFreeChart {
 	 * @param datas
 	 * @param panel
 	 */
-	public static void kline_deal(List<OHLC_VO> datas_k,List<DealVO> datas_deal,Element config,MyPanel panel){
+	public static void kline_deal(List<OHLC_VO> datas_k,List<DealVO> datas_deal,Element config,JPanel panel){
 		XYPlot plot_k,plot_deal;//画图区域对象
 		MyDate startDate,endDate_plus1;
 		MyDate date_temp;
@@ -116,7 +116,6 @@ public class MyFreeChart {
                 if (minValue_k > seriesCollection_k.getLowValue(i, j)) {//取第i个序列中的第j个数据项的最小值
                     minValue_k = seriesCollection_k.getLowValue(i, j); 
                 } 
-                System.out.println("getVolumeValue   "+seriesCollection_k.getVolumeValue(i, j));
             } 
         } 
         /*

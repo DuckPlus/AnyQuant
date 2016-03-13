@@ -20,7 +20,6 @@ public class Picture_panel extends MyPanel{
 	}
 	@Override
 	public void paint(Graphics g) {
-		g.drawString("啊哈哈哈 Picture_panel", 100, 100);
 	}
 	@Override
 	protected void initButtons(Element e) {

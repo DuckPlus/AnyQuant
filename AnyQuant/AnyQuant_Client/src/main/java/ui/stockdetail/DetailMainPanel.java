@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.Vector;
 
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import org.dom4j.Element;
@@ -24,6 +25,7 @@ import ui.tool.PanelController;
 import ui.tool.TipsDialog;
 import util.MyTime;
 import vo.StockVO;
+import blimpl.StockBLImpl;
 import blservice.StockBLService;
 import enumeration.MyDate;
 
@@ -39,7 +41,7 @@ public class DetailMainPanel extends MyPanel{
 		super(config);
 		this.config=config;
 		ctr_panel=controller;
-		ctr_bl=MockStockBLImpl.getAPIBLService();
+		ctr_bl=StockBLImpl.getAPIBLService();
 		initComponent(config);
 		
 	}
@@ -62,12 +64,23 @@ public class DetailMainPanel extends MyPanel{
 	
 	private void initPanel(Element e) {
 		tabPanel=new JTabbedPane();
-		day_K_panel=new Picture_panel(e.element("tabPanel"));
-		week_k_panel=new Picture_panel(e.element("tabPanel"));
-		month_k_panel=new Picture_panel(e.element("tabPanel"));
+		tabPanel.setBounds(35, 130, 720, 500);
+		Element cfg=e.element("tabPanel");
+		day_K_panel=new JPanel();
+		week_k_panel=new JPanel();
+		month_k_panel=new JPanel();
+	
+		int x=Integer.parseInt(cfg.attributeValue("x"));
+		int y=Integer.parseInt(cfg.attributeValue("y"));
+		int w=Integer.parseInt(cfg.attributeValue("width"));
+		int h=Integer.parseInt(cfg.attributeValue("height"));
+		day_K_panel.setBounds(x,y,w,h);
+		week_k_panel.setBounds(x,y,w,h);
+		month_k_panel.setBounds(x,y,w,h);
 		tabPanel.addTab("日K", day_K_panel);
 		tabPanel.addTab("周K", week_k_panel);
 		tabPanel.addTab("月K", month_k_panel);
+		tabPanel.setDisplayedMnemonicIndexAt(0, 0);
 	}
 	@Override
 	public void paintComponent(Graphics g) {
@@ -264,7 +277,8 @@ public class DetailMainPanel extends MyPanel{
 				ctr_bl.getDayOHLC_Data(stockCode, startDate, endDate),
 				ctr_bl.getDayDealVOs(stockCode, startDate, endDate), 
 				config.element("panel").element("pic"),
-				this);
+				day_K_panel);
+		
 		// label上的数据
 		stockPriceNow = Double.parseDouble(table.getValue(
 				table.getRowCount() - 1, 1));
@@ -282,7 +296,7 @@ public class DetailMainPanel extends MyPanel{
 		changeRate = Double.parseDouble(temp.substring(0, temp.length()-1))/100;
 		changeRate_str=temp;
 		refreshLabels();
-//		this.repaint();
+   	this.tabPanel.repaint();
 	}
 	private void refreshLabels() {
 		stockPriceNow_label.setText(stockPriceNow+"");
@@ -296,11 +310,6 @@ public class DetailMainPanel extends MyPanel{
 		dealAmount.setText(dealAmount_num+"");
 		changeColor();
 	}
-	@Override
-	protected void initOtherComponent(Element e) {
-		// TODO Auto-generated method stub
-		
-	}
 	private String stockCode="sh600050",stockName,changeRate_str;
 	private MyDate startDate,endDate;
 	private double changeRate,stockPriceNow,todayOpen_num,yestodayClose_num,highest_num,lowest_num,dealAmount_num;
@@ -312,10 +321,14 @@ public class DetailMainPanel extends MyPanel{
 	private MyDatePicker start_datePicker,end_datePicker;
 	private MyTable table;
 	private JTabbedPane tabPanel;//TODO 为什么3个panel叠加，第三个显示不出？！
-	private Picture_panel day_K_panel,week_k_panel,month_k_panel;
+	private JPanel day_K_panel,week_k_panel,month_k_panel;
 	private StockBLService ctr_bl;
 	private Iterator<StockVO> itr;
 	Element config;
 	private PanelController ctr_panel;
-	
+	@Override
+	protected void initOtherComponent(Element e) {
+		// TODO Auto-generated method stub
+		
+	}
 }

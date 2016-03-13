@@ -45,7 +45,7 @@ public class MySideBarButton extends JLabel{
 		catch(Exception nullex){
 			this.setBounds(Integer.parseInt(e.attributeValue("x")),
 					Integer.parseInt(e.attributeValue("y")),
-					250 ,40);
+					175 ,40);
 		}
 		this.setFont(GraphicsUtils.getFont(null));
 		this.setForeground(Color.WHITE);
