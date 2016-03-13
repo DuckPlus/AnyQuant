@@ -138,7 +138,7 @@ public interface StockBLService {
 			Stock_Attribute attr, List<String> stocksCodes);
 
 	/**
-	 * 获得某只股票最近一个月的数据
+	 * Get the recent datas(last month) of the given stockCode
 	 * 
 	 * @param stockCode
 	 * @return
@@ -146,7 +146,7 @@ public interface StockBLService {
 	public Iterator<StockVO> getRecentStocks(String stockCode);
 
 	/**
-	 * 获得某只股票一段时间内的数据
+	 * Get today's(or last trading day)data of the given stockCode
 	 * 
 	 * @param stockCode
 	 * @return
@@ -156,13 +156,11 @@ public interface StockBLService {
 	/**
 	 * 获得某只股票一段时间内的数据
 	 * 
-	 * @param stockCode
-	 *            股票代码
-	 * @param start
-	 *            起始日期
-	 * @param end
-	 *            结束日期
-	 * @return 若没有，返回<b>NULL</b>
+	 * @param stockCode 
+	 * @param start start date
+	 *           
+	 * @param end end date
+	 * @return if the stockCode is invalid will return <b>NULL</b>
 	 */
 	public Iterator<StockVO> getStocksByTime(String stockCode, MyDate start,
 			MyDate end);

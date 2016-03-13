@@ -20,7 +20,9 @@ public class OHLC_VO {
 			this.close = close;
 			this.high = high;
 			this.low = low;
-			this.date = new MyDate(date);
+			this.date = date.clone();
+			
+			
 		}
        
         
