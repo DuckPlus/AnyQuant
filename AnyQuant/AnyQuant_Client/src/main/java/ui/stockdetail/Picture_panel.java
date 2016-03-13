@@ -1,24 +1,27 @@
 /**
  *@author dsn
- *@version 2016年3月8日    下午11:59:19
+ *@version 2016年3月11日    上午1:08:04
  */
 
-package ui.guideui;
+package ui.stockdetail;
 
-import java.awt.Color;
+import java.awt.Graphics;
 
 import org.dom4j.Element;
 
 import ui.tool.MyPanel;
 
-public class LeftPanel extends MyPanel{
+public class Picture_panel extends MyPanel{
 
-	public LeftPanel(Element config) {
+
+	public Picture_panel(Element config) {
 		super(config);
-		setBackground(new Color(205,105,201));
-		// TODO Auto-generated constructor stub
+		System.out.println("Picture_panel类  "+this.getWidth()+"x"+this.getHeight());
 	}
-
+	@Override
+	public void paint(Graphics g) {
+		g.drawString("啊哈哈哈 Picture_panel", 100, 100);
+	}
 	@Override
 	protected void initButtons(Element e) {
 		// TODO Auto-generated method stub
@@ -38,7 +41,7 @@ public class LeftPanel extends MyPanel{
 	}
 
 	@Override
-	protected void initTable(Element e) {
+	protected void initOtherComponent(Element e) {
 		// TODO Auto-generated method stub
 		
 	}

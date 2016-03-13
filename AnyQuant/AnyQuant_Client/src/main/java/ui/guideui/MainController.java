@@ -9,6 +9,7 @@ import ui.listui.StockListPanel;
 import ui.stockdetail.DetailMainPanel;
 import ui.tool.ButtonState;
 import ui.tool.MyPanel;
+import ui.tool.MyPictureButton;
 import ui.tool.MySideBarButton;
 import ui.tool.MySideBarListener;
 import ui.tool.PanelController;
@@ -21,7 +22,7 @@ import ui.tool.PanelController;
  */
 public class MainController extends PanelController {
 
-	private MySideBarButton BlockButton;
+//	private MySideBarButton BlockButton;
 	private MySideBarButton StockListButton;
 	private MySideBarButton BenchmarkButton;
 
@@ -34,8 +35,7 @@ public class MainController extends PanelController {
 	private DetailMainPanel stockDetailPanel;
 	private BenchMarkListPanel benchMarkListPanel;
 	private StockListPanel stockListPanel;
-	private GuidePanel guidePanel;
-	private BlockPanel blockPanel;
+//	private BlockPanel blockPanel;
 
 	public MainController(MyPanel initialPanel, Element root) {
 		super(initialPanel, root.element("changepanel"));
@@ -55,18 +55,15 @@ public class MainController extends PanelController {
 
 	@Override
 	protected void initPanel(Element e) {
-		stockDetailPanel = new DetailMainPanel(e.element(stockListPanelStr).element(stockDetailPanelStr));
+		stockDetailPanel = new DetailMainPanel(e.element(stockListPanelStr).element(stockDetailPanelStr),this);
 		stockListPanel = new StockListPanel(e.element(stockListPanelStr), this,stockDetailPanel);
 		benchMarkListPanel = new BenchMarkListPanel(
 				e.element(benchmarkPanelStr));
-		guidePanel = new GuidePanel(e.element(guidePanelStr));
-		guidePanel = new GuidePanel(e.element(guidePanelStr));
-		blockPanel=new BlockPanel(e.element(blockPanelStr));
+//		blockPanel=new BlockPanel(e.element(blockPanelStr));
 	}
 
 	@Override
 	protected void initButtons(Element e) {
-		BlockButton = new MySideBarButton(e.element("Block"));
 		StockListButton = new MySideBarButton(e.element("StockList"));
 		BenchmarkButton = new MySideBarButton(e.element("BenchMark"));
 
@@ -75,25 +72,23 @@ public class MainController extends PanelController {
 	@Override
 	protected void addButtons() {
 		mainPanel.add(BenchmarkButton);
-		mainPanel.add(BlockButton);
 		mainPanel.add(StockListButton);
+//		mainPanel.add(stockList_btn_pic);
+//		mainPanel.add(benchMark_btn_pic);
 	}
 
 	@Override
 	protected void addPanels() {
+		changePanel.add(stockListPanel, stockListPanelStr);
 		changePanel.add(benchMarkListPanel, benchmarkPanelStr);
 		changePanel.add(stockDetailPanel, stockDetailPanelStr);
-		changePanel.add(stockListPanel, stockListPanelStr);
-		changePanel.add(blockPanel,blockPanelStr);
-		changePanel.add(guidePanel, guidePanelStr);
+//		changePanel.add(blockPanel,blockPanelStr);
 	}
 
 	@Override
 	protected void addListeners() {
 		BenchmarkButton.addMouseListener(new MySideBarListener(BenchmarkButton,
 				this, benchmarkPanelStr));
-		BlockButton.addMouseListener(new MySideBarListener(
-				BlockButton, this, blockPanelStr));
 		StockListButton.addMouseListener(new MySideBarListener(StockListButton,
 				this, stockListPanelStr));
 
@@ -102,7 +97,7 @@ public class MainController extends PanelController {
 	@Override
 	public void setAllButtonUnClicked() {
 		BenchmarkButton.setMyIcon(ButtonState.NORMAL);
-		BlockButton.setMyIcon(ButtonState.NORMAL);
+//		BlockButton.setMyIcon(ButtonState.NORMAL);
 		StockListButton.setMyIcon(ButtonState.NORMAL);
 
 	}
@@ -118,7 +113,7 @@ public class MainController extends PanelController {
 	@Override
 	protected void addToMap() {
 		buttonMap.put(benchmarkPanelStr, BenchmarkButton);
-		buttonMap.put(blockPanelStr, BlockButton);
+//		buttonMap.put(blockPanelStr, BlockButton);
 		buttonMap.put(stockListPanelStr, StockListButton);
 
 	}

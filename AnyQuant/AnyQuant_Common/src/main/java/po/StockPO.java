@@ -171,11 +171,20 @@ public class StockPO implements InitialBean {
 
 	public void  computeAmplitude(){
 		   double temp = Math.abs(high - low)/preClose;
+		   if(temp>10){
+			   temp=0;
+			   return;
+		   }
 		   this.amplitude =    (int)(temp*10000)/10000.0;
+		   
 	}
 	
 	public void  computeChangeRate(){
 		   double temp = (close-open)/open;
+		   if(temp>10){
+			   temp=0;
+			   return;
+		   }
 		   this.changeRate =     (int)(temp*10000)/10000.0;
 	}
 	

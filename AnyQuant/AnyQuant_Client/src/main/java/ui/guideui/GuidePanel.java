@@ -7,6 +7,7 @@ import org.dom4j.Element;
 
 import ui.config.GraphicsUtils;
 import ui.tool.MyPanel;
+import ui.tool.MyPictureButton;
 
 /**
  * 起始panel
@@ -16,25 +17,23 @@ import ui.tool.MyPanel;
 @SuppressWarnings("serial")
 public class GuidePanel extends MyPanel{
 
+	Element config;
 	public GuidePanel(Element config) {
-		
 		super(config);
-		setBackground(new Color(0,0,0,0));
-		// TODO Auto-generated constructor stub
+		this.config=config;
+		addComponent();
 	}
 	
 	@Override
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
-		g.drawImage(GraphicsUtils.getImage("bg//bg_s"),0,0,null);
+		g.drawImage(GraphicsUtils.getImage(config.attributeValue("img")),0,0,null);
 	}
 	
 
 	@Override
 	protected void initButtons(Element e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -50,15 +49,13 @@ public class GuidePanel extends MyPanel{
 	}
 
 	@Override
-	protected void initTable(Element e) {
+	protected void initOtherComponent(Element e) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	protected void addComponent() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -66,5 +63,4 @@ public class GuidePanel extends MyPanel{
 		// TODO Auto-generated method stub
 		
 	}
-
 }

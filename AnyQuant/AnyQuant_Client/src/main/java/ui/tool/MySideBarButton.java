@@ -17,24 +17,27 @@ import ui.config.GraphicsUtils;
 @SuppressWarnings("serial")
 public class MySideBarButton extends JLabel{
 	
-	private static Icon nowPanel;
-	private static Icon normal;
-	private static Icon entered;
-	private static Icon clicked;
-	
+	private  Icon nowPanel=GraphicsUtils.getIcon("element//stockList_now");
+	private  Icon normal= GraphicsUtils.getIcon("element//stockList_normal");
+	private  Icon entered = GraphicsUtils.getIcon("element//stockList_entered");
+	private  Icon clicked= GraphicsUtils.getIcon("element//stockList_clicked");
 	private boolean isClicked = false;
-	
-	//加载的4张图片始终相等 所以使用静态常量
-	static{
-		nowPanel = GraphicsUtils.getIcon("element//sidebar-now");
-		normal = GraphicsUtils.getIcon("element//sidebar");
-		entered = GraphicsUtils.getIcon("element//sidebar-enter");
-		clicked = GraphicsUtils.getIcon("element//sidebar-clicked");
-	}
-	
 	public MySideBarButton(Element e) {
+		
+		if (e.attributeValue("normal") != null) {
+			normal = GraphicsUtils.getIcon(e.attributeValue("normal"));
+		}
+		if (e.attributeValue("now") != null) {
+			nowPanel = GraphicsUtils.getIcon(e.attributeValue("now"));
+		}
+		if (e.attributeValue("clicked") != null) {
+			clicked = GraphicsUtils.getIcon(e.attributeValue("clicked"));
+		}
+		if (e.attributeValue("entered") != null) {
+			entered = GraphicsUtils.getIcon(e.attributeValue("entered"));
+		}
 		this.setIcon(normal);
-		try{
+		try {
 		this.setBounds(Integer.parseInt(e.attributeValue("x")),
 								Integer.parseInt(e.attributeValue("y")),
 								Integer.parseInt(e.attributeValue("width")), Integer.parseInt(e.attributeValue("height")));

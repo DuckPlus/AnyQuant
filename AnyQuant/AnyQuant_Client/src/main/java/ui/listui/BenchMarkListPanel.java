@@ -46,7 +46,7 @@ public class BenchMarkListPanel extends MyPanel {
 	public BenchMarkListPanel(Element config) {
 		super(config);
 		initBl();
-		initTable(config.element("benchmarklistTable"));
+		initOtherComponent(config.element("benchmarklistTable"));
 		initLabels(config);
 		initButtons(config);
 		initTextFields(config);
@@ -88,7 +88,7 @@ public class BenchMarkListPanel extends MyPanel {
 	}
 
 	@Override
-	protected void initTable(Element e) {
+	protected void initOtherComponent(Element e) {
 		Vector<String> vhead = new Vector<String>();
 		vhead.add("日期");
 		vhead.add("开盘价");

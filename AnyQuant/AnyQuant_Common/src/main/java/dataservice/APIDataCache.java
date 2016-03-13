@@ -30,6 +30,7 @@ import util.MyTime;
  * @date 2016年3月6日
  */
 public class APIDataCache implements APIInterface{
+	
 	private static String fileName1="cache//stockCode.txt";
 	private static String fileName2="cache//stockMes.txt";
     APIInterface   api = null;

@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 import org.dom4j.Element;
+import org.jfree.chart.JFreeChart;
  /** 
  * panel 父类, 定义 写代码的一些流程
  * @author czq 
@@ -33,7 +34,7 @@ public abstract class MyPanel extends JPanel{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 	}
-
+	
 	
 	/**
 	 * 初始化按钮
@@ -50,7 +51,7 @@ public abstract class MyPanel extends JPanel{
 	/**
 	 * 初始化其他组件
 	 */
-	protected abstract void initTable(Element e);
+	protected abstract void initOtherComponent(Element e);
 	/**
 	 * 将组件加到面板上去
 	 */
