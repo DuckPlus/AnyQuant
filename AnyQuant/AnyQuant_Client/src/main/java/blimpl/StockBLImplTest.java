@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import util.MyTime;
+import vo.DealVO;
 import vo.OHLC_VO;
 import vo.StockVO;
 import blservice.StockBLService;
@@ -105,12 +106,22 @@ public class StockBLImplTest {
 
 	@Test
 	public void testGetDayDealVOs() {
-		fail("Not yet implemented");
+		System.out.println("-------------------下面进入日成交量测试------------------------");
+		List<DealVO> dealVOs = bl.getDayDealVOs("sh600300", MyTime.getAnotherDay(-100), MyTime.getAnotherDay(0));
+		for (DealVO dealVO : dealVOs) {
+			System.out.println(dealVO.date.DateToString() + " " + dealVO.dealAmount+ " " + dealVO.volume);
+		}
+	
 	}
 
 	@Test
 	public void testGetWeekDealVOs() {
-		fail("Not yet implemented");
+		System.out.println("-------------------下面进入周成交量测试------------------------");
+		List<DealVO> dealVOs = bl.getWeekDealVOs("sh600300", MyTime.getAnotherDay(-100), MyTime.getAnotherDay(0));
+		for (DealVO dealVO : dealVOs) {
+			System.out.println(dealVO.date.DateToString() + " " + dealVO.dealAmount+ " " + dealVO.volume);
+		}
+
 	}
 
 	@Test

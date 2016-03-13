@@ -182,7 +182,7 @@ public class StockBLImpl implements StockBLService {
 			results = new ArrayList<OHLC_VO>(weekNum);
 			for (int i = 0; i < weekNum; i++) {
 				monday = i * DAY_OF_WEEK;
-				friday = i == weekNum - 1 ? (len % DAY_OF_WEEK) : 4;
+				friday = i == weekNum - 1 ? (len % DAY_OF_WEEK + 1) : 5;
 				// Friday sometimes means the last trading day in this week
 				results.add(new OHLC_VO(MyDate.getDateFromString(pos
 						.get(monday).getDate()), pos.get(monday).getOpen(), pos
@@ -270,9 +270,10 @@ public class StockBLImpl implements StockBLService {
 			results = new ArrayList<DealVO>(weekNum);
 			for (int i = 0; i < weekNum; i++) {
 				monday = i * DAY_OF_WEEK;
-				friday = i == weekNum - 1 ? (len % DAY_OF_WEEK) : 4;
+				//last item is excluive of the method "sublist"
+				friday =  (i == weekNum - 1) ? (len % DAY_OF_WEEK + 1) : 5;
 				// Friday sometimes means the last trading day in this week
-				results.add(getSumDealVO(pos.subList(monday, monday + friday)));
+				results.add(getSumDealVO(pos.subList(monday, monday + friday )));
 			}
 			return results.isEmpty() ? null : results;
 		}
