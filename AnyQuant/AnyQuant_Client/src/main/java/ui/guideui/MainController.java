@@ -30,7 +30,6 @@ public class MainController extends PanelController {
 	private final static String stockListPanelStr = "stockListPanel";
 	private final static String benchmarkPanelStr = "benchmarkPanel";
 	private final static String blockPanelStr = "blockPanel";
-	private final static String guidePanelStr = "guidePanel";
 
 	private DetailMainPanel stockDetailPanel;
 	private BenchMarkListPanel benchMarkListPanel;
@@ -48,7 +47,7 @@ public class MainController extends PanelController {
 		addListeners();
 		addToMap();
 		this.setAllButtonVisable(true);
-		panelManager.show(changePanel, guidePanelStr);
+		panelManager.show(changePanel, stockListPanelStr);
 		changePanel.setVisible(true);
 
 	}
@@ -57,8 +56,8 @@ public class MainController extends PanelController {
 	protected void initPanel(Element e) {
 		stockDetailPanel = new DetailMainPanel(e.element(stockListPanelStr).element(stockDetailPanelStr),this);
 		stockListPanel = new StockListPanel(e.element(stockListPanelStr), this,stockDetailPanel);
-		benchMarkListPanel = new BenchMarkListPanel(
-				e.element(benchmarkPanelStr));
+//		benchMarkListPanel = new BenchMarkListPanel(
+//				e.element(benchmarkPanelStr));
 //		blockPanel=new BlockPanel(e.element(blockPanelStr));
 	}
 
@@ -66,21 +65,19 @@ public class MainController extends PanelController {
 	protected void initButtons(Element e) {
 		StockListButton = new MySideBarButton(e.element("StockList"));
 		BenchmarkButton = new MySideBarButton(e.element("BenchMark"));
-
+		StockListButton.setMyIcon(null);//默认初始界面是股票列表
 	}
 
 	@Override
 	protected void addButtons() {
 		mainPanel.add(BenchmarkButton);
 		mainPanel.add(StockListButton);
-//		mainPanel.add(stockList_btn_pic);
-//		mainPanel.add(benchMark_btn_pic);
 	}
 
 	@Override
 	protected void addPanels() {
 		changePanel.add(stockListPanel, stockListPanelStr);
-		changePanel.add(benchMarkListPanel, benchmarkPanelStr);
+//		changePanel.add(benchMarkListPanel, benchmarkPanelStr);
 		changePanel.add(stockDetailPanel, stockDetailPanelStr);
 //		changePanel.add(blockPanel,blockPanelStr);
 	}

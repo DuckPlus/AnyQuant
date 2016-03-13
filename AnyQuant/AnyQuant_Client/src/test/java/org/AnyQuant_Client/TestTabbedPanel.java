@@ -40,7 +40,7 @@ public class TestTabbedPanel extends JPanel {
         MyPanel panel1 = makeTextPanel();
         panel1.setSize(100,100);
 //        panel1.add(btn);
-        MyFreeChart.kline_deal(null,null, null,panel1);
+//        MyFreeChart.kline_deal(null,null, null,panel1);
         tabbedPane.addTab("One", panel1);  
         Component panel2 = makeTextPanel();  
         tabbedPane.addTab("Two", panel2);  

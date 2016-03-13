@@ -32,7 +32,25 @@ public class TestData {
 			double amplitude, double changeRate) {
 	 */
 	
-	
+	/**
+	 * 得到一个数据
+	 */
+	public static StockVO getOneData(){
+		StockVO vo=new StockVO(dates[0], "石化油服", "600121",
+				Double.parseDouble(df.format(25+Math.random()*5)),
+				Double.parseDouble(df.format(20+Math.random()*5)), 
+				Double.parseDouble(df.format(20+Math.random()*10)),//open
+				Double.parseDouble(df.format(20+Math.random()*10)),//close
+				Double.parseDouble(df.format(20+Math.random()*10)),
+				2, 
+				20000+(long)(Math.random()*10000),
+				Double.parseDouble(df.format(Math.random())),
+				Double.parseDouble(df.format(Math.random())),
+				Double.parseDouble(df.format(Math.random())), 
+				Double.parseDouble(df.format(Math.random())),
+				Double.parseDouble(df.format(1-Math.random()*2)));
+		return vo;
+	}
 	/**
 	 * 得到k个数据--同一支股票，时间不同
 	 * @param k

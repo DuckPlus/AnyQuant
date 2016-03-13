@@ -3,7 +3,6 @@
 
 	<initialpanel x="0" y="0" width="1080" height="720">
         <changepanel x="177" y="30" width="985" height="660"/>
-	 	<leftPanel x="0" y="0" width="230" height="720"/>
 	 	<BUTTONS>
 			<StockList text="股票列表" x="0" y="217" clicked="element/stockList_clicked" entered="element/stockList_entered" normal="element/stockList_normal" now="element/stockList_now"/>
 			<BenchMark text="大盘指数" x="0" y="267" clicked="element/benchMark_clicked" entered="element/benchMark_entered" normal="element/benchMark_normal" now="element/benchMark_now"/>
@@ -22,8 +21,8 @@
 			        <back text="返回" x="780" y="570" height="53" width="70" clicked="element/search_btn" enter="element/search_enter" normal="element/search_btn" />
 			     </BUTTONS>
 			     <panel>
-			     	<tabPanel x="35" y="130" width="660" height="450"/> 
-			     	<pic x="20" y="150" width="750" height="450"/> 
+			     	<tabPanel x="35" y="130" width="720" height="500"/> 
+			     	<pic x="0" y="10" width="690" height="450"/> 
 			     	
 			     </panel>
 			     <TEXTFIELDS>
