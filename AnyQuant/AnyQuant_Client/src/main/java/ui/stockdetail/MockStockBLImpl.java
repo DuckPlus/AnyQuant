@@ -269,5 +269,10 @@ public class MockStockBLImpl implements StockBLService{
 		return getDayDealVOs(stockCode, start, end);
 	}
 
+	@Override
+	public StockVO getTodayStockVO(String stockCode) {
+		return TestData.getOneData();
+	}
+
 }
 
