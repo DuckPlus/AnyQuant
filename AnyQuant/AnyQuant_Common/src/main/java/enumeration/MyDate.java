@@ -1,10 +1,13 @@
 package enumeration;
 
-import java.util.Calendar;
-
 import util.MyTime;
 
-public class MyDate {
+/**
+ * 日期类
+ * @author czq,ss
+ * @date 2016-3-10
+ */
+public class MyDate implements Cloneable{
 	private int year, month, day, hour, min, second;
 	private static final String SPLIT_STRING = "-";
 
@@ -22,7 +25,9 @@ public class MyDate {
 		this.min = min;
 		this.second = second;
 	}
-
+	
+	
+	
 	// 返回日期“2015-01-10”
 	public String DateToString() {
 		String month = "";
@@ -30,7 +35,7 @@ public class MyDate {
 		if (this.month < 10) {
 			month = "0" + this.month;
 		} else {
-			month = "" + this.day;
+			month = "" + this.month;
 		}
 
 		if (this.day < 10) {
@@ -79,37 +84,47 @@ public class MyDate {
 		return new MyDate(Integer.parseInt(tmp[0]), Integer.parseInt(tmp[1]),
 				Integer.parseInt(tmp[2]));
 	}
-
-	public void setYear(int y) {
-		this.year = y;
+	
+	@Override
+	public MyDate clone()  {
+		try {
+			return (MyDate) super.clone();
+		} catch (CloneNotSupportedException e) {
+			return MyTime.getToDay();
+		}
 	}
-
-	public void setMonth(int m) {
-		this.month = m;
-	}
-
-	public void setDay(int d) {
-		this.day = d;
-	}
-
+	
+	
 	public int getYear() {
-		return this.year;
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
 	}
 
 	public int getMonth() {
-		return this.month;
+		return month;
+	}
+
+	public void setMonth(int month) {
+		this.month = month;
 	}
 
 	public int getDay() {
-		return this.day;
+		return day;
 	}
 
-	public int getSecond() {
-		return second;
+	public void setDay(int day) {
+		this.day = day;
 	}
 
-	public void setSecond(int second) {
-		this.second = second;
+	public int getHour() {
+		return hour;
+	}
+
+	public void setHour(int hour) {
+		this.hour = hour;
 	}
 
 	public int getMin() {
@@ -120,12 +135,13 @@ public class MyDate {
 		this.min = min;
 	}
 
-	public int getHour() {
-		return hour;
+	public int getSecond() {
+		return second;
 	}
 
-	public void setHour(int hour) {
-		this.hour = hour;
+	public void setSecond(int second) {
+		this.second = second;
 	}
+
 
 }

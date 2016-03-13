@@ -6,7 +6,7 @@ package vo;
  * @author czq
  * @date 2016年3月4日
  */
-public class StockVO {
+public class StockVO implements Cloneable{
 	 public String date ,name,code;
 	 public double high ,low;
 	 public double open,close,preClose;
@@ -41,6 +41,15 @@ public class StockVO {
 		this.pb = pb;
 		this.amplitude = amplitude;
 		this.changeRate = changeRate;
+	}
+
+	@Override
+	public StockVO clone()  {
+		try {
+			return (StockVO) super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
 	}
 	
 	

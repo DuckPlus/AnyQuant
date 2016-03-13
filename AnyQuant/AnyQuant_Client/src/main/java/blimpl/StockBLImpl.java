@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.python.antlr.PythonParser.return_stmt_return;
-
-import jnr.ffi.Struct.int16_t;
 import po.StockPO;
 import util.MyTime;
 import vo.DealVO;
@@ -104,6 +101,12 @@ public class StockBLImpl implements StockBLService {
 	}
 
 	@Override
+	public StockVO getTodayStockVO(String stockCode) {
+		return stockMap.get(stockCode).clone();
+
+	}
+
+	@Override
 	// TODO
 	public Iterator<StockVO> getStocksByTime(String stockCode, MyDate start,
 			MyDate end) {
@@ -162,51 +165,63 @@ public class StockBLImpl implements StockBLService {
 		List<StockPO> pos = APIDataSer.getStockMes(stockCode,
 				MyTime.getMondayofTheWeek(start),
 				MyTime.getFridayofTheWeek(end));
-//		System.out.println(start.DateToString());
-//		System.out.println(MyTime.getMondayofTheWeek(start).DateToString());
+		// System.out.println(start.DateToString());
+		// System.out.println(MyTime.getMondayofTheWeek(start).DateToString());
 		List<OHLC_VO> results;
 		int DAY_OF_WEEK = 5;
 		if (pos == null) {
 			return null;
 		} else {
-//			System.out.println(pos.size());
-//			System.out.println(pos.get(0).getDate());
+			// System.out.println(pos.size());
+			// System.out.println(pos.get(0).getDate());
 			int len = pos.size();
-			int weekNum = len / 5 + (len % 5 > 0 ? 1 : 0);
+			int weekNum = len / DAY_OF_WEEK + (len % DAY_OF_WEEK > 0 ? 1 : 0);
 			int monday;
 			int friday;
-//			System.out.println(weekNum);
+			// System.out.println(weekNum);
 			results = new ArrayList<OHLC_VO>(weekNum);
 			for (int i = 0; i < weekNum; i++) {
-				 monday = i * DAY_OF_WEEK;
-				 friday = i==weekNum-1?(len%5):4;
-				 //Friday sometimes means the last trading day in this week
+				monday = i * DAY_OF_WEEK;
+				friday = i == weekNum - 1 ? (len % DAY_OF_WEEK) : 4;
+				// Friday sometimes means the last trading day in this week
 				results.add(new OHLC_VO(MyDate.getDateFromString(pos
 						.get(monday).getDate()), pos.get(monday).getOpen(), pos
 						.get(monday + friday).getClose(), getHighInScope(pos
-						.subList(monday, monday+  friday)), getLowInScope(pos
+						.subList(monday, monday + friday)), getLowInScope(pos
 						.subList(monday, monday + friday))));
 			}
-			 return results;
+			return results;
 		}
 	}
 
 	@Override
 	public List<OHLC_VO> getMonthOHLC_Data(String stockCode, MyDate start,
 			MyDate end) {
-		start.setDay(1);
-		end.setDay(28);
-		List<OHLC_VO> vos ;
-		List<StockPO> pos = APIDataSer.getStockMes(stockCode, start, end);
-		if(pos == null){
-			return null;
-		}else{
-			vos = new ArrayList<OHLC_VO>(pos.size());
-			int len = vos.size();
-			int monthNum = 12*(end.getYear()  - start.getYear()  - 1)+ end.getMonth() - start.getMonth();
-			
+		int MONTH_DAY = 31;
+		List<OHLC_VO> vos;
+		List<StockPO> pos = new ArrayList<StockPO>(25);
+
+		int monthNum = 12 * (end.getYear() - start.getYear()) + end.getMonth()
+				- start.getMonth() + 1;
+		vos = new ArrayList<OHLC_VO>(monthNum);
+		MyDate thisMonth = start.clone();
+		MyDate monthEnd = thisMonth.clone();
+		// System.out.println(start.DateToString());
+		// System.out.println(thisMonth.DateToString());
+		// System.out.println(monthEnd.DateToString());
+		thisMonth.setDay(1);
+		monthEnd.setDay(MONTH_DAY);
+		for (int i = 0; i < monthNum; i++) {
+			pos = APIDataSer.getStockMes(stockCode, thisMonth, monthEnd);
+			vos.add(new OHLC_VO(thisMonth, pos.get(0).getOpen(), pos.get(
+					pos.size() - 1).getClose(), getHighInScope(pos),
+					getLowInScope(pos)));
+
+			getNextMonth(thisMonth);
+			getNextMonth(monthEnd);
+
 		}
-		return null;
+		return vos.isEmpty() ? null : vos;
 	}
 
 	@Override
@@ -217,28 +232,94 @@ public class StockBLImpl implements StockBLService {
 
 	@Override
 	public List<DealVO> getDayDealVOs(String stockCode, MyDate start, MyDate end) {
-		// TODO Auto-generated method stub
-		return null;
+		List<StockPO> pos = APIDataSer.getStockMes(stockCode, start, end);
+		List<DealVO> results;
+
+		if (pos == null) {
+			return null;
+		} else {
+			results = new ArrayList<DealVO>(pos.size());
+			for (StockPO stockPO : pos) {
+				results.add(new DealVO(stockPO.getVolume() * stockPO.getOpen(),
+						stockPO.getVolume(), MyDate.getDateFromString(stockPO
+								.getDate())));
+			}
+		}
+
+		return results.isEmpty() ? null : results;
 	}
 
 	@Override
 	public List<DealVO> getWeekDealVOs(String stockCode, MyDate start,
 			MyDate end) {
-		// TODO Auto-generated method stub
-		return null;
+		List<StockPO> pos = APIDataSer.getStockMes(stockCode,
+				MyTime.getMondayofTheWeek(start),
+				MyTime.getFridayofTheWeek(end));
+		List<DealVO> results;
+		int DAY_OF_WEEK = 5;
+		if (pos == null) {
+			return null;
+		} else {
+			// System.out.println(pos.size());
+			// System.out.println(pos.get(0).getDate());
+			int len = pos.size();
+			int weekNum = len / DAY_OF_WEEK + (len % DAY_OF_WEEK > 0 ? 1 : 0);
+			int monday;
+			int friday;
+			// System.out.println(weekNum);
+			results = new ArrayList<DealVO>(weekNum);
+			for (int i = 0; i < weekNum; i++) {
+				monday = i * DAY_OF_WEEK;
+				friday = i == weekNum - 1 ? (len % DAY_OF_WEEK) : 4;
+				// Friday sometimes means the last trading day in this week
+				results.add(getSumDealVO(pos.subList(monday, monday + friday)));
+			}
+			return results.isEmpty() ? null : results;
+		}
+
 	}
 
 	@Override
 	public List<DealVO> getMonthDealVOs(String stockCode, MyDate start,
 			MyDate end) {
-		// TODO Auto-generated method stub
-		return null;
+		int MONTH_DAY = 31;
+		List<DealVO> vos;
+		List<StockPO> pos = new ArrayList<StockPO>(25);
+
+		int monthNum = 12 * (end.getYear() - start.getYear()) + end.getMonth()
+				- start.getMonth() + 1;
+		vos = new ArrayList<DealVO>(monthNum);
+		MyDate thisMonth = start.clone();
+		MyDate monthEnd = thisMonth.clone();
+		thisMonth.setDay(1);
+		monthEnd.setDay(MONTH_DAY);
+		for (int i = 0; i < monthNum; i++) {
+			pos = APIDataSer.getStockMes(stockCode, thisMonth, monthEnd);
+			vos.add(getSumDealVO(pos));
+
+			getNextMonth(monthEnd);
+			getNextMonth(thisMonth);
+		}
+
+		return vos.isEmpty() ? null : vos;
 	}
 
-	@Override
-	public StockVO getTodayStockVO(String stockCode) {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * 计算给定范围内的成交量、成交额总量， 其中成交额暂时用每天开盘价作为平均价,乘以成交量得出
+	 * 
+	 * @param subList
+	 * @return
+	 */
+	private static DealVO getSumDealVO(List<StockPO> subList) {
+		long volume = 0;
+		double openSum = 0;
+		for (StockPO stockPO : subList) {
+			volume += stockPO.getVolume();
+			openSum += stockPO.getOpen();
+		}
+
+		return new DealVO(openSum / subList.size() * volume, volume,
+				MyDate.getDateFromString(subList.get(0).getDate()));
 	}
 
 	private static final double getLowInScope(List<StockPO> scope) {
@@ -259,5 +340,14 @@ public class StockBLImpl implements StockBLService {
 			}
 		}
 		return result;
+	}
+
+	private static final void getNextMonth(MyDate date) {
+		if (date.getMonth() == 12) {
+			date.setMonth(1);
+			date.setYear(date.getYear() + 1);
+		} else {
+			date.setMonth(date.getMonth() + 1);
+		}
 	}
 }
