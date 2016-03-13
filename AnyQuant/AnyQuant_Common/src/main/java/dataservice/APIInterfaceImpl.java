@@ -232,7 +232,7 @@ public class APIInterfaceImpl implements APIInterface{
 		//拿到第一天的前一天有效数据
 		start = MyTime.getFirstPreWorkDay(start);
 		
-		while(getMesCount(stockCode, start, end)<2){
+		while(getStockMesCount(stockCode, start, end)<2){
 			start = MyTime.getFirstPreWorkDay(start);
 	    }
 		return getManyMesFunc(stockCode, start, end);
@@ -268,7 +268,7 @@ public class APIInterfaceImpl implements APIInterface{
 	}
 	
 	//不确定会有几个数据调用该方法，返回数据个数
-	private  int    getMesCount(String stockCode, MyDate start , MyDate end){
+	private  int    getStockMesCount(String stockCode, MyDate start , MyDate end){
 		String startTime = start.DateToString();
 		String endTime = end.DateToString();
 		String url = "http://121.41.106.89:8010/api/stock/"+stockCode+"/?start="+startTime +"&end="+endTime ;
@@ -290,11 +290,17 @@ public class APIInterfaceImpl implements APIInterface{
 		return null;
 	}
 	
+	//获得最新的大盘数据
 	@Override
 	public BenchMarkPO getBenchMes(String benchCode) {
-		List<BenchMarkPO> benchs =getBenchMes(benchCode, MyTime.getAnotherDay(-1),MyTime.getToDay());
-		return benchs.get(benchs.size()-1);
+		//当天可能没有数据
+		 MyDate end = MyTime.getToDay();
+		 MyDate  start = MyTime.getFirstPreWorkDay(end);
+		 List<BenchMarkPO>  benches = getBenchMes(benchCode, start, end);
+         return  benches.get(benches.size()-1);
 	}
+	
+	
 	
 	@Override
 	public List<BenchMarkPO> getBenchMes(String benchCode, MyDate start, MyDate end) {
@@ -325,6 +331,7 @@ public class APIInterfaceImpl implements APIInterface{
 				list.add("hs300");
 				return list;
 	}
+	
 	@Override
 	public List<BenchMarkPO> getAllBenchMes() {
 		 List<String>  benchCodes = this.getAllBenchMarks();
