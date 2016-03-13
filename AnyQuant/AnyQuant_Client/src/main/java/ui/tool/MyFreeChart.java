@@ -141,9 +141,9 @@ public class MyFreeChart {
       //设置是否使用自定义的边框线，程序自带的边框线的颜色不符合中国股票市场的习惯
         candlestickRender.setUseOutlinePaint(true); 
       //设置如何对K线图的宽度进行设定
-        candlestickRender.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_AVERAGE);
+        candlestickRender.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_SMALLEST);
       //设置各个K线图之间的间隔 
-        candlestickRender.setAutoWidthGap(0.001);
+//        candlestickRender.setAutoWidthGap(0.001);
       //设置股票上涨的K线图颜色 
         candlestickRender.setUpPaint(new Color(238,44,44));
       //设置股票下跌的K线图颜色 
@@ -196,7 +196,7 @@ public class MyFreeChart {
 				Integer.parseInt(config.attributeValue("height")));
 		panel.add(chartPanel);
 		panel.repaint();
-		System.out.println("嘿！画K线图啦");
+		System.out.println("嘿！画K线图啦"+panel.getClass());
 	}
 	/**
 	 * 画Y轴的~

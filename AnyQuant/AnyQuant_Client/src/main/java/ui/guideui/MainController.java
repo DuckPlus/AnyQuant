@@ -56,8 +56,8 @@ public class MainController extends PanelController {
 	protected void initPanel(Element e) {
 		stockDetailPanel = new DetailMainPanel(e.element(stockListPanelStr).element(stockDetailPanelStr),this);
 		stockListPanel = new StockListPanel(e.element(stockListPanelStr), this,stockDetailPanel);
-		benchMarkListPanel = new BenchMarkListPanel(
-				e.element(benchmarkPanelStr));
+//		benchMarkListPanel = new BenchMarkListPanel(
+//				e.element(benchmarkPanelStr));
 //		blockPanel=new BlockPanel(e.element(blockPanelStr));
 	}
 
@@ -77,7 +77,7 @@ public class MainController extends PanelController {
 	@Override
 	protected void addPanels() {
 		changePanel.add(stockListPanel, stockListPanelStr);
-		changePanel.add(benchMarkListPanel, benchmarkPanelStr);
+//		changePanel.add(benchMarkListPanel, benchmarkPanelStr);
 		changePanel.add(stockDetailPanel, stockDetailPanelStr);
 //		changePanel.add(blockPanel,blockPanelStr);
 	}

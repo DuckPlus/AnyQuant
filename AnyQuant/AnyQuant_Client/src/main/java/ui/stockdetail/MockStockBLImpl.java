@@ -139,8 +139,7 @@ public class MockStockBLImpl implements StockBLService{
 	@Override
 	public List<OHLC_VO> getMonthOHLC_Data(String stockCode, MyDate start,
 			MyDate end) {
-		// TODO Auto-generated method stub
-		return null;
+		return getDayOHLC_Data(stockCode, start, end);		
 	}
 
 	@Override
@@ -153,8 +152,39 @@ public class MockStockBLImpl implements StockBLService{
 
 	@Override
 	public List<OHLC_VO> getWeekOHLC_Data(String stockCode, MyDate start, MyDate end) {
-		// TODO Auto-generated method stub
-		return null;
+		List<OHLC_VO> vos = new ArrayList<OHLC_VO>();
+		vos.add(new OHLC_VO(new MyDate(2013, 8, 20), 7.02, 7.14, 7.19, 6.94));
+		vos.add(new OHLC_VO(new MyDate(2013, 8, 27), 7.10, 7.07, 7.15, 7.02));
+		vos.add(new OHLC_VO(new MyDate(2013, 9, 3), 6.96, 7.11, 7.15, 6.93));
+		vos.add(new OHLC_VO(new MyDate(2013, 9, 10), 7.12, 7.03, 7.16, 7.00));
+		vos.add(new OHLC_VO(new MyDate(2013, 9, 17), 7.05, 6.99, 7.09, 6.90));
+		vos.add(new OHLC_VO(new MyDate(2013, 9, 24), 7.05, 7.41, 7.46, 7.02));
+		vos.add(new OHLC_VO(new MyDate(2013,10, 1), 7.42, 7.33, 7.66, 7.22));
+		vos.add(new OHLC_VO(new MyDate(2013,10, 8), 7.42, 7.40, 7.56, 7.31));
+		vos.add(new OHLC_VO(new MyDate(2013,10, 15), 7.4, 7.43, 7.6, 7.28));
+		vos.add(new OHLC_VO(new MyDate(2013,10, 22), 7.5, 7.69, 7.8, 7.48));
+		vos.add(new OHLC_VO(new MyDate(2013,10, 29), 7.7, 8.27, 8.46, 7.67));
+		vos.add(new OHLC_VO(new MyDate(2013,11, 6), 8.2, 8.36, 8.74, 8.17));
+		vos.add(new OHLC_VO(new MyDate(2013,11, 13), 8.4, 8.88,10.08, 8.33));
+		vos.add(new OHLC_VO(new MyDate(2013,11, 20), 8.89, 8.73, 9.04, 8.70));
+		vos.add(new OHLC_VO(new MyDate(2013,11, 27), 8.6, 8.95, 9.03, 8.40));
+		vos.add(new OHLC_VO(new MyDate(2013, 12, 4), 9.0, 8.24, 9.0, 8.1));
+		vos.add(new OHLC_VO(new MyDate(2013, 12, 11), 8.2, 8.13, 8.4, 7.81));
+		vos.add(new OHLC_VO(new MyDate(2013, 12, 18), 8.13, 8.42, 8.46, 7.97));
+		vos.add(new OHLC_VO(new MyDate(2013, 12, 25), 8.44, 8.33, 8.45, 8.13));
+		vos.add(new OHLC_VO(new MyDate(2014, 1,1), 8.26, 8.89, 8.98, 8.15));
+		vos.add(new OHLC_VO(new MyDate(2014, 1, 8), 8.88, 8.80, 9.17, 8.69));
+		vos.add(new OHLC_VO(new MyDate(2014, 1, 15), 8.80, 8.66, 8.94, 8.50));
+		vos.add(new OHLC_VO(new MyDate(2014, 1, 22), 8.68, 8.69, 8.95, 8.50));
+		vos.add(new OHLC_VO(new MyDate(2014, 1, 29), 8.68, 9.00, 9.05, 8.40));
+		vos.add(new OHLC_VO(new MyDate(2014, 2, 5), 9.05, 9.25, 9.50, 8.91));
+		vos.add(new OHLC_VO(new MyDate(2014, 2, 12), 9.25, 9.00, 9.33, 8.88));
+		vos.add(new OHLC_VO(new MyDate(2014, 2, 19), 9.0, 9.04, 9.1, 8.82));
+		vos.add(new OHLC_VO(new MyDate(2014, 2, 26), 8.9, 8.96, 9.06, 8.83));
+		vos.add(new OHLC_VO(new MyDate(2014, 3, 4), 9.2, 9.34, 9.58, 9.16)); 
+		vos.add(new OHLC_VO(new MyDate(2014, 3, 11), 7.31, 7.56, 7.70, 7.15));
+       
+		return vos;
 	}
 
 	@Override
@@ -198,14 +228,45 @@ public class MockStockBLImpl implements StockBLService{
 
 	@Override
 	public List<DealVO> getWeekDealVOs(String stockCode, MyDate start, MyDate end) {
-		// TODO Auto-generated method stub
-		return null;
+		List<DealVO> vos=new ArrayList<DealVO>();
+		vos.add(new DealVO(500287500 / 100, 10, new MyDate(2013,8,20)));
+		vos.add(new DealVO(215693200 / 100, 10, new MyDate(2013,8,27)));
+		vos.add(new DealVO(325702000 / 100, 10, new MyDate(2013,9,3)));
+		vos.add(new DealVO(191760600 / 100, 10, new MyDate(2013,9,10)));
+		vos.add(new DealVO(297679500 / 100, 10, new MyDate(2013,9,17)));
+		vos.add(new DealVO(475797500 / 100, 10, new MyDate(2013,9,24)));
+		vos.add(new DealVO(394975400 / 100, 10, new MyDate(2013,10,1)));
+		vos.add(new DealVO(247341700 / 100, 10, new MyDate(2013,10,8)));
+		vos.add(new DealVO(160048200 / 100, 10, new MyDate(2013,10,15)));
+		vos.add(new DealVO(225339300 / 100, 10, new MyDate(2013,10,22)));
+		vos.add(new DealVO(349647800 / 100, 10, new MyDate(2013,10,29)));
+		vos.add(new DealVO(671942600 / 100, 10, new MyDate(2013,11,6)));
+		vos.add(new DealVO(442421200 / 100, 10, new MyDate(2013,11,13)));
+		vos.add(new DealVO(451357300 / 100, 10, new MyDate(2013,11,20)));
+		vos.add(new DealVO(351575300 / 100, 10, new MyDate(2013,11,27)));
+		vos.add(new DealVO(289063600 / 100, 10, new MyDate(2013,12,4)));
+		vos.add(new DealVO(289287300 / 100, 10, new MyDate(2013,12,11)));
+		vos.add(new DealVO(274795400 / 100, 10, new MyDate(2013,12,18)));
+		vos.add(new DealVO(221260400 / 100, 10, new MyDate(2013,12,25)));
+		vos.add(new DealVO(141652900 / 100, 10, new MyDate(2014,1,1)));
+		vos.add(new DealVO(312799600 / 100, 10, new MyDate(2014,1,8)));
+		vos.add(new DealVO(200661600 / 100, 10, new MyDate(2014,1,15)));
+		vos.add(new DealVO(154622600 / 100, 10, new MyDate(2014,1,22)));
+		vos.add(new DealVO(173912600 / 100, 10, new MyDate(2014,1,29)));
+		vos.add(new DealVO(361042300 / 100, 10, new MyDate(2014,2,5)));
+		vos.add(new DealVO(269978500 / 100, 10, new MyDate(2014,2,12)));
+		vos.add(new DealVO(178492400 / 100, 10, new MyDate(2014,2,19)));
+		vos.add(new DealVO(109719000 / 100, 10, new MyDate(2014,2,26)));
+		vos.add(new DealVO(119701900 / 100, 10, new MyDate(2014,3,4)));
+		vos.add(new DealVO(260659400 / 100, 10, new MyDate(2014,3,11)));
+
+		return vos;
+
 	}
 
 	@Override
 	public List<DealVO> getMonthDealVOs(String stockCode, MyDate start, MyDate end) {
-		// TODO Auto-generated method stub
-		return null;
+		return getDayDealVOs(stockCode, start, end);
 	}
 
 }

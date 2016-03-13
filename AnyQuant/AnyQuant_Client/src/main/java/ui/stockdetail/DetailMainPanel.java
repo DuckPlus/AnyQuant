@@ -9,6 +9,8 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.dom4j.Element;
 
@@ -25,7 +27,6 @@ import ui.tool.PanelController;
 import ui.tool.TipsDialog;
 import util.MyTime;
 import vo.StockVO;
-import blimpl.StockBLImpl;
 import blservice.StockBLService;
 import enumeration.MyDate;
 
@@ -41,7 +42,7 @@ public class DetailMainPanel extends MyPanel{
 		super(config);
 		this.config=config;
 		ctr_panel=controller;
-		ctr_bl=StockBLImpl.getAPIBLService();
+		ctr_bl=MockStockBLImpl.getAPIBLService();
 		initComponent(config);
 		
 	}
@@ -66,20 +67,22 @@ public class DetailMainPanel extends MyPanel{
 		tabPanel=new JTabbedPane();
 		tabPanel.setBounds(35, 130, 720, 500);
 		Element cfg=e.element("tabPanel");
-		day_K_panel=new JPanel();
+		day_k_panel=new JPanel();
 		week_k_panel=new JPanel();
 		month_k_panel=new JPanel();
-	
+		time_sharing_panel=new JPanel();	
 		int x=Integer.parseInt(cfg.attributeValue("x"));
 		int y=Integer.parseInt(cfg.attributeValue("y"));
 		int w=Integer.parseInt(cfg.attributeValue("width"));
 		int h=Integer.parseInt(cfg.attributeValue("height"));
-		day_K_panel.setBounds(x,y,w,h);
+		day_k_panel.setBounds(x,y,w,h);
 		week_k_panel.setBounds(x,y,w,h);
 		month_k_panel.setBounds(x,y,w,h);
-		tabPanel.addTab("日K", day_K_panel);
+		time_sharing_panel.setBounds(x, y, w, h);
+		tabPanel.addTab("日K", day_k_panel);
 		tabPanel.addTab("周K", week_k_panel);
 		tabPanel.addTab("月K", month_k_panel);
+		tabPanel.addTab("分时图",time_sharing_panel);
 		tabPanel.setDisplayedMnemonicIndexAt(0, 0);
 	}
 	@Override
@@ -133,7 +136,7 @@ public class DetailMainPanel extends MyPanel{
 	protected void initDatePicker(Element e) {
 		start_datePicker=new MyDatePicker(e.element("start"));
 		end_datePicker=new MyDatePicker(e.element("end"));
-		endDate=new MyTime().getToDay();
+		endDate=MyTime.getToDay();
 		startDate=MyTime.getAnotherDay(endDate, -30);
 		
 	}
@@ -158,8 +161,23 @@ public class DetailMainPanel extends MyPanel{
 	/**
 	 * 刷新表格信息
 	 */
-	private void refreshTable() {
-		table.removeAllItem();
+	private void refreshPictrue() {
+		MyFreeChart.kline_deal(
+				ctr_bl.getDayOHLC_Data(stockCode, startDate, endDate),
+				ctr_bl.getDayDealVOs(stockCode, startDate, endDate), 
+				config.element("panel").element("pic"),
+				day_k_panel);
+		MyFreeChart.kline_deal(
+				ctr_bl.getWeekOHLC_Data(stockCode, startDate, endDate),
+				ctr_bl.getWeekDealVOs(stockCode, startDate, endDate), 
+				config.element("panel").element("pic"),
+				week_k_panel);
+		MyFreeChart.kline_deal(
+				ctr_bl.getMonthOHLC_Data(stockCode, startDate, endDate),
+				ctr_bl.getMonthDealVOs(stockCode, startDate, endDate), 
+				config.element("panel").element("pic"),
+				month_k_panel);
+		
 		int i=0;
 		while(itr.hasNext()){
 			StockVO vo=itr.next();
@@ -217,6 +235,26 @@ public class DetailMainPanel extends MyPanel{
 
 	@Override
 	protected void addListener() {
+//		tabPanel.addChangeListener(new ChangeListener() {
+//			public void stateChanged(ChangeEvent e) {
+//				JTabbedPane tabbedPane = (JTabbedPane) e.getSource();
+//				int selectedIndex = tabbedPane.getSelectedIndex();
+//				switch (selectedIndex) {
+//				case 0:
+//					System.out.println("画日K");
+//					break;
+//				case 1:
+//					System.out.println("画周k");
+//					break;
+//				case 2:
+//					System.out.println("画月K");
+//					break;
+//				case 3:
+//					System.out.println("画分时图");	
+//					break;
+//				}
+//			}
+//		});
 		search_btn.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
 				search_btn.setMyIcon(ButtonState.MOUSE_ENTERED);
@@ -237,7 +275,7 @@ public class DetailMainPanel extends MyPanel{
 							||MyTime.ifSame(startDate, endDate)){
 						itr=ctr_bl.getStocksByTime(stockCode, startDate,endDate);
 						System.out.println("MouseListener "+itr.hasNext());
-						refreshTable();
+						refreshPictrue();
 					}else {
 						feedBack("起止日期填反");
 					}
@@ -270,14 +308,10 @@ public class DetailMainPanel extends MyPanel{
 		this.stockCode = stockCode;
 		this.stockName=stockName;
 		itr=ctr_bl.getRecentStocks(stockCode);//今天是最后一个
-		//刷新表格数据
-		refreshTable();
+		//刷新图表
+		refreshPictrue();
 		//TODO
-		MyFreeChart.kline_deal(
-				ctr_bl.getDayOHLC_Data(stockCode, startDate, endDate),
-				ctr_bl.getDayDealVOs(stockCode, startDate, endDate), 
-				config.element("panel").element("pic"),
-				day_K_panel);
+		
 		
 		// label上的数据
 		stockPriceNow = Double.parseDouble(table.getValue(
@@ -321,7 +355,8 @@ public class DetailMainPanel extends MyPanel{
 	private MyDatePicker start_datePicker,end_datePicker;
 	private MyTable table;
 	private JTabbedPane tabPanel;//TODO 为什么3个panel叠加，第三个显示不出？！
-	private JPanel day_K_panel,week_k_panel,month_k_panel;
+	private JPanel day_k_panel,week_k_panel,month_k_panel,
+	        time_sharing_panel;
 	private StockBLService ctr_bl;
 	private Iterator<StockVO> itr;
 	Element config;
