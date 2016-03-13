@@ -11,115 +11,156 @@ import enumeration.MyDate;
 import enumeration.Stock_Attribute;
 
 /**
- * 股票相关逻辑层接口
+ * Businesslogic Interface of Stock
+ * 
  * @author czq
  * @date 2016年3月4日
  */
 
 public interface StockBLService {
 	/**
+	 * Get the stock's OHLC data by day in the given time
 	 * 
 	 * @param stockCode
 	 * @param start
+	 *            startTime
 	 * @param end
-	 * @return
+	 *            endTime
+	 * @return will be null if the stockCode is invalid
 	 */
 	public List<OHLC_VO> getDayOHLC_Data(String stockCode, MyDate start,
-			MyDate end );
+			MyDate end);
+
 	/**
+	 * Get the stock's OHLC data by week in the given time
 	 * 
 	 * @param stockCode
 	 * @param start
-	 * @param weekNum
-	 * @return
+	 *            startTime
+	 * @param end
+	 *            endTime
+	 * @return will be null if the stockCode is invalid
 	 */
 	public List<OHLC_VO> getWeekOHLC_Data(String stockCode, MyDate start,
 			MyDate end);
+
 	/**
+	 * Get the stock's OHLC data by month in the given time
 	 * 
 	 * @param stockCode
 	 * @param start
+	 *            startTime
 	 * @param end
-	 * @return
+	 *            endTime
+	 * @return will be null if the stockCode is invalid
 	 */
 	public List<OHLC_VO> getMonthOHLC_Data(String stockCode, MyDate start,
-			MyDate end );
+			MyDate end);
+
 	/**
+	 * Get the timeSharing datas by the given stockCode
 	 * 
 	 * @param stockCode
-	 * 分时图
-	 * @return
+	 * @return the recent message from opening quotation(开盘) up to now if today
+	 *         is weekend or festival ,then if will return last time's datas
 	 */
 	public List<TimeSharingVO> getSharingVOs(String stockCode);
+
 	/**
+	 * Get the day deal datas by the date and stockcode
 	 * 
 	 * @param stockCode
 	 * @param start
 	 * @param end
-	 * @return
+	 * @return Stock deal datas between this time interval in a List ordered by time
+	 *            Will be null if stcokCode or the date is invalid
 	 */
-	public List<DealVO> getDayDealVOs(String stockCode, MyDate start,
+	public List<DealVO> getDayDealVOs(String stockCode, MyDate start, MyDate end);
+	/**
+	 * Get the we deal datas by the date and stockcode
+	 * 
+	 * @param stockCode
+	 * @param start
+	 * @param end
+	 * @return Stock deal datas between this time interval in a List ordered by time
+	 *            Will be null if stcokCode or the date is invalid
+	 */	public List<DealVO> getWeekDealVOs(String stockCode, MyDate start,
 			MyDate end);
-	
-	public List<DealVO> getWeekDealVOs(String stockCode, MyDate start,
-			MyDate end);
-	
+	 /**
+		 * Get the month deal datas by the date and stockcode
+		 * 
+		 * @param stockCode
+		 * @param start
+		 * @param end
+		 * @return Stock deal datas between this time interval in a List ordered by time
+		 *            Will be null if stcokCode or the date is invalid
+		 */
 	public List<DealVO> getMonthDealVOs(String stockCode, MyDate start,
 			MyDate end);
-	
-	
-	
-	
+
 	/**
 	 * 获得所有股票的所有数据
+	 * 
 	 * @return 股票集合的迭代器
 	 */
 	public Iterator<StockVO> getAllStocks();
-	
-	
+
 	/**
 	 * 
-	 * @param isUp 是否为升序
-	 * @param attr 排序标准：代码、涨跌幅、振幅、成交量
+	 * @param isUp
+	 *            是否为升序
+	 * @param attr
+	 *            排序标准：代码、涨跌幅、振幅、成交量
 	 * @return
 	 */
 	public Iterator<StockVO> getSortStocks(boolean isUp, Stock_Attribute attr);
 
 	/**
-	 * 对于给定的排序范围 获得经过排序的股票 
-	 * @param isUp 是否为升序
-	 * @param attr 排序标准：代码、涨跌幅、振幅、成交量
-	 * @param stocksCode 排序范围（股票列表）
+	 * 对于给定的排序范围 获得经过排序的股票
+	 * 
+	 * @param isUp
+	 *            是否为升序
+	 * @param attr
+	 *            排序标准：代码、涨跌幅、振幅、成交量
+	 * @param stocksCode
+	 *            排序范围（股票列表）
 	 * @return
 	 */
 	public Iterator<StockVO> getSortStocksInScope(boolean isUp,
 			Stock_Attribute attr, List<String> stocksCode);
 
-	
-
 	/**
 	 * 获得某只股票最近一个月的数据
+	 * 
 	 * @param stockCode
 	 * @return
 	 */
 	public Iterator<StockVO> getRecentStocks(String stockCode);
-
 	/**
 	 * 获得某只股票一段时间内的数据
-	 * @param stockCode 股票代码
- 	 * @param start 起始日期
-	 * @param end 结束日期
-	 * @return    若没有，返回<b>NULL</b>
+	 * @param stockCode
+	 * @return
+	 */
+	public StockVO getTodayStockVO(String stockCode); 
+	/**
+	 * 获得某只股票一段时间内的数据
+	 * 
+	 * @param stockCode
+	 *            股票代码
+	 * @param start
+	 *            起始日期
+	 * @param end
+	 *            结束日期
+	 * @return 若没有，返回<b>NULL</b>
 	 */
 	public Iterator<StockVO> getStocksByTime(String stockCode, MyDate start,
 			MyDate end);
 
-	
 	/**
 	 * 获得包含该股票代码序列的股票的数据
+	 * 
 	 * @param code
-	 * @return  注意：最多返回10只搜索到的股票
-	 * TODO 后期将支持 中文搜索
+	 * @return 注意：最多返回10只搜索到的股票 TODO 后期将支持 中文搜索
 	 */
 	public Iterator<StockVO> getStocksByStockCode(String code);
 

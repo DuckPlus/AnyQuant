@@ -7,7 +7,10 @@ import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.Vector;
 
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.dom4j.Element;
 
@@ -62,12 +65,25 @@ public class DetailMainPanel extends MyPanel{
 	
 	private void initPanel(Element e) {
 		tabPanel=new JTabbedPane();
-		day_K_panel=new Picture_panel(e.element("tabPanel"));
-		week_k_panel=new Picture_panel(e.element("tabPanel"));
-		month_k_panel=new Picture_panel(e.element("tabPanel"));
-		tabPanel.addTab("日K", day_K_panel);
+		tabPanel.setBounds(35, 130, 720, 500);
+		Element cfg=e.element("tabPanel");
+		day_k_panel=new JPanel();
+		week_k_panel=new JPanel();
+		month_k_panel=new JPanel();
+		time_sharing_panel=new JPanel();	
+		int x=Integer.parseInt(cfg.attributeValue("x"));
+		int y=Integer.parseInt(cfg.attributeValue("y"));
+		int w=Integer.parseInt(cfg.attributeValue("width"));
+		int h=Integer.parseInt(cfg.attributeValue("height"));
+		day_k_panel.setBounds(x,y,w,h);
+		week_k_panel.setBounds(x,y,w,h);
+		month_k_panel.setBounds(x,y,w,h);
+		time_sharing_panel.setBounds(x, y, w, h);
+		tabPanel.addTab("日K", day_k_panel);
 		tabPanel.addTab("周K", week_k_panel);
 		tabPanel.addTab("月K", month_k_panel);
+		tabPanel.addTab("分时图",time_sharing_panel);
+		tabPanel.setDisplayedMnemonicIndexAt(0, 0);
 	}
 	@Override
 	public void paintComponent(Graphics g) {
@@ -105,7 +121,7 @@ public class DetailMainPanel extends MyPanel{
 		 yestodayClose=new MyLabel(e.element("yestodayClose"),yestodayClose_num+"");
 		 highest=new MyLabel(e.element("highest"),highest_num+"");
 		 lowest=new MyLabel(e.element("lowest"),lowest_num+"");
-		 dealAmount=new MyLabel(e.element("deal"),dealAmount_num+"");
+		 volume=new MyLabel(e.element("deal"),volume_num+"");
 		 changeColor();
 	}
 	private void changeColor() {
@@ -120,7 +136,7 @@ public class DetailMainPanel extends MyPanel{
 	protected void initDatePicker(Element e) {
 		start_datePicker=new MyDatePicker(e.element("start"));
 		end_datePicker=new MyDatePicker(e.element("end"));
-		endDate=new MyTime().getToDay();
+		endDate=MyTime.getToDay();
 		startDate=MyTime.getAnotherDay(endDate, -30);
 		
 	}
@@ -145,31 +161,27 @@ public class DetailMainPanel extends MyPanel{
 	/**
 	 * 刷新表格信息
 	 */
-	private void refreshTable() {
-		table.removeAllItem();
-		int i=0;
-		while(itr.hasNext()){
-			StockVO vo=itr.next();
-			Vector<String>vd = new Vector<String>();
-			vd.add(vo.date);
-			vd.add(vo.open+"");
-			vd.add(vo.close+"");
-			vd.add(vo.high+"");
-			vd.add(vo.low+"");
-			vd.add(vo.volume+"");
-			vd.add(vo.turnover+"");
-			vd.add(String.format("%.2f",vo.amplitude*100)+"%");
-			vd.add(String.format("%.2f",vo.changeRate*100)+"%");
-			table.addRow(vd);
-			String changeRateStr=table.getValue(i, 8);
-			System.out.println(i+"  "+changeRateStr);
-			if(Double.parseDouble(changeRateStr.substring(0, changeRateStr.length()-1))<=0){
-				table.setRowColor(i,new Color(50,205,50));
-			}else {
-				table.setRowColor(i,new Color(238,44,44));
-			}
-			i++;
-		}
+	private void refreshPictrue() {
+		day_k_panel.removeAll();
+		week_k_panel.removeAll();
+		month_k_panel.removeAll();
+		MyFreeChart.kline_deal(
+				ctr_bl.getDayOHLC_Data(stockCode, startDate, endDate),
+				ctr_bl.getDayDealVOs(stockCode, startDate, endDate), 
+				config.element("panel").element("pic"),
+				day_k_panel);
+		MyFreeChart.kline_deal(
+				ctr_bl.getWeekOHLC_Data(stockCode, startDate, endDate),
+				ctr_bl.getWeekDealVOs(stockCode, startDate, endDate), 
+				config.element("panel").element("pic"),
+				week_k_panel);
+		MyFreeChart.kline_deal(
+				ctr_bl.getMonthOHLC_Data(stockCode, startDate, endDate),
+				ctr_bl.getMonthDealVOs(stockCode, startDate, endDate), 
+				config.element("panel").element("pic"),
+				month_k_panel);
+		System.out.println("refreashPictrue   "+startDate.DateToString()+"  "+endDate.DateToString());
+		
 	}
 
 	@Override
@@ -199,11 +211,31 @@ public class DetailMainPanel extends MyPanel{
 		this.add(yestodayClose);
 		this.add(highest);
 		this.add(lowest);
-		this.add(dealAmount);
+		this.add(volume);
 	}
 
 	@Override
 	protected void addListener() {
+//		tabPanel.addChangeListener(new ChangeListener() {
+//			public void stateChanged(ChangeEvent e) {
+//				JTabbedPane tabbedPane = (JTabbedPane) e.getSource();
+//				int selectedIndex = tabbedPane.getSelectedIndex();
+//				switch (selectedIndex) {
+//				case 0:
+//					System.out.println("画日K");
+//					break;
+//				case 1:
+//					System.out.println("画周k");
+//					break;
+//				case 2:
+//					System.out.println("画月K");
+//					break;
+//				case 3:
+//					System.out.println("画分时图");	
+//					break;
+//				}
+//			}
+//		});
 		search_btn.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
 				search_btn.setMyIcon(ButtonState.MOUSE_ENTERED);
@@ -222,9 +254,7 @@ public class DetailMainPanel extends MyPanel{
 					System.out.println(startDate.DateToString()+" -- "+endDate.DateToString());
 					if(MyTime.ifEarlier(startDate, endDate)
 							||MyTime.ifSame(startDate, endDate)){
-						itr=ctr_bl.getStocksByTime(stockCode, startDate,endDate);
-						System.out.println("MouseListener "+itr.hasNext());
-						refreshTable();
+						refreshPictrue();
 					}else {
 						feedBack("起止日期填反");
 					}
@@ -256,36 +286,24 @@ public class DetailMainPanel extends MyPanel{
 		System.out.println("refreshStockInfo");
 		this.stockCode = stockCode;
 		this.stockName=stockName;
-		itr=ctr_bl.getRecentStocks(stockCode);//今天是最后一个
-		//刷新表格数据
-		refreshTable();
-		//TODO
-		MyFreeChart.kline_deal(
-				ctr_bl.getDayOHLC_Data(stockCode, startDate, endDate),
-				ctr_bl.getDayDealVOs(stockCode, startDate, endDate), 
-				config.element("panel").element("pic"),
-				this);
-		// label上的数据
-		stockPriceNow = Double.parseDouble(table.getValue(
-				table.getRowCount() - 1, 1));
-		todayOpen_num = Double.parseDouble(table.getValue(
-				table.getRowCount() - 1, 1));
-		yestodayClose_num = Double.parseDouble(table.getValue(
-				table.getRowCount() - 2, 2));
-		highest_num = Double.parseDouble(table.getValue(
-				table.getRowCount() - 1, 3));
-		lowest_num = Double.parseDouble(table.getValue(table.getRowCount() - 1,
-				4));
-		dealAmount_num = Long.parseLong(table.getValue(
-				table.getRowCount() - 1, 5));
-		String temp=table.getValue(table.getRowCount() - 1,8);
-		changeRate = Double.parseDouble(temp.substring(0, temp.length()-1))/100;
-		changeRate_str=temp;
+		today_stockVO=ctr_bl.getTodayStockVO(stockCode);
 		refreshLabels();
-//		this.repaint();
+		//刷新图表
+		refreshPictrue();
+		//TODO
+		
+   	this.tabPanel.repaint();
 	}
 	private void refreshLabels() {
-		stockPriceNow_label.setText(stockPriceNow+"");
+		stockPriceNow=today_stockVO.open;
+		changeRate=today_stockVO.changeRate;
+		todayOpen_num=today_stockVO.open;
+		yestodayClose_num=today_stockVO.preClose;
+		highest_num=today_stockVO.high;
+		lowest_num=today_stockVO.low;
+		volume_num=today_stockVO.volume;
+		changeRate_str=String.format("%.2f",changeRate*100)+"%";
+		stockPriceNow_label.setText(String.format("%.2f",stockPriceNow)+"");
 		changeRate_label.setText(changeRate_str);
 		stockCode_label.setText(stockCode+"");
 		stockName_label.setText(stockName+"");
@@ -293,29 +311,30 @@ public class DetailMainPanel extends MyPanel{
 		yestodayClose.setText(yestodayClose_num+"");
 		highest.setText(highest_num+"");
 		lowest.setText(lowest_num+"");
-		dealAmount.setText(dealAmount_num+"");
+		volume.setText(volume_num+"");
 		changeColor();
 	}
+	private String stockCode="sh600050",stockName,changeRate_str;
+	private MyDate startDate,endDate;
+	private double changeRate,stockPriceNow,todayOpen_num,yestodayClose_num,highest_num,lowest_num;
+	private long volume_num;
+	private MyPictureButton search_btn,back_btn;
+	private MyLabel stockCode_label,stockName_label,date_label,stockPriceNow_label,changeRate_label,historyData_label,
+	                todayData_label,todayOpen_label,yestodayClose_label,highest_label,lowest_label,
+	                deal_label,line_label;
+	private MyLabel todayOpen,yestodayClose,highest,lowest,volume;
+	private MyDatePicker start_datePicker,end_datePicker;
+	private MyTable table;
+	private JTabbedPane tabPanel;//TODO 为什么3个panel叠加，第三个显示不出？！
+	private JPanel day_k_panel,week_k_panel,month_k_panel,
+	        time_sharing_panel;
+	private StockBLService ctr_bl;
+	private StockVO today_stockVO;
+	Element config;
+	private PanelController ctr_panel;
 	@Override
 	protected void initOtherComponent(Element e) {
 		// TODO Auto-generated method stub
 		
 	}
-	private String stockCode="sh600050",stockName,changeRate_str;
-	private MyDate startDate,endDate;
-	private double changeRate,stockPriceNow,todayOpen_num,yestodayClose_num,highest_num,lowest_num,dealAmount_num;
-	private MyPictureButton search_btn,back_btn;
-	private MyLabel stockCode_label,stockName_label,date_label,stockPriceNow_label,changeRate_label,historyData_label,
-	                todayData_label,todayOpen_label,yestodayClose_label,highest_label,lowest_label,
-	                deal_label,line_label;
-	private MyLabel todayOpen,yestodayClose,highest,lowest,dealAmount;
-	private MyDatePicker start_datePicker,end_datePicker;
-	private MyTable table;
-	private JTabbedPane tabPanel;//TODO 为什么3个panel叠加，第三个显示不出？！
-	private Picture_panel day_K_panel,week_k_panel,month_k_panel;
-	private StockBLService ctr_bl;
-	private Iterator<StockVO> itr;
-	Element config;
-	private PanelController ctr_panel;
-	
 }

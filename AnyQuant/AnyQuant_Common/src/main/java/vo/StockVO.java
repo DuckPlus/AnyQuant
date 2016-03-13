@@ -14,7 +14,7 @@ public class StockVO {
 	 public long volume;
 	 public double turnover;
 	 public double pe_ttm,pb;
-	 public double amplitude;
+	 public double amplitude;//振幅
 	 public double changeRate;
 	
 	

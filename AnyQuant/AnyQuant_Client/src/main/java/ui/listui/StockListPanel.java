@@ -17,13 +17,13 @@ import org.dom4j.Element;
 
 import ui.config.GraphicsUtils;
 import ui.stockdetail.DetailMainPanel;
+import ui.stockdetail.MockStockBLImpl;
 import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
 import ui.tool.MyTable;
 import ui.tool.MyTextField;
 import ui.tool.PanelController;
 import vo.StockVO;
-import blimpl.StockBLImpl;
 import blservice.StockBLService;
 import enumeration.Stock_Attribute;
 
@@ -169,7 +169,7 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 		
 	}
 	private void initBl(){
-		apiBl =StockBLImpl.getAPIBLService();
+		apiBl =MockStockBLImpl.getAPIBLService();
 //		apiBl = APIImplCache.getAPIBLService();
 	}
 	private void searchStock(String input){

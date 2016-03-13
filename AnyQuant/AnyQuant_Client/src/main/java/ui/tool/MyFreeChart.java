@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import org.dom4j.Element;
 import org.jfree.chart.ChartPanel;
@@ -28,7 +29,6 @@ import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
-import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.xy.XYDataset;
 
@@ -45,7 +45,7 @@ public class MyFreeChart {
 	 * @param datas
 	 * @param panel
 	 */
-	public static void kline_deal(List<OHLC_VO> datas_k,List<DealVO> datas_deal,Element config,MyPanel panel){
+	public static void kline_deal(List<OHLC_VO> datas_k,List<DealVO> datas_deal,Element config,JPanel panel){
 		XYPlot plot_k,plot_deal;//画图区域对象
 		MyDate startDate,endDate_plus1;
 		MyDate date_temp;
@@ -116,7 +116,6 @@ public class MyFreeChart {
                 if (minValue_k > seriesCollection_k.getLowValue(i, j)) {//取第i个序列中的第j个数据项的最小值
                     minValue_k = seriesCollection_k.getLowValue(i, j); 
                 } 
-                System.out.println("getVolumeValue   "+seriesCollection_k.getVolumeValue(i, j));
             } 
         } 
         /*
@@ -142,9 +141,9 @@ public class MyFreeChart {
       //设置是否使用自定义的边框线，程序自带的边框线的颜色不符合中国股票市场的习惯
         candlestickRender.setUseOutlinePaint(true); 
       //设置如何对K线图的宽度进行设定
-        candlestickRender.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_AVERAGE);
+        candlestickRender.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_SMALLEST);
       //设置各个K线图之间的间隔 
-        candlestickRender.setAutoWidthGap(0.001);
+//        candlestickRender.setAutoWidthGap(0.001);
       //设置股票上涨的K线图颜色 
         candlestickRender.setUpPaint(new Color(238,44,44));
       //设置股票下跌的K线图颜色 
@@ -197,7 +196,7 @@ public class MyFreeChart {
 				Integer.parseInt(config.attributeValue("height")));
 		panel.add(chartPanel);
 		panel.repaint();
-		System.out.println("嘿！画K线图啦");
+		System.out.println("嘿！画K线图啦"+panel.getClass());
 	}
 	/**
 	 * 画Y轴的~

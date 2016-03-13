@@ -83,11 +83,6 @@ public interface APIInterface {
 	 */
 	public BenchMarkPO getBenchMes(String benchCode);
 	
-    /**
-     * 返回全部大盘的当日数据
-     * @return
-     */
-	public List<BenchMarkPO>  getAllBenchMes();
 	/**
 	 * 增加了时间限制
 	 * 
@@ -98,5 +93,12 @@ public interface APIInterface {
 	 */
 	public List<BenchMarkPO> getBenchMes(String benchCode, MyDate start,
 			MyDate end);
+	
+    /**
+     * 返回全部大盘的当日数据
+     * @return
+     */
+	public List<BenchMarkPO>  getAllBenchMes();
+
 
 }
