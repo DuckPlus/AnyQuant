@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import enumeration.Stock_Attribute;
 import util.MyTime;
 import vo.DealVO;
 import vo.OHLC_VO;
@@ -26,41 +27,81 @@ public class StockBLImplTest {
 	public void setUp() throws Exception {
 		bl  = BusinessFactory.getStockBLService();
 	}
-
+	
 	@Test
 	public void testGetAPIBLService() {
-		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetAllStocks() {
-		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetSortStocks() {
-		fail("Not yet implemented");
+		System.out.println("---------------------接下来是代码排序----------------");
+		Iterator<StockVO> stocksWithCode = bl.getAllStocks();
+		while(stocksWithCode.hasNext()){
+			System.out.println(stocksWithCode.next().code);
+		}
+		System.out.println("---------------------接下来是涨跌幅排序----------------");
+		StockVO vo;
+		Iterator<StockVO> stocksWithZhangFU = bl.getSortStocks(true, Stock_Attribute.changeRate);
+		while(stocksWithZhangFU.hasNext()){
+			vo = stocksWithZhangFU.next();
+			System.out.println(vo);
+			if(vo.changeRate > 0.1){
+				System.out.println("该股票数据存在异常：涨跌幅大于10%");
+				System.out.println("Code:" + vo.code + " 收盘：" + vo.close + " 昨收盘："+vo.preClose );
+			}
+		}
+		
+		System.out.println("---------------------接下来是振幅排序----------------");
+		Iterator<StockVO> stocksWithzhenfu = bl.getSortStocks(false, Stock_Attribute.amplitude);
+		while(stocksWithzhenfu.hasNext()){
+			System.out.println(stocksWithzhenfu.next().amplitude);
+		}
+		
+		System.out.println("---------------------接下来是成交量排序----------------");
+		Iterator<StockVO> stocksWithvolume = bl.getSortStocks(false, Stock_Attribute.volume);
+		while(stocksWithvolume.hasNext()){
+			System.out.println(stocksWithvolume.next().volume);
+		}
 	}
 
 	@Test
 	public void testGetSortStocksInScope() {
-		fail("Not yet implemented");
+//		fail("Not yet implemented");
+		//pass
 	}
 
 	@Test
 	public void testGetRecentStocks() {
-		fail("Not yet implemented");
-	}
+		System.out.println("---------------------接下来是测试获得一个股票最近数据----------------");
+
+		Iterator<StockVO> vos = bl.getRecentStocks("sh600791");
+		while(vos.hasNext()){
+			StockVO vo = vos.next();
+			System.out.print(vo.date);
+			System.out.print(vo.name);
+			System.out.println();
+		}	}
 
 	@Test
 	public void testGetStocksByTime() {
-		fail("Not yet implemented");
+//		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetStocksByStockCode() {
-		fail("Not yet implemented");
-	}
+		System.out.println("--------------------测试通过股票代码获得相关股票------------------");
+		Iterator<StockVO> vos = bl.getStocksByStockCode("600");
+		while(vos.hasNext()){
+			StockVO vo = vos.next();
+			System.out.print(vo.code);
+			System.out.print(vo.name);
+			System.out.println();
+		}
+	}	
 
 	@Test
 	public void testGetDayOHLC_Data() {
@@ -102,6 +143,7 @@ public class StockBLImplTest {
 	@Test
 	public void testGetSharingVOs() {
 		fail("Not yet implemented");
+		//TODO
 	}
 
 	@Test
@@ -126,12 +168,16 @@ public class StockBLImplTest {
 
 	@Test
 	public void testGetMonthDealVOs() {
-		fail("Not yet implemented");
+		System.out.println("-------------------下面进入月成交量测试------------------------");
+		List<DealVO> dealVOs = bl.getMonthDealVOs("sh600300", MyTime.getAnotherDay(-100), MyTime.getAnotherDay(0));
+		for (DealVO dealVO : dealVOs) {
+			System.out.println(dealVO.date.DateToString() + " " + dealVO.dealAmount+ " " + dealVO.volume);
+		}
 	}
 
 	@Test
 	public void testGetTodayStockVO() {
-		fail("Not yet implemented");
+		
 	}
 
 }
