@@ -181,15 +181,24 @@ public class StockBLImpl implements StockBLService {
 			int friday;
 			// System.out.println(weekNum);
 			results = new ArrayList<OHLC_VO>(weekNum);
+			System.out.println("pos len :" + pos.size());
+			System.out.println();
 			for (int i = 0; i < weekNum; i++) {
 				monday = i * DAY_OF_WEEK;
-				friday = i == weekNum - 1 ? (len % DAY_OF_WEEK + 1) : 5;
+				friday = i == weekNum - 1 ? (len % DAY_OF_WEEK - 1) : 4;
 				// Friday sometimes means the last trading day in this week
+				System.out.println("------");
+				System.out.println(monday);
+				System.out.println(friday);
 				results.add(new OHLC_VO(MyDate.getDateFromString(pos
-						.get(monday).getDate()), pos.get(monday).getOpen(), pos
-						.get(monday + friday).getClose(), getHighInScope(pos
-						.subList(monday, monday + friday)), getLowInScope(pos
-						.subList(monday, monday + friday))));
+						.get(monday).getDate()), 
+						pos.get(monday).getOpen(),
+						pos
+						.get(monday + friday).getClose(), 
+						getHighInScope(pos
+						.subList(monday, monday + friday + 1)), 
+						getLowInScope(pos
+						.subList(monday, monday + friday + 1))));
 			}
 			return results;
 		}
@@ -268,14 +277,17 @@ public class StockBLImpl implements StockBLService {
 			int monday;
 			int friday;
 			// System.out.println(weekNum);
+			System.out.println("pos:" + pos.size());
 			results = new ArrayList<DealVO>(weekNum);
 			for (int i = 0; i < weekNum; i++) {
 				monday = i * DAY_OF_WEEK;
 				//last item is excluive of the method "sublist"
-				friday =  (i == weekNum - 1) ? (len % DAY_OF_WEEK + 1) : 5;
+								friday =  (i == weekNum - 1) ? (len % DAY_OF_WEEK) : 5;
 				// Friday sometimes means the last trading day in this week
 //				printList(pos.subList(monday, monday + friday ));
 				results.add(getSumDealVO(pos.subList(monday, monday + friday )));
+				
+			
 			}
 			return results.isEmpty() ? null : results;
 		}
