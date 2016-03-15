@@ -79,7 +79,7 @@ public class DetailMainPanel extends MyPanel{
 		month_k_panel.setBounds(x,y,w,h);
 		time_sharing_panel.setBounds(x, y, w, h);
 //>>>>>>>>>>dzm
-		lineChart = new LineChart(time_sharing_panel, ctr_bl.getSharingVOs("code_here").iterator());
+//		lineChart = new LineChart(time_sharing_panel, ctr_bl.getSharingVOs("code_here").iterator());
 		
 //<<<<<<<<<<end
 		tabPanel.addTab("日K", day_k_panel);
