@@ -378,4 +378,22 @@ public class StockBLImpl implements StockBLService {
 		}
 		
 	}
+
+	@Override
+	public Iterator<StockVO> getOptionalStocks() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean deleteStockCodes(String stockCode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addStockCode(String stockCode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

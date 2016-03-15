@@ -172,5 +172,23 @@ public interface StockBLService {
 	 * @return 注意：最多返回10只搜索到的股票 TODO 后期将支持 中文搜索
 	 */
 	public Iterator<StockVO> getStocksByStockCode(String code);
-
+	
+	/**
+	 * Get today's(or last trading day)data of the optional(自选的) stockCodes
+	 * @return
+	 */
+	public Iterator<StockVO> getOptionalStocks();
+	/**
+	 * delete optional stocks
+	 * @param stockCode
+	 * @return if not exist, return false , if success return true
+	 */
+	public boolean deleteStockCodes(String stockCode);
+	/**
+	 * add optional stocks
+	 * @param stockCode
+	 * @return if this stock has existed in the optional list or the stock not actually exists , return false
+	 */
+	public boolean addStockCode(String stockCode);
+	
 }
