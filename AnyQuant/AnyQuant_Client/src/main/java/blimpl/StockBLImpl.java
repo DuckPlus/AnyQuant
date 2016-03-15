@@ -14,6 +14,7 @@ import vo.StockVO;
 import vo.TimeSharingVO;
 import blservice.StockBLService;
 import businessLogicHelper.StockSortHelper;
+import businessLogicHelper.VOPOchange;
 import dataservice.APIDataFactory;
 import dataservice.APIInterface;
 import enumeration.MyDate;
@@ -182,7 +183,7 @@ public class StockBLImpl implements StockBLService {
 			results = new ArrayList<OHLC_VO>(weekNum);
 			for (int i = 0; i < weekNum; i++) {
 				monday = i * DAY_OF_WEEK;
-				friday = i == weekNum - 1 ? (len % DAY_OF_WEEK) : 4;
+				friday = i == weekNum - 1 ? (len % DAY_OF_WEEK + 1) : 5;
 				// Friday sometimes means the last trading day in this week
 				results.add(new OHLC_VO(MyDate.getDateFromString(pos
 						.get(monday).getDate()), pos.get(monday).getOpen(), pos
@@ -270,14 +271,18 @@ public class StockBLImpl implements StockBLService {
 			results = new ArrayList<DealVO>(weekNum);
 			for (int i = 0; i < weekNum; i++) {
 				monday = i * DAY_OF_WEEK;
-				friday = i == weekNum - 1 ? (len % DAY_OF_WEEK) : 4;
+				//last item is excluive of the method "sublist"
+				friday =  (i == weekNum - 1) ? (len % DAY_OF_WEEK + 1) : 5;
 				// Friday sometimes means the last trading day in this week
-				results.add(getSumDealVO(pos.subList(monday, monday + friday)));
+//				printList(pos.subList(monday, monday + friday ));
+				results.add(getSumDealVO(pos.subList(monday, monday + friday )));
 			}
 			return results.isEmpty() ? null : results;
 		}
 
 	}
+
+
 
 	@Override
 	public List<DealVO> getMonthDealVOs(String stockCode, MyDate start,
@@ -313,6 +318,7 @@ public class StockBLImpl implements StockBLService {
 	private static DealVO getSumDealVO(List<StockPO> subList) {
 		long volume = 0;
 		double openSum = 0;
+		System.out.println("子序列的长度是 " + subList.size());//TODO
 		for (StockPO stockPO : subList) {
 			volume += stockPO.getVolume();
 			openSum += stockPO.getOpen();
@@ -349,5 +355,15 @@ public class StockBLImpl implements StockBLService {
 		} else {
 			date.setMonth(date.getMonth() + 1);
 		}
+	}
+	
+	
+	@SuppressWarnings("unused")
+	private void printList(List<StockPO> subList) {
+		for (StockPO stockPO : subList) {
+			System.out.print(stockPO.getDate() + " ");
+			System.out.println(stockPO.getVolume());
+		}
+		
 	}
 }
