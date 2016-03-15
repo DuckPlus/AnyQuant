@@ -141,7 +141,8 @@ public class MyFreeChart {
       //设置是否使用自定义的边框线，程序自带的边框线的颜色不符合中国股票市场的习惯
         candlestickRender.setUseOutlinePaint(true); 
       //设置如何对K线图的宽度进行设定
-        candlestickRender.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_SMALLEST);
+        candlestickRender.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_AVERAGE);
+      //  candlestickRender.setCandleWidth(30);
       //设置各个K线图之间的间隔 
 //        candlestickRender.setAutoWidthGap(0.001);
       //设置股票上涨的K线图颜色 
