@@ -72,86 +72,95 @@ public interface StockBLService {
 	 * @param stockCode
 	 * @param start
 	 * @param end
-	 * @return Stock deal datas between this time interval in a List ordered by time
-	 *            Will be null if stcokCode or the date is invalid
+	 * @return Stock deal datas between this time interval in a List ordered by
+	 *         time Will be null if stcokCode or the date is invalid
 	 */
 	public List<DealVO> getDayDealVOs(String stockCode, MyDate start, MyDate end);
+
 	/**
 	 * Get the we deal datas by the date and stockcode
 	 * 
 	 * @param stockCode
 	 * @param start
 	 * @param end
-	 * @return Stock deal datas between this time interval in a List ordered by time
-	 *            Will be null if stcokCode or the date is invalid
-	 */	public List<DealVO> getWeekDealVOs(String stockCode, MyDate start,
+	 * @return Stock deal datas between this time interval in a List ordered by
+	 *         time Will be null if stcokCode or the date is invalid
+	 */
+	public List<DealVO> getWeekDealVOs(String stockCode, MyDate start,
 			MyDate end);
-	 /**
-		 * Get the month deal datas by the date and stockcode
-		 * 
-		 * @param stockCode
-		 * @param start
-		 * @param end
-		 * @return Stock deal datas between this time interval in a List ordered by time
-		 *            Will be null if stcokCode or the date is invalid
-		 */
+
+	/**
+	 * Get the month deal datas（成交量&成交额） by the date and stockcode
+	 * 
+	 * @param stockCode
+	 * @param start
+	 * @param end
+	 * @return Stock deal datas between this time interval(时间区间) in a List
+	 *         ordered by time Will be null if stcokCode or the date is invalid
+	 */
 	public List<DealVO> getMonthDealVOs(String stockCode, MyDate start,
 			MyDate end);
 
 	/**
-	 * 获得所有股票的所有数据
+	 * Get the last trading day's（交易日） datas of all the stocks It's in the order
+	 * of stockCode
 	 * 
-	 * @return 股票集合的迭代器
+	 * @return A Iterator of all the stocks' datas
 	 */
 	public Iterator<StockVO> getAllStocks();
 
 	/**
+	 * Get the last trading day's（交易日） datas of all the stocks <b>in a expected
+	 * order</b>
 	 * 
 	 * @param isUp
-	 *            是否为升序
+	 *            whether is ordered in ascending order
 	 * @param attr
-	 *            排序标准：代码、涨跌幅、振幅、成交量
-	 * @return
+	 *            the attribute to order the stock available attribute is
+	 *            stockCode(default) , changeRate , amplitude(振幅) , volume
+	 * @return a Iterator of the ordered stocks
 	 */
 	public Iterator<StockVO> getSortStocks(boolean isUp, Stock_Attribute attr);
 
 	/**
-	 * 对于给定的排序范围 获得经过排序的股票
+	 * Get the last trading day's（交易日） datas of the given stocks <b>in a
+	 * expected order</b>
 	 * 
 	 * @param isUp
-	 *            是否为升序
+	 *            whether is ordered in ascending order
 	 * @param attr
-	 *            排序标准：代码、涨跌幅、振幅、成交量
-	 * @param stocksCode
-	 *            排序范围（股票列表）
-	 * @return
+	 *            the attribute to order the stock available attribute is
+	 *            stockCode(default) , changeRate , amplitude(振幅) , volume
+	 * @param stocksCodes
+	 * @return a Iterator of the ordered stocks
 	 */
 	public Iterator<StockVO> getSortStocksInScope(boolean isUp,
-			Stock_Attribute attr, List<String> stocksCode);
+			Stock_Attribute attr, List<String> stocksCodes);
 
 	/**
-	 * 获得某只股票最近一个月的数据
+	 * Get the recent datas(last month) of the given stockCode
 	 * 
 	 * @param stockCode
 	 * @return
 	 */
 	public Iterator<StockVO> getRecentStocks(String stockCode);
+
 	/**
-	 * 获得某只股票一段时间内的数据
+	 * Get today's(or last trading day)data of the given stockCode
+	 * 
 	 * @param stockCode
 	 * @return
 	 */
-	public StockVO getTodayStockVO(String stockCode); 
+	public StockVO getTodayStockVO(String stockCode);
+
 	/**
 	 * 获得某只股票一段时间内的数据
 	 * 
-	 * @param stockCode
-	 *            股票代码
-	 * @param start
-	 *            起始日期
-	 * @param end
-	 *            结束日期
-	 * @return 若没有，返回<b>NULL</b>
+	 * @param stockCode 
+	 * @param start start date
+	 *           
+	 * @param end end date
+	 * @return if the stockCode is invalid will return <b>NULL</b>
 	 */
 	public Iterator<StockVO> getStocksByTime(String stockCode, MyDate start,
 			MyDate end);

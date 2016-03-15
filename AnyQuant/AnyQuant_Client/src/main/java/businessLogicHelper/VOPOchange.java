@@ -1,12 +1,9 @@
-package blimpl;
+package businessLogicHelper;
 
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-
-import po.StockPO;
-import vo.StockVO;
 
 /** 
  * VOPO互换类
