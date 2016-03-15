@@ -1,16 +1,16 @@
 package ui.tool;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Container;
 import java.util.Iterator;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.data.category.CategoryDataset;
+import org.jfree.chart.plot.ValueMarker;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.time.Day;
 import org.jfree.data.time.Minute;
-import org.jfree.data.time.Month;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
@@ -29,25 +29,25 @@ public class LineChart {
 	String columnKey = "columnKey";
 	TimeSeries timeSeries;
 	TimeSeriesCollection timeSeriesCollection;
+	double preData = 0;
 	public LineChart(Container container,Iterator<TimeSharingVO> dataItr) {
 		
 		chart = ChartFactory.createTimeSeriesChart("title", "categoryAxisLabel", "valueAxisLabel", TranslateData(dataItr));
 		cp = new ChartPanel(chart,false);
 		cp.setBounds(0, 0, 300, 200);
 		container.add(cp);
+		DrawPreData(preData);
 	}
+	/**
+	 * 
+	 * @param dataItr
+	 * @return
+	 */
 	private XYDataset TranslateData(Iterator<TimeSharingVO> dataItr){
-		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		timeSeriesCollection = new TimeSeriesCollection();
 		timeSeries = new TimeSeries("name");
 		
-		
-		int counter=1;
-		int month = 1;
-		int year = 2016;
 		while(dataItr.hasNext()){
-			System.out.println(month+" "+counter);
-//			timeSeries.add(new Month(counter,2016), dataItr.next());
 			TimeSharingVO temp = dataItr.next();
 			Minute min = new Minute(temp.nowTime.getMin(), 
 								    temp.nowTime.getHour(), 
@@ -55,7 +55,7 @@ public class LineChart {
 								    temp.nowTime.getMonth(), 
 								    temp.nowTime.getYear());
 			timeSeries.add(min, temp.nowPrice);
-//			dataset.addValue(dataItr.next(), rowKey, ""+counter);
+			preData = temp.preClose;
 		}
 		timeSeriesCollection.addSeries(timeSeries);
 		return  timeSeriesCollection;
@@ -68,8 +68,23 @@ public class LineChart {
 		chart.setAntiAlias(true);
 	}
 	public void addData(TimeSharingVO timesharingVO){
-		
-		
+		Minute min = new Minute(timesharingVO.nowTime.getMin(), 
+			    timesharingVO.nowTime.getHour(), 
+			    timesharingVO.nowTime.getDay(), 
+			    timesharingVO.nowTime.getMonth(), 
+			    timesharingVO.nowTime.getYear());
+		timeSeries.add(min,timesharingVO.nowPrice);
+		timeSeriesCollection.removeAllSeries();
+		timeSeriesCollection.addSeries(timeSeries);
+	}
+	
+	private void DrawPreData(double value){
+		ValueMarker valuemarker = new ValueMarker(value);
+		valuemarker.setPaint(Color.red);
+		System.out.println(value);
+		valuemarker.setStroke(new BasicStroke(1.0F, 1, 1, 1.0F, new float[] {13F, 8F}, 0.0F));
+//		valuemarker.setStroke(new BasicStroke(2.0F));
+		chart.getXYPlot().addRangeMarker(valuemarker);
 	}
 	
 }
