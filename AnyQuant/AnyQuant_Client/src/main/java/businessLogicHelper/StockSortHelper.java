@@ -1,4 +1,4 @@
-package blimpl;
+package businessLogicHelper;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -18,7 +18,7 @@ public class StockSortHelper {
 	 */
 	private static boolean isUp = false;
 
-	static Iterator<StockVO> sortStocks(List<StockVO> stocks,
+	public static Iterator<StockVO> sortStocks(List<StockVO> stocks,
 			Stock_Attribute attr, boolean isUp) {
 		StockSortHelper.isUp = isUp;
 		switch (attr) {

@@ -14,6 +14,7 @@ import org.dom4j.Element;
 import ui.config.CompomentType;
 import ui.config.GraphicsUtils;
 import ui.tool.ButtonState;
+import ui.tool.LineChart;
 import ui.tool.MyDatePicker;
 import ui.tool.MyFreeChart;
 import ui.tool.MyLabel;
@@ -77,6 +78,10 @@ public class DetailMainPanel extends MyPanel{
 		week_k_panel.setBounds(x,y,w,h);
 		month_k_panel.setBounds(x,y,w,h);
 		time_sharing_panel.setBounds(x, y, w, h);
+//>>>>>>>>>>dzm
+		lineChart = new LineChart(time_sharing_panel, ctr_bl.getSharingVOs("code_here").iterator());
+		
+//<<<<<<<<<<end
 		tabPanel.addTab("日K", day_k_panel);
 		tabPanel.addTab("周K", week_k_panel);
 		tabPanel.addTab("月K", month_k_panel);
@@ -330,6 +335,7 @@ public class DetailMainPanel extends MyPanel{
 	private StockVO today_stockVO;
 	Element config;
 	private PanelController ctr_panel;
+	private LineChart lineChart;
 	@Override
 	protected void initOtherComponent(Element e) {
 		// TODO Auto-generated method stub

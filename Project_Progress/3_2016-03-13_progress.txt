@@ -1,5 +1,5 @@
  who   陈自强 邸思诺 侍硕 段正谋            
-when  第三周 周三、周五、周日
+when  第三周 周五、周日
 what   一起写代码、讨论各种细节
 how long 10+h
 arrived solutions ：陈自强负责项目结构、逻辑层编码、UI层架构

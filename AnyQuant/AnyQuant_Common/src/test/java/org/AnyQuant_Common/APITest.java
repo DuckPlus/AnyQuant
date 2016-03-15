@@ -17,7 +17,7 @@ public class APITest extends TestCase {
         	    //getAllstocksMessageByAPI();
         	// getBenchMes();
         	   // getStockCode();
-        getAllMesByCache();
+           getAllMesByCache();
         //	 System.out.println(MyTime.getToDay().DateToString()+" "+MyTime.getToDay().TimeToString());
 //            System.out.println(MyTime.getAnotherDay(-1).AllToString());
 //            System.out.println(MyTime.getAnotherDay(0).AllToString());
@@ -84,23 +84,24 @@ public class APITest extends TestCase {
          
          public static void getAllMesByCache(){
         	 APIInterface api = new APIDataFactory().getAPIDataService();
-        	 MyDate start = new MyDate(2016,3,8);
-        	 MyDate end = new MyDate(2016, 3, 10);
+        	 MyDate start = new MyDate(2016,2,1);
+        	 MyDate end = new MyDate(2016, 2, 31);
         	 List<StockPO > stocks = api.getStockMes("sh600007",start,end);
         	 
         	 for(StockPO stock : stocks){
-           	    System.out.print("name: "+stock.getName()+"  " );
-             	System.out.print("code: "+stock.getCode()+"  ");
-             	System.out.print("open: "+stock.getOpen()+"  ");
-               	System.out.print("close: "+stock.getClose()+"  ");
-               	System.out.print("preClose:"+stock.getPreClose()+"  ");
-               	System.out.print("high: "+stock.getHigh()+"  ");
-               	System.out.print("low: "+stock.getLow()+"  ");
-               	System.out.print("pe: "+stock.getPe_ttm()+"  ");
-                System.out.print("pb: "+stock.getPb()+"  ");
-                System.out.print("adj_price: "+stock.getAdj_price()+"  ");
-               	System.out.print("changeRate: "+stock.getChangeRate()+"  ");
-             	System.out.print("amp: "+stock.getAmplitude()+"  ");	
+        		
+//           	    System.out.print("name: "+stock.getName()+"  " );
+//             	System.out.print("code: "+stock.getCode()+"  ");
+//             	System.out.print("open: "+stock.getOpen()+"  ");
+//               	System.out.print("close: "+stock.getClose()+"  ");
+//               	System.out.print("preClose:"+stock.getPreClose()+"  ");
+//               	System.out.print("high: "+stock.getHigh()+"  ");
+//               	System.out.print("low: "+stock.getLow()+"  ");
+//               	System.out.print("pe: "+stock.getPe_ttm()+"  ");
+//                System.out.print("pb: "+stock.getPb()+"  ");
+//                System.out.print("adj_price: "+stock.getAdj_price()+"  ");
+//               	System.out.print("changeRate: "+stock.getChangeRate()+"  ");
+//             	System.out.print("amp: "+stock.getAmplitude()+"  ");	
              	System.out.print("turnover: "+stock.getTurnover()+"  ");
              	System.out.print("date: "+stock.getDate()+'\n');
         	 }

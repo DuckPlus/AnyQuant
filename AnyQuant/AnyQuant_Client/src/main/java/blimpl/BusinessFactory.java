@@ -15,7 +15,7 @@ public class BusinessFactory {
 	}
 	
 	public static BenchMarkBLService getBenchMarkBLService(){
-		return null;
+		return BenchMarkBLImpl.getBenchMarkBLService();
 	}
 	
 }

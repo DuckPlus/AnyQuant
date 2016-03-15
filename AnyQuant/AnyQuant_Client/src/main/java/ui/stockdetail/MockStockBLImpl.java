@@ -7,21 +7,20 @@ package ui.stockdetail;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.jfree.data.time.Day;
-
+import blservice.StockBLService;
+import dataservice.APIInterface;
+import enumeration.MyDate;
+import enumeration.Stock_Attribute;
 import ui.config.TestData;
 import vo.BenchMarkVO;
 import vo.DealVO;
 import vo.OHLC_VO;
 import vo.StockVO;
 import vo.TimeSharingVO;
-import blservice.StockBLService;
-import dataservice.APIInterface;
-import enumeration.MyDate;
-import enumeration.Stock_Attribute;
 
 public class MockStockBLImpl implements StockBLService{
 	/**
@@ -144,8 +143,29 @@ public class MockStockBLImpl implements StockBLService{
 
 	@Override
 	public List<TimeSharingVO> getSharingVOs(String stockCode) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<TimeSharingVO> data = new LinkedList<TimeSharingVO>();
+		TimeSharingVO temp = new TimeSharingVO();
+		temp.nowPrice = 8.02;
+		temp.nowTime = new MyDate(2016, 1, 1, 9, 0, 0);
+		temp.preClose = 7.96;
+		data.add(temp);
+		temp = new TimeSharingVO();
+		temp.nowPrice = 8.19;
+		temp.nowTime = new MyDate(2016, 1, 1, 9, 1, 0);
+		temp.preClose = 7.96;
+		data.add(temp);
+		temp = new TimeSharingVO();
+		temp.nowPrice = 8.01;
+		temp.nowTime = new MyDate(2016, 1, 1, 9, 2, 0);
+		temp.preClose = 7.96;
+		data.add(temp);
+		temp = new TimeSharingVO();
+		temp.nowPrice = 7.92;
+		temp.nowTime = new MyDate(2016, 1, 1, 9, 3, 0);
+		temp.preClose = 7.96;
+		data.add(temp);
+		return data;
 	}
 
 

@@ -228,8 +228,10 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 			vData.add(String.valueOf(temp.low));
 			vData.add(String.valueOf(temp.turnover));
 			vData.add(String.valueOf(temp.volume));
-			vData.add(String.valueOf(temp.amplitude));
-			vData.add(String.valueOf(temp.changeRate));
+//			vData.add(String.valueOf(temp.amplitude));
+			vData.add(String.format("%.2f",temp.amplitude*100)+"%");
+			vData.add(String.format("%.2f",temp.changeRate*100)+"%");
+//			vData.add(String.valueOf(temp.changeRate));
 			stocklistTable.addRow(vData);
 		}
 	}

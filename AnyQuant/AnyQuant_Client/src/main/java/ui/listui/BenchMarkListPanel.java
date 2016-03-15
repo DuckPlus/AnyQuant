@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import org.dom4j.Element;
 
 import blimpl.BenchMarkBLImpl;
+import blimpl.BusinessFactory;
 import blimpl.StockBLImpl;
 import blservice.BenchMarkBLService;
 import blservice.StockBLService;
@@ -130,7 +131,7 @@ public class BenchMarkListPanel extends MyPanel {
 	}
 	private void initBl(){
 //		apiService = StockBLImpl.getAPIBLService();
-		apiService = new BenchMarkBLImpl();
+		apiService = BusinessFactory.getBenchMarkBLService();
 	}
 	
 	private void searchAllBenchmark(){
