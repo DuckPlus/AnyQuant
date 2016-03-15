@@ -4,19 +4,17 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import org.dom4j.Element;
 
 import ui.config.CompomentType;
 import ui.config.GraphicsUtils;
 import ui.tool.ButtonState;
+import ui.tool.LineChart;
 import ui.tool.MyDatePicker;
 import ui.tool.MyFreeChart;
 import ui.tool.MyLabel;
@@ -27,12 +25,13 @@ import ui.tool.PanelController;
 import ui.tool.TipsDialog;
 import util.MyTime;
 import vo.StockVO;
+import blimpl.StockBLImpl;
 import blservice.StockBLService;
 import enumeration.MyDate;
 
 /**
  * 股票详细界面
- * @author dsn14
+ * @author dsn14s
  * @date 2016年3月2日
  */
 @SuppressWarnings("serial")
@@ -42,7 +41,7 @@ public class DetailMainPanel extends MyPanel{
 		super(config);
 		this.config=config;
 		ctr_panel=controller;
-		ctr_bl=MockStockBLImpl.getAPIBLService();
+		ctr_bl=StockBLImpl.getAPIBLService();
 		initComponent(config);
 		
 	}
@@ -79,6 +78,10 @@ public class DetailMainPanel extends MyPanel{
 		week_k_panel.setBounds(x,y,w,h);
 		month_k_panel.setBounds(x,y,w,h);
 		time_sharing_panel.setBounds(x, y, w, h);
+//>>>>>>>>>>dzm
+		lineChart = new LineChart(time_sharing_panel, ctr_bl.getSharingVOs("code_here").iterator());
+		
+//<<<<<<<<<<end
 		tabPanel.addTab("日K", day_k_panel);
 		tabPanel.addTab("周K", week_k_panel);
 		tabPanel.addTab("月K", month_k_panel);
@@ -332,6 +335,7 @@ public class DetailMainPanel extends MyPanel{
 	private StockVO today_stockVO;
 	Element config;
 	private PanelController ctr_panel;
+	private LineChart lineChart;
 	@Override
 	protected void initOtherComponent(Element e) {
 		// TODO Auto-generated method stub

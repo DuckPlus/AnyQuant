@@ -17,13 +17,13 @@ import org.dom4j.Element;
 
 import ui.config.GraphicsUtils;
 import ui.stockdetail.DetailMainPanel;
-import ui.stockdetail.MockStockBLImpl;
 import ui.tool.MyPanel;
 import ui.tool.MyPictureButton;
 import ui.tool.MyTable;
 import ui.tool.MyTextField;
 import ui.tool.PanelController;
 import vo.StockVO;
+import blimpl.StockBLImpl;
 import blservice.StockBLService;
 import enumeration.Stock_Attribute;
 
@@ -169,7 +169,7 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 		
 	}
 	private void initBl(){
-		apiBl =MockStockBLImpl.getAPIBLService();
+		apiBl =StockBLImpl.getAPIBLService();
 //		apiBl = APIImplCache.getAPIBLService();
 	}
 	private void searchStock(String input){
@@ -228,8 +228,10 @@ public class StockListPanel extends MyPanel implements DocumentListener{
 			vData.add(String.valueOf(temp.low));
 			vData.add(String.valueOf(temp.turnover));
 			vData.add(String.valueOf(temp.volume));
-			vData.add(String.valueOf(temp.amplitude));
-			vData.add(String.valueOf(temp.changeRate));
+//			vData.add(String.valueOf(temp.amplitude));
+			vData.add(String.format("%.2f",temp.amplitude*100)+"%");
+			vData.add(String.format("%.2f",temp.changeRate*100)+"%");
+//			vData.add(String.valueOf(temp.changeRate));
 			stocklistTable.addRow(vData);
 		}
 	}
