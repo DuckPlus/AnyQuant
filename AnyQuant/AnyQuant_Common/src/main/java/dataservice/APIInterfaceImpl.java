@@ -27,21 +27,21 @@ import enumeration.MyDate;
  * 2016/03/02
  */
 public class APIInterfaceImpl implements APIInterface{
-    
+
 	 private static  APIInterfaceImpl apiInterfaceImpl;
 	 private Map<String ,String> codeNameMap;
 	 private static String filePath = "cache//name.txt";
 	 private APIInterfaceImpl(){
 		  SetMapUp();
 	 }
-	 
+
 	 private void SetMapUp(){
 		 codeNameMap = new  HashMap<>();
 		 try {
              String encoding="utf-8";
              File file=new File(filePath);
              if(file.isFile() && file.exists()){ //判断文件是否存在
-            	 
+
                       InputStreamReader read = new InputStreamReader(
                                                                      new FileInputStream(file),encoding);//考虑到编码格式
                       BufferedReader bufferedReader = new BufferedReader(read);
@@ -54,7 +54,7 @@ public class APIInterfaceImpl implements APIInterface{
                     	    codeNameMap.put(codeAndName[0], codeAndName[1]);
                       }
                       read.close();
-               
+
              }else{
                        System.out.println("找不到"+filePath);
                        file.createNewFile();
@@ -65,7 +65,7 @@ public class APIInterfaceImpl implements APIInterface{
        }
 
 	 }
-	 
+
 	 public static APIInterface getAPIInterfaceImpl(){
 		 if(apiInterfaceImpl==null){
 			 return new APIInterfaceImpl();
@@ -73,16 +73,16 @@ public class APIInterfaceImpl implements APIInterface{
 			 return apiInterfaceImpl;
 		 }
 	 }
-	 
-	
-	
+
+
+
 	/**
-	 *此方法用来建立url-connection并返回API所提供的全部初始数据 
+	 *此方法用来建立url-connection并返回API所提供的全部初始数据
 	 */
 	private  String SendGET(String url,String param){
 		   String result="";//访问返回结果
 		   BufferedReader read=null;//读取访问结果
-		    
+
 		   try {
 		    //创建url
 		    URL realurl=new URL(url);
@@ -112,7 +112,7 @@ public class APIInterfaceImpl implements APIInterface{
 		   } catch (IOException e) {
 		            // e.printStackTrace();
 		             return "";
-			         
+
 		   }finally{
 		       if(read!=null){//关闭流
 		             try {
@@ -122,23 +122,23 @@ public class APIInterfaceImpl implements APIInterface{
 		             }
 		       }
 		   }
-		     
-		   return result; 
+
+		   return result;
 		 }
-	
+
     /**
      * 默认返回2015年，上海交易所
      */
 	public List<String> getAllStocks() {
-         
+
 		return getAllStocks(2015);
 	}
-	
+
 	  /**
        * 返回指定年份的全部股票
        */
 	public List<String> getAllStocks(int year) {
-	
+
 		if(year<2007||year>2015){
 			year =2015;
 		}
@@ -150,7 +150,7 @@ public class APIInterfaceImpl implements APIInterface{
 	    ArrayList<String> stockCode = new  ArrayList<>();
 		for(int i=0;i<length;i++){
 			JSONObject tempJo = ja.getJSONObject(i);
-			
+
 			if(tempJo.getString("name").equals("sh000300")){
 				         continue;
 			}
@@ -162,12 +162,12 @@ public class APIInterfaceImpl implements APIInterface{
        * 默认返回2015年
        */
 	public List<String> getAllStocks(Exchange exchange) {
-	
+
 		return  getAllStocks(2015, exchange);
 	}
 
 	public List<String> getAllStocks(int year, Exchange exchange) {
-		
+
 		String exchangeStr = "";
 		if(exchange==Exchange.sh){
 			exchangeStr="sh";
@@ -182,7 +182,7 @@ public class APIInterfaceImpl implements APIInterface{
 	    ArrayList<String> stockCode = new  ArrayList<>();
 		for(int i=0;i<length;i++){
 			JSONObject tempJo = ja.getJSONObject(i);
-			
+
 			if(tempJo.getString("name").equals("sh000300")){
 				         continue;
 			}
@@ -194,22 +194,25 @@ public class APIInterfaceImpl implements APIInterface{
 
   /**
    * 获取指定代码的股票的最新数据
-   * 
+   *
    */
 	public StockPO getStockMes(String stockCode) {
-		
+
 		 //当天可能没有数据
 		 MyDate end = MyTime.getToDay();
 		 MyDate  temp = MyTime.getFirstPreWorkDay(end);
 		 MyDate    start =   MyTime.getFirstPreWorkDay(temp);
+		 while(getStockMesCount(stockCode,start,end)<2){
+			    start =   MyTime.getFirstPreWorkDay(temp);
+		 }
 		 List<StockPO>  stocks = getManyMesFunc(stockCode, start, end);
         return  stocks.get(stocks.size()-1);
-  
+
 	}
-	
+
 	  /**
 	   * 根据日期获取指定代码的股票的数据
-	   * 
+	   *
 	   */
 	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end) {
 		if( (end.DateToString().equals(MyTime.getToDay().DateToString()) )  && ( start.DateToString().equals(end.DateToString())||
@@ -218,32 +221,32 @@ public class APIInterfaceImpl implements APIInterface{
 			stocks.add(getStockMes(stockCode));
 			return  stocks;
 		}
-		if(  start.DateToString().equals(end.DateToString()) 
+		if(  start.DateToString().equals(end.DateToString())
 				&&end.DateToString().equals(MyTime.getToDay().DateToString()) ){
 			  List<StockPO> stocks = new ArrayList<>();
 			   return stocks;
 		}
-		
+
 		if(MyTime.ifEarlier(MyTime.getToDay(), start)){
 			   List<StockPO> stocks = new ArrayList<>();
 			   return stocks;
 		}
-		
+
 		//拿到第一天的前一天有效数据
 		start = MyTime.getFirstPreWorkDay(start);
-		
+
 		while(getStockMesCount(stockCode, start, end)<2){
 			start = MyTime.getFirstPreWorkDay(start);
 	    }
 		return getManyMesFunc(stockCode, start, end);
 	}
-	
+
 	//确保至少有两个数据再调用该方法，返回的数据不包含第一个（没有preclose）
 	private List<StockPO>   getManyMesFunc(String stockCode, MyDate start , MyDate end){
 		String startTime = start.DateToString();
 		String endTime = end.DateToString();
 		String url = "http://121.41.106.89:8010/api/stock/"+stockCode+"/?start="+startTime +"&end="+endTime ;
-	    //System.out.println(SendGET(url, ""));
+	//    System.out.println(SendGET(url, ""));
 		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
 		JSONObject data = jo.getJSONObject("data");
 		JSONArray trading_info = data.getJSONArray("trading_info");
@@ -251,14 +254,23 @@ public class APIInterfaceImpl implements APIInterface{
 		List<StockPO> stocks =  new  ArrayList<>();
 			for(int i=0;i<trading_info.size();i++){
 				StockPO stock  = MyJSONObject.toBean(trading_info.getJSONObject(i), StockPO.class);
-				stock.setPe_ttm(Double.parseDouble(trading_info.getJSONObject(i).getString("pe_ttm")));
-				stock.setAdj_price(Double.parseDouble(trading_info.getJSONObject(i).getString("adj_price")));
-				stock.setCode(stockCode);
-				stock.setName((String)codeNameMap.get(stockCode));
-				stocks.add(stock);
-				
+//			   if(trading_info.getJSONObject(i).getString("pe_ttm").equals("")){
+//				   stock.setPe_ttm(0.0);
+//			   }else{
+//				   stock.setPe_ttm(Double.parseDouble(trading_info.getJSONObject(i).getString("pe_ttm")));
+//			   }
+//			   
+//			   if(trading_info.getJSONObject(i).getString("adj_price").equals("")){
+//				      stock.setAdj_price(0.0);
+//			   }else{
+//			         stock.setAdj_price(Double.parseDouble(trading_info.getJSONObject(i).getString("adj_price")));
+//			   }
+			   stock.setCode(stockCode);
+			   stock.setName((String)codeNameMap.get(stockCode));
+			   stocks.add(stock);
+
 			}
-			
+
 			for(int i=1;i<stocks.size();i++){
 				stocks.get(i).setPreClose( stocks.get(i-1).getClose() );
 				stocks.get(i).computeAmplitude();
@@ -266,7 +278,7 @@ public class APIInterfaceImpl implements APIInterface{
 			stocks.remove(0);
 		return stocks;
 	}
-	
+
 	//不确定会有几个数据调用该方法，返回数据个数
 	private  int    getStockMesCount(String stockCode, MyDate start , MyDate end){
 		String startTime = start.DateToString();
@@ -279,7 +291,7 @@ public class APIInterfaceImpl implements APIInterface{
 		//System.out.println("size: "+trading_info.size());
 		return trading_info.size();
 	}
-	
+
 	/**
 	 * 获取所有股票的最新信息列表
 	 * 在APIDataCache中实现
@@ -289,7 +301,7 @@ public class APIInterfaceImpl implements APIInterface{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	//获得最新的大盘数据
 	@Override
 	public BenchMarkPO getBenchMes(String benchCode) {
@@ -299,9 +311,9 @@ public class APIInterfaceImpl implements APIInterface{
 		 List<BenchMarkPO>  benches = getBenchMes(benchCode, start, end);
          return  benches.get(benches.size()-1);
 	}
-	
-	
-	
+
+
+
 	@Override
 	public List<BenchMarkPO> getBenchMes(String benchCode, MyDate start, MyDate end) {
 		String startTime = start.DateToString();
@@ -317,21 +329,21 @@ public class APIInterfaceImpl implements APIInterface{
 			bench.setCode(benchCode);
 			benchs.add(bench);
 		}
-		
+
 		return benchs;
 	}
-	
+
 	/**
 	 * 返回所有大盘代码,目前只有hs300
 	 */
 	@Override
 	public List<String> getAllBenchMarks() {
-		
+
 				List <String> list =  new ArrayList<>();
 				list.add("hs300");
 				return list;
 	}
-	
+
 	@Override
 	public List<BenchMarkPO> getAllBenchMes() {
 		 List<String>  benchCodes = this.getAllBenchMarks();
@@ -342,6 +354,6 @@ public class APIInterfaceImpl implements APIInterface{
 		return list;
 	}
 
-   
+
 
 }
