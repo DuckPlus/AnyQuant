@@ -55,7 +55,6 @@ public class DetailMainPanel extends MyPanel{
 		initPanel(config.element("panel"));
 		initButtons(config.element(CompomentType.BUTTONS.name()));
 		initDatePicker(config.element("DatePicker"));
-		initTable(config.element("Table"));
 		initLabels(config.element(CompomentType.LABELS.name()));
 		addListener();
 		addComponent();
@@ -143,24 +142,6 @@ public class DetailMainPanel extends MyPanel{
 		startDate=MyTime.getAnotherDay(endDate, -30);
 		
 	}
-	protected void initTable(Element e) {
-		Vector<String> vhead = new Vector<String>();
-		vhead.add("日期");
-		vhead.add("开盘");
-		vhead.add("收盘");
-		vhead.add("最高");
-		vhead.add("最低");
-		vhead.add("成交量");
-		vhead.add("换手率");
-		vhead.add("振幅");
-		vhead.add("涨跌幅");
-		table= new MyTable(Integer.valueOf(e.attributeValue("x")), 
-				Integer.valueOf(e.attributeValue("y")), 
-				Integer.valueOf(e.attributeValue("width")), 
-				Integer.valueOf(e.attributeValue("height")), vhead);
-		table.setColumn(new int[]{100,45,45,45,45,70,50,50,50});
-		
-	}
 	/**
 	 * 刷新表格信息
 	 */
@@ -168,17 +149,17 @@ public class DetailMainPanel extends MyPanel{
 		day_k_panel.removeAll();
 		week_k_panel.removeAll();
 		month_k_panel.removeAll();
-		MyFreeChart.kline_deal(
+		MyFreeChart.kline_deal_day(
 				ctr_bl.getDayOHLC_Data(stockCode, startDate, endDate),
 				ctr_bl.getDayDealVOs(stockCode, startDate, endDate), 
 				config.element("panel").element("pic"),
 				day_k_panel);
-		MyFreeChart.kline_deal(
+		MyFreeChart.kline_deal_week(
 				ctr_bl.getWeekOHLC_Data(stockCode, startDate, endDate),
 				ctr_bl.getWeekDealVOs(stockCode, startDate, endDate), 
 				config.element("panel").element("pic"),
 				week_k_panel);
-		MyFreeChart.kline_deal(
+		MyFreeChart.kline_deal_month(
 				ctr_bl.getMonthOHLC_Data(stockCode, startDate, endDate),
 				ctr_bl.getMonthDealVOs(stockCode, startDate, endDate), 
 				config.element("panel").element("pic"),
