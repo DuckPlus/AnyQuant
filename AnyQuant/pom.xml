@@ -36,7 +36,6 @@
 	</dependencies>
 	<modules>
 		<module>AnyQuant_Client</module>
-		<module>AnyQuant_Server</module>
 		<module>AnyQuant_Common</module>
 	</modules>
 </project>
