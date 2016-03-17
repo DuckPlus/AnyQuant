@@ -265,11 +265,7 @@ public class APIInterfaceImpl implements APIInterface{
 //			   }else{
 //			         stock.setAdj_price(Double.parseDouble(trading_info.getJSONObject(i).getString("adj_price")));
 //			   }
-				   if(trading_info.getJSONObject(i).getString("adj_price").equals("")){
-			      stock.setAdj_price(0.0);
-		   }else{
-		         stock.setAdj_price(Double.parseDouble(trading_info.getJSONObject(i).getString("adj_price")));
-		   }
+
 			   stock.setCode(stockCode);
 			   stock.setName((String)codeNameMap.get(stockCode));
 			   stocks.add(stock);
