@@ -51,6 +51,7 @@ public class APIInterfaceImpl implements APIInterface{
                     	    if(codeAndName[1].startsWith("ST")){
                     	    	codeAndName[1]="*"+codeAndName[1];
                     	    }
+                    	    System.out.println(codeAndName[1]);
                     	    codeNameMap.put(codeAndName[0], codeAndName[1]);
                       }
                       read.close();
