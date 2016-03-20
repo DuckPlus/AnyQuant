@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +21,32 @@ import org.dom4j.Element;
  * @author czq 
  * @version 2015年11月23日 上午10:52:51 
  */
+
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.AnchorPane;
+import ui.main.MainAPP;
 public class GraphicsUtils {
+	private final static String fxmlPath =  "";
+	private static FXMLLoader fxmlLoader;
+	
+	static{
+		fxmlLoader = new FXMLLoader();
+	}
+	
+	public static AnchorPane getAnchorPane(URL url){
+		try {
+			fxmlLoader.setLocation(url);
+		return (AnchorPane) fxmlLoader.load();
+		} catch ( IOException e) {
+			System.err.println("路径有误------------------");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	
+	
 	/**
 	 * 用来存储一组按钮的图片，这组图片可以被反复使用，只需要在xml文件中注明类型即可
 	 */
