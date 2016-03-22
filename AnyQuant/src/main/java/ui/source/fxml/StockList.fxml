@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.media.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.StockListController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <SplitPane dividerPositions="0.18262806236080179" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <items>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="Btn" layoutY="-2.0" mnemonicParsing="false" onMouseClicked="#showMsg" prefHeight="36.0" prefWidth="166.0" text="addData" />
+                  <Button fx:id="DelBtn" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#DeleteData" prefHeight="36.0" prefWidth="166.0" text="DelData" />
+               </children></AnchorPane>
+            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                  <Tab text="table">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="tableview" layoutX="7.0" layoutY="8.0" onMouseClicked="#handleMouseClicked" prefHeight="523.0" prefWidth="717.0">
+                                <columns>
+                                  <TableColumn fx:id="sname" prefWidth="75.0" text="股票名称" />
+                                  <TableColumn fx:id="scode" prefWidth="75.0" text="股票代码" />
+                                    <TableColumn fx:id="sopen" prefWidth="75.0" text="开盘价" />
+                                    <TableColumn fx:id="shigh" prefWidth="75.0" text="最高价" />
+                                    <TableColumn fx:id="slow" prefWidth="75.0" text="最低价" />
+                                    <TableColumn fx:id="sclose" prefWidth="75.0" text="收盘价" />
+                                    <TableColumn fx:id="svolume" prefWidth="75.0" text="成交量" />
+                                </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                <Tab text="k_line">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+                <Tab text="time_sharing">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+         </items>
+      </SplitPane>
+   </center>
+</BorderPane>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minHeight="300.0" minWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.LeftPaneController">
+   <children>
+      <Button fx:id="stockButton" layoutX="6.0" layoutY="48.0" mnemonicParsing="false" onAction="#handleStockButton" prefHeight="27.0" prefWidth="290.0" text="股票列表" />
+      <Button layoutX="6.0" layoutY="224.0" mnemonicParsing="false" onAction="#handleBenchButton" prefHeight="27.0" prefWidth="290.0" text="大盘数据" />
+   </children>
+</AnchorPane>
