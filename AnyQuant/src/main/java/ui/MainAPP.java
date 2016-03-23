@@ -38,6 +38,7 @@ public class MainAPP extends Application {
 	private void initialize() {
 		
 		rootpane = (SplitPane) GraphicsUtils.getParent("RootPane"); 
+	
 		Scene scene = new Scene(rootpane);
 		stage.setScene(scene);
 		

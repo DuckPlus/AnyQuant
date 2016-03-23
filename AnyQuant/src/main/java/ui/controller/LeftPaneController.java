@@ -5,14 +5,10 @@ package ui.controller;
 * @date Mar 22, 2016
 */
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import ui.GraphicsUtils;
 
 /**
  * Controller of the leftPane
