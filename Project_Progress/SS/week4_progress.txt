@@ -1,0 +1,5 @@
+who:侍硕
+when:第四周
+what:尝试用JFreeChart来实现K线图
+problem:JFreeChart太笨拙
+todo:学习JavaFX

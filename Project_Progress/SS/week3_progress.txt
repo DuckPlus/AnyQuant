@@ -1,0 +1,5 @@
+who:侍硕
+when:第三周
+what:完善了API接口的实现，消除了日期处理的缺陷
+problem:数据过少
+todo:寻找更多数据

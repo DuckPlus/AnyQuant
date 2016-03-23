@@ -1,0 +1,28 @@
+.stockButton {
+  -fx-background-image: url('../img/stockList_normal.png');
+  -fx-text-fill:white
+}
+
+.stockButton-clicked {
+	-fx-background-image: url('../img/stockList_clicked.png');
+}
+
+.stockButton-entered {
+	-fx-background-image: url('../img/stockList_entered.png');
+}
+
+
+.benchButton {
+  -fx-background-image: url('../img/benchMark_normal.png');
+   -fx-text-fill:white
+}
+
+.benchButton-clicked {
+	-fx-background-image: url('../img/benchMark_clicked.png');
+}
+
+.benchButton-entered {
+	-fx-background-image: url('../img/benchMark_entered.png');
+}
+
+
