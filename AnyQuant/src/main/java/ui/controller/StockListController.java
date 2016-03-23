@@ -1,6 +1,5 @@
 package ui.controller;
 
-import java.awt.event.MouseEvent;
 import java.util.Iterator;
 
 import blimpl.StockBLImpl;
@@ -10,6 +9,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import vo.Stock;
 import vo.StockVO;
 
@@ -41,6 +42,8 @@ public class StockListController {
 	TableColumn<Stock, Double>changeRate = new TableColumn<Stock, Double>();
 	@FXML
 	TableView<Stock> tableview = new TableView<Stock>();
+	@FXML
+	TextField searchBar;
 
 	//get the logic service
 	StockBLService stockBl = StockBLImpl.getAPIBLService();
@@ -85,6 +88,18 @@ public class StockListController {
 //		int sum = tableview.getItems().size();
 		tableview.getItems().removeAll(obsevableList);
 	}
-	
+	@FXML
+	private void handleMouseClick(MouseEvent event){
+		if(event.getClickCount()==2){
+			if(tableview.getSelectionModel().getSelectedIndex()==-1){
+				System.out.println("empty line ");
+				return;
+			}
+			
+			int row =tableview.getSelectionModel().getSelectedIndex();
+			String code =tableview.getSelectionModel().getSelectedItem().code.get();
+			System.out.println(code);
+		}
+	}
 	
 }
