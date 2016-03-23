@@ -22,10 +22,9 @@ public class HomeController {
 
 	public HomeController(SplitPane rootpane) {
 		this.rootpane = rootpane;
-
 		initialPane();
 		//change the ratio of the left pane and the right pane
-		rootpane.setDividerPosition(0, 0.164);
+		rootpane.setDividerPosition(0, 0.164); // 0.164 = 175/1080
 	}
 
 	private void initialPane() {
