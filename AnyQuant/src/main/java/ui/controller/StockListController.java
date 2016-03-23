@@ -49,6 +49,7 @@ public class StockListController {
 	public StockListController() {
 
 		obsevableList = FXCollections.observableArrayList();
+//		tableview.setOnMouseClicked(value);
 	}
 	
 	/**
@@ -84,10 +85,6 @@ public class StockListController {
 //		int sum = tableview.getItems().size();
 		tableview.getItems().removeAll(obsevableList);
 	}
-	@FXML
-	private void handleMouseEvent(MouseEvent e){
-		if(e.getClickCount()==2){
-			System.out.println("double ouch");
-		}
-	}
+	
+	
 }
