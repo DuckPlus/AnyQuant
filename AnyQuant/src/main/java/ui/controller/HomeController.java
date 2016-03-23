@@ -25,7 +25,7 @@ public class HomeController {
 
 		initialPane();
 		//change the ratio of the left pane and the right pane
-		rootpane.setDividerPosition(0, 0.3);
+		rootpane.setDividerPosition(0, 0.164);
 	}
 
 	private void initialPane() {
