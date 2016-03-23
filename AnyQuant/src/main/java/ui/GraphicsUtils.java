@@ -32,4 +32,10 @@ public class GraphicsUtils {
 		
 	}
 	
+	
+	public static final String getStyleFromClass(String css){
+		return css.substring(css.indexOf('{') + 1, css.indexOf('}'));
+	}
+	
+	
 }

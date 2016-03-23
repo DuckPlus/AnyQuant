@@ -5,9 +5,14 @@ package ui.controller;
 * @date Mar 22, 2016
 */
 
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import ui.GraphicsUtils;
 
 /**
  * Controller of the leftPane
@@ -47,19 +52,40 @@ public class LeftPaneController {
 	}
 
 	@FXML
-	private void handleStockButton() {
-		rightPaneController.showStockListPane();
+	private void handleStockButton(MouseEvent event) {
+		if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
+			stockButton.getStyleClass().clear();
+			stockButton.getStyleClass().add("stockButton-clicked");
+			rightPaneController.showStockListPane();
+		} else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
+			stockButton.getStyleClass().clear();
+			stockButton.getStyleClass().add("stockButton-entered");
+		} else {
+			stockButton.getStyleClass().clear();
+			stockButton.getStyleClass().add("stockButton");
+		}
+
 	}
 
 	@FXML
-	private void handleBenchButton() {
-		rightPaneController.showBenchMarkListPane();
+	private void handleBenchButton(MouseEvent event) {
+		if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
+			benchButton.getStyleClass().clear();
+			benchButton.getStyleClass().add("benchButton-clicked");
+			rightPaneController.showBenchMarkListPane();
+		} else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
+			benchButton.getStyleClass().clear();
+			benchButton.getStyleClass().add("benchButton-entered");
+		} else {
+			benchButton.getStyleClass().clear();
+			benchButton.getStyleClass().add("benchButton");
+		}
+
 	}
-	
-	
+
 	/*
-	 *  Set it's pane,this is because it's constructor is called by the system
-	 *  So we cannot put it in the constructor
+	 * Set it's pane,this is because it's constructor is called by the system So
+	 * we cannot put it in the constructor
 	 */
 	static void setPane(Pane pane) {
 		if (LeftPaneController.pane == null) {
@@ -67,5 +93,4 @@ public class LeftPaneController {
 		}
 	}
 
-	
 }

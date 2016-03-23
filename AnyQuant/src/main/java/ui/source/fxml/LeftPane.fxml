@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="300.0" minWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.LeftPaneController">
+<AnchorPane minWidth="175.0" prefWidth="175.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.LeftPaneController">
    <children>
-      <Button fx:id="stockButton" layoutX="6.0" layoutY="48.0" mnemonicParsing="false" onAction="#handleStockButton" prefHeight="27.0" prefWidth="290.0" text="股票列表" />
-      <Button layoutX="6.0" layoutY="224.0" mnemonicParsing="false" onAction="#handleBenchButton" prefHeight="27.0" prefWidth="290.0" text="大盘数据" />
+      <Button fx:id="stockButton" alignment="CENTER" layoutY="51.0" mnemonicParsing="false" onMouseClicked="#handleStockButton" onMouseEntered="#handleStockButton" onMouseExited="#handleStockButton" prefHeight="40.0" prefWidth="175.0" stylesheets="@../css/leftPane.css" text="股票列表" textAlignment="CENTER">
+         <styleClass>
+            <String fx:value="stockButton-clicked" />
+            <String fx:value="stockButton-entered" />
+            <String fx:value="stockButton" />
+         </styleClass>
+         <font>
+            <Font size="17.0" />
+         </font></Button>
+      <Button id="benchButton" fx:id="benchButton" layoutY="109.0" mnemonicParsing="false" onMouseClicked="#handleBenchButton" onMouseEntered="#handleBenchButton" onMouseExited="#handleBenchButton" prefHeight="40.0" prefWidth="175.0" styleClass="benchButton" stylesheets="@../css/leftPane.css" text="大盘数据" textFill="#fffefe" />
    </children>
 </AnchorPane>
