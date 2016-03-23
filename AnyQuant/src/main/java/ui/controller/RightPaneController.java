@@ -32,7 +32,7 @@ public class RightPaneController {
 	}
 
 	private void initialize() {
-		stockDetailPane = (BorderPane) GraphicsUtils.getParent("StockList");
+		stockListPane = (BorderPane) GraphicsUtils.getParent("StockList");
 		 benchMarkPane = (Pane) GraphicsUtils.getParent("BenchMarkPane");
 		
 			
@@ -41,7 +41,7 @@ public class RightPaneController {
 	void showStockListPane() {
 		System.out.println("show stockList!!!");
 		pane.getChildren().clear();
-		pane.getChildren().add(stockDetailPane);
+		pane.getChildren().add(stockListPane);
 	}
 
 	void showBenchMarkListPane() {
