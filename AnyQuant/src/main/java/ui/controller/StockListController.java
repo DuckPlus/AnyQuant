@@ -111,7 +111,6 @@ public class StockListController{
 	}
 	@FXML
 	private void searchStocklist(){
-		System.out.println(searchBar.getCharacters());
 		System.out.println("hello search in time:  ["+searchBar.getText()+"]end");
 		String stockCode = searchBar.getText();
 		Iterator<StockVO>itr =stockBl.getStocksByStockCode(stockCode);
