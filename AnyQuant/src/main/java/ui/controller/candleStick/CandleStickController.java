@@ -12,8 +12,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 
 /**
  *
@@ -29,6 +32,9 @@ public class CandleStickController  implements Initializable {
     private Tab weekTab;
     @FXML
     private Tab monthTab;
+    @FXML
+    private CandleStickChart chart;
+
     public  CandleStickController (){
 
     }
@@ -55,14 +61,18 @@ public class CandleStickController  implements Initializable {
 
 
 
-  private void selectDay(){
-         initPane(dayTab, createChart());
+  public  void selectDay(){
+	     chart =createChart();
+         initPane(dayTab, chart,new ScrollPane());
   }
 
-  private void initPane( Tab tab  , Node chartNode ){
-          BorderPane pane = new BorderPane();
-          pane.setCenter(chartNode);
-          tab.setContent(pane);
+  private void initPane( Tab tab  , Node chartNode, ScrollPane spane ){
+
+	      BorderPane borderPane = new BorderPane();
+	      borderPane.setCenter(chartNode);
+	      spane.setContent(borderPane);
+          tab.setContent(spane);
+
   }
 
 
