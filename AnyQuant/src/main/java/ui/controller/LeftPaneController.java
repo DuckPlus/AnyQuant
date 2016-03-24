@@ -16,7 +16,7 @@ import javafx.scene.layout.Pane;
  * @author Qiang
  *
  */
-public class LeftPaneController {
+public class LeftPaneController{
 	@FXML
 	private Button stockButton;
 	@FXML

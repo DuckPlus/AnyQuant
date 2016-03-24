@@ -29,7 +29,7 @@ public class MainAPP extends Application {
 		new HomeController(rootpane);
 		stage.setTitle("AnyQuant");
 		stage.show();
-		
+		stage.setResizable(false);
 		
 		
 		
