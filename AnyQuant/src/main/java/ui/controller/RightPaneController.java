@@ -39,7 +39,7 @@ public class RightPaneController{
 	public void initialize() {
 		stockListPane = (BorderPane) GraphicsUtils.getParent("StockList");
 		 benchMarkPane = (Pane) GraphicsUtils.getParent("BenchMarkPane");
-           candleStickPane = (AnchorPane)GraphicsUtils.getParent("CandleStick");
+           candleStickPane = (AnchorPane)GraphicsUtils.getParent("CandleStickPane");
 
 	}
 

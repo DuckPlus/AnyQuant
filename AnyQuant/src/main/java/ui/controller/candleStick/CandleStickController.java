@@ -1,10 +1,14 @@
 package ui.controller.candleStick;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javax.swing.text.html.HTML.Tag;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -17,7 +21,7 @@ import javafx.scene.layout.BorderPane;
  * @date 2016年3月24日
  * =。=
  */
-public class CandleStickController {
+public class CandleStickController  implements Initializable {
 
     @FXML
     private Tab dayTab;
@@ -26,13 +30,13 @@ public class CandleStickController {
     @FXML
     private Tab monthTab;
     public  CandleStickController (){
-    	 initialize();
+
     }
 
-    @FXML
-    public void initialize() {
-        selectDay();
-  //  	BorderPane root = new BorderPane();
+    @Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+
+//  	BorderPane root = new BorderPane();
     //    Scene scene = new Scene(root,380,150,Color.WHITE);
 
 //        Button addBT = new Button("添加");
@@ -46,7 +50,10 @@ public class CandleStickController {
       //   root.setBottom(addBT);
 
      //    primaryStage.getScene().getStylesheets().add(getClass().getResource("ensemble2.css").toExternalForm());
+	  selectDay();
     }
+
+
 
   private void selectDay(){
          initPane(dayTab, createChart());
@@ -144,5 +151,7 @@ public class CandleStickController {
         }
         return candleStickChart;
     }
+
+
 
 }
