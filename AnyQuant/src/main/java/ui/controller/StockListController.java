@@ -44,15 +44,20 @@ public class StockListController {
 	TableView<Stock> tableview = new TableView<Stock>();
 	@FXML
 	TextField searchBar;
-
 	//get the logic service
 	StockBLService stockBl = StockBLImpl.getAPIBLService();
 	//
 	ObservableList<Stock> obsevableList ;
+	
 	public StockListController() {
-
+		System.out.println("hello constractor");
 		obsevableList = FXCollections.observableArrayList();
 //		tableview.setOnMouseClicked(value);
+	}
+	@FXML
+	private void initialize(){
+		System.out.println("hello init");
+		showTableData();
 	}
 	
 	/**
@@ -79,7 +84,6 @@ public class StockListController {
 		volume.setCellValueFactory(cell ->cell.getValue().volume.asObject());
 		amplitude.setCellValueFactory(cell ->cell.getValue().amplitude.asObject());
 		changeRate.setCellValueFactory(cell ->cell.getValue().changeRate.asObject());
-		System.out.println("hello world");
 		
 	}
 	
@@ -101,5 +105,5 @@ public class StockListController {
 			System.out.println(code);
 		}
 	}
-	
+
 }

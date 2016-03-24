@@ -5,24 +5,27 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="419.0" prefWidth="561.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="419.0" prefWidth="561.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.BenchmarkController">
    <children>
-      <TableView layoutX="88.0" layoutY="59.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
+      <TableView fx:id="tableview" layoutX="88.0" layoutY="59.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="大盘代号" />
-          <TableColumn prefWidth="75.0" text="日期" />
-            <TableColumn prefWidth="75.0" text="开盘价" />
-            <TableColumn prefWidth="75.0" text="最高价" />
-            <TableColumn prefWidth="75.0" text="最低价" />
-            <TableColumn prefWidth="75.0" text="收盘价" />
-            <TableColumn prefWidth="75.0" text="成交量" />
-            <TableColumn prefWidth="75.0" text="后复权价" />
+          <TableColumn fx:id="code" prefWidth="75.0" text="大盘代号" />
+          <TableColumn fx:id="date" prefWidth="75.0" text="日期" />
+            <TableColumn fx:id="open" prefWidth="75.0" text="开盘价" />
+            <TableColumn fx:id="high" prefWidth="75.0" text="最高价" />
+            <TableColumn fx:id="low" prefWidth="75.0" text="最低价" />
+            <TableColumn fx:id="close" prefWidth="75.0" text="收盘价" />
+            <TableColumn fx:id="volume" prefWidth="75.0" text="成交量" />
+            <TableColumn fx:id="adj_price" prefWidth="75.0" text="后复权价" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button layoutX="22.0" layoutY="1.0" mnemonicParsing="false" prefHeight="7.0" prefWidth="59.0" text="show" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <DatePicker fx:id="beginDate" layoutX="60.0" layoutY="1.0" prefHeight="27.0" prefWidth="116.0" />
+      <DatePicker fx:id="endDate" layoutX="232.0" layoutY="1.0" prefHeight="27.0" prefWidth="116.0" />
+      <Label layoutX="4.0" layoutY="6.0" text="开始时间" />
+      <Label layoutX="180.0" layoutY="6.0" text="结束时间" />
+      <Button layoutX="363.0" layoutY="1.0" mnemonicParsing="false" onAction="#searchByDate" text="查询" />
    </children>
 </AnchorPane>

@@ -1,5 +1,5 @@
 .stockButton {
-  -fx-background-image: url('../img/stockList_normal.png');
+	-fx-background-image: url('../img/stockList_normal.png');
   -fx-text-fill:white
 }
 

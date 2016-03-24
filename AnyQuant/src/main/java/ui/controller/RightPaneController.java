@@ -42,6 +42,7 @@ public class RightPaneController {
 		System.out.println("show stockList!!!");
 		pane.getChildren().clear();
 		pane.getChildren().add(stockListPane);
+		
 	}
 
 	void showBenchMarkListPane() {
