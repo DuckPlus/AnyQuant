@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="720.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TabPane layoutX="-100.0" layoutY="-134.0" prefHeight="356.0" prefWidth="334.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Day">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="374.0" prefWidth="437.0" />
+            </content>
+          </Tab>
+          <Tab text="Week">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="423.0" prefWidth="481.0" />
+            </content>
+          </Tab>
+            <Tab text="Month">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="374.0" prefWidth="437.0" />
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
