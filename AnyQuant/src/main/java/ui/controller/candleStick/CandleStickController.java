@@ -15,8 +15,11 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.RowConstraints;
+
 
 /**
  *
@@ -42,9 +45,6 @@ public class CandleStickController  implements Initializable {
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
-//  	BorderPane root = new BorderPane();
-    //    Scene scene = new Scene(root,380,150,Color.WHITE);
-
 //        Button addBT = new Button("添加");
 //        addBT.setOnAction(event->{
 //        	XYChart.Series<Number,Number> newSeries = new XYChart.Series<>();
@@ -54,8 +54,6 @@ public class CandleStickController  implements Initializable {
 //        });
      //    root.setCenter(chart);
       //   root.setBottom(addBT);
-
-     //    primaryStage.getScene().getStylesheets().add(getClass().getResource("ensemble2.css").toExternalForm());
 	  selectDay();
     }
 
@@ -68,9 +66,14 @@ public class CandleStickController  implements Initializable {
 
   private void initPane( Tab tab  , Node chartNode, ScrollPane spane ){
 
-	      BorderPane borderPane = new BorderPane();
-	      borderPane.setCenter(chartNode);
-	      spane.setContent(borderPane);
+	      GridPane gridPane = new GridPane();
+	      ColumnConstraints cc = new ColumnConstraints(600,880,900);
+	      RowConstraints rc = new RowConstraints(600,650,700);
+	      gridPane.getColumnConstraints().add(cc);
+	      gridPane.getRowConstraints().add(rc);
+          gridPane.add(chartNode, 0, 0);
+
+	      spane.setContent(gridPane);
           tab.setContent(spane);
 
   }
@@ -131,7 +134,7 @@ public class CandleStickController  implements Initializable {
 
     private CandleStickChart createChart() {
     	//X轴，范围0-32，间隔1
-        final NumberAxis xAxis = new NumberAxis(0,40,1);
+        final NumberAxis xAxis = new NumberAxis(0,32,1);
         xAxis.setMinorTickCount(0);
         //Y轴
         final NumberAxis yAxis = new NumberAxis();

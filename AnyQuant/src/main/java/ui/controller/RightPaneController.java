@@ -1,13 +1,11 @@
 package ui.controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import ui.GraphicsUtils;
-import ui.MainAPP;
+
 
 /**
  * Controller of the right pane

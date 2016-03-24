@@ -26,3 +26,17 @@
 }
 
 
+.kButton {
+	-fx-background-image: url('../img/stockList_normal.png');
+  -fx-text-fill:white
+}
+
+.kButton-clicked {
+	-fx-background-image: url('../img/stockList_clicked.png');
+}
+
+.kButton-entered {
+	-fx-background-image: url('../img/stockList_entered.png');
+}
+
+
