@@ -24,7 +24,7 @@
       </TableView>
       <DatePicker fx:id="beginDate" layoutX="60.0" layoutY="1.0" prefHeight="27.0" prefWidth="116.0" />
       <DatePicker fx:id="endDate" layoutX="232.0" layoutY="1.0" prefHeight="27.0" prefWidth="116.0" />
-      <Label layoutX="4.0" layoutY="6.0" text="开始时间" />
+      <Label layoutX="4.0" layoutY="6.0" text="开始时间" textFill="WHITE" />
       <Label layoutX="180.0" layoutY="6.0" text="结束时间" />
       <Button layoutX="363.0" layoutY="1.0" mnemonicParsing="false" onAction="#searchByDate" text="查询" />
    </children>

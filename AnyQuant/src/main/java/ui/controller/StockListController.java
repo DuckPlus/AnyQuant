@@ -57,16 +57,22 @@ public class StockListController{
 	@FXML
 	private void initialize(){
 		System.out.println("hello init");
-		showTableData();
+		showStocklist();
 	}
 	
 	/**
 	 * 
 	 */
 	@FXML
-	public void showTableData(){
+	public void showStocklist(){
 		
 		Iterator<StockVO>itr = stockBl.getAllStocks();
+		showTableData(itr);
+		
+	}
+	
+	private void showTableData(Iterator<StockVO>itr){
+		tableview.getItems().removeAll(obsevableList);
 		while(itr.hasNext()){
 			StockVO temp = itr.next();
 			Stock dataProperty = new Stock(temp);
@@ -84,9 +90,7 @@ public class StockListController{
 		volume.setCellValueFactory(cell ->cell.getValue().volume.asObject());
 		amplitude.setCellValueFactory(cell ->cell.getValue().amplitude.asObject());
 		changeRate.setCellValueFactory(cell ->cell.getValue().changeRate.asObject());
-		
 	}
-	
 	@FXML
 	private void delAllData(){
 //		int sum = tableview.getItems().size();
@@ -104,6 +108,14 @@ public class StockListController{
 			String code =tableview.getSelectionModel().getSelectedItem().code.get();
 			System.out.println(code);
 		}
+	}
+	@FXML
+	private void searchStocklist(){
+		System.out.println(searchBar.getCharacters());
+		System.out.println("hello search in time:  ["+searchBar.getText()+"]end");
+		String stockCode = searchBar.getText();
+		Iterator<StockVO>itr =stockBl.getStocksByStockCode(stockCode);
+		showTableData(itr);
 	}
 
 
