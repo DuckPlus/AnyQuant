@@ -1,13 +1,15 @@
 package ui.controller.candleStick;
 
+import javax.swing.text.html.HTML.Tag;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Scene;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 /**
  *
@@ -16,6 +18,47 @@ import javafx.stage.Stage;
  * =。=
  */
 public class CandleStickController {
+
+    @FXML
+    private Tab dayTab;
+    @FXML
+    private Tab weekTab;
+    @FXML
+    private Tab monthTab;
+    public  CandleStickController (){
+    	 initialize();
+    }
+
+    @FXML
+    public void initialize() {
+        selectDay();
+  //  	BorderPane root = new BorderPane();
+    //    Scene scene = new Scene(root,380,150,Color.WHITE);
+
+//        Button addBT = new Button("添加");
+//        addBT.setOnAction(event->{
+//        	XYChart.Series<Number,Number> newSeries = new XYChart.Series<>();
+//        	newSeries.getData().add(new XYChart.Data<Number,Number>(32, 28,
+//        			new CandleStickExtraValues(18, 30, 12, 22)));
+//            chart.getData().add(newSeries);
+//        });
+     //    root.setCenter(chart);
+      //   root.setBottom(addBT);
+
+     //    primaryStage.getScene().getStylesheets().add(getClass().getResource("ensemble2.css").toExternalForm());
+    }
+
+  private void selectDay(){
+         initPane(dayTab, createChart());
+  }
+
+  private void initPane( Tab tab  , Node chartNode ){
+          BorderPane pane = new BorderPane();
+          pane.setCenter(chartNode);
+          tab.setContent(pane);
+  }
+
+
     // DAY, OPEN, CLOSE, HIGH, LOW, AVERAGE
     private static double[][] data = new double[][]{
             {1,  25, 20, 32, 16, 20},
@@ -68,26 +111,6 @@ public class CandleStickController {
 
     };
 
-    private void init(Stage primaryStage) {
-    	BorderPane root = new BorderPane();
-        Scene scene = new Scene(root,380,150,Color.WHITE);
-        CandleStickChart  chart =  createChart();
-//        Button addBT = new Button("添加");
-//        addBT.setOnAction(event->{
-//        	XYChart.Series<Number,Number> newSeries = new XYChart.Series<>();
-//        	newSeries.getData().add(new XYChart.Data<Number,Number>(32, 28,
-//        			new CandleStickExtraValues(18, 30, 12, 22)));
-//            chart.getData().add(newSeries);
-//        });
-         root.setCenter(chart);
-      //   root.setBottom(addBT);
-
-         primaryStage.setScene(scene);
-         primaryStage.setWidth(600);
-         primaryStage.setHeight(400);
-         primaryStage.getScene().getStylesheets().add(getClass().getResource("ensemble2.css").toExternalForm());
-
-    }
 
     private CandleStickChart createChart() {
     	//X轴，范围0-32，间隔1

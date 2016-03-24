@@ -11,16 +11,16 @@ import javafx.scene.Parent;
 * @date Mar 22, 2016
 */
 public class GraphicsUtils {
-	
+
 	private static final String fxmlPath = "source/fxml/";
 	private static FXMLLoader fxmlLoader;
-	
+
 	public static Parent getParent(String fileName){
-		
-	
+
+
 	try {
 		fxmlLoader = new FXMLLoader();
-		
+
 		fxmlLoader.setLocation(MainAPP.class.getResource(fxmlPath + fileName + ".fxml"));
 		return fxmlLoader.load();
 	} catch (IOException e) {
@@ -28,13 +28,13 @@ public class GraphicsUtils {
 		e.printStackTrace();
 	}
 		return null;
-		
+
 	}
-	
-	
+
+
 	public static final String getStyleFromClass(String css){
 		return css.substring(css.indexOf('{') + 1, css.indexOf('}'));
 	}
-	
-	
+
+
 }

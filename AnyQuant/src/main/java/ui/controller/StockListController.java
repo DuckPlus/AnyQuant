@@ -48,7 +48,7 @@ public class StockListController{
 	StockBLService stockBl = StockBLImpl.getAPIBLService();
 	//
 	ObservableList<Stock> obsevableList ;
-	
+
 	public StockListController() {
 		System.out.println("hello constractor");
 		obsevableList = FXCollections.observableArrayList();
@@ -59,13 +59,13 @@ public class StockListController{
 		System.out.println("hello init");
 		showTableData();
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	@FXML
 	public void showTableData(){
-		
+
 		Iterator<StockVO>itr = stockBl.getAllStocks();
 		while(itr.hasNext()){
 			StockVO temp = itr.next();
@@ -84,9 +84,9 @@ public class StockListController{
 		volume.setCellValueFactory(cell ->cell.getValue().volume.asObject());
 		amplitude.setCellValueFactory(cell ->cell.getValue().amplitude.asObject());
 		changeRate.setCellValueFactory(cell ->cell.getValue().changeRate.asObject());
-		
+
 	}
-	
+
 	@FXML
 	private void delAllData(){
 //		int sum = tableview.getItems().size();
@@ -99,7 +99,7 @@ public class StockListController{
 				System.out.println("empty line ");
 				return;
 			}
-			
+
 			int row =tableview.getSelectionModel().getSelectedIndex();
 			String code =tableview.getSelectionModel().getSelectedItem().code.get();
 			System.out.println(code);
