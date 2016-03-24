@@ -18,7 +18,7 @@ import vo.StockVO;
 *@author:duanzhengmou
 *@date:2016年3月22日
 */
-public class StockListController {
+public class StockListController{
 	@FXML
 	TableColumn<Stock, String>code = new TableColumn<Stock,String>();
 	@FXML
@@ -86,5 +86,8 @@ public class StockListController {
 		tableview.getItems().removeAll(obsevableList);
 	}
 	
-	
+	@FXML
+	protected void initialize() {
+				showTableData();
+	}
 }

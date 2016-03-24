@@ -1,5 +1,6 @@
 package ui.controller;
 
+import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import ui.GraphicsUtils;
@@ -10,11 +11,12 @@ import ui.GraphicsUtils;
  * @author Qiang
  * @date Mar 22, 2016
  */
-public class RightPaneController {
-	private static Pane pane;
+public class RightPaneController{
+	private static BorderPane pane;
 	private BorderPane stockListPane;
 	private Pane benchMarkPane;
 	private Pane stockDetailPane;
+	
 	private static RightPaneController instance;
 
 	public RightPaneController() {
@@ -30,23 +32,21 @@ public class RightPaneController {
 		}
 		return instance;
 	}
-
-	private void initialize() {
+	@FXML
+	public void initialize() {
 		stockListPane = (BorderPane) GraphicsUtils.getParent("StockList");
 		 benchMarkPane = (Pane) GraphicsUtils.getParent("BenchMarkPane");
 		
-			
+		
 	}
 
 	void showStockListPane() {
 		System.out.println("show stockList!!!");
-		pane.getChildren().clear();
-		pane.getChildren().add(stockListPane);
+		pane.setCenter(stockListPane);
 	}
 
 	void showBenchMarkListPane() {
-		pane.getChildren().clear();
-		pane.getChildren().add(benchMarkPane);
+		pane.setCenter(benchMarkPane);
 	}
 
 	private void showDetailPane() {
@@ -55,8 +55,11 @@ public class RightPaneController {
 
 	static void  setPane(Pane pane){
 		if(RightPaneController.pane == null){
-		RightPaneController.pane = pane;
+		RightPaneController.pane = (BorderPane) pane;
 		}
+		
+		
+		
 	}	
 	
 	}

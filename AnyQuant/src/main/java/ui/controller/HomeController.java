@@ -3,6 +3,9 @@ package ui.controller;
 import javafx.collections.ListChangeListener.Change;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import ui.GraphicsUtils;
 
 /**
@@ -18,7 +21,8 @@ public class HomeController {
 	private BottomEdgesController bottomEdgesController;
 	private SplitPane rootpane;
 	private AnchorPane leftPane;
-	private AnchorPane rightPane;
+	private BorderPane rightPane;
+	private Pane bottomPane;
 
 	public HomeController(SplitPane rootpane) {
 		this.rootpane = rootpane;
@@ -28,14 +32,16 @@ public class HomeController {
 	}
 
 	private void initialPane() {
-
+		
 		leftPane = (AnchorPane) GraphicsUtils.getParent("LeftPane");
 
 		rootpane.getItems().set(0, leftPane);
-		LeftPaneController.setPane(leftPane);
-
-		rightPane = (AnchorPane) GraphicsUtils.getParent("RightPane");
+		
+		bottomPane = (Pane) GraphicsUtils.getParent("BottomPane");
+		rightPane = (BorderPane) GraphicsUtils.getParent("RightPane");
 		rootpane.getItems().set(1, rightPane);
+		rightPane.setBottom(bottomPane);
+		LeftPaneController.setPane(leftPane);
 		RightPaneController.setPane(rightPane);
 	}
 
