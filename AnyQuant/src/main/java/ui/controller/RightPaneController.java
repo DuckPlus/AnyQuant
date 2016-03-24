@@ -1,13 +1,17 @@
 package ui.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.TabPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import ui.GraphicsUtils;
+import ui.MainAPP;
 
 /**
  * Controller of the right pane
- * 
+ *
  * @author Qiang
  * @date Mar 22, 2016
  */
@@ -16,7 +20,8 @@ public class RightPaneController{
 	private BorderPane stockListPane;
 	private Pane benchMarkPane;
 	private Pane stockDetailPane;
-	
+	private AnchorPane candleStickPane;
+
 	private static RightPaneController instance;
 
 	public RightPaneController() {
@@ -36,18 +41,24 @@ public class RightPaneController{
 	public void initialize() {
 		stockListPane = (BorderPane) GraphicsUtils.getParent("StockList");
 		 benchMarkPane = (Pane) GraphicsUtils.getParent("BenchMarkPane");
-		
-		
+		 candleStickPane = (AnchorPane) GraphicsUtils.getParent("CandleStickPane");
+
 	}
 
 	void showStockListPane() {
 		System.out.println("show stockList!!!");
-
+        pane.getChildren().clear();
 		pane.setCenter(stockListPane);
 	}
 
 	void showBenchMarkListPane() {
+		 pane.getChildren().clear();
 		pane.setCenter(benchMarkPane);
+	}
+
+	void showCandleStickPane() {
+	     pane.getChildren().clear();
+		pane.setCenter(candleStickPane);
 	}
 
 	private void showDetailPane() {
@@ -58,9 +69,9 @@ public class RightPaneController{
 		if(RightPaneController.pane == null){
 		RightPaneController.pane = (BorderPane) pane;
 		}
-		
-		
-		
-	}	
-	
+
+
+
+	}
+
 	}
