@@ -77,8 +77,8 @@ class CandleStickChart extends XYChart<Number, Number> {
             }
             while (iter.hasNext()) {
                 Data<Number, Number> item = iter.next();
-                double x = getXAxis().getDisplayPosition(getCurrentDisplayedXValue(item));//����x��ֵ�õ���ͼ�е����ص������
-                double y = getYAxis().getDisplayPosition(getCurrentDisplayedYValue(item));//����y��ֵ�õ���ͼ�е����ص�������
+                double x = getXAxis().getDisplayPosition(getCurrentDisplayedXValue(item));
+                double y = getYAxis().getDisplayPosition(getCurrentDisplayedYValue(item));
                  // System.out.print("x: "+x+" y: "+y);
                 Node itemNode = item.getNode();
                 CandleStickExtraValues extra = (CandleStickExtraValues) item.getExtraValue();
@@ -106,7 +106,7 @@ class CandleStickChart extends XYChart<Number, Number> {
                     candle.setLayoutX(x);
                     candle.setLayoutY(y);
                 }
-                //ƽ��ֵ�����ߵĵ����������
+                //折线图
                 if (seriesPath != null) {
                     if (seriesPath.getElements().isEmpty()) {
                         seriesPath.getElements().add(new MoveTo(x, getYAxis().getDisplayPosition(extra.getAverage())));

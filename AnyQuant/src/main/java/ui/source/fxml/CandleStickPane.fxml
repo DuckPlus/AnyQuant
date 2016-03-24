@@ -6,15 +6,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="363.0" prefWidth="413.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.candleStick.CandleStickController">
+<AnchorPane prefHeight="720.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.candleStick.CandleStickController">
    <children>
-      <TabPane layoutX="16.0" layoutY="-58.0" prefHeight="421.0" prefWidth="472.0" stylesheets="@../css/candle.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-59.0" AnchorPane.topAnchor="-58.0">
+      <TabPane prefHeight="720.0" prefWidth="905.0" stylesheets="@../css/candle.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
           <Tab id="dayTab" fx:id="dayTab" onSelectionChanged="#selectDay" text="Day">
                <content>
-                  <ScrollPane>
+                  <ScrollPane prefHeight="720.0" prefWidth="905.0">
                      <content>
-                        <BarChart id="chart" stylesheets="@../css/candle.css">
+                        <BarChart id="chart" prefHeight="720.0" prefWidth="905.0" stylesheets="@../css/candle.css">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -36,12 +36,12 @@
                </content></Tab>
           <Tab id="weekTab" fx:id="weekTab" text="Week">
                <content>
-                  <ScrollPane />
+                  <ScrollPane prefHeight="720.0" prefWidth="905.0" />
                </content>
           </Tab>
             <Tab id="monthTab" fx:id="monthTab" text="Month">
                <content>
-                  <ScrollPane />
+                  <ScrollPane prefHeight="720.0" prefWidth="905.0" />
                </content>
             </Tab>
         </tabs>
