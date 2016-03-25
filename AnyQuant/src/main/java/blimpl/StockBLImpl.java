@@ -108,7 +108,6 @@ public class StockBLImpl implements StockBLService {
 	}
 
 	@Override
-	// TODO
 	public Iterator<StockVO> getStocksByTime(String stockCode, MyDate start,
 			MyDate end) {
 		List<StockPO> pos = APIDataSer.getStockMes(stockCode, start, end);
@@ -381,18 +380,35 @@ public class StockBLImpl implements StockBLService {
 
 	@Override
 	public Iterator<StockVO> getOptionalStocks() {
-		// TODO Auto-generated method stub
+		
 		return null;
+		
+		
+//		return APIDataSer.getOptionalStocks(VOPOchange.POtoVO(o));
 	}
 
+	
+
 	@Override
-	public boolean deleteStockCodes(String stockCode) {
+	public boolean addStockCode(String stockCode) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean addStockCode(String stockCode) {
+	public boolean deleteStockCode(String stockCode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteStockCode(List<String> stockCode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addStockCode(List<String> stockCodes) {
 		// TODO Auto-generated method stub
 		return false;
 	}
