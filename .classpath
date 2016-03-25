@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="AnyQuant/AnyQuant_Client/src/main/java"/>
+	<classpathentry kind="src" path="AnyQuant/AnyQuant_Client/src/test/java"/>
+	<classpathentry kind="src" path="AnyQuant/AnyQuant_Common/src/main/java"/>
+	<classpathentry kind="src" path="AnyQuant/AnyQuant_Common/src/test/java"/>
+	<classpathentry kind="src" path="AnyQuant/AnyQuant_Server/src/main/java"/>
+	<classpathentry kind="src" path="AnyQuant/AnyQuant_Server/src/test/java"/>
+	<classpathentry kind="src" path="AnyQuant/src/main/java"/>
+	<classpathentry kind="src" path="AnyQuant/src/test/java"/>
+	<classpathentry kind="lib" path="AnyQuant/AnyQuant_Client/library/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="AnyQuant/AnyQuant_Client/library/jython_installer-2.2.1.jar"/>
+	<classpathentry kind="lib" path="AnyQuant/AnyQuant_Client/library/jython-installer-2.7.0.jar"/>
+	<classpathentry kind="lib" path="AnyQuant/AnyQuant_Client/library/jython-standalone-2.7.0.jar"/>
+	<classpathentry kind="lib" path="AnyQuant/AnyQuant_Client/library/SwingSets3(BeautyEyeLNFDemo).jar"/>
+	<classpathentry kind="lib" path="AnyQuant/AnyQuant_Common/library/commons-beanutils-1.7.0.jar"/>
+	<classpathentry kind="lib" path="AnyQuant/AnyQuant_Common/library/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="AnyQuant/AnyQuant_Common/library/commons-lang-2.5.jar"/>
+	<classpathentry kind="lib" path="AnyQuant/AnyQuant_Common/library/commons-logging.jar"/>
+	<classpathentry kind="lib" path="AnyQuant/AnyQuant_Common/library/ezmorph-1.0.3.jar"/>
+	<classpathentry kind="lib" path="AnyQuant/AnyQuant_Common/library/json-lib-2.4-jdk15.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="AnyQuant/target/test-classes"/>
+</classpath>

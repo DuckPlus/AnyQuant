@@ -1,0 +1,18 @@
+.split-pane *.vertical-grabber {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-shape: " ";
+}
+.split-pane:vertical > * > .split-pane-divider {
+   -fx-border-color:  transparent;
+   -fx-background-color: transparent;
+   -fx-background-insets: 0;
+}
+.split-pane *.split-pane-divider {
+    -fx-padding: 0 1 0 1;
+}
+
+.split-pane {
+	-fx-background-image: url("../img/bg.png");
+}

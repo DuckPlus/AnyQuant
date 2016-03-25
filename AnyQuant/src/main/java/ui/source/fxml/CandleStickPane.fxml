@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="720.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.candleStick.CandleStickController">
+   <children>
+      <TabPane prefHeight="720.0" prefWidth="905.0" stylesheets="@../css/candle.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab id="dayTab" fx:id="dayTab" onSelectionChanged="#selectDay" text="Day">
+               <content>
+                  <ScrollPane prefHeight="720.0" prefWidth="905.0">
+                     <content>
+                        <BarChart id="chart" prefHeight="720.0" prefWidth="905.0" stylesheets="@../css/candle.css">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                           <styleClass>
+                              <String fx:value="candlestick-average-line" />
+                              <String fx:value="open-above-close" />
+                              <String fx:value="candlestick-candle" />
+                              <String fx:value="candlestick-line" />
+                              <String fx:value="close-above-open" />
+                              <String fx:value="candlestick-tooltip-label" />
+                              <String fx:value="candlestick-bar" />
+                           </styleClass>
+                        </BarChart>
+                     </content>
+                  </ScrollPane>
+               </content></Tab>
+          <Tab id="weekTab" fx:id="weekTab" text="Week">
+               <content>
+                  <ScrollPane prefHeight="720.0" prefWidth="905.0" />
+               </content>
+          </Tab>
+            <Tab id="monthTab" fx:id="monthTab" text="Month">
+               <content>
+                  <ScrollPane prefHeight="720.0" prefWidth="905.0" />
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

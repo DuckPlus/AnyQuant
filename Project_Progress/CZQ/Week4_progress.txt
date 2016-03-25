@@ -1,0 +1,5 @@
+who:陈自强
+when:第四周
+what:更改项目架构，学习javafx
+problem:暂无
+todo:继续学习javafx，完成javafx架构
