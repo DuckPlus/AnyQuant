@@ -21,7 +21,7 @@ import javafx.util.Duration;
 /**
  *
  * @author ss
- * @date 2016/3/24
+ * @date 2016年3月24日
  *
  * A candlestick chart is a style of bar-chart used primarily to describe price movements of a security, derivative,
  * or currency over time.
@@ -58,7 +58,7 @@ class CandleStickChart extends XYChart<Number, Number> {
 
     // -------------- METHODS ------------------------------------------------------------------------------------------
     /** Called to update and layout the content for the plot
-     *     ���²���*/
+     *     更新布局*/
     @Override protected void layoutPlotChildren() {
         // we have nothing to layout if no data is present
         if (getData() == null) {
@@ -77,8 +77,8 @@ class CandleStickChart extends XYChart<Number, Number> {
             }
             while (iter.hasNext()) {
                 Data<Number, Number> item = iter.next();
-                double x = getXAxis().getDisplayPosition(getCurrentDisplayedXValue(item));
-                double y = getYAxis().getDisplayPosition(getCurrentDisplayedYValue(item));
+                double x = getXAxis().getDisplayPosition(getCurrentDisplayedXValue(item));//根据x的值得到绘图中的像素点横坐标
+                double y = getYAxis().getDisplayPosition(getCurrentDisplayedYValue(item));//根据y的值得到绘图中的像素点纵坐标
                  // System.out.print("x: "+x+" y: "+y);
                 Node itemNode = item.getNode();
                 CandleStickExtraValues extra = (CandleStickExtraValues) item.getExtraValue();
@@ -106,7 +106,7 @@ class CandleStickChart extends XYChart<Number, Number> {
                     candle.setLayoutX(x);
                     candle.setLayoutY(y);
                 }
-                //折线图
+                //平均值的折线的点在这里添加
                 if (seriesPath != null) {
                     if (seriesPath.getElements().isEmpty()) {
                         seriesPath.getElements().add(new MoveTo(x, getYAxis().getDisplayPosition(extra.getAverage())));
@@ -125,7 +125,7 @@ class CandleStickChart extends XYChart<Number, Number> {
     @Override protected void dataItemAdded(Series<Number, Number> series, int itemIndex, Data<Number, Number> item) {
         Node candle = createCandle(getData().indexOf(series), item, itemIndex);
         if (shouldAnimate()) {
-            candle.setOpacity(0);//���ò�͸��
+            candle.setOpacity(0);//设置不透明
             getPlotChildren().add(candle);
             // fade in new candle
             FadeTransition ft = new FadeTransition(Duration.millis(500), candle);

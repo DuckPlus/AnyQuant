@@ -1,6 +1,5 @@
 package ui.controller.candleStick;
 
-
 import javafx.scene.Group;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Region;

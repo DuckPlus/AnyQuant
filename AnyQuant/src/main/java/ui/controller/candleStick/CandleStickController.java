@@ -1,24 +1,32 @@
 package ui.controller.candleStick;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.swing.text.html.HTML.Tag;
+import org.python.antlr.PythonParser.return_stmt_return;
 
+import blimpl.StockBLImpl;
+import blservice.StockBLService;
+import enumeration.MyDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import jnr.ffi.Struct.int16_t;
+import util.MyTime;
+import vo.OHLC_VO;
+import vo.Stock;
 
 
 /**
@@ -38,31 +46,61 @@ public class CandleStickController  implements Initializable {
     @FXML
     private CandleStickChart chart;
 
-    public  CandleStickController (){
+    private static String stockCode;
 
+  	private static StockBLService stockBl ;
+
+  	private static ObservableList<OHLC_VO> obsevableList ;
+
+  	private static CandleStickController instance;
+
+    public  CandleStickController (){
+    	if(instance==null){
+    	   stockCode="sh600216";
+    	   stockBl = StockBLImpl.getAPIBLService();
+    	   obsevableList = FXCollections.observableArrayList();
+    	   obsevableList.clear();
+           instance=this;
+    	}
+    }
+
+    public static CandleStickController  getCandleStickController(){
+             if(instance!=null){
+            	 return instance;
+             }else{
+            	 return new CandleStickController();
+             }
+    }
+
+    public static  void setStockCode(String  newCode){
+          stockCode = newCode;
     }
 
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
-//        Button addBT = new Button("添加");
-//        addBT.setOnAction(event->{
-//        	XYChart.Series<Number,Number> newSeries = new XYChart.Series<>();
-//        	newSeries.getData().add(new XYChart.Data<Number,Number>(32, 28,
-//        			new CandleStickExtraValues(18, 30, 12, 22)));
-//            chart.getData().add(newSeries);
-//        });
-     //    root.setCenter(chart);
-      //   root.setBottom(addBT);
-	  selectDay();
+    	//call selectDay() by deafult
+	      selectWeek();
+	      selectMonth();
     }
 
-
-
   public  void selectDay(){
+
+	     getDayData();
 	     chart =createChart();
          initPane(dayTab, chart,new ScrollPane());
   }
+
+  public  void selectWeek(){
+
+	     chart =createChart();
+         initPane(weekTab, chart,new ScrollPane());
+  }
+
+  public  void selectMonth(){
+
+	     chart =createChart();
+         initPane(monthTab, chart,new ScrollPane());
+ }
 
   private void initPane( Tab tab  , Node chartNode, ScrollPane spane ){
 
@@ -131,13 +169,28 @@ public class CandleStickController  implements Initializable {
 
     };
 
+    private  void  getDayData(){
+    	//   System.out.println("CALL getDayData() ");
+    	   MyDate end = MyTime.getToDay();
+    	   MyDate start = MyTime.getAnotherDay(-5);
+    	   List<OHLC_VO>list =stockBl.getDayOHLC_Data(stockCode, start, end);
+    	   obsevableList.clear();
+   // 	   System.out.println("list size : "+list.size());
+
+    	   for(OHLC_VO temp : list){
+    		   obsevableList.add(temp);
+    	   }
+    //	   System.out.println(obsevableList.size());
+    }
 
     private CandleStickChart createChart() {
-    	//X轴，范围0-32，间隔1
+       // System.out.println("CALL createChart() ");
+    	//X轴
         final NumberAxis xAxis = new NumberAxis(0,32,1);
-        xAxis.setMinorTickCount(0);
+
         //Y轴
-        final NumberAxis yAxis = new NumberAxis();
+        final NumberAxis yAxis = new NumberAxis(getMin()-1,getMax()+1,0.5);
+        //yAxis.setTickUnit(0.05);
 
         final CandleStickChart candleStickChart = new CandleStickChart(xAxis,yAxis);
         // setup chart
@@ -146,12 +199,14 @@ public class CandleStickController  implements Initializable {
         yAxis.setLabel("Price");
         // add starting data
         XYChart.Series<Number,Number> series = new XYChart.Series<Number,Number>();
-        for (int i=0; i< data.length; i++) {
-            double[] day = data[i];
-            series.getData().add(
+        for (int i=0; i< obsevableList.size(); i++) {
+            OHLC_VO vo = obsevableList.get(i);
+            String temp = vo.date.DateToString();
+            int day = Integer.parseInt(temp.substring(8));
+            System.out.println(day);
                 //参数：日期、开盘价
-                new XYChart.Data<Number,Number>(day[0],day[1],new CandleStickExtraValues(day[2],day[3],day[4],day[5]))
-            );
+             series.getData().add(   new XYChart.Data<Number,Number>
+                (day,vo.open,new CandleStickExtraValues(vo.close,vo.high,vo.low,vo.close)));
         }
         // candleStickChart.getData()  return type:ObservableList<XYChart.Series<Number,Number>>
         ObservableList<XYChart.Series<Number,Number>> data = candleStickChart.getData();
@@ -166,5 +221,24 @@ public class CandleStickController  implements Initializable {
     }
 
 
+    private double getMin(){
+    	double min=100;
+    	for(OHLC_VO temp : obsevableList){
+    		if(temp.low<min){
+    			min = temp.low;
+    		}
+    	}
+    	return min;
+    }
+
+    private double getMax(){
+    	double max=0;
+    	for(OHLC_VO temp : obsevableList){
+    		if(temp.high>max){
+    			max = temp.low;
+    		}
+    	}
+    	return max;
+    }
 
 }

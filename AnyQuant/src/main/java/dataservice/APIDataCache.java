@@ -275,7 +275,7 @@ public class APIDataCache implements APIInterface{
 	private boolean needUpdate(String preDate){
 		//如果昨天日期与上次纪录不符并且昨天不是周末
 		MyDate yesterday = MyTime.getAnotherDay(-1);
-		System.out.println(yesterday.DateToString());
+		//System.out.println(yesterday.DateToString());
 		if(!preDate.equals(yesterday.DateToString())&& !MyTime.isWeekend(yesterday)){
 			   return true ;
 		}
