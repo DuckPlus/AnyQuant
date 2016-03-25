@@ -34,12 +34,12 @@
                      </content>
                   </ScrollPane>
                </content></Tab>
-          <Tab id="weekTab" fx:id="weekTab" text="Week">
+          <Tab id="weekTab" fx:id="weekTab" onSelectionChanged="#selectWeek" text="Week">
                <content>
                   <ScrollPane prefHeight="720.0" prefWidth="905.0" />
                </content>
           </Tab>
-            <Tab id="monthTab" fx:id="monthTab" text="Month">
+            <Tab id="monthTab" fx:id="monthTab" onSelectionChanged="#selectMonth" text="Month">
                <content>
                   <ScrollPane prefHeight="720.0" prefWidth="905.0" />
                </content>

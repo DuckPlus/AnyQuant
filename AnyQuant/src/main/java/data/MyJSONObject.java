@@ -1,4 +1,4 @@
-package dataservice;
+package data;
 import java.util.Map;
 
 import net.sf.json.JSONObject;

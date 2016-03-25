@@ -2,11 +2,11 @@ package Duck_Plus.AnyQuant;
 
 import java.util.List;
 
+import data.APIInterfaceImpl;
 import po.BenchMarkPO;
 import po.StockPO;
 import dataservice.APIDataFactory;
 import dataservice.APIInterface;
-import dataservice.APIInterfaceImpl;
 import enumeration.MyDate;
 
 
@@ -15,8 +15,8 @@ public class APITest  {
         	    //getAllstocksMessageByAPI();
         	// getBenchMes();
         	   // getStockCode();
-           //getAllMesByCache();
-        	 getLatestMes();
+           getAllMesByCache();
+        	// getLatestMes();
         //	 System.out.println(MyTime.getToDay().DateToString()+" "+MyTime.getToDay().TimeToString());
 //            System.out.println(MyTime.getAnotherDay(-1).AllToString());
 //            System.out.println(MyTime.getAnotherDay(0).AllToString());
@@ -87,9 +87,9 @@ public class APITest  {
          }
          public static void getAllMesByCache(){
         	 APIInterface api = new APIDataFactory().getAPIDataService();
-        	 MyDate start = new MyDate(2016,2,1);
-        	 MyDate end = new MyDate(2016, 2, 31);
-        	 List<StockPO > stocks = api.getStockMes("sh600007",start,end);
+        	 MyDate start = new MyDate(2016,3,20);
+        	 MyDate end = new MyDate(2016, 3, 25);
+        	 List<StockPO > stocks = api.getStockMes("sh600216",start,end);
 
         	 for(StockPO stock : stocks){
 

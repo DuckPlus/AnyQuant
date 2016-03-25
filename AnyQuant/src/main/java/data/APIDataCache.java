@@ -1,4 +1,4 @@
-package dataservice;
+package data;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import dataservice.APIInterface;
 import enumeration.Exchange;
 import enumeration.MyDate;
 import po.BenchMarkPO;
@@ -31,16 +32,16 @@ import util.MyTime;
  * @date 2016年3月6日
  */
 public class APIDataCache implements APIInterface{
-
+	
 	private static String fileName1="cache//stockCode.txt";
 	private static String fileName2="cache//stockMes.txt";
     APIInterface   api = null;
-
+    
     public  APIDataCache(APIInterface api) {
 		  this.api = api;
 //		  updateAllMes();
 	}
-
+    
 	@Override
 	public List<String> getAllStocks() {
 	   return  readAllCodes();
@@ -75,14 +76,14 @@ public class APIDataCache implements APIInterface{
 		// TODO Auto-generated method stub
 		return   api.getStockMes(stockCode, start, end);
 	}
-
+	
 	@Override
 	public List<StockPO> getAllStockMes() {
 		// TODO Auto-generated method stub
 		return readAllMes();
 	}
-
-
+	
+	
 	@Override
 	public List<String> getAllBenchMarks() {
 		return api.getAllBenchMarks();
@@ -106,7 +107,7 @@ public class APIDataCache implements APIInterface{
 		// TODO Auto-generated method stub
 		return api.getAllBenchMes();
 	}
-
+	
 	private List<String> readAllCodes(){
 		try {
                 String encoding="utf-8";
@@ -132,10 +133,10 @@ public class APIDataCache implements APIInterface{
           }
 		  return null;
 	}
-
+	
 	private void writeAllCodes(List<String>  codes){
 		try{
-
+			
 		         File file =new File(fileName1);
 		         //if file doesnt exists, then create it
 		         if(!file.exists()){
@@ -153,9 +154,9 @@ public class APIDataCache implements APIInterface{
 		         System.out.println("Done");
 		    }catch(IOException e){
 		            e.printStackTrace();
-		    }
+		    }		    
 	}
-
+	
 	private List<StockPO>  readAllMes(){
 		try {
             String encoding="utf-8";
@@ -168,7 +169,7 @@ public class APIDataCache implements APIInterface{
                      String temp=bufferedReader.readLine();
                      String [] attrs = null;
                      List<StockPO> result = new ArrayList<StockPO>();
-
+                                                 
                      while((temp=bufferedReader.readLine())!=null){
                     	    attrs = temp.split(",");
                     	    StockPO stock = new StockPO(attrs[0],attrs[1],attrs[2],Double.parseDouble(attrs[3]),Double.parseDouble(attrs[4]),Double.parseDouble(attrs[5]),
@@ -182,11 +183,11 @@ public class APIDataCache implements APIInterface{
                       System.out.println("找不到指定的文件,创建新文件");
                       List<StockPO> result =    new ArrayList<>();
                       List<String> stockCodes = getAllStocks();
-
+                 
                       for(String code : stockCodes){
-
+                   
                     	              result .add(api.getStockMes(code));
-
+  
                       }
                       writeAllMes(result);
                       return result;
@@ -197,10 +198,10 @@ public class APIDataCache implements APIInterface{
       }
 	  return null;
 	}
-
+	
 	private void writeAllMes(List<StockPO> stocks){
 		try{
-
+			
 	         File file =new File(fileName2);
 	         //if file doesnt exists, then create it
 	         if(!file.exists()){
@@ -221,14 +222,14 @@ public class APIDataCache implements APIInterface{
 	         System.out.println("Done");
 	    }catch(IOException e){
 	            e.printStackTrace();
-	    }
+	    }		    
 	}
-
-
+	
+	
 	//每次启动应该调用此方法来更新当日数据
 	private void updateAllMes(){
 		try{
-
+			
 			 String encoding="utf-8";
              String filePath = fileName2;
              File file=new File(filePath);
@@ -244,7 +245,7 @@ public class APIDataCache implements APIInterface{
                     	  System.out.println("更新stockMes.txt---------");
                     	  List<StockPO> result =    new ArrayList<>();
                           List<String> stockCodes = getAllStocks();
-
+                     
                           for(String code : stockCodes){
                         	         result .add(api.getStockMes(code));
                           }
@@ -253,30 +254,30 @@ public class APIDataCache implements APIInterface{
                       }else{
                     	  System.out.println("不需要更新文件");
                       }
-
+                
              }else{
-
+            	 
                        System.out.println("找不到指定的文件,创建新文件");
                  	   List<StockPO> result =    new ArrayList<>();
                        List<String> stockCodes = getAllStocks();
-
+                  
                        for(String code : stockCodes){
                      	         result .add(api.getStockMes(code));
                        }
                        //覆盖写入
                        writeAllMes(result);
              }
-
+	        
 	    }catch(IOException e){
 	            e.printStackTrace();
-	    }
+	    }		    
 	}
-
-
+	
+	
 	private boolean needUpdate(String preDate){
 		//如果昨天日期与上次纪录不符并且昨天不是周末
 		MyDate yesterday = MyTime.getAnotherDay(-1);
-		//System.out.println(yesterday.DateToString());
+		System.out.println(yesterday.DateToString());
 		if(!preDate.equals(yesterday.DateToString())&& !MyTime.isWeekend(yesterday)){
 			   return true ;
 		}
@@ -300,14 +301,14 @@ public class APIDataCache implements APIInterface{
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	
 
 
 
 
 
-
-
-
-
+	    
+	    
 
 }

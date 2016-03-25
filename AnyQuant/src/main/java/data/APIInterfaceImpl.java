@@ -1,4 +1,4 @@
-package dataservice;
+package data;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import data.MyJSONObject;
+import dataservice.APIInterface;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import po.BenchMarkPO;
@@ -52,7 +52,7 @@ public class APIInterfaceImpl implements APIInterface{
                     	    if(codeAndName[1].startsWith("ST")){
                     	    	codeAndName[1]="*"+codeAndName[1];
                     	    }
-                    	  //  System.out.println(codeAndName[1]);
+                    	    System.out.println(codeAndName[1]);
                     	    codeNameMap.put(codeAndName[0], codeAndName[1]);
                       }
                       read.close();
@@ -261,7 +261,7 @@ public class APIInterfaceImpl implements APIInterface{
 //			   }else{
 //				   stock.setPe_ttm(Double.parseDouble(trading_info.getJSONObject(i).getString("pe_ttm")));
 //			   }
-//
+//			   
 //			   if(trading_info.getJSONObject(i).getString("adj_price").equals("")){
 //				      stock.setAdj_price(0.0);
 //			   }else{
@@ -322,7 +322,7 @@ public class APIInterfaceImpl implements APIInterface{
 		String startTime = start.DateToString();
 		String endTime = end.DateToString();
 		String url = "http://121.41.106.89:8010/api/benchmark/"+benchCode+"/?start="+startTime +"&end="+endTime ;
-	   // System.out.println(SendGET(url, ""));
+	    System.out.println(SendGET(url, ""));
 		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
 		JSONObject data = jo.getJSONObject("data");
 		JSONArray trading_info = data.getJSONArray("trading_info");
