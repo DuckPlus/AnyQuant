@@ -186,7 +186,7 @@ public class CandleStickController  implements Initializable {
     private CandleStickChart createChart() {
        // System.out.println("CALL createChart() ");
     	//X轴
-        final NumberAxis xAxis = new NumberAxis(0,32,1);
+        final NumberAxis xAxis = new NumberAxis(0,30,1);
 
         //Y轴
         final NumberAxis yAxis = new NumberAxis(getMin()-1,getMax()+1,0.5);
