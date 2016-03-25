@@ -7,10 +7,14 @@ import blservice.StockBLService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import ui.GraphicsUtils;
 import vo.Stock;
 import vo.StockVO;
 
@@ -42,12 +46,17 @@ public class StockListController{
 	TableColumn<Stock, Double>changeRate = new TableColumn<Stock, Double>();
 	@FXML
 	TableView<Stock> tableview = new TableView<Stock>();
-	@FXML
+	@FXML 
 	TextField searchBar;
+	
+	RightPaneController rightPaneController = RightPaneController.getRightPaneController();
+	StockDetailController stockDetailController = StockDetailController.getStockDetailController();
 	//get the logic service
 	StockBLService stockBl = StockBLImpl.getAPIBLService();
 	//
 	ObservableList<Stock> obsevableList ;
+	
+	BorderPane stockDetailPane;
 	
 	public StockListController() {
 		System.out.println("hello constractor");
@@ -58,6 +67,7 @@ public class StockListController{
 	private void initialize(){
 		System.out.println("hello init");
 		showStocklist();
+		stockDetailPane = (BorderPane)GraphicsUtils.getParent("StockDetail");
 	}
 	
 	/**
@@ -106,7 +116,14 @@ public class StockListController{
 			
 			int row =tableview.getSelectionModel().getSelectedIndex();
 			String code =tableview.getSelectionModel().getSelectedItem().code.get();
+			Stock selectedStock = tableview.getSelectionModel().getSelectedItem();
 			System.out.println(code);
+//			if(stockDetailPane==null){
+//				System.out.println("pane null");
+//				stockDetailPane = (BorderPane)GraphicsUtils.getParent("StockDetail");
+//			}
+			stockDetailController.setData(selectedStock);
+			rightPaneController.showDetailPane(stockDetailPane);
 		}
 	}
 	@FXML
@@ -116,6 +133,7 @@ public class StockListController{
 		Iterator<StockVO>itr =stockBl.getStocksByStockCode(stockCode);
 		showTableData(itr);
 	}
+	
 
 
 }
