@@ -53,42 +53,42 @@
             </Label>
             <VBox layoutX="3.0" AnchorPane.topAnchor="50.0">
                <children>
-                  <Label fx:id="nameLabel2" layoutX="3.0" layoutY="33.0" prefHeight="18.0" prefWidth="48.0" text="今开">
+                  <Label layoutX="3.0" layoutY="33.0" prefHeight="18.0" prefWidth="48.0" text="开盘">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel21" layoutX="4.0" layoutY="59.0" prefHeight="18.0" prefWidth="48.0" text="昨收">
+                  <Label layoutX="4.0" layoutY="59.0" prefHeight="18.0" prefWidth="48.0" text="收盘">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel22" layoutX="4.0" layoutY="81.0" prefHeight="18.0" prefWidth="48.0" text="最高">
+                  <Label layoutX="4.0" layoutY="81.0" prefHeight="18.0" prefWidth="48.0" text="最高">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel221" layoutX="4.0" layoutY="106.0" prefHeight="18.0" prefWidth="48.0" text="最低">
+                  <Label layoutX="4.0" layoutY="106.0" prefHeight="18.0" prefWidth="48.0" text="最低">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel2211" layoutX="14.0" layoutY="116.0" prefHeight="18.0" prefWidth="63.0" text="换手率" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="130.0">
+                  <Label layoutX="14.0" layoutY="116.0" prefHeight="18.0" prefWidth="63.0" text="换手率" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="130.0">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel2212" prefHeight="18.0" prefWidth="63.0" text="成交量">
+                  <Label prefHeight="18.0" prefWidth="63.0" text="成交量">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel22121" prefHeight="18.0" prefWidth="63.0" text="市盈">
+                  <Label prefHeight="18.0" prefWidth="63.0" text="市盈">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel22122" prefHeight="18.0" prefWidth="63.0" text="市净">
+                  <Label prefHeight="18.0" prefWidth="63.0" text="市净">
                      <font>
                         <Font size="12.0" />
                      </font>
@@ -97,49 +97,49 @@
             </VBox>
             <VBox layoutX="102.0" layoutY="5.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
                <children>
-                  <Label fx:id="nameLabel1" layoutX="104.0" prefHeight="18.0" prefWidth="80.0" text="17.72" textAlignment="RIGHT" AnchorPane.topAnchor="5.0">
+                  <Label fx:id="open" layoutX="104.0" prefHeight="18.0" prefWidth="80.0" text="null" textAlignment="RIGHT" AnchorPane.topAnchor="5.0">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel11" layoutX="102.0" layoutY="45.0" prefHeight="18.0" prefWidth="80.0" text="17.72">
+                  <Label fx:id="close" layoutX="102.0" layoutY="45.0" prefHeight="18.0" prefWidth="80.0" text="null">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel111" prefHeight="18.0" prefWidth="80.0" text="17.87">
+                  <Label fx:id="high" prefHeight="18.0" prefWidth="80.0" text="null">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel112" prefHeight="18.0" prefWidth="80.0" text="17.68">
+                  <Label fx:id="low" prefHeight="18.0" prefWidth="80.0" text="null">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel113" prefHeight="18.0" prefWidth="80.0" text="0.07%">
+                  <Label fx:id="turnover" prefHeight="18.0" prefWidth="80.0" text="null">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel114" prefHeight="18.0" prefWidth="80.0" text="13.62w">
+                  <Label fx:id="volume" prefHeight="18.0" prefWidth="80.0" text="null">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel115" prefHeight="18.0" prefWidth="80.0" text="7.04">
+                  <Label fx:id="pe" prefHeight="18.0" prefWidth="80.0" text="null">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel116" prefHeight="18.0" prefWidth="80.0" text="1.29">
+                  <Label fx:id="pb" prefHeight="18.0" prefWidth="80.0" text="null">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
-            <Label fx:id="nameLabel3" layoutX="10.0" layoutY="10.0" prefHeight="20.0" prefWidth="80.0" text="sh600000" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0">
+            <Label fx:id="codeLabel" layoutX="10.0" layoutY="10.0" prefHeight="20.0" prefWidth="80.0" text="sh600000" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0">
                <font>
                   <Font size="12.0" />
                </font>
