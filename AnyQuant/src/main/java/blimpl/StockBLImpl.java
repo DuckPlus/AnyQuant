@@ -22,7 +22,7 @@ import enumeration.Stock_Attribute;
 
 /**
  * API逻辑层实现
- * 
+ *
  * @author czq
  * @date 2016年3月4日
  */
@@ -190,12 +190,12 @@ public class StockBLImpl implements StockBLService {
 				System.out.println(monday);
 				System.out.println(friday);
 				results.add(new OHLC_VO(MyDate.getDateFromString(pos
-						.get(monday).getDate()), 
+						.get(monday).getDate()),
 						pos.get(monday).getOpen(),
 						pos
-						.get(monday + friday).getClose(), 
+						.get(monday + friday).getClose(),
 						getHighInScope(pos
-						.subList(monday, monday + friday + 1)), 
+						.subList(monday, monday + friday + 1)),
 						getLowInScope(pos
 						.subList(monday, monday + friday + 1))));
 			}
@@ -285,8 +285,8 @@ public class StockBLImpl implements StockBLService {
 				// Friday sometimes means the last trading day in this week
 //				printList(pos.subList(monday, monday + friday ));
 				results.add(getSumDealVO(pos.subList(monday, monday + friday )));
-				
-			
+
+
 			}
 			return results.isEmpty() ? null : results;
 		}
@@ -322,7 +322,7 @@ public class StockBLImpl implements StockBLService {
 
 	/**
 	 * 计算给定范围内的成交量、成交额总量， 其中成交额暂时用每天开盘价作为平均价,乘以成交量得出
-	 * 
+	 *
 	 * @param subList
 	 * @return
 	 */
@@ -367,15 +367,15 @@ public class StockBLImpl implements StockBLService {
 			date.setMonth(date.getMonth() + 1);
 		}
 	}
-	
-	
+
+
 	@SuppressWarnings("unused")
 	private void printList(List<StockPO> subList) {
 		for (StockPO stockPO : subList) {
 			System.out.print(stockPO.getDate() + " ");
 			System.out.println(stockPO.getVolume());
 		}
-		
+
 	}
 
 	@Override
