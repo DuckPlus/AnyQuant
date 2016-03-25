@@ -52,7 +52,7 @@ public class APIInterfaceImpl implements APIInterface{
                     	    if(codeAndName[1].startsWith("ST")){
                     	    	codeAndName[1]="*"+codeAndName[1];
                     	    }
-                    	    System.out.println(codeAndName[1]);
+                    	//    System.out.println(codeAndName[1]);
                     	    codeNameMap.put(codeAndName[0], codeAndName[1]);
                       }
                       read.close();
@@ -261,7 +261,7 @@ public class APIInterfaceImpl implements APIInterface{
 //			   }else{
 //				   stock.setPe_ttm(Double.parseDouble(trading_info.getJSONObject(i).getString("pe_ttm")));
 //			   }
-//			   
+//
 //			   if(trading_info.getJSONObject(i).getString("adj_price").equals("")){
 //				      stock.setAdj_price(0.0);
 //			   }else{

@@ -8,7 +8,7 @@ import javafx.scene.shape.Line;
 /**
  *
  * @author ss
- * @date 2016/3/24
+ * @date 2016年3月24日
  */
 /** Candle node used for drawing a candle */
 class Candle extends Group {
@@ -20,7 +20,7 @@ class Candle extends Group {
     private Tooltip tooltip = new Tooltip();
 
     public Candle(String seriesStyleClass, String dataStyleClass) {
-    	System.out.println(seriesStyleClass+"  "+dataStyleClass);
+    	//System.out.println(seriesStyleClass+"  "+dataStyleClass);
         setAutoSizeChildren(false);
         getChildren().addAll(highLowLine, bar);
         this.seriesStyleClass = seriesStyleClass;
