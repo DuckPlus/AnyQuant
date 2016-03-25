@@ -45,13 +45,101 @@
       </TabPane>
    </center>
    <left>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="nameLabel" layoutX="3.0" layoutY="3.0" prefHeight="38.0" prefWidth="78.0" text="股票名称">
+            <Label fx:id="nameLabel" prefHeight="31.0" prefWidth="128.0" text="浦发银行" AnchorPane.topAnchor="0.0">
                <font>
-                  <Font size="17.0" />
+                  <Font size="24.0" />
                </font>
             </Label>
+            <VBox layoutX="3.0" AnchorPane.topAnchor="50.0">
+               <children>
+                  <Label fx:id="nameLabel2" layoutX="3.0" layoutY="33.0" prefHeight="18.0" prefWidth="48.0" text="今开">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="nameLabel21" layoutX="4.0" layoutY="59.0" prefHeight="18.0" prefWidth="48.0" text="昨收">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="nameLabel22" layoutX="4.0" layoutY="81.0" prefHeight="18.0" prefWidth="48.0" text="最高">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="nameLabel221" layoutX="4.0" layoutY="106.0" prefHeight="18.0" prefWidth="48.0" text="最低">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="nameLabel2211" layoutX="14.0" layoutY="116.0" prefHeight="18.0" prefWidth="63.0" text="换手率" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="130.0">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="nameLabel2212" prefHeight="18.0" prefWidth="63.0" text="成交量">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="nameLabel22121" prefHeight="18.0" prefWidth="63.0" text="市盈">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="nameLabel22122" prefHeight="18.0" prefWidth="63.0" text="市净">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox layoutX="102.0" layoutY="5.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
+               <children>
+                  <Label fx:id="nameLabel1" layoutX="104.0" prefHeight="18.0" prefWidth="80.0" text="17.72" AnchorPane.topAnchor="5.0">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="nameLabel11" layoutX="102.0" layoutY="45.0" prefHeight="18.0" prefWidth="80.0" text="17.72">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="nameLabel111" prefHeight="18.0" prefWidth="80.0" text="17.87">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="nameLabel112" prefHeight="18.0" prefWidth="80.0" text="sh600000">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="nameLabel113" prefHeight="18.0" prefWidth="80.0" text="sh600000">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="nameLabel114" prefHeight="18.0" prefWidth="80.0" text="sh600000">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="nameLabel115" prefHeight="18.0" prefWidth="80.0" text="sh600000">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="nameLabel116" prefHeight="18.0" prefWidth="80.0" text="sh600000">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
          </children>
       </AnchorPane>
    </left>

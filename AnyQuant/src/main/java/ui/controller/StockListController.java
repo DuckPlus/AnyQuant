@@ -50,7 +50,7 @@ public class StockListController{
 	TextField searchBar;
 	
 	RightPaneController rightPaneController = RightPaneController.getRightPaneController();
-	StockDetailController stockDetailController = StockDetailController.getStockDetailController();
+	StockDetailController stockDetailController;// = StockDetailController.getStockDetailController();
 	//get the logic service
 	StockBLService stockBl = StockBLImpl.getAPIBLService();
 	//
@@ -122,7 +122,22 @@ public class StockListController{
 //				System.out.println("pane null");
 //				stockDetailPane = (BorderPane)GraphicsUtils.getParent("StockDetail");
 //			}
+//			stockDetailController.setData(selectedStock);
+//			StockDetailController sc = StockDetailController.getCurrent();
+//			StockDetailController sc = StockDetailController.getStockDetailController();
+			
+			//The stockDetailController is null at first, and it must generated after the fxml has initialize
+			//it, otherwise we will get a totally defferent object from the fxml's
+			if(stockDetailController==null){
+			stockDetailController = StockDetailController.getStockDetailController();
+			}
+//			if(sc.nameLabel==null){
+//				System.out.println("controller null");
+//			}else{
+//				System.out.println("controller NOT null");
+//			}
 			stockDetailController.setData(selectedStock);
+//			sc.setData(selectedStock);
 			rightPaneController.showDetailPane(stockDetailPane);
 		}
 	}
