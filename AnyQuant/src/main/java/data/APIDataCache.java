@@ -1,4 +1,4 @@
-package dataservice;
+package data;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,8 +14,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
+import dataservice.APIInterface;
 import enumeration.Exchange;
 import enumeration.MyDate;
 import po.BenchMarkPO;
@@ -279,6 +281,24 @@ public class APIDataCache implements APIInterface{
 		if(!preDate.equals(yesterday.DateToString())&& !MyTime.isWeekend(yesterday)){
 			   return true ;
 		}
+		return false;
+	}
+
+	@Override
+	public Iterator<StockPO> getOptionalStocks() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean dealOptionalStock(String stockCode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addOptionalStock(String stockCode) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 	

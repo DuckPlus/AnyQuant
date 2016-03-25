@@ -1,4 +1,4 @@
-package dataservice;
+package data;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,10 +9,11 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-
+import dataservice.APIInterface;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import po.BenchMarkPO;
@@ -354,6 +355,24 @@ public class APIInterfaceImpl implements APIInterface{
 			 list.add(this.getBenchMes(BenchCode));
 		 }
 		return list;
+	}
+
+	@Override
+	public Iterator<StockPO> getOptionalStocks() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean dealOptionalStock(String stockCode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addOptionalStock(String stockCode) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 

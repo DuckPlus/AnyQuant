@@ -1,6 +1,6 @@
 package po;
 
-import dataservice.InitialBean;
+import data.InitialBean;
 
 public class StockPO implements InitialBean {
 	 private String date ,name,code;
