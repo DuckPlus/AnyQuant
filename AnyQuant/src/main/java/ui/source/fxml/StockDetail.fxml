@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="ui.controller.StockDetailController">
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.StockDetailController">
    <center>
       <TabPane prefHeight="500.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -98,7 +97,7 @@
             </VBox>
             <VBox layoutX="102.0" layoutY="5.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
                <children>
-                  <Label fx:id="nameLabel1" layoutX="104.0" prefHeight="18.0" prefWidth="80.0" text="17.72" AnchorPane.topAnchor="5.0">
+                  <Label fx:id="nameLabel1" layoutX="104.0" prefHeight="18.0" prefWidth="80.0" text="17.72" textAlignment="RIGHT" AnchorPane.topAnchor="5.0">
                      <font>
                         <Font size="12.0" />
                      </font>
@@ -113,33 +112,38 @@
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel112" prefHeight="18.0" prefWidth="80.0" text="sh600000">
+                  <Label fx:id="nameLabel112" prefHeight="18.0" prefWidth="80.0" text="17.68">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel113" prefHeight="18.0" prefWidth="80.0" text="sh600000">
+                  <Label fx:id="nameLabel113" prefHeight="18.0" prefWidth="80.0" text="0.07%">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel114" prefHeight="18.0" prefWidth="80.0" text="sh600000">
+                  <Label fx:id="nameLabel114" prefHeight="18.0" prefWidth="80.0" text="13.62w">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel115" prefHeight="18.0" prefWidth="80.0" text="sh600000">
+                  <Label fx:id="nameLabel115" prefHeight="18.0" prefWidth="80.0" text="7.04">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nameLabel116" prefHeight="18.0" prefWidth="80.0" text="sh600000">
+                  <Label fx:id="nameLabel116" prefHeight="18.0" prefWidth="80.0" text="1.29">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
+            <Label fx:id="nameLabel3" layoutX="10.0" layoutY="10.0" prefHeight="20.0" prefWidth="80.0" text="sh600000" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </left>

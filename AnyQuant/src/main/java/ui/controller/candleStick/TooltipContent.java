@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
  * @author ss
  * @date 2016/3/24
  */
+
  class TooltipContent extends GridPane {
     private Label openValue = new Label();
     private Label closeValue = new Label();
@@ -23,7 +24,7 @@ import javafx.scene.layout.GridPane;
         close.getStyleClass().add("candlestick-tooltip-label");
         high.getStyleClass().add("candlestick-tooltip-label");
         low.getStyleClass().add("candlestick-tooltip-label");
-        setConstraints(open, 0, 0);  //������Node  column row
+        setConstraints(open, 0, 0);  //参数：Node  column row
         setConstraints(openValue, 1, 0);
         setConstraints(close, 0, 1);
         setConstraints(closeValue, 1, 1);
