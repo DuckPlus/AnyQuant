@@ -41,7 +41,6 @@ public class LeftPaneController{
 		}
 		return instance;
 	}
-
 	public LeftPaneController() {
 		if (instance == null) {
 			instance = this;
