@@ -1,16 +1,14 @@
 package ui.controller;
 
-import javafx.collections.ListChangeListener.Change;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import ui.GraphicsUtils;
 
 /**
  * Main controller of the whole pane
- * 
+ *
  * @author Qiang
  * @date Mar 22, 2016
  */
@@ -32,11 +30,11 @@ public class HomeController {
 	}
 
 	private void initialPane() {
-		
+
 		leftPane = (AnchorPane) GraphicsUtils.getParent("LeftPane");
 
 		rootpane.getItems().set(0, leftPane);
-		
+
 		bottomPane = (Pane) GraphicsUtils.getParent("BottomPane");
 		rightPane = (BorderPane) GraphicsUtils.getParent("RightPane");
 		rootpane.getItems().set(1, rightPane);
