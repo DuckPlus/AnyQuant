@@ -1,11 +1,14 @@
 package ui.controller;
 
 import javafx.collections.ListChangeListener.Change;
+import javafx.fxml.FXML;
 import javafx.scene.control.SplitPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import ui.GraphicsUtils;
 
 /**
@@ -23,9 +26,11 @@ public class HomeController {
 	private AnchorPane leftPane;
 	private BorderPane rightPane;
 	private Pane bottomPane;
+	private Stage stage;
 
-	public HomeController(SplitPane rootpane) {
+	public HomeController(SplitPane rootpane, Stage stage) {
 		this.rootpane = rootpane;
+		this.stage = stage;
 		initialPane();
 		//change the ratio of the left pane and the right pane
 		rootpane.setDividerPosition(0, 0.164); // 0.164 = 175/1080
@@ -43,6 +48,15 @@ public class HomeController {
 		rightPane.setBottom(bottomPane);
 		LeftPaneController.setPane(leftPane);
 		RightPaneController.setPane(rightPane);
+		RightPaneController.setStage(stage);
 	}
+	
+	
 
+	
+	
+	
+	
+	
+	
 }

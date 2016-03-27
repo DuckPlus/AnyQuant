@@ -14,5 +14,22 @@
 }
 
 .split-pane {
-	-fx-background-image: url("../img/bg.png");
+	-fx-background-color: black;
 }
+
+.minEnteredImg{
+	-fx-image: url(../img/shrink_clicked.png);
+}
+
+.minNormalImg{
+	-fx-image: url(../img/shrink.png);
+}
+.closeEnteredImg{
+	-fx-image: url(../img/exit_clicked.png);
+}
+
+.closeNormalImg{
+	-fx-image: url(../img/exit.png);
+}
+
+
