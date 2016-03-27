@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.chart.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -12,14 +13,14 @@
         <tabs>
           <Tab id="dayTab" fx:id="dayTab" onSelectionChanged="#selectDay" text="Day">
                <content>
-                  <ScrollPane prefHeight="720.0" prefWidth="905.0">
+                  <ScrollPane prefHeight="600.0" prefViewportHeight="691.0" prefViewportWidth="905.0" prefWidth="600.0">
                      <content>
-                        <BarChart id="chart" prefHeight="720.0" prefWidth="905.0" stylesheets="@../css/candle.css">
+                        <BarChart id="chart" prefHeight="600.0" prefWidth="600.0" stylesheets="@../css/candle.css">
                           <xAxis>
-                            <CategoryAxis side="BOTTOM" />
+                            <CategoryAxis prefWidth="600.0" side="BOTTOM" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis side="LEFT" />
+                            <NumberAxis prefHeight="500.0" side="LEFT" />
                           </yAxis>
                            <styleClass>
                               <String fx:value="candlestick-average-line" />

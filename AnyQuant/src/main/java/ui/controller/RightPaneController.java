@@ -68,8 +68,10 @@ public class RightPaneController{
 		pane.setCenter(candleStickPane);
 	}
 
-	private void showDetailPane() {
-
+	 void showDetailPane(Pane Pane) {
+		System.out.println("detail pane");
+		pane.getChildren().clear();
+		pane.setCenter(Pane);
 	}
 
 	static void  setPane(Pane pane){
