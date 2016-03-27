@@ -84,11 +84,9 @@ public class RightPaneController{
 	}
 	@FXML
 	private void handleMin(MouseEvent event){
-		System.out.println("----handing");
 		if(event.getEventType() == MouseEvent.MOUSE_ENTERED){
 			min.getStyleClass().clear();
 			min.getStyleClass().add("minEnteredImg");
-			System.err.println("mouse enter!");
 		}else if(event.getEventType() == MouseEvent.MOUSE_EXITED){
 			min.getStyleClass().clear();
 			min.getStyleClass().add("minNormalImg");
@@ -106,7 +104,7 @@ public class RightPaneController{
 			close.getStyleClass().add("closeEnteredImg");
 		}else if(event.getEventType() == MouseEvent.MOUSE_EXITED){
 			close.getStyleClass().clear();
-			close.getStyleClass().add("closeNImg");
+			close.getStyleClass().add("closeNormalImg");
 		}
 		
 		if(event.getEventType() == MouseEvent.MOUSE_CLICKED){
@@ -118,7 +116,8 @@ public class RightPaneController{
 	
 	
 	public static void setStage(Stage stage) {
-				RightPaneController.stage = stage;
+
+		RightPaneController.stage = stage;
 	}
 
 	}
