@@ -130,12 +130,11 @@ public class CandleStickController  implements Initializable {
     }
 
     private CandleStickChart createChart() {
+    	double gap=0.5;
     	//X轴
         final CategoryAxis xAxis = new CategoryAxis ();
-
         //Y轴
-        final NumberAxis yAxis = new NumberAxis(getMin()-1,getMax()+2,0.5);
-
+        final NumberAxis yAxis = new NumberAxis(getMin()-gap,getMax()+gap*4,gap);
         final CandleStickChart candleStickChart = new CandleStickChart(xAxis,yAxis);
         // setup chart
         candleStickChart.setTitle("Custom Candle Stick Chart");

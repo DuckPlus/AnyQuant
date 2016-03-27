@@ -1,10 +1,14 @@
 package data;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -12,6 +16,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.python.antlr.PythonParser.return_stmt_return;
 
 import dataservice.APIInterface;
 import net.sf.json.JSONArray;
@@ -21,6 +27,7 @@ import po.StockPO;
 import util.MyTime;
 import enumeration.Exchange;
 import enumeration.MyDate;
+import jnr.ffi.Struct.int16_t;
 
 /**
  * API接口的实现类
@@ -31,7 +38,8 @@ public class APIInterfaceImpl implements APIInterface{
 
 	 private static  APIInterfaceImpl apiInterfaceImpl;
 	 private Map<String ,String> codeNameMap;
-	 private static String filePath = "cache//name.txt";
+	 private static String nameFilePath = "cache//name.txt";
+	 private static String optionalCodesFilePath = "cache//OptionalStocks.txt";
 	 private APIInterfaceImpl(){
 		  SetMapUp();
 	 }
@@ -40,7 +48,7 @@ public class APIInterfaceImpl implements APIInterface{
 		 codeNameMap = new  HashMap<>();
 		 try {
              String encoding="utf-8";
-             File file=new File(filePath);
+             File file=new File(nameFilePath);
              if(file.isFile() && file.exists()){ //判断文件是否存在
 
                       InputStreamReader read = new InputStreamReader(
@@ -59,7 +67,7 @@ public class APIInterfaceImpl implements APIInterface{
                       read.close();
 
              }else{
-                       System.out.println("找不到"+filePath);
+                       System.out.println("找不到"+nameFilePath);
                        file.createNewFile();
              }
        } catch (Exception e) {
@@ -82,52 +90,59 @@ public class APIInterfaceImpl implements APIInterface{
 	/**
 	 *此方法用来建立url-connection并返回API所提供的全部初始数据
 	 */
-	private  String SendGET(String url,String param){
-		   String result="";//访问返回结果
-		   BufferedReader read=null;//读取访问结果
+	private String SendGET(String url, String param) {
+		String result = "";// 访问返回结果
+		BufferedReader read = null;// 读取访问结果
+		int times=0;
+		while (result.equals("")&&times<3) {
 
-		   try {
-		    //创建url
-		    URL realurl=new URL(url);
-		    //打开连接
-		    URLConnection connection=realurl.openConnection();
-		      //设置通用的请求属性
-		             connection.setRequestProperty("accept", "*/*");
-		             connection.setRequestProperty("connection", "Keep-Alive");
-		             connection.setRequestProperty("user-agent",
-		                     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-		             connection.setRequestProperty("X-Auth-Code", "0d4cb00bb416d44daea6fb74f5bfcfc2");
-		             //建立连接
-		             connection.connect();
-//		          // 获取所有响应头字段
-//		             Map<String, List<String>> map = connection.getHeaderFields();
-//		             // 遍历所有的响应头字段，获取到cookies等
-//		             for (String key : map.keySet()) {
-//		                 System.out.println(key + "--->" + map.get(key));
-//		             }
-		             // 定义 BufferedReader输入流来读取URL的响应
-		             read = new BufferedReader(new InputStreamReader(
-		                     connection.getInputStream(),"UTF-8"));
-		             String line;//循环读取
-		             while ((line = read.readLine()) != null) {
-		                 result += line;
-		             }
-		   } catch (IOException e) {
-		            // e.printStackTrace();
-		             return "";
+			try {
+				// 创建url
+				URL realurl = new URL(url);
+				// 打开连接
+				URLConnection connection = realurl.openConnection();
+				// 设置通用的请求属性
+				connection.setRequestProperty("accept", "*/*");
+				connection.setRequestProperty("connection", "Keep-Alive");
+				connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+				connection.setRequestProperty("X-Auth-Code", "0d4cb00bb416d44daea6fb74f5bfcfc2");
+				// 建立连接
+				connection.connect();
+				// // 获取所有响应头字段
+				// Map<String, List<String>> map = connection.getHeaderFields();
+				// // 遍历所有的响应头字段，获取到cookies等
+				// for (String key : map.keySet()) {
+				// System.out.println(key + "--->" + map.get(key));
+				// }
+				// 定义 BufferedReader输入流来读取URL的响应
+				read = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+				String line;// 循环读取
+				while ((line = read.readLine()) != null) {
+					result += line;
+				}
+			} catch (IOException e) {
+				 e.printStackTrace();
+			} finally {
+				if (read != null&&(!result.equals(""))) {// 关闭流
+					try {
+						read.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					 System.out.println("request successfully");
+				}else{
+					 times++;
+			         System.out.println("request failed , try again ,times : "+times);
+				}
+			}
 
-		   }finally{
-		       if(read!=null){//关闭流
-		             try {
-		                  read.close();
-		             } catch (IOException e) {
-		                  e.printStackTrace();
-		             }
-		       }
-		   }
+		}
 
-		   return result;
-		 }
+        if(result.equals("")){
+        	System.out.println("request failed fainally");
+        }
+		return result;
+	}
 
     /**
      * 默认返回2015年，上海交易所
@@ -257,18 +272,6 @@ public class APIInterfaceImpl implements APIInterface{
 		List<StockPO> stocks =  new  ArrayList<>();
 			for(int i=0;i<trading_info.size();i++){
 				StockPO stock  = MyJSONObject.toBean(trading_info.getJSONObject(i), StockPO.class);
-//			   if(trading_info.getJSONObject(i).getString("pe_ttm").equals("")){
-//				   stock.setPe_ttm(0.0);
-//			   }else{
-//				   stock.setPe_ttm(Double.parseDouble(trading_info.getJSONObject(i).getString("pe_ttm")));
-//			   }
-//
-//			   if(trading_info.getJSONObject(i).getString("adj_price").equals("")){
-//				      stock.setAdj_price(0.0);
-//			   }else{
-//			         stock.setAdj_price(Double.parseDouble(trading_info.getJSONObject(i).getString("adj_price")));
-//			   }
-
 			   stock.setCode(stockCode);
 			   stock.setName((String)codeNameMap.get(stockCode));
 			   stocks.add(stock);
@@ -361,20 +364,85 @@ public class APIInterfaceImpl implements APIInterface{
 	@Override
 	public Iterator<StockPO> getOptionalStocks() {
 		// TODO Auto-generated method stub
-		return null;
+		List<StockPO> pos = new ArrayList<StockPO>();
+		List<String> codeStrings =getSelectedStockCodes() ;
+		StockPO temp = null;
+        for(String code: codeStrings){
+               temp= getStockMes(code);
+               pos.add(temp);
+        }
+		return  pos.iterator();
 	}
 
 	@Override
-	public boolean dealOptionalStock(String stockCode) {
+	public boolean deleteOptionalStock(String stockCode) {
 		// TODO Auto-generated method stub
-		return false;
+		List<String>  CodeStrings = getSelectedStockCodes();
+		boolean result =CodeStrings.remove(stockCode);
+		writeSelectedStockCodes(CodeStrings);
+		return result;
 	}
 
 	@Override
 	public boolean addOptionalStock(String stockCode) {
 		// TODO Auto-generated method stub
-		return false;
+		List<String>  CodeStrings = getSelectedStockCodes();
+		CodeStrings.add(stockCode);
+		writeSelectedStockCodes(CodeStrings);
+		return true;
 	}
+
+
+	private List<String> getSelectedStockCodes(){
+		 try {
+             String encoding="utf-8";
+             File file=new File(optionalCodesFilePath);
+
+             if(file.isFile() && file.exists()){ //判断文件是否存在
+                      InputStreamReader read = new InputStreamReader(
+                                                                     new FileInputStream(file),encoding);//考虑到编码格式
+                      BufferedReader bufferedReader = new BufferedReader(read);
+                      String temp="";
+                      List<String> codes = new ArrayList<>();
+                      while( (temp=bufferedReader.readLine())!=null){
+                    	   codes.add(temp);
+                      }
+                      read.close();
+                      return codes;
+             }else{
+                       System.out.println("找不到"+optionalCodesFilePath);
+                       file.createNewFile();
+             }
+       } catch (Exception e) {
+              System.out.println("读取文件内容出错");
+              e.printStackTrace();
+       }
+         return null;
+	}
+
+
+	private void writeSelectedStockCodes(List<String> codes){
+		try{
+
+	         File file =new File(optionalCodesFilePath);
+	         //if file doesnt exists, then create it
+	         if(!file.exists()){
+	                file.createNewFile();
+	         }
+
+	         //true = append file
+	         FileWriter fileWritter = new FileWriter(file,false);
+	         BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+	         for(String code : codes){
+	        	 bufferWritter.write(code+'\n');
+	        //	 System.out.println("write: "+line);
+	         }
+	         bufferWritter.close();
+	         System.out.println("Done");
+	    }catch(IOException e){
+	            e.printStackTrace();
+	    }
+     }
 
 
 

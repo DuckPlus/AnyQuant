@@ -22,7 +22,8 @@ public class GraphicsUtils {
 
 	try {
 		fxmlLoader = new FXMLLoader();
-
+		System.out.println(MainAPP.class.getResource(fxmlPath + fileName + ".fxml"));
+		
 		fxmlLoader.setLocation(MainAPP.class.getResource(fxmlPath + fileName + ".fxml"));
 		return fxmlLoader.load();
 	} catch (IOException e) {

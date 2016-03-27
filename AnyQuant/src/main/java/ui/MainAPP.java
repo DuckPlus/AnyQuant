@@ -2,9 +2,12 @@
 package ui;
 
 import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import ui.controller.HomeController;
 /**
  * JavaFX Launcher
@@ -26,10 +29,13 @@ public class MainAPP extends Application {
 		this.stage = primaryStage;
 		this.initialize();
 
-		new HomeController(rootpane);
+		new HomeController(rootpane,stage);
 		stage.setTitle("AnyQuant");
-		stage.show();
+
+		stage.initStyle(StageStyle.TRANSPARENT);
+		 addDragListeners(rootpane, primaryStage);
 		stage.setResizable(false);
+		stage.show();
 
 
 
@@ -53,6 +59,24 @@ public class MainAPP extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+
+
+
+	double x, y;
+
+	private void addDragListeners(final Node n, Stage primaryStage){
+
+	    n.setOnMousePressed((MouseEvent mouseEvent) -> {
+	        this.x = n.getScene().getWindow().getX() - mouseEvent.getScreenX();
+	        this.y = n.getScene().getWindow().getY() - mouseEvent.getScreenY();
+	    });
+
+	    n.setOnMouseDragged((MouseEvent mouseEvent) -> {
+	        primaryStage.setX(mouseEvent.getScreenX() + this.x);
+	        primaryStage.setY(mouseEvent.getScreenY() + this.y);
+	    });
+	}
+
 
 }
 
