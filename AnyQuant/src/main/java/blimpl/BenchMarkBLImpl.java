@@ -64,6 +64,7 @@ public class BenchMarkBLImpl implements BenchMarkBLService {
 	@Override
 	public Iterator<BenchMarkVO> getBenchMarkByTime(String BenchMarkCode,
 			MyDate start, MyDate end) {
+
 		List<BenchMarkPO> pos = APIDataSer.getBenchMes(BenchMarkCode, start,
 				end);
 		if (pos != null) {
