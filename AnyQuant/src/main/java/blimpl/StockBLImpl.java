@@ -62,12 +62,12 @@ public class StockBLImpl implements StockBLService {
         }
         stocks = new ArrayList<StockVO>(stockMap.values());
 
-        Iterator<StockPO> temp = APIDataSer.getOptionalStocks();
-        StockPO po;
-        while (temp.hasNext()){
-            po = temp.next();
-            optionalStockMap.put(po.getCode() , (StockVO) VOPOchange.POtoVO(po));
-        }
+//        Iterator<StockPO> temp = APIDataSer.getOptionalStocks();
+//        StockPO po;
+//        while (temp.hasNext()){
+//            po = temp.next();
+//            optionalStockMap.put(po.getCode() , (StockVO) VOPOchange.POtoVO(po));
+//        }
         optionStocks = new ArrayList<>(stockMap.values());
         // for (String string : benchCodes) {
         // benchMarkVOs.add( (BenchMarkVO)

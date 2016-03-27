@@ -8,7 +8,7 @@
 
 <AnchorPane minWidth="175.0" prefHeight="625.0" prefWidth="176.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.LeftPaneController">
    <children>
-      <Button fx:id="stockButton" alignment="CENTER" layoutY="51.0" mnemonicParsing="false" onMouseClicked="#handleStockButton" onMouseEntered="#handleStockButton" onMouseExited="#handleStockButton" prefHeight="40.0" prefWidth="176.0" stylesheets="@../css/leftPane.css" text="股列表">
+      <Button fx:id="stockButton" alignment="CENTER" layoutY="51.0" mnemonicParsing="false" onMouseClicked="#handleStockButton" onMouseEntered="#handleStockButton" onMouseExited="#handleStockButton" prefHeight="40.0" prefWidth="176.0" stylesheets="@../css/leftPane.css" text="股表">
          <styleClass>
             <String fx:value="stockButton-clicked" />
             <String fx:value="stockButton-entered" />

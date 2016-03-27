@@ -21,8 +21,9 @@ public class GraphicsUtils {
 
 	try {
 		fxmlLoader = new FXMLLoader();
-
-		fxmlLoader.setLocation(new URL("ui/source/fxml" + fileName + ".fxml"));
+		System.out.println(MainAPP.class.getResource(fxmlPath + fileName + ".fxml"));
+		
+		fxmlLoader.setLocation(MainAPP.class.getResource(fxmlPath + fileName + ".fxml"));
 		return fxmlLoader.load();
 	} catch (IOException e) {
 		System.out.println("配置文件路径有误*************");
