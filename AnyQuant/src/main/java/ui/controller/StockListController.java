@@ -12,6 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import ui.GraphicsUtils;
@@ -46,18 +47,19 @@ public class StockListController{
 	TableColumn<Stock, Double>changeRate = new TableColumn<Stock, Double>();
 	@FXML
 	TableView<Stock> tableview = new TableView<Stock>();
-	@FXML 
+	@FXML
 	TextField searchBar;
-	
+
 	RightPaneController rightPaneController = RightPaneController.getRightPaneController();
 	StockDetailController stockDetailController;// = StockDetailController.getStockDetailController();
 	//get the logic service
 	StockBLService stockBl = StockBLImpl.getAPIBLService();
 	//
 	ObservableList<Stock> obsevableList ;
-	
+
 	BorderPane stockDetailPane;
-	
+	AnchorPane chartPane;
+
 	public StockListController() {
 		System.out.println("hello constractor");
 		obsevableList = FXCollections.observableArrayList();
@@ -66,21 +68,22 @@ public class StockListController{
 	@FXML
 	private void initialize(){
 		System.out.println("hello init");
-		showStocklist();
+
 		stockDetailPane = (BorderPane)GraphicsUtils.getParent("StockDetail");
+		showStocklist();
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	@FXML
 	public void showStocklist(){
-		
+
 		Iterator<StockVO>itr = stockBl.getAllStocks();
 		showTableData(itr);
-		
+
 	}
-	
+
 	private void showTableData(Iterator<StockVO>itr){
 		tableview.getItems().removeAll(obsevableList);
 		while(itr.hasNext()){
@@ -113,7 +116,7 @@ public class StockListController{
 				System.out.println("empty line ");
 				return;
 			}
-			
+
 			int row =tableview.getSelectionModel().getSelectedIndex();
 			String code =tableview.getSelectionModel().getSelectedItem().code.get();
 			Stock selectedStock = tableview.getSelectionModel().getSelectedItem();
@@ -125,19 +128,24 @@ public class StockListController{
 //			stockDetailController.setData(selectedStock);
 //			StockDetailController sc = StockDetailController.getCurrent();
 //			StockDetailController sc = StockDetailController.getStockDetailController();
-			
+
 			//The stockDetailController is null at first, and it must generated after the fxml has initialize
 			//it, otherwise we will get a totally defferent object from the fxml's
 			if(stockDetailController==null){
-			stockDetailController = StockDetailController.getStockDetailController();
+			      stockDetailController = StockDetailController.getStockDetailController();
 			}
 //			if(sc.nameLabel==null){
 //				System.out.println("controller null");
 //			}else{
 //				System.out.println("controller NOT null");
 //			}
+
+
+
+
+			chartPane = (AnchorPane)GraphicsUtils.getParent("CandleStickPane");
+			stockDetailPane.setCenter(chartPane);
 			stockDetailController.setData(selectedStock);
-//			sc.setData(selectedStock);
 			rightPaneController.showDetailPane(stockDetailPane);
 		}
 	}
@@ -148,7 +156,7 @@ public class StockListController{
 		Iterator<StockVO>itr =stockBl.getStocksByStockCode(stockCode);
 		showTableData(itr);
 	}
-	
+
 
 
 }
