@@ -13,6 +13,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.python.antlr.PythonParser.return_stmt_return;
+
 import dataservice.APIInterface;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -21,6 +23,7 @@ import po.StockPO;
 import util.MyTime;
 import enumeration.Exchange;
 import enumeration.MyDate;
+import jnr.ffi.Struct.int16_t;
 
 /**
  * API接口的实现类
@@ -82,52 +85,59 @@ public class APIInterfaceImpl implements APIInterface{
 	/**
 	 *此方法用来建立url-connection并返回API所提供的全部初始数据
 	 */
-	private  String SendGET(String url,String param){
-		   String result="";//访问返回结果
-		   BufferedReader read=null;//读取访问结果
+	private String SendGET(String url, String param) {
+		String result = "";// 访问返回结果
+		BufferedReader read = null;// 读取访问结果
+		int times=0;
+		while (result.equals("")&&times<3) {
 
-		   try {
-		    //创建url
-		    URL realurl=new URL(url);
-		    //打开连接
-		    URLConnection connection=realurl.openConnection();
-		      //设置通用的请求属性
-		             connection.setRequestProperty("accept", "*/*");
-		             connection.setRequestProperty("connection", "Keep-Alive");
-		             connection.setRequestProperty("user-agent",
-		                     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-		             connection.setRequestProperty("X-Auth-Code", "0d4cb00bb416d44daea6fb74f5bfcfc2");
-		             //建立连接
-		             connection.connect();
-//		          // 获取所有响应头字段
-//		             Map<String, List<String>> map = connection.getHeaderFields();
-//		             // 遍历所有的响应头字段，获取到cookies等
-//		             for (String key : map.keySet()) {
-//		                 System.out.println(key + "--->" + map.get(key));
-//		             }
-		             // 定义 BufferedReader输入流来读取URL的响应
-		             read = new BufferedReader(new InputStreamReader(
-		                     connection.getInputStream(),"UTF-8"));
-		             String line;//循环读取
-		             while ((line = read.readLine()) != null) {
-		                 result += line;
-		             }
-		   } catch (IOException e) {
-		            // e.printStackTrace();
-		             return "";
+			try {
+				// 创建url
+				URL realurl = new URL(url);
+				// 打开连接
+				URLConnection connection = realurl.openConnection();
+				// 设置通用的请求属性
+				connection.setRequestProperty("accept", "*/*");
+				connection.setRequestProperty("connection", "Keep-Alive");
+				connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+				connection.setRequestProperty("X-Auth-Code", "0d4cb00bb416d44daea6fb74f5bfcfc2");
+				// 建立连接
+				connection.connect();
+				// // 获取所有响应头字段
+				// Map<String, List<String>> map = connection.getHeaderFields();
+				// // 遍历所有的响应头字段，获取到cookies等
+				// for (String key : map.keySet()) {
+				// System.out.println(key + "--->" + map.get(key));
+				// }
+				// 定义 BufferedReader输入流来读取URL的响应
+				read = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+				String line;// 循环读取
+				while ((line = read.readLine()) != null) {
+					result += line;
+				}
+			} catch (IOException e) {
+				 e.printStackTrace();
+			} finally {
+				if (read != null&&(!result.equals(""))) {// 关闭流
+					try {
+						read.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					 System.out.println("request successfully");
+				}else{
+					 times++;
+			         System.out.println("request failed , try again ,times : "+times);
+				}
+			}
 
-		   }finally{
-		       if(read!=null){//关闭流
-		             try {
-		                  read.close();
-		             } catch (IOException e) {
-		                  e.printStackTrace();
-		             }
-		       }
-		   }
+		}
 
-		   return result;
-		 }
+        if(result.equals("")){
+        	System.out.println("request failed fainally");
+        }
+		return result;
+	}
 
     /**
      * 默认返回2015年，上海交易所
