@@ -405,14 +405,14 @@ public class StockBLImpl implements StockBLService {
 
     @Override
     public boolean deleteStockCode(String stockCode) {
-        return APIDataSer.dealOptionalStock(stockCode);
+        return APIDataSer.deleteOptionalStock(stockCode);
     }
 
     @Override
     public boolean deleteStockCode(List<String> stockCode) {
         boolean result = true;
         for (String stock : stockCode) {
-            result = result && APIDataSer.dealOptionalStock(stock);
+            result = result && APIDataSer.deleteOptionalStock(stock);
         }
         return result;
     }

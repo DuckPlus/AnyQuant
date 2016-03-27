@@ -375,7 +375,7 @@ public class APIInterfaceImpl implements APIInterface{
 	}
 
 	@Override
-	public boolean dealOptionalStock(String stockCode) {
+	public boolean deleteOptionalStock(String stockCode) {
 		// TODO Auto-generated method stub
 		return false;
 	}
