@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.IOException;
+import java.net.URL;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,7 +22,7 @@ public class GraphicsUtils {
 	try {
 		fxmlLoader = new FXMLLoader();
 
-		fxmlLoader.setLocation(MainAPP.class.getResource(fxmlPath + fileName + ".fxml"));
+		fxmlLoader.setLocation(new URL("ui/source/fxml" + fileName + ".fxml"));
 		return fxmlLoader.load();
 	} catch (IOException e) {
 		System.out.println("配置文件路径有误*************");

@@ -3,6 +3,9 @@ package ui.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import ui.GraphicsUtils;
 import vo.Stock;
 import vo.StockVO;
 
@@ -28,9 +31,9 @@ public class StockDetailController {
 	Label pe;
 	@FXML
 	Label pb;
-	
-	
-	
+
+
+
 	private static StockDetailController instance;
 
 	public StockDetailController() {
@@ -59,11 +62,14 @@ public class StockDetailController {
 //				System.out.println("not null in init");
 //			}
 //		nameLabel.setText("hello");
+
 	}
 
 	public static StockDetailController getCurrent(){
 		return instance;
 	}
+
+
 	public void setData(Stock stock){
 //		if(nameLabel==null){
 //			System.out.println("name null in set method");

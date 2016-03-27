@@ -37,7 +37,7 @@ public class MainAPP extends Application {
 		stage.setResizable(false);
 		stage.show();
 
-		
+
 
 	}
 
@@ -60,8 +60,8 @@ public class MainAPP extends Application {
 		launch(args);
 	}
 
-	
-	
+
+
 	double x, y;
 
 	private void addDragListeners(final Node n, Stage primaryStage){

@@ -1,5 +1,6 @@
 package blimpl;
 
+import blservice.StockBLService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,20 +10,20 @@ import static org.junit.Assert.*;
  * Created by Qiang on 3/27/16.
  */
 public class StockBLImplTest {
-
+    StockBLService bl;
     @Before
     public void setUp() throws Exception {
-
+        bl = BusinessFactory.getStockBLService();
     }
 
     @Test
     public void getAllStocks() throws Exception {
-
+        // test in other method
     }
 
     @Test
     public void getSortStocks() throws Exception {
-
+        getSortStocks();;
     }
 
     @Test
