@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="175.0" prefHeight="244.0" prefWidth="176.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.LeftPaneController">
+<AnchorPane minWidth="175.0" prefHeight="625.0" prefWidth="176.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.LeftPaneController">
    <children>
-      <Button fx:id="stockButton" alignment="CENTER" layoutY="51.0" mnemonicParsing="false" onMouseClicked="#handleStockButton" onMouseEntered="#handleStockButton" onMouseExited="#handleStockButton" prefHeight="40.0" prefWidth="176.0" stylesheets="@../css/leftPane.css" text="股票列表">
+      <Button fx:id="stockButton" alignment="CENTER" layoutY="51.0" mnemonicParsing="false" onMouseClicked="#handleStockButton" onMouseEntered="#handleStockButton" onMouseExited="#handleStockButton" prefHeight="40.0" prefWidth="176.0" stylesheets="@../css/leftPane.css" text="股列表">
          <styleClass>
             <String fx:value="stockButton-clicked" />
             <String fx:value="stockButton-entered" />
@@ -21,7 +21,7 @@
          <font>
             <Font size="18.0" />
          </font></Button>
-      <Button id="kButton" fx:id="kButton" alignment="CENTER" layoutY="166.0" mnemonicParsing="false" onMouseClicked="#handleKButton" onMouseEntered="#handleKButton" onMouseExited="#handleKButton" prefHeight="40.0" prefWidth="176.0" styleClass="benchButton" stylesheets="@../css/leftPane.css" text="K线图" textFill="#fffefe">
+      <Button id="kButton" fx:id="kButton" alignment="CENTER" layoutY="166.0" mnemonicParsing="false" onMouseClicked="#handleKButton" onMouseEntered="#handleKButton" onMouseExited="#handleKButton" prefHeight="40.0" prefWidth="176.0" styleClass="benchButton" stylesheets="@../css/leftPane.css" text="222" textFill="#fffefe">
          <font>
             <Font size="18.0" />
          </font>
