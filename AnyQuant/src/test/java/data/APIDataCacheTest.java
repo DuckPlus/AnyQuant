@@ -3,12 +3,22 @@ package data;
 import org.junit.Before;
 import org.junit.Test;
 
+import dataservice.APIDataFactory;
+import enumeration.MyDate;
+
 import static org.junit.Assert.*;
 
 /**
  * Created by Qiang on 3/27/16.
  */
 public class APIDataCacheTest {
+
+
+	public static void main(String[] args) {
+		 APIDataCache cache = (APIDataCache) APIDataFactory.getAPIDataService();
+		// cache.downloadStockInfo("sh600216");
+		 cache.downloadAllStocks();
+	}
 
     @Before
     public void setUp() throws Exception {
