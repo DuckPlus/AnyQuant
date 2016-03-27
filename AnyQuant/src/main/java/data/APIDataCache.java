@@ -39,7 +39,7 @@ public class APIDataCache implements APIInterface{
 
     public  APIDataCache(APIInterface api) {
 		  this.api = api;
-//		  updateAllMes();
+		  updateAllMes();
 	}
 
 	@Override
@@ -277,9 +277,8 @@ public class APIDataCache implements APIInterface{
 	private boolean needUpdate(String preDate){
 		//如果昨天日期与上次纪录不符并且昨天不是周末
 		MyDate yesterday = MyTime.getAnotherDay(-1);
-
-	//	System.out.println(yesterday.DateToString());
-		if(!preDate.equals(yesterday.DateToString())&& !MyTime.isWeekend(yesterday)){
+	    MyDate preMyDate = MyDate.getDateFromString(preDate);
+		if(MyTime.ifEarlier(preMyDate,	 yesterday)&& (!MyTime.isWeekend(yesterday))){
 			   return true ;
 		}
 		return false;
