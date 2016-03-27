@@ -21,8 +21,6 @@ public class LeftPaneController{
 	private Button stockButton;
 	@FXML
 	private Button benchButton;
-	@FXML
-	private Button kButton;
 
 	private RightPaneController rightPaneController;
 	/**
@@ -77,22 +75,6 @@ public class LeftPaneController{
 		} else {
 			benchButton.getStyleClass().clear();
 			benchButton.getStyleClass().add("benchButton");
-		}
-
-	}
-
-	@FXML
-	private void handleKButton(MouseEvent event) {
-		if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-			kButton.getStyleClass().clear();
-			kButton.getStyleClass().add("kButton-clicked");
-			rightPaneController.showCandleStickPane();
-		} else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-			kButton.getStyleClass().clear();
-			kButton.getStyleClass().add("kButton-entered");
-		} else {
-			kButton.getStyleClass().clear();
-			kButton.getStyleClass().add("kButton");
 		}
 
 	}

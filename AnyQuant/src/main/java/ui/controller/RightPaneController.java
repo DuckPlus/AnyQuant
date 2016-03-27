@@ -23,12 +23,11 @@ public class RightPaneController{
 	private BorderPane stockListPane;
 	private Pane benchMarkPane;
 	private Pane stockDetailPane;
-	private AnchorPane candleStickPane;
 	@FXML
 	private ImageView min;
 	@FXML
 	private ImageView close;
-	
+
 	private static RightPaneController instance;
 
 	public RightPaneController() {
@@ -48,7 +47,6 @@ public class RightPaneController{
 	public void initialize() {
 		stockListPane = (BorderPane) GraphicsUtils.getParent("StockList");
 		 benchMarkPane = (Pane) GraphicsUtils.getParent("BenchMarkPane");
-		 candleStickPane = (AnchorPane) GraphicsUtils.getParent("CandleStickPane");
 
 	}
 
@@ -63,11 +61,6 @@ public class RightPaneController{
 		pane.setCenter(benchMarkPane);
 	}
 
-	void showCandleStickPane() {
-	     pane.getChildren().clear();
-		pane.setCenter(candleStickPane);
-	}
-
 	 void showDetailPane(Pane Pane) {
 		System.out.println("detail pane");
 		pane.getChildren().clear();
@@ -79,7 +72,7 @@ public class RightPaneController{
 		RightPaneController.pane = (BorderPane) pane;
 		}
 
-		
+
 
 	}
 	@FXML
@@ -93,11 +86,11 @@ public class RightPaneController{
 			min.getStyleClass().clear();
 			min.getStyleClass().add("minNormalImg");
 		}
-		
+
 		if(event.getEventType() == MouseEvent.MOUSE_CLICKED){
 			stage.setIconified(true);
 		}
-		
+
 	}
 	@FXML
 	private void handleClose(MouseEvent event) {
@@ -108,15 +101,15 @@ public class RightPaneController{
 			close.getStyleClass().clear();
 			close.getStyleClass().add("closeNImg");
 		}
-		
+
 		if(event.getEventType() == MouseEvent.MOUSE_CLICKED){
 			stage.close();
 			System.exit(0);
 		}
-		
+
 	}
-	
-	
+
+
 	public static void setStage(Stage stage) {
 				RightPaneController.stage = stage;
 	}

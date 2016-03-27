@@ -21,10 +21,5 @@
          <font>
             <Font size="18.0" />
          </font></Button>
-      <Button id="kButton" fx:id="kButton" alignment="CENTER" layoutY="166.0" mnemonicParsing="false" onMouseClicked="#handleKButton" onMouseEntered="#handleKButton" onMouseExited="#handleKButton" prefHeight="40.0" prefWidth="176.0" styleClass="benchButton" stylesheets="@../css/leftPane.css" text="K线图" textFill="#fffefe">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>
