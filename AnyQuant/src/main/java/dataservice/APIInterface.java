@@ -104,7 +104,7 @@ public interface APIInterface {
 
 	/**
 	 * Get the customize stocks' last transaction data
-	 * @return the iteration of the collection that contains the optional stocks
+	 * @return the iteration of the collection that contains the optional stocks with the latest data
 	 */
 	public Iterator<StockPO> getOptionalStocks() ;
 
