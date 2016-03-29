@@ -32,7 +32,7 @@ public class MainAPP extends Application {
 		new HomeController(rootpane,stage);
 		stage.setTitle("AnyQuant");
 
-		stage.initStyle(StageStyle.TRANSPARENT);
+		stage.initStyle(StageStyle.UNDECORATED);
 		 addDragListeners(rootpane, primaryStage);
 		stage.setResizable(false);
 		stage.show();

@@ -1,6 +1,7 @@
 package blimpl;
 
 import blservice.BenchMarkBLService;
+import blservice.OptionalStockBLService;
 import blservice.StockBLService;
 
 /**
@@ -17,5 +18,11 @@ public class BusinessFactory {
 	public static BenchMarkBLService getBenchMarkBLService(){
 		return BenchMarkBLImpl.getBenchMarkBLService();
 	}
-	
+
+	public static OptionalStockBLService getOptionalBLService(){
+		return  OptionalStockBLServiceImpl.getOptionalBLService();
+	}
+
+
+
 }
