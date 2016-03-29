@@ -12,10 +12,4 @@
 
 
 ##Team:Duck_plus ##
-Member : 
-|Name       |                     email        |
-|:-----:|:-----:|
-|陈自强      |    czq14@software.mju.edu.cn|
-|邸思诺      |    dsn14@software.mju.edu.cn|
-|段正谋      |    dzm14@software.mju.edu.cn|
-|侍硕       |     ss14@software.mju.edu.cn|
+![](http://ww3.sinaimg.cn/large/005L5iMGjw1f2e0oomw31j310k0da769.jpg)
