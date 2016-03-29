@@ -1,16 +1,28 @@
 package blimpl;
 
 import blservice.StockBLService;
+import enumeration.Stock_Attribute;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.internal.runners.statements.Fail;
+import org.python.antlr.ast.Str;
+import util.MyTime;
+import vo.OHLC_VO;
+import vo.Stock;
+import vo.StockVO;
 
-import static org.junit.Assert.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import static org.junit.Assert.fail;
 
 /**
  * Created by Qiang on 3/27/16.
  */
 public class StockBLImplTest {
     StockBLService bl;
+    enum testValue {};
     @Before
     public void setUp() throws Exception {
         bl = BusinessFactory.getStockBLService();
@@ -23,27 +35,70 @@ public class StockBLImplTest {
 
     @Test
     public void getSortStocks() throws Exception {
-        getSortStocks();;
+        Iterator<StockVO> vos = bl.getSortStocks(true , Stock_Attribute.low);
+
+        double last = Double.MIN_VALUE;
+        last = vos.next().low;
+        while(vos.hasNext()){
+            double temp = vos.next().low;
+            if(temp < last){
+                fail("Can not pass the sort of low");
+            }else{
+                last = temp;
+            }
+        }
+
+
+
+
+
     }
 
+    /**
+     * 本测试主要测试对600XXX的股票进行升序排序是否有问题
+     * @throws Exception
+     */
     @Test
     public void getSortStocksInScope() throws Exception {
+       Iterator<StockVO> vos =  bl.getStocksByStockCode("600");
+        List<String> vostr = new ArrayList<>();
+        while(vos.hasNext()){
+            vostr.add(vos.next().code);
+        }
+
+
+        vos = bl.getSortStocksInScope(true , Stock_Attribute.high , vostr);
+
+
+        double last = Double.MAX_VALUE;
+        last = vos.next().high;
+        while(vos.hasNext()){
+            double temp = vos.next().high;
+            if(temp > last){
+                fail("Can not pass the sort of high in given scope");
+            }else{
+                last = temp;
+            }
+        }
+
+
+
 
     }
 
     @Test
     public void getRecentStocks() throws Exception {
-
+        // not need to test
     }
 
     @Test
     public void getTodayStockVO() throws Exception {
-
+        // not need to test
     }
 
     @Test
     public void getStocksByTime() throws Exception {
-
+        // not need to test
     }
 
     @Test
@@ -53,7 +108,17 @@ public class StockBLImplTest {
 
     @Test
     public void getDayOHLC_Data() throws Exception {
-
+        Iterator<StockVO> vos = bl.getStocksByTime("sh600300", MyTime.getAnotherDay(-30), MyTime.getAnotherDay(0));
+        List<Double> lows = new ArrayList<Double>();
+        while(vos.hasNext()){
+            lows.add(vos.next().low);
+        }
+        List<OHLC_VO> tmp = bl.getDayOHLC_Data("sh600300", MyTime.getAnotherDay(-30), MyTime.getAnotherDay(0));
+        for (int i = 0; i < 15; i++) {
+            if(!lows.get(i).equals(tmp.get(i).low)){
+                fail("Fail to get OHLC_DATA correctly.");
+            }
+        }
     }
 
     @Test
@@ -86,28 +151,5 @@ public class StockBLImplTest {
 
     }
 
-    @Test
-    public void getOptionalStocks() throws Exception {
 
-    }
-
-    @Test
-    public void addStockCode() throws Exception {
-
-    }
-
-    @Test
-    public void deleteStockCode() throws Exception {
-
-    }
-
-    @Test
-    public void deleteStockCode1() throws Exception {
-
-    }
-
-    @Test
-    public void addStockCode1() throws Exception {
-
-    }
 }

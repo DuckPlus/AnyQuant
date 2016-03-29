@@ -416,4 +416,9 @@ public class APIDataCache implements APIInterface {
 		return api.getSelectedStockCodes();
 	}
 
+	@Override
+	public boolean clearOptionalStocks() {
+		return false;
+	}
+
 }
