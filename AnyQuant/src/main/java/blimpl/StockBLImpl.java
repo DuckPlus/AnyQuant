@@ -38,8 +38,7 @@ public class StockBLImpl implements StockBLService {
     private List<StockVO> stocks;
     private Map<String, StockVO> stockMap;
 
-    private List<StockVO> optionStocks;
-    private Map<String, StockVO> optionalStockMap;
+
 
     /*
      * 为了加快测试速度，在开发阶段只引入100只股票
@@ -68,7 +67,6 @@ public class StockBLImpl implements StockBLService {
 //            po = temp.next();
 //            optionalStockMap.put(po.getCode() , (StockVO) VOPOchange.POtoVO(po));
 //        }
-        optionStocks = new ArrayList<>(stockMap.values());
         // for (String string : benchCodes) {
         // benchMarkVOs.add( (BenchMarkVO)
         // VOPOchange.POtoVO(APIDataSer.getBenchMes(string)));
@@ -387,42 +385,5 @@ public class StockBLImpl implements StockBLService {
 
     }
 
-    @Override
-    public Iterator<StockVO> getOptionalStocks() {
 
-
-        return optionStocks.iterator();
-
-
-//		return APIDataSer.getOptionalStocks(VOPOchange.POtoVO(o));
-    }
-
-
-    @Override
-    public boolean addStockCode(String stockCode) {
-        return APIDataSer.addOptionalStock(stockCode);
-    }
-
-    @Override
-    public boolean deleteStockCode(String stockCode) {
-        return APIDataSer.deleteOptionalStock(stockCode);
-    }
-
-    @Override
-    public boolean deleteStockCode(List<String> stockCode) {
-        boolean result = true;
-        for (String stock : stockCode) {
-            result = result && APIDataSer.deleteOptionalStock(stock);
-        }
-        return result;
-    }
-
-    @Override
-    public boolean addStockCode(List<String> stockCodes) {
-        boolean result = true;
-        for (String stock : stockCodes) {
-            result = result && APIDataSer.addOptionalStock(stock);
-        }
-        return result;
-    }
 }

@@ -3,10 +3,16 @@ package data;
 import org.junit.Before;
 import org.junit.Test;
 
+import blimpl.BusinessFactory;
+import blimpl.StockBLImpl;
 import dataservice.APIDataFactory;
 import enumeration.MyDate;
+import util.MyTime;
+import vo.OHLC_VO;
 
 import static org.junit.Assert.*;
+
+import java.util.List;
 
 /**
  * Created by Qiang on 3/27/16.
@@ -15,9 +21,16 @@ public class APIDataCacheTest {
 
 
 	public static void main(String[] args) {
-		 APIDataCache cache = (APIDataCache) APIDataFactory.getAPIDataService();
-		// cache.downloadStockInfo("sh600216");
-		 cache.downloadAllStocks();
+//		 APIDataCache cache = (APIDataCache) APIDataFactory.getAPIDataService();
+//		 cache.downloadStockInfo("sh600216");
+//		 cache.downloadAllStocks();
+		 StockBLImpl blImpl = (StockBLImpl) BusinessFactory.getStockBLService();
+		 MyDate end=MyTime.getToDay();
+		 MyDate start= MyTime.getAnotherDay(-90);
+		 List<OHLC_VO> vos= blImpl.getWeekOHLC_Data("sh600216", start, end);
+		 for (int i = 0; i < vos.size(); i++) {
+			 System.out.println(vos.get(i).open);
+		 }
 	}
 
     @Before

@@ -393,7 +393,7 @@ public class APIInterfaceImpl implements APIInterface{
 	}
 
 
-	private List<String> getSelectedStockCodes(){
+	public List<String> getSelectedStockCodes(){
 		 try {
              String encoding="utf-8";
              File file=new File(optionalCodesFilePath);
