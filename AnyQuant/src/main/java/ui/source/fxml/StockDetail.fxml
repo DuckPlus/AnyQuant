@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="720.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.StockDetailController">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+   </center>
+   <left>
+      <AnchorPane prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="nameLabel" prefHeight="31.0" prefWidth="128.0" text="浦发银行" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <VBox layoutX="3.0" AnchorPane.topAnchor="50.0">
+               <children>
+                  <Label layoutX="3.0" layoutY="33.0" prefHeight="18.0" prefWidth="48.0" text="开盘">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="4.0" layoutY="59.0" prefHeight="18.0" prefWidth="48.0" text="收盘">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="4.0" layoutY="81.0" prefHeight="18.0" prefWidth="48.0" text="最高">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="4.0" layoutY="106.0" prefHeight="18.0" prefWidth="48.0" text="最低">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="14.0" layoutY="116.0" prefHeight="18.0" prefWidth="63.0" text="换手率" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="130.0">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="18.0" prefWidth="63.0" text="成交量">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="18.0" prefWidth="63.0" text="市盈">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="18.0" prefWidth="63.0" text="市净">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox layoutX="102.0" layoutY="5.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
+               <children>
+                  <Label fx:id="open" layoutX="104.0" prefHeight="18.0" prefWidth="80.0" text="null" textAlignment="RIGHT" AnchorPane.topAnchor="5.0">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="close" layoutX="102.0" layoutY="45.0" prefHeight="18.0" prefWidth="80.0" text="null">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="high" prefHeight="18.0" prefWidth="80.0" text="null">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="low" prefHeight="18.0" prefWidth="80.0" text="null">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="turnover" prefHeight="18.0" prefWidth="80.0" text="null">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="volume" prefHeight="18.0" prefWidth="80.0" text="null">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="pe" prefHeight="18.0" prefWidth="80.0" text="null">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="pb" prefHeight="18.0" prefWidth="80.0" text="null">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <Label fx:id="codeLabel" layoutX="10.0" layoutY="10.0" prefHeight="20.0" prefWidth="80.0" text="sh600000" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </left>
+</BorderPane>

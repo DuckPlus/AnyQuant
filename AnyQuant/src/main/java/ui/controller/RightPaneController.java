@@ -1,9 +1,13 @@
 package ui.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import ui.GraphicsUtils;
 
 
@@ -14,11 +18,15 @@ import ui.GraphicsUtils;
  * @date Mar 22, 2016
  */
 public class RightPaneController{
+	private static Stage stage;
 	private static BorderPane pane;
 	private BorderPane stockListPane;
 	private Pane benchMarkPane;
 	private Pane stockDetailPane;
-	private AnchorPane candleStickPane;
+	@FXML
+	private ImageView min;
+	@FXML
+	private ImageView close;
 
 	private static RightPaneController instance;
 
@@ -39,7 +47,6 @@ public class RightPaneController{
 	public void initialize() {
 		stockListPane = (BorderPane) GraphicsUtils.getParent("StockList");
 		 benchMarkPane = (Pane) GraphicsUtils.getParent("BenchMarkPane");
-		 candleStickPane = (AnchorPane) GraphicsUtils.getParent("CandleStickPane");
 
 	}
 
@@ -54,13 +61,10 @@ public class RightPaneController{
 		pane.setCenter(benchMarkPane);
 	}
 
-	void showCandleStickPane() {
-	     pane.getChildren().clear();
-		pane.setCenter(candleStickPane);
-	}
-
-	private void showDetailPane() {
-
+	 void showDetailPane(Pane Pane) {
+		System.out.println("detail pane");
+		pane.getChildren().clear();
+		pane.setCenter(Pane);
 	}
 
 	static void  setPane(Pane pane){
@@ -70,6 +74,43 @@ public class RightPaneController{
 
 
 
+	}
+	@FXML
+	private void handleMin(MouseEvent event){
+		if(event.getEventType() == MouseEvent.MOUSE_ENTERED){
+			min.getStyleClass().clear();
+			min.getStyleClass().add("minEnteredImg");
+		}else if(event.getEventType() == MouseEvent.MOUSE_EXITED){
+			min.getStyleClass().clear();
+			min.getStyleClass().add("minNormalImg");
+		}
+
+		if(event.getEventType() == MouseEvent.MOUSE_CLICKED){
+			stage.setIconified(true);
+		}
+
+	}
+	@FXML
+	private void handleClose(MouseEvent event) {
+		if(event.getEventType() == MouseEvent.MOUSE_ENTERED){
+			close.getStyleClass().clear();
+			close.getStyleClass().add("closeEnteredImg");
+		}else if(event.getEventType() == MouseEvent.MOUSE_EXITED){
+			close.getStyleClass().clear();
+			close.getStyleClass().add("closeNormalImg");
+		}
+
+		if(event.getEventType() == MouseEvent.MOUSE_CLICKED){
+			stage.close();
+			System.exit(0);
+		}
+
+	}
+
+
+	public static void setStage(Stage stage) {
+
+		RightPaneController.stage = stage;
 	}
 
 	}

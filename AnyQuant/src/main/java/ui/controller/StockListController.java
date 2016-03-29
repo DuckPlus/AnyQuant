@@ -7,10 +7,15 @@ import blservice.StockBLService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import ui.GraphicsUtils;
 import vo.Stock;
 import vo.StockVO;
 
@@ -44,10 +49,16 @@ public class StockListController{
 	TableView<Stock> tableview = new TableView<Stock>();
 	@FXML
 	TextField searchBar;
+
+	RightPaneController rightPaneController = RightPaneController.getRightPaneController();
+	StockDetailController stockDetailController;// = StockDetailController.getStockDetailController();
 	//get the logic service
 	StockBLService stockBl = StockBLImpl.getAPIBLService();
 	//
 	ObservableList<Stock> obsevableList ;
+
+	BorderPane stockDetailPane;
+	AnchorPane chartPane;
 
 	public StockListController() {
 		System.out.println("hello constractor");
@@ -57,16 +68,24 @@ public class StockListController{
 	@FXML
 	private void initialize(){
 		System.out.println("hello init");
-		showTableData();
+
+		stockDetailPane = (BorderPane)GraphicsUtils.getParent("StockDetail");
+		showStocklist();
 	}
 
 	/**
 	 *
 	 */
 	@FXML
-	public void showTableData(){
+	public void showStocklist(){
 
 		Iterator<StockVO>itr = stockBl.getAllStocks();
+		showTableData(itr);
+
+	}
+
+	private void showTableData(Iterator<StockVO>itr){
+		tableview.getItems().removeAll(obsevableList);
 		while(itr.hasNext()){
 			StockVO temp = itr.next();
 			Stock dataProperty = new Stock(temp);
@@ -84,9 +103,7 @@ public class StockListController{
 		volume.setCellValueFactory(cell ->cell.getValue().volume.asObject());
 		amplitude.setCellValueFactory(cell ->cell.getValue().amplitude.asObject());
 		changeRate.setCellValueFactory(cell ->cell.getValue().changeRate.asObject());
-
 	}
-
 	@FXML
 	private void delAllData(){
 //		int sum = tableview.getItems().size();
@@ -102,9 +119,44 @@ public class StockListController{
 
 			int row =tableview.getSelectionModel().getSelectedIndex();
 			String code =tableview.getSelectionModel().getSelectedItem().code.get();
+			Stock selectedStock = tableview.getSelectionModel().getSelectedItem();
 			System.out.println(code);
+//			if(stockDetailPane==null){
+//				System.out.println("pane null");
+//				stockDetailPane = (BorderPane)GraphicsUtils.getParent("StockDetail");
+//			}
+//			stockDetailController.setData(selectedStock);
+//			StockDetailController sc = StockDetailController.getCurrent();
+//			StockDetailController sc = StockDetailController.getStockDetailController();
+
+			//The stockDetailController is null at first, and it must generated after the fxml has initialize
+			//it, otherwise we will get a totally defferent object from the fxml's
+			if(stockDetailController==null){
+			      stockDetailController = StockDetailController.getStockDetailController();
+			}
+//			if(sc.nameLabel==null){
+//				System.out.println("controller null");
+//			}else{
+//				System.out.println("controller NOT null");
+//			}
+
+
+
+
+			chartPane = (AnchorPane)GraphicsUtils.getParent("CandleStickPane");
+			stockDetailPane.setCenter(chartPane);
+			stockDetailController.setData(selectedStock);
+			rightPaneController.showDetailPane(stockDetailPane);
 		}
 	}
+	@FXML
+	private void searchStocklist(){
+		System.out.println("hello search in time:  ["+searchBar.getText()+"]end");
+		String stockCode = searchBar.getText();
+		Iterator<StockVO>itr =stockBl.getStocksByStockCode(stockCode);
+		showTableData(itr);
+	}
+
 
 
 }

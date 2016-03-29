@@ -13,9 +13,9 @@ import enumeration.MyDate;
 public class APITest  {
          public static void main(String a[]){
         	    //getAllstocksMessageByAPI();
-        	// getBenchMes();
+        	 getBenchMes();
         	   // getStockCode();
-           getAllMesByCache();
+        //   getAllMesByCache();
         	// getLatestMes();
         //	 System.out.println(MyTime.getToDay().DateToString()+" "+MyTime.getToDay().TimeToString());
 //            System.out.println(MyTime.getAnotherDay(-1).AllToString());
@@ -51,8 +51,8 @@ public class APITest  {
 
         	 APIInterface api =  APIInterfaceImpl.getAPIInterfaceImpl();
         	// BenchMarkPO stock = api.getBenchMes("hs300");
-        	 MyDate start = new MyDate(2016, 3, 1);
-        	 MyDate end = new MyDate(2016, 3, 10);
+        	 MyDate start = new MyDate(2016, 2, 1);
+        	 MyDate end = new MyDate(2016, 3,11);
         	 List<BenchMarkPO> benchs = api.getBenchMes("hs300", start, end);
         	 for(BenchMarkPO  stock: benchs){
         		            System.out.print("date: "+stock.getDate()+" ");

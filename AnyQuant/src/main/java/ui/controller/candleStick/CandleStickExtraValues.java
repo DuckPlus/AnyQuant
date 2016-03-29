@@ -2,7 +2,7 @@ package ui.controller.candleStick;
 /**
  *
  * @author ss
- * @date 2016/3/24
+ * @date 2016年3月24日
  */
 /** Data extra values for storing close, high and low. */
 class CandleStickExtraValues {
