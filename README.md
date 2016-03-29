@@ -1,13 +1,21 @@
-Software Engineering III's project : AnyQuant
+# AnyQuant  
+## By DuckPlus
 
-迭代一发布说明:
-助教您好!迭代一的jar包放在AnyQuant/releases/Iteration1下的Iteration1.jar下,单击即可打开(由于涉及到图片的关系,必须要在项目的文件夹下才能打开)
+## 迭代一说明 ##
+迭代一采用Swing，实现了简单的股票列表数据查看、历史数据查看。
+发布在releases下，双击IterationI.jar即可运行
 
 
 
-Team:Duck_plus 
+
+![](http://ww2.sinaimg.cn/large/005L5iMGjw1f2e0i50ic7j30dw0dxdgk.jpg)
+
+
+##Team:Duck_plus ##
 Member : 
-陈自强          czq14@software.mju.edu.cn
-邸思诺          dsn14@software.mju.edu.cn
-段正谋          dzm14@software.mju.edu.cn
-侍硕            ss14@software.mju.edu.cn
+|Name       |                     email        |
+|:-----:|:-----:|
+|陈自强      |    czq14@software.mju.edu.cn|
+|邸思诺      |    dsn14@software.mju.edu.cn|
+|段正谋      |    dzm14@software.mju.edu.cn|
+|侍硕       |     ss14@software.mju.edu.cn|

@@ -12,7 +12,9 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Created by Qiang on 3/29/16.
+ *
+ * @author Qiang
+ * @date 3/29/16.
  */
 public class OptionalStockBLServiceImplTest {
     OptionalStockBLService bl;
