@@ -42,7 +42,8 @@ public class APIDataCache implements APIInterface {
 	public APIDataCache(APIInterface api) {
 		this.api = api;
 		updateLatestStockMes();
-		updateAllStockInfo();
+		updateSelectedStockInfo();
+
 	}
 
 	@Override
@@ -328,6 +329,14 @@ public class APIDataCache implements APIInterface {
              }
 	}
 
+	public void updateSelectedStockInfo(){
+       List<String>  selectedStocks = api.getSelectedStockCodes();
+       for(String code: selectedStocks){
+    	   if(code!=null){
+    	         updateStockInfo(code);
+    	   }
+       }
+	}
 
  	private boolean needUpdate(String preDate) {
 		// 如果昨天日期与上次纪录不符并且昨天不是周末
@@ -386,19 +395,25 @@ public class APIDataCache implements APIInterface {
 	@Override
 	public Iterator<StockPO> getOptionalStocks() {
 		// TODO Auto-generated method stub
-		return null;
+		return api.getOptionalStocks();
 	}
 
 	@Override
 	public boolean deleteOptionalStock(String stockCode) {
-		// TODO Auto-generated method stub
-		return false;
+
+		return  api.deleteOptionalStock(stockCode);
 	}
 
 	@Override
 	public boolean addOptionalStock(String stockCode) {
-		// TODO Auto-generated method stub
-		return false;
+
+		return api.addOptionalStock(stockCode);
+	}
+
+	@Override
+	public List<String> getSelectedStockCodes() {
+
+		return api.getSelectedStockCodes();
 	}
 
 }

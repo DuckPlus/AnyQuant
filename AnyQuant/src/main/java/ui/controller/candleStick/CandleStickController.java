@@ -43,8 +43,8 @@ public class CandleStickController  implements Initializable {
     @FXML
     private CandleStickChart chart;
 
-    private static String stockCode;
-
+    private static String stockCode="";
+    private static MyDate start=null,end=null;
   	private static StockBLService stockBl ;
 
   	private static ObservableList<OHLC_VO> obsevableList ;

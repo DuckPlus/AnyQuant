@@ -122,5 +122,7 @@ public interface APIInterface {
 	 */
 	public boolean addOptionalStock(String stockCode);
 
+	public List<String> getSelectedStockCodes();
+
 
 }
