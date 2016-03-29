@@ -20,7 +20,10 @@ import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
 import util.MyTime;
 import vo.OHLC_VO;
 
@@ -104,16 +107,19 @@ public class CandleStickController  implements Initializable {
          initPane(monthTab, chart,new ScrollPane());
  }
 
+    private  void setPreWidth(){
+
+    }
+
     private void initPane( Tab tab  , Node chartNode, ScrollPane spane ){
 
-	      GridPane gridPane = new GridPane();
-	      ColumnConstraints cc = new ColumnConstraints(905,905,905);
-	      RowConstraints rc = new RowConstraints(720,720,720);
-	      gridPane.getColumnConstraints().add(cc);
-	      gridPane.getRowConstraints().add(rc);
-          gridPane.add(chartNode, 0, 0);
 
-	      spane.setContent(gridPane);
+          HBox hBox = new HBox();
+          HBox.setHgrow(chartNode, Priority.ALWAYS);
+          hBox.getChildren().add(chartNode);
+
+
+	      spane.setContent(hBox);
 	      spane.setHbarPolicy(ScrollBarPolicy.ALWAYS);
 	      spane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
           tab.setContent(spane);
@@ -123,7 +129,7 @@ public class CandleStickController  implements Initializable {
     private  void  getDayData(){
            //默认显示近一个月的数据
     	   MyDate end = MyTime.getToDay();
-    	   MyDate start = MyTime.getAnotherDay(-31);
+    	   MyDate start = MyTime.getAnotherDay(-30);
     	   List<OHLC_VO>list =stockBl.getDayOHLC_Data(stockCode, start, end);
     	   obsevableList.clear();
     	   for(OHLC_VO temp : list){
@@ -134,7 +140,7 @@ public class CandleStickController  implements Initializable {
     private  void  getWeekData(){
         //默认显示最近一年的数据
  	   MyDate end = MyTime.getToDay();
- 	   MyDate start = MyTime.getAnotherDay(-90);
+ 	   MyDate start = MyTime.getAnotherDay(-180);
  	   List<OHLC_VO>list =stockBl.getWeekOHLC_Data(stockCode, start, end);
  	   obsevableList.clear();
  	   for(OHLC_VO temp : list){
@@ -145,7 +151,7 @@ public class CandleStickController  implements Initializable {
     private  void  getMonthData(){
         //默认显示最近三年的数据
  	   MyDate end = MyTime.getToDay();
- 	   MyDate start = MyTime.getAnotherDay(-90);
+ 	   MyDate start = MyTime.getAnotherDay(-365*2);
  	   List<OHLC_VO>list =stockBl.getMonthOHLC_Data(stockCode, start, end);
  	   obsevableList.clear();
  	   for(OHLC_VO temp : list){
