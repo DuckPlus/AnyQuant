@@ -1,6 +1,7 @@
 package ui.controller.candleStick;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -13,17 +14,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.Chart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.Tab;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
+
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
+
 import util.MyTime;
 import vo.OHLC_VO;
 
@@ -43,8 +44,12 @@ public class CandleStickController  implements Initializable {
     private Tab weekTab;
     @FXML
     private Tab monthTab;
+	@FXML
+	DatePicker startDatePicker;
+	@FXML
+	DatePicker endDatePicker;
     @FXML
-    private CandleStickChart chart;
+    private CandleStickChart dayChart,weekChart,monthChart;
 
     private static String stockCode;
     private static MyDate startDate,endDate;
@@ -56,7 +61,7 @@ public class CandleStickController  implements Initializable {
 
     public  CandleStickController (){
     	if(instance==null){
-    	   stockCode="sh600216";
+    	   stockCode="sh600000";
     	   startDate = new MyDate(2016,3,1 );
     	   endDate = new MyDate(2016,4, 1);
     	   stockBl = StockBLImpl.getAPIBLService();
@@ -78,52 +83,83 @@ public class CandleStickController  implements Initializable {
           stockCode = newCode;
     }
 
-    public static void setDate(MyDate start,MyDate end) {
-	    startDate = start;
-	    endDate=end;
-	}
-
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
+    	startDatePicker.setValue(LocalDate.now());
+		endDatePicker.setValue(LocalDate.now());
+		startDatePicker.setEditable(false);
+		endDatePicker.setEditable(false);
+		selectDay();
+		selectMonth();
+		selectWeek();
     }
 
-  public  void selectDay(){
+   @FXML
+   public void updateChart(){
+	    startDate = new MyDate
+			   (startDatePicker.getValue().getYear(), startDatePicker.getValue().getMonthValue(), startDatePicker.getValue().getDayOfMonth());
+		endDate  = new MyDate
+				(endDatePicker.getValue().getYear(), endDatePicker.getValue().getMonthValue(), endDatePicker.getValue().getDayOfMonth());
+       updateDay();
+       updateWeek();
+       updateMonth();
+   }
 
+
+   public  void selectDay(){
+	   if(dayChart==null){
 	     getDayData();
-	     chart =createChart();
-         initPane(dayTab, chart,new ScrollPane());
+	     dayChart =createChart();
+         initPane(dayTab, dayChart,new ScrollPane());
+	   }
   }
 
-  public  void selectWeek(){
+   public  void selectWeek(){
+	   if(weekChart==null){
          getWeekData();
-	     chart =createChart();
-         initPane(weekTab, chart,new ScrollPane());
+	     weekChart =createChart();
+         initPane(weekTab, weekChart,new ScrollPane());
+       }
   }
 
-  public  void selectMonth(){
+   public  void selectMonth(){
+	   if(monthChart==null){
          getMonthData();
-	     chart =createChart();
-         initPane(monthTab, chart,new ScrollPane());
+	     monthChart =createChart();
+         initPane(monthTab, monthChart,new ScrollPane());
+	   }
  }
 
-    private  void setPreWidth(){
+   public  void updateDay(){
+	     dayChart.getData().clear();
+	     getDayDataByDate();
+	     dayChart =createChart();
+         initPane(dayTab, dayChart,new ScrollPane());
+}
 
-    }
+ public  void updateWeek(){
+	   weekChart.getData().clear();
+       getWeekDataByDate();
+	    weekChart =createChart();
+       initPane(weekTab, weekChart,new ScrollPane());
+}
+
+ public  void updateMonth(){
+	  monthChart.getData().clear();
+       getMonthDataByDate();
+	    monthChart =createChart();
+       initPane(monthTab, monthChart,new ScrollPane());
+}
 
     private void initPane( Tab tab  , Node chartNode, ScrollPane spane ){
-
-
           HBox hBox = new HBox();
           HBox.setHgrow(chartNode, Priority.ALWAYS);
           hBox.getChildren().add(chartNode);
-
 
 	      spane.setContent(hBox);
 	      spane.setHbarPolicy(ScrollBarPolicy.ALWAYS);
 	      spane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
           tab.setContent(spane);
-
   }
 
     private  void  getDayData(){
@@ -136,6 +172,16 @@ public class CandleStickController  implements Initializable {
     		     obsevableList.add(temp);
     	   }
     }
+    private  void  getDayDataByDate(){
+		if (startDate != null && endDate != null) {
+			List<OHLC_VO> list = stockBl.getDayOHLC_Data(stockCode, startDate, endDate);
+			obsevableList.clear();
+			for (OHLC_VO temp : list) {
+				obsevableList.add(temp);
+			}
+		}
+ }
+
 
     private  void  getWeekData(){
         //默认显示最近一年的数据
@@ -148,6 +194,16 @@ public class CandleStickController  implements Initializable {
  	   }
     }
 
+    private  void  getWeekDataByDate(){
+		if (startDate != null && endDate != null) {
+			List<OHLC_VO> list = stockBl.getWeekOHLC_Data(stockCode, startDate, endDate);
+			obsevableList.clear();
+			for (OHLC_VO temp : list) {
+				obsevableList.add(temp);
+			}
+		}
+    }
+
     private  void  getMonthData(){
         //默认显示最近三年的数据
  	   MyDate end = MyTime.getToDay();
@@ -158,6 +214,17 @@ public class CandleStickController  implements Initializable {
  		     obsevableList.add(temp);
  	   }
     }
+
+    private  void  getMonthDataByDate(){
+		if (startDate != null && endDate != null) {
+			List<OHLC_VO> list = stockBl.getMonthOHLC_Data(stockCode, startDate, endDate);
+			obsevableList.clear();
+			for (OHLC_VO temp : list) {
+				obsevableList.add(temp);
+			}
+		}
+    }
+
 
     private CandleStickChart createChart() {
     	double gap=0.5;

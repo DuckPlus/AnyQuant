@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -22,10 +23,10 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <DatePicker fx:id="beginDate" layoutX="60.0" layoutY="1.0" prefHeight="27.0" prefWidth="116.0" />
-      <DatePicker fx:id="endDate" layoutX="232.0" layoutY="1.0" prefHeight="27.0" prefWidth="116.0" />
-      <Label layoutX="4.0" layoutY="6.0" text="开始时间" textFill="WHITE" />
-      <Label layoutX="180.0" layoutY="6.0" text="结束时间" />
-      <Button layoutX="363.0" layoutY="1.0" mnemonicParsing="false" onAction="#searchByDate" text="查询" />
+      <DatePicker fx:id="beginDate" layoutX="64.0" layoutY="2.0" prefHeight="25.0" prefWidth="120.0" AnchorPane.topAnchor="2.0" />
+      <DatePicker fx:id="endDate" layoutX="256.0" layoutY="3.0" prefHeight="25.0" prefWidth="120.0" AnchorPane.topAnchor="2.0" />
+      <Label layoutX="11.0" layoutY="6.0" text="开始时间" />
+      <Label layoutX="203.0" layoutY="6.0" text="结束时间" />
+      <Button layoutX="387.0" layoutY="3.0" mnemonicParsing="false" onAction="#searchByDate" text="查询" />
    </children>
 </AnchorPane>
