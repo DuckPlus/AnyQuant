@@ -43,8 +43,8 @@ public class CandleStickController  implements Initializable {
     @FXML
     private CandleStickChart chart;
 
-    private static String stockCode="";
-    private static MyDate start=null,end=null;
+    private static String stockCode;
+    private static MyDate startDate,endDate;
   	private static StockBLService stockBl ;
 
   	private static ObservableList<OHLC_VO> obsevableList ;
@@ -54,6 +54,8 @@ public class CandleStickController  implements Initializable {
     public  CandleStickController (){
     	if(instance==null){
     	   stockCode="sh600216";
+    	   startDate = new MyDate(2016,3,1 );
+    	   endDate = new MyDate(2016,4, 1);
     	   stockBl = StockBLImpl.getAPIBLService();
     	   obsevableList = FXCollections.observableArrayList();
     	   obsevableList.clear();
@@ -73,11 +75,14 @@ public class CandleStickController  implements Initializable {
           stockCode = newCode;
     }
 
+    public static void setDate(MyDate start,MyDate end) {
+	    startDate = start;
+	    endDate=end;
+	}
+
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-    	//call selectDay() by deafult
-	    //  selectWeek();
-	  //    selectMonth();
+
     }
 
   public  void selectDay(){
@@ -88,13 +93,13 @@ public class CandleStickController  implements Initializable {
   }
 
   public  void selectWeek(){
-
+         getWeekData();
 	     chart =createChart();
          initPane(weekTab, chart,new ScrollPane());
   }
 
   public  void selectMonth(){
-
+         getMonthData();
 	     chart =createChart();
          initPane(monthTab, chart,new ScrollPane());
  }
@@ -116,17 +121,36 @@ public class CandleStickController  implements Initializable {
   }
 
     private  void  getDayData(){
-    	//   System.out.println("CALL getDayData() ");
+           //默认显示近一个月的数据
     	   MyDate end = MyTime.getToDay();
     	   MyDate start = MyTime.getAnotherDay(-31);
     	   List<OHLC_VO>list =stockBl.getDayOHLC_Data(stockCode, start, end);
     	   obsevableList.clear();
-   // 	   System.out.println("list size : "+list.size());
-
     	   for(OHLC_VO temp : list){
     		     obsevableList.add(temp);
     	   }
-    //	   System.out.println(obsevableList.size());
+    }
+
+    private  void  getWeekData(){
+        //默认显示最近一年的数据
+ 	   MyDate end = MyTime.getToDay();
+ 	   MyDate start = MyTime.getAnotherDay(-90);
+ 	   List<OHLC_VO>list =stockBl.getWeekOHLC_Data(stockCode, start, end);
+ 	   obsevableList.clear();
+ 	   for(OHLC_VO temp : list){
+ 		     obsevableList.add(temp);
+ 	   }
+    }
+
+    private  void  getMonthData(){
+        //默认显示最近三年的数据
+ 	   MyDate end = MyTime.getToDay();
+ 	   MyDate start = MyTime.getAnotherDay(-90);
+ 	   List<OHLC_VO>list =stockBl.getMonthOHLC_Data(stockCode, start, end);
+ 	   obsevableList.clear();
+ 	   for(OHLC_VO temp : list){
+ 		     obsevableList.add(temp);
+ 	   }
     }
 
     private CandleStickChart createChart() {
