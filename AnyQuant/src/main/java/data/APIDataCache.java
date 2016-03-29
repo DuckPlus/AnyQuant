@@ -334,7 +334,7 @@ public class APIDataCache implements APIInterface {
 		MyDate yesterday = MyTime.getAnotherDay(-1);
 		MyDate preMyDate = MyDate.getDateFromString(preDate);
 		if (MyTime.ifEarlier(preMyDate, yesterday) && (!MyTime.isWeekend(yesterday))) {
-			return true;
+			return false;
 		}
 		return false;
 	}
