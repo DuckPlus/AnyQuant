@@ -13,14 +13,14 @@
         <tabs>
           <Tab id="dayTab" fx:id="dayTab" onSelectionChanged="#selectDay" text="Day">
                <content>
-                  <ScrollPane prefHeight="600.0" prefViewportHeight="691.0" prefViewportWidth="905.0" prefWidth="600.0">
+                  <ScrollPane prefHeight="720.0" prefViewportHeight="691.0" prefViewportWidth="905.0" prefWidth="905.0">
                      <content>
-                        <BarChart id="chart" prefHeight="600.0" prefWidth="600.0" stylesheets="@../css/candle.css">
+                        <BarChart id="chart" prefHeight="720.0" prefWidth="905.0" stylesheets="@../css/candle.css">
                           <xAxis>
-                            <CategoryAxis prefWidth="600.0" side="BOTTOM" />
+                            <CategoryAxis prefWidth="905.0" side="BOTTOM" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis prefHeight="500.0" side="LEFT" />
+                            <NumberAxis prefHeight="720.0" side="LEFT" />
                           </yAxis>
                            <styleClass>
                               <String fx:value="candlestick-average-line" />
@@ -39,7 +39,7 @@
                <content>
                   <ScrollPane prefHeight="720.0" prefWidth="905.0">
                      <content>
-                        <BarChart prefHeight="600.0" prefWidth="600.0">
+                        <BarChart prefHeight="696.0" prefWidth="900.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -54,7 +54,7 @@
                <content>
                   <ScrollPane prefHeight="720.0" prefWidth="905.0">
                      <content>
-                        <BarChart prefHeight="600.0" prefWidth="600.0">
+                        <BarChart prefHeight="710.0" prefWidth="923.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>

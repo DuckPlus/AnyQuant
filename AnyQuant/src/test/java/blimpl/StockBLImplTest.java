@@ -88,21 +88,17 @@ public class StockBLImplTest {
 
     @Test
     public void getRecentStocks() throws Exception {
-        Iterator<StockVO> vo = bl.getRecentStocks("600000");
-
-
-
-
+        // not need to test
     }
 
     @Test
     public void getTodayStockVO() throws Exception {
-
+        // not need to test
     }
 
     @Test
     public void getStocksByTime() throws Exception {
-
+        // not need to test
     }
 
     @Test
@@ -155,28 +151,5 @@ public class StockBLImplTest {
 
     }
 
-    @Test
-    public void getOptionalStocks() throws Exception {
 
-    }
-
-    @Test
-    public void addStockCode() throws Exception {
-
-    }
-
-    @Test
-    public void deleteStockCode() throws Exception {
-
-    }
-
-    @Test
-    public void deleteStockCode1() throws Exception {
-
-    }
-
-    @Test
-    public void addStockCode1() throws Exception {
-
-    }
 }
