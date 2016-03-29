@@ -420,6 +420,11 @@ public class APIInterfaceImpl implements APIInterface{
          return null;
 	}
 
+	@Override
+	public boolean clearOptionalStocks() {
+		return false;
+	}
+
 
 	private void writeSelectedStockCodes(List<String> codes){
 		try{

@@ -83,4 +83,9 @@ public class OptionalStockBLServiceImpl implements OptionalStockBLService {
         }
         return result;
     }
+
+    @Override
+    public boolean clearOptionalStocks() {
+        return APIDataSer.clearOptionalStocks();
+    }
 }

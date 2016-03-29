@@ -41,4 +41,11 @@ public interface OptionalStockBLService {
      * @return if this stock has existed in the optional list or the stock not actually exists , return false
      */
     public boolean addStockCode(List<String> stockCodes);
+
+
+    /**
+     * clear all the optional stocks
+     * @return success or not
+     */
+    public boolean clearOptionalStocks();
 }
