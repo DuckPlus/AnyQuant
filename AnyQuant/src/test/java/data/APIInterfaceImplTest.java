@@ -3,26 +3,28 @@ package data;
 import org.junit.Before;
 import org.junit.Test;
 
+import dataservice.APIDataFactory;
+
 import static org.junit.Assert.*;
 
 /**
  * Created by Qiang on 3/27/16.
  */
 public class APIInterfaceImplTest {
-
+	APIInterfaceImpl api;
     @Before
     public void setUp() throws Exception {
-
+        api= (APIInterfaceImpl) APIInterfaceImpl.getAPIInterfaceImpl();
     }
 
     @Test
     public void getAPIInterfaceImpl() throws Exception {
-
+      
     }
 
     @Test
     public void getAllStocks() throws Exception {
-
+          
     }
 
     @Test
