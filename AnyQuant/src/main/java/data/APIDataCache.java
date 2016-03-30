@@ -332,7 +332,7 @@ public class APIDataCache implements APIInterface {
 	public void updateSelectedStockInfo(){
        List<String>  selectedStocks = api.getSelectedStockCodes();
        for(String code: selectedStocks){
-    	   if(code!=null){
+    	   if(code!=null&&!code.equals("")){
     	         updateStockInfo(code);
     	   }
        }

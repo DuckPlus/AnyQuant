@@ -22,7 +22,7 @@ public class APIDataCacheTest {
 
     @Before
     public void setUp() throws Exception {
-        
+
     }
 
     @Test
@@ -86,7 +86,7 @@ public class APIDataCacheTest {
     }
 
     @Test
-    public void dealOptionalStock() throws Exception {
+    public void deleteOptionalStock() throws Exception {
 
     }
 

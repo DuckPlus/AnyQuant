@@ -14,6 +14,7 @@ import vo.BenchMark;
 
 import static org.junit.Assert.*;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -144,21 +145,52 @@ public class APIInterfaceImplTest {
 
     @Test
     public void getAllBenchMes() throws Exception {
-
+    	List<BenchMarkPO> pos = api.getAllBenchMes();
+    	if(pos==null){
+    		fail("fail to pass getAllBenchMes()");
+    	}
     }
 
     @Test
     public void getOptionalStocks() throws Exception {
-
-    }
-
-    @Test
-    public void dealOptionalStock() throws Exception {
-
+    	Iterator<StockPO> it = api.getOptionalStocks();
+    	if(it==null){
+    		fail("fail to pass getOptionalStocks()");
+    	}
     }
 
     @Test
     public void addOptionalStock() throws Exception {
-
+        api.addOptionalStock("sh600000");
+        List<String> codes  = api.getSelectedStockCodes();
+       for(String code:codes){
+    	   if(code.equals("sh600000")){
+    		    return;
+    	   }
+       }
+       fail("fail to pass addOptionalStock()");
     }
+
+    @Test
+    public void deleteOptionalStock() throws Exception {
+    	  api.addOptionalStock("sh600001");
+    	 List<String> codes  = api.getSelectedStockCodes();
+    	 if(codes.size()>=1){
+    		 String toDeleteString = codes.get(codes.size()-1);
+            api.deleteOptionalStock(toDeleteString);
+            System.out.println("delete "+toDeleteString);
+            List<String> newcodes  = api.getSelectedStockCodes();
+            if(newcodes.size()==codes.size()){
+               fail("fail to pass deleteOptionalStock()");
+            }
+
+            for(String newcode:newcodes){
+            	if(newcode.equals(toDeleteString)){
+            		fail("fail to pass deleteOptionalStock()");
+            	}
+            }
+  	     }
+    }
+
+
 }

@@ -408,8 +408,11 @@ public class APIInterfaceImpl implements APIInterface{
 		List<String> codeStrings =getSelectedStockCodes() ;
 		StockPO temp = null;
         for(String code: codeStrings){
-               temp= getStockMes(code);
-               pos.add(temp);
+        	   if(code.length()>2){
+        		   System.out.println(code);
+                    temp= getStockMes(code);
+                    pos.add(temp);
+        	   }
         }
 		return  pos.iterator();
 	}
@@ -427,9 +430,12 @@ public class APIInterfaceImpl implements APIInterface{
 	public boolean addOptionalStock(String stockCode) {
 		// TODO Auto-generated method stub
 		List<String>  CodeStrings = getSelectedStockCodes();
-		CodeStrings.add(stockCode);
-		writeSelectedStockCodes(CodeStrings);
-		return true;
+		if(!CodeStrings.contains(stockCode)){
+		     CodeStrings.add(stockCode);
+		     writeSelectedStockCodes(CodeStrings);
+		     return true;
+		}
+		return false;
 	}
 
 
