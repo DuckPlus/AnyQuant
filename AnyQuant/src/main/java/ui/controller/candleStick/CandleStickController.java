@@ -8,18 +8,23 @@ import java.util.ResourceBundle;
 import blimpl.StockBLImpl;
 import blservice.StockBLService;
 import enumeration.MyDate;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.Chart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.image.Image;
 import javafx.scene.control.Tab;
 
 import javafx.scene.layout.HBox;
@@ -58,7 +63,7 @@ public class CandleStickController  implements Initializable {
   	private static ObservableList<OHLC_VO> obsevableList ;
 
   	private static CandleStickController instance;
-
+    private static ProgressIndicator progressIndicator;
     public  CandleStickController (){
     	if(instance==null){
     	   stockCode="sh600000";
@@ -85,32 +90,63 @@ public class CandleStickController  implements Initializable {
 
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+    	progressIndicator = createProgressIndicator();
     	startDatePicker.setValue(LocalDate.now());
 		endDatePicker.setValue(LocalDate.now());
 		startDatePicker.setEditable(false);
 		endDatePicker.setEditable(false);
-		selectDay();
-		selectMonth();
-		selectWeek();
+		initCharts();
     }
+    //double click to enter this scene
+  public void initCharts(){
+		Task initTask = createInitWorker();
+		progressIndicator.setVisible(true);
+		progressIndicator.progressProperty().unbind();
+		progressIndicator.progressProperty().bind( initTask.progressProperty());
+		new Thread( initTask).start();
 
-   @FXML
-   public void updateChart(){
-	    startDate = new MyDate
+  }
+
+  //set date  to update charts
+  @FXML
+public void updateCharts(){
+       startDate = new MyDate
 			   (startDatePicker.getValue().getYear(), startDatePicker.getValue().getMonthValue(), startDatePicker.getValue().getDayOfMonth());
 		endDate  = new MyDate
 				(endDatePicker.getValue().getYear(), endDatePicker.getValue().getMonthValue(), endDatePicker.getValue().getDayOfMonth());
-       updateDay();
-       updateWeek();
-       updateMonth();
-   }
+
+		Task updateTask = createUpdateWorker();
+		progressIndicator.setVisible(true);
+		progressIndicator.progressProperty().unbind();
+		progressIndicator.progressProperty().bind( updateTask.progressProperty());
+		new Thread( updateTask).start();
+}
+
+
+
+  public void  prepareInitCharts(){
+	  selectDay();
+	  selectWeek();
+	  selectMonth();
+  }
+
+  public void  prepareUpdateCharts(){
+	updateDay();
+	updateWeek();
+	updateMonth();
+  }
+
+  public void displayCharts(){
+	     initPane(dayTab, dayChart,new ScrollPane());
+		 initPane(weekTab, weekChart,new ScrollPane());
+		 initPane(monthTab, monthChart,new ScrollPane());
+  }
 
 
    public  void selectDay(){
 	   if(dayChart==null){
 	     getDayData();
 	     dayChart =createChart();
-         initPane(dayTab, dayChart,new ScrollPane());
 	   }
   }
 
@@ -118,7 +154,6 @@ public class CandleStickController  implements Initializable {
 	   if(weekChart==null){
          getWeekData();
 	     weekChart =createChart();
-         initPane(weekTab, weekChart,new ScrollPane());
        }
   }
 
@@ -126,29 +161,26 @@ public class CandleStickController  implements Initializable {
 	   if(monthChart==null){
          getMonthData();
 	     monthChart =createChart();
-         initPane(monthTab, monthChart,new ScrollPane());
+
 	   }
  }
 
-   public  void updateDay(){
+ public  void updateDay(){
 	     dayChart.getData().clear();
 	     getDayDataByDate();
 	     dayChart =createChart();
-         initPane(dayTab, dayChart,new ScrollPane());
 }
 
  public  void updateWeek(){
 	   weekChart.getData().clear();
        getWeekDataByDate();
 	    weekChart =createChart();
-       initPane(weekTab, weekChart,new ScrollPane());
 }
 
  public  void updateMonth(){
 	  monthChart.getData().clear();
        getMonthDataByDate();
 	    monthChart =createChart();
-       initPane(monthTab, monthChart,new ScrollPane());
 }
 
     private void initPane( Tab tab  , Node chartNode, ScrollPane spane ){
@@ -257,6 +289,57 @@ public class CandleStickController  implements Initializable {
         return candleStickChart;
     }
 
+
+	/*
+	 * Create a progress indicator control to be centered.
+	 *
+	 * @param scene The primary application scene.
+	 *
+	 * @return ProgressIndicator a new progress indicator centered.
+	 */
+	private ProgressIndicator createProgressIndicator() {
+		ProgressIndicator progress = new ProgressIndicator(0);
+		progress.setVisible(false);
+	//	progress.layoutXProperty().bind(scene.widthProperty().subtract(progress.widthProperty()).divide(2));
+	//	progress.layoutYProperty().bind(scene.heightProperty().subtract(progress.heightProperty()).divide(2));
+		return progress;
+	}
+
+	private Task createInitWorker() {
+		return new Task() {
+			@Override
+			protected Object call() throws Exception {
+				// on the worker thread...
+
+				Platform.runLater(() -> {
+					prepareInitCharts();
+					// on the JavaFX Application Thread....
+					System.out.println("done initCharts");
+					displayCharts();
+					progressIndicator.setVisible(false);
+				});
+				return true;
+			}
+		};
+	}
+
+
+	private Task createUpdateWorker() {
+		return new Task() {
+			@Override
+			protected Object call() throws Exception {
+				// on the worker thread...
+			    prepareUpdateCharts();
+				Platform.runLater(() -> {
+					// on the JavaFX Application Thread....
+					System.out.println("done updateCharts");
+					displayCharts();
+					progressIndicator.setVisible(false);
+				});
+				return true;
+			}
+		};
+	}
 
     private double getMin(){
     	double min=100;
