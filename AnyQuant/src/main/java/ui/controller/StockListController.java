@@ -64,26 +64,19 @@ public class StockListController{
 	//get the logic service
 	StockBLService stockBl = StockBLImpl.getAPIBLService();
 	//
-	ObservableList<Stock> obsevableList ;
+	ObservableList<Stock> observableList ;
 
 	BorderPane stockDetailPane;
 	AnchorPane chartPane;
 
 	public StockListController() {
-		System.out.println("hello constractor");
-		obsevableList = FXCollections.observableArrayList();
-//		tableview.setOnMouseClicked(value);
-		
-		System.err.println(tableview.getStyleClass());
+		observableList = FXCollections.observableArrayList();
 	}
 	@FXML
 	private void initialize(){
-		System.out.println("hello init");
-
 		stockDetailPane = (BorderPane)GraphicsUtils.getParent("StockDetail");
 		showStocklist();
 		
-//		setCss();
 	}
 	
 	private void setCss(){
@@ -134,14 +127,14 @@ public class StockListController{
 	}
 
 	private void showTableData(Iterator<StockVO>itr){
-		tableview.getItems().removeAll(obsevableList);
+		tableview.getItems().removeAll(observableList);
 		while(itr.hasNext()){
 			StockVO temp = itr.next();
 			Stock dataProperty = new Stock(temp);
-			obsevableList.add(dataProperty);
+			observableList.add(dataProperty);
 		}
 
-		tableview.setItems(obsevableList);
+		tableview.setItems(observableList);
 		name.setCellValueFactory(cell -> cell.getValue().name);
 		code.setCellValueFactory(cell -> cell.getValue().code);
 		open.setCellValueFactory(cell ->cell.getValue().open.asObject());
@@ -156,7 +149,7 @@ public class StockListController{
 	@FXML
 	private void delAllData(){
 //		int sum = tableview.getItems().size();
-		tableview.getItems().removeAll(obsevableList);
+		tableview.getItems().removeAll(observableList);
 	}
 	@FXML
 	private void handleMouseClick(MouseEvent event){
@@ -199,13 +192,13 @@ public class StockListController{
 			chartPane = (AnchorPane)GraphicsUtils.getParent("CandleStickPane");
 			stockDetailPane.setCenter(chartPane);
 			
-//			if(candleStickController==null){
-//				candleStickController = CandleStickController.getCandleStickController();
-//			}
-			MyDate begin = new MyDate(2016, 03, 01);
-			MyDate end = new MyDate(2016, 03, 20);
+			if(candleStickController==null){
+				candleStickController = CandleStickController.getCandleStickController();
+			}
+//			MyDate begin = new MyDate(2016, 03, 01);
+//			MyDate end = new MyDate(2016, 03, 20);
 //			candleStickController.setDate(begin, end);
-//			candleStickController.setStockCode(selectedStock.code.get());
+			candleStickController.setStockCode(selectedStock.code.get());
 			stockDetailController.setData(selectedStock);
 			rightPaneController.showDetailPane(stockDetailPane);
 		}

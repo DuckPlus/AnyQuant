@@ -20,6 +20,7 @@ public class RightPaneController{
 	private static BorderPane pane;
 	private BorderPane stockListPane;
 	private Pane benchMarkPane;
+	private BorderPane optionalStockPane;
 	@FXML
 	private ImageView min;
 	@FXML
@@ -44,7 +45,8 @@ public class RightPaneController{
 	public void initialize() {
 		stockListPane = (BorderPane) GraphicsUtils.getParent("StockList");
 		 benchMarkPane = (Pane) GraphicsUtils.getParent("BenchMarkPane");
-
+		 optionalStockPane = (BorderPane) GraphicsUtils.getParent("optionalStock");
+		 System.out.println("left init done");
 	}
 
 	void showStockListPane() {
@@ -63,6 +65,11 @@ public class RightPaneController{
 		pane.getChildren().clear();
 		pane.setCenter(Pane);
 	}
+	 void showOptionalStockPane(){
+		 System.out.println("optional Pane");
+		 pane.getChildren().clear();
+		 pane.setCenter(optionalStockPane);
+	 }
 
 	static void  setPane(Pane pane){
 		if(RightPaneController.pane == null){

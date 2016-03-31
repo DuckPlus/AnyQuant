@@ -1,13 +1,11 @@
 package ui.controller;
 
+import blimpl.OptionalStockBLServiceImpl;
+import blservice.OptionalStockBLService;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TabPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import ui.GraphicsUtils;
 import vo.Stock;
-import vo.StockVO;
 
 public class StockDetailController {
 
@@ -31,8 +29,10 @@ public class StockDetailController {
 	Label pe;
 	@FXML
 	Label pb;
-
-
+	@FXML
+	Button addBtn;
+	private Stock currentStock;
+	OptionalStockBLService optionBl = OptionalStockBLServiceImpl.getOptionalBLService();
 
 	private static StockDetailController instance;
 
@@ -77,6 +77,7 @@ public class StockDetailController {
 //			}else{
 //				System.out.println("not null in set method");
 //				}
+		currentStock = stock;
 		System.out.println("changed!!");
 //		System.out.println(stock.name.get());
 		nameLabel.setText(stock.name.get());
@@ -89,5 +90,15 @@ public class StockDetailController {
 		pe.setText(String.valueOf(stock.pe_ttm.get()));
 		pb.setText(String.valueOf(stock.pb.get()));
 		volume.setText(String.valueOf(stock.volume.get()));
+		addBtn.setText("加入自选股");
+	}
+	@FXML
+	private void addOptionalStock(){
+		boolean added=optionBl.addStockCode(currentStock.code.get());
+		if(!added){
+			addBtn.setText("已存在自选股");
+		}else{
+			addBtn.setText("加入成功");
+		}
 	}
 }
