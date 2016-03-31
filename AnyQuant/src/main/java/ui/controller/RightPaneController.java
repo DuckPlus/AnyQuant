@@ -1,10 +1,8 @@
 package ui.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -22,7 +20,6 @@ public class RightPaneController{
 	private static BorderPane pane;
 	private BorderPane stockListPane;
 	private Pane benchMarkPane;
-	private Pane stockDetailPane;
 	@FXML
 	private ImageView min;
 	@FXML

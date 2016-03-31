@@ -4,18 +4,26 @@ import java.util.Iterator;
 
 import blimpl.StockBLImpl;
 import blservice.StockBLService;
+import enumeration.MyDate;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.util.Callback;
 import ui.GraphicsUtils;
+import ui.controller.candleStick.CandleStickController;
 import vo.Stock;
 import vo.StockVO;
 
@@ -52,6 +60,7 @@ public class StockListController{
 
 	RightPaneController rightPaneController = RightPaneController.getRightPaneController();
 	StockDetailController stockDetailController;// = StockDetailController.getStockDetailController();
+	CandleStickController candleStickController;
 	//get the logic service
 	StockBLService stockBl = StockBLImpl.getAPIBLService();
 	//
@@ -64,6 +73,8 @@ public class StockListController{
 		System.out.println("hello constractor");
 		obsevableList = FXCollections.observableArrayList();
 //		tableview.setOnMouseClicked(value);
+		
+		System.err.println(tableview.getStyleClass());
 	}
 	@FXML
 	private void initialize(){
@@ -71,6 +82,44 @@ public class StockListController{
 
 		stockDetailPane = (BorderPane)GraphicsUtils.getParent("StockDetail");
 		showStocklist();
+		
+//		setCss();
+	}
+	
+	private void setCss(){
+		System.out.println("css");
+		
+//		code.setCellFactory(new Callback<TableColumn<Stock,String>, TableCell<Stock,String>>() {
+//			
+//			@Override
+//			public TableCell<Stock, String> call(TableColumn<Stock, String> param) {
+//				// TODO Auto-generated method stub
+//				return new TableCell<Stock,String>(){
+//					ObservableValue ov;  
+//                    @Override  
+//                    public void updateItem(String item, boolean empty) {  
+//                        super.updateItem(item, empty);  
+//                        if (!isEmpty()) {  
+//                            ov = getTableColumn().getCellObservableValue(getIndex());  
+////                             System.err.println("!!"+ov.getValue());  
+//                               
+//                            if(getTableRow() != null){  
+////                            	this.getTableRow().getStyle()
+//                                this.getTableRow().setStyle("-fx-background-color: black");  
+//                                System.out.println("===="+this.getTableRow().getStyle());
+//                            }  
+////                            this.setTextFill(Color.RED);  
+//                            // Get fancy and change color based on data 
+//                            
+//                            if (item.contains("@"))  
+//                                this.setTextFill(Color.YELLOW);  
+//                            setText(item);  
+//                        }  
+//                    }
+//				};
+//			}
+//		});
+//		tableview.getStyleClass().add("stockList");
 	}
 
 	/**
@@ -81,7 +130,7 @@ public class StockListController{
 
 		Iterator<StockVO>itr = stockBl.getAllStocks();
 		showTableData(itr);
-
+		
 	}
 
 	private void showTableData(Iterator<StockVO>itr){
@@ -132,8 +181,12 @@ public class StockListController{
 			//The stockDetailController is null at first, and it must generated after the fxml has initialize
 			//it, otherwise we will get a totally defferent object from the fxml's
 			if(stockDetailController==null){
+				System.err.println("============new controller============");
 			      stockDetailController = StockDetailController.getStockDetailController();
 			}
+			
+			
+//			if()
 //			if(sc.nameLabel==null){
 //				System.out.println("controller null");
 //			}else{
@@ -145,14 +198,26 @@ public class StockListController{
 
 			chartPane = (AnchorPane)GraphicsUtils.getParent("CandleStickPane");
 			stockDetailPane.setCenter(chartPane);
+			
+//			if(candleStickController==null){
+//				candleStickController = CandleStickController.getCandleStickController();
+//			}
+			MyDate begin = new MyDate(2016, 03, 01);
+			MyDate end = new MyDate(2016, 03, 20);
+//			candleStickController.setDate(begin, end);
+//			candleStickController.setStockCode(selectedStock.code.get());
 			stockDetailController.setData(selectedStock);
 			rightPaneController.showDetailPane(stockDetailPane);
 		}
 	}
 	@FXML
 	private void searchStocklist(){
-		System.out.println("hello search in time:  ["+searchBar.getText()+"]end");
+//		System.out.println("hello search in time:  ["+searchBar.getText()+"]end");
 		String stockCode = searchBar.getText();
+		if(stockCode.equals("")){
+			showStocklist();
+			return;
+		}
 		Iterator<StockVO>itr =stockBl.getStocksByStockCode(stockCode);
 		showTableData(itr);
 	}

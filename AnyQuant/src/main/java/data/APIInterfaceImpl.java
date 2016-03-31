@@ -37,7 +37,7 @@ import jnr.ffi.Struct.int16_t;
 public class APIInterfaceImpl implements APIInterface{
 
 	 private static  APIInterfaceImpl apiInterfaceImpl;
-	 private Map<String ,String> codeNameMap;
+	 private static Map<String ,String> codeNameMap;
 	 private static String nameFilePath = "cache//name.txt";
 	 private static String optionalCodesFilePath = "cache//OptionalStocks.txt";
 	 private APIInterfaceImpl(){
@@ -145,7 +145,7 @@ public class APIInterfaceImpl implements APIInterface{
 	}
 
     /**
-     * 默认返回2015年，上海交易所
+     * 默认返回2015年全部股票
      */
 	public List<String> getAllStocks() {
 
@@ -221,6 +221,7 @@ public class APIInterfaceImpl implements APIInterface{
 		 MyDate  temp = MyTime.getFirstPreWorkDay(end);
 		 MyDate    start =   MyTime.getFirstPreWorkDay(temp);
 		 while(getStockMesCount(stockCode,start,end)<2){
+			    temp = MyTime.getFirstPreWorkDay(temp);
 			    start =   MyTime.getFirstPreWorkDay(temp);
 		 }
 		 List<StockPO>  stocks = getManyMesFunc(stockCode, start, end);
@@ -315,7 +316,10 @@ public class APIInterfaceImpl implements APIInterface{
 		//当天可能没有数据
 		 MyDate end = MyTime.getToDay();
 		 MyDate  start = MyTime.getFirstPreWorkDay(end);
-		 List<BenchMarkPO>  benches = getBenchMes(benchCode, start, end);
+		 while(getBenchMesCount(benchCode, start, end)<1){
+              start=MyTime.getFirstPreWorkDay(start);
+		 }
+		 List<BenchMarkPO>  benches =getManyBenchMesFunc(benchCode, start, end);
          return  benches.get(benches.size()-1);
 	}
 
@@ -323,22 +327,58 @@ public class APIInterfaceImpl implements APIInterface{
 
 	@Override
 	public List<BenchMarkPO> getBenchMes(String benchCode, MyDate start, MyDate end) {
-		String startTime = start.DateToString();
-		String endTime = end.DateToString();
-		String url = "http://121.41.106.89:8010/api/benchmark/"+benchCode+"/?start="+startTime +"&end="+endTime ;
-//	    System.out.println(SendGET(url, ""));
-		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
-		JSONObject data = jo.getJSONObject("data");
-		JSONArray trading_info = data.getJSONArray("trading_info");
-		List<BenchMarkPO> benchs =  new  ArrayList<>();
-		for(int i=0;i<trading_info.size();i++){
-			BenchMarkPO  bench  = MyJSONObject.toBean(trading_info.getJSONObject(i), BenchMarkPO.class);
-			bench.setCode(benchCode);
-			benchs.add(bench);
+		if(  MyTime.getAnotherDay(start,1 ).DateToString().equals(end.DateToString())
+				&&end.DateToString().equals(MyTime.getToDay())){
+			List<BenchMarkPO> benchMarkPOs = new ArrayList<>();
+			benchMarkPOs.add(getBenchMes(benchCode));
+			return  benchMarkPOs;
 		}
 
-		return benchs;
+		if(  start.DateToString().equals(end.DateToString())
+				&&end.DateToString().equals(MyTime.getToDay().DateToString()) ){
+			  List<BenchMarkPO> benchMarkPOs = new ArrayList<>();
+			   return benchMarkPOs;
+		}
+
+		if(MyTime.ifEarlier(MyTime.getToDay(), start)){
+			List<BenchMarkPO> benchMarkPOs = new ArrayList<>();
+			   return benchMarkPOs;
+		}
+
+		return getManyBenchMesFunc(benchCode, start, end);
+
 	}
+
+		private List<BenchMarkPO> getManyBenchMesFunc(String benchCode, MyDate start, MyDate end) {
+			String startTime = start.DateToString();
+			String endTime = end.DateToString();
+			String url = "http://121.41.106.89:8010/api/benchmark/"+benchCode+"/?start="+startTime +"&end="+endTime ;
+//		    System.out.println(SendGET(url, ""));
+			JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
+			JSONObject data = jo.getJSONObject("data");
+			JSONArray trading_info = data.getJSONArray("trading_info");
+			List<BenchMarkPO> benchs =  new  ArrayList<>();
+			for(int i=0;i<trading_info.size();i++){
+				BenchMarkPO  bench  = MyJSONObject.toBean(trading_info.getJSONObject(i), BenchMarkPO.class);
+				bench.setCode(benchCode);
+				benchs.add(bench);
+			}
+
+			return benchs;
+	}
+
+		//不确定会有几个数据调用该方法，返回数据个数
+		private  int    getBenchMesCount(String benchCode, MyDate start, MyDate end){
+			String startTime = start.DateToString();
+			String endTime = end.DateToString();
+			String url = "http://121.41.106.89:8010/api/benchmark/"+benchCode+"/?start="+startTime +"&end="+endTime ;
+//		    System.out.println(SendGET(url, ""));
+			JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
+			JSONObject data = jo.getJSONObject("data");
+			JSONArray trading_info = data.getJSONArray("trading_info");
+			return trading_info.size();
+		}
+
 
 	/**
 	 * 返回所有大盘代码,目前只有hs300
@@ -368,8 +408,11 @@ public class APIInterfaceImpl implements APIInterface{
 		List<String> codeStrings =getSelectedStockCodes() ;
 		StockPO temp = null;
         for(String code: codeStrings){
-               temp= getStockMes(code);
-               pos.add(temp);
+        	   if(code.length()>2){
+        		   System.out.println(code);
+                    temp= getStockMes(code);
+                    pos.add(temp);
+        	   }
         }
 		return  pos.iterator();
 	}
@@ -387,9 +430,12 @@ public class APIInterfaceImpl implements APIInterface{
 	public boolean addOptionalStock(String stockCode) {
 		// TODO Auto-generated method stub
 		List<String>  CodeStrings = getSelectedStockCodes();
-		CodeStrings.add(stockCode);
-		writeSelectedStockCodes(CodeStrings);
-		return true;
+		if(!CodeStrings.contains(stockCode)){
+		     CodeStrings.add(stockCode);
+		     writeSelectedStockCodes(CodeStrings);
+		     return true;
+		}
+		return false;
 	}
 
 
@@ -422,7 +468,10 @@ public class APIInterfaceImpl implements APIInterface{
 
 	@Override
 	public boolean clearOptionalStocks() {
-		return false;
+		List<String>  CodeStrings = getSelectedStockCodes();
+		CodeStrings.clear();
+		writeSelectedStockCodes(CodeStrings);
+		return true;
 	}
 
 
