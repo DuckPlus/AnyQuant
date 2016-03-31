@@ -67,16 +67,20 @@ public class OptionalStockBLServiceImplTest {
 
     @Test
     public void deleteStockCode1() throws Exception {
-
+        // no need to test
     }
 
     @Test
     public void addStockCode1() throws Exception {
-
+        // no need to test
     }
 
     @Test
     public void clearOptionalStocks() throws Exception {
-
+        bl.clearOptionalStocks();
+        Iterator<StockVO>  tmp = bl.getOptionalStocks();
+        if(tmp.hasNext()){
+            fail();
+        }
     }
 }
