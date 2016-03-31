@@ -33,7 +33,7 @@ public class MainAPP extends Application {
 		stage.setTitle("AnyQuant");
 
 		stage.initStyle(StageStyle.UNDECORATED);
-		 addDragListeners(rootpane, primaryStage);
+		addDragListeners(rootpane, primaryStage);
 		stage.setResizable(false);
 		stage.show();
 
@@ -62,7 +62,7 @@ public class MainAPP extends Application {
 
 
 
-	double x, y;
+	private double x, y;
 
 	private void addDragListeners(final Node n, Stage primaryStage){
 

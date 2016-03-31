@@ -39,7 +39,6 @@ public class StockBLImpl implements StockBLService {
     private Map<String, StockVO> stockMap;
 
 
-
     /*
      * 为了加快测试速度，在开发阶段只引入100只股票
      */
@@ -133,10 +132,8 @@ public class StockBLImpl implements StockBLService {
     @Override
     public Iterator<StockVO> getStocksByStockCode(String code) {
         List<StockVO> result = new ArrayList<StockVO>();
-
-        for (Iterator<String> iterator = stockMap.keySet().iterator(); iterator
-                .hasNext(); ) {
-            String temp = iterator.next();
+        for (String temp : stockMap.keySet()
+                ) {
             if (temp.contains(code)) {
                 result.add(stockMap.get(temp));
             }
@@ -144,6 +141,7 @@ public class StockBLImpl implements StockBLService {
                 break;
             }
         }
+
 
         return result.iterator();
     }
@@ -194,9 +192,6 @@ public class StockBLImpl implements StockBLService {
                 monday = i * DAY_OF_WEEK;
                 friday = i == weekNum - 1 ? (len % DAY_OF_WEEK - 1) : 4;
                 // Friday sometimes means the last trading day in this week
-                System.out.println("------");
-                System.out.println(monday);
-                System.out.println(friday);
                 results.add(new OHLC_VO(MyDate.getDateFromString(pos
                         .get(monday).getDate()),
                         pos.get(monday).getOpen(),
@@ -215,12 +210,12 @@ public class StockBLImpl implements StockBLService {
     public List<OHLC_VO> getMonthOHLC_Data(String stockCode, MyDate start,
                                            MyDate end) {
         int MONTH_DAY = 31;
-        List<OHLC_VO> vos;
-        List<StockPO> pos = new ArrayList<StockPO>(25);
+        List<OHLC_VO> vos ;
+        List<StockPO> pos ;
 
         int monthNum = 12 * (end.getYear() - start.getYear()) + end.getMonth()
                 - start.getMonth() + 1;
-        vos = new ArrayList<OHLC_VO>(monthNum);
+        vos = new ArrayList<>(monthNum);
         MyDate thisMonth = start.clone();
         MyDate monthEnd = thisMonth.clone();
         // System.out.println(start.DateToString());
@@ -311,7 +306,7 @@ public class StockBLImpl implements StockBLService {
 
         int monthNum = 12 * (end.getYear() - start.getYear()) + end.getMonth()
                 - start.getMonth() + 1;
-        vos = new ArrayList<DealVO>(monthNum);
+        vos = new ArrayList<>(monthNum);
         MyDate thisMonth = start.clone();
         MyDate monthEnd = thisMonth.clone();
         thisMonth.setDay(1);
