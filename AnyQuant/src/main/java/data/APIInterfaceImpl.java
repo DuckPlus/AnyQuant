@@ -468,10 +468,27 @@ public class APIInterfaceImpl implements APIInterface{
 
 	@Override
 	public boolean clearOptionalStocks() {
-		List<String>  CodeStrings = getSelectedStockCodes();
-		CodeStrings.clear();
-		writeSelectedStockCodes(CodeStrings);
-		return true;
+		try{
+
+	         File file =new File(optionalCodesFilePath);
+	         file.delete();
+	         //if file doesnt exists, then create it
+	         if(!file.exists()){
+	                file.createNewFile();
+	         }
+
+	         //true = append file
+	         FileWriter fileWritter = new FileWriter(file,false);
+	         BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+
+	         bufferWritter.write("");
+
+	         bufferWritter.close();
+	         System.out.println("Done");
+	    }catch(IOException e){
+	            e.printStackTrace();
+	    }
+         return true;
 	}
 
 

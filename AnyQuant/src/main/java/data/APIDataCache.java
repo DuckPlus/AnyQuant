@@ -418,7 +418,7 @@ public class APIDataCache implements APIInterface {
 
 	@Override
 	public boolean clearOptionalStocks() {
-		return false;
+		return api.clearOptionalStocks();
 	}
 
 }

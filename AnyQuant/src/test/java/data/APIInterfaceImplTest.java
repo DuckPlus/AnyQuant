@@ -79,36 +79,36 @@ public class APIInterfaceImplTest {
 
     @Test
     public void getStockMes() throws Exception {
-
+        StockPO stockPO = api.getStockMes("sh600216");
+        if(stockPO==null){
+     	   fail("fail to pass getStockMes()--NULL");
+        }else if(!stockPO.getCode().equals("sh600216")){
+     	   fail("fail to pass getStockMes()");
+        }else if(!stockPO.getName().equals("浙江医药")){
+     	   fail("fail to pass getStockMes()");
+        }
     }
 
     @Test
     public void getStockMes1() throws Exception {
-       StockPO stockPO = api.getStockMes("sh600216");
-       if(stockPO==null){
-    	   fail("fail to pass getStockMes1()--NULL");
-       }else if(!stockPO.getCode().equals("sh600216")){
-    	   fail("fail to pass getStockMes1()");
-       }else if(!stockPO.getName().equals("浙江医药")){
-    	   fail("fail to pass getStockMes1()");
-       }
-    }
-
-    @Test
-    public void getAllStockMes() throws Exception {
     	MyDate end = MyTime.getToDay();
     	MyDate start = MyTime.getAnotherDay(-10);
         List<StockPO>  stocks = api.getStockMes("sh600216",start,end);
 
         if(stocks==null){
-     	   fail("fail to pass getStockMes2()--NULL");
+     	   fail("fail to pass getStockMes1()--NULL");
         }else if(!stocks.get(0).getCode().equals("sh600216")){
-     	   fail("fail to pass getStockMes2()");
+     	   fail("fail to pass getStockMes1()");
         }else if(!stocks.get(0).getName().equals("浙江医药")){
-     	   fail("fail to pass getStockMes2()");
+     	   fail("fail to pass getStockMes1()");
         }else if(!stocks.get(0).getDate().equals("2016-03-21")){
-        	fail("fail to pass getStockMes2()");
+        	fail("fail to pass getStockMes1()");
         }
+    }
+
+    @Test
+    public void getAllStockMes() throws Exception {
+
     }
 
     @Test
