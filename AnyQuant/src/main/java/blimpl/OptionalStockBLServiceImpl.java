@@ -11,7 +11,9 @@ import vo.StockVO;
 import java.util.*;
 
 /**
- * Created by Qiang on 3/29/16.
+ *
+ * @author Qiang
+ * @date 3/29/16.
  */
 public class OptionalStockBLServiceImpl implements OptionalStockBLService {
 

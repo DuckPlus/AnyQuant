@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import ui.controller.HomeController;
 /**
  * JavaFX Launcher
@@ -20,7 +19,7 @@ public class MainAPP extends Application {
 	/**
 	 * 背景Pane
 	 */
-	private SplitPane rootpane;
+	private SplitPane rootPane;
 
 
 
@@ -29,11 +28,11 @@ public class MainAPP extends Application {
 		this.stage = primaryStage;
 		this.initialize();
 
-		new HomeController(rootpane,stage);
+		new HomeController(rootPane,stage);
 		stage.setTitle("AnyQuant");
 
 
-		 addDragListeners(rootpane, primaryStage);
+		 addDragListeners(rootPane, primaryStage);
 		stage.setResizable(false);
 		stage.show();
 
@@ -43,9 +42,9 @@ public class MainAPP extends Application {
 
 	private void initialize() {
 
-		rootpane = (SplitPane) GraphicsUtils.getParent("RootPane");
+		rootPane = (SplitPane) GraphicsUtils.getParent("RootPane");
 
-		Scene scene = new Scene(rootpane);
+		Scene scene = new Scene(rootPane);
 		stage.setScene(scene);
 
 	}

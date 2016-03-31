@@ -7,7 +7,7 @@ import enumeration.MyDate;
 
 /**
  * 大盘逻辑层接口
- * @author czq
+ * @author Qiang
  * @date 2016年3月10日
  */
 public interface BenchMarkBLService {

@@ -6,38 +6,40 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by Qiang on 3/29/16.
+ * Business Logic Interface on Optional Stocks
+ * @author Qiang
+ * @date 3/29/16.
  */
 public interface OptionalStockBLService {
     /**
      * Get today's(or last trading day)data of the optional(自选的) stockCodes
-     * @return
+     * @return a Collection's Iterator on StockVOs
      */
     public Iterator<StockVO> getOptionalStocks();
     /**
      * delete optional stocks
-     * @param stockCode
+     * @param stockCode the stock to delete
      * @return if not exist, return false , if success return true
      */
     public boolean deleteStockCode(String stockCode);
 
     /**
      * delete optional stocks
-     * @param stockCode the list of the stockCodes
+     * @param stockCode the list of the stockCodes to delete
      * @return if not exist, return false , if success return true
      */
     public boolean deleteStockCode(List<String> stockCode);
 
     /**
      * add optional stocks
-     * @param stockCode
+     * @param stockCode the stock to add
      * @return if this stock has existed in the optional list or the stock not actually exists , return false
      */
     public boolean addStockCode(String stockCode);
 
     /**
      * add optional stocks
-     * @param stockCodes
+     * @param stockCodes the list of stock to add
      * @return if this stock has existed in the optional list or the stock not actually exists , return false
      */
     public boolean addStockCode(List<String> stockCodes);
@@ -45,7 +47,7 @@ public interface OptionalStockBLService {
 
     /**
      * clear all the optional stocks
-     * @return success or not
+     * @return success or fail
      */
     public boolean clearOptionalStocks();
 }
