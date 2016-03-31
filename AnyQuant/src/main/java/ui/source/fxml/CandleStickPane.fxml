@@ -11,9 +11,9 @@
    <children>
       <DatePicker fx:id="endDatePicker" layoutX="297.0" layoutY="3.0" prefHeight="25.0" prefWidth="120.0" AnchorPane.topAnchor="2.0" />
       <DatePicker fx:id="startDatePicker" layoutX="64.0" layoutY="4.0" prefHeight="25.0" prefWidth="120.0" AnchorPane.topAnchor="2.0" />
-      <TabPane layoutY="30.0" prefHeight="690.0" prefWidth="905.0" stylesheets="@../css/candle.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <TabPane layoutY="30.0" prefHeight="720.0" prefWidth="905.0" stylesheets="@../css/candle.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
         <tabs>
-          <Tab id="dayTab" fx:id="dayTab" onSelectionChanged="#selectDay" text="Day">
+          <Tab id="dayTab" fx:id="dayTab" onSelectionChanged="#selectDay" text="日线图">
                <content>
                   <ScrollPane prefHeight="720.0" prefViewportHeight="691.0" prefViewportWidth="905.0" prefWidth="905.0">
                      <content>
@@ -37,31 +37,31 @@
                      </content>
                   </ScrollPane>
                </content></Tab>
-          <Tab id="weekTab" fx:id="weekTab" onSelectionChanged="#selectWeek" text="Week">
+          <Tab id="weekTab" fx:id="weekTab" onSelectionChanged="#selectWeek" text="周线图">
                <content>
                   <ScrollPane prefHeight="720.0" prefWidth="905.0">
                      <content>
-                        <BarChart prefHeight="696.0" prefWidth="900.0">
+                        <BarChart prefHeight="720.0" prefWidth="900.0">
                           <xAxis>
-                            <CategoryAxis side="BOTTOM" />
+                            <CategoryAxis prefWidth="905.0" side="BOTTOM" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis side="LEFT" />
+                            <NumberAxis prefHeight="720.0" side="LEFT" />
                           </yAxis>
                         </BarChart>
                      </content></ScrollPane>
                </content>
           </Tab>
-            <Tab id="monthTab" fx:id="monthTab" onSelectionChanged="#selectMonth" text="Month">
+            <Tab id="monthTab" fx:id="monthTab" onSelectionChanged="#selectMonth" text="月线图">
                <content>
                   <ScrollPane prefHeight="720.0" prefWidth="905.0">
                      <content>
-                        <BarChart prefHeight="710.0" prefWidth="923.0">
+                        <BarChart prefHeight="720.0" prefWidth="905.0">
                           <xAxis>
-                            <CategoryAxis side="BOTTOM" />
+                            <CategoryAxis prefWidth="905.0" side="BOTTOM" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis side="LEFT" />
+                            <NumberAxis prefHeight="720.0" side="LEFT" />
                           </yAxis>
                         </BarChart>
                      </content></ScrollPane>

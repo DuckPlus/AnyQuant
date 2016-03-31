@@ -234,7 +234,7 @@ public class CandleStickController  implements Initializable {
         final NumberAxis yAxis = new NumberAxis(getMin()-gap,getMax()+gap*4,gap);
         final CandleStickChart candleStickChart = new CandleStickChart(xAxis,yAxis);
         // setup chart
-        candleStickChart.setTitle("Custom Candle Stick Chart");
+       // candleStickChart.setTitle("Custom Candle Stick Chart");
         xAxis.setLabel("Day");
         yAxis.setLabel("Price");
         // add starting data

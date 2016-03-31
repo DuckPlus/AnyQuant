@@ -39,7 +39,7 @@ public class APIInterfaceImpl implements APIInterface{
 	 private static  APIInterfaceImpl apiInterfaceImpl;
 	 private static Map<String ,String> codeNameMap;
 	 private static String nameFilePath = "cache//name.txt";
-	 private static String optionalCodesFilePath = "cache//OptionalStocks.txt";
+	 private static String optionalCodesFilePath = "data//OptionalStocks.txt";
 	 private APIInterfaceImpl(){
 		  SetMapUp();
 	 }
