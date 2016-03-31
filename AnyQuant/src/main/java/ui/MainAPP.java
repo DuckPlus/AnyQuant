@@ -32,6 +32,7 @@ public class MainAPP extends Application {
 		new HomeController(rootpane,stage);
 		stage.setTitle("AnyQuant");
 
+
 		 addDragListeners(rootpane, primaryStage);
 		stage.setResizable(false);
 		stage.show();
@@ -61,7 +62,7 @@ public class MainAPP extends Application {
 
 
 
-	double x, y;
+	private double x, y;
 
 	private void addDragListeners(final Node n, Stage primaryStage){
 

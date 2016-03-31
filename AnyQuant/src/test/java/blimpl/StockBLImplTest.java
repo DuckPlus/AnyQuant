@@ -18,7 +18,9 @@ import java.util.List;
 import static org.junit.Assert.fail;
 
 /**
- * Created by Qiang on 3/27/16.
+ *
+ * @author Qiang
+ * @date 3/27/16.
  */
 public class StockBLImplTest {
     StockBLService bl;
@@ -113,6 +115,7 @@ public class StockBLImplTest {
         while(vos.hasNext()){
             lows.add(vos.next().low);
         }
+        System.out.println("***************");
         List<OHLC_VO> tmp = bl.getDayOHLC_Data("sh600300", MyTime.getAnotherDay(-30), MyTime.getAnotherDay(0));
         for (int i = 0; i < 15; i++) {
             if(!lows.get(i).equals(tmp.get(i).low)){
