@@ -21,6 +21,8 @@ public class LeftPaneController{
 	private Button stockButton;
 	@FXML
 	private Button benchButton;
+	@FXML
+	private Button optionalStockButton;
 
 	private RightPaneController rightPaneController;
 	/**
@@ -74,6 +76,21 @@ public class LeftPaneController{
 		} else {
 			benchButton.getStyleClass().clear();
 			benchButton.getStyleClass().add("benchButton");
+		}
+
+	}
+	@FXML
+	private void handleOptionalStockButton(MouseEvent event) {
+		if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
+//			optionalStockButton.getStyleClass().clear();
+//			optionalStockButton.getStyleClass().add("optionStockButton-clicked");
+			rightPaneController.showOptionalStockPane();
+		} else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
+//			optionalStockButton.getStyleClass().clear();
+//			optionalStockButton.getStyleClass().add("optionStockButton-entered");
+		} else {
+//			optionalStockButton.getStyleClass().clear();
+//			optionalStockButton.getStyleClass().add("optionStockButton");
 		}
 
 	}
