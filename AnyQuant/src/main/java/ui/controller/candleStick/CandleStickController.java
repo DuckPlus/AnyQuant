@@ -282,11 +282,12 @@ public void updateCharts(){
 
 
     private CandleStickChart createChart() {
-    	double gap=0.5;
+    	System.out.println(getMax()+"    "+getMin());
+    	double gap=(getMax()-getMin())/10;
     	//X轴
         final CategoryAxis xAxis = new CategoryAxis ();
         //Y轴
-        final NumberAxis yAxis = new NumberAxis(getMin()-gap,getMax()+gap*4,gap);
+        final NumberAxis yAxis = new NumberAxis(getMin()-gap,getMax()+gap*2,gap);
         final CandleStickChart candleStickChart = new CandleStickChart(xAxis,yAxis);
         // setup chart
        // candleStickChart.setTitle("Custom Candle Stick Chart");
@@ -389,7 +390,7 @@ public void updateCharts(){
     	double max=0;
     	for(OHLC_VO temp : obsevableList){
     		if(temp.high>max){
-    			max = temp.low;
+    			max = temp.high;
     		}
     	}
     	return max;
