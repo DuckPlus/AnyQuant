@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -9,7 +10,9 @@
    <center>
       <AnchorPane prefHeight="500.0" prefWidth="700.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="tableview" layoutX="121.0" layoutY="7.0" onMouseClicked="#handleMouseClick" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+            <Label text="股票查询" AnchorPane.leftAnchor="4.0" AnchorPane.topAnchor="10.0" />
+            <TextField fx:id="searchBar" layoutX="78.0" layoutY="6.0" onKeyTyped="#searchStocklist" AnchorPane.topAnchor="6.0" />
+            <TableView fx:id="tableview" onMouseClicked="#handleMouseClick" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
               <columns>
                 <TableColumn fx:id="name" prefWidth="75.0" text="股票名称" />
                 <TableColumn fx:id="code" prefWidth="75.0" text="股票代码" />
@@ -26,8 +29,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <TextField fx:id="searchBar" layoutX="88.0" layoutY="8.0" onKeyTyped="#searchStocklist" />
-            <Label layoutX="10.0" layoutY="12.0" text="股票查询" />
+
          </children></AnchorPane>
    </center>
 </BorderPane>

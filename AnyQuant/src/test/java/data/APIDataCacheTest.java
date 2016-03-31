@@ -20,19 +20,6 @@ import java.util.List;
 public class APIDataCacheTest {
 
 
-	public static void main(String[] args) {
-//		 APIDataCache cache = (APIDataCache) APIDataFactory.getAPIDataService();
-//		 cache.downloadStockInfo("sh600216");
-//		 cache.downloadAllStocks();
-		 StockBLImpl blImpl = (StockBLImpl) BusinessFactory.getStockBLService();
-		 MyDate end=MyTime.getToDay();
-		 MyDate start= MyTime.getAnotherDay(-90);
-		 List<OHLC_VO> vos= blImpl.getWeekOHLC_Data("sh600216", start, end);
-		 for (int i = 0; i < vos.size(); i++) {
-			 System.out.println(vos.get(i).open);
-		 }
-	}
-
     @Before
     public void setUp() throws Exception {
 
@@ -99,7 +86,7 @@ public class APIDataCacheTest {
     }
 
     @Test
-    public void dealOptionalStock() throws Exception {
+    public void deleteOptionalStock() throws Exception {
 
     }
 

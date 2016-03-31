@@ -346,7 +346,7 @@ public class StockBLImpl implements StockBLService {
                 MyDate.getDateFromString(subList.get(0).getDate()));
     }
 
-    private static final double getLowInScope(List<StockPO> scope) {
+    private static double getLowInScope(List<StockPO> scope) {
         double result = Double.MAX_VALUE;
         for (StockPO stockPO : scope) {
             if (stockPO.getLow() < result) {
@@ -356,7 +356,7 @@ public class StockBLImpl implements StockBLService {
         return result;
     }
 
-    private static final double getHighInScope(List<StockPO> scope) {
+    private static double getHighInScope(List<StockPO> scope) {
         double result = Double.MIN_VALUE;
         for (StockPO stockPO : scope) {
             if (stockPO.getHigh() > result) {
@@ -366,7 +366,7 @@ public class StockBLImpl implements StockBLService {
         return result;
     }
 
-    private static final void getNextMonth(MyDate date) {
+    private static void getNextMonth(MyDate date) {
         if (date.getMonth() == 12) {
             date.setMonth(1);
             date.setYear(date.getYear() + 1);

@@ -9,18 +9,20 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.candleStick.CandleStickController">
    <children>
-      <TabPane prefHeight="720.0" prefWidth="905.0" stylesheets="@../css/candle.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <DatePicker fx:id="endDatePicker" layoutX="297.0" layoutY="3.0" prefHeight="25.0" prefWidth="120.0" AnchorPane.topAnchor="2.0" />
+      <DatePicker fx:id="startDatePicker" layoutX="64.0" layoutY="4.0" prefHeight="25.0" prefWidth="120.0" AnchorPane.topAnchor="2.0" />
+      <TabPane layoutY="30.0" prefHeight="690.0" prefWidth="905.0" stylesheets="@../css/candle.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
         <tabs>
           <Tab id="dayTab" fx:id="dayTab" onSelectionChanged="#selectDay" text="Day">
                <content>
-                  <ScrollPane prefHeight="600.0" prefViewportHeight="691.0" prefViewportWidth="905.0" prefWidth="600.0">
+                  <ScrollPane prefHeight="720.0" prefViewportHeight="691.0" prefViewportWidth="905.0" prefWidth="905.0">
                      <content>
-                        <BarChart id="chart" prefHeight="600.0" prefWidth="600.0" stylesheets="@../css/candle.css">
+                        <BarChart id="chart" prefHeight="720.0" prefWidth="905.0" stylesheets="@../css/candle.css">
                           <xAxis>
-                            <CategoryAxis prefWidth="600.0" side="BOTTOM" />
+                            <CategoryAxis prefWidth="905.0" side="BOTTOM" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis prefHeight="500.0" side="LEFT" />
+                            <NumberAxis prefHeight="720.0" side="LEFT" />
                           </yAxis>
                            <styleClass>
                               <String fx:value="candlestick-average-line" />
@@ -39,7 +41,7 @@
                <content>
                   <ScrollPane prefHeight="720.0" prefWidth="905.0">
                      <content>
-                        <BarChart prefHeight="600.0" prefWidth="600.0">
+                        <BarChart prefHeight="696.0" prefWidth="900.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -54,7 +56,7 @@
                <content>
                   <ScrollPane prefHeight="720.0" prefWidth="905.0">
                      <content>
-                        <BarChart prefHeight="600.0" prefWidth="600.0">
+                        <BarChart prefHeight="710.0" prefWidth="923.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -67,5 +69,8 @@
             </Tab>
         </tabs>
       </TabPane>
+      <Label layoutX="14.0" layoutY="2.0" prefHeight="25.0" text="开始时间" />
+      <Label layoutX="244.0" layoutY="3.0" prefHeight="25.0" text="结束时间" />
+      <Button layoutX="437.0" layoutY="4.0" mnemonicParsing="false" onMouseClicked="#updateChart" prefHeight="25.0" text="查询" AnchorPane.topAnchor="2.0" />
    </children>
 </AnchorPane>

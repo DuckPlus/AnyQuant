@@ -123,6 +123,9 @@ public interface APIInterface {
 	public boolean addOptionalStock(String stockCode);
 
 	public List<String> getSelectedStockCodes();
-
-
+	/**
+	 * clear all the optional stocks
+	 * @return success or not
+	 */
+	public boolean clearOptionalStocks();
 }

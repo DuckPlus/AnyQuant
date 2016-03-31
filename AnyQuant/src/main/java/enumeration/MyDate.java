@@ -25,9 +25,9 @@ public class MyDate implements Cloneable{
 		this.min = min;
 		this.second = second;
 	}
-	
-	
-	
+
+
+
 	// 返回日期“2015-01-10”
 	public String DateToString() {
 		String month = "";
@@ -84,7 +84,7 @@ public class MyDate implements Cloneable{
 		return new MyDate(Integer.parseInt(tmp[0]), Integer.parseInt(tmp[1]),
 				Integer.parseInt(tmp[2]));
 	}
-	
+
 	@Override
 	public MyDate clone()  {
 		try {
@@ -93,8 +93,8 @@ public class MyDate implements Cloneable{
 			return MyTime.getToDay();
 		}
 	}
-	
-	
+
+
 	public int getYear() {
 		return year;
 	}

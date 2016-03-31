@@ -332,7 +332,7 @@ public class APIDataCache implements APIInterface {
 	public void updateSelectedStockInfo(){
        List<String>  selectedStocks = api.getSelectedStockCodes();
        for(String code: selectedStocks){
-    	   if(code!=null){
+    	   if(code!=null&&!code.equals("")){
     	         updateStockInfo(code);
     	   }
        }
@@ -343,7 +343,7 @@ public class APIDataCache implements APIInterface {
 		MyDate yesterday = MyTime.getAnotherDay(-1);
 		MyDate preMyDate = MyDate.getDateFromString(preDate);
 		if (MyTime.ifEarlier(preMyDate, yesterday) && (!MyTime.isWeekend(yesterday))) {
-			return true;
+			return false;
 		}
 		return false;
 	}
@@ -414,6 +414,11 @@ public class APIDataCache implements APIInterface {
 	public List<String> getSelectedStockCodes() {
 
 		return api.getSelectedStockCodes();
+	}
+
+	@Override
+	public boolean clearOptionalStocks() {
+		return false;
 	}
 
 }

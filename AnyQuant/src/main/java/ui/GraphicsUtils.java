@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 public class GraphicsUtils {
 
 	private static final String fxmlPath = "source/fxml/";
+	
 	private static FXMLLoader fxmlLoader;
 
 	public static Parent getParent(String fileName){
