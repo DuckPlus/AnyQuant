@@ -22,7 +22,7 @@ public class APIDataCacheTest {
 
     @Before
     public void setUp() throws Exception {
-
+    	APIDataCache apiDataCache = (APIDataCache) APIDataFactory.getAPIDataService();
     }
 
     @Test

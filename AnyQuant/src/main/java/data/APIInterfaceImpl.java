@@ -468,7 +468,10 @@ public class APIInterfaceImpl implements APIInterface{
 
 	@Override
 	public boolean clearOptionalStocks() {
-		return false;
+		List<String>  CodeStrings = getSelectedStockCodes();
+		CodeStrings.clear();
+		writeSelectedStockCodes(CodeStrings);
+		return true;
 	}
 
 

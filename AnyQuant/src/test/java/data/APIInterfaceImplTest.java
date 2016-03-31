@@ -190,6 +190,17 @@ public class APIInterfaceImplTest {
             	}
             }
   	     }
+      }
+
+    @Test
+    public void clearOptionalStock() throws Exception {
+
+       api.clearOptionalStocks();
+       List<String> newcodes  = api.getSelectedStockCodes();
+     //  System.out.println(newcodes.get(0));
+       if(newcodes.size()>=1){
+           fail("fail to pass clearOptionalStock()");
+       }
     }
 
 
