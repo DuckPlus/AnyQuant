@@ -7,70 +7,71 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="720.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.candleStick.CandleStickController">
+<AnchorPane id="bottomPane" fx:id="bottomPane" prefHeight="720.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.candleStick.CandleStickController">
    <children>
-      <DatePicker fx:id="endDatePicker" layoutX="297.0" layoutY="3.0" prefHeight="25.0" prefWidth="120.0" AnchorPane.topAnchor="2.0" />
-      <DatePicker fx:id="startDatePicker" layoutX="64.0" layoutY="4.0" prefHeight="25.0" prefWidth="120.0" AnchorPane.topAnchor="2.0" />
-      <TabPane layoutY="30.0" prefHeight="720.0" prefWidth="905.0" stylesheets="@../css/candle.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
-        <tabs>
-          <Tab id="dayTab" fx:id="dayTab" onSelectionChanged="#selectDay" text="日线图">
-               <content>
-                  <ScrollPane prefHeight="720.0" prefViewportHeight="691.0" prefViewportWidth="905.0" prefWidth="905.0">
-                     <content>
-                        <BarChart id="chart" prefHeight="720.0" prefWidth="905.0" stylesheets="@../css/candle.css">
-                          <xAxis>
-                            <CategoryAxis prefWidth="905.0" side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis prefHeight="720.0" side="LEFT" />
-                          </yAxis>
-                           <styleClass>
-                              <String fx:value="candlestick-average-line" />
-                              <String fx:value="open-above-close" />
-                              <String fx:value="candlestick-candle" />
-                              <String fx:value="candlestick-line" />
-                              <String fx:value="close-above-open" />
-                              <String fx:value="candlestick-tooltip-label" />
-                              <String fx:value="candlestick-bar" />
-                           </styleClass>
-                        </BarChart>
-                     </content>
-                  </ScrollPane>
-               </content></Tab>
-          <Tab id="weekTab" fx:id="weekTab" onSelectionChanged="#selectWeek" text="周线图">
-               <content>
-                  <ScrollPane prefHeight="720.0" prefWidth="905.0">
-                     <content>
-                        <BarChart prefHeight="720.0" prefWidth="900.0">
-                          <xAxis>
-                            <CategoryAxis prefWidth="905.0" side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis prefHeight="720.0" side="LEFT" />
-                          </yAxis>
-                        </BarChart>
-                     </content></ScrollPane>
-               </content>
-          </Tab>
-            <Tab id="monthTab" fx:id="monthTab" onSelectionChanged="#selectMonth" text="月线图">
-               <content>
-                  <ScrollPane prefHeight="720.0" prefWidth="905.0">
-                     <content>
-                        <BarChart prefHeight="720.0" prefWidth="905.0">
-                          <xAxis>
-                            <CategoryAxis prefWidth="905.0" side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis prefHeight="720.0" side="LEFT" />
-                          </yAxis>
-                        </BarChart>
-                     </content></ScrollPane>
-               </content>
-            </Tab>
-        </tabs>
-      </TabPane>
-      <Label layoutX="14.0" layoutY="2.0" prefHeight="25.0" text="开始时间" />
-      <Label layoutX="244.0" layoutY="3.0" prefHeight="25.0" text="结束时间" />
-      <Button layoutX="437.0" layoutY="4.0" mnemonicParsing="false" onMouseClicked="#updateCharts" prefHeight="25.0" text="查询" AnchorPane.topAnchor="2.0" />
+      <VBox id="vbox" fx:id="vbox" prefHeight="720.0" prefWidth="905.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="30.0" prefWidth="905.0">
+               <children>
+                  <Button layoutX="520.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#updateCharts" prefHeight="25.0" text="查询" AnchorPane.topAnchor="2.0" />
+                  <Label layoutX="284.0" layoutY="2.0" prefHeight="25.0" text="结束时间" AnchorPane.topAnchor="2.0" />
+                  <Label layoutX="54.0" layoutY="2.0" prefHeight="25.0" text="开始时间" AnchorPane.topAnchor="2.0" />
+                  <DatePicker fx:id="startDatePicker" layoutX="122.0" layoutY="2.0" prefHeight="25.0" prefWidth="120.0" AnchorPane.topAnchor="2.0" />
+                  <DatePicker fx:id="endDatePicker" layoutX="353.0" layoutY="2.0" prefHeight="25.0" prefWidth="120.0" AnchorPane.topAnchor="2.0" />
+               </children>
+            </AnchorPane>
+            <StackPane id="stackPane" fx:id="stackPane" prefHeight="690.0" prefWidth="905.0">
+               <children>
+                  <TabPane id="tabPane" fx:id="tabPane" prefHeight="690.0" prefWidth="905.0" stylesheets="@../css/candle.css" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab id="dayTab" fx:id="dayTab" onSelectionChanged="#selectDay" text="日线图">
+                           <content>
+                              <ScrollPane prefHeight="690.0" prefViewportHeight="691.0" prefViewportWidth="905.0" prefWidth="905.0">
+                                 <content>
+                                    <HBox prefHeight="690.0" prefWidth="905.0" />
+                                 </content></ScrollPane>
+                           </content>
+                        </Tab>
+                      <Tab id="weekTab" fx:id="weekTab" onSelectionChanged="#selectWeek" text="周线图">
+                           <content>
+                              <ScrollPane prefHeight="690.0" prefWidth="905.0">
+                                 <content>
+                                    <HBox prefHeight="690.0" prefWidth="905.0" />
+                                 </content></ScrollPane>
+                           </content>
+                      </Tab>
+                        <Tab id="monthTab" fx:id="monthTab" onSelectionChanged="#selectMonth" text="月线图">
+                           <content>
+                              <ScrollPane prefHeight="690.0" prefWidth="905.0">
+                                 <content>
+                                    <HBox prefHeight="690.0" prefWidth="905.0" />
+                                 </content></ScrollPane>
+                           </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
+                  <GridPane id="cachePane" fx:id="cachePane" StackPane.alignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ProgressIndicator id="progressIndicator" fx:id="progressIndicator" prefHeight="150.0" prefWidth="182.0" progress="0.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                     </children>
+                  </GridPane>
+               </children>
+            </StackPane>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

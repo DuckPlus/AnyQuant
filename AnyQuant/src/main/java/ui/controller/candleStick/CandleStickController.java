@@ -5,10 +5,15 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.python.antlr.PythonParser.print_stmt_return;
+
+import com.sun.swingset3.demos.tabbedpane.TabbedPaneDemo;
+
 import blimpl.StockBLImpl;
 import blservice.StockBLService;
 import enumeration.MyDate;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -26,10 +31,17 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.control.Tab;
-
+import javafx.scene.control.TabPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import util.MyTime;
 import vo.OHLC_VO;
 
@@ -42,17 +54,29 @@ import vo.OHLC_VO;
  * =。=
  */
 public class CandleStickController  implements Initializable {
-
+    @FXML
+    private TabPane tabPane;
     @FXML
     private Tab dayTab;
     @FXML
     private Tab weekTab;
     @FXML
     private Tab monthTab;
+    @FXML
+    private AnchorPane bottomPane;
+    @FXML
+    private VBox vbox;
+    @FXML
+    private StackPane stackPane;
+    @FXML
+    private GridPane cachePane;
+
 	@FXML
-	DatePicker startDatePicker;
+	private DatePicker startDatePicker;
 	@FXML
-	DatePicker endDatePicker;
+	private DatePicker endDatePicker;
+	@FXML
+	private  ProgressIndicator progressIndicator;
     @FXML
     private CandleStickChart dayChart,weekChart,monthChart;
 
@@ -63,7 +87,7 @@ public class CandleStickController  implements Initializable {
   	private static ObservableList<OHLC_VO> obsevableList ;
 
   	private static CandleStickController instance;
-    private static ProgressIndicator progressIndicator;
+
     public  CandleStickController (){
     	if(instance==null){
     	   stockCode="sh600000";
@@ -90,7 +114,7 @@ public class CandleStickController  implements Initializable {
 
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-    	progressIndicator = createProgressIndicator();
+
     	startDatePicker.setValue(LocalDate.now());
 		endDatePicker.setValue(LocalDate.now());
 		startDatePicker.setEditable(false);
@@ -100,11 +124,8 @@ public class CandleStickController  implements Initializable {
     //double click to enter this scene
   public void initCharts(){
 		Task initTask = createInitWorker();
-		progressIndicator.setVisible(true);
-		progressIndicator.progressProperty().unbind();
-		progressIndicator.progressProperty().bind( initTask.progressProperty());
-		new Thread( initTask).start();
-
+		showProgressIndicator( initTask.progressProperty(),initTask.runningProperty());
+		new Thread(initTask).start();
   }
 
   //set date  to update charts
@@ -116,9 +137,7 @@ public void updateCharts(){
 				(endDatePicker.getValue().getYear(), endDatePicker.getValue().getMonthValue(), endDatePicker.getValue().getDayOfMonth());
 
 		Task updateTask = createUpdateWorker();
-		progressIndicator.setVisible(true);
-		progressIndicator.progressProperty().unbind();
-		progressIndicator.progressProperty().bind( updateTask.progressProperty());
+		showProgressIndicator( updateTask.progressProperty(),updateTask.runningProperty());
 		new Thread( updateTask).start();
 }
 
@@ -184,9 +203,13 @@ public void updateCharts(){
 }
 
     private void initPane( Tab tab  , Node chartNode, ScrollPane spane ){
+    	 //RowConstraints  rc = new RowConstraints(500, 690, 690);
+    	//ColumnConstraints cc = new ColumnConstraints(800,900,900);
           HBox hBox = new HBox();
           HBox.setHgrow(chartNode, Priority.ALWAYS);
+          hBox.setPrefSize(800, 600);
           hBox.getChildren().add(chartNode);
+
 
 	      spane.setContent(hBox);
 	      spane.setHbarPolicy(ScrollBarPolicy.ALWAYS);
@@ -300,9 +323,20 @@ public void updateCharts(){
 	private ProgressIndicator createProgressIndicator() {
 		ProgressIndicator progress = new ProgressIndicator(0);
 		progress.setVisible(false);
-	//	progress.layoutXProperty().bind(scene.widthProperty().subtract(progress.widthProperty()).divide(2));
-	//	progress.layoutYProperty().bind(scene.heightProperty().subtract(progress.heightProperty()).divide(2));
 		return progress;
+	}
+
+	private void showProgressIndicator(ObservableValue<? extends Number> progressProperty,
+			ObservableValue<? extends Boolean> runningProperty          ){
+		progressIndicator.setVisible(true);
+		progressIndicator.progressProperty().unbind();
+		progressIndicator.progressProperty().bind( progressProperty);
+		cachePane.visibleProperty().bind(runningProperty);
+
+	}
+
+	private void  removeProgressIndicator(){
+		progressIndicator.setVisible(false);
 	}
 
 	private Task createInitWorker() {
@@ -310,13 +344,13 @@ public void updateCharts(){
 			@Override
 			protected Object call() throws Exception {
 				// on the worker thread...
-
+				prepareInitCharts();
 				Platform.runLater(() -> {
-					prepareInitCharts();
+
 					// on the JavaFX Application Thread....
-					System.out.println("done initCharts");
+					System.out.println("done init Charts");
+					removeProgressIndicator();
 					displayCharts();
-					progressIndicator.setVisible(false);
 				});
 				return true;
 			}
@@ -333,8 +367,8 @@ public void updateCharts(){
 				Platform.runLater(() -> {
 					// on the JavaFX Application Thread....
 					System.out.println("done updateCharts");
+					removeProgressIndicator();
 					displayCharts();
-					progressIndicator.setVisible(false);
 				});
 				return true;
 			}
