@@ -1,0 +1,5 @@
+who:侍硕
+when:第五周
+what:改用JavaFX框架后，基本实现了k线图
+problem:图表的大小不能随着数据的增多而自动变大，scrollpane仿佛没有起到作用
+todo:继续学习JavaFX 动画，完善自选股票
