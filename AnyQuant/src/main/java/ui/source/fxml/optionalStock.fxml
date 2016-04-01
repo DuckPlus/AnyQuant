@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.optionalStockController">
+<BorderPane prefHeight="500.0" prefWidth="700.0" stylesheets="@../css/optional.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.optionalStockController">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -27,7 +27,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Label layoutX="9.0" layoutY="11.0" text="自选股" />
+            <Label layoutX="9.0" layoutY="11.0" text="自选股" textFill="WHITE" />
             <TextField layoutX="54.0" layoutY="6.0" onKeyTyped="#getOptionalStock" />
          </children>
       </AnchorPane>
