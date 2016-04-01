@@ -1,14 +1,17 @@
 .stockButton {
-	-fx-background-image: url('../img/stockList_normal.png');
-  -fx-text-fill:white
+	-fx-background-image: url('../img/stockListIcon.png');
+  	-fx-background-size:176px 40px;
+  	-fx-text-fill:white
 }
 
 .stockButton-clicked {
-	-fx-background-image: url('../img/stockList_clicked.png');
+	-fx-background-image: url('../img/stockListIcon.png');
+	-fx-background-size:176px 40px;
 }
 
 .stockButton-entered {
-	-fx-background-image: url('../img/stockList_entered.png');
+	-fx-background-image: url('../img/stockListIcon.png');
+	-fx-background-size:176px 40px;
 }
 
 

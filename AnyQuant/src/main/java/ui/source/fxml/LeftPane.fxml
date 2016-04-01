@@ -10,9 +10,9 @@
    <children>
       <Button fx:id="stockButton" alignment="CENTER" layoutY="51.0" mnemonicParsing="false" onMouseClicked="#handleStockButton" onMouseEntered="#handleStockButton" onMouseExited="#handleStockButton" prefHeight="40.0" prefWidth="176.0" stylesheets="@../css/leftPane.css" text="股票列表">
          <styleClass>
+            <String fx:value="stockButton" />
             <String fx:value="stockButton-clicked" />
             <String fx:value="stockButton-entered" />
-            <String fx:value="stockButton" />
          </styleClass>
          <font>
             <Font size="17.0" />

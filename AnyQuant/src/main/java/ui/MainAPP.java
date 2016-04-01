@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import ui.controller.HomeController;
@@ -30,7 +31,7 @@ public class MainAPP extends Application {
 
 		new HomeController(rootPane,stage);
 		stage.setTitle("AnyQuant");
-
+		this.stage.getIcons().add(new Image("ui/source/img/AppIcon.png"));
 
 		 addDragListeners(rootPane, primaryStage);
 		stage.setResizable(false);
