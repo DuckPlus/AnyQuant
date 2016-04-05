@@ -23,7 +23,9 @@ public class HttpUtil {
 
 	public static void main(String[] args) throws IOException, EncoderException {
 		// 根据api store页面上实际的api url来发送get请求，获取数据
-		String url = "https://api.wmcloud.com:443/data/v1/api/subject/getThemeThemes.csv?field=&ticker=000001&secShortName=&beginDate=&endDate=";
+		String url = "https://api.wmcloud.com:443/data/v1/api/master/getSecTypeRel.json?field=&typeID=101001002003002003&secID=&ticker=";
+//		String url = "https://api.wmcloud.com:443/data/v1/api/master/getSecType.json?field=";
+
 		HttpGet httpGet = new HttpGet(url);
 		// 在header里加入 Bearer {token}，添加认证的token，并执行get请求获取json数据
 		httpGet.addHeader("Authorization", "Bearer " + ACCESS_TOKEN);
