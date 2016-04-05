@@ -14,8 +14,8 @@
             <AnchorPane prefHeight="30.0" prefWidth="905.0">
                <children>
                   <Button layoutX="520.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#updateCharts" prefHeight="25.0" text="查询" AnchorPane.topAnchor="2.0" />
-                  <Label layoutX="284.0" layoutY="2.0" prefHeight="25.0" text="结束时间" AnchorPane.topAnchor="2.0" />
-                  <Label layoutX="54.0" layoutY="2.0" prefHeight="25.0" text="开始时间" AnchorPane.topAnchor="2.0" />
+                  <Label layoutX="284.0" layoutY="2.0" prefHeight="25.0" text="结束时间" textFill="WHITE" AnchorPane.topAnchor="2.0" />
+                  <Label layoutX="54.0" layoutY="2.0" prefHeight="25.0" text="开始时间" textFill="WHITE" AnchorPane.topAnchor="2.0" />
                   <DatePicker fx:id="startDatePicker" layoutX="122.0" layoutY="2.0" prefHeight="25.0" prefWidth="120.0" AnchorPane.topAnchor="2.0" />
                   <DatePicker fx:id="endDatePicker" layoutX="353.0" layoutY="2.0" prefHeight="25.0" prefWidth="120.0" AnchorPane.topAnchor="2.0" />
                </children>
