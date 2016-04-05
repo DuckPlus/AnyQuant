@@ -7,6 +7,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import ui.GraphicsUtils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.TreeMap;
+
 /**
  * Main controller of the whole pane
  *
@@ -33,6 +38,7 @@ public class HomeController {
 	}
 
 	private void initialPane() {
+
 
 		leftPane = (AnchorPane) GraphicsUtils.getParent("LeftPane");
 

@@ -40,21 +40,21 @@ public class StockBLImplTest {
 	@Test
 	public void testGetSortStocks() {
 		System.out.println("---------------------接下来是代码排序----------------");
-		Iterator<StockVO> stocksWithCode = bl.getAllStocks();
-		while(stocksWithCode.hasNext()){
-			System.out.println(stocksWithCode.next().code);
-		}
-		System.out.println("---------------------接下来是涨跌幅排序----------------");
-		StockVO vo;
-		Iterator<StockVO> stocksWithZhangFU = bl.getSortStocks(true, Stock_Attribute.changeRate);
-		while(stocksWithZhangFU.hasNext()){
-			vo = stocksWithZhangFU.next();
-			System.out.println(vo);
-			if(vo.changeRate > 0.1){
-				System.out.println("该股票数据存在异常：涨跌幅大于10%");
-				System.out.println("Code:" + vo.code + " 收盘：" + vo.close + " 昨收盘："+vo.preClose );
-			}
-		}
+//		Iterator<StockVO> stocksWithCode = bl.getAllStocks();
+//		while(stocksWithCode.hasNext()){
+//			System.out.println(stocksWithCode.next().code);
+//		}
+//		System.out.println("---------------------接下来是涨跌幅排序----------------");
+//		StockVO vo;
+//		Iterator<StockVO> stocksWithZhangFU = bl.getSortStocks(true, Stock_Attribute.changeRate);
+//		while(stocksWithZhangFU.hasNext()){
+//			vo = stocksWithZhangFU.next();
+//			System.out.println(vo.changeRate );
+//			if(vo.changeRate > 0.1){
+//				System.out.println("该股票数据存在异常：涨跌幅大于10%");
+//				System.out.println("Code:" + vo.code + " 收盘：" + vo.close + " 昨收盘："+vo.preClose );
+//			}
+//		}
 		
 		System.out.println("---------------------接下来是振幅排序----------------");
 		Iterator<StockVO> stocksWithzhenfu = bl.getSortStocks(false, Stock_Attribute.amplitude);

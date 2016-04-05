@@ -37,14 +37,16 @@ public class StockBLImplTest {
 
     @Test
     public void getSortStocks() throws Exception {
-        Iterator<StockVO> vos = bl.getSortStocks(true , Stock_Attribute.low);
+        Iterator<StockVO> vos = bl.getSortStocks(true , Stock_Attribute.amplitude);
 
         double last = Double.MIN_VALUE;
-        last = vos.next().low;
+        last = vos.next().amplitude;
         while(vos.hasNext()){
-            double temp = vos.next().low;
+            double temp = vos.next().amplitude;
+            System.out.println(temp);
             if(temp < last){
-                fail("Can not pass the sort of low");
+                System.out.print(temp + " " + last);
+                fail("Can not pass the sort of amplitude");
             }else{
                 last = temp;
             }
@@ -69,13 +71,13 @@ public class StockBLImplTest {
         }
 
 
-        vos = bl.getSortStocksInScope(true , Stock_Attribute.high , vostr);
+        vos = bl.getSortStocksInScope(false , Stock_Attribute.amplitude , vostr);
 
 
         double last = Double.MAX_VALUE;
-        last = vos.next().high;
         while(vos.hasNext()){
-            double temp = vos.next().high;
+            double temp = vos.next().amplitude;
+            System.out.println(temp);
             if(temp > last){
                 fail("Can not pass the sort of high in given scope");
             }else{
@@ -105,7 +107,7 @@ public class StockBLImplTest {
 
     @Test
     public void getStocksByStockCode() throws Exception {
-
+        // no need to test
     }
 
     @Test
