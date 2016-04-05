@@ -1,52 +1,52 @@
 .stockButton {
 	-fx-background-image: url('../img/stockList.png');
-  	-fx-background-size:176px 40px;
+  	-fx-background-size:176px 42px;
   	-fx-text-fill:white
 }
 
 .stockButton-clicked {
 	-fx-background-image: url('../img/stockList.png');
-	-fx-background-size:176px 40px;
+	-fx-background-size:176px 42px;
 }
 
 .stockButton-entered {
 	-fx-background-image: url('../img/stockList.png');
-	-fx-background-size:176px 40px;
+	-fx-background-size:176px 42px;
 	-fx-text-fill:black
 }
 
 
 .benchButton {
   -fx-background-image: url('../img/benchMark.png');
-  -fx-background-size:176px 40px;
+  -fx-background-size:176px 42px;
    -fx-text-fill:white
 }
 
 .benchButton-clicked {
 	-fx-background-image: url('../img/benchMark.png');
-	-fx-background-size:176px 40px;
+	-fx-background-size:176px 42px;
 }
 
 .benchButton-entered {
 	-fx-background-image: url('../img/benchMark.png');
-	-fx-background-size:176px 40px;
+	-fx-background-size:176px 42px;
 	-fx-text-fill:black
 }
 
 .optionalButton {
   -fx-background-image: url('../img/optional.png');
-  -fx-background-size:176px 40px;
+  -fx-background-size:176px 42px;
    -fx-text-fill:white
 }
 
 .optionalButton-clicked {
 	-fx-background-image: url('../img/optional.png');
-	-fx-background-size:176px 40px;
+	-fx-background-size:176px 42px;
 }
 
 .optionalButton-entered {
 	-fx-background-image: url('../img/optional.png');
-	-fx-background-size:176px 40px;
+	-fx-background-size:176px 42px;
 	-fx-text-fill:black
 }
 

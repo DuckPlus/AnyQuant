@@ -1,5 +1,6 @@
 package ui.controller;
 
+
 import java.util.Iterator;
 
 import blimpl.OptionalStockBLServiceImpl;
@@ -10,6 +11,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import ui.GraphicsUtils;
+import ui.controller.candleStick.CandleStickController;
 import vo.Stock;
 import vo.StockVO;
 
@@ -39,18 +45,36 @@ public class optionalStockController {
 	TableView<Stock> tableview;// = new TableView<Stock>();
 	@FXML
 	TextField searchBar;
-	ObservableList<Stock> observableList;
+	private ObservableList<Stock> observableList;
 	
-	OptionalStockBLService optinalBl = OptionalStockBLServiceImpl.getOptionalBLService();
+	private OptionalStockBLService optinalBl = OptionalStockBLServiceImpl.getOptionalBLService();
 	
+	private StockDetailController stockDetailController;
+	
+	private RightPaneController rightPaneController;
+	
+	private BorderPane stockDetailPane;
+	private AnchorPane chartPane;
+	CandleStickController candleStickController;
+	
+	private static optionalStockController instance;
 	public optionalStockController() {
-	
+		if(instance == null ){
+			instance = this;
+		}
+	}
+	public static optionalStockController getOptionalStockController() {
+		if (instance == null) {
+			instance = new optionalStockController();
+		}
+		return instance;
 	}
 	
 	
 	@FXML
 	private void initialize(){
 		observableList = FXCollections.observableArrayList();
+		stockDetailPane = (BorderPane)GraphicsUtils.getParent("StockDetail");
 		if(name!=null){
 			System.out.println("not null col");
 		getOptionalStock();
@@ -58,7 +82,7 @@ public class optionalStockController {
 		
 	}
 	@FXML
-	private void getOptionalStock(){
+	public void getOptionalStock(){
 		Iterator<StockVO>itr = optinalBl.getOptionalStocks();
 		showTableData(itr);
 	}
@@ -81,6 +105,58 @@ public class optionalStockController {
 		volume.setCellValueFactory(cell ->cell.getValue().volume.asObject());
 		amplitude.setCellValueFactory(cell ->cell.getValue().amplitude.asObject());
 		changeRate.setCellValueFactory(cell ->cell.getValue().changeRate.asObject());
+	}
+	
+	
+	@FXML
+	private void handleMouseClick(MouseEvent e){
+
+//		if(e.getClickCount()==2){
+//			if(tableview.getSelectionModel().getSelectedIndex()==-1){
+//				System.out.println("empty line");
+//				return ;
+//			}
+//			if(stockDetailController==null){
+//				stockDetailController = StockDetailController.getStockDetailController();
+//			}
+//			if(rightPaneController==null){
+//				rightPaneController = RightPaneController.getRightPaneController();
+//			}
+//			
+//			Stock selectedStock = tableview.getSelectionModel().getSelectedItem();
+//			stockDetailController.setData(selectedStock);
+//			rightPaneController.showDetailPane(Pane);
+		if(e.getClickCount()==2){
+			if(tableview.getSelectionModel().getSelectedIndex()==-1){
+				System.out.println("empty line ");
+				return;
+			}
+
+			Stock selectedStock = tableview.getSelectionModel().getSelectedItem();
+			//The stockDetailController is null at first, and it must generated after the fxml has initialize
+			//it, otherwise we will get a totally defferent object from the fxml's
+			if(stockDetailController==null){
+				System.err.println("============new controller============");
+			      stockDetailController = StockDetailController.getStockDetailController();
+			}
+			if(rightPaneController==null){
+				rightPaneController = RightPaneController.getRightPaneController();
+			}
+
+			chartPane = (AnchorPane)GraphicsUtils.getParent("CandleStickPane");
+			stockDetailPane.setCenter(chartPane);
+			
+			if(candleStickController==null){
+				candleStickController = CandleStickController.getCandleStickController();
+			}
+//			MyDate begin = new MyDate(2016, 03, 01);
+//			MyDate end = new MyDate(2016, 03, 20);
+//			candleStickController.setDate(begin, end);
+			candleStickController.setStockCode(selectedStock.code.get());
+			stockDetailController.setData(selectedStock);
+			rightPaneController.showDetailPane(stockDetailPane);
+			
+		}
 	}
 	
 }

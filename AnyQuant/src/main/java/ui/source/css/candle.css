@@ -3,24 +3,24 @@
 .candlestick-tooltip-label {
     -fx-font-size: 0.75em;
     -fx-font-weight: bold;
-    -fx-text-fill: #666666;
+    -fx-text-fill: #ffffff;
     -fx-padding: 2 5 2 0;
 }
 .candlestick-average-line {
     -fx-stroke: #106ece;
-    -fx-stroke-width: 3px;
+    -fx-stroke-width: 1px;
 }
 .candlestick-candle {
-    -fx-effect: dropshadow( two-pass-box , rgba(0,0,0,0.4) , 10, 0.0 , 2 , 4 );
+    /*-fx-effect: dropshadow( two-pass-box , rgba(0,0,0,0.4) , 10, 0.0 , 2 , 4 );*/
 }
 
 .candlestick-line {
     -fx-stroke: #666666;
-    -fx-stroke-width: 3px;
+    -fx-stroke-width: 2px;
 }
 .candlestick-bar {
     -fx-padding: 5;
-    -demo-bar-fill: red;
+   /* -demo-bar-fill: red;*/
     -fx-background-color: linear-gradient(derive(-demo-bar-fill,-30%), derive(-demo-bar-fill,-40%)),
                           linear-gradient(derive(-demo-bar-fill,100%), derive(-demo-bar-fill, 10%)),
                           linear-gradient(derive(-demo-bar-fill,30%), derive(-demo-bar-fill,-10%));
@@ -32,4 +32,5 @@
 
 .candlestick-bar.open-above-close {
     -demo-bar-fill: #ce2700;
+    -demo-bar-border:black
 }

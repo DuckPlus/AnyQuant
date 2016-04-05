@@ -79,41 +79,7 @@ public class StockListController{
 		
 	}
 	
-	private void setCss(){
-		System.out.println("css");
-		
-//		code.setCellFactory(new Callback<TableColumn<Stock,String>, TableCell<Stock,String>>() {
-//			
-//			@Override
-//			public TableCell<Stock, String> call(TableColumn<Stock, String> param) {
-//				// TODO Auto-generated method stub
-//				return new TableCell<Stock,String>(){
-//					ObservableValue ov;  
-//                    @Override  
-//                    public void updateItem(String item, boolean empty) {  
-//                        super.updateItem(item, empty);  
-//                        if (!isEmpty()) {  
-//                            ov = getTableColumn().getCellObservableValue(getIndex());  
-////                             System.err.println("!!"+ov.getValue());  
-//                               
-//                            if(getTableRow() != null){  
-////                            	this.getTableRow().getStyle()
-//                                this.getTableRow().setStyle("-fx-background-color: black");  
-//                                System.out.println("===="+this.getTableRow().getStyle());
-//                            }  
-////                            this.setTextFill(Color.RED);  
-//                            // Get fancy and change color based on data 
-//                            
-//                            if (item.contains("@"))  
-//                                this.setTextFill(Color.YELLOW);  
-//                            setText(item);  
-//                        }  
-//                    }
-//				};
-//			}
-//		});
-//		tableview.getStyleClass().add("stockList");
-	}
+
 
 	/**
 	 *
@@ -153,6 +119,7 @@ public class StockListController{
 	}
 	@FXML
 	private void handleMouseClick(MouseEvent event){
+		System.out.println("hehe");
 		if(event.getClickCount()==2){
 			if(tableview.getSelectionModel().getSelectedIndex()==-1){
 				System.out.println("empty line ");
@@ -163,31 +130,12 @@ public class StockListController{
 			String code =tableview.getSelectionModel().getSelectedItem().code.get();
 			Stock selectedStock = tableview.getSelectionModel().getSelectedItem();
 			System.out.println(code);
-//			if(stockDetailPane==null){
-//				System.out.println("pane null");
-//				stockDetailPane = (BorderPane)GraphicsUtils.getParent("StockDetail");
-//			}
-//			stockDetailController.setData(selectedStock);
-//			StockDetailController sc = StockDetailController.getCurrent();
-//			StockDetailController sc = StockDetailController.getStockDetailController();
-
 			//The stockDetailController is null at first, and it must generated after the fxml has initialize
 			//it, otherwise we will get a totally defferent object from the fxml's
 			if(stockDetailController==null){
 				System.err.println("============new controller============");
 			      stockDetailController = StockDetailController.getStockDetailController();
 			}
-			
-			
-//			if()
-//			if(sc.nameLabel==null){
-//				System.out.println("controller null");
-//			}else{
-//				System.out.println("controller NOT null");
-//			}
-
-
-
 
 			chartPane = (AnchorPane)GraphicsUtils.getParent("CandleStickPane");
 			stockDetailPane.setCenter(chartPane);
