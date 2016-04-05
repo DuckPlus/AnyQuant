@@ -1,32 +1,56 @@
 .stockButton {
-	-fx-background-image: url('../img/stockList_normal.png');
-  -fx-text-fill:white
+	-fx-background-image: url('../img/stockList.png');
+  	-fx-background-size:176px 40px;
+  	-fx-text-fill:white
 }
 
 .stockButton-clicked {
-	-fx-background-image: url('../img/stockList_clicked.png');
+	-fx-background-image: url('../img/stockList.png');
+	-fx-background-size:176px 40px;
 }
 
 .stockButton-entered {
-	-fx-background-image: url('../img/stockList_entered.png');
+	-fx-background-image: url('../img/stockList.png');
+	-fx-background-size:176px 40px;
+	-fx-text-fill:black
 }
 
 
 .benchButton {
-  -fx-background-image: url('../img/benchMark_normal.png');
+  -fx-background-image: url('../img/benchMark.png');
+  -fx-background-size:176px 40px;
    -fx-text-fill:white
 }
 
 .benchButton-clicked {
-	-fx-background-image: url('../img/benchMark_clicked.png');
+	-fx-background-image: url('../img/benchMark.png');
+	-fx-background-size:176px 40px;
 }
 
 .benchButton-entered {
-	-fx-background-image: url('../img/benchMark_entered.png');
+	-fx-background-image: url('../img/benchMark.png');
+	-fx-background-size:176px 40px;
+	-fx-text-fill:black
 }
 
+.optionalButton {
+  -fx-background-image: url('../img/optional.png');
+  -fx-background-size:176px 40px;
+   -fx-text-fill:white
+}
 
-.kButton {
+.optionalButton-clicked {
+	-fx-background-image: url('../img/optional.png');
+	-fx-background-size:176px 40px;
+}
+
+.optionalButton-entered {
+	-fx-background-image: url('../img/optional.png');
+	-fx-background-size:176px 40px;
+	-fx-text-fill:black
+}
+
+/*.kButton {
 	-fx-background-image: url('../img/stockList_normal.png');
   -fx-text-fill:white
 }
@@ -38,5 +62,7 @@
 .kButton-entered {
 	-fx-background-image: url('../img/stockList_entered.png');
 }
+*/
+
 
 

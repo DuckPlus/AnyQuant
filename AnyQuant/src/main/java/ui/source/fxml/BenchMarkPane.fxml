@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="419.0" prefWidth="561.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.BenchmarkController">
+<AnchorPane prefHeight="419.0" prefWidth="561.0" styleClass="background" stylesheets="@../css/Benchmark.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.BenchmarkController">
    <children>
       <TableView fx:id="tableview" layoutX="88.0" layoutY="59.0" prefHeight="389.0" prefWidth="562.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0">
         <columns>
@@ -25,8 +25,8 @@
       </TableView>
       <DatePicker fx:id="beginDate" layoutX="64.0" layoutY="2.0" prefHeight="25.0" prefWidth="120.0" AnchorPane.topAnchor="2.0" />
       <DatePicker fx:id="endDate" layoutX="256.0" layoutY="3.0" prefHeight="25.0" prefWidth="120.0" AnchorPane.topAnchor="2.0" />
-      <Label layoutX="11.0" layoutY="6.0" text="开始时间" />
-      <Label layoutX="203.0" layoutY="6.0" text="结束时间" />
+      <Label layoutX="8.0" layoutY="6.0" text="开始时间" textFill="WHITE" />
+      <Label layoutX="198.0" layoutY="6.0" text="结束时间" textFill="WHITE" />
       <Button layoutX="387.0" layoutY="3.0" mnemonicParsing="false" onAction="#searchByDate" text="查询" />
    </children>
 </AnchorPane>

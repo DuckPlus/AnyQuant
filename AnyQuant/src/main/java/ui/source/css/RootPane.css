@@ -15,7 +15,8 @@
 }
 
 .split-pane {
-	-fx-background-color: black;
+	/*-fx-background-color: black;*/
+	-fx-background-color: rgb(38, 51, 53)
 }
 
 .minEnteredImg{

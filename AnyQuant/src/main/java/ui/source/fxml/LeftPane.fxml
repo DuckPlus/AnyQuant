@@ -8,19 +8,17 @@
 
 <AnchorPane minWidth="175.0" prefHeight="625.0" prefWidth="176.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.LeftPaneController">
    <children>
-      <Button fx:id="stockButton" alignment="CENTER" layoutY="51.0" mnemonicParsing="false" onMouseClicked="#handleStockButton" onMouseEntered="#handleStockButton" onMouseExited="#handleStockButton" prefHeight="40.0" prefWidth="176.0" stylesheets="@../css/leftPane.css" text="股票列表">
-         <styleClass>
-            <String fx:value="stockButton-clicked" />
-            <String fx:value="stockButton-entered" />
-            <String fx:value="stockButton" />
-         </styleClass>
+      <Button fx:id="stockButton" alignment="CENTER" layoutY="51.0" mnemonicParsing="false" onMouseClicked="#handleStockButton" onMouseEntered="#handleStockButton" onMouseExited="#handleStockButton" prefHeight="40.0" prefWidth="176.0" styleClass="stockButton" stylesheets="@../css/leftPane.css" text="股票列表" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font></Button>
-      <Button id="benchButton" fx:id="benchButton" alignment="CENTER" layoutY="92.0" mnemonicParsing="false" onMouseClicked="#handleBenchButton" onMouseEntered="#handleBenchButton" onMouseExited="#handleBenchButton" prefHeight="40.0" prefWidth="176.0" styleClass="benchButton" stylesheets="@../css/leftPane.css" text="大盘数据" textFill="#fffefe">
+      <Button id="benchButton" fx:id="benchButton" alignment="CENTER" layoutY="92.0" mnemonicParsing="false" onMouseClicked="#handleBenchButton" onMouseEntered="#handleBenchButton" onMouseExited="#handleBenchButton" prefHeight="40.0" prefWidth="176.0" styleClass="benchButton" stylesheets="@../css/leftPane.css" text="大盘数据" textFill="WHITE">
          <font>
-            <Font size="18.0" />
+            <Font size="17.0" />
          </font></Button>
-      <Button fx:id="optionalStockButton" layoutY="132.0" mnemonicParsing="false" onMouseClicked="#handleOptionalStockButton" onMouseEntered="#handleOptionalStockButton" onMouseExited="#handleOptionalStockButton" prefHeight="40.0" prefWidth="176.0" text="自选股" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="133.0" />
+      <Button id="optionalStockButton" fx:id="optionalStockButton" alignment="CENTER" layoutY="132.0" mnemonicParsing="false" onMouseClicked="#handleOptionalStockButton" onMouseEntered="#handleOptionalStockButton" onMouseExited="#handleOptionalStockButton" prefHeight="40.0" prefWidth="176.0" styleClass="optionalButton" stylesheets="@../css/leftPane.css" text="自选股" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="133.0">
+         <font>
+            <Font size="17.0" />
+         </font></Button>
    </children>
 </AnchorPane>

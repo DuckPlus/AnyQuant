@@ -82,15 +82,15 @@ public class LeftPaneController{
 	@FXML
 	private void handleOptionalStockButton(MouseEvent event) {
 		if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-//			optionalStockButton.getStyleClass().clear();
-//			optionalStockButton.getStyleClass().add("optionStockButton-clicked");
+			optionalStockButton.getStyleClass().clear();
+			optionalStockButton.getStyleClass().add("optionalButton-clicked");
 			rightPaneController.showOptionalStockPane();
 		} else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-//			optionalStockButton.getStyleClass().clear();
-//			optionalStockButton.getStyleClass().add("optionStockButton-entered");
+			optionalStockButton.getStyleClass().clear();
+			optionalStockButton.getStyleClass().add("optionalButton-entered");
 		} else {
-//			optionalStockButton.getStyleClass().clear();
-//			optionalStockButton.getStyleClass().add("optionStockButton");
+			optionalStockButton.getStyleClass().clear();
+			optionalStockButton.getStyleClass().add("optionalButton");
 		}
 
 	}
