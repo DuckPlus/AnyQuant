@@ -3,18 +3,19 @@ package po;
 import data.InitialBean;
 
 public class StockPO implements InitialBean {
-	 private String date ,name,code;
+	//新加了板块、地域属性
+	 private String date ,name,code,board,region;
 	 private double high ,low;
 	 private double open,close,preClose;
 	 private long volume;
-	 private double turnover;	
+	 private double turnover;
 	 private double pb,pe_ttm;
 	 private double adj_price;
 	 //尚未实现
 	 private double amplitude;
 	 //尚未实现
 	 private double changeRate;
-	
+
     public StockPO(){
              super();
     }
@@ -40,7 +41,7 @@ public class StockPO implements InitialBean {
 		this.amplitude = amplitude;
 		this.changeRate = changeRate;
 	}
-  
+
 	public String getDate() {
 		return date;
 	}
@@ -52,15 +53,15 @@ public class StockPO implements InitialBean {
 	public String getCode() {
 		return code;
 	}
-    
+
 	public double getPe_ttm(){
 		return this.pe_ttm;
 	}
-	
+
 	public double getAdj_price(){
 		return this.adj_price;
 	}
-	
+
 	public double getHigh() {
 		return high;
 	}
@@ -112,11 +113,11 @@ public class StockPO implements InitialBean {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	
+
 	public void setPe_ttm(double pe_ttm){
 		this.pe_ttm=pe_ttm;
 	}
-	
+
 	public void setAdj_price(double adj_price){
 		this.adj_price=adj_price;
 	}
@@ -176,9 +177,9 @@ public class StockPO implements InitialBean {
 			   return;
 		   }
 		   this.amplitude =    (int)(temp*10000)/10000.0;
-		   
+
 	}
-	
+
 	public void  computeChangeRate(){
 		   double temp = (close-open)/open;
 		   if(temp>10){
@@ -187,26 +188,42 @@ public class StockPO implements InitialBean {
 		   }
 		   this.changeRate =     (int)(temp*10000)/10000.0;
 	}
-	
-	
+
+
 	public String MyToString(char a){
 		return ""+date+a+name+a+code+a+high+a+low+a+open+a+close+a+preClose+a+adj_price+a+
 				volume+a+turnover+a+pe_ttm+a+pb+a+amplitude+a+changeRate;
 	}
-	
-	
+
+
 	@Override
 	public void initialize() {
-		
-		
+
+
 		 computeChangeRate();
 	//	 computeAmplitude();
-		
+
 	}
-    
-    
-    
-	
-	
-	
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public String getBoard() {
+		return board;
+	}
+
+	public void setBoard(String board) {
+		this.board = board;
+	}
+
+
+
+
+
+
 }
