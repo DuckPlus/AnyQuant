@@ -25,6 +25,7 @@ public class LeftPaneController{
 	private Button optionalStockButton;
 
 	private RightPaneController rightPaneController;
+//	private optionalStockController opStockController;
 	/**
 	 * the leftPane
 	 */

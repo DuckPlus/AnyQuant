@@ -21,6 +21,7 @@ public class RightPaneController{
 	private BorderPane stockListPane;
 	private Pane benchMarkPane;
 	private BorderPane optionalStockPane;
+	private optionalStockController opStockController;
 	@FXML
 	private ImageView min;
 	@FXML
@@ -67,8 +68,14 @@ public class RightPaneController{
 	}
 	 void showOptionalStockPane(){
 		 System.out.println("optional Pane");
+		
 		 pane.getChildren().clear();
 		 pane.setCenter(optionalStockPane);
+		 if(opStockController ==null){
+			 opStockController = optionalStockController.getOptionalStockController();
+		 }
+		 System.out.println("showwwwww");
+		 opStockController.getOptionalStock();
 	 }
 
 	static void  setPane(Pane pane){
