@@ -2,12 +2,12 @@ package vo;
 
 /**
  * StockVO类
- * 
+ *
  * @author czq
  * @date 2016年3月4日
  */
 public class StockVO implements Cloneable{
-	 public String date ,name,code;
+	 public String date ,name,code,board,region;
 	 public double high ,low;
 	 public double open,close,preClose;
 	 public double adj_price;
@@ -16,8 +16,8 @@ public class StockVO implements Cloneable{
 	 public double pe_ttm,pb;
 	 public double amplitude;//振幅
 	 public double changeRate;
-	
-	
+
+
 	public StockVO() {
 	}
 
@@ -51,7 +51,7 @@ public class StockVO implements Cloneable{
 			return null;
 		}
 	}
-	
-	
-		
+
+
+
 }
