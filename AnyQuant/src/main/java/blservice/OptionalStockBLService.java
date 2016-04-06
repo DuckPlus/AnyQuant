@@ -2,6 +2,8 @@ package blservice;
 
 import vo.StockVO;
 
+import java.security.KeyStore.Entry;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.List;
 
@@ -50,4 +52,16 @@ public interface OptionalStockBLService {
      * @return success or fail
      */
     public boolean clearOptionalStocks();
+    
+    
+    /**
+     * Get the distribution of the opt
+     * @return
+     */
+    public Iterator<SimpleEntry<String , Integer>> getRegionDistribution();
+    
+    public Iterator<SimpleEntry<String , Integer>> getBorderDistribution();
+    
+    
+    
 }
