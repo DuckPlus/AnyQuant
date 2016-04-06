@@ -11,12 +11,26 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.python.antlr.PythonParser.return_stmt_return;
 
 import dataservice.APIInterface;
@@ -88,7 +102,7 @@ public class APIInterfaceImpl implements APIInterface{
 
 
 	/**
-	 *此方法用来建立url-connection并返回API所提供的全部初始数据
+	 *此方法用来建立url-connection并返回助教提供的API所提供的初始数据
 	 */
 	private String SendGET(String url, String param) {
 		String result = "";// 访问返回结果
@@ -143,12 +157,66 @@ public class APIInterfaceImpl implements APIInterface{
         }
 		return result;
 	}
+	/**
+	 *此方法用来建立url-connection并返回通联API所提供的初始数据
+	 */
+    private static String request(String url) {
+		final String ACCESS_TOKEN =
+				"44a70d35d80240eaa3d9a66b0b090de5bef4c96914f39c4faa225b4570ee301c";
+		CloseableHttpClient httpClient = createHttpsClient();
+		HttpGet httpGet = new HttpGet(url);
+		// 在header里加入 Bearer {token}，添加认证的token，并执行get请求获取json数据
+		httpGet.addHeader("Authorization", "Bearer " + ACCESS_TOKEN);
+		CloseableHttpResponse response;
+		HttpEntity entity = null;
+		String result = "";
+		try {
+			response = httpClient.execute(httpGet);
+			entity = response.getEntity();
+			result = EntityUtils.toString(entity);
+			System.out.println(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	// 创建http client
+	private static CloseableHttpClient createHttpsClient() {
+		X509TrustManager x509mgr = new X509TrustManager() {
+			@Override
+			public void checkClientTrusted(X509Certificate[] xcs, String string) {
+			}
+
+			@Override
+			public void checkServerTrusted(X509Certificate[] xcs, String string) {
+			}
+
+			@Override
+			public X509Certificate[] getAcceptedIssuers() {
+				return null;
+			}
+		};
+		// 因为java客户端要进行安全证书的认证，这里我们设置ALLOW_ALL_HOSTNAME_VERIFIER来跳过认证，否则将报错
+		SSLConnectionSocketFactory sslsf = null;
+		try {
+			SSLContext sslContext = SSLContext.getInstance("TLS");
+			sslContext.init(null, new TrustManager[] { x509mgr }, null);
+			sslsf = new SSLConnectionSocketFactory(sslContext, SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+		} catch (KeyManagementException e) {
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return HttpClients.custom().setSSLSocketFactory(sslsf).build();
+	}
+
 
     /**
      * 默认返回2015年全部股票
      */
 	public List<String> getAllStocks() {
-
 		return getAllStocks(2015);
 	}
 
@@ -228,6 +296,23 @@ public class APIInterfaceImpl implements APIInterface{
 		 List<StockPO>  stocks = getManyMesFunc(stockCode, start, end);
         return  stocks.get(stocks.size()-1);
 
+	}
+
+   /**
+    * 获取指定代码的股票的在指定日期的数据
+    */
+	public StockPO getStockMes(String code, MyDate date) {
+		// TODO Auto-generated method stub
+		String shortCode = code.substring(2);
+		MyDate end = MyDate.getDateFromString("2016-03-28");
+		MyDate start = MyTime.getAnotherDay(end,-3);
+//		String url = "https://api.wmcloud.com:443/data/v1"
+//				+ "/api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=&ticker="+shortCode+"&tradeDate="+tradeDateString ;
+		String url = "https://api.wmcloud.com:443/data/v1"
+				+ "/api/market/getMktEqud.json?field=tradeDate&beginDate="+start.DateToStringSimple()+"&endDate="+end.DateToStringSimple() +"&secID=&ticker="+shortCode+"&tradeDate=";
+	    String result = request(url);
+	    JSONObject jo = JSONObject.fromObject(result);
+	    return null;
 	}
 
 	  /**
@@ -515,6 +600,14 @@ public class APIInterfaceImpl implements APIInterface{
 	            e.printStackTrace();
 	    }
      }
+
+
+
+	@Override
+	public BenchMarkPO getBenchMes(String benchCode, MyDate date) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 

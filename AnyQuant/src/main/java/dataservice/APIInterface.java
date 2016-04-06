@@ -46,15 +46,23 @@ public interface APIInterface {
 	 */
 
 	/**
-	 * 只需要传入股票的代码例如"sh600126"，返回当天的全部信息
+	 * 只需要传入股票的代码例如"sh600126"，返回最新信息
 	 *
 	 * @param stockCode
 	 * @return
 	 */
 	public StockPO getStockMes(String stockCode);
+	/**
+	 *增加了时间限制，可以设置只查看某一天的数据
+	 * @param stockCode
+	 * @param date
+	 * @return
+	 */
+	public StockPO getStockMes(String stockCode,MyDate date);
+
 
 	/**
-	 * 增加了时间限制
+	 * 增加了时间限制，可以查看某段时间内的数据
 	 *
 	 * @param stockCode
 	 * @param fields
@@ -83,9 +91,16 @@ public interface APIInterface {
 	 * @return
 	 */
 	public BenchMarkPO getBenchMes(String benchCode);
+	/**
+	 * 增加了时间限制,可以查看某一天的大盘的数据
+	 * @param benchCode
+	 * @param date
+	 * @return
+	 */
+	public BenchMarkPO getBenchMes(String benchCode,MyDate date);
 
 	/**
-	 * 增加了时间限制
+	 * 增加了时间限制，可以查看某段时间内的大盘数据
 	 *
 	 * @param benchCode
 	 * @param start
