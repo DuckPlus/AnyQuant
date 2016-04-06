@@ -33,8 +33,9 @@ public class nettest {
     public static void main(String[] args) throws IOException, EncoderException {
         //根据api store页面上实际的api url来发送get请求，获取数据
         String url = "https://api.wmcloud.com:443/data/v1" 
-        + "/api/master/getSecTypeRegion.json?field="; //用来获得地域
+//        + "/api/master/getSecTypeRegion.json?field="; //用来获得地域
 //        + "/api/master/getSecType.json?field=";
+        	 + "/api/master/getSecType.json?field=";
         
         HttpGet httpGet = new HttpGet(url);
         //在header里加入 Bearer {token}，添加认证的token，并执行get请求获取json数据
@@ -67,10 +68,14 @@ public class nettest {
         		System.out.print(provinces.get(temp.getKey()));
         		List<String> tm2 = temp.getValue();
         		for (int i = 0; i < temp.getValue().size(); i++) {
+        				
 					System.out.print(cities.get(tm2.get(i)));
+					String nowtemp = cities.get(tm2.get(i)) + " " + provinces.get(temp.getKey());
+					if( !(nowtemp.contains("省") || nowtemp.contains("市") || nowtemp.contains("自治区") )){
+						writer.write(nowtemp);
+						writer.newLine();
+					}
 					
-					writer.write(cities.get(tm2.get(i)) + " " + provinces.get(temp.getKey()));
-					writer.newLine();
 					
 				}
         		System.out.println();
