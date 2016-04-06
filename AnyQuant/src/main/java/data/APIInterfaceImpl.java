@@ -168,6 +168,7 @@ public class APIInterfaceImpl implements APIInterface{
 	    ArrayList<String> stockCode = new  ArrayList<>();
 		for(int i=0;i<length;i++){
 			JSONObject tempJo = ja.getJSONObject(i);
+			
 
 			if(tempJo.getString("name").equals("sh000300")){
 				         continue;
