@@ -8,35 +8,44 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.python.antlr.PythonParser.list_for_return;
+import org.python.antlr.PythonParser.return_stmt_return;
+import org.python.bouncycastle.jcajce.provider.symmetric.AES.Wrap;
+import org.python.compiler.MTime;
+
+import enumeration.MyDate;
+import jnr.ffi.Struct.int16_t;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import util.MyTime;
+
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class HttpUtil {
 	// 创建http client
+	private static String fileName1 = "cache//stockCode.txt";
+	private static String fileName2 = "cache//industry&loation.txt";
 	private static CloseableHttpClient httpClient = createHttpsClient();
 	private static final String ACCESS_TOKEN = "44a70d35d80240eaa3d9a66b0b090de5bef4c96914f39c4faa225b4570ee301c";
 
-	public static void main(String[] args) throws IOException, EncoderException {
-		// 根据api store页面上实际的api url来发送get请求，获取数据
-		String url = "https://api.wmcloud.com:443/data/v1//api/equity/getEquIndustry.json?field=industryName1,industryName2,industryName3,industryName4&industryVersionCD=&industry=&secID=&ticker=000004&intoDate=20150101";
-//		String url = "https://api.wmcloud.com:443/data/v1/api/master/getSecType.json?field=";
-
-		HttpGet httpGet = new HttpGet(url);
-		// 在header里加入 Bearer {token}，添加认证的token，并执行get请求获取json数据
-		httpGet.addHeader("Authorization", "Bearer " + ACCESS_TOKEN);
-		CloseableHttpResponse response = httpClient.execute(httpGet);
-		HttpEntity entity = response.getEntity();
-		String body = EntityUtils.toString(entity);
-		System.out.println(body);
-	}
-
 	// 创建http client
-	public static CloseableHttpClient createHttpsClient() {
+	private static CloseableHttpClient createHttpsClient() {
 		X509TrustManager x509mgr = new X509TrustManager() {
 			@Override
 			public void checkClientTrusted(X509Certificate[] xcs, String string) {
@@ -64,4 +73,131 @@ public class HttpUtil {
 		}
 		return HttpClients.custom().setSSLSocketFactory(sslsf).build();
 	}
+
+
+	private static List<String> readAllCodes() {
+		try {
+			String encoding = "utf-8";
+			String filePath = fileName1;
+			File file = new File(filePath);
+			if (file.isFile() && file.exists()) { // 判断文件是否存在
+				InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);// 考虑到编码格式
+				BufferedReader bufferedReader = new BufferedReader(read);
+				String lineTxt = bufferedReader.readLine();
+				List<String> result = Arrays.asList(lineTxt.split(","));
+				read.close();
+				return result;
+			} else {
+				System.out.println("找不到指定的文件,创建新文件");
+				return null;
+			}
+		} catch (Exception e) {
+			System.out.println("读取文件内容出错");
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private static void writeAllCodes(List<String> contents) {
+		try {
+
+			File file = new File(fileName2);
+			// if file doesnt exists, then create it
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
+			// true = append file
+			FileWriter fileWritter = new FileWriter(file, true);
+			BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+			for (String line : contents) {
+				bufferWritter.write(line + '\n');
+				System.out.println("write: " + line);
+			}
+			bufferWritter.close();
+			System.out.println("Done");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static String getIndustryLocationByCode(String code) {
+		String shortCode = code.substring(2);
+		String url = "https://api.wmcloud.com:443/data/v1"
+				+ "/api/master/getSecTypeRel.json?field=&typeID=&secID=&ticker=" + shortCode;
+		String result = request(url);
+		JSONObject jo = JSONObject.fromObject(result);
+		if (jo.getInt("retCode") != -1) {
+			JSONArray ja = jo.getJSONArray("data");
+
+			String city = "", industry = "";
+			for (int i = 0; i < ja.size(); i++) {
+
+				JSONObject tempJo = ja.getJSONObject(i);
+
+				if (tempJo.getString("typeID").length() == 18) {
+					if (tempJo.getString("typeName").endsWith("市")) {
+						city = tempJo.getString("typeName");
+					} else {
+						industry = tempJo.getString("typeName");
+					}
+				}
+			}
+			return code + "," + industry + "," + city;
+
+		} else {
+			return code;
+		}
+	}
+
+	private static void createIndustryLocationFile() {
+		List<String> codes = readAllCodes();
+		List<String> contents = new ArrayList<String>();
+		for (String code : codes) {
+			String line = getIndustryLocationByCode(code);
+			contents.add(line);
+		}
+		writeAllCodes(contents);
+	}
+
+
+	public static String request(String url) {
+		HttpGet httpGet = new HttpGet(url);
+		// 在header里加入 Bearer {token}，添加认证的token，并执行get请求获取json数据
+		httpGet.addHeader("Authorization", "Bearer " + ACCESS_TOKEN);
+		CloseableHttpResponse response;
+		HttpEntity entity = null;
+		String result = "";
+		try {
+			response = httpClient.execute(httpGet);
+			entity = response.getEntity();
+			result = EntityUtils.toString(entity);
+			System.out.println(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	//最新数据
+	public static void getStockMes(String code){
+		String shortCode = code.substring(2);
+		MyDate today = MyTime.getToDay();
+		MyDate yes = MyTime.getAnotherDay(-5);
+        String tradeDateString = yes.DateToStringSimple();
+		String url = "https://api.wmcloud.com:443/data/v1"
+				+ "/api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=&ticker="+shortCode+"&tradeDate="+tradeDateString ;
+	    String result = request(url);
+	    JSONObject jo = JSONObject.fromObject(result);
+		if (jo.getInt("retCode") != -1) {
+
+		}
+
+	}
+	public static void main(String[] args) throws IOException, EncoderException {
+		// 根据api store页面上实际的api url来发送get请求，获取数据
+		getStockMes("sh600216");
+	}
+
 }
