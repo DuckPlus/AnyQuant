@@ -20,7 +20,7 @@ import vo.Stock;
 import vo.StockVO;
 
 public class optionalStockController {
-	
+
 	@FXML
 	TableColumn<Stock, String>code;// = new TableColumn<Stock,String>();
 	@FXML
@@ -46,17 +46,17 @@ public class optionalStockController {
 	@FXML
 	TextField searchBar;
 	private ObservableList<Stock> observableList;
-	
+
 	private OptionalStockBLService optinalBl = OptionalStockBLServiceImpl.getOptionalBLService();
-	
+
 	private StockDetailController stockDetailController;
-	
+
 	private RightPaneController rightPaneController;
-	
+
 	private BorderPane stockDetailPane;
 	private AnchorPane chartPane;
 	CandleStickController candleStickController;
-	
+
 	private static optionalStockController instance;
 	public optionalStockController() {
 		if(instance == null ){
@@ -69,8 +69,8 @@ public class optionalStockController {
 		}
 		return instance;
 	}
-	
-	
+
+
 	@FXML
 	private void initialize(){
 		observableList = FXCollections.observableArrayList();
@@ -79,7 +79,7 @@ public class optionalStockController {
 			System.out.println("not null col");
 		getOptionalStock();
 		}
-		
+
 	}
 	@FXML
 	public void getOptionalStock(){
@@ -101,13 +101,13 @@ public class optionalStockController {
 		high.setCellValueFactory(cell ->cell.getValue().high.asObject());
 		low.setCellValueFactory(cell ->cell.getValue().low.asObject());
 		close.setCellValueFactory(cell ->cell.getValue().close.asObject());
-		turnover.setCellValueFactory(cell ->cell.getValue().turnover.asObject());
-		volume.setCellValueFactory(cell ->cell.getValue().volume.asObject());
+		turnover.setCellValueFactory(cell ->cell.getValue().turnoverRate.asObject());
+		volume.setCellValueFactory(cell ->cell.getValue().turnoverVol.asObject());
 		amplitude.setCellValueFactory(cell ->cell.getValue().amplitude.asObject());
 		changeRate.setCellValueFactory(cell ->cell.getValue().changeRate.asObject());
 	}
-	
-	
+
+
 	@FXML
 	private void handleMouseClick(MouseEvent e){
 
@@ -122,7 +122,7 @@ public class optionalStockController {
 //			if(rightPaneController==null){
 //				rightPaneController = RightPaneController.getRightPaneController();
 //			}
-//			
+//
 //			Stock selectedStock = tableview.getSelectionModel().getSelectedItem();
 //			stockDetailController.setData(selectedStock);
 //			rightPaneController.showDetailPane(Pane);
@@ -145,7 +145,7 @@ public class optionalStockController {
 
 			chartPane = (AnchorPane)GraphicsUtils.getParent("CandleStickPane");
 			stockDetailPane.setCenter(chartPane);
-			
+
 			if(candleStickController==null){
 				candleStickController = CandleStickController.getCandleStickController();
 			}
@@ -155,8 +155,8 @@ public class optionalStockController {
 			candleStickController.setStockCode(selectedStock.code.get());
 			stockDetailController.setData(selectedStock);
 			rightPaneController.showDetailPane(stockDetailPane);
-			
+
 		}
 	}
-	
+
 }

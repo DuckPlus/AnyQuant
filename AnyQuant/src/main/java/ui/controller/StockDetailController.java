@@ -86,10 +86,10 @@ public class StockDetailController {
 		close.setText(String.valueOf(stock.close.get()));
 		high.setText(String.valueOf(stock.high.get()));
 		low.setText(String.valueOf(stock.low.get()));
-		turnover.setText(String.valueOf(stock.turnover.get()));
-		pe.setText(String.valueOf(stock.pe_ttm.get()));
+		turnover.setText(String.valueOf(stock.turnoverRate.get()));
+		pe.setText(String.valueOf(stock.pe.get()));
 		pb.setText(String.valueOf(stock.pb.get()));
-		volume.setText(String.valueOf(stock.volume.get()));
+		volume.setText(String.valueOf(stock.turnoverVol.get()));
 		addBtn.setText("加入自选股");
 	}
 	@FXML

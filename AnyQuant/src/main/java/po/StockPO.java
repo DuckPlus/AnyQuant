@@ -7,37 +7,55 @@ public class StockPO implements InitialBean {
 	 private String date ,name,code,board,region;
 	 private double high ,low;
 	 private double open,close,preClose;
-	 private long volume;
-	 private double turnover;
-	 private double pb,pe_ttm;
-	 private double adj_price;
+	 //成交量
+	 private long turnoverVol;
+	 //成交额
+	 private double turnoverValue;
+	 //换手率
+	 private double turnoverRate;
+	 //市净率,市盈率
+	 private double pb,pe;
+	 //累积前复权因子
+	 private double accAdjFactor;
+	 //流通市值
+	 private double cirMarketValue;
+	 //总市值
+	 private double totalMarketValue;
+     //振幅
 	 private double amplitude;
+	 //变化率
 	 private double changeRate;
 
     public StockPO(){
              super();
     }
 
-	public StockPO(String date, String name, String code, double high,
-			double low, double open, double close, double preClose,double adj_Price,
-			long volume, double turnover, double pe, double pb,
-			double amplitude, double changeRate) {
+	public StockPO(String date, String name, String code,String board,String region, double high,
+			double low, double open, double close, double preClose,double accAdjFactor,
+			double turnoverValue, double turnoverRate, double pe, double pb,double cirMarketValue,
+			double totalMarketValue,double amplitude, double changeRate,long volume) {
 		super();
 		this.date = date;
 		this.name = name;
 		this.code = code;
+		this.board=board;
+		this.region=region;
 		this.high = high;
 		this.low = low;
 		this.open = open;
 		this.close = close;
 		this.preClose = preClose;
-		this.adj_price = adj_Price;
-		this.volume = volume;
-		this.turnover = turnover;
-		this.pe_ttm = pe;
+		this.accAdjFactor = accAdjFactor;
+
+		this.turnoverValue=turnoverValue;
+		this.turnoverRate = turnoverRate;
+		this.pe = pe;
 		this.pb = pb;
+		this.cirMarketValue=cirMarketValue;
+		this.totalMarketValue=totalMarketValue;
 		this.amplitude = amplitude;
 		this.changeRate = changeRate;
+		this.turnoverVol = volume;
 	}
 
 	public String getDate() {
@@ -53,11 +71,11 @@ public class StockPO implements InitialBean {
 	}
 
 	public double getPe_ttm(){
-		return this.pe_ttm;
+		return this.pe;
 	}
 
 	public double getAdj_price(){
-		return this.adj_price;
+		return this.accAdjFactor;
 	}
 
 	public double getHigh() {
@@ -79,11 +97,11 @@ public class StockPO implements InitialBean {
 
 
 	public long getVolume() {
-		return volume;
+		return turnoverVol;
 	}
 
 	public double getTurnover() {
-		return turnover;
+		return turnoverRate;
 	}
 
 
@@ -113,11 +131,11 @@ public class StockPO implements InitialBean {
 	}
 
 	public void setPe_ttm(double pe_ttm){
-		this.pe_ttm=pe_ttm;
+		this.pe=pe_ttm;
 	}
 
 	public void setAdj_price(double adj_price){
-		this.adj_price=adj_price;
+		this.accAdjFactor=adj_price;
 	}
 
 	public void setHigh(double high) {
@@ -139,11 +157,11 @@ public class StockPO implements InitialBean {
 
 
 	public void setVolume(long volume) {
-		this.volume = volume;
+		this.turnoverVol = volume;
 	}
 
 	public void setTurnover(double turnover) {
-		this.turnover = turnover;
+		this.turnoverRate = turnover;
 	}
 
 
@@ -189,8 +207,7 @@ public class StockPO implements InitialBean {
 
 
 	public String MyToString(char a){
-		return ""+date+a+name+a+code+a+high+a+low+a+open+a+close+a+preClose+a+adj_price+a+
-				volume+a+turnover+a+pe_ttm+a+pb+a+amplitude+a+changeRate;
+		return ""+date+a+name+a+code+a+board+a+region+a+high+a+low+a+open+a+close+a+preClose+a+accAdjFactor+a+turnoverValue+a+turnoverRate+a+pe+a+pb+a+cirMarketValue+a+totalMarketValue+a+amplitude+a+changeRate+a+turnoverVol;
 	}
 
 
@@ -217,6 +234,38 @@ public class StockPO implements InitialBean {
 
 	public void setBoard(String board) {
 		this.board = board;
+	}
+
+	public double getTurnoverValue() {
+		return turnoverValue;
+	}
+
+	public void setTurnoverValue(double turnoverValue) {
+		this.turnoverValue = turnoverValue;
+	}
+
+	public double getCirMarketValue() {
+		return cirMarketValue;
+	}
+
+	public void setCirMarketValue(double cirMarketValue) {
+		this.cirMarketValue = cirMarketValue;
+	}
+
+	public double getAccAdjFactor() {
+		return accAdjFactor;
+	}
+
+	public void setAccAdjFactor(double accAdjFactor) {
+		this.accAdjFactor = accAdjFactor;
+	}
+
+	public double getTotalMarketValue() {
+		return totalMarketValue;
+	}
+
+	public void setTotalMarketValue(double totalMarketValue) {
+		this.totalMarketValue = totalMarketValue;
 	}
 
 

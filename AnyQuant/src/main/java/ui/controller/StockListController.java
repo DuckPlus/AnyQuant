@@ -46,9 +46,9 @@ public class StockListController{
 	@FXML
 	TableColumn<Stock, Double>close = new TableColumn<Stock, Double>();
 	@FXML
-	TableColumn<Stock, Double>turnover = new TableColumn<Stock, Double>();
+	TableColumn<Stock, Double>turnoverRate = new TableColumn<Stock, Double>();
 	@FXML
-	TableColumn<Stock, Long>volume = new TableColumn<Stock, Long>();
+	TableColumn<Stock, Long>turnoverVol = new TableColumn<Stock, Long>();
 	@FXML
 	TableColumn<Stock, Double>amplitude = new TableColumn<Stock, Double>();
 	@FXML
@@ -76,9 +76,9 @@ public class StockListController{
 	private void initialize(){
 		stockDetailPane = (BorderPane)GraphicsUtils.getParent("StockDetail");
 		showStocklist();
-		
+
 	}
-	
+
 
 
 	/**
@@ -89,7 +89,7 @@ public class StockListController{
 
 		Iterator<StockVO>itr = stockBl.getAllStocks();
 		showTableData(itr);
-		
+
 	}
 
 	private void showTableData(Iterator<StockVO>itr){
@@ -107,8 +107,8 @@ public class StockListController{
 		high.setCellValueFactory(cell ->cell.getValue().high.asObject());
 		low.setCellValueFactory(cell ->cell.getValue().low.asObject());
 		close.setCellValueFactory(cell ->cell.getValue().close.asObject());
-		turnover.setCellValueFactory(cell ->cell.getValue().turnover.asObject());
-		volume.setCellValueFactory(cell ->cell.getValue().volume.asObject());
+		turnoverRate.setCellValueFactory(cell ->cell.getValue().turnoverRate.asObject());
+		turnoverVol.setCellValueFactory(cell ->cell.getValue().turnoverVol.asObject());
 		amplitude.setCellValueFactory(cell ->cell.getValue().amplitude.asObject());
 		changeRate.setCellValueFactory(cell ->cell.getValue().changeRate.asObject());
 	}
@@ -139,7 +139,7 @@ public class StockListController{
 
 			chartPane = (AnchorPane)GraphicsUtils.getParent("CandleStickPane");
 			stockDetailPane.setCenter(chartPane);
-			
+
 			if(candleStickController==null){
 				candleStickController = CandleStickController.getCandleStickController();
 			}

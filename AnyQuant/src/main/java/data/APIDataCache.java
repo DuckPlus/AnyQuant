@@ -172,11 +172,13 @@ public class APIDataCache implements APIInterface {
 
 				while ((temp = bufferedReader.readLine()) != null) {
 					attrs = temp.split(",");
-					StockPO stock = new StockPO(attrs[0], attrs[1], attrs[2], Double.parseDouble(attrs[3]),
-							Double.parseDouble(attrs[4]), Double.parseDouble(attrs[5]), Double.parseDouble(attrs[6]),
-							Double.parseDouble(attrs[7]), Double.parseDouble(attrs[8]), Long.parseLong(attrs[9]),
+					StockPO stock = new StockPO(attrs[0], attrs[1], attrs[2],attrs[3],attrs[4],
+						    Double.parseDouble(attrs[5]), Double.parseDouble(attrs[6]),
+							Double.parseDouble(attrs[7]), Double.parseDouble(attrs[8]), Double.parseDouble(attrs[9]),
 							Double.parseDouble(attrs[10]), Double.parseDouble(attrs[11]), Double.parseDouble(attrs[12]),
-							Double.parseDouble(attrs[13]), Double.parseDouble(attrs[14]));
+							Double.parseDouble(attrs[13]), Double.parseDouble(attrs[14]),Double.parseDouble(attrs[15]),
+							Double.parseDouble(attrs[16]),
+							Double.parseDouble(attrs[17]),Double.parseDouble(attrs[18]),Long.parseLong(attrs[19]) );
 					result.add(stock);
 				}
 				read.close();

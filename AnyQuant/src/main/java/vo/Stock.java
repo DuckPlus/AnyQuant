@@ -10,25 +10,32 @@ import javafx.beans.property.SimpleStringProperty;
 *@date:2016年3月20日
 */
 public class Stock {
-	
+
 	public Stock(StockVO s) {
 		date = new SimpleStringProperty(s.date);
 		name = new SimpleStringProperty(s.name);
 		code = new SimpleStringProperty(s.code);
+		board = new SimpleStringProperty(s.board);
+		region = new SimpleStringProperty(s.region);
+
 		preClose = new SimpleDoubleProperty(s.preClose);
 		low = new SimpleDoubleProperty(s.low);
 		high = new SimpleDoubleProperty(s.high);
 		open = new SimpleDoubleProperty(s.open);
 		close = new SimpleDoubleProperty(s.close);
-		adj_price = new SimpleDoubleProperty(s.adj_price);
-		turnover = new SimpleDoubleProperty(s.turnover);
-		pe_ttm = new SimpleDoubleProperty(s.pe_ttm);
+		accAdjFactor = new SimpleDoubleProperty(s.accAdjFactor);
+		turnoverVol = new SimpleLongProperty(s.turnoverVol);
+		turnoverValue = new SimpleDoubleProperty(s.turnoverValue);
+		turnoverRate = new SimpleDoubleProperty(s.turnoverRate);
+		cirMarketValue = new SimpleDoubleProperty(s.cirMarketValue);
+		totalMarketValue = new SimpleDoubleProperty(s.totalMarketValue);
+		pe = new SimpleDoubleProperty(s.pe);
 		pb = new SimpleDoubleProperty(s.pb);
 		amplitude = new SimpleDoubleProperty(s.amplitude);
 		changeRate = new SimpleDoubleProperty(s.changeRate);
-		volume = new SimpleLongProperty(s.volume);
+
 	}
-	 public SimpleStringProperty date ,name,code;
-	 public SimpleDoubleProperty high ,low,open,close,preClose,adj_price,turnover,pe_ttm,pb,amplitude,changeRate;
-	 public SimpleLongProperty volume;
+	 public SimpleStringProperty date ,name,code,board,region;
+	 public SimpleDoubleProperty high ,low,open,close,preClose,accAdjFactor,turnoverValue,turnoverRate,pe,pb,cirMarketValue, totalMarketValue,amplitude,changeRate;
+	 public SimpleLongProperty turnoverVol;
 }
