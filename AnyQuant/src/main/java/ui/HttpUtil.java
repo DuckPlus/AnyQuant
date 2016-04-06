@@ -12,6 +12,7 @@ import org.python.antlr.PythonParser.list_for_return;
 import org.python.antlr.PythonParser.return_stmt_return;
 import org.python.bouncycastle.jcajce.provider.symmetric.AES.Wrap;
 import org.python.compiler.MTime;
+import org.python.icu.text.StringPrep;
 
 import enumeration.MyDate;
 import jnr.ffi.Struct.int16_t;
@@ -35,14 +36,17 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class HttpUtil {
 	// 创建http client
 	private static String fileName1 = "cache//stockCode.txt";
 	private static String fileName2 = "cache//industry&loation.txt";
-	private static CloseableHttpClient httpClient = createHttpsClient();
-	private static final String ACCESS_TOKEN = "44a70d35d80240eaa3d9a66b0b090de5bef4c96914f39c4faa225b4570ee301c";
+	private static String fileName3=  "cache//name.txt";
+	private static String fileName4=  "cache//stockExtraInfo.txt";
 
 	// 创建http client
 	private static CloseableHttpClient createHttpsClient() {
@@ -121,6 +125,7 @@ public class HttpUtil {
 		}
 	}
 
+
 	private static String getIndustryLocationByCode(String code) {
 		String shortCode = code.substring(2);
 		String url = "https://api.wmcloud.com:443/data/v1"
@@ -160,8 +165,61 @@ public class HttpUtil {
 		writeAllCodes(contents);
 	}
 
+	private static void updateIndustryLocation(){
+		ArrayList<String>  lineStrings = new ArrayList<String>();
+		try {
+			String encoding = "utf-8";
+			String filePath = fileName2;
+			File file = new File(filePath);
+			if (file.isFile() && file.exists()) { // 判断文件是否存在
+				InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);// 考虑到编码格式
+				BufferedReader bufferedReader = new BufferedReader(read);
+				String line;
+			    while ( (line=bufferedReader.readLine())!=null) {
+                      String [] temp = line.split(",");
+                      if(temp.length==3){
+                    	  lineStrings.add(line);
+                      }
+				}
+				read.close();
+			} else {
+				System.out.println("找不到指定的文件,创建新文件");
+			}
+		} catch (Exception e) {
+			System.out.println("读取文件内容出错");
+			e.printStackTrace();
+		}
+
+
+
+		try {
+
+			File file = new File(fileName2);
+			// if file doesnt exists, then create it
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
+			// true = append file
+			FileWriter fileWritter = new FileWriter(file, true);
+			BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+			for (String line : lineStrings) {
+				bufferWritter.write(line + '\n');
+				System.out.println("write: " + line);
+			}
+			bufferWritter.close();
+			System.out.println("Done");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
+	}
 
 	public static String request(String url) {
+		final String ACCESS_TOKEN =
+				"44a70d35d80240eaa3d9a66b0b090de5bef4c96914f39c4faa225b4570ee301c";
+		CloseableHttpClient httpClient = createHttpsClient();
 		HttpGet httpGet = new HttpGet(url);
 		// 在header里加入 Bearer {token}，添加认证的token，并执行get请求获取json数据
 		httpGet.addHeader("Authorization", "Bearer " + ACCESS_TOKEN);
@@ -183,11 +241,12 @@ public class HttpUtil {
 	//最新数据
 	public static void getStockMes(String code){
 		String shortCode = code.substring(2);
-		MyDate today = MyTime.getToDay();
-		MyDate yes = MyTime.getAnotherDay(-5);
-        String tradeDateString = yes.DateToStringSimple();
+		MyDate end = MyDate.getDateFromString("2016-03-28");
+		MyDate start = MyTime.getAnotherDay(end,-3);
+//		String url = "https://api.wmcloud.com:443/data/v1"
+//				+ "/api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=&ticker="+shortCode+"&tradeDate="+tradeDateString ;
 		String url = "https://api.wmcloud.com:443/data/v1"
-				+ "/api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=&ticker="+shortCode+"&tradeDate="+tradeDateString ;
+				+ "/api/market/getMktEqud.json?field=tradeDate&beginDate="+start.DateToStringSimple()+"&endDate="+end.DateToStringSimple() +"&secID=&ticker="+shortCode+"&tradeDate=";
 	    String result = request(url);
 	    JSONObject jo = JSONObject.fromObject(result);
 		if (jo.getInt("retCode") != -1) {
@@ -195,9 +254,20 @@ public class HttpUtil {
 		}
 
 	}
+
+	public static void getLocation(String code){
+
+	    String shortCode = code.substring(2);
+		String url = "https://api.wmcloud.com:443/data/v1"
+				+ "/api/equity/getEqu.json?field=equType&listStatusCD=&secID=&ticker=&equTypeCD=A";
+	    String result = request(url);
+	    JSONObject jo = JSONObject.fromObject(result);
+	}
 	public static void main(String[] args) throws IOException, EncoderException {
 		// 根据api store页面上实际的api url来发送get请求，获取数据
-		getStockMes("sh600216");
+		//getStockMes("sh600216");
+		//updateIndustryLocation();
+		getLocation("sh600216");
 	}
 
 }

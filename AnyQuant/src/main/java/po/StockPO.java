@@ -11,9 +11,7 @@ public class StockPO implements InitialBean {
 	 private double turnover;
 	 private double pb,pe_ttm;
 	 private double adj_price;
-	 //尚未实现
 	 private double amplitude;
-	 //尚未实现
 	 private double changeRate;
 
     public StockPO(){

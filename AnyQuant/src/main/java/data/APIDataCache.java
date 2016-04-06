@@ -421,4 +421,16 @@ public class APIDataCache implements APIInterface {
 		return api.clearOptionalStocks();
 	}
 
+	@Override
+	public StockPO getStockMes(String stockCode, MyDate date) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BenchMarkPO getBenchMes(String benchCode, MyDate date) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
