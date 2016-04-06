@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.KeyManagementException;
@@ -51,15 +52,15 @@ import jnr.ffi.Struct.int16_t;
 public class APIInterfaceImpl implements APIInterface{
 
 	 private static  APIInterfaceImpl apiInterfaceImpl;
-	 private static Map<String ,String> codeNameMap;
-	 private static String nameFilePath = "cache//name.txt";
+	 private static Map<String ,String[]> IndustryLocationMap;
+	 private static String nameFilePath = "data//StockIndustries&Regions.txt";
 	 private static String optionalCodesFilePath = "data//OptionalStocks.txt";
 	 private APIInterfaceImpl(){
 		  SetMapUp();
 	 }
 
 	 private void SetMapUp(){
-		 codeNameMap = new  HashMap<>();
+		 IndustryLocationMap = new  HashMap<>();
 		 try {
              String encoding="utf-8";
              File file=new File(nameFilePath);
@@ -70,13 +71,11 @@ public class APIInterfaceImpl implements APIInterface{
                       BufferedReader bufferedReader = new BufferedReader(read);
                       String temp="";
                       while( (temp=bufferedReader.readLine())!=null){
-                    	    String [] codeAndName = temp.split("\\,");
-                    	    if(codeAndName[1].startsWith("ST")){
-                    	    	codeAndName[1]="*"+codeAndName[1];
-                    	    }
-
-                    	//    System.out.println(codeAndName[1]);
-                    	    codeNameMap.put(codeAndName[0], codeAndName[1]);
+                    	    String [] codeAndMes = temp.split(",");
+                    	    String[] industryAndLocationStrings =  new String [2] ;
+                    	    industryAndLocationStrings[0]=codeAndMes[1];
+                    	    industryAndLocationStrings[1]=codeAndMes[2];
+                    	    IndustryLocationMap.put(codeAndMes[0], industryAndLocationStrings);
                       }
                       read.close();
 
@@ -213,6 +212,9 @@ public class APIInterfaceImpl implements APIInterface{
 	}
 
 
+
+
+
     /**
      * 默认返回2015年全部股票
      */
@@ -236,7 +238,7 @@ public class APIInterfaceImpl implements APIInterface{
 	    ArrayList<String> stockCode = new  ArrayList<>();
 		for(int i=0;i<length;i++){
 			JSONObject tempJo = ja.getJSONObject(i);
-			
+
 
 			if(tempJo.getString("name").equals("sh000300")){
 				         continue;
@@ -284,35 +286,58 @@ public class APIInterfaceImpl implements APIInterface{
    *
    */
 	public StockPO getStockMes(String stockCode) {
-
-		 //当天可能没有数据
-		 MyDate end = MyTime.getToDay();
-		 MyDate  temp = MyTime.getFirstPreWorkDay(end);
-		 MyDate    start =   MyTime.getFirstPreWorkDay(temp);
-		 while(getStockMesCount(stockCode,start,end)<2){
-			    temp = MyTime.getFirstPreWorkDay(temp);
-			    start =   MyTime.getFirstPreWorkDay(temp);
-		 }
-		 List<StockPO>  stocks = getManyMesFunc(stockCode, start, end);
-        return  stocks.get(stocks.size()-1);
-
+		  int offset=0;
+		  MyDate date  = MyTime.getAnotherDay(offset);
+		  while(getStockMesRequestResult(stockCode, date)!=1){
+			  offset--;
+			  date=MyTime.getAnotherDay(offset);
+		  }
+         return  getStockMes(stockCode, date);
 	}
 
    /**
     * 获取指定代码的股票的在指定日期的数据
     */
 	public StockPO getStockMes(String code, MyDate date) {
-		// TODO Auto-generated method stub
-		String shortCode = code.substring(2);
-		MyDate end = MyDate.getDateFromString("2016-03-28");
-		MyDate start = MyTime.getAnotherDay(end,-3);
-//		String url = "https://api.wmcloud.com:443/data/v1"
-//				+ "/api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=&ticker="+shortCode+"&tradeDate="+tradeDateString ;
+
+		String tradeDateString=date.DateToStringSimple();
 		String url = "https://api.wmcloud.com:443/data/v1"
-				+ "/api/market/getMktEqud.json?field=tradeDate&beginDate="+start.DateToStringSimple()+"&endDate="+end.DateToStringSimple() +"&secID=&ticker="+shortCode+"&tradeDate=";
+				+ "/api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=&ticker="+code+"&tradeDate="+tradeDateString ;
 	    String result = request(url);
 	    JSONObject jo = JSONObject.fromObject(result);
-	    return null;
+	    if(jo.getInt("retCode")==1){
+	       JSONArray jArray = jo.getJSONArray("data");
+	       JSONObject  stockpoJsonObject = jArray.getJSONObject(0);
+           StockPO po= JSONObjectToStockPO(stockpoJsonObject);
+           return po;
+	    }else{
+           return new StockPO();
+	    }
+
+	}
+
+	private StockPO JSONObjectToStockPO(JSONObject jo){
+		StockPO po = new StockPO();
+		po.setDate(jo.getString("tradeDate")); po.setName(jo.getString("secShortName"));
+
+		String code=jo.getString("ticker");
+		if(code.startsWith("6")){
+			code="sh"+code;
+		}else{
+			code="sz"+code;
+		}
+		po.setCode(code);
+
+		po.setHigh(jo.getDouble("highestPrice"));  	po.setLow(jo.getDouble("lowestPrice"));   po.setOpen(jo.getDouble("openPrice"));
+		po.setClose(jo.getDouble("closePrice"));  po.setPreClose(jo.getDouble("preClosePrice"));  po.setTurnoverVol(jo.getLong("turnoverVol"));
+		po.setTurnoverValue(jo.getDouble("turnoverValue"));  po.setTurnoverRate(jo.getDouble("turnoverRate"));   po.setPb(jo.getDouble("PB"));
+		po.setPe(jo.getDouble("PE"));  po.setAccAdjFactor(jo.getDouble("accumAdjFactor"));  po.setCirMarketValue(jo.getDouble("negMarketValue"));
+		po.setTotalMarketValue(jo.getDouble("marketValue"));
+		po.computeAmplitude();  po.computeChangeRate();
+
+		String [] industryAndLoc = IndustryLocationMap.get(code);
+		po.setBoard(industryAndLoc[0]);   po.setRegion(industryAndLoc[1]);
+		return po;
 	}
 
 	  /**
@@ -320,70 +345,39 @@ public class APIInterfaceImpl implements APIInterface{
 	   *
 	   */
 	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end) {
-		if( (end.DateToString().equals(MyTime.getToDay().DateToString()) )  && ( start.DateToString().equals(end.DateToString())||
-				 MyTime.getAnotherDay(start,1 ).DateToString().equals(end.DateToString())  ) ){
+
+		if( end.DateToString().equals( MyTime.getToDay().DateToString() )  ){
 			List<StockPO> stocks = new ArrayList<>();
-			stocks.add(getStockMes(stockCode));
+			stocks.add(getStockMes(stockCode,start));
 			return  stocks;
 		}
-		if(  start.DateToString().equals(end.DateToString())
-				&&end.DateToString().equals(MyTime.getToDay().DateToString()) ){
-			  List<StockPO> stocks = new ArrayList<>();
-			   return stocks;
-		}
 
-		if(MyTime.ifEarlier(MyTime.getToDay(), start)){
-			   List<StockPO> stocks = new ArrayList<>();
-			   return stocks;
-		}
-
-		//拿到第一天的前一天有效数据
-		start = MyTime.getFirstPreWorkDay(start);
-
-		while(getStockMesCount(stockCode, start, end)<2){
-			start = MyTime.getFirstPreWorkDay(start);
+		List<StockPO> pos = new ArrayList<>();
+		String url = "https://api.wmcloud.com:443/data/v1"
+				+ "/api/market/getMktEqud.json?field=&beginDate="+start.DateToStringSimple()+"&endDate="+end.DateToStringSimple() +"&secID=&ticker="+stockCode+"&tradeDate=";
+	    String result = request(url);
+	    JSONObject jo = JSONObject.fromObject(result);
+	    if(jo.getInt("retCode")==1){
+	       JSONArray jArray = jo.getJSONArray("data");
+	       for(int i=0;i<jArray.size();i++){
+	    	   JSONObject  stockpoJsonObject = jArray.getJSONObject(0);
+	           StockPO po= JSONObjectToStockPO(stockpoJsonObject);
+	           pos.add(po);
+	       }
+           return pos;
+	    }else{
+           return new ArrayList<>();
 	    }
-		return getManyMesFunc(stockCode, start, end);
 	}
 
-	//确保至少有两个数据再调用该方法，返回的数据不包含第一个（没有preclose）
-	private List<StockPO>   getManyMesFunc(String stockCode, MyDate start , MyDate end){
-		String startTime = start.DateToString();
-		String endTime = end.DateToString();
-		String url = "http://121.41.106.89:8010/api/stock/"+stockCode+"/?start="+startTime +"&end="+endTime ;
-	//    System.out.println(SendGET(url, ""));
-		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
-		JSONObject data = jo.getJSONObject("data");
-		JSONArray trading_info = data.getJSONArray("trading_info");
-		//System.out.println("size: "+trading_info.size());
-		List<StockPO> stocks =  new  ArrayList<>();
-			for(int i=0;i<trading_info.size();i++){
-				StockPO stock  = MyJSONObject.toBean(trading_info.getJSONObject(i), StockPO.class);
-			   stock.setCode(stockCode);
-			   stock.setName((String)codeNameMap.get(stockCode));
-			   stocks.add(stock);
-
-			}
-
-			for(int i=1;i<stocks.size();i++){
-				stocks.get(i).setPreClose( stocks.get(i-1).getClose() );
-				stocks.get(i).computeAmplitude();
-			}
-			stocks.remove(0);
-		return stocks;
-	}
-
-	//不确定会有几个数据调用该方法，返回数据个数
-	private  int    getStockMesCount(String stockCode, MyDate start , MyDate end){
-		String startTime = start.DateToString();
-		String endTime = end.DateToString();
-		String url = "http://121.41.106.89:8010/api/stock/"+stockCode+"/?start="+startTime +"&end="+endTime ;
-	    //System.out.println(SendGET(url, ""));
-		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
-		JSONObject data = jo.getJSONObject("data");
-		JSONArray trading_info = data.getJSONArray("trading_info");
-		//System.out.println("size: "+trading_info.size());
-		return trading_info.size();
+	//不确定请求的某日是否有数据调用该方法，返回请求结果1为有，-1为没有
+	private  int    getStockMesRequestResult(String code, MyDate date){
+		String tradeDateString=date.DateToStringSimple();
+		String url = "https://api.wmcloud.com:443/data/v1"
+				+ "/api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=&ticker="+code+"&tradeDate="+tradeDateString ;
+	    String result = request(url);
+	    JSONObject jo = JSONObject.fromObject(result);
+	    return  jo.getInt("retCode");
 	}
 
 	/**
@@ -395,6 +389,9 @@ public class APIInterfaceImpl implements APIInterface{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
 
 	//获得最新的大盘数据
 	@Override

@@ -70,13 +70,10 @@ public class StockPO implements InitialBean {
 		return code;
 	}
 
-	public double getPe_ttm(){
+	public double getPe(){
 		return this.pe;
 	}
 
-	public double getAdj_price(){
-		return this.accAdjFactor;
-	}
 
 	public double getHigh() {
 		return high;
@@ -96,14 +93,17 @@ public class StockPO implements InitialBean {
 
 
 
-	public long getVolume() {
+	public long getTurnoverVol() {
 		return turnoverVol;
 	}
 
-	public double getTurnover() {
+	public double getTurnoverRate() {
 		return turnoverRate;
 	}
 
+	public double getTotalMarketValue() {
+		return totalMarketValue;
+	}
 
 
 	public double getPb() {
@@ -130,12 +130,8 @@ public class StockPO implements InitialBean {
 		this.code = code;
 	}
 
-	public void setPe_ttm(double pe_ttm){
-		this.pe=pe_ttm;
-	}
-
-	public void setAdj_price(double adj_price){
-		this.accAdjFactor=adj_price;
+	public void setPe(double pe){
+		this.pe=pe;
 	}
 
 	public void setHigh(double high) {
@@ -156,12 +152,16 @@ public class StockPO implements InitialBean {
 
 
 
-	public void setVolume(long volume) {
+	public void setTurnoverVol(long volume) {
 		this.turnoverVol = volume;
 	}
 
-	public void setTurnover(double turnover) {
+	public void setTurnoverRate(double turnover) {
 		this.turnoverRate = turnover;
+	}
+
+	public void setTotalMarketValue(double totalMarketValue) {
+		this.totalMarketValue = totalMarketValue;
 	}
 
 
@@ -184,40 +184,6 @@ public class StockPO implements InitialBean {
 
 	public void setPreClose(double preClose) {
 		this.preClose = preClose;
-	}
-
-	public void  computeAmplitude(){
-		   double temp = Math.abs(high - low)/preClose;
-		   if(temp>10){
-			   temp=0;
-			   return;
-		   }
-		   this.amplitude =    (int)(temp*10000)/10000.0;
-
-	}
-
-	public void  computeChangeRate(){
-		   double temp = (close-open)/open;
-		   if(temp>10){
-			   temp=0;
-			   return;
-		   }
-		   this.changeRate =     (int)(temp*10000)/10000.0;
-	}
-
-
-	public String MyToString(char a){
-		return ""+date+a+name+a+code+a+board+a+region+a+high+a+low+a+open+a+close+a+preClose+a+accAdjFactor+a+turnoverValue+a+turnoverRate+a+pe+a+pb+a+cirMarketValue+a+totalMarketValue+a+amplitude+a+changeRate+a+turnoverVol;
-	}
-
-
-	@Override
-	public void initialize() {
-
-
-		 computeChangeRate();
-	//	 computeAmplitude();
-
 	}
 
 	public String getRegion() {
@@ -260,13 +226,47 @@ public class StockPO implements InitialBean {
 		this.accAdjFactor = accAdjFactor;
 	}
 
-	public double getTotalMarketValue() {
-		return totalMarketValue;
+
+
+
+
+
+
+	public void  computeAmplitude(){
+		   double temp = Math.abs(high - low)/preClose;
+		   if(temp>10){
+			   temp=0;
+			   return;
+		   }
+		   this.amplitude =    (int)(temp*10000)/10000.0;
+
 	}
 
-	public void setTotalMarketValue(double totalMarketValue) {
-		this.totalMarketValue = totalMarketValue;
+	public void  computeChangeRate(){
+		   double temp = (close-open)/open;
+		   if(temp>10){
+			   temp=0;
+			   return;
+		   }
+		   this.changeRate =     (int)(temp*10000)/10000.0;
 	}
+
+
+	public String MyToString(char a){
+		return ""+date+a+name+a+code+a+board+a+region+a+high+a+low+a+open+a+close+a+preClose+a+accAdjFactor+a+turnoverValue+a+turnoverRate+a+pe+a+pb+a+cirMarketValue+a+totalMarketValue+a+amplitude+a+changeRate+a+turnoverVol;
+	}
+
+
+	@Override
+	public void initialize() {
+
+
+		 computeChangeRate();
+	//	 computeAmplitude();
+
+	}
+
+
 
 
 

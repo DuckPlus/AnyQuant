@@ -5,6 +5,7 @@ import java.util.List;
 import data.APIInterfaceImpl;
 import po.BenchMarkPO;
 import po.StockPO;
+import util.MyTime;
 import dataservice.APIDataFactory;
 import dataservice.APIInterface;
 import enumeration.MyDate;
@@ -12,14 +13,8 @@ import enumeration.MyDate;
 
 public class APITest  {
          public static void main(String a[]){
-        	    //getAllstocksMessageByAPI();
-        	 getBenchMes();
-        	   // getStockCode();
-        //   getAllMesByCache();
-        	// getLatestMes();
-        //	 System.out.println(MyTime.getToDay().DateToString()+" "+MyTime.getToDay().TimeToString());
-//            System.out.println(MyTime.getAnotherDay(-1).AllToString());
-//            System.out.println(MyTime.getAnotherDay(0).AllToString());
+                     getStockMesByNewAPI();
+
          }
          public  static void getAllstocksMessageByAPI(){
         	 APIInterface api =  APIInterfaceImpl.getAPIInterfaceImpl();
@@ -37,12 +32,12 @@ public class APITest  {
                	System.out.print("preClose:"+stock.getPreClose()+"  ");
                	System.out.print("high: "+stock.getHigh()+"  ");
                	System.out.print("low: "+stock.getLow()+"  ");
-               	System.out.print("pe: "+stock.getPe_ttm()+"  ");
+               	System.out.print("pe: "+stock.getPe()+"  ");
                 System.out.print("pb: "+stock.getPb()+"  ");
-                System.out.print("adj_price: "+stock.getAdj_price()+"  ");
+                System.out.print("adj_price: "+stock.getAccAdjFactor()+"  ");
                	System.out.print("changeRate: "+stock.getChangeRate()+"  ");
              	System.out.print("amp: "+stock.getAmplitude()+"  ");
-             	System.out.print("turnover: "+stock.getTurnover()+"  ");
+             	System.out.print("turnover: "+stock.getTurnoverRate()+"  ");
              	System.out.print("date: "+stock.getDate()+'\n');
         	}
          }
@@ -82,8 +77,8 @@ public class APITest  {
          public  static void getLatestMes(){
         	 APIInterface api = APIInterfaceImpl.getAPIInterfaceImpl();
         	 StockPO stock = api.getStockMes("sh600243");
-        	 System.out.println(stock.getPe_ttm());
-        	 System.out.println(stock.getAdj_price());
+        	 System.out.println(stock.getPe());
+        	 System.out.println(stock.getAccAdjFactor());
          }
          public static void getAllMesByCache(){
         	 APIInterface api = new APIDataFactory().getAPIDataService();
@@ -100,13 +95,43 @@ public class APITest  {
                	System.out.print("preClose:"+stock.getPreClose()+"  ");
                	System.out.print("high: "+stock.getHigh()+"  ");
                	System.out.print("low: "+stock.getLow()+"  ");
-               	System.out.print("pe: "+stock.getPe_ttm()+"  ");
+               	System.out.print("pe: "+stock.getPe()+"  ");
                 System.out.print("pb: "+stock.getPb()+"  ");
-                System.out.print("adj_price: "+stock.getAdj_price()+"  ");
+                System.out.print("adj_price: "+stock.getAccAdjFactor()+"  ");
                	System.out.print("changeRate: "+stock.getChangeRate()+"  ");
              	System.out.print("amp: "+stock.getAmplitude()+"  ");
-             	System.out.print("turnover: "+stock.getTurnover()+"  ");
+             	System.out.print("turnover: "+stock.getTurnoverRate()+"  ");
              	System.out.print("date: "+stock.getDate()+'\n');
         	 }
          }
+
+          public static void getStockMesByNewAPI(){
+        	  APIInterface api =  APIInterfaceImpl.getAPIInterfaceImpl();
+        		MyDate end = MyDate.getDateFromString("2016-03-28");
+        		MyDate start = MyTime.getAnotherDay(end,-3);
+        	 // StockPO stock =api.getStockMes("600216", MyTime.getAnotherDay(-1));
+        	  List<StockPO> stocks = api.getStockMes("600216",start,end);
+        	  for(StockPO stock:stocks){
+        	    System.out.print("name: "+stock.getName()+"  " );
+           	    System.out.print("code: "+stock.getCode()+"  ");
+           	    System.out.print("board: "+stock.getBoard()+"  ");
+           	    System.out.print("region: "+stock.getRegion()+"  ");
+
+             	System.out.print("open: "+stock.getOpen()+"  ");
+             	System.out.print("close: "+stock.getClose()+"  ");
+             	System.out.print("preClose:"+stock.getPreClose()+"  ");
+             	System.out.print("high: "+stock.getHigh()+"  ");
+             	System.out.print("low: "+stock.getLow()+"  ");
+             	System.out.print("pe: "+stock.getPe()+"  ");
+              System.out.print("pb: "+stock.getPb()+"  ");
+              System.out.print("accAdjFactor: "+stock.getAccAdjFactor()+"  ");
+          	System.out.print("turnoverVol: "+stock.getTurnoverVol()+"  ");
+           	System.out.print("turnoverRate: "+stock.getTurnoverRate()+"  ");
+        	System.out.print("turnoverValue: "+stock.getTurnoverValue()+"  ");
+         	System.out.print("changeRate: "+stock.getChangeRate()+"  ");
+           	System.out.print("amp: "+stock.getAmplitude()+"  ");
+           	System.out.print("date: "+stock.getDate()+'\n');
+           	}
+          }
+
 }
