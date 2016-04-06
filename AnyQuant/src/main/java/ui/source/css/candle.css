@@ -21,9 +21,13 @@
 .candlestick-bar {
     -fx-padding: 5;
    /* -demo-bar-fill: red;*/
-    -fx-background-color: linear-gradient(derive(-demo-bar-fill,-30%), derive(-demo-bar-fill,-40%)),
-                          linear-gradient(derive(-demo-bar-fill,100%), derive(-demo-bar-fill, 10%)),
+/*     -fx-background-color: linear-gradient(derive(-demo-bar-fill,-30%), derive(-demo-bar-fill,-40%)),
+                           linear-gradient(derive(-demo-bar-fill,100%), derive(-demo-bar-fill, 10%)),
                           linear-gradient(derive(-demo-bar-fill,30%), derive(-demo-bar-fill,-10%));
+*/                          
+     -fx-background-color: /*linear-gradient(derive(-demo-bar-fill,-30%), derive(-demo-bar-fill,-40%)),*/
+                           linear-gradient(derive(-demo-bar-fill,100%), derive(-demo-bar-fill, 100%)),
+                          linear-gradient(derive(-demo-bar-fill,0%), derive(-demo-bar-fill,0%));
     -fx-background-insets: 0,1,2;
 }
 .candlestick-bar.close-above-open {
