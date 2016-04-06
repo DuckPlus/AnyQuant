@@ -43,10 +43,11 @@ import java.util.Map;
 
 public class HttpUtil {
 	// 创建http client
-	private static String fileName1 = "cache//stockCode.txt";
+	private static String fileName1 = "data//Industries.txt";
 	private static String fileName2 = "cache//industry&loation.txt";
 	private static String fileName3=  "cache//name.txt";
-	private static String fileName4=  "cache//stockExtraInfo.txt";
+	private static String fileName4=  "data//Regions.txt";
+	private static String fileName5=  "data//StockIndustries&Regions.txt";
 
 	// 创建http client
 	private static CloseableHttpClient createHttpsClient() {
@@ -167,6 +168,10 @@ public class HttpUtil {
 
 	private static void updateIndustryLocation(){
 		ArrayList<String>  lineStrings = new ArrayList<String>();
+		ArrayList<String []>  region = new ArrayList<String []>();
+		ArrayList<String []>  industry = new ArrayList<String []>();
+		ArrayList<String> contentStrings = new ArrayList<String>();
+		//建立lineString
 		try {
 			String encoding = "utf-8";
 			String filePath = fileName2;
@@ -177,9 +182,10 @@ public class HttpUtil {
 				String line;
 			    while ( (line=bufferedReader.readLine())!=null) {
                       String [] temp = line.split(",");
-                      if(temp.length==3){
-                    	  lineStrings.add(line);
+                      if(temp.length==2){
+                    	  line=line+"未知位置";
                       }
+                      lineStrings.add(line);
 				}
 				read.close();
 			} else {
@@ -190,11 +196,81 @@ public class HttpUtil {
 			e.printStackTrace();
 		}
 
+//		for(String line:lineStrings){
+//			System.out.println(line);
+//		}
 
+		//建立industry
+		try {
+			String encoding = "utf-8";
+			String filePath = fileName1;
+			File file = new File(filePath);
+			if (file.isFile() && file.exists()) { // 判断文件是否存在
+				InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);// 考虑到编码格式
+				BufferedReader bufferedReader = new BufferedReader(read);
+				String line;
+			    while ( (line=bufferedReader.readLine())!=null) {
+                      String [] temp = line.split(" ");   //temp[1]为父类
+                  //    System.out.println(temp.length);
+                      //System.out.println(temp[0]+"  "+temp[1]);
+                      industry.add(temp);
+				}
+				read.close();
+			} else {
+				System.out.println("找不到指定的文件,创建新文件");
+			}
+		} catch (Exception e) {
+			System.out.println("读取文件内容出错");
+			e.printStackTrace();
+		}
+
+		//建立region
+				try {
+					String encoding = "utf-8";
+					String filePath = fileName4;
+					File file = new File(filePath);
+					if (file.isFile() && file.exists()) { // 判断文件是否存在
+						InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);// 考虑到编码格式
+						BufferedReader bufferedReader = new BufferedReader(read);
+						String line;
+					    while ( (line=bufferedReader.readLine())!=null) {
+		                      String [] temp = line.split(" ");   //temp[1]为父类
+		                      region.add(temp);
+						}
+						read.close();
+					} else {
+						System.out.println("找不到指定的文件,创建新文件");
+					}
+				} catch (Exception e) {
+					System.out.println("读取文件内容出错");
+					e.printStackTrace();
+				}
+
+		for (String line : lineStrings) {
+			String[] temp = line.split(",");
+			if (temp.length == 3) {
+
+				for (int i = 0; i < region.size(); i++) {
+					String[] regionMap = region.get(i);
+					if (regionMap[0].equals(temp[2])) {
+						temp[2] = regionMap[1];
+					}
+				}
+				for (int i = 0; i < industry.size(); i++) {
+					String[] industryMap = industry.get(i);
+					if (industryMap[0].equals(temp[1])) {
+						temp[1] = industryMap[1];
+					}
+				}
+				String resultString = temp[0] + "," + temp[1] + "," + temp[2];
+				contentStrings.add(resultString);
+			//	System.out.println(resultString);
+			}
+		}
 
 		try {
 
-			File file = new File(fileName2);
+			File file = new File(fileName5);
 			// if file doesnt exists, then create it
 			if (!file.exists()) {
 				file.createNewFile();
@@ -203,7 +279,7 @@ public class HttpUtil {
 			// true = append file
 			FileWriter fileWritter = new FileWriter(file, true);
 			BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
-			for (String line : lineStrings) {
+			for (String line : contentStrings) {
 				bufferWritter.write(line + '\n');
 				System.out.println("write: " + line);
 			}
@@ -266,8 +342,8 @@ public class HttpUtil {
 	public static void main(String[] args) throws IOException, EncoderException {
 		// 根据api store页面上实际的api url来发送get请求，获取数据
 		//getStockMes("sh600216");
-		//updateIndustryLocation();
-		getLocation("sh600216");
+		updateIndustryLocation();
+	//	getLocation("sh600216");
 	}
 
 }
