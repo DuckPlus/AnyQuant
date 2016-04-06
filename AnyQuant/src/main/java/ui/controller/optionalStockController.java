@@ -47,7 +47,7 @@ public class optionalStockController {
 	TextField searchBar;
 	private ObservableList<Stock> observableList;
 	
-	private OptionalStockBLService optinalBl = OptionalStockBLServiceImpl.getOptionalBLService();
+	private OptionalStockBLService optionalBl = OptionalStockBLServiceImpl.getOptionalBLService();
 	
 	private StockDetailController stockDetailController;
 	
@@ -83,7 +83,7 @@ public class optionalStockController {
 	}
 	@FXML
 	public void getOptionalStock(){
-		Iterator<StockVO>itr = optinalBl.getOptionalStocks();
+		Iterator<StockVO>itr = optionalBl.getOptionalStocks();
 		showTableData(itr);
 	}
 	private void showTableData(Iterator<StockVO>itr){
@@ -107,25 +107,15 @@ public class optionalStockController {
 		changeRate.setCellValueFactory(cell ->cell.getValue().changeRate.asObject());
 	}
 	
-	
+	@FXML
+	private void deleteOptionalStock(){
+		if(tableview.getSelectionModel().getSelectedIndex()!=-1){
+			String stockCode = tableview.getSelectionModel().getSelectedItem().code.get();
+			boolean status = optionalBl.deleteStockCode(stockCode);
+		}
+	}
 	@FXML
 	private void handleMouseClick(MouseEvent e){
-
-//		if(e.getClickCount()==2){
-//			if(tableview.getSelectionModel().getSelectedIndex()==-1){
-//				System.out.println("empty line");
-//				return ;
-//			}
-//			if(stockDetailController==null){
-//				stockDetailController = StockDetailController.getStockDetailController();
-//			}
-//			if(rightPaneController==null){
-//				rightPaneController = RightPaneController.getRightPaneController();
-//			}
-//			
-//			Stock selectedStock = tableview.getSelectionModel().getSelectedItem();
-//			stockDetailController.setData(selectedStock);
-//			rightPaneController.showDetailPane(Pane);
 		if(e.getClickCount()==2){
 			if(tableview.getSelectionModel().getSelectedIndex()==-1){
 				System.out.println("empty line ");
@@ -149,9 +139,7 @@ public class optionalStockController {
 			if(candleStickController==null){
 				candleStickController = CandleStickController.getCandleStickController();
 			}
-//			MyDate begin = new MyDate(2016, 03, 01);
-//			MyDate end = new MyDate(2016, 03, 20);
-//			candleStickController.setDate(begin, end);
+			
 			candleStickController.setStockCode(selectedStock.code.get());
 			stockDetailController.setData(selectedStock);
 			rightPaneController.showDetailPane(stockDetailPane);

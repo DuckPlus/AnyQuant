@@ -75,6 +75,7 @@ public class StockListController{
 	@FXML
 	private void initialize(){
 		stockDetailPane = (BorderPane)GraphicsUtils.getParent("StockDetail");
+		
 		showStocklist();
 		
 	}

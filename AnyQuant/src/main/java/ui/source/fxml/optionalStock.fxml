@@ -29,6 +29,7 @@
             </TableView>
             <Label layoutX="9.0" layoutY="11.0" text="自选股" textFill="WHITE" />
             <TextField layoutX="54.0" layoutY="6.0" onKeyTyped="#getOptionalStock" />
+            <Button layoutX="628.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#deleteOptionalStock" text="移除" />
          </children>
       </AnchorPane>
    </center>
