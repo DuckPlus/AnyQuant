@@ -4,9 +4,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import com.ziclix.python.sql.handler.UpdateCountDataHandler;
-
 import blimpl.StockBLImpl;
 import blservice.StockBLService;
 import enumeration.MyDate;
@@ -103,9 +100,9 @@ public class CandleStickController  implements Initializable {
     }
 
     public void setStockCode(String  newCode){
+
           stockCode = newCode;
-//          updateCharts();
-          
+
     }
 
     @Override
@@ -391,11 +388,11 @@ public void updateCharts(){
     	}
     	return max;
     }
-    
+
     /**
      * 以下是画分时图的部分
      * @author dzm
      * @date 2016-04-07
      */
-    
+
 }
