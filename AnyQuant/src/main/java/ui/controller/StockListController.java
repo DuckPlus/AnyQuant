@@ -98,10 +98,11 @@ public class StockListController{
 		tableview.getItems().removeAll(observableList);
 		while(itr.hasNext()){
 			StockVO temp = itr.next();
+			System.out.println("volume"+temp.turnoverVol);
 			Stock dataProperty = new Stock(temp);
 			observableList.add(dataProperty);
 		}
-
+		
 		tableview.setItems(observableList);
 		name.setCellValueFactory(cell -> cell.getValue().name);
 		code.setCellValueFactory(cell -> cell.getValue().code);

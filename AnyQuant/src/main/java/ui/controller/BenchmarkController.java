@@ -29,10 +29,10 @@ public class BenchmarkController {
 	TableColumn<BenchMark, Double> high;
 	@FXML
 	TableColumn<BenchMark, Double> low;
+//	@FXML
+//	TableColumn<BenchMark, Double> adj_price;
 	@FXML
-	TableColumn<BenchMark, Double> adj_price;
-	@FXML
-	TableColumn<BenchMark, Long> volume;
+	TableColumn<BenchMark, Long> turnoverVol;
 	@FXML
 	TableView<BenchMark> tableview;
 	@FXML
@@ -95,12 +95,11 @@ public class BenchmarkController {
 			observableList.add(dataProperty);
 		}
 		code.setCellValueFactory(cell -> cell.getValue().code);
-		date.setCellValueFactory(cell -> cell.getValue().date);
 		open.setCellValueFactory(cell -> cell.getValue().open.asObject());
 		close.setCellValueFactory(cell -> cell.getValue().close.asObject());
 		high.setCellValueFactory(cell -> cell.getValue().high.asObject());
 		low.setCellValueFactory(cell -> cell.getValue().low.asObject());
-		volume.setCellValueFactory(cell -> cell.getValue().turnoverVol.asObject());
+		turnoverVol.setCellValueFactory(cell -> cell.getValue().turnoverVol.asObject());
 		tableview.setItems(observableList);
 		
 	}

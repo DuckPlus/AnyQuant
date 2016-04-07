@@ -303,6 +303,7 @@ public class APIInterfaceImpl implements APIInterface{
     * 获取指定代码的股票的在指定日期的数据
     */
 	public StockPO getStockMes(String code, MyDate date) {
+		System.out.println(code);
         String shortCode = code.substring(2);
 		String tradeDateString=date.DateToStringSimple();
 		String url = "https://api.wmcloud.com:443/data/v1"
