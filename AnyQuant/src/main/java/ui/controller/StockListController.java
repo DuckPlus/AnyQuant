@@ -68,14 +68,15 @@ public class StockListController{
 
 	BorderPane stockDetailPane;
 	AnchorPane chartPane;
-
+	InstanceController instanceController = InstanceController.getInstance();
 	public StockListController() {
 		observableList = FXCollections.observableArrayList();
 	}
 	@FXML
 	private void initialize(){
 		stockDetailPane = (BorderPane)GraphicsUtils.getParent("StockDetail");
-		
+		instanceController.registStockDetailPane(stockDetailPane);// add the instance into the factory
+		System.err.println(instanceController.toString());
 		showStocklist();
 		
 	}
@@ -120,7 +121,7 @@ public class StockListController{
 	}
 	@FXML
 	private void handleMouseClick(MouseEvent event){
-		System.out.println("hehe");
+//		System.out.println("hehe");
 		if(event.getClickCount()==2){
 			if(tableview.getSelectionModel().getSelectedIndex()==-1){
 				System.out.println("empty line ");
@@ -134,7 +135,7 @@ public class StockListController{
 			//The stockDetailController is null at first, and it must generated after the fxml has initialize
 			//it, otherwise we will get a totally defferent object from the fxml's
 			if(stockDetailController==null){
-				System.err.println("============new controller============");
+//				System.err.println("============new controller============");
 			      stockDetailController = StockDetailController.getStockDetailController();
 			}
 
@@ -148,6 +149,10 @@ public class StockListController{
 //			MyDate end = new MyDate(2016, 03, 20);
 //			candleStickController.setDate(begin, end);
 			candleStickController.setStockCode(selectedStock.code.get());
+			System.err.println("stock instance:"+stockDetailController.toString());
+//			System.err.println(selectedStock.code.get());
+//			System.err.println("open "+selectedStock.open+"  "+"close "+selectedStock.close);
+//			System.err.println("high "+selectedStock.high+"  "+"low "+selectedStock.low);
 			stockDetailController.setData(selectedStock);
 			rightPaneController.showDetailPane(stockDetailPane);
 		}

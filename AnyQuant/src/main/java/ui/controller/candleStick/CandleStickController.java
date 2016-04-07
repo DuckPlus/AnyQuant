@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import com.ziclix.python.sql.handler.UpdateCountDataHandler;
+
 import blimpl.StockBLImpl;
 import blservice.StockBLService;
 import enumeration.MyDate;
@@ -52,6 +54,8 @@ public class CandleStickController  implements Initializable {
     @FXML
     private Tab monthTab;
     @FXML
+    private Tab timeShareTab;
+    @FXML
     private AnchorPane bottomPane;
     @FXML
     private VBox vbox;
@@ -79,6 +83,7 @@ public class CandleStickController  implements Initializable {
 
     public  CandleStickController (){
     	if(instance==null){
+    		System.err.println("instance null");
     	   stockCode="sh600000";
     	   startDate = new MyDate(2016,3,1 );
     	   endDate = new MyDate(2016,4, 1);
@@ -97,8 +102,10 @@ public class CandleStickController  implements Initializable {
              }
     }
 
-    public static  void setStockCode(String  newCode){
+    public void setStockCode(String  newCode){
           stockCode = newCode;
+//          updateCharts();
+          
     }
 
     @Override
@@ -384,5 +391,11 @@ public void updateCharts(){
     	}
     	return max;
     }
-
+    
+    /**
+     * 以下是画分时图的部分
+     * @author dzm
+     * @date 2016-04-07
+     */
+    
 }

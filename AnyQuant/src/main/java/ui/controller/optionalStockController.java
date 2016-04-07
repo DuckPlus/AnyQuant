@@ -58,6 +58,7 @@ public class optionalStockController {
 	CandleStickController candleStickController;
 	
 	private static optionalStockController instance;
+	InstanceController instanceController = InstanceController.getInstance();
 	public optionalStockController() {
 		if(instance == null ){
 			instance = this;
@@ -74,7 +75,8 @@ public class optionalStockController {
 	@FXML
 	private void initialize(){
 		observableList = FXCollections.observableArrayList();
-		stockDetailPane = (BorderPane)GraphicsUtils.getParent("StockDetail");
+//		stockDetailPane = (BorderPane)GraphicsUtils.getParent("StockDetail");
+		stockDetailPane = instanceController.getStockDetailPane();
 		if(name!=null){
 			System.out.println("not null col");
 		getOptionalStock();
@@ -139,9 +141,10 @@ public class optionalStockController {
 			if(candleStickController==null){
 				candleStickController = CandleStickController.getCandleStickController();
 			}
-			
+//			System.err.println("stock instance:"+stockDetailController.toString());
 			candleStickController.setStockCode(selectedStock.code.get());
 			stockDetailController.setData(selectedStock);
+			System.out.println(selectedStock.open+"  "+selectedStock.close);
 			rightPaneController.showDetailPane(stockDetailPane);
 			
 		}

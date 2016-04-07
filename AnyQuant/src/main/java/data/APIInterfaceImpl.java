@@ -129,7 +129,7 @@ public class APIInterfaceImpl implements APIInterface{
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					 System.out.println("request successfully");
+//					 System.out.println("request successfully");
 				}else{
 					 times++;
 			         System.out.println("request failed , try again ,times : "+times);

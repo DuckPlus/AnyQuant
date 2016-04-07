@@ -48,6 +48,15 @@
                                  </content></ScrollPane>
                            </content>
                         </Tab>
+                        <Tab id="monthTab" fx:id="monthTab1" onSelectionChanged="#selectMonth" text="分时图">
+                           <content>
+                              <ScrollPane prefHeight="690.0" prefWidth="905.0">
+                                 <content>
+                                    <HBox prefHeight="690.0" prefWidth="905.0" />
+                                 </content>
+                              </ScrollPane>
+                           </content>
+                        </Tab>
                     </tabs>
                   </TabPane>
                   <GridPane id="cachePane" fx:id="cachePane" StackPane.alignment="CENTER">

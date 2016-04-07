@@ -31,14 +31,16 @@ public class StockDetailController {
 	Label pb;
 	@FXML
 	Button addBtn;
+	
 	private Stock currentStock;
 	OptionalStockBLService optionBl = OptionalStockBLServiceImpl.getOptionalBLService();
 
 	private static StockDetailController instance;
 
 	public StockDetailController() {
-		System.err.println("init constructor");
+		System.err.println("init constructor======");
 		if (instance == null) {
+			System.out.println("【null instance】");
 			instance = this;
 		}
 	}
@@ -53,15 +55,6 @@ public class StockDetailController {
 	}
 	@FXML
 	private void initialize(){
-		//TODO
-//		System.out.println("init complete");
-//		if(nameLabel==null){
-//			System.out.println("name null in init");
-//			return;
-//			}else{
-//				System.out.println("not null in init");
-//			}
-//		nameLabel.setText("hello");
 
 	}
 
@@ -77,6 +70,7 @@ public class StockDetailController {
 //			}else{
 //				System.out.println("not null in set method");
 //				}
+		System.out.println("[get in and current stock :"+stock.code+"]");
 		currentStock = stock;
 		System.out.println("changed!!");
 //		System.out.println(stock.name.get());
@@ -90,11 +84,14 @@ public class StockDetailController {
 		pe.setText(String.valueOf(stock.pe_ttm.get()));
 		pb.setText(String.valueOf(stock.pb.get()));
 		volume.setText(String.valueOf(stock.volume.get()));
-		addBtn.setText("加入自选股");
+		addBtn.setText("加入自选股?");
 	}
 	@FXML
 	private void addOptionalStock(){
+		System.out.println("add begin");
+		if(currentStock==null)System.err.println("current null");
 		boolean added=optionBl.addStockCode(currentStock.code.get());
+		System.out.println(added+"add");
 		if(!added){
 			addBtn.setText("已存在自选股");
 		}else{
