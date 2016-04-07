@@ -1,11 +1,11 @@
 package blservice;
 
-import vo.StockVO;
-
-import java.security.KeyStore.Entry;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
+import vo.StockVO;
 
 /**
  * Business Logic Interface on Optional Stocks
@@ -58,12 +58,12 @@ public interface OptionalStockBLService {
      * Get the region's distribution of the optional stocks 
      * @return the iterator of a collection which contains the distribution
      */
-    public Iterator<SimpleEntry<String , Integer>> getRegionDistribution();
+    public Iterator<Map.Entry<String, Integer>> getRegionDistribution();
     /**
      * Get the border's distribution of the optional stocks 
      * @return the iterator of a collection which contains the distribution
      */
-    public Iterator<SimpleEntry<String , Integer>> getBorderDistribution();
+    public Iterator<Map.Entry<String, Integer>> getBorderDistribution();
     
     
     
