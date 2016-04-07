@@ -2,6 +2,9 @@ package dataservice;
 
 import data.APIDataCache;
 import data.APIInterfaceImpl;
+import data.BenchMarkDSImpl;
+import data.OptionalStockDSImpl;
+import data.StockDSImpl;
 
 /**
  *
@@ -14,4 +17,18 @@ public class APIDataFactory {
         	   APIInterface  dataService = new APIDataCache(api);
         	   return dataService;
         }
+
+        public static StockDataService getStockDataService(){
+     	   return  StockDSImpl.getStockDSImpl();
+        }
+
+        public static BenchMarkDataService getBenchMarkDataService(){
+      	   return  BenchMarkDSImpl.getBenchMarkDSImpl();
+         }
+
+        public static OptionalStockDataService getOptionalStockDataService(){
+      	   return  OptionalStockDSImpl.getOptionalStockDSImpl();
+         }
+
+
 }

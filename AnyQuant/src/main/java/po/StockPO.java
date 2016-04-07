@@ -1,8 +1,7 @@
 package po;
 
-import data.InitialBean;
 
-public class StockPO implements InitialBean {
+public class StockPO  {
 	//新加了板块、地域属性
 	 private String date ,name,code,board,region;
 	 private double high ,low;
@@ -255,21 +254,6 @@ public class StockPO implements InitialBean {
 	public String MyToString(char a){
 		return ""+date+a+name+a+code+a+board+a+region+a+high+a+low+a+open+a+close+a+preClose+a+accAdjFactor+a+turnoverValue+a+turnoverRate+a+pe+a+pb+a+cirMarketValue+a+totalMarketValue+a+amplitude+a+changeRate+a+turnoverVol;
 	}
-
-
-	@Override
-	public void initialize() {
-
-
-		 computeChangeRate();
-	//	 computeAmplitude();
-
-	}
-
-
-
-
-
 
 
 
