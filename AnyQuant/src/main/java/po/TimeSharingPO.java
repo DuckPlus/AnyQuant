@@ -1,14 +1,13 @@
-package vo;
+package po;
 
 import enumeration.MyDate;
 
 /**
- * 用于实时价格图的vo
- * @author czq
- * @date 2016年3月10日
+ *
+ * @author Qiang
+ * @date Apr 7, 2016
  */
-public class TimeSharingVO {
-	
+public class TimeSharingPO {
 	public MyDate nowTime;
 
 	public double nowPrice;
@@ -16,12 +15,12 @@ public class TimeSharingVO {
 	public long volume;
 	
 	public double value;
-	
-	public TimeSharingVO() {
+
+	public TimeSharingPO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TimeSharingVO(MyDate nowTime, double nowPrice, long volume, double value) {
+	public TimeSharingPO(MyDate nowTime, double nowPrice, long volume, double value) {
 		super();
 		this.nowTime = nowTime;
 		this.nowPrice = nowPrice;
@@ -29,9 +28,6 @@ public class TimeSharingVO {
 		this.value = value;
 	}
 
-	
-	
-	
 	
 	
 }

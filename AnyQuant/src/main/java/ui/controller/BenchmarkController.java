@@ -62,21 +62,6 @@ public class BenchmarkController {
 	private void showAllBenchmark(){
 		Iterator<BenchMarkVO>itr = benchmarkBl.getRecentBenchMarks("hs300");
 		showTableData(itr);
-//		while(itr.hasNext()){
-//			BenchMarkVO temp = itr.next();
-////			System.out.println(temp.date+" "+temp.adj_price);
-//			BenchMark dataProperty = new BenchMark(temp);
-//			observableList.add(dataProperty);
-//		}
-//		code.setCellValueFactory(cell -> cell.getValue().code);
-//		date.setCellValueFactory(cell -> cell.getValue().date);
-//		open.setCellValueFactory(cell -> cell.getValue().open.asObject());
-//		close.setCellValueFactory(cell -> cell.getValue().close.asObject());
-//		high.setCellValueFactory(cell -> cell.getValue().high.asObject());
-//		low.setCellValueFactory(cell -> cell.getValue().low.asObject());
-//		volume.setCellValueFactory(cell -> cell.getValue().volume.asObject());
-//		adj_price.setCellValueFactory(cell -> cell.getValue().adj_price.asObject());
-//		tableview.setItems(observableList);
 		
 	}
 	@FXML
@@ -115,8 +100,7 @@ public class BenchmarkController {
 		close.setCellValueFactory(cell -> cell.getValue().close.asObject());
 		high.setCellValueFactory(cell -> cell.getValue().high.asObject());
 		low.setCellValueFactory(cell -> cell.getValue().low.asObject());
-		volume.setCellValueFactory(cell -> cell.getValue().volume.asObject());
-		adj_price.setCellValueFactory(cell -> cell.getValue().adj_price.asObject());
+		volume.setCellValueFactory(cell -> cell.getValue().turnoverVol.asObject());
 		tableview.setItems(observableList);
 		
 	}

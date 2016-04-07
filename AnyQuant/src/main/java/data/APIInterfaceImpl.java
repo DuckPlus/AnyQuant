@@ -9,25 +9,43 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.python.antlr.PythonParser.return_stmt_return;
 
 import dataservice.APIInterface;
+import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import po.BenchMarkPO;
 import po.StockPO;
+import po.TimeSharingPO;
 import util.MyTime;
 import enumeration.Exchange;
 import enumeration.MyDate;
 import jnr.ffi.Struct.int16_t;
+import jnr.ffi.Struct.time_t;
 
 /**
  * API接口的实现类
@@ -37,15 +55,15 @@ import jnr.ffi.Struct.int16_t;
 public class APIInterfaceImpl implements APIInterface{
 
 	 private static  APIInterfaceImpl apiInterfaceImpl;
-	 private static Map<String ,String> codeNameMap;
-	 private static String nameFilePath = "cache//name.txt";
+	 private static Map<String ,String[]> IndustryLocationMap;
+	 private static String nameFilePath = "data//StockIndustries&Regions.txt";
 	 private static String optionalCodesFilePath = "data//OptionalStocks.txt";
 	 private APIInterfaceImpl(){
 		  SetMapUp();
 	 }
 
 	 private void SetMapUp(){
-		 codeNameMap = new  HashMap<>();
+		 IndustryLocationMap = new  HashMap<>();
 		 try {
              String encoding="utf-8";
              File file=new File(nameFilePath);
@@ -56,13 +74,11 @@ public class APIInterfaceImpl implements APIInterface{
                       BufferedReader bufferedReader = new BufferedReader(read);
                       String temp="";
                       while( (temp=bufferedReader.readLine())!=null){
-                    	    String [] codeAndName = temp.split("\\,");
-                    	    if(codeAndName[1].startsWith("ST")){
-                    	    	codeAndName[1]="*"+codeAndName[1];
-                    	    }
-
-                    	//    System.out.println(codeAndName[1]);
-                    	    codeNameMap.put(codeAndName[0], codeAndName[1]);
+                    	    String [] codeAndMes = temp.split(",");
+                    	    String[] industryAndLocationStrings =  new String [2] ;
+                    	    industryAndLocationStrings[0]=codeAndMes[1];
+                    	    industryAndLocationStrings[1]=codeAndMes[2];
+                    	    IndustryLocationMap.put(codeAndMes[0], industryAndLocationStrings);
                       }
                       read.close();
 
@@ -88,7 +104,7 @@ public class APIInterfaceImpl implements APIInterface{
 
 
 	/**
-	 *此方法用来建立url-connection并返回API所提供的全部初始数据
+	 *此方法用来建立url-connection并返回助教提供的API所提供的初始数据
 	 */
 	private String SendGET(String url, String param) {
 		String result = "";// 访问返回结果
@@ -143,12 +159,69 @@ public class APIInterfaceImpl implements APIInterface{
         }
 		return result;
 	}
+	/**
+	 *此方法用来建立url-connection并返回通联API所提供的初始数据
+	 */
+    private static String request(String url) {
+		final String ACCESS_TOKEN =
+				"44a70d35d80240eaa3d9a66b0b090de5bef4c96914f39c4faa225b4570ee301c";
+		CloseableHttpClient httpClient = createHttpsClient();
+		HttpGet httpGet = new HttpGet(url);
+		// 在header里加入 Bearer {token}，添加认证的token，并执行get请求获取json数据
+		httpGet.addHeader("Authorization", "Bearer " + ACCESS_TOKEN);
+		CloseableHttpResponse response;
+		HttpEntity entity = null;
+		String result = "";
+		try {
+			response = httpClient.execute(httpGet);
+			entity = response.getEntity();
+			result = EntityUtils.toString(entity);
+	//		System.out.println(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	// 创建http client
+	private static CloseableHttpClient createHttpsClient() {
+		X509TrustManager x509mgr = new X509TrustManager() {
+			@Override
+			public void checkClientTrusted(X509Certificate[] xcs, String string) {
+			}
+
+			@Override
+			public void checkServerTrusted(X509Certificate[] xcs, String string) {
+			}
+
+			@Override
+			public X509Certificate[] getAcceptedIssuers() {
+				return null;
+			}
+		};
+		// 因为java客户端要进行安全证书的认证，这里我们设置ALLOW_ALL_HOSTNAME_VERIFIER来跳过认证，否则将报错
+		SSLConnectionSocketFactory sslsf = null;
+		try {
+			SSLContext sslContext = SSLContext.getInstance("TLS");
+			sslContext.init(null, new TrustManager[] { x509mgr }, null);
+			sslsf = new SSLConnectionSocketFactory(sslContext, SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+		} catch (KeyManagementException e) {
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return HttpClients.custom().setSSLSocketFactory(sslsf).build();
+	}
+
+
+
+
 
     /**
      * 默认返回2015年全部股票
      */
 	public List<String> getAllStocks() {
-
 		return getAllStocks(2015);
 	}
 
@@ -168,6 +241,7 @@ public class APIInterfaceImpl implements APIInterface{
 	    ArrayList<String> stockCode = new  ArrayList<>();
 		for(int i=0;i<length;i++){
 			JSONObject tempJo = ja.getJSONObject(i);
+
 
 			if(tempJo.getString("name").equals("sh000300")){
 				         continue;
@@ -215,90 +289,121 @@ public class APIInterfaceImpl implements APIInterface{
    *
    */
 	public StockPO getStockMes(String stockCode) {
+		  int offset=0;
+		  MyDate date  = MyTime.getAnotherDay(offset);
+		  while(getStockMesRequestResult(stockCode, date)!=1){
+			  offset--;
+			  date=MyTime.getAnotherDay(offset);
+			  System.out.println(offset);
+		  }
+         return  getStockMes(stockCode, date);
+	}
 
-		 //当天可能没有数据
-		 MyDate end = MyTime.getToDay();
-		 MyDate  temp = MyTime.getFirstPreWorkDay(end);
-		 MyDate    start =   MyTime.getFirstPreWorkDay(temp);
-		 while(getStockMesCount(stockCode,start,end)<2){
-			    temp = MyTime.getFirstPreWorkDay(temp);
-			    start =   MyTime.getFirstPreWorkDay(temp);
-		 }
-		 List<StockPO>  stocks = getManyMesFunc(stockCode, start, end);
-        return  stocks.get(stocks.size()-1);
+   /**
+    * 获取指定代码的股票的在指定日期的数据
+    */
+	public StockPO getStockMes(String code, MyDate date) {
+        String shortCode = code.substring(2);
+		String tradeDateString=date.DateToStringSimple();
+		String url = "https://api.wmcloud.com:443/data/v1"
+				+ "/api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=&ticker="+shortCode+"&tradeDate="+tradeDateString ;
+	    String result = request(url);
+	    JSONObject jo = JSONObject.fromObject(result);
+	    if(jo.getInt("retCode")==1){
+	       JSONArray jArray = jo.getJSONArray("data");
+	       JSONObject  stockpoJsonObject = jArray.getJSONObject(0);
+           StockPO po= JSONObjectToStockPO(stockpoJsonObject);
+           return po;
+	    }else{
+           return new StockPO();
+	    }
 
+	}
+
+	private StockPO JSONObjectToStockPO(JSONObject jo){
+		StockPO po = new StockPO();
+		po.setDate(jo.getString("tradeDate")); po.setName(jo.getString("secShortName"));
+
+		String code=jo.getString("ticker");
+		if(code.startsWith("6")){
+			code="sh"+code;
+		}else{
+			code="sz"+code;
+		}
+		po.setCode(code);
+
+		po.setHigh(jo.getDouble("highestPrice"));  	po.setLow(jo.getDouble("lowestPrice"));   po.setOpen(jo.getDouble("openPrice"));
+		po.setClose(jo.getDouble("closePrice"));  po.setPreClose(jo.getDouble("preClosePrice"));  po.setTurnoverVol(jo.getLong("turnoverVol"));
+		po.setTurnoverValue(jo.getDouble("turnoverValue"));  po.setTurnoverRate(jo.getDouble("turnoverRate"));   po.setPb(jo.getDouble("PB"));
+		po.setPe(jo.getDouble("PE"));  po.setAccAdjFactor(jo.getDouble("accumAdjFactor"));  po.setCirMarketValue(jo.getDouble("negMarketValue"));
+		po.setTotalMarketValue(jo.getDouble("marketValue"));
+		po.computeAmplitude();  po.computeChangeRate();
+
+		String [] industryAndLoc = IndustryLocationMap.get(code);
+		po.setBoard(industryAndLoc[0]);   po.setRegion(industryAndLoc[1]);
+		return po;
+	}
+
+
+	private BenchMarkPO JSONObjectToBenchMarkPO(JSONObject jo){
+		BenchMarkPO po = new BenchMarkPO();
+		po.setDate(jo.getString("tradeDate")); po.setName(jo.getString("secShortName"));
+        po.setCode(jo.getString("ticker"));     po.setHigh(jo.getDouble("highestIndex"));  	po.setLow(jo.getDouble("lowestIndex"));   po.setOpen(jo.getDouble("openIndex"));
+		po.setClose(jo.getDouble("closeIndex"));  po.setPreclose(jo.getDouble("preCloseIndex"));  po.setTurnoverVol(jo.getLong("turnoverVol"));
+		po.setTurnoverValue(jo.getDouble("turnoverValue"));  po.setChange(jo.getDouble("CHG"));     po.setChangePct(jo.getDouble("CHGPct"));
+		return po;
 	}
 
 	  /**
 	   * 根据日期获取指定代码的股票的数据
 	   *
 	   */
-	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end) {
-		if( (end.DateToString().equals(MyTime.getToDay().DateToString()) )  && ( start.DateToString().equals(end.DateToString())||
-				 MyTime.getAnotherDay(start,1 ).DateToString().equals(end.DateToString())  ) ){
+	public List<StockPO> getStockMes(String code, MyDate start, MyDate end) {
+
+		if( end.DateToString().equals( MyTime.getToDay().DateToString() )  ){
 			List<StockPO> stocks = new ArrayList<>();
-			stocks.add(getStockMes(stockCode));
+			stocks.add(getStockMes(code,start));
 			return  stocks;
 		}
-		if(  start.DateToString().equals(end.DateToString())
-				&&end.DateToString().equals(MyTime.getToDay().DateToString()) ){
-			  List<StockPO> stocks = new ArrayList<>();
-			   return stocks;
-		}
-
-		if(MyTime.ifEarlier(MyTime.getToDay(), start)){
-			   List<StockPO> stocks = new ArrayList<>();
-			   return stocks;
-		}
-
-		//拿到第一天的前一天有效数据
-		start = MyTime.getFirstPreWorkDay(start);
-
-		while(getStockMesCount(stockCode, start, end)<2){
-			start = MyTime.getFirstPreWorkDay(start);
+		String shortCode = code.substring(2);
+		List<StockPO> pos = new ArrayList<>();
+		String url = "https://api.wmcloud.com:443/data/v1"
+				+ "/api/market/getMktEqud.json?field=&beginDate="+start.DateToStringSimple()+"&endDate="+end.DateToStringSimple() +"&secID=&ticker="+shortCode+"&tradeDate=";
+	    String result = request(url);
+	    JSONObject jo = JSONObject.fromObject(result);
+	    if(jo.getInt("retCode")==1){
+	       JSONArray jArray = jo.getJSONArray("data");
+	       for(int i=0;i<jArray.size();i++){
+	    	   JSONObject  stockpoJsonObject = jArray.getJSONObject(0);
+	           StockPO po= JSONObjectToStockPO(stockpoJsonObject);
+	           pos.add(po);
+	       }
+           return pos;
+	    }else{
+           return new ArrayList<>();
 	    }
-		return getManyMesFunc(stockCode, start, end);
 	}
 
-	//确保至少有两个数据再调用该方法，返回的数据不包含第一个（没有preclose）
-	private List<StockPO>   getManyMesFunc(String stockCode, MyDate start , MyDate end){
-		String startTime = start.DateToString();
-		String endTime = end.DateToString();
-		String url = "http://121.41.106.89:8010/api/stock/"+stockCode+"/?start="+startTime +"&end="+endTime ;
-	//    System.out.println(SendGET(url, ""));
-		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
-		JSONObject data = jo.getJSONObject("data");
-		JSONArray trading_info = data.getJSONArray("trading_info");
-		//System.out.println("size: "+trading_info.size());
-		List<StockPO> stocks =  new  ArrayList<>();
-			for(int i=0;i<trading_info.size();i++){
-				StockPO stock  = MyJSONObject.toBean(trading_info.getJSONObject(i), StockPO.class);
-			   stock.setCode(stockCode);
-			   stock.setName((String)codeNameMap.get(stockCode));
-			   stocks.add(stock);
-
-			}
-
-			for(int i=1;i<stocks.size();i++){
-				stocks.get(i).setPreClose( stocks.get(i-1).getClose() );
-				stocks.get(i).computeAmplitude();
-			}
-			stocks.remove(0);
-		return stocks;
+	//不确定请求的股票信息在某日是否有数据，返回请求结果1为有，-1为没有
+	private  int    getStockMesRequestResult(String code, MyDate date){
+		String shortCodeString = code.substring(2);
+		String tradeDateString=date.DateToStringSimple();
+		String url = "https://api.wmcloud.com:443/data/v1"
+				+ "/api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=&ticker="+shortCodeString+"&tradeDate="+tradeDateString ;
+	    String result = request(url);
+	    JSONObject jo = JSONObject.fromObject(result);
+	    return  jo.getInt("retCode");
 	}
 
-	//不确定会有几个数据调用该方法，返回数据个数
-	private  int    getStockMesCount(String stockCode, MyDate start , MyDate end){
-		String startTime = start.DateToString();
-		String endTime = end.DateToString();
-		String url = "http://121.41.106.89:8010/api/stock/"+stockCode+"/?start="+startTime +"&end="+endTime ;
-	    //System.out.println(SendGET(url, ""));
-		JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
-		JSONObject data = jo.getJSONObject("data");
-		JSONArray trading_info = data.getJSONArray("trading_info");
-		//System.out.println("size: "+trading_info.size());
-		return trading_info.size();
-	}
+	//不确定请求的大盘信息在某日是否有数据，返回请求结果1为有，-1为没有
+		private  int    getBenchMesRequestResult(String benchCode, MyDate date){
+			String tradeDateString=date.DateToStringSimple();
+			String url = "https://api.wmcloud.com:443/data/v1"
+					+ "/api/market/getMktIdxd.json?field=&beginDate=&endDate=&indexID=&ticker="+benchCode+"&tradeDate="+tradeDateString ;
+		    String result = request(url);
+		    JSONObject jo = JSONObject.fromObject(result);
+		    return  jo.getInt("retCode");
+		}
 
 	/**
 	 * 获取所有股票的最新信息列表
@@ -310,74 +415,71 @@ public class APIInterfaceImpl implements APIInterface{
 		return null;
 	}
 
+
+
+
+
+
 	//获得最新的大盘数据
 	@Override
 	public BenchMarkPO getBenchMes(String benchCode) {
-		//当天可能没有数据
-		 MyDate end = MyTime.getToDay();
-		 MyDate  start = MyTime.getFirstPreWorkDay(end);
-		 while(getBenchMesCount(benchCode, start, end)<1){
-              start=MyTime.getFirstPreWorkDay(start);
-		 }
-		 List<BenchMarkPO>  benches =getManyBenchMesFunc(benchCode, start, end);
-         return  benches.get(benches.size()-1);
+		  int offset=0;
+		  MyDate date  = MyTime.getAnotherDay(offset);
+		  while(getBenchMesRequestResult(benchCode, date)!=1){
+			  offset--;
+			  date=MyTime.getAnotherDay(offset);
+		  }
+         return  getBenchMes(benchCode, date);
 	}
 
+
+	@Override
+	public BenchMarkPO getBenchMes(String benchCode, MyDate date) {
+		String tradeDateString=date.DateToStringSimple();
+		String url = "https://api.wmcloud.com:443/data/v1"
+				+ "/api/market/getMktIdxd.json?field=&beginDate=&endDate=&indexID=&ticker="+benchCode+"&tradeDate="+tradeDateString ;
+	    String result = request(url);
+	    JSONObject jo = JSONObject.fromObject(result);
+	    if(jo.getInt("retCode")==1){
+	       JSONArray jArray = jo.getJSONArray("data");
+	       JSONObject  benJsonObject = jArray.getJSONObject(0);
+	       BenchMarkPO po= JSONObjectToBenchMarkPO(benJsonObject);
+           return po;
+	    }else{
+           return new BenchMarkPO();
+	    }
+	}
 
 
 	@Override
 	public List<BenchMarkPO> getBenchMes(String benchCode, MyDate start, MyDate end) {
-		if(  MyTime.getAnotherDay(start,1 ).DateToString().equals(end.DateToString())
-				&&end.DateToString().equals(MyTime.getToDay())){
+		if(  start.DateToString().equals(end.DateToString()) ){
 			List<BenchMarkPO> benchMarkPOs = new ArrayList<>();
-			benchMarkPOs.add(getBenchMes(benchCode));
+			benchMarkPOs.add(getBenchMes(benchCode,start));
 			return  benchMarkPOs;
 		}
 
-		if(  start.DateToString().equals(end.DateToString())
-				&&end.DateToString().equals(MyTime.getToDay().DateToString()) ){
-			  List<BenchMarkPO> benchMarkPOs = new ArrayList<>();
-			   return benchMarkPOs;
-		}
-
-		if(MyTime.ifEarlier(MyTime.getToDay(), start)){
-			List<BenchMarkPO> benchMarkPOs = new ArrayList<>();
-			   return benchMarkPOs;
-		}
-
-		return getManyBenchMesFunc(benchCode, start, end);
+		List<BenchMarkPO> pos = new ArrayList<>();
+		String url = "https://api.wmcloud.com:443/data/v1"
+				+ "/api/market/getMktIdxd.json?field=&beginDate="+start.DateToStringSimple()+"&endDate="+end.DateToStringSimple()+"&indexID=&ticker="+benchCode+"&tradeDate=" ;
+	    String result = request(url);
+	    JSONObject jo = JSONObject.fromObject(result);
+	    if(jo.getInt("retCode")==1){
+	       JSONArray jArray = jo.getJSONArray("data");
+	       for(int i=0;i<jArray.size();i++){
+	    	   JSONObject  stockpoJsonObject = jArray.getJSONObject(0);
+	           BenchMarkPO po= JSONObjectToBenchMarkPO(stockpoJsonObject);
+	           pos.add(po);
+	       }
+           return pos;
+	    }else{
+           return new ArrayList<>();
+	    }
 
 	}
 
-		private List<BenchMarkPO> getManyBenchMesFunc(String benchCode, MyDate start, MyDate end) {
-			String startTime = start.DateToString();
-			String endTime = end.DateToString();
-			String url = "http://121.41.106.89:8010/api/benchmark/"+benchCode+"/?start="+startTime +"&end="+endTime ;
-//		    System.out.println(SendGET(url, ""));
-			JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
-			JSONObject data = jo.getJSONObject("data");
-			JSONArray trading_info = data.getJSONArray("trading_info");
-			List<BenchMarkPO> benchs =  new  ArrayList<>();
-			for(int i=0;i<trading_info.size();i++){
-				BenchMarkPO  bench  = MyJSONObject.toBean(trading_info.getJSONObject(i), BenchMarkPO.class);
-				bench.setCode(benchCode);
-				benchs.add(bench);
-			}
 
-			return benchs;
-	}
 
-		//不确定会有几个数据调用该方法，返回数据个数
-		private  int    getBenchMesCount(String benchCode, MyDate start, MyDate end){
-			String startTime = start.DateToString();
-			String endTime = end.DateToString();
-			String url = "http://121.41.106.89:8010/api/benchmark/"+benchCode+"/?start="+startTime +"&end="+endTime ;
-//		    System.out.println(SendGET(url, ""));
-			JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
-			JSONObject data = jo.getJSONObject("data");
-			JSONArray trading_info = data.getJSONArray("trading_info");
-			return trading_info.size();
-		}
 
 
 	/**
@@ -393,12 +495,7 @@ public class APIInterfaceImpl implements APIInterface{
 
 	@Override
 	public List<BenchMarkPO> getAllBenchMes() {
-		 List<String>  benchCodes = this.getAllBenchMarks();
-		 List<BenchMarkPO>  list = new ArrayList<>();
-		 for(String BenchCode : benchCodes){
-			 list.add(this.getBenchMes(BenchCode));
-		 }
-		return list;
+		return null;
 	}
 
 	@Override
@@ -516,5 +613,57 @@ public class APIInterfaceImpl implements APIInterface{
      }
 
 
+
+
+
+	@Override
+	public List<TimeSharingPO> geTimeSharingPOs(String stockCode) {
+		String SH_EXCHANGE = ".XSHG";
+		String SZ_EXCHANGE = ".XSHE";
+
+		if(stockCode.startsWith("sh")){
+			stockCode = stockCode.substring(2) + SH_EXCHANGE;
+		}else{
+			stockCode = stockCode.substring(2) + SZ_EXCHANGE;
+		}
+
+
+		String url = "https://api.wmcloud.com:443/data/v1/api/market/getBarRTIntraDay.json?securityID="+stockCode +"&startTime=&endTime=&unit=1";
+		 JSONObject jsonObject = JSONObject.fromObject(request(url));
+		 JSONArray jsonArray = jsonObject.getJSONArray("data");
+		 JSONObject jsonObject2 = jsonArray.getJSONObject(0);
+		jsonArray = jsonObject2.getJSONArray("barBodys");
+
+		List<TimeSharingPO> pos = new ArrayList<>(jsonArray.size());
+		for (int i = 0; i < jsonArray.size(); i++) {
+			pos.add(makeTimeSharingPO(jsonArray.getJSONObject(i)));
+		}
+
+
+
+		return pos.isEmpty()? null : pos;
+	}
+
+
+	private TimeSharingPO makeTimeSharingPO(JSONObject jsonObject){
+		MyDate date = MyTime.getToDay();
+
+		String nowTime = jsonObject.getString("barTime");
+		String[] split = nowTime.split(":");
+ 		date.setHour(Integer.parseInt(split[0]));
+		date.setMin(Integer.parseInt(split[1]));
+
+		return new TimeSharingPO(date, jsonObject.getDouble("closePrice"), jsonObject.getLong("totalVolume") , jsonObject.getDouble("totalValue"));
+	}
+
+
+	public static void main(String[] args) {
+		APIInterface apiInterface  = new APIInterfaceImpl();
+		List<TimeSharingPO> po = apiInterface.geTimeSharingPOs("sh600000");
+
+		for (int i = 0; i < po.size(); i++) {
+			System.out.println(po.get(i).nowPrice);
+		}
+	}
 
 }

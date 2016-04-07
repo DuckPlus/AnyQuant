@@ -28,7 +28,7 @@ public class StockBLImplTest {
 	public void setUp() throws Exception {
 		bl  = BusinessFactory.getStockBLService();
 	}
-	
+
 	@Test
 	public void testGetAPIBLService() {
 	}
@@ -55,17 +55,17 @@ public class StockBLImplTest {
 //				System.out.println("Code:" + vo.code + " 收盘：" + vo.close + " 昨收盘："+vo.preClose );
 //			}
 //		}
-		
+
 		System.out.println("---------------------接下来是振幅排序----------------");
 		Iterator<StockVO> stocksWithzhenfu = bl.getSortStocks(false, Stock_Attribute.amplitude);
 		while(stocksWithzhenfu.hasNext()){
 			System.out.println(stocksWithzhenfu.next().amplitude);
 		}
-		
+
 		System.out.println("---------------------接下来是成交量排序----------------");
 		Iterator<StockVO> stocksWithvolume = bl.getSortStocks(false, Stock_Attribute.volume);
 		while(stocksWithvolume.hasNext()){
-			System.out.println(stocksWithvolume.next().volume);
+			System.out.println(stocksWithvolume.next().turnoverVol);
 		}
 	}
 
@@ -102,7 +102,7 @@ public class StockBLImplTest {
 			System.out.print(vo.name);
 			System.out.println();
 		}
-	}	
+	}
 
 	@Test
 	public void testGetDayOHLC_Data() {
@@ -118,7 +118,7 @@ public class StockBLImplTest {
 			if(!lows.get(i).equals(tmp.get(i).low)){
 				fail();
 			}
-		}				
+		}
 	}
 
 	@Test
@@ -154,7 +154,7 @@ public class StockBLImplTest {
 		for (DealVO dealVO : dealVOs) {
 			System.out.println(dealVO.date.DateToString() + " " + dealVO.dealAmount+ " " + dealVO.volume);
 		}
-	
+
 	}
 
 	@Test
@@ -178,7 +178,7 @@ public class StockBLImplTest {
 
 	@Test
 	public void testGetTodayStockVO() {
-		
+
 	}
 
 }

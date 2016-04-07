@@ -10,6 +10,7 @@ import util.MyTime;
 import vo.OHLC_VO;
 import vo.Stock;
 import vo.StockVO;
+import vo.TimeSharingVO;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -137,6 +138,13 @@ public class StockBLImplTest {
 
     @Test
     public void getSharingVOs() throws Exception {
+    		List<TimeSharingVO> vos = bl.getSharingVOs("sh600000");
+    		for (int i = 0; i < vos.size(); i++) {
+				System.out.println(vos.get(i).nowPrice);
+				
+			}
+    	
+    	
 
     }
 

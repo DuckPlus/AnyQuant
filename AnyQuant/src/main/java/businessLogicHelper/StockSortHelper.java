@@ -51,7 +51,7 @@ public class StockSortHelper {
     private static class sortByVolume implements Comparator<StockVO> {
         @Override
         public int compare(StockVO o1, StockVO o2) {
-            return compareWith(o1.volume, o2.volume);
+            return compareWith(o1.turnoverVol, o2.turnoverVol);
         }
     }
 
