@@ -11,7 +11,7 @@ import java.util.TreeMap;
 import blservice.OptionalStockBLService;
 import businessLogicHelper.VOPOchange;
 import dataservice.APIDataFactory;
-import dataservice.APIInterface;
+import dataservice.OptionalStockDataService;
 import po.StockPO;
 import vo.StockVO;
 
@@ -26,7 +26,7 @@ public class OptionalStockBLServiceImpl implements OptionalStockBLService {
 	 * 单例模式
 	 */
 	private static OptionalStockBLService bl;
-	private APIInterface APIDataSer;
+	private OptionalStockDataService APIDataSer;
 
 	private List<StockVO> optionStocks;
 	private Map<String, StockVO> optionalStockMap;
@@ -41,7 +41,7 @@ public class OptionalStockBLServiceImpl implements OptionalStockBLService {
 	}
 
 	private OptionalStockBLServiceImpl() {
-		APIDataSer = APIDataFactory.getAPIDataService();
+		APIDataSer = APIDataFactory.getOptionalStockDataService();
 
 		refreshOptionalStocks();
 

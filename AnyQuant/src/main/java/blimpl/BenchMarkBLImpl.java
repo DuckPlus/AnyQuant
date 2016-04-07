@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import po.BenchMarkPO;
-import util.MyTime;
-import vo.BenchMarkVO;
 import blservice.BenchMarkBLService;
 import businessLogicHelper.VOPOchange;
 import dataservice.APIDataFactory;
-import dataservice.APIInterface;
+import dataservice.BenchMarkDataService;
 import enumeration.MyDate;
+import po.BenchMarkPO;
+import util.MyTime;
+import vo.BenchMarkVO;
 
 /**
  *
@@ -26,12 +26,12 @@ public class BenchMarkBLImpl implements BenchMarkBLService {
 	 */
 	private List<BenchMarkVO> benchMarkVOs;
 	private Map<String, BenchMarkVO> benchMap;
-	private APIInterface APIDataSer;
+	private BenchMarkDataService APIDataSer;
 	private static BenchMarkBLService bl;
 
 	private BenchMarkBLImpl() {
 
-		APIDataSer = APIDataFactory.getAPIDataService();
+		APIDataSer = APIDataFactory.getBenchMarkDataService();
 		benchMap = new TreeMap<String, BenchMarkVO>();
 		List<BenchMarkPO> benchMarkPOs = APIDataSer.getAllBenchMes();
 		for (BenchMarkPO po : benchMarkPOs) {

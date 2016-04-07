@@ -6,6 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import blservice.StockBLService;
+import businessLogicHelper.StockSortHelper;
+import businessLogicHelper.VOPOchange;
+import dataservice.APIDataFactory;
+import dataservice.StockDataService;
+import enumeration.MyDate;
+import enumeration.Stock_Attribute;
 import po.StockPO;
 import po.TimeSharingPO;
 import util.MyTime;
@@ -13,18 +20,11 @@ import vo.DealVO;
 import vo.OHLC_VO;
 import vo.StockVO;
 import vo.TimeSharingVO;
-import blservice.StockBLService;
-import businessLogicHelper.StockSortHelper;
-import businessLogicHelper.VOPOchange;
-import dataservice.APIDataFactory;
-import dataservice.APIInterface;
-import enumeration.MyDate;
-import enumeration.Stock_Attribute;
 
 /**
  * API逻辑层实现
  *
- * @author czq
+ * @author Qiang
  * @date 2016年3月4日
  */
 public class StockBLImpl implements StockBLService {
@@ -32,7 +32,7 @@ public class StockBLImpl implements StockBLService {
 	 * 单例模式
 	 */
 	private static StockBLService APIBlservice;
-	private APIInterface APIDataSer;
+	private StockDataService APIDataSer;
 	/**
 	 * 两份股票的数据，Collection版便于排序，Map版便于查找
 	 */
@@ -43,7 +43,7 @@ public class StockBLImpl implements StockBLService {
 	 * 为了加快测试速度，在开发阶段只引入100只股票
 	 */
 	private StockBLImpl() {
-		APIDataSer = APIDataFactory.getAPIDataService();
+		APIDataSer = APIDataFactory.getStockDataService();
 		List<StockPO> stocksCode = APIDataSer.getAllStockMes();
 		stockMap = new TreeMap<String, StockVO>();
 
