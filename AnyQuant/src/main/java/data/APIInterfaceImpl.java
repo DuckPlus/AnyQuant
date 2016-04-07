@@ -173,7 +173,7 @@ public class APIInterfaceImpl implements APIInterface{
 			response = httpClient.execute(httpGet);
 			entity = response.getEntity();
 			result = EntityUtils.toString(entity);
-			System.out.println(result);
+	//		System.out.println(result);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -291,6 +291,7 @@ public class APIInterfaceImpl implements APIInterface{
 		  while(getStockMesRequestResult(stockCode, date)!=1){
 			  offset--;
 			  date=MyTime.getAnotherDay(offset);
+			  System.out.println(offset);
 		  }
          return  getStockMes(stockCode, date);
 	}
@@ -299,10 +300,10 @@ public class APIInterfaceImpl implements APIInterface{
     * 获取指定代码的股票的在指定日期的数据
     */
 	public StockPO getStockMes(String code, MyDate date) {
-
+        String shortCode = code.substring(2);
 		String tradeDateString=date.DateToStringSimple();
 		String url = "https://api.wmcloud.com:443/data/v1"
-				+ "/api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=&ticker="+code+"&tradeDate="+tradeDateString ;
+				+ "/api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=&ticker="+shortCode+"&tradeDate="+tradeDateString ;
 	    String result = request(url);
 	    JSONObject jo = JSONObject.fromObject(result);
 	    if(jo.getInt("retCode")==1){
@@ -354,17 +355,17 @@ public class APIInterfaceImpl implements APIInterface{
 	   * 根据日期获取指定代码的股票的数据
 	   *
 	   */
-	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end) {
+	public List<StockPO> getStockMes(String code, MyDate start, MyDate end) {
 
 		if( end.DateToString().equals( MyTime.getToDay().DateToString() )  ){
 			List<StockPO> stocks = new ArrayList<>();
-			stocks.add(getStockMes(stockCode,start));
+			stocks.add(getStockMes(code,start));
 			return  stocks;
 		}
-
+		String shortCode = code.substring(2);
 		List<StockPO> pos = new ArrayList<>();
 		String url = "https://api.wmcloud.com:443/data/v1"
-				+ "/api/market/getMktEqud.json?field=&beginDate="+start.DateToStringSimple()+"&endDate="+end.DateToStringSimple() +"&secID=&ticker="+stockCode+"&tradeDate=";
+				+ "/api/market/getMktEqud.json?field=&beginDate="+start.DateToStringSimple()+"&endDate="+end.DateToStringSimple() +"&secID=&ticker="+shortCode+"&tradeDate=";
 	    String result = request(url);
 	    JSONObject jo = JSONObject.fromObject(result);
 	    if(jo.getInt("retCode")==1){
@@ -380,15 +381,26 @@ public class APIInterfaceImpl implements APIInterface{
 	    }
 	}
 
-	//不确定请求的某日是否有数据调用该方法，返回请求结果1为有，-1为没有
+	//不确定请求的股票信息在某日是否有数据，返回请求结果1为有，-1为没有
 	private  int    getStockMesRequestResult(String code, MyDate date){
+		String shortCodeString = code.substring(2);
 		String tradeDateString=date.DateToStringSimple();
 		String url = "https://api.wmcloud.com:443/data/v1"
-				+ "/api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=&ticker="+code+"&tradeDate="+tradeDateString ;
+				+ "/api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=&ticker="+shortCodeString+"&tradeDate="+tradeDateString ;
 	    String result = request(url);
 	    JSONObject jo = JSONObject.fromObject(result);
 	    return  jo.getInt("retCode");
 	}
+
+	//不确定请求的大盘信息在某日是否有数据，返回请求结果1为有，-1为没有
+		private  int    getBenchMesRequestResult(String benchCode, MyDate date){
+			String tradeDateString=date.DateToStringSimple();
+			String url = "https://api.wmcloud.com:443/data/v1"
+					+ "/api/market/getMktIdxd.json?field=&beginDate=&endDate=&indexID=&ticker="+benchCode+"&tradeDate="+tradeDateString ;
+		    String result = request(url);
+		    JSONObject jo = JSONObject.fromObject(result);
+		    return  jo.getInt("retCode");
+		}
 
 	/**
 	 * 获取所有股票的最新信息列表
@@ -408,14 +420,13 @@ public class APIInterfaceImpl implements APIInterface{
 	//获得最新的大盘数据
 	@Override
 	public BenchMarkPO getBenchMes(String benchCode) {
-		//当天可能没有数据
-		 MyDate end = MyTime.getToDay();
-		 MyDate  start = MyTime.getFirstPreWorkDay(end);
-		 while(getBenchMesCount(benchCode, start, end)<1){
-              start=MyTime.getFirstPreWorkDay(start);
-		 }
-		 List<BenchMarkPO>  benches =getManyBenchMesFunc(benchCode, start, end);
-         return  benches.get(benches.size()-1);
+		  int offset=0;
+		  MyDate date  = MyTime.getAnotherDay(offset);
+		  while(getBenchMesRequestResult(benchCode, date)!=1){
+			  offset--;
+			  date=MyTime.getAnotherDay(offset);
+		  }
+         return  getBenchMes(benchCode, date);
 	}
 
 
@@ -439,57 +450,33 @@ public class APIInterfaceImpl implements APIInterface{
 
 	@Override
 	public List<BenchMarkPO> getBenchMes(String benchCode, MyDate start, MyDate end) {
-		if(  MyTime.getAnotherDay(start,1 ).DateToString().equals(end.DateToString())
-				&&end.DateToString().equals(MyTime.getToDay())){
+		if(  start.DateToString().equals(end.DateToString()) ){
 			List<BenchMarkPO> benchMarkPOs = new ArrayList<>();
-			benchMarkPOs.add(getBenchMes(benchCode));
+			benchMarkPOs.add(getBenchMes(benchCode,start));
 			return  benchMarkPOs;
 		}
 
-		if(  start.DateToString().equals(end.DateToString())
-				&&end.DateToString().equals(MyTime.getToDay().DateToString()) ){
-			  List<BenchMarkPO> benchMarkPOs = new ArrayList<>();
-			   return benchMarkPOs;
-		}
-
-		if(MyTime.ifEarlier(MyTime.getToDay(), start)){
-			List<BenchMarkPO> benchMarkPOs = new ArrayList<>();
-			   return benchMarkPOs;
-		}
-
-		return getManyBenchMesFunc(benchCode, start, end);
+		List<BenchMarkPO> pos = new ArrayList<>();
+		String url = "https://api.wmcloud.com:443/data/v1"
+				+ "/api/market/getMktIdxd.json?field=&beginDate="+start.DateToStringSimple()+"&endDate="+end.DateToStringSimple()+"&indexID=&ticker="+benchCode+"&tradeDate=" ;
+	    String result = request(url);
+	    JSONObject jo = JSONObject.fromObject(result);
+	    if(jo.getInt("retCode")==1){
+	       JSONArray jArray = jo.getJSONArray("data");
+	       for(int i=0;i<jArray.size();i++){
+	    	   JSONObject  stockpoJsonObject = jArray.getJSONObject(0);
+	           BenchMarkPO po= JSONObjectToBenchMarkPO(stockpoJsonObject);
+	           pos.add(po);
+	       }
+           return pos;
+	    }else{
+           return new ArrayList<>();
+	    }
 
 	}
 
-		private List<BenchMarkPO> getManyBenchMesFunc(String benchCode, MyDate start, MyDate end) {
-			String startTime = start.DateToString();
-			String endTime = end.DateToString();
-			String url = "http://121.41.106.89:8010/api/benchmark/"+benchCode+"/?start="+startTime +"&end="+endTime ;
-//		    System.out.println(SendGET(url, ""));
-			JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
-			JSONObject data = jo.getJSONObject("data");
-			JSONArray trading_info = data.getJSONArray("trading_info");
-			List<BenchMarkPO> benchs =  new  ArrayList<>();
-			for(int i=0;i<trading_info.size();i++){
-				BenchMarkPO  bench  = MyJSONObject.toBean(trading_info.getJSONObject(i), BenchMarkPO.class);
-				bench.setCode(benchCode);
-				benchs.add(bench);
-			}
 
-			return benchs;
-	}
 
-		//不确定会有几个数据调用该方法，返回数据个数
-		private  int    getBenchMesCount(String benchCode, MyDate start, MyDate end){
-			String startTime = start.DateToString();
-			String endTime = end.DateToString();
-			String url = "http://121.41.106.89:8010/api/benchmark/"+benchCode+"/?start="+startTime +"&end="+endTime ;
-//		    System.out.println(SendGET(url, ""));
-			JSONObject jo = JSONObject.fromObject(SendGET(url, ""));
-			JSONObject data = jo.getJSONObject("data");
-			JSONArray trading_info = data.getJSONArray("trading_info");
-			return trading_info.size();
-		}
 
 
 	/**
@@ -505,12 +492,7 @@ public class APIInterfaceImpl implements APIInterface{
 
 	@Override
 	public List<BenchMarkPO> getAllBenchMes() {
-		 List<String>  benchCodes = this.getAllBenchMarks();
-		 List<BenchMarkPO>  list = new ArrayList<>();
-		 for(String BenchCode : benchCodes){
-			 list.add(this.getBenchMes(BenchCode));
-		 }
-		return list;
+		return null;
 	}
 
 	@Override

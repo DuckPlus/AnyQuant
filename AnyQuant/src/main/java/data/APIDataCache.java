@@ -44,8 +44,8 @@ public class APIDataCache implements APIInterface {
 
 	public APIDataCache(APIInterface api) {
 		this.api = api;
-	//	updateLatestStockMes();
-		updateSelectedStockInfo();
+		updateLatestStockMes();
+	//	updateSelectedStockInfo();
 
 	}
 
@@ -124,7 +124,13 @@ public class APIDataCache implements APIInterface {
 	@Override
 	public List<BenchMarkPO> getAllBenchMes() {
 		// TODO Auto-generated method stub
-		return api.getAllBenchMes();
+		List<String> benchCodeStrings = getAllBenchMarks();
+		List<BenchMarkPO> benchMarkPOs = new ArrayList<>();
+		for(String code: benchCodeStrings){
+			BenchMarkPO po = api.getBenchMes(code);
+			benchMarkPOs.add(po);
+		}
+		return benchMarkPOs;
 	}
 
 	@Override
@@ -254,8 +260,8 @@ public class APIDataCache implements APIInterface {
 							Double.parseDouble(attrs[7]), Double.parseDouble(attrs[8]), Double.parseDouble(attrs[9]),
 							Double.parseDouble(attrs[10]), Double.parseDouble(attrs[11]), Double.parseDouble(attrs[12]),
 							Double.parseDouble(attrs[13]), Double.parseDouble(attrs[14]),Double.parseDouble(attrs[15]),
-							Double.parseDouble(attrs[16]),
-							Double.parseDouble(attrs[17]),Double.parseDouble(attrs[18]),Long.parseLong(attrs[19]) );
+							Double.parseDouble(attrs[16]),Double.parseDouble(attrs[17]),Double.parseDouble(attrs[18]),
+							Long.parseLong(attrs[19]) );
 					result.add(stock);
 				}
 				read.close();
@@ -336,7 +342,7 @@ public class APIDataCache implements APIInterface {
 
 			} else {
 
-				System.out.println("找不到指定的文件,创建新文件");
+				System.out.println("找不到"+stockMesFileName+",创建新文件");
 				List<StockPO> result = new ArrayList<>();
 				List<String> stockCodes = getAllStocks();
 

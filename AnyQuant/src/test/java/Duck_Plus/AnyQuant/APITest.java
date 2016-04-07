@@ -18,12 +18,12 @@ public class APITest  {
          }
          public  static void getAllstocksMessageByAPI(){
         	 APIInterface api =  APIInterfaceImpl.getAPIInterfaceImpl();
-        	 MyDate start = new MyDate(2016, 2, 29);
-        	 MyDate end = new MyDate(2016, 3, 7);
-        	List<StockPO>  stocks =  api.getStockMes("sh600979",start,end);
+//        	 MyDate start = new MyDate(2016, 2, 29);
+//        	 MyDate end = new MyDate(2016, 3, 7);
+        	  StockPO  stock =  api.getStockMes("sh600979");
         //	StockPO stock =   api.getStockMes("sh600126");
 
-        	for(StockPO stock : stocks){
+        //	for(StockPO stock : stocks){
 
         		System.out.print("name: "+stock.getName()+"  " );
              	System.out.print("code: "+stock.getCode()+"  ");
@@ -39,8 +39,8 @@ public class APITest  {
              	System.out.print("amp: "+stock.getAmplitude()+"  ");
              	System.out.print("turnover: "+stock.getTurnoverRate()+"  ");
              	System.out.print("date: "+stock.getDate()+'\n');
-        	}
-         }
+       }
+       //  }
 
          public static void getBenchMes(){
 
@@ -56,7 +56,7 @@ public class APITest  {
         		          	System.out.print("close: "+stock.getClose()+" ");
         		          	System.out.print("high: "+stock.getHigh()+" ");
         		          	System.out.print("low: "+stock.getLow()+" ");
-        		          	System.out.print("adj_price: "+stock.getAdj_price()+'\n');
+
 
         		 }
 
@@ -107,11 +107,11 @@ public class APITest  {
 
           public static void getStockMesByNewAPI(){
         	  APIInterface api =  APIInterfaceImpl.getAPIInterfaceImpl();
-        		MyDate end = MyDate.getDateFromString("2016-03-28");
-        		MyDate start = MyTime.getAnotherDay(end,-3);
-        	 // StockPO stock =api.getStockMes("600216", MyTime.getAnotherDay(-1));
-        	  List<StockPO> stocks = api.getStockMes("600216",start,end);
-        	  for(StockPO stock:stocks){
+//        		MyDate end = MyDate.getDateFromString("2016-03-28");
+//        		MyDate start = MyTime.getAnotherDay(end,-3);
+        	  StockPO stock =api.getStockMes("sh600216");
+        	//  List<StockPO> stocks = api.getStockMes("600216",start,end);
+        //	  for(StockPO stock:stocks){
         	    System.out.print("name: "+stock.getName()+"  " );
            	    System.out.print("code: "+stock.getCode()+"  ");
            	    System.out.print("board: "+stock.getBoard()+"  ");
@@ -132,6 +132,6 @@ public class APITest  {
            	System.out.print("amp: "+stock.getAmplitude()+"  ");
            	System.out.print("date: "+stock.getDate()+'\n');
            	}
-          }
+
 
 }
