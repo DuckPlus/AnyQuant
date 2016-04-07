@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import po.StockPO;
+import po.TimeSharingPO;
 import util.MyTime;
 import vo.DealVO;
 import vo.OHLC_VO;
@@ -224,8 +225,18 @@ public class StockBLImpl implements StockBLService {
 
 	@Override
 	public List<TimeSharingVO> getSharingVOs(String stockCode) {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<TimeSharingPO> pos = APIDataSer.geTimeSharingPOs(stockCode);
+
+		List<TimeSharingVO> vos = new ArrayList<>();
+
+		for (TimeSharingPO po : pos) {
+
+			vos.add((TimeSharingVO) VOPOchange.POtoVO(po));
+
+		}
+
+		return vos.isEmpty() ? null : vos;
 	}
 
 	@Override
@@ -301,23 +312,22 @@ public class StockBLImpl implements StockBLService {
 		return vos.isEmpty() ? null : vos;
 	}
 
-	 /**
+	/**
 	 * 计算给定范围内的成交量、成交额总量， 其中成交额暂时用每天开盘价作为平均价,乘以成交量得出
 	 *
 	 * @param subList
 	 * @return
 	 */
-	 private static DealVO getSumDealVO(List<StockPO> subList) {
-	 long volume = 0;
-	 double turnoverval = 0;
-	 for (StockPO stockPO : subList) {
-	 volume += stockPO.getTurnoverVol();
-	 turnoverval += stockPO.getTurnoverValue();
-	 }
-	
-	 return new DealVO(turnoverval, volume,
-	 MyDate.getDateFromString(subList.get(0).getDate()));
-	 }
+	private static DealVO getSumDealVO(List<StockPO> subList) {
+		long volume = 0;
+		double turnoverval = 0;
+		for (StockPO stockPO : subList) {
+			volume += stockPO.getTurnoverVol();
+			turnoverval += stockPO.getTurnoverValue();
+		}
+
+		return new DealVO(turnoverval, volume, MyDate.getDateFromString(subList.get(0).getDate()));
+	}
 
 	private static double getLowInScope(List<StockPO> scope) {
 		double result = Double.MAX_VALUE;
@@ -360,5 +370,15 @@ public class StockBLImpl implements StockBLService {
 		}
 
 	}
-
+	
+	
+	
+	public static void main(String[] args) {
+		StockBLService bl = new StockBLImpl();
+		List<TimeSharingVO> vos = bl.getSharingVOs("sh600000");
+		for (int i = 0; i < vos.size(); i++) {
+			System.out.println(vos.get(i).nowPrice);
+			
+		}
+	}
 }

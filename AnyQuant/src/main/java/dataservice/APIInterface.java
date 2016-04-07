@@ -5,6 +5,7 @@ import java.util.List;
 
 import po.BenchMarkPO;
 import po.StockPO;
+import po.TimeSharingPO;
 import enumeration.Exchange;
 import enumeration.MyDate;
 
@@ -143,4 +144,6 @@ public interface APIInterface {
 	 * @return success or not
 	 */
 	public boolean clearOptionalStocks();
+	
+	public List<TimeSharingPO> geTimeSharingPOs(String stockCode);
 }
