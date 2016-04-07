@@ -55,11 +55,14 @@ public interface OptionalStockBLService {
     
     
     /**
-     * Get the distribution of the opt
-     * @return
+     * Get the region's distribution of the optional stocks 
+     * @return the iterator of a collection which contains the distribution
      */
     public Iterator<SimpleEntry<String , Integer>> getRegionDistribution();
-    
+    /**
+     * Get the border's distribution of the optional stocks 
+     * @return the iterator of a collection which contains the distribution
+     */
     public Iterator<SimpleEntry<String , Integer>> getBorderDistribution();
     
     

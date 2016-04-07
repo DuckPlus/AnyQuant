@@ -9,6 +9,7 @@ import po.StockPO;
 import vo.StockVO;
 
 import java.util.*;
+import java.util.AbstractMap.SimpleEntry;
 
 /**
  *
@@ -90,4 +91,16 @@ public class OptionalStockBLServiceImpl implements OptionalStockBLService {
     public boolean clearOptionalStocks() {
         return APIDataSer.clearOptionalStocks();
     }
+
+	@Override
+	public Iterator<SimpleEntry<String, Integer>> getRegionDistribution() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterator<SimpleEntry<String, Integer>> getBorderDistribution() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
