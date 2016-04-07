@@ -35,10 +35,10 @@ public class nettest {
         String url = "https://api.wmcloud.com:443/data/v1" 
 //        + "/api/master/getSecTypeRegion.json?field="; //用来获得地域
 //        + "/api/master/getSecType.json?field=";
-//        	 + "/api/master/getSecType.json?field=";
+        	 + "/api/master/getSecType.json?field=";
 //        		+ "/api/market/getBarRTIntraDay.json?securityID=600000.XSHG&startTime=&endTime=&unit=1";
 //        		+ "/api/master/getSecTypeRel.json?field=&typeID=101001004001001&secID=&ticker=";
-        + "/api/market/getMktIdxd.json?field=&beginDate=&endDate=&indexID=&ticker=&tradeDate=20150513";
+//        + "/api/market/getMktIdxd.json?field=&beginDate=&endDate=&indexID=&ticker=&tradeDate=20150513";
         HttpGet httpGet = new HttpGet(url);
         //在header里加入 Bearer {token}，添加认证的token，并执行get请求获取json数据
         httpGet.addHeader("Authorization", "Bearer " + ACCESS_TOKEN);
@@ -58,10 +58,10 @@ public class nettest {
         BufferedWriter writer = new BufferedWriter(new FileWriter(new File("BenchMarks2.txt")));
         for (int i = 0; i < len; i++) {
         		js = JSONObject.fromObject(jsonArray.get(i));
-//			if (  (js.getInt("typeLevel")) == 4 && js.getString("typeID").charAt(8) == '5') {
+			if (  (js.getInt("typeLevel")) == 4 && js.getString("typeID").charAt(8) == '1') {
 				
-				regions.put((String) js.get("ticker"), js.getString("secShortName"));
-//			}
+				regions.put((String) js.get("typeID"), js.getString("typeName"));
+			}
 		}
         for(Map.Entry<String, String> temp : regions.entrySet()){
         		System.out.println(temp.getKey() + " " + temp.getValue());
