@@ -317,13 +317,15 @@ public class HttpUtil {
 	//最新数据
 	public static void getStockMes(String code){
 		String shortCode = code.substring(2);
-		MyDate end = MyDate.getDateFromString("2016-03-28");
-		MyDate start = MyTime.getAnotherDay(end,-3);
+//		MyDate end = MyDate.getDateFromString("2016-03-28");
+//		MyDate start = MyTime.getAnotherDay(end,-3);
 //		String url = "https://api.wmcloud.com:443/data/v1"
 //				+ "/api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=&ticker="+shortCode+"&tradeDate="+end.DateToStringSimple() ;
+//		String url = "https://api.wmcloud.com:443/data/v1"
+//				+ "/api/market/getMktEqud.json?field=tradeDate&beginDate="+start.DateToStringSimple()+"&endDate="+end.DateToStringSimple() +"&secID=&ticker="+shortCode+"&tradeDate=";
 		String url = "https://api.wmcloud.com:443/data/v1"
-				+ "/api/market/getMktEqud.json?field=tradeDate&beginDate="+start.DateToStringSimple()+"&endDate="+end.DateToStringSimple() +"&secID=&ticker="+shortCode+"&tradeDate=";
-	    String result = request(url);
+				+ "/api/market/getMktIdxd.json?field=&beginDate=&endDate=&indexID=&ticker="+"000001"+"&tradeDate="+20150407 ;
+		String result = request(url);
 	    JSONObject jo = JSONObject.fromObject(result);
 		if (jo.getInt("retCode") != -1) {
 
