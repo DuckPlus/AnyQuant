@@ -166,20 +166,15 @@ public class StockBLImpl implements StockBLService {
 	public List<OHLC_VO> getWeekOHLC_Data(String stockCode, MyDate start, MyDate end) {
 		List<StockPO> pos = APIDataSer.getStockMes(stockCode, MyTime.getMondayofTheWeek(start),
 				MyTime.getFridayofTheWeek(end));
-		// System.out.println(start.DateToString());
-		// System.out.println(MyTime.getMondayofTheWeek(start).DateToString());
 		List<OHLC_VO> results;
 		int DAY_OF_WEEK = 5;
 		if (pos == null) {
 			return null;
 		} else {
-			// System.out.println(pos.size());
-			// System.out.println(pos.get(0).getDate());
 			int len = pos.size();
 			int weekNum = len / DAY_OF_WEEK + (len % DAY_OF_WEEK > 0 ? 1 : 0);
 			int monday;
 			int friday;
-			// System.out.println(weekNum);
 			results = new ArrayList<OHLC_VO>(weekNum);
 			// System.out.println("pos len :" + pos.size());
 			// System.out.println();
@@ -370,15 +365,5 @@ public class StockBLImpl implements StockBLService {
 		}
 
 	}
-	
-	
-	
-	public static void main(String[] args) {
-		StockBLService bl = new StockBLImpl();
-		List<TimeSharingVO> vos = bl.getSharingVOs("sh600000");
-		for (int i = 0; i < vos.size(); i++) {
-			System.out.println(vos.get(i).nowPrice);
-			
-		}
-	}
+
 }
