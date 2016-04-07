@@ -4,12 +4,11 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.Socket;
+
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.KeyManagementException;
@@ -32,10 +31,10 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.python.antlr.PythonParser.return_stmt_return;
+
 
 import dataservice.APIInterface;
-import net.sf.json.JSON;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import po.BenchMarkPO;
@@ -44,8 +43,6 @@ import po.TimeSharingPO;
 import util.MyTime;
 import enumeration.Exchange;
 import enumeration.MyDate;
-import jnr.ffi.Struct.int16_t;
-import jnr.ffi.Struct.time_t;
 
 /**
  * API接口的实现类
@@ -294,7 +291,7 @@ public class APIInterfaceImpl implements APIInterface{
 		  while(getStockMesRequestResult(stockCode, date)!=1){
 			  offset--;
 			  date=MyTime.getAnotherDay(offset);
-			  System.out.println(offset);
+
 		  }
          return  getStockMes(stockCode, date);
 	}
@@ -303,7 +300,7 @@ public class APIInterfaceImpl implements APIInterface{
     * 获取指定代码的股票的在指定日期的数据
     */
 	public StockPO getStockMes(String code, MyDate date) {
-		System.out.println(code);
+
         String shortCode = code.substring(2);
 		String tradeDateString=date.DateToStringSimple();
 		String url = "https://api.wmcloud.com:443/data/v1"
@@ -427,7 +424,6 @@ public class APIInterfaceImpl implements APIInterface{
 		  int offset=0;
 		  MyDate date  = MyTime.getAnotherDay(offset);
 		  while(getBenchMesRequestResult(benchCode, date)!=1){
-
 			  offset--;
 			  date=MyTime.getAnotherDay(offset);
 		  }
@@ -489,7 +485,6 @@ public class APIInterfaceImpl implements APIInterface{
 	 */
 	@Override
 	public List<String> getAllBenchMarks() {
-
 				List <String> list =  new ArrayList<>();
 				list.add("hs300");
 				return list;
