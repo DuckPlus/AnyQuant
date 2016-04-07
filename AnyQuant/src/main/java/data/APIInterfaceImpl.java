@@ -35,14 +35,17 @@ import org.apache.http.util.EntityUtils;
 import org.python.antlr.PythonParser.return_stmt_return;
 
 import dataservice.APIInterface;
+import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import po.BenchMarkPO;
 import po.StockPO;
+import po.TimeSharingPO;
 import util.MyTime;
 import enumeration.Exchange;
 import enumeration.MyDate;
 import jnr.ffi.Struct.int16_t;
+import jnr.ffi.Struct.time_t;
 
 /**
  * API接口的实现类
@@ -613,6 +616,54 @@ public class APIInterfaceImpl implements APIInterface{
 
 
 
-
+	@Override
+	public List<TimeSharingPO> geTimeSharingPOs(String stockCode) {
+		String SH_EXCHANGE = ".XSHG";
+		String SZ_EXCHANGE = ".XSHE";
+		
+		if(stockCode.startsWith("sh")){
+			stockCode = stockCode.substring(2) + SH_EXCHANGE;
+		}else{
+			stockCode = stockCode.substring(2) + SZ_EXCHANGE;
+		}
+		
+		
+		String url = "https://api.wmcloud.com:443/data/v1/api/market/getBarRTIntraDay.json?securityID="+stockCode +"&startTime=&endTime=&unit=1";
+		 JSONObject jsonObject = JSONObject.fromObject(request(url));
+		 JSONArray jsonArray = jsonObject.getJSONArray("data");
+		 JSONObject jsonObject2 = jsonArray.getJSONObject(0);
+		jsonArray = jsonObject2.getJSONArray("barBodys");
+		
+		List<TimeSharingPO> pos = new ArrayList<>(jsonArray.size());
+		for (int i = 0; i < jsonArray.size(); i++) {
+			pos.add(makeTimeSharingPO(jsonArray.getJSONObject(i)));
+		}
+		
+		
+		
+		return pos.isEmpty()? null : pos;
+	}
+	
+	
+	private TimeSharingPO makeTimeSharingPO(JSONObject jsonObject){
+		MyDate date = MyTime.getToDay();
+		
+		String nowTime = jsonObject.getString("barTime");
+		String[] split = nowTime.split(":");
+ 		date.setHour(Integer.parseInt(split[0]));
+		date.setMin(Integer.parseInt(split[1]));
+		
+		return new TimeSharingPO(date, jsonObject.getDouble("closePrice"), jsonObject.getLong("totalVolume") , jsonObject.getDouble("totalValue"));
+	}
+	
+	
+	public static void main(String[] args) {
+		APIInterface apiInterface  = new APIInterfaceImpl();
+		List<TimeSharingPO> po = apiInterface.geTimeSharingPOs("sh600000");
+		
+		for (int i = 0; i < po.size(); i++) {
+			System.out.println(po.get(i).nowPrice);
+		}
+	}
 
 }

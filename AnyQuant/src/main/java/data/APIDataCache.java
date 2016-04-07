@@ -26,6 +26,7 @@ import enumeration.MyDate;
 import jnr.ffi.Struct.int16_t;
 import po.BenchMarkPO;
 import po.StockPO;
+import po.TimeSharingPO;
 import util.MyTime;
 
 /**
@@ -482,5 +483,11 @@ public class APIDataCache implements APIInterface {
 
 
 
+
+	@Override
+	public List<TimeSharingPO> geTimeSharingPOs(String stockCode) {
+		// TODO Auto-generated method stub
+		return api.geTimeSharingPOs(stockCode);
+	}
 
 }
