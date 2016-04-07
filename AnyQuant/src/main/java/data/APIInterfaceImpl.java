@@ -348,8 +348,8 @@ public class APIInterfaceImpl implements APIInterface{
 	private BenchMarkPO JSONObjectToBenchMarkPO(JSONObject jo){
 		BenchMarkPO po = new BenchMarkPO();
 		po.setDate(jo.getString("tradeDate")); po.setName(jo.getString("secShortName"));
-        po.setCode(jo.getString("ticker"));     po.setHigh(jo.getDouble("highestPrice"));  	po.setLow(jo.getDouble("lowestPrice"));   po.setOpen(jo.getDouble("openPrice"));
-		po.setClose(jo.getDouble("closePrice"));  po.setPreclose(jo.getDouble("preClosePrice"));  po.setTurnoverVol(jo.getLong("turnoverVol"));
+        po.setCode(jo.getString("ticker"));     po.setHigh(jo.getDouble("highestIndex"));  	po.setLow(jo.getDouble("lowestIndex"));   po.setOpen(jo.getDouble("openIndex"));
+		po.setClose(jo.getDouble("closeIndex"));  po.setPreclose(jo.getDouble("preCloseIndex"));  po.setTurnoverVol(jo.getLong("turnoverVol"));
 		po.setTurnoverValue(jo.getDouble("turnoverValue"));  po.setChange(jo.getDouble("CHG"));     po.setChangePct(jo.getDouble("CHGPct"));
 		return po;
 	}
@@ -442,8 +442,8 @@ public class APIInterfaceImpl implements APIInterface{
 	    JSONObject jo = JSONObject.fromObject(result);
 	    if(jo.getInt("retCode")==1){
 	       JSONArray jArray = jo.getJSONArray("data");
-	       JSONObject  stockpoJsonObject = jArray.getJSONObject(0);
-	       BenchMarkPO po= JSONObjectToBenchMarkPO(jo);
+	       JSONObject  benJsonObject = jArray.getJSONObject(0);
+	       BenchMarkPO po= JSONObjectToBenchMarkPO(benJsonObject);
            return po;
 	    }else{
            return new BenchMarkPO();
@@ -620,47 +620,47 @@ public class APIInterfaceImpl implements APIInterface{
 	public List<TimeSharingPO> geTimeSharingPOs(String stockCode) {
 		String SH_EXCHANGE = ".XSHG";
 		String SZ_EXCHANGE = ".XSHE";
-		
+
 		if(stockCode.startsWith("sh")){
 			stockCode = stockCode.substring(2) + SH_EXCHANGE;
 		}else{
 			stockCode = stockCode.substring(2) + SZ_EXCHANGE;
 		}
-		
-		
+
+
 		String url = "https://api.wmcloud.com:443/data/v1/api/market/getBarRTIntraDay.json?securityID="+stockCode +"&startTime=&endTime=&unit=1";
 		 JSONObject jsonObject = JSONObject.fromObject(request(url));
 		 JSONArray jsonArray = jsonObject.getJSONArray("data");
 		 JSONObject jsonObject2 = jsonArray.getJSONObject(0);
 		jsonArray = jsonObject2.getJSONArray("barBodys");
-		
+
 		List<TimeSharingPO> pos = new ArrayList<>(jsonArray.size());
 		for (int i = 0; i < jsonArray.size(); i++) {
 			pos.add(makeTimeSharingPO(jsonArray.getJSONObject(i)));
 		}
-		
-		
-		
+
+
+
 		return pos.isEmpty()? null : pos;
 	}
-	
-	
+
+
 	private TimeSharingPO makeTimeSharingPO(JSONObject jsonObject){
 		MyDate date = MyTime.getToDay();
-		
+
 		String nowTime = jsonObject.getString("barTime");
 		String[] split = nowTime.split(":");
  		date.setHour(Integer.parseInt(split[0]));
 		date.setMin(Integer.parseInt(split[1]));
-		
+
 		return new TimeSharingPO(date, jsonObject.getDouble("closePrice"), jsonObject.getLong("totalVolume") , jsonObject.getDouble("totalValue"));
 	}
-	
-	
+
+
 	public static void main(String[] args) {
 		APIInterface apiInterface  = new APIInterfaceImpl();
 		List<TimeSharingPO> po = apiInterface.geTimeSharingPOs("sh600000");
-		
+
 		for (int i = 0; i < po.size(); i++) {
 			System.out.println(po.get(i).nowPrice);
 		}

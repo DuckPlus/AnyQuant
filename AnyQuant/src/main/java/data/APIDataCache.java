@@ -127,10 +127,13 @@ public class APIDataCache implements APIInterface {
 		// TODO Auto-generated method stub
 		List<String> benchCodeStrings = getAllBenchMarks();
 		List<BenchMarkPO> benchMarkPOs = new ArrayList<>();
-		for(String code: benchCodeStrings){
-			BenchMarkPO po = api.getBenchMes(code);
-			benchMarkPOs.add(po);
-		}
+//		for(String benchCode: benchCodeStrings){
+//			if(benchCode.length()>2){
+//			   BenchMarkPO po = api.getBenchMes(benchCode);
+//			   benchMarkPOs.add(po);
+//			}
+//		}
+		benchMarkPOs.add(api.getBenchMes("000001"));
 		return benchMarkPOs;
 	}
 

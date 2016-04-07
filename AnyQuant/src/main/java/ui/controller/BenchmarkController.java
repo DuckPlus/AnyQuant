@@ -114,7 +114,7 @@ public class BenchmarkController {
 			observableList.add(dataProperty);
 		}
 		code.setCellValueFactory(cell -> cell.getValue().code);
-		date.setCellValueFactory(cell -> cell.getValue().date);
+		//date.setCellValueFactory(cell -> cell.getValue().date);
 		name.setCellValueFactory(cell -> cell.getValue().name);
 		preclose.setCellValueFactory(cell -> cell.getValue().preclose.asObject());
 		open.setCellValueFactory(cell -> cell.getValue().open.asObject());
