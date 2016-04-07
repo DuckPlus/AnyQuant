@@ -2,15 +2,15 @@ package data;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.python.antlr.PythonParser.else_clause_return;
 
-import dataservice.APIDataFactory;
+import dataservice.BenchMarkDataService;
+import dataservice.OptionalStockDataService;
+import dataservice.StockDataService;
 import enumeration.Exchange;
 import enumeration.MyDate;
 import po.BenchMarkPO;
 import po.StockPO;
 import util.MyTime;
-import vo.BenchMark;
 
 import static org.junit.Assert.*;
 
@@ -21,10 +21,14 @@ import java.util.List;
  * Created by Qiang on 3/27/16.
  */
 public class APIInterfaceImplTest {
-	APIInterfaceImpl api;
+	StockDataService stockImpl ;
+	BenchMarkDataService benchImpl ;
+	OptionalStockDataService optionImpl ;
     @Before
     public void setUp() throws Exception {
-        api= (APIInterfaceImpl) APIInterfaceImpl.getAPIInterfaceImpl();
+    	 stockImpl =  StockDSImpl.getStockDSImpl();
+    	 benchImpl = BenchMarkDSImpl.getBenchMarkDSImpl();
+    	 optionImpl = OptionalStockDSImpl.getOptionalStockDSImpl();
     }
 
     @Test
@@ -34,7 +38,7 @@ public class APIInterfaceImplTest {
 
     @Test
     public void getAllStocks() throws Exception {
-          List<String> codes = api.getAllStocks();
+          List<String> codes = stockImpl.getAllStocks();
           if(codes==null){
         	  fail("fail to pass getAllStocks()--NULL");
           }
@@ -45,7 +49,7 @@ public class APIInterfaceImplTest {
 
     @Test
     public void getAllStocks1() throws Exception {
-    	 List<String> codes = api.getAllStocks(Exchange.sh);
+    	 List<String> codes =stockImpl.getAllStocks(Exchange.sh);
     	 if(codes==null){
        	  fail("fail to pass getAllStocks1()--NULL");
          }
@@ -57,7 +61,7 @@ public class APIInterfaceImplTest {
 
     @Test
     public void getAllStocks2() throws Exception {
-    	 List<String> codes = api.getAllStocks(2015);
+    	 List<String> codes = stockImpl.getAllStocks(2015);
     	 if(codes==null){
        	  fail("fail to pass getAllStocks2()--NULL");
          }
@@ -68,7 +72,7 @@ public class APIInterfaceImplTest {
 
     @Test
     public void getAllStocks3() throws Exception {
-    	List<String> codes = api.getAllStocks(2015,Exchange.sz);
+    	List<String> codes = stockImpl.getAllStocks(2015,Exchange.sz);
     	 if(codes==null){
        	    fail("fail to pass getAllStocks3()--NULL");
          }
@@ -79,7 +83,7 @@ public class APIInterfaceImplTest {
 
     @Test
     public void getStockMes() throws Exception {
-        StockPO stockPO = api.getStockMes("sh600216");
+        StockPO stockPO = stockImpl.getStockMes("sh600216");
         if(stockPO==null){
      	   fail("fail to pass getStockMes()--NULL");
         }else if(!stockPO.getCode().equals("sh600216")){
@@ -93,31 +97,35 @@ public class APIInterfaceImplTest {
     public void getStockMes1() throws Exception {
     	MyDate end = MyTime.getToDay();
     	MyDate start = MyTime.getAnotherDay(-10);
-        List<StockPO>  stocks = api.getStockMes("sh600216",start,end);
-
+        List<StockPO>  stocks = stockImpl.getStockMes("sh600216",start,end);
+      //  System.out.println(stocks.get(0).getCode()+"   "+stocks.get(0).getName());
         if(stocks==null){
      	   fail("fail to pass getStockMes1()--NULL");
         }else if(!stocks.get(0).getCode().equals("sh600216")){
      	   fail("fail to pass getStockMes1()");
         }else if(!stocks.get(0).getName().equals("浙江医药")){
      	   fail("fail to pass getStockMes1()");
-        }else if(!stocks.get(0).getDate().equals("2016-03-21")){
-        	fail("fail to pass getStockMes1()");
         }
     }
 
     @Test
     public void getAllStockMes() throws Exception {
-
+    	List<StockPO> pos = stockImpl.getAllStockMes();
+    	for(StockPO po : pos){
+    		System.out.println(po.MyToString(','));
+    	}
+    	if(pos==null){
+    		fail("fail to pass getAllBenchMes()");
+    	}
     }
 
     @Test
     public void getBenchMes() throws Exception {
-    	BenchMarkPO  benchMark =  api.getBenchMes("hs300");
+    	BenchMarkPO  benchMark =  benchImpl.getBenchMes("000001");
     	if(benchMark==null){
     		fail("fail to pass getBenMes()--NULL");
     	}
-    	if(!benchMark.getCode().equals("hs300")){
+    	if(!benchMark.getCode().equals("000001")){
     	    fail("fail to pass getBenchMes()");
     	}
 
@@ -127,25 +135,25 @@ public class APIInterfaceImplTest {
     public void getBenchMes1() throws Exception {
     	MyDate endDate = MyTime.getToDay();
     	MyDate startDate = MyTime.getAnotherDay(endDate,-10);
-    	List<BenchMarkPO>  benchMarks =  api.getBenchMes("hs300",startDate,endDate);
+    	List<BenchMarkPO>  benchMarks =  benchImpl.getBenchMes("000001",startDate,endDate);
     	if(benchMarks==null){
     		fail("fail to pass getBenMes1()--NULL");
-    	}else if(!benchMarks.get(0).getCode().equals("hs300")){
+    	}else if(!benchMarks.get(0).getCode().equals("000001")){
     		fail("fail to pass getBenMes1()");
     	}
     }
 
     @Test
     public void getAllBenchMarks() throws Exception {
-       List<String> markCodes = api.getAllBenchMarks();
-       if(!markCodes.get(0).equals("hs300")){
+       List<String> markCodes = benchImpl.getAllBenchMarks();
+       if(!markCodes.get(0).equals("000001")){
     	   fail("fail to pass getAllBenchMarks()");
        }
     }
 
     @Test
     public void getAllBenchMes() throws Exception {
-    	List<BenchMarkPO> pos = api.getAllBenchMes();
+    	List<BenchMarkPO> pos = benchImpl.getAllBenchMes();
     	if(pos==null){
     		fail("fail to pass getAllBenchMes()");
     	}
@@ -153,7 +161,7 @@ public class APIInterfaceImplTest {
 
     @Test
     public void getOptionalStocks() throws Exception {
-    	Iterator<StockPO> it = api.getOptionalStocks();
+    	Iterator<StockPO> it = optionImpl.getOptionalStocks();
     	if(it==null){
     		fail("fail to pass getOptionalStocks()");
     	}
@@ -161,8 +169,8 @@ public class APIInterfaceImplTest {
 
     @Test
     public void addOptionalStock() throws Exception {
-        api.addOptionalStock("sh600000");
-        List<String> codes  = api.getSelectedStockCodes();
+    	optionImpl.addOptionalStock("sh600000");
+        List<String> codes  = optionImpl.getSelectedStockCodes();
        for(String code:codes){
     	   if(code.equals("sh600000")){
     		    return;
@@ -173,13 +181,13 @@ public class APIInterfaceImplTest {
 
     @Test
     public void deleteOptionalStock() throws Exception {
-    	  api.addOptionalStock("sh600001");
-    	 List<String> codes  = api.getSelectedStockCodes();
+    	optionImpl.addOptionalStock("sh600001");
+    	 List<String> codes  = optionImpl.getSelectedStockCodes();
     	 if(codes.size()>=1){
     		 String toDeleteString = codes.get(codes.size()-1);
-            api.deleteOptionalStock(toDeleteString);
+    		 optionImpl.deleteOptionalStock(toDeleteString);
             System.out.println("delete "+toDeleteString);
-            List<String> newcodes  = api.getSelectedStockCodes();
+            List<String> newcodes  = optionImpl.getSelectedStockCodes();
             if(newcodes.size()==codes.size()){
                fail("fail to pass deleteOptionalStock()");
             }
@@ -195,8 +203,8 @@ public class APIInterfaceImplTest {
     @Test
     public void clearOptionalStock() throws Exception {
 
-       api.clearOptionalStocks();
-       List<String> newcodes  = api.getSelectedStockCodes();
+    	optionImpl.clearOptionalStocks();
+       List<String> newcodes  = optionImpl.getSelectedStockCodes();
      //  System.out.println(newcodes.get(0));
        if(newcodes.size()>=1){
            fail("fail to pass clearOptionalStock()");

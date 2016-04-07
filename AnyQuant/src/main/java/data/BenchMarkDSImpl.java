@@ -3,6 +3,7 @@ package data;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.python.antlr.PythonParser.file_input_return;
 import org.python.antlr.PythonParser.return_stmt_return;
 
 import dataservice.BenchMarkDataService;
@@ -32,14 +33,9 @@ public class BenchMarkDSImpl implements BenchMarkDataService{
 	    	     }
 	       }
 
-			/**
-			 * 返回所有大盘代码,目前只有hs300
-			 */
 			@Override
 			public List<String> getAllBenchMarks() {
-						List <String> list =  new ArrayList<>();
-						list.add("hs300");
-						return list;
+						return FileIOHelper.readAllBenches();
 			}
 
 
@@ -102,8 +98,17 @@ public class BenchMarkDSImpl implements BenchMarkDataService{
 			}
 
 			@Override
+			/**
+			 *目前尚未实现缓存
+			 */
 			public List<BenchMarkPO> getAllBenchMes() {
-				return null;
+				List<BenchMarkPO> pos = new ArrayList<>();
+				List<String> benchs = FileIOHelper.readAllBenches();
+				for(String benchCode: benchs){
+					   BenchMarkPO po = this.getBenchMes(benchCode);
+					   pos.add(po);
+				}
+				return pos;
 			}
 
 			//不确定请求的大盘信息在某日是否有数据，返回请求结果1为有，-1为没有

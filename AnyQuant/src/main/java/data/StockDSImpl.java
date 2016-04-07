@@ -222,8 +222,7 @@ public class StockDSImpl implements StockDataService {
 	 */
 	@Override
 	public List<StockPO> getAllStockMes() {
-		// TODO Auto-generated method stub
-		return null;
+		return  FileIOHelper.readAllMes();
 	}
 
 	@Override
