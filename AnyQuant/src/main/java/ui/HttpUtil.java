@@ -324,7 +324,7 @@ public class HttpUtil {
 //		String url = "https://api.wmcloud.com:443/data/v1"
 //				+ "/api/market/getMktEqud.json?field=tradeDate&beginDate="+start.DateToStringSimple()+"&endDate="+end.DateToStringSimple() +"&secID=&ticker="+shortCode+"&tradeDate=";
 		String url = "https://api.wmcloud.com:443/data/v1"
-				+ "/api/market/getMktIdxd.json?field=&beginDate=&endDate=&indexID=&ticker="+"399000"+"&tradeDate="+20150407 ;
+				+ "/api/market/getMktIdxd.json?field=&beginDate=&endDate=&indexID=&ticker="+"399000"+"&tradeDate="+20140406 ;
 		String result = request(url);
 	    JSONObject jo = JSONObject.fromObject(result);
 		if (jo.getInt("retCode") != -1) {

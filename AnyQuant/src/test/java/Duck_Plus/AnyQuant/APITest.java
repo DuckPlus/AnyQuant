@@ -136,10 +136,10 @@ public class APITest {
 	public static void getBenchMesByNewAPI() {
 		APIInterface api = APIDataFactory.getAPIDataService();
 		List<BenchMarkPO> stocks = api.getAllBenchMes();
+	//	BenchMarkPO stock = api.getBenchMes("399000");
 		for (BenchMarkPO stock : stocks) {
 			System.out.print("name: " + stock.getName() + "  ");
 			System.out.print("code: " + stock.getCode() + "  ");
-
 			System.out.print("open: " + stock.getOpen() + "  ");
 			System.out.print("close: " + stock.getClose() + "  ");
 			System.out.print("preClose:" + stock.getPreclose() + "  ");

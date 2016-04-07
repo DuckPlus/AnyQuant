@@ -426,6 +426,7 @@ public class APIInterfaceImpl implements APIInterface{
 		  int offset=0;
 		  MyDate date  = MyTime.getAnotherDay(offset);
 		  while(getBenchMesRequestResult(benchCode, date)!=1){
+
 			  offset--;
 			  date=MyTime.getAnotherDay(offset);
 		  }

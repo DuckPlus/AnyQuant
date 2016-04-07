@@ -129,12 +129,11 @@ public class APIDataCache implements APIInterface {
 		List<BenchMarkPO> benchMarkPOs = new ArrayList<>();
 		for(String benchCode: benchCodeStrings){
 			if(benchCode.length()>2){
-				System.out.println(benchCode);
+				//System.out.println(benchCode);
 			   BenchMarkPO po = api.getBenchMes(benchCode);
 			   benchMarkPOs.add(po);
 			}
 		}
-
 		return benchMarkPOs;
 	}
 
