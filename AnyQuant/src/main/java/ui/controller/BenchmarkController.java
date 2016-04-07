@@ -16,11 +16,15 @@ import vo.BenchMark;
 import vo.BenchMarkVO;
 
 public class BenchmarkController {
-	
+
 	@FXML
 	TableColumn<BenchMark, String> code;
 	@FXML
 	TableColumn<BenchMark, String> date;
+	@FXML
+	TableColumn<BenchMark, String> name;
+	@FXML
+	TableColumn<BenchMark, Double> preclose;
 	@FXML
 	TableColumn<BenchMark, Double> open;
 	@FXML
@@ -30,9 +34,9 @@ public class BenchmarkController {
 	@FXML
 	TableColumn<BenchMark, Double> low;
 	@FXML
-	TableColumn<BenchMark, Double> adj_price;
+	TableColumn<BenchMark, Double> turnoverValue;
 	@FXML
-	TableColumn<BenchMark, Long> volume;
+	TableColumn<BenchMark, Long> turnoverVol;
 	@FXML
 	TableView<BenchMark> tableview;
 	@FXML
@@ -45,7 +49,7 @@ public class BenchmarkController {
 		// TODO Auto-generated constructor stub
 		System.out.println("constructor done");
 	}
-	
+
 	@FXML
 	private void initialize(){
 		System.out.println("init done");
@@ -54,11 +58,11 @@ public class BenchmarkController {
 		endDate.setValue(LocalDate.now());
 		beginDate.setEditable(false);
 		endDate.setEditable(false);
-		
 
-		
+
+
 	}
-	
+
 	private void showAllBenchmark(){
 		Iterator<BenchMarkVO>itr = benchmarkBl.getRecentBenchMarks("hs300");
 		showTableData(itr);
@@ -77,7 +81,7 @@ public class BenchmarkController {
 //		volume.setCellValueFactory(cell -> cell.getValue().volume.asObject());
 //		adj_price.setCellValueFactory(cell -> cell.getValue().adj_price.asObject());
 //		tableview.setItems(observableList);
-		
+
 	}
 	@FXML
 	private void searchByDate(){
@@ -92,7 +96,7 @@ public class BenchmarkController {
 		showTableData(itr);
 //		while(itr.hasNext()){
 //			BenchMarkVO temp = itr.next();
-//			
+//
 //		}
 //		if(beginDate){
 //			System.out.println("bad request");
@@ -111,13 +115,15 @@ public class BenchmarkController {
 		}
 		code.setCellValueFactory(cell -> cell.getValue().code);
 		date.setCellValueFactory(cell -> cell.getValue().date);
+		name.setCellValueFactory(cell -> cell.getValue().name);
+		preclose.setCellValueFactory(cell -> cell.getValue().preclose.asObject());
 		open.setCellValueFactory(cell -> cell.getValue().open.asObject());
 		close.setCellValueFactory(cell -> cell.getValue().close.asObject());
 		high.setCellValueFactory(cell -> cell.getValue().high.asObject());
 		low.setCellValueFactory(cell -> cell.getValue().low.asObject());
-		volume.setCellValueFactory(cell -> cell.getValue().volume.asObject());
-		adj_price.setCellValueFactory(cell -> cell.getValue().adj_price.asObject());
+		turnoverVol.setCellValueFactory(cell -> cell.getValue().turnoverVol.asObject());
+		turnoverValue.setCellValueFactory(cell -> cell.getValue().turnoverValue.asObject());
 		tableview.setItems(observableList);
-		
+
 	}
 }

@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.omg.CosNaming.NamingContextPackage.AlreadyBound;
+import org.python.antlr.PythonParser.return_stmt_return;
 
 import dataservice.APIInterface;
 import enumeration.Exchange;
@@ -35,8 +36,10 @@ import util.MyTime;
  */
 public class APIDataCache implements APIInterface {
 
-	private static String fileName1 = "cache//stockCode.txt";
-	private static String fileName2 = "cache//stockMes.txt";
+	private static String stockCodeFileName = "data//stockCode.txt";
+	private static String benchCodeFileName = "data//benchCode.txt";
+	private static String stockMesFileName = "cache//stockMes.txt";
+
 	APIInterface api = null;
 
 	public APIDataCache(APIInterface api) {
@@ -76,6 +79,12 @@ public class APIDataCache implements APIInterface {
 	}
 
 	@Override
+	public StockPO getStockMes(String stockCode, MyDate date) {
+		// TODO Auto-generated method stub
+		return api.getStockMes(stockCode, date);
+	}
+
+	@Override
 	public List<StockPO> getStockMes(String stockCode, MyDate start, MyDate end) {
 		// TODO Auto-generated method stub
 		return api.getStockMes(stockCode, start, end);
@@ -87,15 +96,23 @@ public class APIDataCache implements APIInterface {
 		return readAllMes();
 	}
 
+
+
 	@Override
 	public List<String> getAllBenchMarks() {
-		return api.getAllBenchMarks();
+		return readAllBenches();
 	}
 
 	@Override
 	public BenchMarkPO getBenchMes(String benchCode) {
 		// TODO Auto-generated method stub
 		return api.getBenchMes(benchCode);
+	}
+
+	@Override
+	public BenchMarkPO getBenchMes(String benchCode, MyDate date) {
+		// TODO Auto-generated method stub
+		return api.getBenchMes(benchCode, date);
 	}
 
 	@Override
@@ -110,10 +127,44 @@ public class APIDataCache implements APIInterface {
 		return api.getAllBenchMes();
 	}
 
+	@Override
+	public Iterator<StockPO> getOptionalStocks() {
+		// TODO Auto-generated method stub
+		return api.getOptionalStocks();
+	}
+
+	@Override
+	public boolean deleteOptionalStock(String stockCode) {
+
+		return  api.deleteOptionalStock(stockCode);
+	}
+
+	@Override
+	public boolean addOptionalStock(String stockCode) {
+
+		return api.addOptionalStock(stockCode);
+	}
+
+	@Override
+	public List<String> getSelectedStockCodes() {
+
+		return api.getSelectedStockCodes();
+	}
+
+	@Override
+	public boolean clearOptionalStocks() {
+		return api.clearOptionalStocks();
+	}
+
+
+
+
+
+
 	private List<String> readAllCodes() {
 		try {
 			String encoding = "utf-8";
-			String filePath = fileName1;
+			String filePath = stockCodeFileName;
 			File file = new File(filePath);
 			if (file.isFile() && file.exists()) { // 判断文件是否存在
 				InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);// 考虑到编码格式
@@ -135,10 +186,36 @@ public class APIDataCache implements APIInterface {
 		return null;
 	}
 
+	private List<String> readAllBenches() {
+		try {
+			String encoding = "utf-8";
+			String filePath = benchCodeFileName;
+			File file = new File(filePath);
+			if (file.isFile() && file.exists()) { // 判断文件是否存在
+				InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);// 考虑到编码格式
+				BufferedReader bufferedReader = new BufferedReader(read);
+				List<String> benchCodes = new ArrayList<>();
+			   	String line;
+			   	while((line= bufferedReader.readLine())!=null){
+                        benchCodes.add(line);
+			   	}
+				read.close();
+				return benchCodes;
+			} else {
+				System.out.println("找不到"+benchCodeFileName);
+				return null;
+			}
+		} catch (Exception e) {
+			System.out.println("读取文件内容出错");
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	private void writeAllCodes(List<String> codes) {
 		try {
 
-			File file = new File(fileName1);
+			File file = new File(stockCodeFileName);
 			// if file doesnt exists, then create it
 			if (!file.exists()) {
 				file.createNewFile();
@@ -161,7 +238,7 @@ public class APIDataCache implements APIInterface {
 	private List<StockPO> readAllMes() {
 		try {
 			String encoding = "utf-8";
-			String filePath = fileName2;
+			String filePath = stockMesFileName;
 			File file = new File(filePath);
 			if (file.isFile() && file.exists()) { // 判断文件是否存在
 				InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);// 考虑到编码格式
@@ -206,7 +283,7 @@ public class APIDataCache implements APIInterface {
 	private void writeAllMes(List<StockPO> stocks) {
 		try {
 
-			File file = new File(fileName2);
+			File file = new File(stockMesFileName);
 			// if file doesnt exists, then create it
 			if (!file.exists()) {
 				file.createNewFile();
@@ -234,7 +311,7 @@ public class APIDataCache implements APIInterface {
 		try {
 
 			String encoding = "utf-8";
-			String filePath = fileName2;
+			String filePath = stockMesFileName;
 			File file = new File(filePath);
 			if (file.isFile() && file.exists()) { // 判断文件是否存在
 				// 先读取第一行
@@ -394,45 +471,10 @@ public class APIDataCache implements APIInterface {
 		}
 	}
 
-	@Override
-	public Iterator<StockPO> getOptionalStocks() {
-		// TODO Auto-generated method stub
-		return api.getOptionalStocks();
-	}
 
-	@Override
-	public boolean deleteOptionalStock(String stockCode) {
 
-		return  api.deleteOptionalStock(stockCode);
-	}
 
-	@Override
-	public boolean addOptionalStock(String stockCode) {
 
-		return api.addOptionalStock(stockCode);
-	}
 
-	@Override
-	public List<String> getSelectedStockCodes() {
-
-		return api.getSelectedStockCodes();
-	}
-
-	@Override
-	public boolean clearOptionalStocks() {
-		return api.clearOptionalStocks();
-	}
-
-	@Override
-	public StockPO getStockMes(String stockCode, MyDate date) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public BenchMarkPO getBenchMes(String benchCode, MyDate date) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

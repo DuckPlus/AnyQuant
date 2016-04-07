@@ -340,6 +340,16 @@ public class APIInterfaceImpl implements APIInterface{
 		return po;
 	}
 
+
+	private BenchMarkPO JSONObjectToBenchMarkPO(JSONObject jo){
+		BenchMarkPO po = new BenchMarkPO();
+		po.setDate(jo.getString("tradeDate")); po.setName(jo.getString("secShortName"));
+        po.setCode(jo.getString("ticker"));     po.setHigh(jo.getDouble("highestPrice"));  	po.setLow(jo.getDouble("lowestPrice"));   po.setOpen(jo.getDouble("openPrice"));
+		po.setClose(jo.getDouble("closePrice"));  po.setPreclose(jo.getDouble("preClosePrice"));  po.setTurnoverVol(jo.getLong("turnoverVol"));
+		po.setTurnoverValue(jo.getDouble("turnoverValue"));  po.setChange(jo.getDouble("CHG"));     po.setChangePct(jo.getDouble("CHGPct"));
+		return po;
+	}
+
 	  /**
 	   * 根据日期获取指定代码的股票的数据
 	   *
@@ -393,6 +403,8 @@ public class APIInterfaceImpl implements APIInterface{
 
 
 
+
+
 	//获得最新的大盘数据
 	@Override
 	public BenchMarkPO getBenchMes(String benchCode) {
@@ -406,6 +418,23 @@ public class APIInterfaceImpl implements APIInterface{
          return  benches.get(benches.size()-1);
 	}
 
+
+	@Override
+	public BenchMarkPO getBenchMes(String benchCode, MyDate date) {
+		String tradeDateString=date.DateToStringSimple();
+		String url = "https://api.wmcloud.com:443/data/v1"
+				+ "/api/market/getMktIdxd.json?field=&beginDate=&endDate=&indexID=&ticker="+benchCode+"&tradeDate="+tradeDateString ;
+	    String result = request(url);
+	    JSONObject jo = JSONObject.fromObject(result);
+	    if(jo.getInt("retCode")==1){
+	       JSONArray jArray = jo.getJSONArray("data");
+	       JSONObject  stockpoJsonObject = jArray.getJSONObject(0);
+	       BenchMarkPO po= JSONObjectToBenchMarkPO(jo);
+           return po;
+	    }else{
+           return new BenchMarkPO();
+	    }
+	}
 
 
 	@Override
@@ -600,11 +629,7 @@ public class APIInterfaceImpl implements APIInterface{
 
 
 
-	@Override
-	public BenchMarkPO getBenchMes(String benchCode, MyDate date) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 
 
