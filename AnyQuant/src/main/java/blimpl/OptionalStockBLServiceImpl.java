@@ -88,16 +88,7 @@ public class OptionalStockBLServiceImpl implements OptionalStockBLService {
 		return APIDataSer.clearOptionalStocks();
 	}
 
-	private void refreshOptionalStocks() {
-		Iterator<StockPO> pos = APIDataSer.getOptionalStocks();
-		optionalStockMap = new TreeMap<>();
-		StockPO po;
-		while (pos.hasNext()) {
-			po = pos.next();
-			optionalStockMap.put(po.getCode(), (StockVO) VOPOchange.POtoVO(po));
-		}
-		optionStocks = new ArrayList<>(optionalStockMap.values());
-	}
+	
 
 	@Override
 	public Iterator<Entry<String, Integer>> getRegionDistribution() {
@@ -134,5 +125,17 @@ public class OptionalStockBLServiceImpl implements OptionalStockBLService {
 
 		return boards.entrySet().iterator();
 
+	}
+	
+	
+	private void refreshOptionalStocks() {
+		Iterator<StockPO> pos = APIDataSer.getOptionalStocks();
+		optionalStockMap = new TreeMap<>();
+		StockPO po;
+		while (pos.hasNext()) {
+			po = pos.next();
+			optionalStockMap.put(po.getCode(), (StockVO) VOPOchange.POtoVO(po));
+		}
+		optionStocks = new ArrayList<>(optionalStockMap.values());
 	}
 }
