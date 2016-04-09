@@ -1,13 +1,15 @@
 package ui.controller;
 
-import java.util.Iterator;
+
 import java.util.List;
 
 import blimpl.OptionalStockBLImpl;
 import blservice.OptionalStockBLService;
+import enumeration.MyDate;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -18,43 +20,31 @@ import vo.Stock;
 public class StockDetailController {
 
 	@FXML
-	Label nameLabel;
+	Label nameLB, codeLB;
 	@FXML
-	Label codeLabel;
+	Label openLB, closeLB, lowLB , highLB;
 	@FXML
-	Label open;
+	Label turnoverRateLB, turnoverVolLB;
 	@FXML
-	Label close;
-	@FXML
-	Label high;
-	@FXML
-	Label low;
-	@FXML
-	Label turnover;
-	@FXML
-	Label volume;
-	@FXML
-	Label pe;
-	@FXML
-	Label pb;
+	Label peLB,pbLB;
 	@FXML
 	Button addBtn;
 	@FXML
-	Tab k_day;
-	@FXML
-	Tab k_month;
-	@FXML
-	Tab k_week;
+	Tab k_day, k_week, k_month;
 	@FXML
 	Tab timeSharing;
+	@FXML
+	DatePicker  dayStart,dayEnd,weekStart,weekEnd,monthStart,monthEnd;
+	@FXML
+	Button dayBT,weekBT,monthBT;
 	@FXML
 	TabPane tabPane;
 	private Boolean exist;
 	private String stockCode;
 
 	private Stock currentStock;
-	OptionalStockBLService optionBl = OptionalStockBLImpl.getOptionalBLService();
-
+	private OptionalStockBLService optionBl = OptionalStockBLImpl.getOptionalBLService();
+	private CandleStickController candleStickController = CandleStickController.getCandleStickController();
 	private static StockDetailController instance;
 
 	public StockDetailController() {
@@ -94,16 +84,16 @@ public class StockDetailController {
 		currentStock = stock;
 		System.out.println("changed!!");
 		stockCode = stock.code.get();
-		nameLabel.setText(stock.name.get());
-		codeLabel.setText(stockCode);
-		open.setText(String.valueOf(stock.open.get()));
-		close.setText(String.valueOf(stock.close.get()));
-		high.setText(String.valueOf(stock.high.get()));
-		low.setText(String.valueOf(stock.low.get()));
-		turnover.setText(String.valueOf(stock.turnoverRate.get()));
-		pe.setText(String.valueOf(stock.pe.get()));
-		pb.setText(String.valueOf(stock.pb.get()));
-		volume.setText(String.valueOf(stock.turnoverVol.get()));
+		nameLB.setText(stock.name.get());
+		codeLB.setText(stockCode);
+		openLB.setText(String.valueOf(stock.open.get()));
+		closeLB.setText(String.valueOf(stock.close.get()));
+		highLB.setText(String.valueOf(stock.high.get()));
+		lowLB.setText(String.valueOf(stock.low.get()));
+		turnoverRateLB.setText(String.valueOf(stock.turnoverRate.get()));
+		peLB.setText(String.valueOf(stock.pe.get()));
+		pbLB.setText(String.valueOf(stock.pb.get()));
+		turnoverVolLB.setText(String.valueOf(stock.turnoverVol.get()));
 		if (optionBl.ifStockExist(stockCode)) {// 存在于自选股
 			addBtn.setText("删除该自选股");
 			exist = true;
@@ -124,18 +114,38 @@ public class StockDetailController {
 	}
 
 	private void initKLine() {
-		CandleStickController KChart = new CandleStickController();
-		List<Node> nodes = KChart.getInitialCharts(currentStock.code.get());
-		if (nodes.size() == 3) {
-			k_day.setContent(nodes.get(0));
-			k_week.setContent(nodes.get(1));
-			k_month.setContent(nodes.get(2));
-		}
+		Node dayChart=candleStickController.getInitialDayChart(currentStock.code.get());
+		Node weekChart=candleStickController.getInitialWeekChart(currentStock.code.get());
+		Node monthChart = candleStickController.getInitialMonthChart(currentStock.code.get());
+			k_day.setContent(dayChart);
+			k_week.setContent(weekChart);
+			k_month.setContent(monthChart);
 
+	}
+	@FXML
+	private  void updateDayChart(){
+		MyDate start = new MyDate(dayStart.getValue().getYear(),dayStart.getValue().getMonthValue(),dayStart.getValue().getDayOfMonth());
+		MyDate end = new MyDate(dayEnd.getValue().getYear(),dayEnd.getValue().getMonthValue(),dayEnd.getValue().getDayOfMonth());
+        Node dayChart = candleStickController.getUpdatedDayChart(currentStock.code.get(), start, end);
+        k_day.setContent(dayChart);
+	}
+	@FXML
+	private  void updateWeekChart(){
+		MyDate start = new MyDate(weekStart.getValue().getYear(),weekStart.getValue().getMonthValue(),weekStart.getValue().getDayOfMonth());
+		MyDate end = new MyDate(weekEnd.getValue().getYear(),weekEnd.getValue().getMonthValue(),weekEnd.getValue().getDayOfMonth());
+        Node weekChart = candleStickController.getUpdatedWeekChart(currentStock.code.get(), start, end);
+        k_week.setContent(weekChart);
+	}
+	@FXML
+	private  void updateMonthChart(){
+		MyDate start = new MyDate(monthStart.getValue().getYear(),monthStart.getValue().getMonthValue(),monthStart.getValue().getDayOfMonth());
+		MyDate end = new MyDate(monthEnd.getValue().getYear(),monthEnd.getValue().getMonthValue(),monthEnd.getValue().getDayOfMonth());
+        Node monthChart = candleStickController.getUpdatedMonthChart(currentStock.code.get(), start, end);
+        k_month.setContent(monthChart);
 	}
 
 	@FXML
-	private void addOptionalStock() {
+ 	private void addOptionalStock() {
 		if (currentStock == null)
 			System.err.println("current null");
 		if (exist) {// 执行删除操作

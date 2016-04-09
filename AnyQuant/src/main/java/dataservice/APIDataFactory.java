@@ -1,7 +1,5 @@
 package dataservice;
 
-import data.APIDataCache;
-import data.APIInterfaceImpl;
 import data.BenchMarkDSImpl;
 import data.OptionalStockDSImpl;
 import data.StockDSImpl;
@@ -12,11 +10,11 @@ import data.StockDSImpl;
  * @date 2016年3月6日
  */
 public class APIDataFactory {
-        public static APIInterface getAPIDataService(){
-        	   APIInterface  api = APIInterfaceImpl.getAPIInterfaceImpl();
-        	   APIInterface  dataService = new APIDataCache(api);
-        	   return dataService;
-        }
+//        public static APIInterface getAPIDataService(){
+//        	   APIInterface  api = APIInterfaceImpl.getAPIInterfaceImpl();
+//        	   APIInterface  dataService = new APIDataCache(api);
+//        	   return dataService;
+//        }
 
         public static StockDataService getStockDataService(){
      	   return  StockDSImpl.getStockDSImpl();

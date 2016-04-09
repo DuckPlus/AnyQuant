@@ -1,5 +1,6 @@
-package data;
+package data.helper;
 
+import enumeration.API_TYPE;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import util.MyTime;
@@ -12,8 +13,8 @@ import util.MyTime;
 public class StockMesHelper {
 		public static boolean isTradeDay(){
 			String date = MyTime.getToDay().DateToStringSimple();
-			String url = "https://api.wmcloud.com:443/data/v1/api/master/getTradeCal.json?field=&exchangeCD=XSHG,XSHE&beginDate=" +date+"&endDate=" + date;
-			JSONArray array = JSONObject.fromObject(ConnectionHelper.request(url)).getJSONArray("data");
+//			String url = "https://api.wmcloud.com:443/data/v1/api/master/getTradeCal.json?field=&exchangeCD=XSHG,XSHE&beginDate=" +date+"&endDate=" + date;
+			JSONArray array = (ConnectionHelper.requestAPI(API_TYPE.IS_TRADING_DAY, "XSHG,XSHE" , date , date)).getJSONArray("data");
 			JSONObject object = array.getJSONObject(0);
 			return object.getInt("isOpen") == 1;
 			

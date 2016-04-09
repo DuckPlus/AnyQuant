@@ -374,4 +374,21 @@ public class StockBLImpl implements StockBLService {
 
 	}
 
+	@Override
+	public void updateAllStockMes() {
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				if(APIDataSer.updateAllMes()){
+					//send success message
+					
+					
+				}
+				
+			}
+		}).start();
+		
+	}
+
 }
