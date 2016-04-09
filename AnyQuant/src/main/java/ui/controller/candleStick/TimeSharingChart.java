@@ -33,6 +33,7 @@ public class TimeSharingChart {
 	        yAxis.setLowerBound(17);
 	        yAxis.setUpperBound(20);
 	        yAxis.setTickUnit(0.1);
+	        
 	        //creating the chart
 	        lineChart  = new LineChart<String,Number>(xAxis,yAxis);
 	                
@@ -61,6 +62,7 @@ public class TimeSharingChart {
 	        lineChart.getData().add(series);
 	        lineChart.setPrefHeight(600);
 	        lineChart.setPrefWidth(1000);
+	        lineChart.setLayoutY(0.5);
 	    }
 	   public LineChart<String, Number> getTimesharingChart(){
 		   return lineChart;
