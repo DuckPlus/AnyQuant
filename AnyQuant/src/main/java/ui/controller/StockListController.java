@@ -98,7 +98,7 @@ public class StockListController{
 		tableview.getItems().removeAll(observableList);
 		while(itr.hasNext()){
 			StockVO temp = itr.next();
-			System.out.println("volume"+temp.turnoverVol);
+//			System.out.println("volume"+temp.turnoverVol);
 			Stock dataProperty = new Stock(temp);
 			observableList.add(dataProperty);
 		}
@@ -132,7 +132,7 @@ public class StockListController{
 			int row =tableview.getSelectionModel().getSelectedIndex();
 			String code =tableview.getSelectionModel().getSelectedItem().code.get();
 			Stock selectedStock = tableview.getSelectionModel().getSelectedItem();
-			System.out.println(code);
+//			System.out.println(code);
 			//The stockDetailController is null at first, and it must generated after the fxml has initialize
 			//it, otherwise we will get a totally defferent object from the fxml's
 			if(stockDetailController==null){

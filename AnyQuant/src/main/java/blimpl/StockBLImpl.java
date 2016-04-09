@@ -143,13 +143,9 @@ public class StockBLImpl implements StockBLService {
 
 	@Override
 	public List<OHLC_VO> getDayOHLC_Data(String stockCode, MyDate start, MyDate end) {
-		System.out.println("------*****" +stockCode + start.DateToString() + end.DateToString());
 		List<StockPO> pos = APIDataSer.getStockMes(stockCode, start, end);
 		List<OHLC_VO> results;
 		if (pos != null) {
-			
-			System.out.println(pos.size());
-			
 			results = new ArrayList<OHLC_VO>(pos.size());
 			for (StockPO stockPO : pos) {
 				if (judgeData(stockPO)) { // if the stock didn't trade that day , desert it
@@ -195,7 +191,7 @@ public class StockBLImpl implements StockBLService {
 
 	@Override
 	public List<OHLC_VO> getMonthOHLC_Data(String stockCode, MyDate start, MyDate end) {
-		
+
 		List<OHLC_VO> vos;
 		List<StockPO> pos;
 
@@ -207,18 +203,18 @@ public class StockBLImpl implements StockBLService {
 		thisMonth.setDay(1);
 		monthEnd.setDay(MyTime.getMonthEndDay(monthEnd));
 		for (int i = 0; i < monthNum; i++) {
-			
-			
+
+
 			pos = APIDataSer.getStockMes(stockCode, thisMonth, monthEnd);
-			
+
 			if( pos==null || pos.size()==0){
-				
+
 			}else{
 				vos.add(new OHLC_VO(thisMonth, pos.get(0).getOpen(), pos.get(pos.size() - 1).getClose(),
 						getHighInScope(pos), getLowInScope(pos)));
 			}
-			
-			
+
+
 
 			getNextMonth(thisMonth);
 			getNextMonth(monthEnd);
@@ -228,19 +224,19 @@ public class StockBLImpl implements StockBLService {
 		return vos.isEmpty() ? null : vos;
 	}
 
-	
+
 
 	@Override
 	public List<TimeSharingVO> getSharingVOs(String stockCode) {
 
 		List<TimeSharingPO> pos = APIDataSer.geTimeSharingPOs(stockCode);
-		
+
 		if(pos == null){
 			return null;
 		}
-		
+
 		List<TimeSharingVO> vos = new ArrayList<>();
-		
+
 		for (TimeSharingPO po : pos) {
 
 			vos.add((TimeSharingVO) VOPOchange.POtoVO(po));
@@ -302,7 +298,7 @@ public class StockBLImpl implements StockBLService {
 
 	@Override
 	public List<DealVO> getMonthDealVOs(String stockCode, MyDate start, MyDate end) {
-		
+
 		List<DealVO> vos;
 		List<StockPO> pos = new ArrayList<StockPO>(25);
 

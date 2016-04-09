@@ -9,9 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.python.antlr.PythonParser.return_stmt_return;
+
 import dataservice.StockDataService;
 import enumeration.Exchange;
 import enumeration.MyDate;
+import enumeration.StaticMessage;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import po.StockPO;
@@ -27,7 +30,10 @@ public class StockDSImpl implements StockDataService {
 	private static StockDSImpl stockDSImpl;
 	private static Map<String, String[]> IndustryLocationMap;
 	private static String nameFilePath = "data//StockIndustries&Regions.txt";
-
+	
+	
+	
+	
 	private StockDSImpl() {
 		SetMapUp();
 	}
@@ -143,10 +149,14 @@ public class StockDSImpl implements StockDataService {
 	public StockPO getStockMes(String stockCode) {
 		int offset = 0;
 		MyDate date = MyTime.getAnotherDay(offset);
-		while (getStockMesRequestResult(stockCode, date) != 1) {
+		while ((getStockMesRequestResult(stockCode, date) != 1)&&(offset>-10)) {
 			offset--;
 			date = MyTime.getAnotherDay(offset);
+		}
 
+		if(offset<=-10){
+			System.out.println(stockCode+"error-----------------------");
+			return null;
 		}
 		return getStockMes(stockCode, date);
 	}
@@ -169,7 +179,7 @@ public class StockDSImpl implements StockDataService {
 			StockPO po = JSONTransferHelper.JSONObjectToStockPO(IndustryLocationMap, stockpoJsonObject);
 			return po;
 		} else {
-			return new StockPO();
+			return null;
 		}
 
 	}
@@ -180,7 +190,7 @@ public class StockDSImpl implements StockDataService {
 	 */
 	public List<StockPO> getStockMes(String code, MyDate start, MyDate end) {
 
-		if (end.DateToString().equals(MyTime.getToDay().DateToString())) {
+		if (end.DateToString().equals(start.DateToString())) {
 			List<StockPO> stocks = new ArrayList<>();
 			stocks.add(getStockMes(code, start));
 			return stocks;
@@ -202,7 +212,7 @@ public class StockDSImpl implements StockDataService {
 			}
 			return pos;
 		} else {
-			return new ArrayList<>();
+			return null;
 		}
 	}
 
@@ -228,17 +238,19 @@ public class StockDSImpl implements StockDataService {
 
 	@Override
 	public List<TimeSharingPO> geTimeSharingPOs(String stockCode) {
-		String SH_EXCHANGE = ".XSHG";
-		String SZ_EXCHANGE = ".XSHE";
+		
 
 		if (stockCode.startsWith("sh")) {
-			stockCode = stockCode.substring(2) + SH_EXCHANGE;
+			stockCode = stockCode.substring(2) + StaticMessage.SH_EXCHANGE;
 		} else {
-			stockCode = stockCode.substring(2) + SZ_EXCHANGE;
+			stockCode = stockCode.substring(2) + StaticMessage.SZ_EXCHANGE;
 		}
-
+		
+		String endTime = StockMesHelper.isTradeDay() ? "" : "15:00";
+		
+		
 		String url = "https://api.wmcloud.com:443/data/v1/api/market/getBarRTIntraDay.json?securityID=" + stockCode
-				+ "&startTime=&endTime=&unit=1";
+				+ "&startTime=&endTime="+ endTime +"&unit=1";
 		JSONObject jsonObject = JSONObject.fromObject(ConnectionHelper.request(url));
 		JSONArray jsonArray = jsonObject.getJSONArray("data");
 		 jsonObject = jsonArray.getJSONObject(0);

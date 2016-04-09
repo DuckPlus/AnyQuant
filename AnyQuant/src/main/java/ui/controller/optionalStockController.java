@@ -92,7 +92,7 @@ public class optionalStockController {
 		tableview.getItems().removeAll(observableList);
 		while(itr.hasNext()){
 			StockVO temp = itr.next();
-			System.out.println(temp.name);
+//			System.out.println(temp.name);
 			Stock dataProperty = new Stock(temp);
 			observableList.add(dataProperty);
 		}
@@ -144,7 +144,7 @@ public class optionalStockController {
 //			System.err.println("stock instance:"+stockDetailController.toString());
 			candleStickController.setStockCode(selectedStock.code.get());
 			stockDetailController.setData(selectedStock);
-			System.out.println(selectedStock.open+"  "+selectedStock.close);
+//			System.out.println(selectedStock.open+"  "+selectedStock.close);
 			rightPaneController.showDetailPane(stockDetailPane);
 
 		}

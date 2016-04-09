@@ -24,6 +24,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import enumeration.StaticMessage;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 public class nettest {
@@ -36,10 +37,14 @@ public class nettest {
 //        + "/api/master/getSecTypeRegion.json?field="; //用来获得地域
 //        + "/api/master/getSecType.json?field=";
 //        	 + "/api/master/getSecType.json?field=";
-        		+ "/api/market/getMktEqud.json?field=&beginDate=20150310&endDate=20150409&secID=&ticker=600000&tradeDate=";
+//        		+ "/api/market/getMktEqud.json?field=&beginDate=20150310&endDate=20150409&secID=&ticker=600000&tradeDate=";
 //        		+ "/api/market/getBarRTIntraDay.json?securityID=600000.XSHG&startTime=&endTime=&unit=1";
 //        		+ "/api/master/getSecTypeRel.json?field=&typeID=101001004001001&secID=&ticker=";
 //        + "/api/market/getMktIdxd.json?field=&beginDate=20140401&endDate=20140530&indexID=&ticker=600001&tradeDate=";
+        		+"/api/market/getBarRTIntraDay.json" + "?securityID=000001.XSHE&startTime=09:30&endTime=&unit=1";
+        		
+        		
+        		
         HttpGet httpGet = new HttpGet(url);
         //在header里加入 Bearer {token}，添加认证的token，并执行get请求获取json数据
         httpGet.addHeader("Authorization", "Bearer " + ACCESS_TOKEN);
