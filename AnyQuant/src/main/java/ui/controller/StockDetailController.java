@@ -1,14 +1,16 @@
 package ui.controller;
 
-import blimpl.StockBLImpl;
+import java.util.Iterator;
+
 import blimpl.OptionalStockBLImpl;
 import blservice.OptionalStockBLService;
-import blservice.StockBLService;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import ui.controller.candleStick.CandleStickController;
 import ui.controller.candleStick.TimeSharingChart;
 import vo.Stock;
 
@@ -113,10 +115,21 @@ public class StockDetailController {
 		}
 		//add time sharing then
 		initTimeSharing();
+		//add k_line
+		initKLine();
 	}
 	private void initTimeSharing(){
 		TimeSharingChart timeChart = new TimeSharingChart(currentStock);
 		timeSharing.setContent(timeChart.getTimeSharingChart());
+//		timeSharing.getTabPane().
+	}
+	private void initKLine(){
+		CandleStickController KChart = new CandleStickController();
+		Iterator<Node>itr = KChart.getInitialCharts(currentStock.code.get());
+		if(itr.next()==null)System.out.println("null NODE");
+//		k_day.setContent(itr.next());
+//		k_week.setContent(itr.next());
+//		k_month.setContent(itr.next());
 		
 	}
 	@FXML

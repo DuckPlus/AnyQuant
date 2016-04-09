@@ -138,11 +138,11 @@ public class optionalStockController {
 			chartPane = (AnchorPane)GraphicsUtils.getParent("CandleStickPane");
 			stockDetailPane.setCenter(chartPane);
 
-			if(candleStickController==null){
-				candleStickController = CandleStickController.getCandleStickController();
-			}
+//			if(candleStickController==null){
+//				candleStickController = CandleStickController.getCandleStickController();
+//			}
 //			System.err.println("stock instance:"+stockDetailController.toString());
-			candleStickController.setStockCode(selectedStock.code.get());
+//			candleStickController.setStockCode(selectedStock.code.get());
 			stockDetailController.setData(selectedStock);
 //			System.out.println(selectedStock.open+"  "+selectedStock.close);
 			rightPaneController.showDetailPane(stockDetailPane);

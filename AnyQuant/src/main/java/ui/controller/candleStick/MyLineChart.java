@@ -32,13 +32,14 @@ public class MyLineChart {
 	        yAxis.setAutoRanging(false);
 //	        yAxis.setLowerBound(17.5);
 //	        yAxis.setUpperBound(17.8);
-//	        yAxis.setTickUnit(0.1);
+//	        yAxis.setTickUnit(0.01);
 	        
 	        //defining a series
 	        series = new XYChart.Series<String,Number>();
 	        series.setName("series_name");
 	        //creating the chart
 	        //set basic property of chart
+	        
 	        lineChart  = new LineChart<String,Number>(xAxis,yAxis);
 	        lineChart.setLegendVisible(false);
 	        lineChart.setTitle("chart title");// the title depend on code name	        
@@ -46,7 +47,6 @@ public class MyLineChart {
 	        lineChart.setPrefHeight(300);
 	        lineChart.setPrefWidth(500);
 	        lineChart.setCreateSymbols(false);
-	        
 	        //populating the series with data
 //	        series.getData().add(new XYChart.Data("21:13", 23));
 //	        series.getData().add(new XYChart.Data(2, 14));
