@@ -16,12 +16,38 @@
               <tabs>
                 <Tab fx:id="k_day" text="日线图">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <HBox layoutX="20.0" layoutY="3.0" prefHeight="27.0" prefWidth="250.0">
+                                 <children>
+                                    <DatePicker prefHeight="27.0" prefWidth="114.0" promptText="起始时间" />
+                                    <DatePicker prefHeight="27.0" prefWidth="114.0" promptText="终止时间">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </DatePicker>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
                   </content>
                 </Tab>
                 <Tab fx:id="k_week" text="周线图">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <HBox layoutX="20.0" prefHeight="27.0" prefWidth="250.0">
+                                 <children>
+                                    <DatePicker prefHeight="27.0" prefWidth="114.0" promptText="起始时间" />
+                                    <DatePicker prefHeight="27.0" prefWidth="114.0" promptText="终止时间">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </DatePicker>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
                   </content>
                 </Tab>
                   <Tab fx:id="k_month" text="月线图">
@@ -31,7 +57,20 @@
                   </Tab>
                   <Tab fx:id="timeSharing" text="分时图">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <HBox layoutX="20.0" prefHeight="27.0" prefWidth="250.0">
+                                 <children>
+                                    <DatePicker prefHeight="27.0" prefWidth="114.0" promptText="起始时间" />
+                                    <DatePicker prefHeight="27.0" prefWidth="114.0" promptText="终止时间">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </DatePicker>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
                      </content>
                   </Tab>
               </tabs>

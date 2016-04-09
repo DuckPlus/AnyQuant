@@ -50,13 +50,8 @@ public class StockDetailController {
 	private String stockCode;
 
 	private Stock currentStock;
-//<<<<<<< HEAD
-//	OptionalStockBLService optionBl = OptionalStockBLServiceImpl.getOptionalBLService();
-//	StockBLService stockBl = StockBLImpl.getAPIBLService();
-//=======
 	OptionalStockBLService optionBl = OptionalStockBLImpl.getOptionalBLService();
 
-//>>>>>>> 7115410b39c4a27d876bae4a7300b23b99469b4b
 	private static StockDetailController instance;
 
 	public StockDetailController() {
@@ -122,6 +117,7 @@ public class StockDetailController {
 	private void initTimeSharing(){
 		TimeSharingChart timeChart = new TimeSharingChart(currentStock);
 		timeSharing.setContent(timeChart.getTimeSharingChart());
+		
 	}
 	@FXML
 	private void addOptionalStock(){
