@@ -146,10 +146,6 @@ public class StockBLImpl implements StockBLService {
 		List<StockPO> pos = APIDataSer.getStockMes(stockCode, start, end);
 		List<OHLC_VO> results;
 		if (pos != null) {
-<<<<<<< HEAD
-=======
-
->>>>>>> 42ef593a4b898a0576e64f3a0a0469711e11814a
 			results = new ArrayList<OHLC_VO>(pos.size());
 			for (StockPO stockPO : pos) {
 				if (judgeData(stockPO)) { // if the stock didn't trade that day , desert it
