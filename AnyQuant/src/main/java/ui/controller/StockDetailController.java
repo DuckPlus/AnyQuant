@@ -1,6 +1,7 @@
 package ui.controller;
 
 import java.util.Iterator;
+import java.util.List;
 
 import blimpl.OptionalStockBLImpl;
 import blservice.OptionalStockBLService;
@@ -57,44 +58,42 @@ public class StockDetailController {
 	private static StockDetailController instance;
 
 	public StockDetailController() {
-//		System.err.println("init constructor======");
+		// System.err.println("init constructor======");
 		if (instance == null) {
-//			System.out.println("【null instance】");
+			// System.out.println("【null instance】");
 			instance = this;
 		}
 	}
 
 	public static StockDetailController getStockDetailController() {
-//		System.err.println("get instance");
+		// System.err.println("get instance");
 		if (instance == null) {
-//			System.err.println("create");
+			// System.err.println("create");
 			instance = new StockDetailController();
 		}
 		return instance;
 	}
+
 	@FXML
-	private void initialize(){
-		
-		
-		
+	private void initialize() {
+
 	}
 
-	public static StockDetailController getCurrent(){
+	public static StockDetailController getCurrent() {
 		return instance;
 	}
 
-
-	public void setData(Stock stock){
-//		if(nameLabel==null){
-//			System.out.println("name null in set method");
-//			return;
-//			}else{
-//				System.out.println("not null in set method");
-//				}
-		System.out.println("[get in and current stock :"+stock.code+"]");
+	public void setData(Stock stock) {
+		// if(nameLabel==null){
+		// System.out.println("name null in set method");
+		// return;
+		// }else{
+		// System.out.println("not null in set method");
+		// }
+		System.out.println("[get in and current stock :" + stock.code + "]");
 		currentStock = stock;
 		System.out.println("changed!!");
-		stockCode=stock.code.get();
+		stockCode = stock.code.get();
 		nameLabel.setText(stock.name.get());
 		codeLabel.setText(stockCode);
 		open.setText(String.valueOf(stock.open.get()));
@@ -105,53 +104,56 @@ public class StockDetailController {
 		pe.setText(String.valueOf(stock.pe.get()));
 		pb.setText(String.valueOf(stock.pb.get()));
 		volume.setText(String.valueOf(stock.turnoverVol.get()));
-		if(optionBl.ifStockExist(stockCode)){//存在于自选股
+		if (optionBl.ifStockExist(stockCode)) {// 存在于自选股
 			addBtn.setText("删除该自选股");
-			exist=true;
-		}
-		else{
+			exist = true;
+		} else {
 			addBtn.setText("加入自选股");
-			exist=false;
+			exist = false;
 		}
-		//add time sharing then
+		// add time sharing then
 		initTimeSharing();
-		//add k_line
+		// add k_line
 		initKLine();
 	}
-	private void initTimeSharing(){
+
+	private void initTimeSharing() {
 		TimeSharingChart timeChart = new TimeSharingChart(currentStock);
 		timeSharing.setContent(timeChart.getTimeSharingChart());
-//		timeSharing.getTabPane().
+		// timeSharing.getTabPane().
 	}
-	private void initKLine(){
+
+	private void initKLine() {
 		CandleStickController KChart = new CandleStickController();
-		Iterator<Node>itr = KChart.getInitialCharts(currentStock.code.get());
-		if(itr.next()==null)System.out.println("null NODE");
-//		k_day.setContent(itr.next());
-//		k_week.setContent(itr.next());
-//		k_month.setContent(itr.next());
-		
+		List<Node> nodes = KChart.getInitialCharts(currentStock.code.get());
+		if (nodes.size() == 3) {
+			k_day.setContent(nodes.get(0));
+			k_week.setContent(nodes.get(1));
+			k_month.setContent(nodes.get(2));
+		}
+
 	}
+
 	@FXML
-	private void addOptionalStock(){
-		if(currentStock==null)System.err.println("current null");
-		if(exist){//执行删除操作
-			if(optionBl.deleteStockCode(stockCode)){//删除成功
+	private void addOptionalStock() {
+		if (currentStock == null)
+			System.err.println("current null");
+		if (exist) {// 执行删除操作
+			if (optionBl.deleteStockCode(stockCode)) {// 删除成功
 				addBtn.setText("加入自选股");
-				exist=false;
-			}else{
-				addBtn.setText("删除失败");//TODO   失败原因？。。
+				exist = false;
+			} else {
+				addBtn.setText("删除失败");// TODO 失败原因？。。
 			}
-		}else{//执行增加操作
+		} else {// 执行增加操作
 			System.out.println("add begin");
-			if(optionBl.addStockCode(stockCode)){//添加成功
+			if (optionBl.addStockCode(stockCode)) {// 添加成功
 				addBtn.setText("删除该自选股");
-				exist=true;
-			}else{
+				exist = true;
+			} else {
 				addBtn.setText("加入失败");
 			}
 		}
-
 
 	}
 }
