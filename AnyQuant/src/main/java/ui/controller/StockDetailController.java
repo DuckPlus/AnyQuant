@@ -31,7 +31,9 @@ public class StockDetailController {
 	Label pb;
 	@FXML
 	Button addBtn;
-	
+	private Boolean exist;
+	private String stockCode;
+
 	private Stock currentStock;
 	OptionalStockBLService optionBl = OptionalStockBLServiceImpl.getOptionalBLService();
 
@@ -73,9 +75,9 @@ public class StockDetailController {
 		System.out.println("[get in and current stock :"+stock.code+"]");
 		currentStock = stock;
 		System.out.println("changed!!");
-//		System.out.println(stock.name.get());
+		stockCode=stock.code.get();
 		nameLabel.setText(stock.name.get());
-		codeLabel.setText(stock.code.get());
+		codeLabel.setText(stockCode);
 		open.setText(String.valueOf(stock.open.get()));
 		close.setText(String.valueOf(stock.close.get()));
 		high.setText(String.valueOf(stock.high.get()));
@@ -84,18 +86,35 @@ public class StockDetailController {
 		pe.setText(String.valueOf(stock.pe.get()));
 		pb.setText(String.valueOf(stock.pb.get()));
 		volume.setText(String.valueOf(stock.turnoverVol.get()));
-		addBtn.setText("加入自选股");
+		if(optionBl.ifStockExist(stockCode)){//存在于自选股
+			addBtn.setText("删除该自选股");
+			exist=true;
+		}
+		else{
+			addBtn.setText("加入自选股");
+			exist=false;
+		}
 	}
 	@FXML
 	private void addOptionalStock(){
-		System.out.println("add begin");
 		if(currentStock==null)System.err.println("current null");
-		boolean added=optionBl.addStockCode(currentStock.code.get());
-		System.out.println(added+"add");
-		if(!added){
-			addBtn.setText("已存在自选股");
-		}else{
-			addBtn.setText("加入成功");
+		if(exist){//执行删除操作
+			if(optionBl.deleteStockCode(stockCode)){//删除成功
+				addBtn.setText("加入自选股");
+				exist=false;
+			}else{
+				addBtn.setText("删除失败");//TODO   失败原因？。。
+			}
+		}else{//执行增加操作
+			System.out.println("add begin");
+			if(optionBl.addStockCode(stockCode)){//添加成功
+				addBtn.setText("删除该自选股");
+				exist=true;
+			}else{
+				addBtn.setText("加入失败");
+			}
 		}
+
+
 	}
 }

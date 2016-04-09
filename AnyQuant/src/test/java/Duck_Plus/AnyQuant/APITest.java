@@ -8,12 +8,13 @@ import po.StockPO;
 import util.MyTime;
 import dataservice.APIDataFactory;
 import dataservice.APIInterface;
+import dataservice.StockDataService;
 import enumeration.MyDate;
 
 public class APITest {
 	public static void main(String a[]) {
-		// getStockMesByNewAPI();
-		getBenchMesByNewAPI();
+		getStockMesByNewAPI();
+		//getBenchMesByNewAPI();
 	}
 
 	public static void getAllstocksMessageByAPI() {
@@ -106,12 +107,12 @@ public class APITest {
 	}
 
 	public static void getStockMesByNewAPI() {
-		APIInterface api = APIInterfaceImpl.getAPIInterfaceImpl();
+		StockDataService api = APIDataFactory.getStockDataService();
 		// MyDate end = MyDate.getDateFromString("2016-03-28");
 		// MyDate start = MyTime.getAnotherDay(end,-3);
-		StockPO stock = api.getStockMes("sh600216");
-		// List<StockPO> stocks = api.getStockMes("600216",start,end);
-		// for(StockPO stock:stocks){
+		List<StockPO>  stocks = api.getStockMes("sh600000", new MyDate(2016, 3, 10), new MyDate(2016, 4, 30));
+
+		 for(StockPO stock:stocks){
 		System.out.print("name: " + stock.getName() + "  ");
 		System.out.print("code: " + stock.getCode() + "  ");
 		System.out.print("board: " + stock.getBoard() + "  ");
@@ -131,6 +132,7 @@ public class APITest {
 		System.out.print("changeRate: " + stock.getChangeRate() + "  ");
 		System.out.print("amp: " + stock.getAmplitude() + "  ");
 		System.out.print("date: " + stock.getDate() + '\n');
+		 }
 	}
 
 	public static void getBenchMesByNewAPI() {
