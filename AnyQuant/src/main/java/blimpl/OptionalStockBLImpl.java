@@ -20,7 +20,7 @@ import vo.StockVO;
  * @author Qiang
  * @date 3/29/16.
  */
-public class OptionalStockBLServiceImpl implements OptionalStockBLService {
+public class OptionalStockBLImpl implements OptionalStockBLService {
 
 	/**
 	 * 单例模式
@@ -35,12 +35,12 @@ public class OptionalStockBLServiceImpl implements OptionalStockBLService {
 
 	public static OptionalStockBLService getOptionalBLService() {
 		if (bl == null) {
-			bl = new OptionalStockBLServiceImpl();
+			bl = new OptionalStockBLImpl();
 		}
 		return bl;
 	}
 
-	private OptionalStockBLServiceImpl() {
+	private OptionalStockBLImpl() {
 		APIDataSer = APIDataFactory.getOptionalStockDataService();
 
 		refreshOptionalStocks();

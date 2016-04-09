@@ -3,7 +3,7 @@ package ui.controller;
 
 import java.util.Iterator;
 
-import blimpl.OptionalStockBLServiceImpl;
+import blimpl.OptionalStockBLImpl;
 import blservice.OptionalStockBLService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,17 +38,17 @@ public class optionalStockController {
 	@FXML
 	TableColumn<Stock, Long>volume;// = new TableColumn<Stock, Long>();
 	@FXML
-	TableColumn<Stock, Double>amplitude;// = new TableColumn<Stock, Double>();
+	TableColumn<Stock, String>amplitude;// = new TableColumn<Stock, Double>();
 	@FXML
-	TableColumn<Stock, Double>changeRate;// = new TableColumn<Stock, Double>();
+	TableColumn<Stock, String>changeRate;// = new TableColumn<Stock, Double>();
 	@FXML
 	TableView<Stock> tableview;// = new TableView<Stock>();
 	@FXML
 	TextField searchBar;
 	private ObservableList<Stock> observableList;
-	
-	private OptionalStockBLService optionalBl = OptionalStockBLServiceImpl.getOptionalBLService();
-	
+
+	private OptionalStockBLService optionalBl = OptionalStockBLImpl.getOptionalBLService();
+
 	private StockDetailController stockDetailController;
 
 	private RightPaneController rightPaneController;
@@ -92,7 +92,7 @@ public class optionalStockController {
 		tableview.getItems().removeAll(observableList);
 		while(itr.hasNext()){
 			StockVO temp = itr.next();
-			System.out.println(temp.name);
+//			System.out.println(temp.name);
 			Stock dataProperty = new Stock(temp);
 			observableList.add(dataProperty);
 		}
@@ -105,10 +105,10 @@ public class optionalStockController {
 		close.setCellValueFactory(cell ->cell.getValue().close.asObject());
 		turnover.setCellValueFactory(cell ->cell.getValue().turnoverRate.asObject());
 		volume.setCellValueFactory(cell ->cell.getValue().turnoverVol.asObject());
-		amplitude.setCellValueFactory(cell ->cell.getValue().amplitude.asObject());
-		changeRate.setCellValueFactory(cell ->cell.getValue().changeRate.asObject());
+		amplitude.setCellValueFactory(cell ->cell.getValue().getStringAmplitude());
+		changeRate.setCellValueFactory(cell ->cell.getValue().getStringChangeRate());
 	}
-	
+
 	@FXML
 	private void deleteOptionalStock(){
 		if(tableview.getSelectionModel().getSelectedIndex()!=-1){
@@ -144,7 +144,7 @@ public class optionalStockController {
 //			System.err.println("stock instance:"+stockDetailController.toString());
 			candleStickController.setStockCode(selectedStock.code.get());
 			stockDetailController.setData(selectedStock);
-			System.out.println(selectedStock.open+"  "+selectedStock.close);
+//			System.out.println(selectedStock.open+"  "+selectedStock.close);
 			rightPaneController.showDetailPane(stockDetailPane);
 
 		}
