@@ -14,7 +14,10 @@ import enumeration.MyDate;
  *
  */
 public class MyTime {
-
+	
+	private static int[] MONTH_DAY = {31,28 , 31, 30 , 31, 30 ,31 ,31 , 30 , 31 ,30 ,31};
+	
+	
 	/**
 	 * 返回当前时期包括时间
 	 * 
@@ -154,19 +157,17 @@ public class MyTime {
 			calendar.add(Calendar.DATE, 2 - calendar.get(Calendar.DAY_OF_WEEK));
 
 		}
-		return new MyDate(calendar.get(Calendar.YEAR),
-				calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DATE));
+		return new MyDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DATE));
 	}
 
 	public static final MyDate getFridayofTheWeek(MyDate date) {
 
 		Calendar calendar = getMyCalendar(date);
-		int nowDay = calendar.get(Calendar.DAY_OF_WEEK) ;
-		if( !(nowDay == 1 || nowDay >= 6 )){
+		int nowDay = calendar.get(Calendar.DAY_OF_WEEK);
+		if (!(nowDay == 1 || nowDay >= 6)) {
 			calendar.add(Calendar.DATE, Calendar.FRIDAY - calendar.get(Calendar.DAY_OF_WEEK));
 		}
-		return new MyDate(calendar.get(Calendar.YEAR),
-				calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DATE));
+		return new MyDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DATE));
 	}
 
 	public static final Calendar getMyCalendar(MyDate date) {
@@ -178,8 +179,7 @@ public class MyTime {
 
 	public static void main(String[] args) {
 		System.out.println(MyTime.getToDay().DateToString());
-		System.out
-				.println(getMondayofTheWeek(MyTime.getToDay()).DateToString());
+		System.out.println(getMondayofTheWeek(MyTime.getToDay()).DateToString());
 
 		Calendar c2 = Calendar.getInstance();
 		c2.clear();
@@ -230,4 +230,28 @@ public class MyTime {
 		System.out.println("星期：" + day);
 	}
 
+	public static boolean isLeapYear(MyDate date) {
+		int year = date.getYear();
+		return (year % 4 == 0) ? ((year % 100 == 0) ? ((year % 400 == 0) ? true : false) : true) : false;
+	}
+	
+	public static int getMonthEndDay(MyDate date){
+		
+			if(date.getMonth() != 2){
+				return MONTH_DAY[date.getMonth() - 1];
+			}else{
+				if(isLeapYear(date)){
+					return 29;
+				}else{
+					return MONTH_DAY[1];
+				}
+			}
+		
+		
+		
+		
+		
+	}
+	
+	
 }
