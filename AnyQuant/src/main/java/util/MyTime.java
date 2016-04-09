@@ -157,6 +157,7 @@ public class MyTime {
 			calendar.add(Calendar.DATE, 2 - calendar.get(Calendar.DAY_OF_WEEK));
 
 		}
+		
 		return new MyDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DATE));
 	}
 

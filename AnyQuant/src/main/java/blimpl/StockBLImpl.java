@@ -148,7 +148,7 @@ public class StockBLImpl implements StockBLService {
 		List<OHLC_VO> results;
 		if (pos != null) {
 			
-		
+			System.out.println(pos.size());
 			
 			results = new ArrayList<OHLC_VO>(pos.size());
 			for (StockPO stockPO : pos) {
