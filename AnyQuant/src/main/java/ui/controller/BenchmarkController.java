@@ -64,33 +64,20 @@ public class BenchmarkController {
 	}
 
 	private void showAllBenchmark(){
-		Iterator<BenchMarkVO>itr = benchmarkBl.getAllBenchMarks();
-		showTableData(itr);
+//		Iterator<BenchMarkVO>itr = benchmarkBl.getAllBenchMarks();
+//		showTableData(itr);
 
 	}
 	@FXML
 	private void searchByDate(){
-//		System.out.println("picker done");
-//		System.out.println(beginDate.getValue().getMonth().getValue());
-//		System.out.println(beginDate.getValue().getYear());
-//		System.out.println(beginDate.getValue().getDayOfMonth());
 		MyDate start = new MyDate(beginDate.getValue().getYear(), beginDate.getValue().getMonthValue(), beginDate.getValue().getDayOfMonth());
 		MyDate end = new MyDate(endDate.getValue().getYear(), endDate.getValue().getMonthValue(), endDate.getValue().getDayOfMonth());
 		System.out.println(start.AllToString()+"   "+end.AllToString());
 		Iterator<BenchMarkVO>itr = benchmarkBl.getBenchMarkByTime("hs300", start, end);
 		System.out.println(benchmarkBl.getAllBenchMarks().next().name);
 		showTableData(itr);
-//		while(itr.hasNext()){
-//			BenchMarkVO temp = itr.next();
-//
-//		}
-//		if(beginDate){
-//			System.out.println("bad request");
-//			return;
-//		}
-		System.out.println(beginDate.getValue().toString());
-		System.out.println(endDate.getValue().toString());
 	}
+	
 	private void showTableData(Iterator<BenchMarkVO>itr){
 		
 		tableview.getItems().removeAll(observableList);

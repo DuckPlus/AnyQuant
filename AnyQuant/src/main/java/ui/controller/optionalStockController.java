@@ -91,7 +91,7 @@ public class optionalStockController {
 		if(name!=null){
 			System.out.println("not null col");
 		getOptionalStock();
-		initPieChart();
+//		initPieChart();
 		}
 
 	}
@@ -119,6 +119,7 @@ public class optionalStockController {
 	public void getOptionalStock(){
 		Iterator<StockVO>itr = optionalBl.getOptionalStocks();
 		showTableData(itr);
+//		initPieChart();
 	}
 	private void showTableData(Iterator<StockVO>itr){
 		tableview.getItems().removeAll(observableList);
