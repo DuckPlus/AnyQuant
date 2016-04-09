@@ -1,6 +1,7 @@
 package po;
 
-import java.lang.reflect.Field;
+import data.helper.TransferHelper;
+import enumeration.StaticMessage;
 
 public class StockPO {
 	private String date, name, code;
@@ -266,27 +267,12 @@ public class StockPO {
 		this.changeRate = (int) (temp * 10000) / 10000.0;
 	}
 
+
+	
+	
 	public String MyToString(String splitChar) {
-		try {
-			Class<?> class1 = Class.forName("po.StockPO");
-			Field[] fields = class1.getDeclaredFields();
-
-			for (Field field : fields) {
-				field.setAccessible(true);
-			}
-			StringBuffer buffer = new StringBuffer();
-
-			for (Field field : fields) {
-				buffer.append(field.get(this));
-				buffer.append(splitChar);
-			}
-			// desert the last char
-			return buffer.substring(0, buffer.length() - 1);
-
-		} catch (ClassNotFoundException | IllegalArgumentException | IllegalAccessException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return TransferHelper.ObjectToString(StaticMessage.STOCK_PO , this , splitChar);
+//		try {
 		// return "" + date + splitChar + name + splitChar + code + splitChar +
 		// board + splitChar + region + splitChar + high + splitChar + low
 		// + splitChar + open + splitChar + close + splitChar + preClose +

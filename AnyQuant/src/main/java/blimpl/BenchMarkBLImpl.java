@@ -33,6 +33,7 @@ public class BenchMarkBLImpl implements BenchMarkBLService {
 
 		APIDataSer = APIDataFactory.getBenchMarkDataService();
 		benchMap = new TreeMap<String, BenchMarkVO>();
+
 		List<BenchMarkPO> benchMarkPOs = APIDataSer.getAllBenchMes();
 		for (BenchMarkPO po : benchMarkPOs) {
 			benchMap.put(po.getCode(), (BenchMarkVO) VOPOchange.POtoVO(po));
