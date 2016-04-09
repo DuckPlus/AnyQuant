@@ -20,17 +20,23 @@ public class BenchmarkController {
 	@FXML
 	TableColumn<BenchMark, String> code;
 	@FXML
+	TableColumn<BenchMark, String> name;
+	@FXML
 	TableColumn<BenchMark, String> date;
 	@FXML
 	TableColumn<BenchMark, Double> open;
 	@FXML
 	TableColumn<BenchMark, Double> close;
 	@FXML
+	TableColumn<BenchMark, Double> preClose;
+	@FXML
 	TableColumn<BenchMark, Double> high;
 	@FXML
 	TableColumn<BenchMark, Double> low;
 	@FXML
 	TableColumn<BenchMark, Long> turnoverVol;
+	@FXML
+	TableColumn<BenchMark, Double> turnoverValue;
 	@FXML
 	TableView<BenchMark> tableview;
 	@FXML
@@ -58,46 +64,40 @@ public class BenchmarkController {
 	}
 
 	private void showAllBenchmark(){
-		Iterator<BenchMarkVO>itr = benchmarkBl.getRecentBenchMarks("hs300");
-		showTableData(itr);
+//		Iterator<BenchMarkVO>itr = benchmarkBl.getAllBenchMarks();
+//		showTableData(itr);
 
 	}
 	@FXML
 	private void searchByDate(){
-//		System.out.println("picker done");
-//		System.out.println(beginDate.getValue().getMonth().getValue());
-//		System.out.println(beginDate.getValue().getYear());
-//		System.out.println(beginDate.getValue().getDayOfMonth());
 		MyDate start = new MyDate(beginDate.getValue().getYear(), beginDate.getValue().getMonthValue(), beginDate.getValue().getDayOfMonth());
 		MyDate end = new MyDate(endDate.getValue().getYear(), endDate.getValue().getMonthValue(), endDate.getValue().getDayOfMonth());
 		System.out.println(start.AllToString()+"   "+end.AllToString());
 		Iterator<BenchMarkVO>itr = benchmarkBl.getBenchMarkByTime("hs300", start, end);
+		System.out.println(benchmarkBl.getAllBenchMarks().next().name);
 		showTableData(itr);
-//		while(itr.hasNext()){
-//			BenchMarkVO temp = itr.next();
-//
-//		}
-//		if(beginDate){
-//			System.out.println("bad request");
-//			return;
-//		}
-		System.out.println(beginDate.getValue().toString());
-		System.out.println(endDate.getValue().toString());
 	}
+	
 	private void showTableData(Iterator<BenchMarkVO>itr){
+		
 		tableview.getItems().removeAll(observableList);
+//		if(itr==null)System.err.println("Iterator null");
 		while(itr.hasNext()){
+//			System.out.println("hello table");
 			BenchMarkVO temp = itr.next();
-//			System.out.println(temp.date+" "+temp.adj_price);
+			System.out.println(temp.date+" "+temp.name);
 			BenchMark dataProperty = new BenchMark(temp);
 			observableList.add(dataProperty);
 		}
 		code.setCellValueFactory(cell -> cell.getValue().code);
+		name.setCellValueFactory(cell -> cell.getValue().name);
 		open.setCellValueFactory(cell -> cell.getValue().open.asObject());
 		close.setCellValueFactory(cell -> cell.getValue().close.asObject());
+		preClose.setCellValueFactory(cell -> cell.getValue().preclose.asObject());
 		high.setCellValueFactory(cell -> cell.getValue().high.asObject());
 		low.setCellValueFactory(cell -> cell.getValue().low.asObject());
 		turnoverVol.setCellValueFactory(cell -> cell.getValue().turnoverVol.asObject());
+		turnoverValue.setCellValueFactory(cell -> cell.getValue().turnoverValue.asObject());
 		tableview.setItems(observableList);
 
 	}
