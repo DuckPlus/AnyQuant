@@ -2,19 +2,22 @@ package ui.controller;
 
 
 import java.util.Iterator;
+import java.util.Map.Entry;
 
+import blimpl.BenchMarkBLImpl;
 import blimpl.OptionalStockBLImpl;
+import blservice.BenchMarkBLService;
 import blservice.OptionalStockBLService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import ui.GraphicsUtils;
 import ui.controller.candleStick.CandleStickController;
 import vo.Stock;
 import vo.StockVO;
@@ -45,10 +48,18 @@ public class optionalStockController {
 	TableView<Stock> tableview;// = new TableView<Stock>();
 	@FXML
 	TextField searchBar;
+	@FXML
+	AnchorPane bottomPane;
+	@FXML
+	Tab geographicalDis;
+	@FXML
+	Tab boardDis;
 	private ObservableList<Stock> observableList;
 
 	private OptionalStockBLService optionalBl = OptionalStockBLImpl.getOptionalBLService();
 
+	private BenchMarkBLService benchMarkBl = BenchMarkBLImpl.getBenchMarkBLService();
+	
 	private StockDetailController stockDetailController;
 
 	private RightPaneController rightPaneController;
@@ -80,8 +91,29 @@ public class optionalStockController {
 		if(name!=null){
 			System.out.println("not null col");
 		getOptionalStock();
+		initPieChart();
 		}
 
+	}
+	private void initPieChart(){
+		MyPieChart pc_board = new MyPieChart();
+		Iterator<Entry<String,Integer>>itr = optionalBl.getBorderDistribution();
+		while(itr.hasNext()){
+			Entry<String,Integer> temp = itr.next();
+			pc_board.addData(temp.getKey(), temp.getValue());
+		}
+//		optionalBl.getBorderDistribution();
+		boardDis.setContent(pc_board.getPieChart());
+		//
+		MyPieChart pc_geog = new MyPieChart();
+		Iterator<Entry<String,Integer>>itr2 = optionalBl.getRegionDistribution();
+		while(itr2.hasNext()){
+			Entry<String,Integer> temp = itr2.next();
+			pc_geog.addData(temp.getKey(), temp.getValue());
+		}
+//		optionalBl.getBorderDistribution();
+		geographicalDis.setContent(pc_geog.getPieChart());
+		
 	}
 	@FXML
 	public void getOptionalStock(){
@@ -135,16 +167,10 @@ public class optionalStockController {
 				rightPaneController = RightPaneController.getRightPaneController();
 			}
 
-			chartPane = (AnchorPane)GraphicsUtils.getParent("CandleStickPane");
-			stockDetailPane.setCenter(chartPane);
+//			chartPane = (AnchorPane)GraphicsUtils.getParent("CandleStickPane");
+//			stockDetailPane.setCenter(chartPane);
 
-//			if(candleStickController==null){
-//				candleStickController = CandleStickController.getCandleStickController();
-//			}
-//			System.err.println("stock instance:"+stockDetailController.toString());
-//			candleStickController.setStockCode(selectedStock.code.get());
 			stockDetailController.setData(selectedStock);
-//			System.out.println(selectedStock.open+"  "+selectedStock.close);
 			rightPaneController.showDetailPane(stockDetailPane);
 
 		}
