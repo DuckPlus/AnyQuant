@@ -180,7 +180,7 @@ public class StockDSImpl implements StockDataService {
 	 */
 	public List<StockPO> getStockMes(String code, MyDate start, MyDate end) {
 
-		if (end.DateToString().equals(MyTime.getToDay().DateToString())) {
+		if (end.DateToString().equals(start.DateToString())) {
 			List<StockPO> stocks = new ArrayList<>();
 			stocks.add(getStockMes(code, start));
 			return stocks;
@@ -202,7 +202,7 @@ public class StockDSImpl implements StockDataService {
 			}
 			return pos;
 		} else {
-			return new ArrayList<>();
+			return null;
 		}
 	}
 

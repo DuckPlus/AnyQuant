@@ -110,7 +110,7 @@ public class APITest {
 		StockDataService api = APIDataFactory.getStockDataService();
 		// MyDate end = MyDate.getDateFromString("2016-03-28");
 		// MyDate start = MyTime.getAnotherDay(end,-3);
-		List<StockPO>  stocks = api.getStockMes("sh600216", new MyDate(2016, 3, 10), new MyDate(2016, 4, 30));
+		List<StockPO>  stocks = api.getStockMes("sh600000", new MyDate(2016, 3, 10), new MyDate(2016, 4, 30));
 
 		 for(StockPO stock:stocks){
 		System.out.print("name: " + stock.getName() + "  ");
