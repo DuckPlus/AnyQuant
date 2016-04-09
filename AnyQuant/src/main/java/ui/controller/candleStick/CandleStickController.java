@@ -219,6 +219,7 @@ public void updateCharts(){
     	   MyDate end = MyTime.getToDay();
     	   MyDate start = MyTime.getAnotherDay(-30);
     	   List<OHLC_VO>list =stockBl.getDayOHLC_Data(stockCode, start, end);
+    	   if(dayList==null)System.err.println("null day list");
     	   dayList.clear();
     	   for(OHLC_VO temp : list){
     		     dayList.add(temp);
@@ -403,16 +404,25 @@ public void updateCharts(){
      */
     @FXML
     private void initTimeSharing(){
-    	System.out.println("time init");
-    	TimeSharingChart timeSharingChart = new TimeSharingChart();
-    	initPane(timeShareTab, timeSharingChart.getTimesharingChart(), new ScrollPane());
-    	List<TimeSharingVO> timeSharingData = stockBl.getSharingVOs("sh600000");
-    	Iterator<TimeSharingVO>itr = timeSharingData.iterator();
-    	while(itr.hasNext()){
-    		TimeSharingVO temp = itr.next();
-    		System.out.println(temp.nowTime.AllToString()+"  "+temp.nowPrice);
-    		timeSharingChart.addData(temp.nowTime.TimeToString(), temp.nowPrice);
-    	}
+//    	TimeSharingChart timeSharingChart = new TimeSharingChart();
+//    	initPane(timeShareTab, timeSharingChart.getTimesharingChart(), new ScrollPane());
+//    	List<TimeSharingVO> timeSharingData = stockBl.getSharingVOs("sh600000");
+//    	//get the upperBounds and lowerBounds
+//    	Iterator<TimeSharingVO> itrc = timeSharingData.iterator();
+//    	double upperBounds=0;
+//    	double lowerBounds=10000;
+//    	while(itrc.hasNext()){
+//    		TimeSharingVO tempCmp = itrc.next();
+//    		if(tempCmp.nowPrice>upperBounds)upperBounds = tempCmp.nowPrice;
+//    		if(tempCmp.nowPrice<lowerBounds)lowerBounds = tempCmp.nowPrice;
+//    	}
+//    	//end
+//    	timeSharingChart.setChartProperty("Stock xxx", upperBounds+0.02, lowerBounds-0.02);
+//    	Iterator<TimeSharingVO>itr = timeSharingData.iterator();
+//    	while(itr.hasNext()){
+//    		TimeSharingVO temp = itr.next();
+//    		timeSharingChart.addData(temp.nowTime.TimeToString(), temp.nowPrice);
+//    	}
     }
 
 }

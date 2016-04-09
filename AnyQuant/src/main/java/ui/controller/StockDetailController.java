@@ -1,10 +1,15 @@
 package ui.controller;
 
 import blimpl.OptionalStockBLServiceImpl;
+import blimpl.StockBLImpl;
 import blservice.OptionalStockBLService;
+import blservice.StockBLService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import ui.controller.candleStick.TimeSharingChart;
 import vo.Stock;
 
 public class StockDetailController {
@@ -31,33 +36,45 @@ public class StockDetailController {
 	Label pb;
 	@FXML
 	Button addBtn;
+	@FXML
+	Tab k_day;
+	@FXML
+	Tab k_month;
+	@FXML
+	Tab k_week;
+	@FXML
+	Tab timeSharing;
+	@FXML
+	TabPane tabPane;
 	private Boolean exist;
 	private String stockCode;
 
 	private Stock currentStock;
 	OptionalStockBLService optionBl = OptionalStockBLServiceImpl.getOptionalBLService();
-
+	StockBLService stockBl = StockBLImpl.getAPIBLService();
 	private static StockDetailController instance;
 
 	public StockDetailController() {
-		System.err.println("init constructor======");
+//		System.err.println("init constructor======");
 		if (instance == null) {
-			System.out.println("【null instance】");
+//			System.out.println("【null instance】");
 			instance = this;
 		}
 	}
 
 	public static StockDetailController getStockDetailController() {
-		System.err.println("get instance");
+//		System.err.println("get instance");
 		if (instance == null) {
-			System.err.println("create");
+//			System.err.println("create");
 			instance = new StockDetailController();
 		}
 		return instance;
 	}
 	@FXML
 	private void initialize(){
-
+		
+		
+		
 	}
 
 	public static StockDetailController getCurrent(){
@@ -94,6 +111,12 @@ public class StockDetailController {
 			addBtn.setText("加入自选股");
 			exist=false;
 		}
+		//add time sharing then
+		initTimeSharing();
+	}
+	private void initTimeSharing(){
+		TimeSharingChart timeChart = new TimeSharingChart(currentStock);
+		timeSharing.setContent(timeChart.getTimeSharingChart());
 	}
 	@FXML
 	private void addOptionalStock(){
