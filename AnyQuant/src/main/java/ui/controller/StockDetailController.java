@@ -86,7 +86,7 @@ public class StockDetailController {
 		pe.setText(String.valueOf(stock.pe.get()));
 		pb.setText(String.valueOf(stock.pb.get()));
 		volume.setText(String.valueOf(stock.turnoverVol.get()));
-		if(optionBl.ifExist(stockCode)){//存在于自选股
+		if(optionBl.ifStockExist(stockCode)){//存在于自选股
 			addBtn.setText("删除该自选股");
 			exist=true;
 		}

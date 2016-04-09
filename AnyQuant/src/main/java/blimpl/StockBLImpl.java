@@ -148,7 +148,7 @@ public class StockBLImpl implements StockBLService {
 		List<OHLC_VO> results;
 		if (pos != null) {
 			
-			System.out.println("pos size:" + pos.size());
+			System.out.println(pos.size());
 			
 			results = new ArrayList<OHLC_VO>(pos.size());
 			for (StockPO stockPO : pos) {
@@ -195,7 +195,7 @@ public class StockBLImpl implements StockBLService {
 
 	@Override
 	public List<OHLC_VO> getMonthOHLC_Data(String stockCode, MyDate start, MyDate end) {
-		int MONTH_DAY = 31;
+		
 		List<OHLC_VO> vos;
 		List<StockPO> pos;
 
@@ -205,14 +205,8 @@ public class StockBLImpl implements StockBLService {
 		MyDate monthEnd = thisMonth.clone();
 
 		thisMonth.setDay(1);
-		monthEnd.setDay(MONTH_DAY);
+		monthEnd.setDay(MyTime.getMonthEndDay(monthEnd));
 		for (int i = 0; i < monthNum; i++) {
-			
-			
-			System.out.println(monthEnd.DateToString());
-			
-			System.out.println(stockCode);
-			System.out.println(thisMonth.DateToString());
 			
 			
 			pos = APIDataSer.getStockMes(stockCode, thisMonth, monthEnd);
@@ -233,6 +227,8 @@ public class StockBLImpl implements StockBLService {
 		// System.out.println(vos.size());
 		return vos.isEmpty() ? null : vos;
 	}
+
+	
 
 	@Override
 	public List<TimeSharingVO> getSharingVOs(String stockCode) {
@@ -306,7 +302,7 @@ public class StockBLImpl implements StockBLService {
 
 	@Override
 	public List<DealVO> getMonthDealVOs(String stockCode, MyDate start, MyDate end) {
-		int MONTH_DAY = 31;
+		
 		List<DealVO> vos;
 		List<StockPO> pos = new ArrayList<StockPO>(25);
 
@@ -315,7 +311,7 @@ public class StockBLImpl implements StockBLService {
 		MyDate thisMonth = start.clone();
 		MyDate monthEnd = thisMonth.clone();
 		thisMonth.setDay(1);
-		monthEnd.setDay(MONTH_DAY);
+		monthEnd.setDay(MyTime.getMonthEndDay(monthEnd));
 		for (int i = 0; i < monthNum; i++) {
 			pos = APIDataSer.getStockMes(stockCode, thisMonth, monthEnd);
 			vos.add(getSumDealVO(pos));

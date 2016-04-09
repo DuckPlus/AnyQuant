@@ -140,8 +140,8 @@ public class OptionalStockBLServiceImpl implements OptionalStockBLService {
 	}
 
 	@Override
-	public boolean ifExist(String stockCode) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean ifStockExist(String stockCode) {
+		refreshOptionalStocks();
+		return optionalStockMap.containsKey(stockCode);
 	}
 }

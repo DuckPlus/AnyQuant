@@ -68,7 +68,7 @@ public interface OptionalStockBLService {
      * @param stockCode
      * @return
      */
-    public boolean ifExist(String stockCode);
+    public boolean ifStockExist(String stockCode);
 
 
 
