@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.python.antlr.PythonParser.return_stmt_return;
+import org.python.netty.util.concurrent.SucceededFuture;
+
 import blimpl.StockBLImpl;
 import blservice.StockBLService;
 import enumeration.MyDate;
@@ -44,7 +47,8 @@ public class CandleStickController implements Initializable {
 	private CandleStickChart dayChart, weekChart, monthChart;
 	private ObservableList<OHLC_VO> dayList, weekList, monthList;
 	private String stockCode;
-	MyDate startDate, endDate;
+	private MyDate startDate, endDate;
+
 
 	private static StockBLService stockBl;
 	private static CandleStickController instance;
@@ -79,17 +83,24 @@ public class CandleStickController implements Initializable {
 	}
 
 	// double click to enter this scene
-	public Iterator<Node> getInitialCharts(String code) {
+	public List<Node> getInitialCharts(String code) {
 		this.stockCode = code;
-		Task initTask = createInitWorker();
+	    List<Node> nodes = new ArrayList<Node>();
+	//	Task initTask = createInitWorker();
 		// showProgressIndicator(
 		// initTask.progressProperty(),initTask.runningProperty());
-		new Thread(initTask).start();
-		List<Node> nodes = new ArrayList<Node>();
-		nodes.add(dayChart);
-		nodes.add(weekChart);
-		nodes.add(monthChart);
-		return nodes.iterator();
+	//	new Thread(initTask).start();
+		getInitData();
+
+		 dayChart = CandleStickChart.createChart(dayList);
+		 weekChart = CandleStickChart.createChart(weekList);
+		 monthChart = CandleStickChart.createChart(monthList);
+
+	   nodes.add(dayChart);
+	   nodes.add(weekChart);
+	   nodes.add(monthChart);
+	   return nodes;
+
 	}
 
 	// set date to update charts
@@ -99,9 +110,10 @@ public class CandleStickController implements Initializable {
 		this.startDate = start;
 		this.endDate = end;
 		Task updateTask = createUpdateDayChartWorker();
-		// showProgressIndicator(
-		// updateTask.progressProperty(),updateTask.runningProperty());
+		 showProgressIndicator(
+		 updateTask.progressProperty(),updateTask.runningProperty());
 		new Thread(updateTask).start();
+
 		return dayChart;
 
 	}
@@ -285,12 +297,17 @@ public class CandleStickController implements Initializable {
 					// on the JavaFX Application Thread....
 					System.out.println("done init Charts");
 					// removeProgressIndicator();
-					dayChart = CandleStickChart.createChart(dayList);
-					weekChart = CandleStickChart.createChart(weekList);
-					monthChart = CandleStickChart.createChart(monthList);
+
 				});
 				return true;
 			}
+
+			@Override
+            protected void succeeded() {
+                super.succeeded();
+
+            }
+
 		};
 	}
 
