@@ -20,17 +20,17 @@ import vo.Stock;
 public class StockDetailController {
 
 	@FXML
-	Label nameLB;  Label codeLB;
+	Label nameLB, codeLB;
 	@FXML
-	Label openLB;  Label closeLB;  Label lowLB ;Label highLB;
+	Label openLB, closeLB, lowLB , highLB;
 	@FXML
-	Label turnoverRateLB; Label turnoverVolLB;
+	Label turnoverRateLB, turnoverVolLB;
 	@FXML
-	Label peLB;Label pbLB;
+	Label peLB,pbLB;
 	@FXML
 	Button addBtn;
 	@FXML
-	Tab k_day;  Tab k_week; 	Tab k_month;
+	Tab k_day, k_week, k_month;
 	@FXML
 	Tab timeSharing;
 	@FXML
@@ -121,21 +121,21 @@ public class StockDetailController {
 			k_month.setContent(nodes.get(2));
 		}
 	}
-
+	@FXML
 	private  void updateDayChart(){
 		MyDate start = new MyDate(dayStart.getValue().getYear(),dayStart.getValue().getMonthValue(),dayStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(dayEnd.getValue().getYear(),dayEnd.getValue().getMonthValue(),dayEnd.getValue().getDayOfMonth());
         Node dayChart = candleStickController.getUpdatedDayChart(currentStock.code.get(), start, end);
         k_day.setContent(dayChart);
 	}
-
+	@FXML
 	private  void updateWeekChart(){
 		MyDate start = new MyDate(weekStart.getValue().getYear(),weekStart.getValue().getMonthValue(),weekStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(weekEnd.getValue().getYear(),weekEnd.getValue().getMonthValue(),weekEnd.getValue().getDayOfMonth());
         Node weekChart = candleStickController.getUpdatedWeekChart(currentStock.code.get(), start, end);
         k_week.setContent(weekChart);
 	}
-
+	@FXML
 	private  void updateMonthChart(){
 		MyDate start = new MyDate(monthStart.getValue().getYear(),monthStart.getValue().getMonthValue(),monthStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(monthEnd.getValue().getYear(),monthEnd.getValue().getMonthValue(),monthEnd.getValue().getDayOfMonth());
