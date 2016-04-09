@@ -44,9 +44,14 @@ public class BenchMarkDSImpl implements BenchMarkDataService{
 			public BenchMarkPO getBenchMes(String benchCode) {
 				  int offset=0;
 				  MyDate date  = MyTime.getAnotherDay(offset);
-				  while(getBenchMesRequestResult(benchCode, date)!=1){
+				  while((getBenchMesRequestResult(benchCode, date)!=1)&&offset>-10){
 					  offset--;
 					  date=MyTime.getAnotherDay(offset);
+				  }
+
+				  if(offset<-10){
+					  System.out.println(benchCode+"error-----------");
+					  return null;
 				  }
 		         return  getBenchMes(benchCode, date);
 			}
@@ -86,7 +91,7 @@ public class BenchMarkDSImpl implements BenchMarkDataService{
 			    if(jo.getInt("retCode")==1){
 			       JSONArray jArray = jo.getJSONArray("data");
 			       for(int i=0;i<jArray.size();i++){
-			    	   JSONObject  stockpoJsonObject = jArray.getJSONObject(0);
+			    	   JSONObject  stockpoJsonObject = jArray.getJSONObject(i);
 			           BenchMarkPO po=JSONTransferHelper. JSONObjectToBenchMarkPO(stockpoJsonObject);
 			           pos.add(po);
 			       }

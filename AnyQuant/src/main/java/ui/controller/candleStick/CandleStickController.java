@@ -66,12 +66,12 @@ public class CandleStickController implements Initializable {
 	private ProgressIndicator progressIndicator;
 	@FXML
 	private CandleStickChart dayChart, weekChart, monthChart;
-
+    private ObservableList<OHLC_VO> dayList,weekList,monthList;
 	private static String stockCode;
 	private static MyDate startDate, endDate;
 	private static StockBLService stockBl;
 
-	private static ObservableList<OHLC_VO> obsevableList;
+
 
 	private static CandleStickController instance;
 
@@ -82,8 +82,10 @@ public class CandleStickController implements Initializable {
 			startDate = new MyDate(2016, 3, 1);
 			endDate = new MyDate(2016, 4, 1);
 			stockBl = StockBLImpl.getAPIBLService();
-			obsevableList = FXCollections.observableArrayList();
-			obsevableList.clear();
+			dayList = FXCollections.observableArrayList();
+			weekList = FXCollections.observableArrayList();
+			monthList = FXCollections.observableArrayList();
+			dayList.clear();  weekList.clear(); monthList.clear();
 			instance = this;
 		}
 	}
@@ -145,6 +147,9 @@ public class CandleStickController implements Initializable {
 	}
 
 	public void displayCharts() {
+		dayChart = createChart(dayList);
+		weekChart = createChart(weekList);
+		monthChart = createChart(monthList);
 		initPane(dayTab, dayChart, new ScrollPane());
 		initPane(weekTab, weekChart, new ScrollPane());
 		initPane(monthTab, monthChart, new ScrollPane());
@@ -153,41 +158,34 @@ public class CandleStickController implements Initializable {
 	public void selectDay() {
 		if (dayChart == null) {
 			getDayData();
-			dayChart = createChart();
 		}
 	}
 
 	public void selectWeek() {
 		if (weekChart == null) {
 			getWeekData();
-			weekChart = createChart();
 		}
 	}
 
 	public void selectMonth() {
 		if (monthChart == null) {
 			getMonthData();
-			monthChart = createChart();
-
 		}
 	}
 
 	public void updateDay() {
-		dayChart.getData().clear();
+
 		getDayDataByDate();
-		dayChart = createChart();
 	}
 
 	public void updateWeek() {
-		weekChart.getData().clear();
+
 		getWeekDataByDate();
-		weekChart = createChart();
 	}
 
 	public void updateMonth() {
-		monthChart.getData().clear();
+
 		getMonthDataByDate();
-		monthChart = createChart();
 	}
 
 	private void initPane(Tab tab, Node chartNode, ScrollPane spane) {
@@ -209,22 +207,18 @@ public class CandleStickController implements Initializable {
 		MyDate end = MyTime.getToDay();
 		MyDate start = MyTime.getAnotherDay(-30);
 		List<OHLC_VO> list = stockBl.getDayOHLC_Data(stockCode, start, end);
-		obsevableList.clear();
-		
-		
-		
-		
+		dayList.clear();
 		for (OHLC_VO temp : list) {
-			obsevableList.add(temp);
+			dayList.add(temp);
 		}
 	}
 
 	private void getDayDataByDate() {
 		if (startDate != null && endDate != null) {
 			List<OHLC_VO> list = stockBl.getDayOHLC_Data(stockCode, startDate, endDate);
-			obsevableList.clear();
+			dayList.clear();
 			for (OHLC_VO temp : list) {
-				obsevableList.add(temp);
+				dayList.add(temp);
 			}
 		}
 	}
@@ -234,18 +228,18 @@ public class CandleStickController implements Initializable {
 		MyDate end = MyTime.getToDay();
 		MyDate start = MyTime.getAnotherDay(-180);
 		List<OHLC_VO> list = stockBl.getWeekOHLC_Data(stockCode, start, end);
-		obsevableList.clear();
+		weekList.clear();
 		for (OHLC_VO temp : list) {
-			obsevableList.add(temp);
+			weekList.add(temp);
 		}
 	}
 
 	private void getWeekDataByDate() {
 		if (startDate != null && endDate != null) {
 			List<OHLC_VO> list = stockBl.getWeekOHLC_Data(stockCode, startDate, endDate);
-			obsevableList.clear();
+			weekList.clear();
 			for (OHLC_VO temp : list) {
-				obsevableList.add(temp);
+				weekList.add(temp);
 			}
 		}
 	}
@@ -255,29 +249,28 @@ public class CandleStickController implements Initializable {
 		MyDate end = MyTime.getToDay();
 		MyDate start = MyTime.getAnotherDay(-365 * 2);
 		List<OHLC_VO> list = stockBl.getMonthOHLC_Data(stockCode, start, end);
-		obsevableList.clear();
+		monthList.clear();
 		for (OHLC_VO temp : list) {
-			obsevableList.add(temp);
+			monthList.add(temp);
 		}
 	}
 
 	private void getMonthDataByDate() {
 		if (startDate != null && endDate != null) {
 			List<OHLC_VO> list = stockBl.getMonthOHLC_Data(stockCode, startDate, endDate);
-			obsevableList.clear();
+			monthList.clear();
 			for (OHLC_VO temp : list) {
-				obsevableList.add(temp);
+				monthList.add(temp);
 			}
 		}
 	}
 
-	private CandleStickChart createChart() {
-		System.out.println(getMax() + "    " + getMin());
-		double gap = (getMax() - getMin()) / 10;
+	private CandleStickChart createChart(ObservableList<OHLC_VO>  obsevableList ) {
+		double gap = (getMax(obsevableList) - getMin(obsevableList)) / 10;
 		// X轴
 		final CategoryAxis xAxis = new CategoryAxis();
 		// Y轴
-		final NumberAxis yAxis = new NumberAxis(getMin() - gap, getMax() + gap * 2, gap);
+		final NumberAxis yAxis = new NumberAxis(getMin(obsevableList) - gap, getMax(obsevableList) + gap * 2, gap);
 		final CandleStickChart candleStickChart = new CandleStickChart(xAxis, yAxis);
 		// setup chart
 		// candleStickChart.setTitle("Custom Candle Stick Chart");
@@ -355,6 +348,7 @@ public class CandleStickController implements Initializable {
 				// on the worker thread...
 				prepareUpdateCharts();
 				Platform.runLater(() -> {
+
 					// on the JavaFX Application Thread....
 					System.out.println("done updateCharts");
 					removeProgressIndicator();
@@ -365,7 +359,7 @@ public class CandleStickController implements Initializable {
 		};
 	}
 
-	private double getMin() {
+	private double getMin(ObservableList<OHLC_VO>  obsevableList) {
 		double min = 100;
 		for (OHLC_VO temp : obsevableList) {
 			if (temp.low < min) {
@@ -375,7 +369,7 @@ public class CandleStickController implements Initializable {
 		return min;
 	}
 
-	private double getMax() {
+	private double getMax(ObservableList<OHLC_VO>  obsevableList) {
 		double max = 0;
 		for (OHLC_VO temp : obsevableList) {
 			if (temp.high > max) {
@@ -387,7 +381,7 @@ public class CandleStickController implements Initializable {
 
 	/**
 	 * 以下是画分时图的部分
-	 * 
+	 *
 	 * @author dzm
 	 * @date 2016-04-07
 	 */
