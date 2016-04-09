@@ -148,8 +148,6 @@ public class StockBLImpl implements StockBLService {
 		List<OHLC_VO> results;
 		if (pos != null) {
 
-			System.out.println(pos.size());
-
 			results = new ArrayList<OHLC_VO>(pos.size());
 			for (StockPO stockPO : pos) {
 				if (judgeData(stockPO)) { // if the stock didn't trade that day , desert it
