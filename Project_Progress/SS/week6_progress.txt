@@ -1,0 +1,5 @@
+who:侍硕
+when:第六周
+what:换了新的api，因此数据层要换
+problem:新的api速度可能不稳定
+todo:更换api，继续学习JavaFX 动画
