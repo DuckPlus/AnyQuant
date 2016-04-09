@@ -229,7 +229,7 @@ public class StockBLImpl implements StockBLService {
 	@Override
 	public List<TimeSharingVO> getSharingVOs(String stockCode) {
 
-		List<TimeSharingPO> pos = APIDataSer.geTimeSharingPOs(stockCode);
+		List<TimeSharingPO> pos = APIDataSer.getTimeSharingPOs(stockCode);
 
 		if(pos == null){
 			return null;
@@ -273,13 +273,10 @@ public class StockBLImpl implements StockBLService {
 		if (pos == null) {
 			return null;
 		} else {
-			// System.out.println(pos.size());
-			// System.out.println(pos.get(0).getDate());
 			int len = pos.size();
 			int weekNum = len / DAY_OF_WEEK + (len % DAY_OF_WEEK > 0 ? 1 : 0);
 			int monday;
 			int friday;
-			// System.out.println(weekNum);
 			System.out.println("pos:" + pos.size());
 			results = new ArrayList<DealVO>(weekNum);
 			for (int i = 0; i < weekNum; i++) {
@@ -287,7 +284,6 @@ public class StockBLImpl implements StockBLService {
 				// last item is exclusive of the method "sublist"
 				friday = (i == weekNum - 1) ? (len % DAY_OF_WEEK) : 5;
 				// Friday sometimes means the last trading day in this week
-				// printList(pos.subList(monday, monday + friday ));
 				results.add(getSumDealVO(pos.subList(monday, monday + friday)));
 
 			}

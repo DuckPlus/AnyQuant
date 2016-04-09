@@ -1,10 +1,10 @@
 package ui;
 
 import java.io.IOException;
-import java.net.URL;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.image.Image;
 
 /**
 *
@@ -14,7 +14,7 @@ import javafx.scene.Parent;
 public class GraphicsUtils {
 
 	private static final String fxmlPath = "source/fxml/";
-	
+	private static final String postfix = ".fxml";
 	private static FXMLLoader fxmlLoader;
 
 	public static Parent getParent(String fileName){
@@ -22,9 +22,9 @@ public class GraphicsUtils {
 
 	try {
 		fxmlLoader = new FXMLLoader();
-		System.out.println(MainAPP.class.getResource(fxmlPath + fileName + ".fxml"));
+		System.out.println(MainAPP.class.getResource(fxmlPath + fileName + postfix));
 		
-		fxmlLoader.setLocation(MainAPP.class.getResource(fxmlPath + fileName + ".fxml"));
+		fxmlLoader.setLocation(MainAPP.class.getResource(fxmlPath + fileName +postfix));
 		return fxmlLoader.load();
 	} catch (IOException e) {
 		System.out.println("配置文件路径有误*************");
@@ -34,10 +34,9 @@ public class GraphicsUtils {
 
 	}
 
-
-	public static final String getStyleFromClass(String css){
-		return css.substring(css.indexOf('{') + 1, css.indexOf('}'));
+	public static Image getImage(String imagePath){
+		return new Image(imagePath);
 	}
 
-
+	
 }

@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,23 +25,27 @@ import util.MyTime;
  */
 public class FileIOHelper {
 
-	private static String stockCodeFileName = "data//stockCode.txt";
-	private static String benchCodeFileName = "data//benchCode.txt";
-	private static String optionalCodesFilePath = "data//OptionalStocks.txt";
-	private static String stockMesFileName = "cache//stockMes.txt";
+	private static final String stockCodeFileName = "data//stockCode.txt";
+	private static final String benchCodeFileName = "data//benchCode.txt";
+	private static final String optionalCodesFilePath = "data//OptionalStocks.txt";
+	private static final String stockMesFileName = "cache//stockMes.txt";
+	private static final String SPLIT_CHAR = ",";
+	private static final String ENCODING = "utf-8";
+	private static final char  LINE_WRAPPER = '\n';
+	private static final String FILE_POSTFIX = ".txt";
 	private static StockDataService stockDSImpl = StockDSImpl.getStockDSImpl();
 	private static OptionalStockDataService optionalStockDSImpl = OptionalStockDSImpl.getOptionalStockDSImpl();
 
 	public static List<String> readAllCodes() {
 		try {
-			String encoding = "utf-8";
+			String encoding = ENCODING;
 			String filePath = stockCodeFileName;
 			File file = new File(filePath);
 			if (file.isFile() && file.exists()) { // 判断文件是否存在
 				InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);// 考虑到编码格式
 				BufferedReader bufferedReader = new BufferedReader(read);
 				String lineTxt = bufferedReader.readLine();
-				List<String> result = Arrays.asList(lineTxt.split(","));
+				List<String> result = Arrays.asList(lineTxt.split(SPLIT_CHAR));
 				read.close();
 				return result;
 			} else {
@@ -58,7 +63,7 @@ public class FileIOHelper {
 
 	public static List<String> readAllBenches() {
 		try {
-			String encoding = "utf-8";
+			String encoding = ENCODING;
 			String filePath = benchCodeFileName;
 			File file = new File(filePath);
 			if (file.isFile() && file.exists()) { // 判断文件是否存在
@@ -95,7 +100,7 @@ public class FileIOHelper {
 			FileWriter fileWritter = new FileWriter(file, true);
 			BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
 			for (String line : codes) {
-				bufferWritter.write(line + ',');
+				bufferWritter.write(line + SPLIT_CHAR);
 				// System.out.println("write: "+line);
 			}
 			bufferWritter.close();
@@ -107,7 +112,7 @@ public class FileIOHelper {
 
 	public static List<StockPO> readAllMes() {
 		try {
-			String encoding = "utf-8";
+			String encoding = ENCODING;
 			String filePath = stockMesFileName;
 			File file = new File(filePath);
 			if (file.isFile() && file.exists()) { // 判断文件是否存在
@@ -118,13 +123,11 @@ public class FileIOHelper {
 				List<StockPO> result = new ArrayList<StockPO>();
 
 				while ((temp = bufferedReader.readLine()) != null) {
-					attrs = temp.split(",");
-					StockPO stock = new StockPO(attrs[0], attrs[1], attrs[2], attrs[3], attrs[4],
-							Double.parseDouble(attrs[5]), Double.parseDouble(attrs[6]), Double.parseDouble(attrs[7]),
-							Double.parseDouble(attrs[8]), Double.parseDouble(attrs[9]), Double.parseDouble(attrs[10]),
-							Double.parseDouble(attrs[11]), Double.parseDouble(attrs[12]), Double.parseDouble(attrs[13]),
-							Double.parseDouble(attrs[14]), Double.parseDouble(attrs[15]), Double.parseDouble(attrs[16]),
-							Double.parseDouble(attrs[17]), Double.parseDouble(attrs[18]), Long.parseLong(attrs[19]));
+					attrs = temp.split(SPLIT_CHAR);
+					StockPO stock = new StockPO();
+					//反射赋值
+					assignValue(stock , attrs);
+					
 					result.add(stock);
 				}
 				read.close();
@@ -149,6 +152,8 @@ public class FileIOHelper {
 		return null;
 	}
 
+	
+
 	public static void writeAllMes(List<StockPO> stocks) {
 		try {
 
@@ -162,9 +167,9 @@ public class FileIOHelper {
 			FileWriter fileWritter = new FileWriter(file, false);
 			BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
 			// 开头记录日期
-			bufferWritter.write(stocks.get(0).getDate() + '\n');
+			bufferWritter.write(stocks.get(0).getDate() +LINE_WRAPPER);
 			for (StockPO stock : stocks) {
-				String temp = stock.MyToString(',') + '\n';
+				String temp = stock.MyToString(SPLIT_CHAR) +LINE_WRAPPER;
 				// System.out.println("write: "+temp);
 				bufferWritter.write(temp);
 			}
@@ -177,7 +182,7 @@ public class FileIOHelper {
 
 	public  static List<String> readSelectedStockCodes() {
 		try {
-			String encoding = "utf-8";
+			String encoding = ENCODING;
 			File file = new File(optionalCodesFilePath);
 
 			if (file.isFile() && file.exists()) { // 判断文件是否存在
@@ -214,7 +219,7 @@ public class FileIOHelper {
 			FileWriter fileWritter = new FileWriter(file, false);
 			BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
 			for (String code : codes) {
-				bufferWritter.write(code + '\n');
+				bufferWritter.write(code +LINE_WRAPPER);
 				// System.out.println("write: "+line);
 			}
 			bufferWritter.close();
@@ -228,7 +233,7 @@ public class FileIOHelper {
 	public static void updateLatestStockMes() {
 		try {
 
-			String encoding = "utf-8";
+			String encoding = ENCODING;
 			String filePath = stockMesFileName;
 			File file = new File(filePath);
 			if (file.isFile() && file.exists()) { // 判断文件是否存在
@@ -240,11 +245,18 @@ public class FileIOHelper {
 				// 判断是否需要更新
 				if (needUpdate(preDate)) {
 					System.out.println("更新stockMes.txt---------");
+					long time = System.currentTimeMillis();
+					
+					
 					List<StockPO> result = new ArrayList<>();
 					List<String> stockCodes = readAllCodes();
-
-					for (String code : stockCodes) {
-						result.add(stockDSImpl.getStockMes(code));
+					
+					for (int i = 0 ; i< stockCodes.size() ; i++) {
+						
+						result.add(stockDSImpl.getStockMes(stockCodes.get(i)));
+						
+						System.out.println("finish " + i + " of "  + stockCodes.size());
+						System.out.println("Used Time :" +   (System.currentTimeMillis() - time) );
 					}
 					// 覆盖写入
 					writeAllMes(result);
@@ -274,8 +286,8 @@ public class FileIOHelper {
 	public static void updateStockInfo(String code) {
 		try {
 
-			String encoding = "utf-8";
-			String filePath = "cache//" + "stockInfo//" + code + ".txt";
+			String encoding = ENCODING;
+			String filePath = "cache//" + "stockInfo//" + code + FILE_POSTFIX;
 			File file = new File(filePath);
 			if (file.isFile() && file.exists()) { // 判断文件是否存在
 				// 先读取第一行
@@ -285,7 +297,7 @@ public class FileIOHelper {
 				read.close();
 				// 判断是否需要更新
 				if (needUpdate(preDate)) {
-					System.out.println("更新 " + code + ".txt");
+					System.out.println("更新 " + code + FILE_POSTFIX);
 					MyDate start = MyDate.getDateFromString("2006-01-01");
 					MyDate end = MyTime.getToDay();
 					ArrayList<StockPO> stocks = (ArrayList<StockPO>) stockDSImpl.getStockMes(code, start, end);
@@ -293,11 +305,11 @@ public class FileIOHelper {
 					FileWriter fileWritter = new FileWriter(file, false);
 					BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
 					// 开头记录最后一个日期
-					bufferWritter.write(stocks.get(stocks.size() - 1).getDate() + '\n');
+					bufferWritter.write(stocks.get(stocks.size() - 1).getDate() +LINE_WRAPPER);
 					int i = 0;
 					for (StockPO stock : stocks) {
 						i++;
-						String temp = stock.MyToString(',') + '\n';
+						String temp = stock.MyToString(SPLIT_CHAR) +LINE_WRAPPER;
 						// System.out.println("write: "+temp);
 						bufferWritter.write(temp);
 						System.out.println("create file No." + i);
@@ -311,7 +323,7 @@ public class FileIOHelper {
 
 			} else {
 
-				System.out.println("找不到" + code + ".txt" + ",创建新文件");
+				System.out.println("找不到" + code + FILE_POSTFIX + ",创建新文件");
 				downloadStockInfo(code);
 			}
 
@@ -323,8 +335,11 @@ public class FileIOHelper {
 	// 调用此方法来更新全部代码的股票信息
 	public static void updateAllStockInfo() {
 		List<String> codes = readAllCodes();
-		for (String code : codes) {
-			updateStockInfo(code);
+		System.out.println("共有"  +  codes.size() + "只股票");
+		for (int i = 0 ; i < codes.size() ; i ++) {
+			updateStockInfo(codes.get(i));
+			
+			System.out.println("已完成" +i +  "/" + codes.size());
 		}
 	}
 
@@ -355,7 +370,7 @@ public class FileIOHelper {
 	}
 
 	public static void downloadStockInfo(String code) {
-		String fileUrl = "cache//" + "stockInfo//" + code + ".txt";
+		String fileUrl = "cache//" + "stockInfo//" + code + FILE_POSTFIX;
 		try {
 
 			File file = new File(fileUrl);
@@ -370,11 +385,11 @@ public class FileIOHelper {
 				FileWriter fileWritter = new FileWriter(file, false);
 				BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
 				// 开头记录最后一个日期
-				bufferWritter.write(stocks.get(stocks.size() - 1).getDate() + '\n');
+				bufferWritter.write(stocks.get(stocks.size() - 1).getDate() +LINE_WRAPPER);
 				int i = 0;
 				for (StockPO stock : stocks) {
 					i++;
-					String temp = stock.MyToString(',') + '\n';
+					String temp = stock.MyToString(SPLIT_CHAR) +LINE_WRAPPER;
 					// System.out.println("write: "+temp);
 					bufferWritter.write(temp);
 					System.out.println("create file No." + i);
@@ -390,4 +405,44 @@ public class FileIOHelper {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	
+	
+	
+	public static void main(String[] args) {
+		updateLatestStockMes();
+	}
+	
+	
+	private static void assignValue(StockPO stock, String[] attrs) {
+		
+		
+		
+		try {
+			Class<?> c = Class.forName("po.StockPO");
+			Field[] fields = c.getDeclaredFields();
+			
+			for (int i = 0 ; i < fields.length ; i++) {
+				fields[i].setAccessible(true);
+				if(fields[i].getType().getName().equalsIgnoreCase("double")){
+						fields[i].set(stock, Double.parseDouble(attrs[i]));
+				}else if(fields[i].getType().getName().equalsIgnoreCase("long")){
+						fields[i].set(stock, Long.parseLong(attrs[i]));
+				}else{
+					fields[i].set(stock, attrs[i]);
+				}
+				
+				
+			}
+			
+		} catch (ClassNotFoundException | IllegalArgumentException | IllegalAccessException e) {
+			System.err.println("赋值给StockPO出现异常==============================");
+			e.printStackTrace();
+		}
+		
+		
+	
+}
 }
