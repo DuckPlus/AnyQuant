@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import ui.controller.candleStick.CandleStickController;
+import util.PanelType;
 import vo.Stock;
 import vo.StockVO;
 
@@ -59,7 +60,7 @@ public class optionalStockController {
 	private OptionalStockBLService optionalBl = OptionalStockBLImpl.getOptionalBLService();
 
 	private BenchMarkBLService benchMarkBl = BenchMarkBLImpl.getBenchMarkBLService();
-	
+
 	private StockDetailController stockDetailController;
 
 	private RightPaneController rightPaneController;
@@ -86,12 +87,11 @@ public class optionalStockController {
 	@FXML
 	private void initialize(){
 		observableList = FXCollections.observableArrayList();
-//		stockDetailPane = (BorderPane)GraphicsUtils.getParent("StockDetail");
 		stockDetailPane = instanceController.getStockDetailPane();
 		if(name!=null){
 			System.out.println("not null col");
 		getOptionalStock();
-//		initPieChart();
+		initPieChart();
 		}
 
 	}
@@ -113,19 +113,17 @@ public class optionalStockController {
 		}
 //		optionalBl.getBorderDistribution();
 		geographicalDis.setContent(pc_geog.getPieChart());
-		
+
 	}
 	@FXML
 	public void getOptionalStock(){
 		Iterator<StockVO>itr = optionalBl.getOptionalStocks();
 		showTableData(itr);
-//		initPieChart();
 	}
 	private void showTableData(Iterator<StockVO>itr){
 		tableview.getItems().removeAll(observableList);
 		while(itr.hasNext()){
 			StockVO temp = itr.next();
-//			System.out.println(temp.name);
 			Stock dataProperty = new Stock(temp);
 			observableList.add(dataProperty);
 		}
@@ -171,7 +169,7 @@ public class optionalStockController {
 //			chartPane = (AnchorPane)GraphicsUtils.getParent("CandleStickPane");
 //			stockDetailPane.setCenter(chartPane);
 
-			stockDetailController.setData(selectedStock);
+			stockDetailController.setData(selectedStock,PanelType.OPTIONAL_STOCK);
 			rightPaneController.showDetailPane(stockDetailPane);
 
 		}

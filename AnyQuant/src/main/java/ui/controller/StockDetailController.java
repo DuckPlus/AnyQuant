@@ -14,6 +14,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import ui.controller.candleStick.CandleStickController;
 import ui.controller.candleStick.TimeSharingChart;
+import util.PanelType;
 import vo.Stock;
 
 public class StockDetailController {
@@ -27,7 +28,7 @@ public class StockDetailController {
 	@FXML
 	Label peLB,pbLB;
 	@FXML
-	Button addBtn;
+	Button addBtn,backBtn;
 	@FXML
 	Tab k_day, k_week, k_month;
 	@FXML
@@ -42,10 +43,11 @@ public class StockDetailController {
 	TabPane tabPane;
 	private Boolean exist;
 	private String stockCode;
-
+	private PanelType parentPanelType;
 	private Stock currentStock;
 	private OptionalStockBLService optionBl = OptionalStockBLImpl.getOptionalBLService();
 	private CandleStickController candleStickController = CandleStickController.getCandleStickController();
+	private RightPaneController rightPaneController = RightPaneController.getRightPaneController();
 	private static StockDetailController instance;
 
 	public StockDetailController() {
@@ -71,8 +73,8 @@ public class StockDetailController {
 	}
 
 
-	public void setData(Stock stock) {
-
+	public void setData(Stock stock,PanelType panelType) {
+		parentPanelType=panelType;
 		System.out.println("[get in and current stock :" + stock.code + "]");
 		currentStock = stock;
 		System.out.println("changed!!");
@@ -135,6 +137,14 @@ public class StockDetailController {
 		MyDate end = new MyDate(monthEnd.getValue().getYear(),monthEnd.getValue().getMonthValue(),monthEnd.getValue().getDayOfMonth());
         Node monthChart = candleStickController.getUpdatedMonthChart(currentStock.code.get(), start, end);
         monthBorderPane.setCenter(monthChart);
+	}
+	@FXML
+	private void back(){
+		if(parentPanelType==PanelType.OPTIONAL_STOCK){
+			rightPaneController.showOptionalStockPane();
+		}else if(parentPanelType==PanelType.STOCK_LIST){
+			rightPaneController.showStockListPane();
+		}
 	}
 
 	@FXML
