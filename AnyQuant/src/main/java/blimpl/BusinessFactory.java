@@ -10,17 +10,17 @@ import blservice.StockBLService;
  * @date 2016年3月10日
  */
 public class BusinessFactory {
-	
+
 	public static StockBLService getStockBLService(){
 		return StockBLImpl.getAPIBLService();
 	}
-	
+
 	public static BenchMarkBLService getBenchMarkBLService(){
 		return BenchMarkBLImpl.getBenchMarkBLService();
 	}
 
 	public static OptionalStockBLService getOptionalBLService(){
-		return  OptionalStockBLServiceImpl.getOptionalBLService();
+		return  MockOptionalStockBLImpl.getOptionalBLService();
 	}
 
 

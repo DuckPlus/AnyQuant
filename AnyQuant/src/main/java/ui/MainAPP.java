@@ -5,7 +5,6 @@ import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import ui.controller.HomeController;
@@ -30,8 +29,8 @@ public class MainAPP extends Application {
 		this.initialize();
 
 		new HomeController(rootPane,stage);
-		stage.setTitle("AnyQuant");
-		this.stage.getIcons().add(new Image("ui/source/img/AppIcon.png"));
+		stage.setTitle(UIStaticSource.title);
+		this.stage.getIcons().add(UIStaticSource.ICON);
 
 		 addDragListeners(rootPane, primaryStage);
 		stage.setResizable(false);
@@ -43,7 +42,7 @@ public class MainAPP extends Application {
 
 	private void initialize() {
 
-		rootPane = (SplitPane) GraphicsUtils.getParent("RootPane");
+		rootPane = (SplitPane) GraphicsUtils.getParent(UIStaticSource.rootPane);
 
 		Scene scene = new Scene(rootPane);
 		stage.setScene(scene);

@@ -1,17 +1,12 @@
 package data;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.python.antlr.PythonParser.return_stmt_return;
 
 import dataservice.OptionalStockDataService;
 import dataservice.StockDataService;
@@ -39,7 +34,6 @@ public class OptionalStockDSImpl implements OptionalStockDataService{
 
     @Override
 	public Iterator<StockPO> getOptionalStocks() {
-		// TODO Auto-generated method stub
 		List<StockPO> pos = new ArrayList<StockPO>();
 		List<String> codeStrings =getSelectedStockCodes() ;
 		StockDataService stockDSImplDataService = StockDSImpl.getStockDSImpl();
@@ -55,7 +49,6 @@ public class OptionalStockDSImpl implements OptionalStockDataService{
 
 	@Override
 	public boolean deleteOptionalStock(String stockCode) {
-		// TODO Auto-generated method stub
 		List<String>  CodeStrings = getSelectedStockCodes();
 		boolean result =CodeStrings.remove(stockCode);
 		FileIOHelper.writeSelectedStockCodes(CodeStrings);
@@ -64,7 +57,6 @@ public class OptionalStockDSImpl implements OptionalStockDataService{
 
 	@Override
 	public boolean addOptionalStock(String stockCode) {
-		// TODO Auto-generated method stub
 		List<String>  CodeStrings = getSelectedStockCodes();
 		if(!CodeStrings.contains(stockCode)){
 		     CodeStrings.add(stockCode);
@@ -107,7 +99,6 @@ public class OptionalStockDSImpl implements OptionalStockDataService{
 
 	@Override
 	public List<String> getSelectedStockCodes() {
-		// TODO Auto-generated method stub
 		return FileIOHelper.readSelectedStockCodes();
 	}
 

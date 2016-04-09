@@ -74,5 +74,5 @@ public interface StockDataService {
 	public List<StockPO> getAllStockMes();
 
 
-	public List<TimeSharingPO> geTimeSharingPOs(String stockCode);
+	public List<TimeSharingPO> getTimeSharingPOs(String stockCode);
 }

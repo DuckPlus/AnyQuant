@@ -12,13 +12,16 @@ public class TimeSharingVO {
 	public MyDate nowTime;
 
 	public double nowPrice;
-
+	/**
+	 * 成交量
+	 */
 	public long volume;
-	
+	/**
+	 * 该分钟成交额
+	 */
 	public double value;
 	
 	public TimeSharingVO() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public TimeSharingVO(MyDate nowTime, double nowPrice, long volume, double value) {

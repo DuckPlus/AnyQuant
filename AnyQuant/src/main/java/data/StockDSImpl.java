@@ -237,7 +237,7 @@ public class StockDSImpl implements StockDataService {
 	}
 
 	@Override
-	public List<TimeSharingPO> geTimeSharingPOs(String stockCode) {
+	public List<TimeSharingPO> getTimeSharingPOs(String stockCode) {
 		
 
 		if (stockCode.startsWith("sh")) {

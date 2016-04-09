@@ -140,6 +140,8 @@ public class StockBLImplTest {
     public void getSharingVOs() throws Exception {
     		List<TimeSharingVO> vos = bl.getSharingVOs("sh600000");
     		for (int i = 0; i < vos.size(); i++) {
+    				System.out.println(vos.get(i).nowTime.getHour() +":"+ vos.get(i).nowTime.getMin());
+    				
 				System.out.println(vos.get(i).nowPrice);
 				
 			}

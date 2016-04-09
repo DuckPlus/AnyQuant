@@ -1,7 +1,7 @@
 package ui.controller;
 
-import blimpl.OptionalStockBLServiceImpl;
 import blimpl.StockBLImpl;
+import blimpl.OptionalStockBLImpl;
 import blservice.OptionalStockBLService;
 import blservice.StockBLService;
 import javafx.fxml.FXML;
@@ -50,8 +50,13 @@ public class StockDetailController {
 	private String stockCode;
 
 	private Stock currentStock;
-	OptionalStockBLService optionBl = OptionalStockBLServiceImpl.getOptionalBLService();
-	StockBLService stockBl = StockBLImpl.getAPIBLService();
+//<<<<<<< HEAD
+//	OptionalStockBLService optionBl = OptionalStockBLServiceImpl.getOptionalBLService();
+//	StockBLService stockBl = StockBLImpl.getAPIBLService();
+//=======
+	OptionalStockBLService optionBl = OptionalStockBLImpl.getOptionalBLService();
+
+//>>>>>>> 7115410b39c4a27d876bae4a7300b23b99469b4b
 	private static StockDetailController instance;
 
 	public StockDetailController() {
