@@ -50,9 +50,9 @@ public class StockListController{
 	@FXML
 	TableColumn<Stock, Long>turnoverVol = new TableColumn<Stock, Long>();
 	@FXML
-	TableColumn<Stock, Double>amplitude = new TableColumn<Stock, Double>();
+	TableColumn<Stock, String>amplitude = new TableColumn<Stock, String>();
 	@FXML
-	TableColumn<Stock, Double>changeRate = new TableColumn<Stock, Double>();
+	TableColumn<Stock, String>changeRate = new TableColumn<Stock, String>();
 	@FXML
 	TableView<Stock> tableview = new TableView<Stock>();
 	@FXML
@@ -102,7 +102,7 @@ public class StockListController{
 			Stock dataProperty = new Stock(temp);
 			observableList.add(dataProperty);
 		}
-		
+
 		tableview.setItems(observableList);
 		name.setCellValueFactory(cell -> cell.getValue().name);
 		code.setCellValueFactory(cell -> cell.getValue().code);
@@ -112,8 +112,8 @@ public class StockListController{
 		close.setCellValueFactory(cell ->cell.getValue().close.asObject());
 		turnoverRate.setCellValueFactory(cell ->cell.getValue().turnoverRate.asObject());
 		turnoverVol.setCellValueFactory(cell ->cell.getValue().turnoverVol.asObject());
-		amplitude.setCellValueFactory(cell ->cell.getValue().amplitude.asObject());
-		changeRate.setCellValueFactory(cell ->cell.getValue().changeRate.asObject());
+		amplitude.setCellValueFactory(cell ->cell.getValue().getStringAmplitude());
+		changeRate.setCellValueFactory(cell ->cell.getValue().getStringChangeRate());
 	}
 	@FXML
 	private void delAllData(){
