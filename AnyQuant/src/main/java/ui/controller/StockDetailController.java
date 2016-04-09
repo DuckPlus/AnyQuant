@@ -1,6 +1,6 @@
 package ui.controller;
 
-import blimpl.OptionalStockBLServiceImpl;
+import blimpl.OptionalStockBLImpl;
 import blservice.OptionalStockBLService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -35,7 +35,7 @@ public class StockDetailController {
 	private String stockCode;
 
 	private Stock currentStock;
-	OptionalStockBLService optionBl = OptionalStockBLServiceImpl.getOptionalBLService();
+	OptionalStockBLService optionBl = OptionalStockBLImpl.getOptionalBLService();
 
 	private static StockDetailController instance;
 

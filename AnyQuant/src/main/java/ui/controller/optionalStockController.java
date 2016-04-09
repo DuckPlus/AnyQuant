@@ -3,7 +3,7 @@ package ui.controller;
 
 import java.util.Iterator;
 
-import blimpl.OptionalStockBLServiceImpl;
+import blimpl.OptionalStockBLImpl;
 import blservice.OptionalStockBLService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -47,7 +47,7 @@ public class optionalStockController {
 	TextField searchBar;
 	private ObservableList<Stock> observableList;
 
-	private OptionalStockBLService optionalBl = OptionalStockBLServiceImpl.getOptionalBLService();
+	private OptionalStockBLService optionalBl = OptionalStockBLImpl.getOptionalBLService();
 
 	private StockDetailController stockDetailController;
 
