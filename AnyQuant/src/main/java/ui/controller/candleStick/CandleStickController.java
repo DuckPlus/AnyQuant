@@ -104,42 +104,48 @@ public class CandleStickController implements Initializable {
 	}
 
 	// set date to update charts
-	@FXML
+
 	public Node getUpdatedDayChart(String code, MyDate start, MyDate end) {
 		this.stockCode = code;
 		this.startDate = start;
 		this.endDate = end;
-		Task updateTask = createUpdateDayChartWorker();
-		 showProgressIndicator(
-		 updateTask.progressProperty(),updateTask.runningProperty());
-		new Thread(updateTask).start();
+	//	Task updateTask = createUpdateDayChartWorker();
+	//	 showProgressIndicator(
+	//	 updateTask.progressProperty(),updateTask.runningProperty());
+   //		new Thread(updateTask).start();
+      updateDay();
+      dayChart = CandleStickChart.createChart(dayList);
 
 		return dayChart;
 
 	}
 
-	@FXML
+
 	public Node getUpdatedWeekChart(String code, MyDate start, MyDate end) {
 		this.stockCode = code;
 		this.startDate = start;
 		this.endDate = end;
-		Task updateTask = createUpdateWeekChartWorker();
+	//	Task updateTask = createUpdateWeekChartWorker();
 		// showProgressIndicator(
 		// updateTask.progressProperty(),updateTask.runningProperty());
-		new Thread(updateTask).start();
-		return dayChart;
+	//	new Thread(updateTask).start();
+		updateWeek();
+        weekChart=CandleStickChart.createChart(weekList);
+		return weekChart;
 
 	}
 
-	@FXML
+
 	public Node getUpdatedMonthChart(String code, MyDate start, MyDate end) {
 		this.stockCode = code;
 		this.startDate = start;
 		this.endDate = end;
-		Task updateTask = createUpdateMonthChartWorker();
+	//	Task updateTask = createUpdateMonthChartWorker();
 		// showProgressIndicator(
 		// updateTask.progressProperty(),updateTask.runningProperty());
-		new Thread(updateTask).start();
+	//	new Thread(updateTask).start();
+		updateMonth();
+		monthChart=CandleStickChart.createChart(monthList);
 		return dayChart;
 
 	}
