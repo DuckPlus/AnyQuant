@@ -222,7 +222,7 @@ public class StockDSImpl implements StockDataService {
 	 */
 	@Override
 	public List<StockPO> getAllStockMes() {
-		return  FileIOHelper.readAllMes();
+		return FileIOHelper.readAllMes();
 	}
 
 	@Override
@@ -240,8 +240,8 @@ public class StockDSImpl implements StockDataService {
 				+ "&startTime=&endTime=&unit=1";
 		JSONObject jsonObject = JSONObject.fromObject(ConnectionHelper.request(url));
 		JSONArray jsonArray = jsonObject.getJSONArray("data");
-		JSONObject jsonObject2 = jsonArray.getJSONObject(0);
-		jsonArray = jsonObject2.getJSONArray("barBodys");
+		 jsonObject = jsonArray.getJSONObject(0);
+		jsonArray = jsonObject.getJSONArray("barBodys");
 
 		List<TimeSharingPO> pos = new ArrayList<>(jsonArray.size());
 		for (int i = 0; i < jsonArray.size(); i++) {

@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import ui.controller.HomeController;
 /**
  * JavaFX Launcher
- * @author czq
+ * @author Qiang
  *
  */
 public class MainAPP extends Application {

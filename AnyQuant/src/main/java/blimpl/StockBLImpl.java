@@ -143,19 +143,22 @@ public class StockBLImpl implements StockBLService {
 
 	@Override
 	public List<OHLC_VO> getDayOHLC_Data(String stockCode, MyDate start, MyDate end) {
+		System.out.println(stockCode + start.DateToString() + end.DateToString());
 		List<StockPO> pos = APIDataSer.getStockMes(stockCode, start, end);
 		List<OHLC_VO> results;
 		if (pos != null) {
+			
+			System.out.println("pos size:" + pos.size());
+			
 			results = new ArrayList<OHLC_VO>(pos.size());
 			for (StockPO stockPO : pos) {
-				if (judgeData(stockPO)) { // if the stock didn't trade that day
-											// , desert it
+				if (judgeData(stockPO)) { // if the stock didn't trade that day , desert it
 					results.add(new OHLC_VO(MyDate.getDateFromString(stockPO.getDate()), stockPO.getOpen(),
 							stockPO.getClose(), stockPO.getHigh(), stockPO.getLow()));
 				}
 
 			}
-			return results.isEmpty() ? null : results;
+			return results;
 		} else {
 			return null;
 		}
@@ -222,9 +225,13 @@ public class StockBLImpl implements StockBLService {
 	public List<TimeSharingVO> getSharingVOs(String stockCode) {
 
 		List<TimeSharingPO> pos = APIDataSer.geTimeSharingPOs(stockCode);
-
+		
+		if(pos == null){
+			return null;
+		}
+		
 		List<TimeSharingVO> vos = new ArrayList<>();
-
+		
 		for (TimeSharingPO po : pos) {
 
 			vos.add((TimeSharingVO) VOPOchange.POtoVO(po));

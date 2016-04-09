@@ -13,7 +13,7 @@ import vo.StockVO;
  */
 public interface OptionalStockBLService {
     /**
-     * Get today's(or last trading day)data of the optional(自选的) stockCodes
+     * Get today's(or last trading day)data of the optional stockCodes
      * @return a Collection's Iterator on StockVOs
      */
     public Iterator<StockVO> getOptionalStocks();
