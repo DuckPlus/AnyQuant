@@ -5,17 +5,20 @@ import java.util.Iterator;
 import java.util.List;
 
 import javafx.animation.FadeTransition;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.chart.Axis;
 import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
+import vo.OHLC_VO;
 
 /**
  *
@@ -293,4 +296,58 @@ class CandleStickChart extends XYChart<String, Number> {
 			}
 		}
 	}
+
+	public static CandleStickChart createChart(ObservableList<OHLC_VO> obsevableList) {
+    	//System.out.println(getMax(obsevableList)+"    "+getMin(obsevableList));
+    	double gap=(getMax(obsevableList)-getMin(obsevableList))/10;
+    	//X轴
+        final CategoryAxis xAxis = new CategoryAxis ();
+        //Y轴
+        final NumberAxis yAxis = new NumberAxis(getMin(obsevableList)-gap,getMax(obsevableList)+gap*2,gap);
+        final CandleStickChart candleStickChart = new CandleStickChart(xAxis,yAxis);
+        // setup chart
+       // candleStickChart.setTitle("Custom Candle Stick Chart");
+        xAxis.setLabel("Day");
+        yAxis.setLabel("Price");
+        // add starting data
+        XYChart.Series<String,Number> series = new XYChart.Series<String,Number>();
+        for (int i=0; i< obsevableList.size(); i++) {
+            OHLC_VO vo = obsevableList.get(i);
+                //参数：日期、开盘价
+             series.getData().add(   new XYChart.Data<String,Number>
+                (vo.date.DateToString(),vo.open,new CandleStickExtraValues(vo.close,vo.high,vo.low,vo.close)));
+        }
+        // candleStickChart.getData()  return type:ObservableList<XYChart.Series<Number,Number>>
+        ObservableList<XYChart.Series<String,Number>> data = candleStickChart.getData();
+        if (data == null) {
+
+            data = FXCollections.observableArrayList(series);
+            candleStickChart.setData(data);
+        } else {
+            candleStickChart.getData().add(series);
+        }
+        return candleStickChart;
+    }
+	private static double getMin(ObservableList<OHLC_VO>  obsevableList) {
+		double min = 100;
+		for (OHLC_VO temp : obsevableList) {
+			if (temp.low < min) {
+				min = temp.low;
+			}
+		}
+		return min;
+	}
+
+
+	private static double getMax(ObservableList<OHLC_VO>  obsevableList) {
+		double max = 0;
+		for (OHLC_VO temp : obsevableList) {
+			if (temp.high > max) {
+				max = temp.high;
+			}
+		}
+		return max;
+	}
+
+
 }
