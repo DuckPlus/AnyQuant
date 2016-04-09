@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.python.antlr.PythonParser.return_stmt_return;
+
 import dataservice.StockDataService;
 import enumeration.Exchange;
 import enumeration.MyDate;
@@ -143,10 +145,14 @@ public class StockDSImpl implements StockDataService {
 	public StockPO getStockMes(String stockCode) {
 		int offset = 0;
 		MyDate date = MyTime.getAnotherDay(offset);
-		while (getStockMesRequestResult(stockCode, date) != 1) {
+		while ((getStockMesRequestResult(stockCode, date) != 1)&&(offset>-10)) {
 			offset--;
 			date = MyTime.getAnotherDay(offset);
+		}
 
+		if(offset<=-10){
+			System.out.println(stockCode+"error-----------------------");
+			return null;
 		}
 		return getStockMes(stockCode, date);
 	}
@@ -169,7 +175,7 @@ public class StockDSImpl implements StockDataService {
 			StockPO po = JSONTransferHelper.JSONObjectToStockPO(IndustryLocationMap, stockpoJsonObject);
 			return po;
 		} else {
-			return new StockPO();
+			return null;
 		}
 
 	}
