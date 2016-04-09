@@ -191,7 +191,7 @@ public class StockDSImpl implements StockDataService {
 				+ start.DateToStringSimple() + "&endDate=" + end.DateToStringSimple() + "&secID=&ticker=" + shortCode
 				+ "&tradeDate=";
 		String result = ConnectionHelper.request(url);
-		System.out.println(result);
+	//	System.out.println(result);
 		JSONObject jo = JSONObject.fromObject(result);
 		if (jo.getInt("retCode") == 1) {
 			JSONArray jArray = jo.getJSONArray("data");
