@@ -10,12 +10,117 @@
 
 <BorderPane prefHeight="720.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.StockDetailController">
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <TabPane layoutX="114.0" layoutY="160.0" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/candle.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <tabs>
+                <Tab fx:id="k_day" text="日线图">
+                     <content>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                           <top>
+                              <HBox prefHeight="27.0" prefWidth="570.0" spacing="100.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <DatePicker fx:id="dayStart" prefHeight="30.0" prefWidth="120.0" promptText="起始时间">
+                                       <HBox.margin>
+                                          <Insets left="100.0" />
+                                       </HBox.margin></DatePicker>
+                                    <DatePicker fx:id="dayEnd" prefHeight="30.0" prefWidth="120.0" promptText="终止时间" />
+                                    <Button fx:id="dayBT" alignment="CENTER" mnemonicParsing="false" onAction="#updateDayChart" prefHeight="30.0" prefWidth="80.0" text="查询" textAlignment="JUSTIFY">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                                 <BorderPane.margin>
+                                    <Insets top="10.0" />
+                                 </BorderPane.margin>
+                              </HBox>
+                           </top>
+                        </BorderPane>
+                     </content>
+                </Tab>
+                <Tab fx:id="k_week" text="周线图">
+                     <content>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                           <top>
+                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets top="10.0" />
+                                 </BorderPane.margin>
+                                 <children>
+                                    <DatePicker fx:id="weekStart" prefHeight="30.0" prefWidth="120.0">
+                                       <HBox.margin>
+                                          <Insets left="100.0" />
+                                       </HBox.margin>
+                                    </DatePicker>
+                                    <DatePicker fx:id="weekEnd" prefHeight="30.0" prefWidth="120.0" />
+                                    <Button fx:id="weekBT" mnemonicParsing="false" onAction="#updateWeekChart" prefHeight="30.0" prefWidth="80.0" text="查询">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </top>
+                        </BorderPane>
+                     </content>
+                </Tab>
+                  <Tab fx:id="k_month" text="月线图">
+                     <content>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                           <top>
+                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets top="10.0" />
+                                 </BorderPane.margin>
+                                 <children>
+                                    <DatePicker fx:id="monthStart" prefHeight="30.0" prefWidth="120.0">
+                                       <HBox.margin>
+                                          <Insets left="100.0" />
+                                       </HBox.margin>
+                                    </DatePicker>
+                                    <DatePicker fx:id="monthEnd" prefHeight="30.0" prefWidth="120.0">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </DatePicker>
+                                    <Button fx:id="monthBT" mnemonicParsing="false" onAction="#updateMonthChart" prefHeight="30.0" prefWidth="80.0" text="查询">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </top>
+                        </BorderPane>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="timeSharing" text="分时图">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <HBox layoutX="20.0" prefHeight="27.0" prefWidth="250.0">
+                                 <children>
+                                    <DatePicker prefHeight="27.0" prefWidth="114.0" promptText="起始时间" />
+                                    <DatePicker prefHeight="27.0" prefWidth="114.0" promptText="终止时间">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </DatePicker>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+         </children></AnchorPane>
    </center>
    <right>
       <AnchorPane prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="nameLabel" prefHeight="31.0" prefWidth="128.0" text="浦发银行" textFill="WHITE" AnchorPane.topAnchor="0.0">
+            <Label fx:id="nameLB" prefHeight="31.0" prefWidth="128.0" text="浦发银行" textFill="WHITE" AnchorPane.topAnchor="0.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -66,49 +171,49 @@
             </VBox>
             <VBox layoutX="102.0" layoutY="5.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
                <children>
-                  <Label fx:id="open" layoutX="104.0" prefHeight="18.0" prefWidth="80.0" text="null" textAlignment="RIGHT" textFill="WHITE" AnchorPane.topAnchor="5.0">
+                  <Label fx:id="openLB" layoutX="104.0" prefHeight="18.0" prefWidth="80.0" text="null" textAlignment="RIGHT" textFill="WHITE" AnchorPane.topAnchor="5.0">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="close" layoutX="102.0" layoutY="45.0" prefHeight="18.0" prefWidth="80.0" text="null" textFill="WHITE">
+                  <Label fx:id="closeLB" layoutX="102.0" layoutY="45.0" prefHeight="18.0" prefWidth="80.0" text="null" textFill="WHITE">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="high" prefHeight="18.0" prefWidth="80.0" text="null" textFill="WHITE">
+                  <Label fx:id="highLB" prefHeight="18.0" prefWidth="80.0" text="null" textFill="WHITE">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="low" prefHeight="18.0" prefWidth="80.0" text="null" textFill="WHITE">
+                  <Label fx:id="lowLB" prefHeight="18.0" prefWidth="80.0" text="null" textFill="WHITE">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="turnover" prefHeight="18.0" prefWidth="80.0" text="null" textFill="WHITE">
+                  <Label fx:id="turnoverRateLB" prefHeight="18.0" prefWidth="80.0" text="null" textFill="WHITE">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="volume" prefHeight="18.0" prefWidth="80.0" text="null" textFill="WHITE">
+                  <Label fx:id="turnoverVolLB" prefHeight="18.0" prefWidth="80.0" text="null" textFill="WHITE">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="pe" prefHeight="18.0" prefWidth="80.0" text="null" textFill="WHITE">
+                  <Label fx:id="peLB" prefHeight="18.0" prefWidth="80.0" text="null" textFill="WHITE">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="pb" prefHeight="18.0" prefWidth="80.0" text="null" textFill="WHITE">
+                  <Label fx:id="pbLB" prefHeight="18.0" prefWidth="80.0" text="null" textFill="WHITE">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
-            <Label fx:id="codeLabel" layoutX="10.0" layoutY="10.0" prefHeight="20.0" prefWidth="80.0" text="sh600000" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0">
+            <Label fx:id="codeLB" layoutX="10.0" layoutY="10.0" prefHeight="20.0" prefWidth="80.0" text="sh600000" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0">
                <font>
                   <Font size="12.0" />
                </font>

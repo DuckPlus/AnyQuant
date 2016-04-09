@@ -1,10 +1,14 @@
 package ui.controller.candleStick;
 
 import java.net.URL;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import org.python.antlr.PythonParser.return_stmt_return;
+import org.python.netty.util.concurrent.SucceededFuture;
+
 import blimpl.StockBLImpl;
 import blservice.StockBLService;
 import enumeration.MyDate;
@@ -16,150 +20,141 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import util.MyTime;
 import vo.OHLC_VO;
 import vo.TimeSharingVO;
 
-
-
 /**
  *
  * @author ss
- * @date 2016年3月24日
- * =。=
+ * @date 2016年3月24日 =。=
  */
-public class CandleStickController  implements Initializable {
-    @FXML
-    private TabPane tabPane;
-    @FXML
-    private Tab dayTab;
-    @FXML
-    private Tab weekTab;
-    @FXML
-    private Tab monthTab;
-    @FXML
-    private Tab timeShareTab;
-    @FXML
-    private AnchorPane bottomPane;
-    @FXML
-    private VBox vbox;
-    @FXML
-    private StackPane stackPane;
-    @FXML
-    private GridPane cachePane;
+public class CandleStickController implements Initializable {
 
 	@FXML
-	private DatePicker startDatePicker;
+	private VBox vbox;
 	@FXML
-	private DatePicker endDatePicker;
+	private StackPane stackPane;
 	@FXML
+	private GridPane cachePane;
 
 	private ProgressIndicator progressIndicator;
 	@FXML
 	private CandleStickChart dayChart, weekChart, monthChart;
-    private ObservableList<OHLC_VO> dayList,weekList,monthList;
-	private static String stockCode;
-	private static MyDate startDate, endDate;
+	private ObservableList<OHLC_VO> dayList, weekList, monthList;
+	private String stockCode;
+	private MyDate startDate, endDate;
+
+
 	private static StockBLService stockBl;
-  	private static CandleStickController instance;
+	private static CandleStickController instance;
 
 	public CandleStickController() {
 		if (instance == null) {
-			System.err.println("instance null");
 			stockCode = "sh600000";
-			startDate = new MyDate(2016, 3, 1);
-			endDate = new MyDate(2016, 4, 1);
+			startDate = MyTime.getToDay();
+			endDate = startDate;
 			stockBl = StockBLImpl.getAPIBLService();
 			dayList = FXCollections.observableArrayList();
 			weekList = FXCollections.observableArrayList();
 			monthList = FXCollections.observableArrayList();
-			dayList.clear();  weekList.clear(); monthList.clear();
+			dayList.clear();
+			weekList.clear();
+			monthList.clear();
 			instance = this;
 		}
 	}
 
-    public static CandleStickController  getCandleStickController(){
-             if(instance!=null){
-            	 return instance;
-             }else{
-            	 return new CandleStickController();
-             }
-    }
-
-    public void setStockCode(String  newCode){
-
-          stockCode = newCode;
-
-    }
-
-    @Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-
-    	startDatePicker.setValue(LocalDate.now());
-		endDatePicker.setValue(LocalDate.now());
-		startDatePicker.setEditable(false);
-		endDatePicker.setEditable(false);
-		initCharts();
-    }
-    //double click to enter this scene
-  public void initCharts(){
-		Task initTask = createInitWorker();
-		showProgressIndicator( initTask.progressProperty(),initTask.runningProperty());
-		new Thread(initTask).start();
-  }
-
-  //set date  to update charts
-  @FXML
-public void updateCharts(){
-       startDate = new MyDate
-			   (startDatePicker.getValue().getYear(), startDatePicker.getValue().getMonthValue(), startDatePicker.getValue().getDayOfMonth());
-		endDate  = new MyDate
-				(endDatePicker.getValue().getYear(), endDatePicker.getValue().getMonthValue(), endDatePicker.getValue().getDayOfMonth());
-
-		Task updateTask = createUpdateWorker();
-		showProgressIndicator( updateTask.progressProperty(),updateTask.runningProperty());
-		new Thread( updateTask).start();
-}
-
-
-
-
-	public void displayCharts() {
-		dayChart = createChart(dayList);
-		weekChart = createChart(weekList);
-		monthChart = createChart(monthList);
-		initPane(dayTab, dayChart, new ScrollPane());
-		initPane(weekTab, weekChart, new ScrollPane());
-		initPane(monthTab, monthChart, new ScrollPane());
+	public static CandleStickController getCandleStickController() {
+		if (instance != null) {
+			return instance;
+		} else {
+			return new CandleStickController();
+		}
 	}
 
-  public void  prepareInitCharts(){
-	  selectDay();
-	  selectWeek();
-	  selectMonth();
-  }
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+
+	}
+
+	// double click to enter this scene
+	public List<Node> getInitialCharts(String code) {
+		this.stockCode = code;
+	    List<Node> nodes = new ArrayList<Node>();
+	//	Task initTask = createInitWorker();
+		// showProgressIndicator(
+		// initTask.progressProperty(),initTask.runningProperty());
+	//	new Thread(initTask).start();
+		getInitData();
+
+		 dayChart = CandleStickChart.createChart(dayList);
+		 weekChart = CandleStickChart.createChart(weekList);
+		 monthChart = CandleStickChart.createChart(monthList);
+
+	   nodes.add(dayChart);
+	   nodes.add(weekChart);
+	   nodes.add(monthChart);
+	   return nodes;
+
+	}
+
+	// set date to update charts
+
+	public Node getUpdatedDayChart(String code, MyDate start, MyDate end) {
+		this.stockCode = code;
+		this.startDate = start;
+		this.endDate = end;
+	//	Task updateTask = createUpdateDayChartWorker();
+	//	 showProgressIndicator(
+	//	 updateTask.progressProperty(),updateTask.runningProperty());
+   //		new Thread(updateTask).start();
+      updateDay();
+      dayChart = CandleStickChart.createChart(dayList);
+
+		return dayChart;
+
+	}
 
 
-  public void  prepareUpdateCharts(){
-	updateDay();
-	updateWeek();
-	updateMonth();
-  }
+	public Node getUpdatedWeekChart(String code, MyDate start, MyDate end) {
+		this.stockCode = code;
+		this.startDate = start;
+		this.endDate = end;
+	//	Task updateTask = createUpdateWeekChartWorker();
+		// showProgressIndicator(
+		// updateTask.progressProperty(),updateTask.runningProperty());
+	//	new Thread(updateTask).start();
+		updateWeek();
+        weekChart=CandleStickChart.createChart(weekList);
+		return weekChart;
+
+	}
+
+
+	public Node getUpdatedMonthChart(String code, MyDate start, MyDate end) {
+		this.stockCode = code;
+		this.startDate = start;
+		this.endDate = end;
+	//	Task updateTask = createUpdateMonthChartWorker();
+		// showProgressIndicator(
+		// updateTask.progressProperty(),updateTask.runningProperty());
+	//	new Thread(updateTask).start();
+		updateMonth();
+		monthChart=CandleStickChart.createChart(monthList);
+		return dayChart;
+
+	}
+
+	public void getInitData() {
+		selectDay();
+		selectWeek();
+		selectMonth();
+	}
 
 	public void selectDay() {
 		if (dayChart == null) {
@@ -179,15 +174,9 @@ public void updateCharts(){
 		}
 	}
 
-
 	public void updateDay() {
-
 		getDayDataByDate();
 	}
-
-
-
-
 
 	public void updateWeek() {
 
@@ -199,31 +188,32 @@ public void updateCharts(){
 		getMonthDataByDate();
 	}
 
-    private void initPane( Tab tab  , Node chartNode, ScrollPane spane ){
-    	 //RowConstraints  rc = new RowConstraints(500, 690, 690);
-    	//ColumnConstraints cc = new ColumnConstraints(800,900,900);
-          HBox hBox = new HBox();
-          HBox.setHgrow(chartNode, Priority.ALWAYS);
-          hBox.setPrefSize(800, 600);
-          hBox.getChildren().add(chartNode);
+	// private Node createPane( Node chartNode, ScrollPane spane ){
+	// //RowConstraints rc = new RowConstraints(500, 690, 690);
+	// //ColumnConstraints cc = new ColumnConstraints(800,900,900);
+	// HBox hBox = new HBox();
+	// HBox.setHgrow(chartNode, Priority.ALWAYS);
+	// hBox.setPrefSize(800, 600);
+	// hBox.getChildren().add(chartNode);
+	//
+	//
+	// spane.setContent(hBox);
+	// spane.setHbarPolicy(ScrollBarPolicy.ALWAYS);
+	// spane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+	// return spane;
+	// }
 
+	private void getDayData() {
+		// 默认显示近一个月的数据
+		MyDate end = MyTime.getToDay();
+		MyDate start = MyTime.getAnotherDay(-30);
+		List<OHLC_VO> list = stockBl.getDayOHLC_Data(stockCode, start, end);
+		dayList.clear();
+		for (OHLC_VO temp : list) {
+			dayList.add(temp);
+		}
+	}
 
-	      spane.setContent(hBox);
-	      spane.setHbarPolicy(ScrollBarPolicy.ALWAYS);
-	      spane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-          tab.setContent(spane);
-  }
-
-    private  void  getDayData(){
-           //默认显示近一个月的数据
-    	   MyDate end = MyTime.getToDay();
-    	   MyDate start = MyTime.getAnotherDay(-30);
-    	   List<OHLC_VO>list =stockBl.getDayOHLC_Data(stockCode, start, end);
-    	   dayList.clear();
-    	   for(OHLC_VO temp : list){
-    		     dayList.add(temp);
-    	   }
-    }
     private  void  getDayDataByDate(){
 		if (startDate != null && endDate != null) {
 			List<OHLC_VO> list = stockBl.getDayOHLC_Data(stockCode, startDate, endDate);
@@ -232,7 +222,7 @@ public void updateCharts(){
 				dayList.add(temp);
 			}
 		}
- }
+	}
 
 	private void getWeekData() {
 		// 默认显示最近一年的数据
@@ -245,8 +235,7 @@ public void updateCharts(){
 		}
 	}
 
-
-    private  void  getWeekDataByDate(){
+	private void getWeekDataByDate() {
 		if (startDate != null && endDate != null) {
 			List<OHLC_VO> list = stockBl.getWeekOHLC_Data(stockCode, startDate, endDate);
 			weekList.clear();
@@ -254,7 +243,7 @@ public void updateCharts(){
 				weekList.add(temp);
 			}
 		}
-    }
+	}
 
 	private void getMonthData() {
 		// 默认显示最近三年的数据
@@ -267,7 +256,7 @@ public void updateCharts(){
 		}
 	}
 
-    private  void  getMonthDataByDate(){
+	private void getMonthDataByDate() {
 		if (startDate != null && endDate != null) {
 			List<OHLC_VO> list = stockBl.getMonthOHLC_Data(stockCode, startDate, endDate);
 			monthList.clear();
@@ -275,40 +264,7 @@ public void updateCharts(){
 				monthList.add(temp);
 			}
 		}
-    }
-
-    private CandleStickChart createChart(ObservableList<OHLC_VO> obsevableList) {
-    	//System.out.println(getMax(obsevableList)+"    "+getMin(obsevableList));
-    	double gap=(getMax(obsevableList)-getMin(obsevableList))/10;
-    	//X轴
-        final CategoryAxis xAxis = new CategoryAxis ();
-        //Y轴
-        final NumberAxis yAxis = new NumberAxis(getMin(obsevableList)-gap,getMax(obsevableList)+gap*2,gap);
-        final CandleStickChart candleStickChart = new CandleStickChart(xAxis,yAxis);
-        // setup chart
-       // candleStickChart.setTitle("Custom Candle Stick Chart");
-        xAxis.setLabel("Day");
-        yAxis.setLabel("Price");
-        // add starting data
-        XYChart.Series<String,Number> series = new XYChart.Series<String,Number>();
-        for (int i=0; i< obsevableList.size(); i++) {
-            OHLC_VO vo = obsevableList.get(i);
-                //参数：日期、开盘价
-             series.getData().add(   new XYChart.Data<String,Number>
-                (vo.date.DateToString(),vo.open,new CandleStickExtraValues(vo.close,vo.high,vo.low,vo.close)));
-        }
-        // candleStickChart.getData()  return type:ObservableList<XYChart.Series<Number,Number>>
-        ObservableList<XYChart.Series<String,Number>> data = candleStickChart.getData();
-        if (data == null) {
-
-            data = FXCollections.observableArrayList(series);
-            candleStickChart.setData(data);
-        } else {
-            candleStickChart.getData().add(series);
-        }
-        return candleStickChart;
-    }
-
+	}
 
 	/*
 	 * Create a progress indicator control to be centered.
@@ -324,15 +280,15 @@ public void updateCharts(){
 	}
 
 	private void showProgressIndicator(ObservableValue<? extends Number> progressProperty,
-			ObservableValue<? extends Boolean> runningProperty          ){
+			ObservableValue<? extends Boolean> runningProperty) {
 		progressIndicator.setVisible(true);
 		progressIndicator.progressProperty().unbind();
-		progressIndicator.progressProperty().bind( progressProperty);
+		progressIndicator.progressProperty().bind(progressProperty);
 		cachePane.visibleProperty().bind(runningProperty);
 
 	}
 
-	private void  removeProgressIndicator(){
+	private void removeProgressIndicator() {
 		progressIndicator.setVisible(false);
 	}
 
@@ -341,78 +297,78 @@ public void updateCharts(){
 			@Override
 			protected Object call() throws Exception {
 				// on the worker thread...
-				prepareInitCharts();
+				getInitData();
 				Platform.runLater(() -> {
 
 					// on the JavaFX Application Thread....
 					System.out.println("done init Charts");
-					removeProgressIndicator();
-					displayCharts();
+					// removeProgressIndicator();
+
 				});
 				return true;
 			}
+
+			@Override
+            protected void succeeded() {
+                super.succeeded();
+
+            }
+
 		};
 	}
 
-
-	private Task createUpdateWorker() {
+	private Task createUpdateDayChartWorker() {
 		return new Task() {
 			@Override
 			protected Object call() throws Exception {
 				// on the worker thread...
-			    prepareUpdateCharts();
+				updateDay();
 				Platform.runLater(() -> {
 
 					// on the JavaFX Application Thread....
 					System.out.println("done updateCharts");
-					removeProgressIndicator();
-					displayCharts();
+					// removeProgressIndicator();
+					dayChart = CandleStickChart.createChart(dayList);
 				});
 				return true;
 			}
 		};
 	}
 
+	private Task createUpdateWeekChartWorker() {
+		return new Task() {
+			@Override
+			protected Object call() throws Exception {
+				// on the worker thread...
+				updateWeek();
+				Platform.runLater(() -> {
 
-	private double getMin(ObservableList<OHLC_VO>  obsevableList) {
-		double min = 100;
-		for (OHLC_VO temp : obsevableList) {
-			if (temp.low < min) {
-				min = temp.low;
+					// on the JavaFX Application Thread....
+					System.out.println("done updateCharts");
+					// removeProgressIndicator();
+					weekChart = CandleStickChart.createChart(weekList);
+				});
+				return true;
 			}
-		}
-		return min;
+		};
 	}
 
+	private Task createUpdateMonthChartWorker() {
+		return new Task() {
+			@Override
+			protected Object call() throws Exception {
+				// on the worker thread...
+				updateMonth();
+				Platform.runLater(() -> {
 
-	private double getMax(ObservableList<OHLC_VO>  obsevableList) {
-		double max = 0;
-		for (OHLC_VO temp : obsevableList) {
-			if (temp.high > max) {
-				max = temp.high;
+					// on the JavaFX Application Thread....
+					System.out.println("done updateCharts");
+					// removeProgressIndicator();
+					monthChart = CandleStickChart.createChart(monthList);
+				});
+				return true;
 			}
-		}
-		return max;
+		};
 	}
-
-
-    /**
-     * 以下是画分时图的部分
-     * @author dzm
-     * @date 2016-04-07
-     */
-    @FXML
-    private void initTimeSharing(){
-    	System.out.println("time init");
-    	TimeSharingChart timeSharingChart = new TimeSharingChart();
-    	initPane(timeShareTab, timeSharingChart.getTimesharingChart(), new ScrollPane());
-    	List<TimeSharingVO> timeSharingData = stockBl.getSharingVOs("sh600000");
-    	Iterator<TimeSharingVO>itr = timeSharingData.iterator();
-    	while(itr.hasNext()){
-    		TimeSharingVO temp = itr.next();
-    		System.out.println(temp.nowTime.AllToString()+"  "+temp.nowPrice);
-    		timeSharingChart.addData(temp.nowTime.TimeToString(), temp.nowPrice);
-    	}
-    }
 
 }

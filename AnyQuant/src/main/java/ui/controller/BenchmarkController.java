@@ -16,7 +16,7 @@ import vo.BenchMark;
 import vo.BenchMarkVO;
 
 public class BenchmarkController {
-	
+
 	@FXML
 	TableColumn<BenchMark, String> code;
 	@FXML
@@ -29,8 +29,6 @@ public class BenchmarkController {
 	TableColumn<BenchMark, Double> high;
 	@FXML
 	TableColumn<BenchMark, Double> low;
-//	@FXML
-//	TableColumn<BenchMark, Double> adj_price;
 	@FXML
 	TableColumn<BenchMark, Long> turnoverVol;
 	@FXML
@@ -45,7 +43,7 @@ public class BenchmarkController {
 		// TODO Auto-generated constructor stub
 		System.out.println("constructor done");
 	}
-	
+
 	@FXML
 	private void initialize(){
 		System.out.println("init done");
@@ -54,15 +52,15 @@ public class BenchmarkController {
 		endDate.setValue(LocalDate.now());
 		beginDate.setEditable(false);
 		endDate.setEditable(false);
-		
 
-		
+
+
 	}
-	
+
 	private void showAllBenchmark(){
 		Iterator<BenchMarkVO>itr = benchmarkBl.getRecentBenchMarks("hs300");
 		showTableData(itr);
-		
+
 	}
 	@FXML
 	private void searchByDate(){
@@ -77,7 +75,7 @@ public class BenchmarkController {
 		showTableData(itr);
 //		while(itr.hasNext()){
 //			BenchMarkVO temp = itr.next();
-//			
+//
 //		}
 //		if(beginDate){
 //			System.out.println("bad request");
@@ -101,6 +99,6 @@ public class BenchmarkController {
 		low.setCellValueFactory(cell -> cell.getValue().low.asObject());
 		turnoverVol.setCellValueFactory(cell -> cell.getValue().turnoverVol.asObject());
 		tableview.setItems(observableList);
-		
+
 	}
 }

@@ -140,16 +140,16 @@ public class StockListController{
 			      stockDetailController = StockDetailController.getStockDetailController();
 			}
 
-			chartPane = (AnchorPane)GraphicsUtils.getParent("CandleStickPane");
-			stockDetailPane.setCenter(chartPane);
+//			chartPane = (AnchorPane)GraphicsUtils.getParent("CandleStickPane");
+//			stockDetailPane.setCenter(chartPane);
 
-			if(candleStickController==null){
-				candleStickController = CandleStickController.getCandleStickController();
-			}
+//			if(candleStickController==null){
+//				candleStickController = CandleStickController.getCandleStickController();
+//			}
 //			MyDate begin = new MyDate(2016, 03, 01);
 //			MyDate end = new MyDate(2016, 03, 20);
 //			candleStickController.setDate(begin, end);
-			candleStickController.setStockCode(selectedStock.code.get());
+//			candleStickController.setStockCode(selectedStock.code.get());
 			System.err.println("stock instance:"+stockDetailController.toString());
 //			System.err.println(selectedStock.code.get());
 //			System.err.println("open "+selectedStock.open+"  "+"close "+selectedStock.close);
