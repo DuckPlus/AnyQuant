@@ -73,6 +73,15 @@ public interface StockDataService {
 	 */
 	public List<StockPO> getAllStockMes();
 
-
+	/**
+	 * 获得分时图数据
+	 * @param stockCode
+	 * @return
+	 */
 	public List<TimeSharingPO> getTimeSharingPOs(String stockCode);
+	
+	/**
+	 * 更新所有股票数据
+	 */
+	public boolean updateAllMes();
 }
