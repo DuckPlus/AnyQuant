@@ -140,8 +140,8 @@ public class StockListController{
 			      stockDetailController = StockDetailController.getStockDetailController();
 			}
 
-			chartPane = (AnchorPane)GraphicsUtils.getParent("CandleStickPane");
-			stockDetailPane.setCenter(chartPane);
+//			chartPane = (AnchorPane)GraphicsUtils.getParent("CandleStickPane");
+//			stockDetailPane.setCenter(chartPane);
 
 			if(candleStickController==null){
 				candleStickController = CandleStickController.getCandleStickController();

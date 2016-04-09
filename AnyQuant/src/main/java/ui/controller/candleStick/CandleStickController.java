@@ -196,7 +196,7 @@ public class CandleStickController implements Initializable {
 		}
 	}
 
-	private void getDayDataByDate() {
+    private  void  getDayDataByDate(){
 		if (startDate != null && endDate != null) {
 			List<OHLC_VO> list = stockBl.getDayOHLC_Data(stockCode, startDate, endDate);
 			dayList.clear();
@@ -347,25 +347,5 @@ public class CandleStickController implements Initializable {
 			}
 		};
 	}
-
-	/**
-	 * 以下是画分时图的部分
-	 *
-	 * @author dzm
-	 * @date 2016-04-07
-	 */
-	// @FXML
-	// private void initTimeSharing(){
-	// System.out.println("time init");
-	// TimeSharingChart timeSharingChart = new TimeSharingChart();
-	// initPane( timeSharingChart.getTimesharingChart(), new ScrollPane());
-	// List<TimeSharingVO> timeSharingData = stockBl.getSharingVOs("sh600000");
-	// Iterator<TimeSharingVO>itr = timeSharingData.iterator();
-	// while(itr.hasNext()){
-	// TimeSharingVO temp = itr.next();
-	// System.out.println(temp.nowTime.AllToString()+" "+temp.nowPrice);
-	// timeSharingChart.addData(temp.nowTime.TimeToString(), temp.nowPrice);
-	// }
-	// }
 
 }
