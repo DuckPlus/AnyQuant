@@ -2,12 +2,10 @@ package ui.controller.candleStick;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import org.python.antlr.PythonParser.return_stmt_return;
-import org.python.netty.util.concurrent.SucceededFuture;
 
 import blimpl.StockBLImpl;
 import blservice.StockBLService;
@@ -26,7 +24,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import util.MyTime;
 import vo.OHLC_VO;
-import vo.TimeSharingVO;
 
 /**
  *
@@ -82,29 +79,29 @@ public class CandleStickController implements Initializable {
 
 	}
 
-	// double click to enter this scene
-	public List<Node> getInitialCharts(String code) {
+
+	public Node getInitialDayChart(String code) {
 		this.stockCode = code;
-	    List<Node> nodes = new ArrayList<Node>();
-	//	Task initTask = createInitWorker();
-		// showProgressIndicator(
-		// initTask.progressProperty(),initTask.runningProperty());
-	//	new Thread(initTask).start();
-		getInitData();
+		selectDay();
+        dayChart = CandleStickChart.createChart(dayList);
+		return dayChart;
+	}
 
-		 dayChart = CandleStickChart.createChart(dayList);
-		 weekChart = CandleStickChart.createChart(weekList);
-		 monthChart = CandleStickChart.createChart(monthList);
+	public Node getInitialWeekChart(String code){
+	    this.stockCode=code;
+	    selectWeek();
+	    weekChart= CandleStickChart.createChart(weekList);
+	    return weekChart;
+	}
 
-	   nodes.add(dayChart);
-	   nodes.add(weekChart);
-	   nodes.add(monthChart);
-	   return nodes;
-
+	public Node getInitialMonthChart(String code){
+       this.stockCode=code;
+       selectMonth();
+       monthChart=CandleStickChart.createChart(monthList);
+       return monthChart;
 	}
 
 	// set date to update charts
-
 	public Node getUpdatedDayChart(String code, MyDate start, MyDate end) {
 		this.stockCode = code;
 		this.startDate = start;
@@ -150,11 +147,7 @@ public class CandleStickController implements Initializable {
 
 	}
 
-	public void getInitData() {
-		selectDay();
-		selectWeek();
-		selectMonth();
-	}
+
 
 	public void selectDay() {
 		if (dayChart == null) {
@@ -297,7 +290,7 @@ public class CandleStickController implements Initializable {
 			@Override
 			protected Object call() throws Exception {
 				// on the worker thread...
-				getInitData();
+				//getInitData();
 				Platform.runLater(() -> {
 
 					// on the JavaFX Application Thread....

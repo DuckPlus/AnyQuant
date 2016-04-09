@@ -114,12 +114,13 @@ public class StockDetailController {
 	}
 
 	private void initKLine() {
-		List<Node> nodes = candleStickController.getInitialCharts(currentStock.code.get());
-		if (nodes.size() == 3) {
-			k_day.setContent(nodes.get(0));
-			k_week.setContent(nodes.get(1));
-			k_month.setContent(nodes.get(2));
-		}
+		Node dayChart=candleStickController.getInitialDayChart(currentStock.code.get());
+		Node weekChart=candleStickController.getInitialWeekChart(currentStock.code.get());
+		Node monthChart = candleStickController.getInitialMonthChart(currentStock.code.get());
+			k_day.setContent(dayChart);
+			k_week.setContent(weekChart);
+			k_month.setContent(monthChart);
+
 	}
 	@FXML
 	private  void updateDayChart(){
