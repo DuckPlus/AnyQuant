@@ -1,4 +1,4 @@
-package data;
+package data.helper;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import data.OptionalStockDSImpl;
+import data.StockDSImpl;
 import dataservice.OptionalStockDataService;
 import dataservice.StockDataService;
 import enumeration.MyDate;

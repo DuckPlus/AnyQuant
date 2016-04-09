@@ -41,8 +41,9 @@ public class nettest {
 //        		+ "/api/market/getBarRTIntraDay.json?securityID=600000.XSHG&startTime=&endTime=&unit=1";
 //        		+ "/api/master/getSecTypeRel.json?field=&typeID=101001004001001&secID=&ticker=";
 //        + "/api/market/getMktIdxd.json?field=&beginDate=20140401&endDate=20140530&indexID=&ticker=600001&tradeDate=";
-        		+"/api/market/getBarRTIntraDay.json" + "?securityID=000001.XSHE&startTime=09:30&endTime=&unit=1";
-        		
+//        		+"/api/market/getBarRTIntraDay.json" + "?securityID=000001.XSHE&startTime=09:30&endTime=&unit=1";
+        		+  "/api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=&ticker=600006" 
+				+ "&tradeDate=20160407" ;
         		
         		
         HttpGet httpGet = new HttpGet(url);

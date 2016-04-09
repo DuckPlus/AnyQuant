@@ -1,4 +1,4 @@
-package data;
+package data.helper;
 
 import java.util.Map;
 

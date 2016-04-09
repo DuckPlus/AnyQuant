@@ -1,13 +1,19 @@
-package data;
+package data.helper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -21,16 +27,59 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import enumeration.API_TYPE;
+import net.sf.json.JSONObject;
+
 /**
  *
  * @author ss
  * @date 2016年4月7日
  */
 public class ConnectionHelper {
+	
+	private static final String API_PREFIX = "https://api.wmcloud.com:443/data/v1/";
+	private static final String ZHUJIAO_API_PREFIX = "http://121.41.106.89:8010/api/";
+	private static final Map<API_TYPE, List<String>>  API_Saver = new HashMap<>(30);
+	
+	static{
+		API_Saver.put(API_TYPE.GET_BENCHMARK_MES, Arrays.asList(API_PREFIX +"api/market/getMktIdxd.json?field=" , "&beginDate=" , "&endDate=" , "&indexID=" , "&ticker=" , "&tradeDate="));
+		API_Saver.put(API_TYPE.IS_TRADING_DAY, Arrays.asList(API_PREFIX +"api/master/getTradeCal.json?field=" ,  "&exchangeCD="  , "&beginDate=" , "&endDate=" ) );
+		API_Saver.put(API_TYPE.GET_STOCKMES_AT_TIME, Arrays.asList(API_PREFIX +"api/market/getMktEqud.json?field=" ,"&beginDate=","&endDate=","&secID=","&ticker=" ,"&tradeDate=") );
+//		API_Saver.put(API_TYPE.GET_STOCKMES_BETWEEN_TIME, Arrays.asList( "api/master/getTradeCal.json?field=" ,  "&exchangeCD="  , "&beginDate=" , "&endDate=" ) );
+		API_Saver.put(API_TYPE.GET_TIMESAHRING, Arrays.asList(API_PREFIX +"api/market/getBarRTIntraDay.json?" ,"securityID=" ,  "&startTime=" , "&endTime=" , "&unit="  ) );
+		API_Saver.put(API_TYPE.CHECK_IF_TRADING, Arrays.asList(API_PREFIX +"api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=" , "&ticker=" , "&tradeDate=" ));
+	
+		//================以下为助教API=======================================
+		API_Saver.put(API_TYPE.GET_STOCKS_LIST, Arrays.asList(ZHUJIAO_API_PREFIX + "stocks/?" , "year"));
+		API_Saver.put(API_TYPE.GET_STOCKS_LIST_WITH_EXCHANGE , Arrays.asList(ZHUJIAO_API_PREFIX + "stocks/?" , "year" ,"&exchange="));
+		
+	}
+	
+	
+	public static JSONObject requestAPI(API_TYPE type , String... param ){
+		List<String> urls = API_Saver.get(type);
+		StringBuffer buffer = new StringBuffer(urls.get(0));
+		for (int i = 0; i < urls.size() - 1; i++) {
+			buffer.append(urls.get(i+1) );
+			buffer.append(param[i]);
+		}
+//		System.err.println(buffer.toString());
+//		System.out.println(request(buffer.toString()));
+		
+		if(urls.get(0).startsWith(API_PREFIX)){
+			return JSONObject.fromObject(request(buffer.toString()));
+		}else{
+			return JSONObject.fromObject(SendGET(buffer.toString(), ""));
+		}
+		
+	}
+	
+	
+	
 	/**
 	 *此方法用来建立url-connection并返回助教提供的API所提供的初始数据
 	 */
-	public static String SendGET(String url, String param) {
+	private static String SendGET(String url, String param) {
 		String result = "";// 访问返回结果
 		BufferedReader read = null;// 读取访问结果
 		int times=0;
@@ -86,7 +135,7 @@ public class ConnectionHelper {
 	/**
 	 *此方法用来建立url-connection并返回通联API所提供的初始数据
 	 */
-    public static String request(String url) {
+    private static String request(String url) {
 		final String ACCESS_TOKEN =
 				"44a70d35d80240eaa3d9a66b0b090de5bef4c96914f39c4faa225b4570ee301c";
 		CloseableHttpClient httpClient = createHttpsClient();
@@ -109,6 +158,7 @@ public class ConnectionHelper {
 	}
 
 	// 创建http client
+	@SuppressWarnings("deprecation")
 	private static CloseableHttpClient createHttpsClient() {
 		X509TrustManager x509mgr = new X509TrustManager() {
 			@Override

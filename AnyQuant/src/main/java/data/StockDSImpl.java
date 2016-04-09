@@ -9,9 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.python.antlr.PythonParser.return_stmt_return;
-
+import data.helper.ConnectionHelper;
+import data.helper.FileIOHelper;
+import data.helper.JSONTransferHelper;
+import data.helper.StockMesHelper;
 import dataservice.StockDataService;
+import enumeration.API_TYPE;
 import enumeration.Exchange;
 import enumeration.MyDate;
 import enumeration.StaticMessage;
@@ -93,7 +96,7 @@ public class StockDSImpl implements StockDataService {
 		}
 		String url = "http://121.41.106.89:8010/api/stocks/?year=" + year;
 		// System.out.println(SendGET(url, ""));
-		JSONObject jo = JSONObject.fromObject(ConnectionHelper.SendGET(url, ""));
+		JSONObject jo = ConnectionHelper.requestAPI(API_TYPE.GET_STOCKS_LIST, String.valueOf(year));
 		JSONArray ja = jo.getJSONArray("data");
 		int length = ja.size();
 		ArrayList<String> stockCode = new ArrayList<>();
@@ -124,9 +127,9 @@ public class StockDSImpl implements StockDataService {
 		} else {
 			exchangeStr = "sz";
 		}
-		String url = "http://121.41.106.89:8010/api/stocks/?year=" + year + "&exchange=" + exchangeStr;
+//		String url = "http://121.41.106.89:8010/api/stocks/?year=" + year + "&exchange=" + exchangeStr;
 		// System.out.println(SendGET(url, ""));
-		JSONObject jo = JSONObject.fromObject(ConnectionHelper.SendGET(url, ""));
+		JSONObject jo = ConnectionHelper.requestAPI(API_TYPE.GET_STOCKS_LIST_WITH_EXCHANGE, String.valueOf(year) , exchangeStr);
 		JSONArray ja = jo.getJSONArray("data");
 		int length = ja.size();
 		ArrayList<String> stockCode = new ArrayList<>();
@@ -149,12 +152,12 @@ public class StockDSImpl implements StockDataService {
 	public StockPO getStockMes(String stockCode) {
 		int offset = 0;
 		MyDate date = MyTime.getAnotherDay(offset);
-		while ((getStockMesRequestResult(stockCode, date) != 1)&&(offset>-10)) {
+		while (  (!checkDataValid(stockCode, date)) &&(offset>-30)) {
 			offset--;
 			date = MyTime.getAnotherDay(offset);
 		}
 
-		if(offset<=-10){
+		if(offset<=-30){
 			System.out.println(stockCode+"error-----------------------");
 			return null;
 		}
@@ -168,11 +171,7 @@ public class StockDSImpl implements StockDataService {
 
 		String shortCode = code.substring(2);
 		String tradeDateString = date.DateToStringSimple();
-		String url = "https://api.wmcloud.com:443/data/v1"
-				+ "/api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=&ticker=" + shortCode + "&tradeDate="
-				+ tradeDateString;
-		String result = ConnectionHelper.request(url);
-		JSONObject jo = JSONObject.fromObject(result);
+		JSONObject jo = ConnectionHelper.requestAPI(API_TYPE.GET_STOCKMES_AT_TIME, "" , "" , "" , shortCode , tradeDateString);
 		if (jo.getInt("retCode") == 1) {
 			JSONArray jArray = jo.getJSONArray("data");
 			JSONObject stockpoJsonObject = jArray.getJSONObject(0);
@@ -197,12 +196,7 @@ public class StockDSImpl implements StockDataService {
 		}
 		String shortCode = code.substring(2);
 		List<StockPO> pos = new ArrayList<>();
-		String url = "https://api.wmcloud.com:443/data/v1" + "/api/market/getMktEqud.json?field=&beginDate="
-				+ start.DateToStringSimple() + "&endDate=" + end.DateToStringSimple() + "&secID=&ticker=" + shortCode
-				+ "&tradeDate=";
-		String result = ConnectionHelper.request(url);
-	//	System.out.println(result);
-		JSONObject jo = JSONObject.fromObject(result);
+		JSONObject jo = ConnectionHelper.requestAPI(API_TYPE.GET_STOCKMES_AT_TIME, start.DateToStringSimple() , end.DateToStringSimple() , "" , shortCode ,"");
 		if (jo.getInt("retCode") == 1) {
 			JSONArray jArray = jo.getJSONArray("data");
 			for (int i = 0; i < jArray.size(); i++) {
@@ -216,16 +210,26 @@ public class StockDSImpl implements StockDataService {
 		}
 	}
 
-	// 不确定请求的股票信息在某日是否有数据，返回请求结果1为有，-1为没有
-	private int getStockMesRequestResult(String code, MyDate date) {
+	 /**
+	  * 判断股票在该日期是否有有效数据
+	  * @param code
+	  * @param date
+	  * @return
+	  */
+	private boolean checkDataValid(String code, MyDate date) {
+				
 		String shortCodeString = code.substring(2);
 		String tradeDateString = date.DateToStringSimple();
-		String url = "https://api.wmcloud.com:443/data/v1"
-				+ "/api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=&ticker=" + shortCodeString
-				+ "&tradeDate=" + tradeDateString;
-		String result = ConnectionHelper.request(url);
-		JSONObject jo = JSONObject.fromObject(result);
-		return jo.getInt("retCode");
+	
+		JSONObject jo = ConnectionHelper.requestAPI(API_TYPE.CHECK_IF_TRADING, shortCodeString , tradeDateString);
+		//此时表示该天大盘未开盘
+		if(jo.getInt("retCode") == -1){
+			return false;
+		}
+		//表示该天该股票停牌
+		jo =  jo.getJSONArray("data").getJSONObject(0);
+		return jo.isNullObject() ? false : (jo.getLong("turnoverVol") != 0);
+		
 	}
 
 	/**
@@ -246,12 +250,12 @@ public class StockDSImpl implements StockDataService {
 			stockCode = stockCode.substring(2) + StaticMessage.SZ_EXCHANGE;
 		}
 		
-		String endTime = StockMesHelper.isTradeDay() ? "" : "15:00";
+		String endTime = StockMesHelper.isTradeDay() ? "" : StaticMessage.TRADE_OVER_TIME;
 		
 		
-		String url = "https://api.wmcloud.com:443/data/v1/api/market/getBarRTIntraDay.json?securityID=" + stockCode
-				+ "&startTime=&endTime="+ endTime +"&unit=1";
-		JSONObject jsonObject = JSONObject.fromObject(ConnectionHelper.request(url));
+//		String url = "https://api.wmcloud.com:443/data/v1/api/market/getBarRTIntraDay.json?securityID=" + stockCode
+//				+ "&startTime=&endTime="+ endTime +"&unit=1";
+		JSONObject jsonObject = ConnectionHelper.requestAPI(API_TYPE.GET_TIMESAHRING	,stockCode , "" , endTime , "1");
 		JSONArray jsonArray = jsonObject.getJSONArray("data");
 		 jsonObject = jsonArray.getJSONObject(0);
 		jsonArray = jsonObject.getJSONArray("barBodys");
@@ -270,9 +274,16 @@ public class StockDSImpl implements StockDataService {
 		String[] split = nowTime.split(":");
 		date.setHour(Integer.parseInt(split[0]));
 		date.setMin(Integer.parseInt(split[1]));
+		date.setSecond(0);
 
 		return new TimeSharingPO(date, jsonObject.getDouble("closePrice"), jsonObject.getLong("totalVolume"),
 				jsonObject.getDouble("totalValue"));
+	}
+
+	@Override
+	public boolean updateAllMes() {
+		FileIOHelper.updateLatestStockMes();
+		return true;
 	}
 
 }
