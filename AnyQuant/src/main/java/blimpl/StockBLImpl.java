@@ -143,7 +143,7 @@ public class StockBLImpl implements StockBLService {
 
 	@Override
 	public List<OHLC_VO> getDayOHLC_Data(String stockCode, MyDate start, MyDate end) {
-		System.out.println(stockCode + start.DateToString() + end.DateToString());
+		System.out.println("------*****" +stockCode + start.DateToString() + end.DateToString());
 		List<StockPO> pos = APIDataSer.getStockMes(stockCode, start, end);
 		List<OHLC_VO> results;
 		if (pos != null) {
@@ -203,15 +203,28 @@ public class StockBLImpl implements StockBLService {
 		vos = new ArrayList<>(monthNum);
 		MyDate thisMonth = start.clone();
 		MyDate monthEnd = thisMonth.clone();
-		// System.out.println(start.DateToString());
-		// System.out.println(thisMonth.DateToString());
-		// System.out.println(monthEnd.DateToString());
+
 		thisMonth.setDay(1);
 		monthEnd.setDay(MONTH_DAY);
 		for (int i = 0; i < monthNum; i++) {
+			
+			
+			System.out.println(monthEnd.DateToString());
+			
+			System.out.println(stockCode);
+			System.out.println(thisMonth.DateToString());
+			
+			
 			pos = APIDataSer.getStockMes(stockCode, thisMonth, monthEnd);
-			vos.add(new OHLC_VO(thisMonth, pos.get(0).getOpen(), pos.get(pos.size() - 1).getClose(),
-					getHighInScope(pos), getLowInScope(pos)));
+			
+			if( pos==null || pos.size()==0){
+				
+			}else{
+				vos.add(new OHLC_VO(thisMonth, pos.get(0).getOpen(), pos.get(pos.size() - 1).getClose(),
+						getHighInScope(pos), getLowInScope(pos)));
+			}
+			
+			
 
 			getNextMonth(thisMonth);
 			getNextMonth(monthEnd);
