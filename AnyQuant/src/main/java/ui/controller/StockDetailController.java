@@ -1,8 +1,6 @@
 package ui.controller;
 
 
-import java.util.List;
-
 import blimpl.OptionalStockBLImpl;
 import blservice.OptionalStockBLService;
 import enumeration.MyDate;
@@ -13,6 +11,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.BorderPane;
 import ui.controller.candleStick.CandleStickController;
 import ui.controller.candleStick.TimeSharingChart;
 import vo.Stock;
@@ -37,6 +36,8 @@ public class StockDetailController {
 	DatePicker  dayStart,dayEnd,weekStart,weekEnd,monthStart,monthEnd;
 	@FXML
 	Button dayBT,weekBT,monthBT;
+	@FXML
+	BorderPane dayBorderPane,weekBorderPane,monthBorderPane;
 	@FXML
 	TabPane tabPane;
 	private Boolean exist;
@@ -69,17 +70,9 @@ public class StockDetailController {
 
 	}
 
-	public static StockDetailController getCurrent() {
-		return instance;
-	}
 
 	public void setData(Stock stock) {
-		// if(nameLabel==null){
-		// System.out.println("name null in set method");
-		// return;
-		// }else{
-		// System.out.println("not null in set method");
-		// }
+
 		System.out.println("[get in and current stock :" + stock.code + "]");
 		currentStock = stock;
 		System.out.println("changed!!");
@@ -110,16 +103,16 @@ public class StockDetailController {
 	private void initTimeSharing() {
 		TimeSharingChart timeChart = new TimeSharingChart(currentStock);
 		timeSharing.setContent(timeChart.getTimeSharingChart());
-		// timeSharing.getTabPane().
 	}
 
 	private void initKLine() {
+		System.out.println("initKLine()"+currentStock.code.get());
 		Node dayChart=candleStickController.getInitialDayChart(currentStock.code.get());
 		Node weekChart=candleStickController.getInitialWeekChart(currentStock.code.get());
 		Node monthChart = candleStickController.getInitialMonthChart(currentStock.code.get());
-			k_day.setContent(dayChart);
-			k_week.setContent(weekChart);
-			k_month.setContent(monthChart);
+		dayBorderPane.setCenter(dayChart);
+		weekBorderPane.setCenter(weekChart);
+		monthBorderPane.setCenter(monthChart);
 
 	}
 	@FXML
@@ -127,21 +120,21 @@ public class StockDetailController {
 		MyDate start = new MyDate(dayStart.getValue().getYear(),dayStart.getValue().getMonthValue(),dayStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(dayEnd.getValue().getYear(),dayEnd.getValue().getMonthValue(),dayEnd.getValue().getDayOfMonth());
         Node dayChart = candleStickController.getUpdatedDayChart(currentStock.code.get(), start, end);
-        k_day.setContent(dayChart);
+        dayBorderPane.setCenter(dayChart);
 	}
 	@FXML
 	private  void updateWeekChart(){
 		MyDate start = new MyDate(weekStart.getValue().getYear(),weekStart.getValue().getMonthValue(),weekStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(weekEnd.getValue().getYear(),weekEnd.getValue().getMonthValue(),weekEnd.getValue().getDayOfMonth());
         Node weekChart = candleStickController.getUpdatedWeekChart(currentStock.code.get(), start, end);
-        k_week.setContent(weekChart);
+        weekBorderPane.setCenter(weekChart);
 	}
 	@FXML
 	private  void updateMonthChart(){
 		MyDate start = new MyDate(monthStart.getValue().getYear(),monthStart.getValue().getMonthValue(),monthStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(monthEnd.getValue().getYear(),monthEnd.getValue().getMonthValue(),monthEnd.getValue().getDayOfMonth());
         Node monthChart = candleStickController.getUpdatedMonthChart(currentStock.code.get(), start, end);
-        k_month.setContent(monthChart);
+        monthBorderPane.setCenter(monthChart);
 	}
 
 	@FXML

@@ -16,7 +16,7 @@
               <tabs>
                 <Tab fx:id="k_day" text="日线图">
                      <content>
-                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                        <BorderPane fx:id="dayBorderPane" prefHeight="200.0" prefWidth="200.0">
                            <top>
                               <HBox prefHeight="27.0" prefWidth="570.0" spacing="100.0" BorderPane.alignment="CENTER">
                                  <children>
@@ -41,9 +41,9 @@
                 </Tab>
                 <Tab fx:id="k_week" text="周线图">
                      <content>
-                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                        <BorderPane fx:id="weekBorderPane" prefHeight="200.0" prefWidth="200.0">
                            <top>
-                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0" BorderPane.alignment="CENTER">
+                              <HBox prefHeight="30.0" prefWidth="775.0" spacing="100.0" BorderPane.alignment="CENTER">
                                  <BorderPane.margin>
                                     <Insets top="10.0" />
                                  </BorderPane.margin>
@@ -67,9 +67,9 @@
                 </Tab>
                   <Tab fx:id="k_month" text="月线图">
                      <content>
-                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                        <BorderPane fx:id="monthBorderPane" prefHeight="200.0" prefWidth="200.0">
                            <top>
-                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0" BorderPane.alignment="CENTER">
+                              <HBox prefHeight="29.0" prefWidth="775.0" spacing="100.0" BorderPane.alignment="CENTER">
                                  <BorderPane.margin>
                                     <Insets top="10.0" />
                                  </BorderPane.margin>

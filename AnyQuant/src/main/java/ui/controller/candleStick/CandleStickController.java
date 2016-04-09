@@ -1,11 +1,8 @@
 package ui.controller.candleStick;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import org.python.antlr.PythonParser.return_stmt_return;
 
 import blimpl.StockBLImpl;
 import blservice.StockBLService;
@@ -150,21 +147,21 @@ public class CandleStickController implements Initializable {
 
 
 	public void selectDay() {
-		if (dayChart == null) {
-			getDayData();
-		}
+
+		  getDayData();
+
 	}
 
 	public void selectWeek() {
-		if (weekChart == null) {
+
 			getWeekData();
-		}
+
 	}
 
 	public void selectMonth() {
-		if (monthChart == null) {
+
 			getMonthData();
-		}
+
 	}
 
 	public void updateDay() {
