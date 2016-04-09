@@ -35,7 +35,8 @@ public class nettest {
         String url = "https://api.wmcloud.com:443/data/v1" 
 //        + "/api/master/getSecTypeRegion.json?field="; //用来获得地域
 //        + "/api/master/getSecType.json?field=";
-        	 + "/api/master/getSecType.json?field=";
+//        	 + "/api/master/getSecType.json?field=";
+        		+ "/api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=&ticker=&tradeDate=20140401";
 //        		+ "/api/market/getBarRTIntraDay.json?securityID=600000.XSHG&startTime=&endTime=&unit=1";
 //        		+ "/api/master/getSecTypeRel.json?field=&typeID=101001004001001&secID=&ticker=";
 //        + "/api/market/getMktIdxd.json?field=&beginDate=&endDate=&indexID=&ticker=&tradeDate=20150513";
