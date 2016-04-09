@@ -33,4 +33,7 @@
          </children>
       </AnchorPane>
    </center>
+   <right>
+      <AnchorPane prefHeight="500.0" prefWidth="183.0" BorderPane.alignment="CENTER" />
+   </right>
 </BorderPane>
