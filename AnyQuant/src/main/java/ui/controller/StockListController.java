@@ -50,9 +50,9 @@ public class StockListController{
 	@FXML
 	TableColumn<Stock, Long>turnoverVol = new TableColumn<Stock, Long>();
 	@FXML
-	TableColumn<Stock, Double>amplitude = new TableColumn<Stock, Double>();
+	TableColumn<Stock, String>amplitude = new TableColumn<Stock, String>();
 	@FXML
-	TableColumn<Stock, Double>changeRate = new TableColumn<Stock, Double>();
+	TableColumn<Stock, String>changeRate = new TableColumn<Stock, String>();
 	@FXML
 	TableView<Stock> tableview = new TableView<Stock>();
 	@FXML
@@ -98,11 +98,11 @@ public class StockListController{
 		tableview.getItems().removeAll(observableList);
 		while(itr.hasNext()){
 			StockVO temp = itr.next();
-			System.out.println("volume"+temp.turnoverVol);
+//			System.out.println("volume"+temp.turnoverVol);
 			Stock dataProperty = new Stock(temp);
 			observableList.add(dataProperty);
 		}
-		
+
 		tableview.setItems(observableList);
 		name.setCellValueFactory(cell -> cell.getValue().name);
 		code.setCellValueFactory(cell -> cell.getValue().code);
@@ -112,8 +112,8 @@ public class StockListController{
 		close.setCellValueFactory(cell ->cell.getValue().close.asObject());
 		turnoverRate.setCellValueFactory(cell ->cell.getValue().turnoverRate.asObject());
 		turnoverVol.setCellValueFactory(cell ->cell.getValue().turnoverVol.asObject());
-		amplitude.setCellValueFactory(cell ->cell.getValue().amplitude.asObject());
-		changeRate.setCellValueFactory(cell ->cell.getValue().changeRate.asObject());
+		amplitude.setCellValueFactory(cell ->cell.getValue().getStringAmplitude());
+		changeRate.setCellValueFactory(cell ->cell.getValue().getStringChangeRate());
 	}
 	@FXML
 	private void delAllData(){
@@ -132,7 +132,7 @@ public class StockListController{
 			int row =tableview.getSelectionModel().getSelectedIndex();
 			String code =tableview.getSelectionModel().getSelectedItem().code.get();
 			Stock selectedStock = tableview.getSelectionModel().getSelectedItem();
-			System.out.println(code);
+//			System.out.println(code);
 			//The stockDetailController is null at first, and it must generated after the fxml has initialize
 			//it, otherwise we will get a totally defferent object from the fxml's
 			if(stockDetailController==null){
