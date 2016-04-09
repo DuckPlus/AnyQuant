@@ -62,7 +62,8 @@ public interface StockBLService {
 	 * 
 	 * @param stockCode
 	 * @return the recent message from opening quotation(开盘) up to now if today
-	 *         is weekend or festival ,then if will return last time's datas
+	 *        			is weekend or festival ,then if will return last time's data
+	 *       	 result will be null if any exception happens 
 	 */
 	public List<TimeSharingVO> getSharingVOs(String stockCode);
 
