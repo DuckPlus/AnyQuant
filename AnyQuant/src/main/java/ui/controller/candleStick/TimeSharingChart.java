@@ -62,7 +62,8 @@ public class TimeSharingChart {
 	        lineChart.getData().add(series);
 	        lineChart.setPrefHeight(600);
 	        lineChart.setPrefWidth(1000);
-	        lineChart.setLayoutY(0.5);
+	        lineChart.setCreateSymbols(false);
+//	        lineChart.set
 	    }
 	   public LineChart<String, Number> getTimesharingChart(){
 		   return lineChart;
