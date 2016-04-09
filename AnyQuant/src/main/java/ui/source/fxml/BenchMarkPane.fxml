@@ -16,7 +16,7 @@
             <TableColumn fx:id="low" prefWidth="75.0" text="最低价" />
             <TableColumn fx:id="open" prefWidth="75.0" text="开盘价" />
             <TableColumn fx:id="close" prefWidth="75.0" text="今收盘" />
-            <TableColumn fx:id="preclose" prefWidth="75.0" text="昨收盘" />
+            <TableColumn fx:id="preClose" prefWidth="75.0" text="昨收盘" />
             <TableColumn fx:id="turnoverVol" prefWidth="75.0" text="成交量" />
             <TableColumn fx:id="turnoverValue" prefWidth="75.0" text="成交额" />
         </columns>
