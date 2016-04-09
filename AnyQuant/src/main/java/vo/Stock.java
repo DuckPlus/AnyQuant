@@ -1,5 +1,7 @@
 package vo;
 
+import java.text.DecimalFormat;
+
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,6 +14,7 @@ import javafx.beans.property.SimpleStringProperty;
 public class Stock {
 
 	public Stock(StockVO s) {
+		this.vo=s;
 		date = new SimpleStringProperty(s.date);
 		name = new SimpleStringProperty(s.name);
 		code = new SimpleStringProperty(s.code);
@@ -35,7 +38,16 @@ public class Stock {
 		changeRate = new SimpleDoubleProperty(s.changeRate);
 
 	}
+	public SimpleStringProperty getStringAmplitude(){
+		SimpleStringProperty str=new SimpleStringProperty(String.format("%.2f",(vo.amplitude*100))+"%");
+		return str;
+	}
+	public SimpleStringProperty getStringChangeRate(){
+		SimpleStringProperty str=new SimpleStringProperty(String.format("%.2f",(vo.changeRate*100))+"%");
+		return str;
+	}
 	 public SimpleStringProperty date ,name,code,board,region;
 	 public SimpleDoubleProperty high ,low,open,close,preClose,accAdjFactor,turnoverValue,turnoverRate,pe,pb,cirMarketValue, totalMarketValue,amplitude,changeRate;
 	 public SimpleLongProperty turnoverVol;
+	 private StockVO vo;
 }

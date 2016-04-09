@@ -38,17 +38,17 @@ public class optionalStockController {
 	@FXML
 	TableColumn<Stock, Long>volume;// = new TableColumn<Stock, Long>();
 	@FXML
-	TableColumn<Stock, Double>amplitude;// = new TableColumn<Stock, Double>();
+	TableColumn<Stock, String>amplitude;// = new TableColumn<Stock, Double>();
 	@FXML
-	TableColumn<Stock, Double>changeRate;// = new TableColumn<Stock, Double>();
+	TableColumn<Stock, String>changeRate;// = new TableColumn<Stock, Double>();
 	@FXML
 	TableView<Stock> tableview;// = new TableView<Stock>();
 	@FXML
 	TextField searchBar;
 	private ObservableList<Stock> observableList;
-	
+
 	private OptionalStockBLService optionalBl = OptionalStockBLServiceImpl.getOptionalBLService();
-	
+
 	private StockDetailController stockDetailController;
 
 	private RightPaneController rightPaneController;
@@ -105,10 +105,10 @@ public class optionalStockController {
 		close.setCellValueFactory(cell ->cell.getValue().close.asObject());
 		turnover.setCellValueFactory(cell ->cell.getValue().turnoverRate.asObject());
 		volume.setCellValueFactory(cell ->cell.getValue().turnoverVol.asObject());
-		amplitude.setCellValueFactory(cell ->cell.getValue().amplitude.asObject());
-		changeRate.setCellValueFactory(cell ->cell.getValue().changeRate.asObject());
+		amplitude.setCellValueFactory(cell ->cell.getValue().getStringAmplitude());
+		changeRate.setCellValueFactory(cell ->cell.getValue().getStringChangeRate());
 	}
-	
+
 	@FXML
 	private void deleteOptionalStock(){
 		if(tableview.getSelectionModel().getSelectedIndex()!=-1){
