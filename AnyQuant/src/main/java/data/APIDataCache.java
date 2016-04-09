@@ -45,7 +45,7 @@ public class APIDataCache implements APIInterface {
 
 	public APIDataCache(APIInterface api) {
 		this.api = api;
-		updateLatestStockMes();
+	//	updateLatestStockMes();
 	//	updateSelectedStockInfo();
 
 	}
