@@ -1,7 +1,7 @@
 package enumeration;
 
 /**
- *
+ * API 请求种类
  * @author Qiang
  * @date 2016年4月9日
  */

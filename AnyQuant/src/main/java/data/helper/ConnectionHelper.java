@@ -3,7 +3,6 @@ package data.helper;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.KeyManagementException;
@@ -13,7 +12,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -28,17 +26,21 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import enumeration.API_TYPE;
+import enumeration.StaticMessage;
 import net.sf.json.JSONObject;
 
 /**
- *
- * @author ss
+ * 
+ * @author ss,Qiang
  * @date 2016年4月7日
  */
 public class ConnectionHelper {
 	
 	private static final String API_PREFIX = "https://api.wmcloud.com:443/data/v1/";
 	private static final String ZHUJIAO_API_PREFIX = "http://121.41.106.89:8010/api/";
+	/**
+	 * 存储API序列
+	 */
 	private static final Map<API_TYPE, List<String>>  API_Saver = new HashMap<>(30);
 	
 	static{
@@ -49,13 +51,18 @@ public class ConnectionHelper {
 		API_Saver.put(API_TYPE.GET_TIMESAHRING, Arrays.asList(API_PREFIX +"api/market/getBarRTIntraDay.json?" ,"securityID=" ,  "&startTime=" , "&endTime=" , "&unit="  ) );
 		API_Saver.put(API_TYPE.CHECK_IF_TRADING, Arrays.asList(API_PREFIX +"api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=" , "&ticker=" , "&tradeDate=" ));
 	
-		//================以下为助教API=======================================
+		/*================以下为助教API=======================================*/
 		API_Saver.put(API_TYPE.GET_STOCKS_LIST, Arrays.asList(ZHUJIAO_API_PREFIX + "stocks/?" , "year"));
 		API_Saver.put(API_TYPE.GET_STOCKS_LIST_WITH_EXCHANGE , Arrays.asList(ZHUJIAO_API_PREFIX + "stocks/?" , "year" ,"&exchange="));
 		
 	}
 	
-	
+	/**
+	 * 
+	 * @param type
+	 * @param param
+	 * @return
+	 */
 	public static JSONObject requestAPI(API_TYPE type , String... param ){
 		List<String> urls = API_Saver.get(type);
 		StringBuffer buffer = new StringBuffer(urls.get(0));
@@ -137,7 +144,7 @@ public class ConnectionHelper {
 	 */
     private static String request(String url) {
 		final String ACCESS_TOKEN =
-				"44a70d35d80240eaa3d9a66b0b090de5bef4c96914f39c4faa225b4570ee301c";
+				StaticMessage.ACCESS_TOKEN;
 		CloseableHttpClient httpClient = createHttpsClient();
 		HttpGet httpGet = new HttpGet(url);
 		// 在header里加入 Bearer {token}，添加认证的token，并执行get请求获取json数据

@@ -11,7 +11,7 @@ import java.util.Map;
 
 import data.helper.ConnectionHelper;
 import data.helper.FileIOHelper;
-import data.helper.JSONTransferHelper;
+import data.helper.TransferHelper;
 import data.helper.StockMesHelper;
 import dataservice.StockDataService;
 import enumeration.API_TYPE;
@@ -94,8 +94,6 @@ public class StockDSImpl implements StockDataService {
 		if (year < 2007 || year > 2015) {
 			year = 2015;
 		}
-		String url = "http://121.41.106.89:8010/api/stocks/?year=" + year;
-		// System.out.println(SendGET(url, ""));
 		JSONObject jo = ConnectionHelper.requestAPI(API_TYPE.GET_STOCKS_LIST, String.valueOf(year));
 		JSONArray ja = jo.getJSONArray("data");
 		int length = ja.size();
@@ -175,7 +173,7 @@ public class StockDSImpl implements StockDataService {
 		if (jo.getInt("retCode") == 1) {
 			JSONArray jArray = jo.getJSONArray("data");
 			JSONObject stockpoJsonObject = jArray.getJSONObject(0);
-			StockPO po = JSONTransferHelper.JSONObjectToStockPO(IndustryLocationMap, stockpoJsonObject);
+			StockPO po = TransferHelper.JSONObjectToStockPO(IndustryLocationMap, stockpoJsonObject);
 			return po;
 		} else {
 			return null;
@@ -201,7 +199,7 @@ public class StockDSImpl implements StockDataService {
 			JSONArray jArray = jo.getJSONArray("data");
 			for (int i = 0; i < jArray.size(); i++) {
 				JSONObject stockpoJsonObject = jArray.getJSONObject(i);
-				StockPO po = JSONTransferHelper.JSONObjectToStockPO(IndustryLocationMap, stockpoJsonObject);
+				StockPO po = TransferHelper.JSONObjectToStockPO(IndustryLocationMap, stockpoJsonObject);
 				pos.add(po);
 			}
 			return pos;
@@ -237,7 +235,7 @@ public class StockDSImpl implements StockDataService {
 	 */
 	@Override
 	public List<StockPO> getAllStockMes() {
-		return FileIOHelper.readAllMes();
+		return FileIOHelper.readAllStocks();
 	}
 
 	@Override

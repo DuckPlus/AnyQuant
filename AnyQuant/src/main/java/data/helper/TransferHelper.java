@@ -1,5 +1,6 @@
 package data.helper;
 
+import java.lang.reflect.Field;
 import java.util.Map;
 
 import net.sf.json.JSONObject;
@@ -11,7 +12,7 @@ import po.StockPO;
  * @author ss
  * @date 2016年4月7日
  */
-public class JSONTransferHelper {
+public class TransferHelper {
 	public static StockPO JSONObjectToStockPO(Map<String ,String[]> IndustryLocationMap, JSONObject jo){
 		StockPO po = new StockPO();
 		po.setDate(jo.getString("tradeDate")); po.setName(jo.getString("secShortName"));
@@ -45,5 +46,30 @@ public class JSONTransferHelper {
 		po.setClose(jo.getDouble("closeIndex"));  po.setPreclose(jo.getDouble("preCloseIndex"));  po.setTurnoverVol(jo.getLong("turnoverVol"));
 		po.setTurnoverValue(jo.getDouble("turnoverValue"));  po.setChange(jo.getDouble("CHG"));     po.setChangePct(jo.getDouble("CHGPct"));
 		return po;
+	}
+
+
+
+	public static String ObjectToString(String name , Object object , String splitChar) {
+		try {
+			Class<?> class1 = Class.forName(name);
+			Field[] fields = class1.getDeclaredFields();
+
+			for (Field field : fields) {
+				field.setAccessible(true);
+			}
+			StringBuffer buffer = new StringBuffer();
+
+			for (Field field : fields) {
+				buffer.append(field.get(object));
+				buffer.append(splitChar);
+			}
+			// desert the last char
+			return buffer.substring(0, buffer.length() - 1);
+
+		} catch (ClassNotFoundException | IllegalArgumentException | IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

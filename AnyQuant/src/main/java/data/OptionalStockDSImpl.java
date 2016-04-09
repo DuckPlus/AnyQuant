@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import data.helper.CacheHelper;
 import data.helper.FileIOHelper;
 import dataservice.OptionalStockDataService;
 import dataservice.StockDataService;
@@ -18,94 +19,89 @@ import po.StockPO;
  * @author ss
  * @date 2016年4月7日
  */
-public class OptionalStockDSImpl implements OptionalStockDataService{
-    private static OptionalStockDSImpl optionalStockDSImpl;
-    private static String optionalCodesFilePath = "data//OptionalStocks.txt";
-    private  OptionalStockDSImpl() {
+public class OptionalStockDSImpl implements OptionalStockDataService {
+	private static OptionalStockDSImpl optionalStockDSImpl;
+	private static String optionalCodesFilePath = "data//OptionalStocks.txt";
+
+	private OptionalStockDSImpl() {
 
 	}
 
-    public static OptionalStockDataService getOptionalStockDSImpl(){
-    	if(optionalStockDSImpl==null){
-    		return new OptionalStockDSImpl();
-    	}else{
-    		return optionalStockDSImpl;
-    	}
-    }
+	public static OptionalStockDataService getOptionalStockDSImpl() {
+		if (optionalStockDSImpl == null) {
+			return new OptionalStockDSImpl();
+		} else {
+			return optionalStockDSImpl;
+		}
+	}
 
-    @Override
+	@Override
 	public Iterator<StockPO> getOptionalStocks() {
-		List<StockPO> pos = new ArrayList<StockPO>();
-		List<String> codeStrings =getSelectedStockCodes() ;
-		StockDataService stockDSImplDataService = StockDSImpl.getStockDSImpl();
-		StockPO temp = null;
-        for(String code: codeStrings){
-        	   if(code.length()>2){
-                    temp= stockDSImplDataService.getStockMes(code);
-                    pos.add(temp);
-        	   }
-        }
-		return  pos.iterator();
+
+		if (CacheHelper.needUpdate(true)) {
+			List<StockPO> pos = new ArrayList<StockPO>();
+			List<String> codeStrings = getSelectedStockCodes();
+			StockDataService stockDSImplDataService = StockDSImpl.getStockDSImpl();
+			StockPO temp = null;
+			for (String code : codeStrings) {
+				if (code.length() > 2) {
+					temp = stockDSImplDataService.getStockMes(code);
+					pos.add(temp);
+				}
+			}
+			FileIOHelper.writeOptionalStocks(pos);
+		}
+
+		return CacheHelper.getCacheStockPOs().iterator();
 	}
 
 	@Override
 	public boolean deleteOptionalStock(String stockCode) {
-		List<String>  CodeStrings = getSelectedStockCodes();
-		boolean result =CodeStrings.remove(stockCode);
-		FileIOHelper.writeSelectedStockCodes(CodeStrings);
+		List<String> CodeStrings = getSelectedStockCodes();
+		boolean result = CodeStrings.remove(stockCode);
+		FileIOHelper.writeDataToFile(CodeStrings, optionalCodesFilePath);
 		return result;
 	}
 
 	@Override
 	public boolean addOptionalStock(String stockCode) {
-		List<String>  CodeStrings = getSelectedStockCodes();
-		if(!CodeStrings.contains(stockCode)){
-		     CodeStrings.add(stockCode);
-		     FileIOHelper.writeSelectedStockCodes(CodeStrings);
-		     return true;
+		List<String> CodeStrings = getSelectedStockCodes();
+		if (!CodeStrings.contains(stockCode)) {
+			CodeStrings.add(stockCode);
+			FileIOHelper.writeDataToFile(CodeStrings, optionalCodesFilePath);
+			return true;
 		}
 		return false;
 	}
 
-
-
-
 	@Override
 	public boolean clearOptionalStocks() {
-		try{
+		try {
 
-	         File file =new File(optionalCodesFilePath);
-	         file.delete();
-	         //if file doesnt exists, then create it
-	         if(!file.exists()){
-	                file.createNewFile();
-	         }
+			File file = new File(optionalCodesFilePath);
+			file.delete();
+			// if file doesnt exists, then create it
+			if (!file.exists()) {
+				file.createNewFile();
+			}
 
-	         //true = append file
-	         FileWriter fileWritter = new FileWriter(file,false);
-	         BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+			// true = append file
+			FileWriter fileWritter = new FileWriter(file, false);
+			BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
 
-	         bufferWritter.write("");
+			bufferWritter.write("");
 
-	         bufferWritter.close();
-	         System.out.println("Done");
-	    }catch(IOException e){
-	            e.printStackTrace();
-	    }
-         return true;
+			bufferWritter.close();
+			System.out.println("Done");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return true;
 	}
-
-
-
 
 	@Override
 	public List<String> getSelectedStockCodes() {
-		return FileIOHelper.readSelectedStockCodes();
+		return FileIOHelper.readFiles(optionalCodesFilePath);
 	}
-
-
-
-
-
 
 }
