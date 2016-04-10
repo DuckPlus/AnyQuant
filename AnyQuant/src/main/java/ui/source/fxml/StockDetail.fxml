@@ -204,7 +204,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <VBox layoutX="3.0" AnchorPane.topAnchor="50.0">
+            <VBox layoutX="3.0" spacing="5.0" AnchorPane.topAnchor="50.0">
                <children>
                   <Label layoutX="3.0" layoutY="33.0" prefHeight="18.0" prefWidth="48.0" text="开盘" textFill="WHITE">
                      <font>
@@ -248,7 +248,7 @@
                   </Label>
                </children>
             </VBox>
-            <VBox layoutX="102.0" layoutY="5.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
+            <VBox layoutX="102.0" layoutY="5.0" spacing="5.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
                <children>
                   <Label fx:id="openLB" layoutX="104.0" prefHeight="18.0" prefWidth="80.0" text="null" textAlignment="RIGHT" textFill="WHITE" AnchorPane.topAnchor="5.0">
                      <font>
@@ -297,12 +297,14 @@
                   <Font size="12.0" />
                </font>
             </Label>
+
              <VBox layoutX="3" layoutY="500" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
                 <children>
    	            <Button fx:id="addBtn" layoutX="21.0" layoutY="196.0" mnemonicParsing="false" onAction="#addOptionalStock" text="加入自选" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="196.0" />
    	            <Button fx:id="backBtn" layoutX="21.0" layoutY="400.0" mnemonicParsing="false" onAction="#back" text="返回" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="196.0" />
                 </children>
              </VBox>
+
          </children>
       </AnchorPane>
    </right>

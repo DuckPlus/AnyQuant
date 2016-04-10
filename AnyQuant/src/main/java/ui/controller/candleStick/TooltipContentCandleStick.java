@@ -9,13 +9,13 @@ import javafx.scene.layout.GridPane;
  * @date 2016/3/24
  */
 
- class TooltipContent extends GridPane {
+ class TooltipContentCandleStick extends GridPane {
     private Label openValue = new Label();
     private Label closeValue = new Label();
     private Label highValue = new Label();
     private Label lowValue = new Label();
 
-    public TooltipContent() {
+    public TooltipContentCandleStick() {
         Label open = new Label("开盘:");
         Label close = new Label("收盘:");
         Label high = new Label("最高:");

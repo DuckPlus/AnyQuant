@@ -21,8 +21,9 @@ import po.StockPO;
  */
 public class OptionalStockDSImpl implements OptionalStockDataService {
 	private static OptionalStockDSImpl optionalStockDSImpl;
+	StockDataService stockDSImplDataService = StockDSImpl.getStockDSImpl() ;
 	private static String optionalCodesFilePath = "data//OptionalStocks.txt";
-
+	private static List<StockPO> pos;
 	private OptionalStockDSImpl() {
 
 	}
@@ -39,9 +40,8 @@ public class OptionalStockDSImpl implements OptionalStockDataService {
 	public Iterator<StockPO> getOptionalStocks() {
 
 		if (CacheHelper.needUpdate(true)) {
-			List<StockPO> pos = new ArrayList<StockPO>();
+			pos = new ArrayList<StockPO>();
 			List<String> codeStrings = getSelectedStockCodes();
-			StockDataService stockDSImplDataService = StockDSImpl.getStockDSImpl();
 			StockPO temp = null;
 			for (String code : codeStrings) {
 				if (code.length() > 2) {
@@ -50,16 +50,25 @@ public class OptionalStockDSImpl implements OptionalStockDataService {
 				}
 			}
 			FileIOHelper.writeOptionalStocks(pos);
+		}else {
+			pos = CacheHelper.getCacheStockPOs();
 		}
 
-		return CacheHelper.getCacheStockPOs().iterator();
+		return pos.iterator();
 	}
 
 	@Override
 	public boolean deleteOptionalStock(String stockCode) {
 		List<String> CodeStrings = getSelectedStockCodes();
 		boolean result = CodeStrings.remove(stockCode);
-		FileIOHelper.writeDataToFile(CodeStrings, optionalCodesFilePath);
+		for (StockPO stockPO : pos) {
+			if(stockPO.getCode().equals(stockCode)){
+				pos.remove(stockPO);
+				break;
+			}
+		}
+		updateOptionalStocks(CodeStrings);
+	
 		return result;
 	}
 
@@ -68,7 +77,8 @@ public class OptionalStockDSImpl implements OptionalStockDataService {
 		List<String> CodeStrings = getSelectedStockCodes();
 		if (!CodeStrings.contains(stockCode)) {
 			CodeStrings.add(stockCode);
-			FileIOHelper.writeDataToFile(CodeStrings, optionalCodesFilePath);
+			pos.add(stockDSImplDataService.getStockMes(stockCode));
+			updateOptionalStocks(CodeStrings);
 			return true;
 		}
 		return false;
@@ -104,4 +114,10 @@ public class OptionalStockDSImpl implements OptionalStockDataService {
 		return FileIOHelper.readFiles(optionalCodesFilePath);
 	}
 
+	
+	private void updateOptionalStocks(List<String> CodeStrings){
+		FileIOHelper.writeOptionalStocks(pos);
+		FileIOHelper.writeDataToFile(CodeStrings, optionalCodesFilePath);
+	}
+	
 }

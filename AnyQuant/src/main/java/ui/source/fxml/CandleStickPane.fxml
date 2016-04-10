@@ -48,7 +48,7 @@
                                  </content></ScrollPane>
                            </content>
                         </Tab>
-                        <Tab id="monthTab" fx:id="timeShareTab" onSelectionChanged="#initTimeSharing" text="分时图">
+                        <Tab id="timeShareTab" fx:id="timeShareTab" onSelectionChanged="#initTimeSharing" text="分时图">
                            <content>
                               <ScrollPane prefHeight="690.0" prefWidth="905.0">
                                  <content>

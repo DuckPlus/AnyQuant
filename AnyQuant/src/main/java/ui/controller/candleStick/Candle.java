@@ -26,7 +26,7 @@ class Candle extends Group {
         this.seriesStyleClass = seriesStyleClass;
         this.dataStyleClass = dataStyleClass;
         updateStyleClasses();
-        tooltip.setGraphic(new TooltipContent());
+        tooltip.setGraphic(new TooltipContentCandleStick());
         Tooltip.install(bar, tooltip);
     }
 
@@ -55,7 +55,7 @@ class Candle extends Group {
     }
 
     public void updateTooltip(double open, double close, double high, double low) {
-        TooltipContent tooltipContent = (TooltipContent) tooltip.getGraphic();
+        TooltipContentCandleStick tooltipContent = (TooltipContentCandleStick) tooltip.getGraphic();
         tooltipContent.update(open, close, high, low);
 //                tooltip.setText("Open: "+open+"\nClose: "+close+"\nHigh: "+high+"\nLow: "+low);
     }
