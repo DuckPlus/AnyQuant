@@ -8,6 +8,8 @@ import enumeration.MyDate;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableCell;
@@ -78,7 +80,7 @@ public class StockListController{
 		instanceController.registStockDetailPane(stockDetailPane);// add the instance into the factory
 		System.err.println(instanceController.toString());
 		showStocklist();
-
+//		searchBar.
 	}
 
 
@@ -146,7 +148,7 @@ public class StockListController{
 	}
 	@FXML
 	private void searchStocklist(){
-//		System.out.println("hello search in time:  ["+searchBar.getText()+"]end");
+		System.out.println("hello search in time:  ["+searchBar.getText()+"]end");
 		String stockCode = searchBar.getText();
 		if(stockCode.equals("")){
 			showStocklist();
@@ -154,7 +156,9 @@ public class StockListController{
 		}
 		Iterator<StockVO>itr =stockBl.getStocksByStockCode(stockCode);
 		showTableData(itr);
+//		new SearchThread(searchBar, this).start();
 	}
+	
 
 
 

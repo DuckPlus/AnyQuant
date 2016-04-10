@@ -145,6 +145,7 @@ public class optionalStockController {
 		if(tableview.getSelectionModel().getSelectedIndex()!=-1){
 			String stockCode = tableview.getSelectionModel().getSelectedItem().code.get();
 			boolean status = optionalBl.deleteStockCode(stockCode);
+			getOptionalStock();
 		}
 	}
 	@FXML

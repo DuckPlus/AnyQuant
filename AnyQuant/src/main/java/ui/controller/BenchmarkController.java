@@ -64,8 +64,8 @@ public class BenchmarkController {
 	}
 
 	private void showAllBenchmark(){
-//		Iterator<BenchMarkVO>itr = benchmarkBl.getAllBenchMarks();
-//		showTableData(itr);
+		Iterator<BenchMarkVO>itr = benchmarkBl.getAllBenchMarks();
+		showTableData(itr);
 
 	}
 	@FXML

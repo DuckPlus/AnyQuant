@@ -10,8 +10,8 @@
    <children>
       <TableView fx:id="tableview" layoutX="88.0" layoutY="59.0" prefHeight="389.0" prefWidth="562.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0">
         <columns>
-          <TableColumn fx:id="code" prefWidth="75.0" text="大盘代号" />
-            <TableColumn fx:id="name" prefWidth="75.0" text="大盘名称" />
+          <TableColumn fx:id="code" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" text="大盘代号" />
+            <TableColumn fx:id="name" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" text="大盘名称" />
             <TableColumn fx:id="high" prefWidth="75.0" text="最高价" />
             <TableColumn fx:id="low" prefWidth="75.0" text="最低价" />
             <TableColumn fx:id="open" prefWidth="75.0" text="开盘价" />
