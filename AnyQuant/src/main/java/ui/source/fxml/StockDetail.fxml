@@ -12,7 +12,7 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <TabPane layoutX="114.0" layoutY="160.0" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/candle.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TabPane fx:id="tabPane" prefHeight="720.0" prefWidth="775.0" stylesheets="@../css/candle.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <tabs>
                 <Tab fx:id="k_day" text="日线图">
                      <content>
@@ -23,7 +23,8 @@
                                     <DatePicker fx:id="dayStart" prefHeight="30.0" prefWidth="120.0" promptText="起始时间">
                                        <HBox.margin>
                                           <Insets left="100.0" />
-                                       </HBox.margin></DatePicker>
+                                       </HBox.margin>
+                                    </DatePicker>
                                     <DatePicker fx:id="dayEnd" prefHeight="30.0" prefWidth="120.0" promptText="终止时间" />
                                     <Button fx:id="dayBT" alignment="CENTER" mnemonicParsing="false" onAction="#updateDayChart" prefHeight="30.0" prefWidth="80.0" text="查询" textAlignment="JUSTIFY">
                                        <font>
@@ -36,6 +37,32 @@
                                  </BorderPane.margin>
                               </HBox>
                            </top>
+                           <center>
+                              <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <HBox fx:id="dayHBox" prefHeight="100.0" prefWidth="200.0" />
+                                    <GridPane fx:id="dayCachePane">
+                                      <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <ProgressIndicator fx:id="dayIndicator" progress="0.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </StackPane>
+                           </center>
                         </BorderPane>
                      </content>
                 </Tab>
@@ -48,12 +75,12 @@
                                     <Insets top="10.0" />
                                  </BorderPane.margin>
                                  <children>
-                                    <DatePicker fx:id="weekStart" prefHeight="30.0" prefWidth="120.0">
+                                    <DatePicker fx:id="weekStart" prefHeight="30.0" prefWidth="120.0" promptText="起始时间">
                                        <HBox.margin>
                                           <Insets left="100.0" />
                                        </HBox.margin>
                                     </DatePicker>
-                                    <DatePicker fx:id="weekEnd" prefHeight="30.0" prefWidth="120.0" />
+                                    <DatePicker fx:id="weekEnd" prefHeight="30.0" prefWidth="120.0" promptText="终止时间" />
                                     <Button fx:id="weekBT" mnemonicParsing="false" onAction="#updateWeekChart" prefHeight="30.0" prefWidth="80.0" text="查询">
                                        <font>
                                           <Font size="14.0" />
@@ -62,6 +89,32 @@
                                  </children>
                               </HBox>
                            </top>
+                           <center>
+                              <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <HBox fx:id="weekHBox" prefHeight="100.0" prefWidth="200.0" />
+                                    <GridPane fx:id="weekCachePane">
+                                       <children>
+                                          <ProgressIndicator fx:id="weekIndicator" progress="0.0" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                       </children>
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                    </GridPane>
+                                 </children>
+                              </StackPane>
+                           </center>
                         </BorderPane>
                      </content>
                 </Tab>
@@ -74,12 +127,12 @@
                                     <Insets top="10.0" />
                                  </BorderPane.margin>
                                  <children>
-                                    <DatePicker fx:id="monthStart" prefHeight="30.0" prefWidth="120.0">
+                                    <DatePicker fx:id="monthStart" prefHeight="30.0" prefWidth="120.0" promptText="起始时间">
                                        <HBox.margin>
                                           <Insets left="100.0" />
                                        </HBox.margin>
                                     </DatePicker>
-                                    <DatePicker fx:id="monthEnd" prefHeight="30.0" prefWidth="120.0">
+                                    <DatePicker fx:id="monthEnd" prefHeight="30.0" prefWidth="120.0" promptText="终止时间">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>
@@ -92,6 +145,32 @@
                                  </children>
                               </HBox>
                            </top>
+                           <center>
+                              <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <HBox fx:id="monthHBox" prefHeight="100.0" prefWidth="200.0" />
+                                    <GridPane fx:id="monthCachePane">
+                                       <children>
+                                          <ProgressIndicator fx:id="monthIndicator" progress="0.0" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                       </children>
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                    </GridPane>
+                                 </children>
+                              </StackPane>
+                           </center>
                         </BorderPane>
                      </content>
                   </Tab>
@@ -219,8 +298,10 @@
                </font>
             </Label>
              <VBox layoutX="3" layoutY="500" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
-	            <Button fx:id="addBtn" layoutX="21.0" layoutY="196.0" mnemonicParsing="false" onAction="#addOptionalStock" text="加入自选" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="196.0" />
-	            <Button fx:id="backBtn" layoutX="21.0" layoutY="400.0" mnemonicParsing="false" onAction="#back" text="返回" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="196.0" />
+                <children>
+   	            <Button fx:id="addBtn" layoutX="21.0" layoutY="196.0" mnemonicParsing="false" onAction="#addOptionalStock" text="加入自选" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="196.0" />
+   	            <Button fx:id="backBtn" layoutX="21.0" layoutY="400.0" mnemonicParsing="false" onAction="#back" text="返回" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="196.0" />
+                </children>
              </VBox>
          </children>
       </AnchorPane>

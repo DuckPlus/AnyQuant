@@ -22,14 +22,14 @@ public class ProgressIndicatorHelper {
 	 */
 	public static ProgressIndicator createProgressIndicator() {
 		ProgressIndicator progress = new ProgressIndicator(0);
-		progress.setVisible(false);
+		progress.setOpacity(0.0);
 		return progress;
 	}
 
 	public static  void showProgressIndicator(ObservableValue<? extends Number> progressProperty,
 			ObservableValue<? extends Boolean> runningProperty,ProgressIndicator progressIndicator,
 			Node node) {
-		progressIndicator.setVisible(true);
+		progressIndicator.setOpacity(1.0);
 		progressIndicator.progressProperty().unbind();
 		progressIndicator.progressProperty().bind(progressProperty);
 		node.visibleProperty().bind(runningProperty);

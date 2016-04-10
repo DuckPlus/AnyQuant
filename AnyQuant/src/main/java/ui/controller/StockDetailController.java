@@ -4,17 +4,25 @@ package ui.controller;
 import blimpl.OptionalStockBLImpl;
 import blservice.OptionalStockBLService;
 import enumeration.MyDate;
+import enumeration.Worker_Type;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import ui.controller.candleStick.CandleStickChart;
+import ui.controller.candleStick.CandleStickThreadHelper;
+import ui.controller.candleStick.ProgressIndicatorHelper;
 import ui.controller.candleStick.TimeSharingChart;
 import util.PanelType;
 import vo.Stock;
@@ -40,13 +48,11 @@ public class StockDetailController {
 	@FXML
 	private Button dayBT,weekBT,monthBT;
 	@FXML
-	private BorderPane dayBorderPane,weekBorderPane,monthBorderPane;
+	public HBox dayHBox,weekHBox,monthHBox;
 	@FXML
-	private VBox vbox;
+	private GridPane dayCachePane,weekCachePane,monthCachePane;
 	@FXML
-	private StackPane stackPane;
-	@FXML
-	private GridPane cachePane;
+	 private ProgressIndicator dayIndicator,weekIndicator,monthIndicator;
 	@FXML
 	TabPane tabPane;
 	private Boolean exist;
@@ -104,10 +110,11 @@ public class StockDetailController {
 			addBtn.setText("加入自选股");
 			exist = false;
 		}
-		// add time sharing then
-		initTimeSharing();
 		// add k_line
 		initKLine();
+		// add time sharing then
+		initTimeSharing();
+
 	}
 
 	private void initTimeSharing() {
@@ -117,34 +124,57 @@ public class StockDetailController {
 
 	private void initKLine() {
 		System.out.println("initKLine()"+currentStock.code.get());
-		Node dayChart=candleStickController.getInitialDayChart(currentStock.code.get());
-		Node weekChart=candleStickController.getInitialWeekChart(currentStock.code.get());
-		Node monthChart = candleStickController.getInitialMonthChart(currentStock.code.get());
-		dayBorderPane.setCenter(dayChart);
-		weekBorderPane.setCenter(weekChart);
-		monthBorderPane.setCenter(monthChart);
 
+
+         Task initDayTask=CandleStickThreadHelper.
+        		          createInitWorker(Worker_Type.initDayChart,currentStock.code.get());
+
+         Task initWeekTask= CandleStickThreadHelper.
+        		          createInitWorker(Worker_Type.initWeekChart, currentStock.code.get());
+
+         Task initMonthTask= CandleStickThreadHelper.
+		          createInitWorker(Worker_Type.initMonthChart, currentStock.code.get());
+
+         ProgressIndicatorHelper.showProgressIndicator(initDayTask.progressProperty(),
+        		 initDayTask.runningProperty(), dayIndicator, dayCachePane);
+         ProgressIndicatorHelper.showProgressIndicator(initWeekTask.progressProperty(),
+        		 initWeekTask.runningProperty(), weekIndicator, weekCachePane);
+         ProgressIndicatorHelper.showProgressIndicator(initMonthTask.progressProperty(),
+        		 initMonthTask.runningProperty(), monthIndicator, monthCachePane);
+
+ 		 new Thread(initDayTask).start();
+		 new Thread(initWeekTask).start();
+		 new Thread(initMonthTask).start();
 	}
 	@FXML
 	private  void updateDayChart(){
 		MyDate start = new MyDate(dayStart.getValue().getYear(),dayStart.getValue().getMonthValue(),dayStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(dayEnd.getValue().getYear(),dayEnd.getValue().getMonthValue(),dayEnd.getValue().getDayOfMonth());
-        Node dayChart = candleStickController.getUpdatedDayChart(currentStock.code.get(), start, end);
-        dayBorderPane.setCenter(dayChart);
+		Task updateDayTask=CandleStickThreadHelper.
+		          createUpdateChartWorker(Worker_Type.updateDayChart,currentStock.code.get(),start,end);
+		ProgressIndicatorHelper.showProgressIndicator(updateDayTask.progressProperty(),
+				updateDayTask.runningProperty(), dayIndicator, dayCachePane);
+		new Thread(updateDayTask).start();
 	}
 	@FXML
 	private  void updateWeekChart(){
 		MyDate start = new MyDate(weekStart.getValue().getYear(),weekStart.getValue().getMonthValue(),weekStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(weekEnd.getValue().getYear(),weekEnd.getValue().getMonthValue(),weekEnd.getValue().getDayOfMonth());
-        Node weekChart = candleStickController.getUpdatedWeekChart(currentStock.code.get(), start, end);
-        weekBorderPane.setCenter(weekChart);
+		Task updateWeekTask=CandleStickThreadHelper.
+		          createUpdateChartWorker(Worker_Type.updateWeekChart,currentStock.code.get(),start,end);
+		ProgressIndicatorHelper.showProgressIndicator(updateWeekTask.progressProperty(),
+				updateWeekTask.runningProperty(), weekIndicator, weekCachePane);
+		new Thread(updateWeekTask).start();
 	}
 	@FXML
 	private  void updateMonthChart(){
 		MyDate start = new MyDate(monthStart.getValue().getYear(),monthStart.getValue().getMonthValue(),monthStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(monthEnd.getValue().getYear(),monthEnd.getValue().getMonthValue(),monthEnd.getValue().getDayOfMonth());
-        Node monthChart = candleStickController.getUpdatedMonthChart(currentStock.code.get(), start, end);
-        monthBorderPane.setCenter(monthChart);
+		Task updateMonthTask=CandleStickThreadHelper.
+		          createUpdateChartWorker(Worker_Type.updateMonthChart,currentStock.code.get(),start,end);
+		ProgressIndicatorHelper.showProgressIndicator(updateMonthTask.progressProperty(),
+				updateMonthTask.runningProperty(), monthIndicator, monthCachePane);
+		new Thread(updateMonthTask).start();
 	}
 	@FXML
 	private void back(){

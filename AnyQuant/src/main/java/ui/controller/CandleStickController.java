@@ -7,18 +7,12 @@ import java.util.ResourceBundle;
 import blimpl.StockBLImpl;
 import blservice.StockBLService;
 import enumeration.MyDate;
-import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import ui.controller.candleStick.CandleStickChart;
 import util.MyTime;
 import vo.OHLC_VO;
@@ -31,11 +25,16 @@ import vo.OHLC_VO;
 public class CandleStickController implements Initializable {
 
 
-	@FXML
-	private CandleStickChart dayChart, weekChart, monthChart;
-	private ObservableList<OHLC_VO> dayList, weekList, monthList;
+
+
+	public CandleStickChart dayChart, weekChart, monthChart;
+	public ObservableList<OHLC_VO> dayList;
+	public ObservableList<OHLC_VO> weekList;
+	public ObservableList<OHLC_VO> monthList;
 	private String stockCode;
 	private MyDate startDate, endDate;
+
+
 
 
 	private static StockBLService stockBl;
@@ -72,22 +71,23 @@ public class CandleStickController implements Initializable {
 
 
 	public Node getInitialDayChart(String code) {
+
 		this.stockCode = code;
-		selectDay();
+		getDayData();
         dayChart = CandleStickChart.createChart(dayList);
 		return dayChart;
 	}
 
 	public Node getInitialWeekChart(String code){
 	    this.stockCode=code;
-	    selectWeek();
+	   getWeekData();
 	    weekChart= CandleStickChart.createChart(weekList);
 	    return weekChart;
 	}
 
 	public Node getInitialMonthChart(String code){
        this.stockCode=code;
-       selectMonth();
+      getMonthData();
        monthChart=CandleStickChart.createChart(monthList);
        return monthChart;
 	}
@@ -97,11 +97,7 @@ public class CandleStickController implements Initializable {
 		this.stockCode = code;
 		this.startDate = start;
 		this.endDate = end;
-	//	Task updateTask = createUpdateDayChartWorker();
-	//	 showProgressIndicator(
-	//	 updateTask.progressProperty(),updateTask.runningProperty());
-   //		new Thread(updateTask).start();
-      updateDay();
+        getDayDataByDate();
       dayChart = CandleStickChart.createChart(dayList);
 
 		return dayChart;
@@ -113,11 +109,7 @@ public class CandleStickController implements Initializable {
 		this.stockCode = code;
 		this.startDate = start;
 		this.endDate = end;
-	//	Task updateTask = createUpdateWeekChartWorker();
-		// showProgressIndicator(
-		// updateTask.progressProperty(),updateTask.runningProperty());
-	//	new Thread(updateTask).start();
-		updateWeek();
+		getWeekDataByDate();
         weekChart=CandleStickChart.createChart(weekList);
 		return weekChart;
 
@@ -132,62 +124,14 @@ public class CandleStickController implements Initializable {
 		// showProgressIndicator(
 		// updateTask.progressProperty(),updateTask.runningProperty());
 	//	new Thread(updateTask).start();
-		updateMonth();
+		getMonthDataByDate();
 		monthChart=CandleStickChart.createChart(monthList);
 		return dayChart;
 
 	}
 
 
-
-	public void selectDay() {
-
-		  getDayData();
-
-	}
-
-	public void selectWeek() {
-
-			getWeekData();
-
-	}
-
-	public void selectMonth() {
-
-			getMonthData();
-
-	}
-
-	public void updateDay() {
-		getDayDataByDate();
-	}
-
-	public void updateWeek() {
-
-		getWeekDataByDate();
-	}
-
-	public void updateMonth() {
-
-		getMonthDataByDate();
-	}
-
-	// private Node createPane( Node chartNode, ScrollPane spane ){
-	// //RowConstraints rc = new RowConstraints(500, 690, 690);
-	// //ColumnConstraints cc = new ColumnConstraints(800,900,900);
-	// HBox hBox = new HBox();
-	// HBox.setHgrow(chartNode, Priority.ALWAYS);
-	// hBox.setPrefSize(800, 600);
-	// hBox.getChildren().add(chartNode);
-	//
-	//
-	// spane.setContent(hBox);
-	// spane.setHbarPolicy(ScrollBarPolicy.ALWAYS);
-	// spane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-	// return spane;
-	// }
-
-	private void getDayData() {
+	public void getDayData() {
 		// 默认显示近一个月的数据
 		MyDate end = MyTime.getToDay();
 		MyDate start = MyTime.getAnotherDay(-30);
@@ -197,7 +141,7 @@ public class CandleStickController implements Initializable {
 			dayList.add(temp);
 		}
 	}
-    private  void  getDayDataByDate(){
+    public  void  getDayDataByDate(){
 		if (startDate != null && endDate != null) {
 			List<OHLC_VO> list = stockBl.getDayOHLC_Data(stockCode, startDate, endDate);
 			dayList.clear();
@@ -207,7 +151,7 @@ public class CandleStickController implements Initializable {
 		}
 	}
 
-	private void getWeekData() {
+	public void getWeekData() {
 		// 默认显示最近一年的数据
 		MyDate end = MyTime.getToDay();
 		MyDate start = MyTime.getAnotherDay(-180);
@@ -218,7 +162,7 @@ public class CandleStickController implements Initializable {
 		}
 	}
 
-	private void getWeekDataByDate() {
+	public void getWeekDataByDate() {
 		if (startDate != null && endDate != null) {
 			List<OHLC_VO> list = stockBl.getWeekOHLC_Data(stockCode, startDate, endDate);
 			weekList.clear();
@@ -228,7 +172,7 @@ public class CandleStickController implements Initializable {
 		}
 	}
 
-	private void getMonthData() {
+	public void getMonthData() {
 		// 默认显示最近三年的数据
 		MyDate end = MyTime.getToDay();
 		MyDate start = MyTime.getAnotherDay(-365 * 2);
@@ -239,7 +183,7 @@ public class CandleStickController implements Initializable {
 		}
 	}
 
-	private void getMonthDataByDate() {
+	public void getMonthDataByDate() {
 		if (startDate != null && endDate != null) {
 			List<OHLC_VO> list = stockBl.getMonthOHLC_Data(stockCode, startDate, endDate);
 			monthList.clear();
@@ -249,8 +193,17 @@ public class CandleStickController implements Initializable {
 		}
 	}
 
+	public void SetStockCode(String code){
+		this.stockCode=code;
+	}
 
+	public void SetStartDate(MyDate start){
+		startDate=start;
+	}
 
+	public void SetEndDate(MyDate end){
+		endDate=end;
+	}
 
 
 }
