@@ -8,13 +8,13 @@ import javafx.scene.image.Image;
 * @date 2016年4月9日
 */
 public class UIStaticSource {
-	
-	
+
+
 		public static final String title = "AnyQuant";
 		public static final String rootPane = "RootPane";
-		
-	
-		public static final Image ICON = GraphicsUtils.getImage("ui/source/img/AppIcon.png");
-	
-	
+
+
+		public static final Image ICON = GraphicsUtils.getImage("ui/source/img/AppIcon_.png");
+
+
 }
