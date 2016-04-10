@@ -32,7 +32,7 @@ import vo.OHLC_VO;
  *       CandleStickExtraValues object.
  */
 
-class CandleStickChart extends XYChart<String, Number> {
+public class CandleStickChart extends XYChart<String, Number> {
 
 	// TODO
 	// -------------- CONSTRUCTORS

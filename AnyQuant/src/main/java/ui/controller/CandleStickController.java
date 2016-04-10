@@ -1,4 +1,4 @@
-package ui.controller.candleStick;
+package ui.controller;
 
 import java.net.URL;
 import java.util.List;
@@ -19,6 +19,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import ui.controller.candleStick.CandleStickChart;
 import util.MyTime;
 import vo.OHLC_VO;
 
@@ -29,14 +30,7 @@ import vo.OHLC_VO;
  */
 public class CandleStickController implements Initializable {
 
-	@FXML
-	private VBox vbox;
-	@FXML
-	private StackPane stackPane;
-	@FXML
-	private GridPane cachePane;
 
-	private ProgressIndicator progressIndicator;
 	@FXML
 	private CandleStickChart dayChart, weekChart, monthChart;
 	private ObservableList<OHLC_VO> dayList, weekList, monthList;
@@ -203,7 +197,6 @@ public class CandleStickController implements Initializable {
 			dayList.add(temp);
 		}
 	}
-
     private  void  getDayDataByDate(){
 		if (startDate != null && endDate != null) {
 			List<OHLC_VO> list = stockBl.getDayOHLC_Data(stockCode, startDate, endDate);
@@ -256,109 +249,8 @@ public class CandleStickController implements Initializable {
 		}
 	}
 
-	/*
-	 * Create a progress indicator control to be centered.
-	 *
-	 * @param scene The primary application scene.
-	 *
-	 * @return ProgressIndicator a new progress indicator centered.
-	 */
-	private ProgressIndicator createProgressIndicator() {
-		ProgressIndicator progress = new ProgressIndicator(0);
-		progress.setVisible(false);
-		return progress;
-	}
 
-	private void showProgressIndicator(ObservableValue<? extends Number> progressProperty,
-			ObservableValue<? extends Boolean> runningProperty) {
-		progressIndicator.setVisible(true);
-		progressIndicator.progressProperty().unbind();
-		progressIndicator.progressProperty().bind(progressProperty);
-		cachePane.visibleProperty().bind(runningProperty);
 
-	}
 
-	private void removeProgressIndicator() {
-		progressIndicator.setVisible(false);
-	}
-
-	private Task createInitWorker() {
-		return new Task() {
-			@Override
-			protected Object call() throws Exception {
-				// on the worker thread...
-				//getInitData();
-				Platform.runLater(() -> {
-
-					// on the JavaFX Application Thread....
-					System.out.println("done init Charts");
-					// removeProgressIndicator();
-
-				});
-				return true;
-			}
-
-			@Override
-            protected void succeeded() {
-                super.succeeded();
-
-            }
-
-		};
-	}
-
-	private Task createUpdateDayChartWorker() {
-		return new Task() {
-			@Override
-			protected Object call() throws Exception {
-				// on the worker thread...
-				updateDay();
-				Platform.runLater(() -> {
-
-					// on the JavaFX Application Thread....
-					System.out.println("done updateCharts");
-					// removeProgressIndicator();
-					dayChart = CandleStickChart.createChart(dayList);
-				});
-				return true;
-			}
-		};
-	}
-
-	private Task createUpdateWeekChartWorker() {
-		return new Task() {
-			@Override
-			protected Object call() throws Exception {
-				// on the worker thread...
-				updateWeek();
-				Platform.runLater(() -> {
-
-					// on the JavaFX Application Thread....
-					System.out.println("done updateCharts");
-					// removeProgressIndicator();
-					weekChart = CandleStickChart.createChart(weekList);
-				});
-				return true;
-			}
-		};
-	}
-
-	private Task createUpdateMonthChartWorker() {
-		return new Task() {
-			@Override
-			protected Object call() throws Exception {
-				// on the worker thread...
-				updateMonth();
-				Platform.runLater(() -> {
-
-					// on the JavaFX Application Thread....
-					System.out.println("done updateCharts");
-					// removeProgressIndicator();
-					monthChart = CandleStickChart.createChart(monthList);
-				});
-				return true;
-			}
-		};
-	}
 
 }

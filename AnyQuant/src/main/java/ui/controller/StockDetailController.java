@@ -12,7 +12,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
-import ui.controller.candleStick.CandleStickController;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import ui.controller.candleStick.TimeSharingChart;
 import util.PanelType;
 import vo.Stock;
@@ -20,25 +22,31 @@ import vo.Stock;
 public class StockDetailController {
 
 	@FXML
-	Label nameLB, codeLB;
+	private Label nameLB, codeLB;
 	@FXML
-	Label openLB, closeLB, lowLB , highLB;
+	private Label openLB, closeLB, lowLB , highLB;
 	@FXML
-	Label turnoverRateLB, turnoverVolLB;
+	private Label turnoverRateLB, turnoverVolLB;
 	@FXML
-	Label peLB,pbLB;
+	private Label peLB,pbLB;
 	@FXML
-	Button addBtn,backBtn;
+	private Button addBtn,backBtn;
 	@FXML
-	Tab k_day, k_week, k_month;
+	private Tab k_day, k_week, k_month;
 	@FXML
-	Tab timeSharing;
+	private Tab timeSharing;
 	@FXML
-	DatePicker  dayStart,dayEnd,weekStart,weekEnd,monthStart,monthEnd;
+	private DatePicker  dayStart,dayEnd,weekStart,weekEnd,monthStart,monthEnd;
 	@FXML
-	Button dayBT,weekBT,monthBT;
+	private Button dayBT,weekBT,monthBT;
 	@FXML
-	BorderPane dayBorderPane,weekBorderPane,monthBorderPane;
+	private BorderPane dayBorderPane,weekBorderPane,monthBorderPane;
+	@FXML
+	private VBox vbox;
+	@FXML
+	private StackPane stackPane;
+	@FXML
+	private GridPane cachePane;
 	@FXML
 	TabPane tabPane;
 	private Boolean exist;
