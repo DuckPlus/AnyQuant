@@ -30,6 +30,7 @@ public class MainAPP extends Application {
 
 		new HomeController(rootPane,stage);
 		stage.setTitle(UIStaticSource.title);
+		this.stage.getIcons().clear();
 		this.stage.getIcons().add(UIStaticSource.ICON);
 
 		 addDragListeners(rootPane, primaryStage);
