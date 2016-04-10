@@ -17,7 +17,6 @@ public class CacheHelper {
 	public static boolean needUpdate(boolean selectedOrBench) {
 		List<String> tmp;
 		if (selectedOrBench) {
-
 			tmp = FileIOHelper.readFiles(FileIOHelper.SELECTED_FILE);
 		} else {
 			tmp = FileIOHelper.readFiles(FileIOHelper.BENCHMARK_CACHE_FILE);
