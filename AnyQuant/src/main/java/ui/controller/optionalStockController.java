@@ -18,7 +18,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import ui.controller.candleStick.CandleStickController;
 import util.PanelType;
 import vo.Stock;
 import vo.StockVO;

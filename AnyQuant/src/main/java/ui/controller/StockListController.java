@@ -23,7 +23,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import ui.GraphicsUtils;
-import ui.controller.candleStick.CandleStickController;
 import util.PanelType;
 import vo.Stock;
 import vo.StockVO;
