@@ -3,9 +3,10 @@ package data;
 import java.util.ArrayList;
 import java.util.List;
 
+import data.helper.CacheHelper;
 import data.helper.ConnectionHelper;
 import data.helper.FileIOHelper;
-import data.helper.JSONTransferHelper;
+import data.helper.TransferHelper;
 import data.helper.StockMesHelper;
 import dataservice.BenchMarkDataService;
 import enumeration.API_TYPE;
@@ -37,7 +38,7 @@ public class BenchMarkDSImpl implements BenchMarkDataService {
 
 	@Override
 	public List<String> getAllBenchMarks() {
-		return FileIOHelper.readAllBenches();
+		return FileIOHelper.readFiles(FileIOHelper.benchCodeFileName);
 	}
 
 	// 获得最新的大盘数据
@@ -64,7 +65,7 @@ public class BenchMarkDSImpl implements BenchMarkDataService {
 		if (jo.getInt("retCode") == 1) {
 			JSONArray jArray = jo.getJSONArray("data");
 			JSONObject benJsonObject = jArray.getJSONObject(0);
-			BenchMarkPO po = JSONTransferHelper.JSONObjectToBenchMarkPO(benJsonObject);
+			BenchMarkPO po = TransferHelper.JSONObjectToBenchMarkPO(benJsonObject);
 			return po;
 		} else {
 			return new BenchMarkPO();
@@ -86,7 +87,7 @@ public class BenchMarkDSImpl implements BenchMarkDataService {
 			JSONArray jArray = jo.getJSONArray("data");
 			for (int i = 0; i < jArray.size(); i++) {
 				JSONObject stockpoJsonObject = jArray.getJSONObject(i);
-				BenchMarkPO po = JSONTransferHelper.JSONObjectToBenchMarkPO(stockpoJsonObject);
+				BenchMarkPO po = TransferHelper.JSONObjectToBenchMarkPO(stockpoJsonObject);
 				pos.add(po);
 			}
 			return pos;
@@ -97,17 +98,20 @@ public class BenchMarkDSImpl implements BenchMarkDataService {
 	}
 
 	@Override
-	/**
-	 * 目前尚未实现缓存
-	 */
 	public List<BenchMarkPO> getAllBenchMes() {
-		List<BenchMarkPO> pos = new ArrayList<>();
-		List<String> benchs = FileIOHelper.readAllBenches();
-		for (String benchCode : benchs) {
-			BenchMarkPO po = this.getBenchMes(benchCode);
-			pos.add(po);
+		
+		
+		if(CacheHelper.needUpdate(false)){
+			List<BenchMarkPO> pos = new ArrayList<>();
+			List<String> benchs = FileIOHelper.readFiles(FileIOHelper.benchCodeFileName);
+			for (String benchCode : benchs) {
+				BenchMarkPO po = this.getBenchMes(benchCode);
+				pos.add(po);
+			}
+			FileIOHelper.writeAllBenMes(pos);
 		}
-		return pos;
+		
+		return CacheHelper.getCacheBenchPOs();
 	}
 
 	// 不确定请求的大盘信息在某日是否有数据，返回请求结果1为有，-1为没有

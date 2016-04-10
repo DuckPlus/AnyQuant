@@ -21,7 +21,7 @@
                   <TableColumn fx:id="low" prefWidth="75.0" text="最低价" />
                   <TableColumn fx:id="close" prefWidth="75.0" text="收盘价" />
                   <TableColumn fx:id="turnoverRate" prefWidth="75.0" text="换手率" />
-                  <TableColumn fx:id="turnoverVol" prefWidth="75.0" text="成交量" />
+                  <TableColumn fx:id="turnoverVol" prefWidth="75.0" styleClass="notTrade" text="成交量" />
                   <TableColumn fx:id="amplitude" prefWidth="75.0" text="振幅" />
                   <TableColumn fx:id="changeRate" prefWidth="75.0" text="涨跌幅" />
               </columns>

@@ -218,7 +218,10 @@
                   <Font size="12.0" />
                </font>
             </Label>
-            <Button fx:id="addBtn" layoutX="21.0" layoutY="196.0" mnemonicParsing="false" onAction="#addOptionalStock" text="加入自选" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="196.0" />
+             <VBox layoutX="3" layoutY="500" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
+	            <Button fx:id="addBtn" layoutX="21.0" layoutY="196.0" mnemonicParsing="false" onAction="#addOptionalStock" text="加入自选" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="196.0" />
+	            <Button fx:id="backBtn" layoutX="21.0" layoutY="400.0" mnemonicParsing="false" onAction="#back" text="返回" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="196.0" />
+             </VBox>
          </children>
       </AnchorPane>
    </right>

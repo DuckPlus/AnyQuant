@@ -2,6 +2,7 @@ package ui.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Side;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
 /**
@@ -11,27 +12,29 @@ import javafx.scene.chart.PieChart.Data;
 */
 public class MyPieChart {
 	private ObservableList<Data> items = FXCollections.observableArrayList();
-	private PieChart pc;
+	private PieChart piechart;
 	public MyPieChart() {
 		init();
 	}
-	
+
 	private void init(){
-		pc = new PieChart(items);
-		pc.setPrefSize(200, 200);
+		piechart = new PieChart(items);
+		piechart.setPrefSize(200, 200);
+		piechart.setLabelLineLength(10);
+		piechart.setLegendSide(Side.RIGHT);
 	}
-	
+
 	public void addData(String s,double value){
-		pc.setLegendVisible(true);
+		piechart.setLegendVisible(true);
 		items.add(new PieChart.Data(s, value));
-		
+
 	}
 	public PieChart getPieChart(){
-		return pc;
+		return piechart;
 	}
-	
+
 	 protected PieChart createChart() {
-		 
+
 	        final PieChart pc = new PieChart(FXCollections.observableArrayList(
 	            new PieChart.Data("Sun", 20),
 	            new PieChart.Data("IBM", 12),

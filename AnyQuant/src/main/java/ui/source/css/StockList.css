@@ -1,9 +1,9 @@
 .background{
-	-fx-background-color :rgb(38, 51, 53);
+	-fx-background-color : rgba(26, 145, 163, 0.55);
 }
 
 .stockTable{
-	-fx-background-color :#2c3e50
+	-fx-background-color : #1ba0a3
 	
 	
     -fx-table-cell-border-color transparent;
@@ -30,7 +30,7 @@
 	
 }*/
 .table-row-cell:selected {
-    -fx-background-color: #005797;
+    -fx-background-color: #b6c857;
     -fx-background-insets: 0;
     -fx-background-radius: 15;
 	-fx-border: rgb(178, 17, 47);
@@ -39,12 +39,13 @@
 	-fx-background-color:transparent
 }
 .table-view .column-header-background{
-    -fx-background-color: linear-gradient(#131313 0%, #424141 100%);
+    -fx-background-color: linear-gradient(#54969c 0%, #c566a7 100%);
 }
 
 .table-view .column-header-background .label{
     -fx-background-color: transparent;
     -fx-text-fill: white;
+    -fx-text-font-size: 18
 }
 
 .table-view .column-header {
@@ -53,3 +54,15 @@
 .table-view .table-cell{
     -fx-text-fill: white;
 }
+
+.table-column {
+  -fx-alignment: CENTER;
+
+}
+
+.table-column-cell .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: #e5e439;
+    -fx-text-font-size: 15
+}
+

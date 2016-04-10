@@ -1,4 +1,8 @@
 package po;
+
+import data.helper.TransferHelper;
+import enumeration.StaticMessage;
+
 /**
  *
  * @author ss
@@ -114,5 +118,10 @@ public class BenchMarkPO {
 
 		public void setChange(double change) {
 			this.change = change;
+		}
+		
+		
+		public String MyToString(String splitChar) {
+			return TransferHelper.ObjectToString(StaticMessage.BENCHMARK_PO , this , splitChar);
 		}
 }

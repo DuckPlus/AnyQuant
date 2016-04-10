@@ -16,10 +16,10 @@ import javafx.scene.layout.GridPane;
     private Label lowValue = new Label();
 
     public TooltipContent() {
-        Label open = new Label("OPEN:");
-        Label close = new Label("CLOSE:");
-        Label high = new Label("HIGH:");
-        Label low = new Label("LOW:");
+        Label open = new Label("开盘:");
+        Label close = new Label("收盘:");
+        Label high = new Label("最高:");
+        Label low = new Label("最低:");
         open.getStyleClass().add("candlestick-tooltip-label");
         close.getStyleClass().add("candlestick-tooltip-label");
         high.getStyleClass().add("candlestick-tooltip-label");

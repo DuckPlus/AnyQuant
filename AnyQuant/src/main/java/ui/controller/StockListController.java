@@ -24,6 +24,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import ui.GraphicsUtils;
 import ui.controller.candleStick.CandleStickController;
+import util.PanelType;
 import vo.Stock;
 import vo.StockVO;
 
@@ -140,7 +141,7 @@ public class StockListController{
 			      stockDetailController = StockDetailController.getStockDetailController();
 			}
 			System.err.println("stock instance:"+stockDetailController.toString());
-			stockDetailController.setData(selectedStock);
+			stockDetailController.setData(selectedStock,PanelType.STOCK_LIST);
 			rightPaneController.showDetailPane(stockDetailPane);
 		}
 	}

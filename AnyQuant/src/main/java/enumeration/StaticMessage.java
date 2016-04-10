@@ -8,7 +8,7 @@ public class StaticMessage {
 	public static final String SH_EXCHANGE = ".XSHG";
 	public static final String SZ_EXCHANGE = ".XSHE";
 	public static final String TRADE_OVER_TIME = "15:00";
-	public static final String CONNECTION_API_PREFIX = "";
-	public static final String ACCESS_TOKEN = "";
-	
+	public static final String ACCESS_TOKEN = "44a70d35d80240eaa3d9a66b0b090de5bef4c96914f39c4faa225b4570ee301c";
+	public static final String STOCK_PO = "po.StockPO";
+	public static final String BENCHMARK_PO = "po.BenchMarkPO";
 }

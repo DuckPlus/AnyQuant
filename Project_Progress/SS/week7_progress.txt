@@ -1,0 +1,6 @@
+who:侍硕
+when:第六周
+what:重构数据层，把APIDataServcieImpl一分为三，并且提供了一些辅助类，来提高数据层的内聚度，将k线图和实时图
+           拆分开来以作将来的复用
+problem:  界面拆分后缓冲动画没法用了
+todo:学习JavaFX线程，把缓冲动画再补充上去
