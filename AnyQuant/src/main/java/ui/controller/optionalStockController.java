@@ -88,10 +88,10 @@ public class optionalStockController {
 	private void initialize(){
 		observableList = FXCollections.observableArrayList();
 		stockDetailPane = instanceController.getStockDetailPane();
+		initPieChart();
 		if(name!=null){
 			System.out.println("not null col");
 		getOptionalStock();
-		initPieChart();
 		}
 
 	}

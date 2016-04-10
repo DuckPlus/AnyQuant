@@ -13,13 +13,19 @@ import javafx.scene.chart.PieChart.Data;
 public class MyPieChart {
 	private ObservableList<Data> items = FXCollections.observableArrayList();
 	private PieChart piechart;
+	private int width=200,height=200;
 	public MyPieChart() {
+		init();
+	}
+	public MyPieChart(int width,int height) {
+		this.width=width;
+		this.height=height;
 		init();
 	}
 
 	private void init(){
 		piechart = new PieChart(items);
-		piechart.setPrefSize(200, 200);
+		piechart.setPrefSize(width,height);
 		piechart.setLabelLineLength(10);
 		piechart.setLegendSide(Side.RIGHT);
 	}

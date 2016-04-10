@@ -11,6 +11,7 @@ import java.util.List;
 import blimpl.StockBLImpl;
 import blservice.StockBLService;
 import javafx.scene.chart.LineChart;
+import javafx.scene.control.Tooltip;
 import vo.Stock;
 import vo.TimeSharingVO;
 
@@ -18,6 +19,7 @@ public class TimeSharingChart {
 	MyLineChart lineChart;
 	StockBLService stockBl = StockBLImpl.getAPIBLService();
 	Stock currentStock;
+	 private Tooltip tooltip = new Tooltip();
 	public TimeSharingChart(Stock cs) {
 		currentStock = cs;
 		init();
@@ -29,10 +31,13 @@ public class TimeSharingChart {
     	Iterator<TimeSharingVO> itrc = timeSharingData.iterator();
     	double upperBounds=0;
     	double lowerBounds=10000;
+    	tooltip.setGraphic(new TooltipContentTimeSharing());
+        Tooltip.install(lineChart.getTimesharingChart(), tooltip);
     	while(itrc.hasNext()){
     		TimeSharingVO tempCmp = itrc.next();
     		if(tempCmp.nowPrice>upperBounds)upperBounds = tempCmp.nowPrice;
     		if(tempCmp.nowPrice<lowerBounds)lowerBounds = tempCmp.nowPrice;
+
     	}
     	//end
     	lineChart.setChartProperty(currentStock.name.get()+"   Monitoring", upperBounds+0.02, lowerBounds-0.02);
@@ -40,13 +45,15 @@ public class TimeSharingChart {
     	while(itr.hasNext()){
     		TimeSharingVO temp = itr.next();
     		lineChart.addData(temp.nowTime.TimeToString(), temp.nowPrice);
+    		TooltipContentTimeSharing tip=(TooltipContentTimeSharing)tooltip.getGraphic();
+    		tip.update(temp.nowTime.TimeToString(), temp.nowPrice);
     	}
-		
-		
+
+
 	}
-	
+
 	public LineChart<String, Number> getTimeSharingChart(){
 		return lineChart.getTimesharingChart();
 	}
-	
+
 }
