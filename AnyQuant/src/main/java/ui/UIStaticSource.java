@@ -14,7 +14,7 @@ public class UIStaticSource {
 		public static final String rootPane = "RootPane";
 
 
-		public static final Image ICON = GraphicsUtils.getImage("ui/source/img/AppIcon_.png");
+		public static final Image ICON = GraphicsUtils.getImage("ui/source/img/AppIcon.png");
 
 
 }

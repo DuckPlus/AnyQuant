@@ -68,7 +68,7 @@ public class RightPaneController{
 	}
 	 void showOptionalStockPane(){
 		 System.out.println("optional Pane");
-		
+
 		 pane.getChildren().clear();
 		 pane.setCenter(optionalStockPane);
 		 if(opStockController ==null){
@@ -82,7 +82,6 @@ public class RightPaneController{
 		if(RightPaneController.pane == null){
 		RightPaneController.pane = (BorderPane) pane;
 		}
-
 
 
 	}
