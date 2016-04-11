@@ -1,6 +1,10 @@
  .background{
-	-fx-background-color :rgb(38, 51, 53);
+	-fx-background-color :#000000;
 }
+ .header-region{
+    -fx-background-color :#000000;   
+ }
+
 
 .stockTable{
 	-fx-background-color :#2c3e50

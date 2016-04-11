@@ -1,6 +1,7 @@
 package ui.controller;
 
 
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -8,9 +9,13 @@ import blimpl.BenchMarkBLImpl;
 import blimpl.OptionalStockBLImpl;
 import blservice.BenchMarkBLService;
 import blservice.OptionalStockBLService;
+import enumeration.MyDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -18,6 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import ui.controller.candleStick.MyLineChart;
 import util.PanelType;
 import vo.Stock;
 import vo.StockVO;
@@ -54,7 +60,23 @@ public class optionalStockController {
 	Tab geographicalDis;
 	@FXML
 	Tab boardDis;
+	// compare below
+	@FXML
+	ComboBox<String>chartType;
+	@FXML
+	TableColumn<Stock, String>cmpName,cmpCode;
+	@FXML
+	TableView<Stock>cmpTableview;
+	@FXML
+	DatePicker cmpBgn,cmpEnd;
+	@FXML
+	AnchorPane cmpChartPane;
+	
+	MyLineChart cmpChart;
+	
 	private ObservableList<Stock> observableList;
+	
+	private ObservableList<Stock> cmpTableData;
 
 	private OptionalStockBLService optionalBl = OptionalStockBLImpl.getOptionalBLService();
 
@@ -65,7 +87,7 @@ public class optionalStockController {
 	private RightPaneController rightPaneController;
 
 	private BorderPane stockDetailPane;
-	private AnchorPane chartPane;
+//	private AnchorPane chartPane;
 	CandleStickController candleStickController;
 
 	private static optionalStockController instance;
@@ -86,14 +108,62 @@ public class optionalStockController {
 	@FXML
 	private void initialize(){
 		observableList = FXCollections.observableArrayList();
+		cmpTableData = FXCollections.observableArrayList();
 		stockDetailPane = instanceController.getStockDetailPane();
 		initPieChart();
-		if(name!=null){
-			System.out.println("not null col");
 		getOptionalStock();
-		}
-
+		initChoice();
+		initCmpTable();
 	}
+	
+	private void initChoice(){
+	chartType.getItems().add("市盈率");
+	chartType.getItems().add("市净率");
+	chartType.getItems().add("成交量");
+	chartType.getSelectionModel().select(0);
+	}
+	private void initCmpTable(){
+		//init date picker
+		
+		cmpBgn.setValue(LocalDate.now());
+		cmpEnd.setValue(LocalDate.now());
+		//init table
+		cmpTableview.getItems().removeAll(cmpTableData);
+		Iterator<StockVO>itr = optionalBl.getOptionalStocks();
+		while(itr.hasNext()){
+			StockVO temp = itr.next();
+			Stock dataProperty = new Stock(temp);
+			cmpTableData.add(dataProperty);
+		}
+		cmpTableview.setItems(cmpTableData);
+		cmpName.setCellValueFactory(cell -> cell.getValue().name);
+		cmpCode.setCellValueFactory(cell -> cell.getValue().code);
+		
+		//init chart
+		cmpChart = new MyLineChart();
+		cmpChart.setSize(650, 650);
+		cmpChartPane.getChildren().add(cmpChart.getTimesharingChart());
+	}
+	@FXML
+	private void addCmpStock(){
+		System.out.println("ouch");
+		if(cmpTableview.getSelectionModel().getSelectedIndex()!=-1){
+		Stock selectedCmpStock = cmpTableview.getSelectionModel().getSelectedItem();
+		MyDate cmpB = new MyDate(cmpBgn.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
+		MyDate cmpE = new MyDate(cmpEnd.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
+		
+		switch(chartType.getSelectionModel().getSelectedItem()){
+			case "市盈率":drawCmpPEChart();break;
+			case "市净率":System.out.println("sjl");break;
+			case "成交量":System.out.println("cjl");break;
+			default:System.out.println("default");break;
+		}
+		}
+	}
+	private void drawCmpPEChart(){
+		
+	}
+	
 	private void initPieChart(){
 		MyPieChart pc_board = new MyPieChart();
 		Iterator<Entry<String,Integer>>itr = optionalBl.getBorderDistribution();

@@ -64,6 +64,10 @@ public class MyLineChart {
 //update method//			series.getData().add(new XYChart.Data<String,Number>(String.valueOf(LocalDateTime.now().getHour())+":"+String.valueOf(LocalDateTime.now().getMinute()) ,10+Math.random()*15));
 
 	    }
+	   public void setSize(int width,int height){
+		   lineChart.setPrefHeight(height);
+	       lineChart.setPrefWidth(width);
+	   }
 	   public LineChart<String, Number> getTimesharingChart(){
 		   return lineChart;
 	   }

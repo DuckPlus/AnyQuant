@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Side;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
+import javafx.scene.layout.Background;
 /**
 *
 *@author:duanzhengmou
@@ -28,6 +29,7 @@ public class MyPieChart {
 		piechart.setPrefSize(width,height);
 		piechart.setLabelLineLength(10);
 		piechart.setLegendSide(Side.RIGHT);
+		piechart.getStylesheets().add("ui/source/css/pieChart.css");
 	}
 
 	public void addData(String s,double value){

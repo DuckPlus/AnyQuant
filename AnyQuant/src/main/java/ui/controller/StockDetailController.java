@@ -1,6 +1,8 @@
 package ui.controller;
 
 
+import java.time.LocalDate;
+
 import blimpl.OptionalStockBLImpl;
 import blservice.OptionalStockBLService;
 import enumeration.MyDate;
@@ -83,7 +85,12 @@ public class StockDetailController {
 
 	@FXML
 	private void initialize() {
-
+		dayEnd.setValue(LocalDate.now());
+		dayStart.setValue(LocalDate.now());
+		weekStart.setValue(LocalDate.now());
+		weekEnd.setValue(LocalDate.now());
+		monthStart.setValue(LocalDate.now());
+		monthEnd.setValue(LocalDate.now());
 	}
 
 
