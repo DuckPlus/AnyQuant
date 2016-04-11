@@ -74,6 +74,9 @@ public class optionalStockController {
 	
 	MyLineChart cmpChart;
 	
+	@FXML
+	AnchorPane rightP;
+	
 	private ObservableList<Stock> observableList;
 	
 	private ObservableList<Stock> cmpTableData;
@@ -171,9 +174,18 @@ public class optionalStockController {
 			Entry<String,Integer> temp = itr.next();
 			pc_board.addData(temp.getKey(), temp.getValue());
 		}
-//		optionalBl.getBorderDistribution();
-		boardDis.setContent(pc_board.getPieChart());
-		//
+
+
+		MyPieChart pc_board0 = new MyPieChart(50,50);
+		Iterator<Entry<String,Integer>>itr0 = optionalBl.getBorderDistribution();
+		while(itr0.hasNext()){
+			Entry<String,Integer> temp = itr0.next();
+			pc_board0.addData(temp.getKey(), temp.getValue());
+		}
+
+		Double x=new Double(0);
+		rightP.setBottomAnchor(pc_board0.getPieChart(),x);
+
 		MyPieChart pc_geog = new MyPieChart();
 		Iterator<Entry<String,Integer>>itr2 = optionalBl.getRegionDistribution();
 		while(itr2.hasNext()){
@@ -246,5 +258,7 @@ public class optionalStockController {
 
 		}
 	}
-
+	public AnchorPane getRightBorderPane(){
+		return rightP;
+	}
 }

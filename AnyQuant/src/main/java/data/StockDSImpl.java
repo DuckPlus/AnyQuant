@@ -150,23 +150,32 @@ public class StockDSImpl implements StockDataService {
 	public StockPO getStockMes(String stockCode) {
 		int offset = 0;
 		MyDate date = MyTime.getAnotherDay(offset);
-		while (  (!checkDataValid(stockCode, date)) &&(offset>-30)) {
+		
+		JSONObject jObject = null;
+		while (  ((jObject = checkDataValid(stockCode, date)) ==null) &&(offset>-30)) {
 			offset--;
 			date = MyTime.getAnotherDay(offset);
 		}
 
-		if(offset<=-30){
-			System.out.println(stockCode+"error-----------------------");
+//		if(offset<=-30){
+//			System.out.println(stockCode+"error-----------------------");
+//			return null;
+//		}
+		
+		if(jObject == null){
+			System.err.println("Error! 股票信息读取错误");
 			return null;
 		}
-		return getStockMes(stockCode, date);
+		
+		
+		
+		return TransferHelper.JSONObjectToStockPO(IndustryLocationMap, jObject);
 	}
 
 	/**
 	 * 获取指定代码的股票的在指定日期的数据
 	 */
 	public StockPO getStockMes(String code, MyDate date) {
-
 		String shortCode = code.substring(2);
 		String tradeDateString = date.DateToStringSimple();
 		JSONObject jo = ConnectionHelper.requestAPI(API_TYPE.GET_STOCKMES_AT_TIME, "" , "" , "" , shortCode , tradeDateString);
@@ -212,9 +221,9 @@ public class StockDSImpl implements StockDataService {
 	  * 判断股票在该日期是否有有效数据
 	  * @param code
 	  * @param date
-	  * @return
+	  * @return 若有的话，返回有效数据，若无效返回null
 	  */
-	private boolean checkDataValid(String code, MyDate date) {
+	private JSONObject checkDataValid(String code, MyDate date) {
 				
 		String shortCodeString = code.substring(2);
 		String tradeDateString = date.DateToStringSimple();
@@ -222,11 +231,11 @@ public class StockDSImpl implements StockDataService {
 		JSONObject jo = ConnectionHelper.requestAPI(API_TYPE.CHECK_IF_TRADING, shortCodeString , tradeDateString);
 		//此时表示该天大盘未开盘
 		if(jo.getInt("retCode") == -1){
-			return false;
+			return null;
 		}
 		//表示该天该股票停牌
 		jo =  jo.getJSONArray("data").getJSONObject(0);
-		return jo.isNullObject() ? false : (jo.getLong("turnoverVol") != 0);
+		return jo.isNullObject() ? null : (jo.getLong("turnoverVol") != 0 ? jo : null);
 		
 	}
 

@@ -28,7 +28,9 @@ public class TransferHelper {
 		po.setHigh(jo.getDouble("highestPrice"));  	po.setLow(jo.getDouble("lowestPrice"));   po.setOpen(jo.getDouble("openPrice"));
 		po.setClose(jo.getDouble("closePrice"));  po.setPreClose(jo.getDouble("preClosePrice"));  po.setTurnoverVol(jo.getLong("turnoverVol"));
 		po.setTurnoverValue(jo.getDouble("turnoverValue"));  po.setTurnoverRate(jo.getDouble("turnoverRate"));   po.setPb(jo.getDouble("PB"));
-		po.setPe(jo.getDouble("PE"));  po.setAccAdjFactor(jo.getDouble("accumAdjFactor"));  po.setCirMarketValue(jo.getDouble("negMarketValue"));
+		po.setPe(jo.getDouble("PE")); 
+//		po.setAccAdjFactor(jo.getDouble("accumAdjFactor"));   TODO
+		po.setCirMarketValue(jo.getDouble("negMarketValue"));
 		po.setTotalMarketValue(jo.getDouble("marketValue"));
 		po.computeAmplitude();  po.computeChangeRate();
 
