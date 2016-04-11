@@ -75,6 +75,7 @@ public class CandleStickChart extends XYChart<String, Number> {
 	 */
 	@Override
 	protected void layoutPlotChildren() {
+		System.out.println("唤醒~");
 		// we have nothing to layout if no data is present
 		if (getData() == null) {
 			return;

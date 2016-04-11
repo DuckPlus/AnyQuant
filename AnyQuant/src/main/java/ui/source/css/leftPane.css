@@ -15,7 +15,6 @@
 	-fx-text-fill:black
 }
 
-
 .benchButton {
   -fx-background-image: url('../img/benchMark.png');
   -fx-background-size:176px 42px;

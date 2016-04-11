@@ -20,7 +20,7 @@ public class RightPaneController{
 	private static BorderPane pane;
 	private BorderPane stockListPane;
 	private Pane benchMarkPane;
-	private BorderPane optionalStockPane;
+	private static BorderPane optionalStockPane;
 	private optionalStockController opStockController;
 	@FXML
 	private ImageView min;
@@ -50,7 +50,7 @@ public class RightPaneController{
 		 System.out.println("left init done");
 	}
 
-	void showStockListPane() {
+	 void showStockListPane() {
 		System.out.println("show stockList!!!");
         pane.getChildren().clear();
 		pane.setCenter(stockListPane);
@@ -66,22 +66,23 @@ public class RightPaneController{
 		pane.getChildren().clear();
 		pane.setCenter(Pane);
 	}
-	 void showOptionalStockPane(){
+	 public static void showOptionalStockPane(){
 		 System.out.println("optional Pane");
 
 		 pane.getChildren().clear();
 		 pane.setCenter(optionalStockPane);
-		 if(opStockController ==null){
-			 opStockController = optionalStockController.getOptionalStockController();
-		 }
-		 System.out.println("showwwwww");
-		 opStockController.getOptionalStock();
+//		 if(opStockController ==null){
+//			 opStockController = optionalStockController.getOptionalStockController();
+//		 }
+//		 System.out.println("showwwwww");
+//		 opStockController.getOptionalStock();
 	 }
 
 	static void  setPane(Pane pane){
 		if(RightPaneController.pane == null){
 		RightPaneController.pane = (BorderPane) pane;
 		}
+		showOptionalStockPane();//默认初始界面为自选股
 
 
 	}
