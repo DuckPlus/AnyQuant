@@ -128,6 +128,7 @@ public class StockBLImpl implements StockBLService {
 
 	@Override
 	public Iterator<StockVO> getStocksByStockCode(String code) {
+		System.out.println(code);
 		List<StockVO> result = new ArrayList<StockVO>();
 		for (String temp : stockMap.keySet()) {
 			if (temp.contains(code)) {

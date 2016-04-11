@@ -28,7 +28,7 @@ public class CacheHelper {
 			
 			return true;
 		} else {
-			System.out.println("可直接使用缓存文件");
+//			System.out.println("可直接使用缓存文件");
 			return false;
 		}
 
