@@ -111,6 +111,7 @@ public class optionalStockController {
 			pc_geog.addData(temp.getKey(), temp.getValue());
 		}
 //		optionalBl.getBorderDistribution();
+		
 		geographicalDis.setContent(pc_geog.getPieChart());
 
 	}
