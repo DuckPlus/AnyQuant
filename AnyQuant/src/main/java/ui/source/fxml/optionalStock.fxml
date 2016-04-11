@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.BorderPane?>
 
 <!--  <BorderPane prefHeight="700.0" prefWidth="900.0" stylesheets="@../css/optional.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.optionalStockController">-->
+
 <BorderPane prefWidth="850.0" stylesheets="@../css/optional.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.optionalStockController">
    <left>
       <TabPane prefHeight="700.0" prefWidth="900.0" stylesheets="@../css/optional.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
@@ -77,7 +78,4 @@
          </BorderPane.margin>
       </TabPane>
    </left>
-   <right>
-      <AnchorPane fx:id="rightP" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </right>
 </BorderPane>
