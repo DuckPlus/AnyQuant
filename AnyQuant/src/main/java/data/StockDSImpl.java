@@ -166,7 +166,6 @@ public class StockDSImpl implements StockDataService {
 	 * 获取指定代码的股票的在指定日期的数据
 	 */
 	public StockPO getStockMes(String code, MyDate date) {
-
 		String shortCode = code.substring(2);
 		String tradeDateString = date.DateToStringSimple();
 		JSONObject jo = ConnectionHelper.requestAPI(API_TYPE.GET_STOCKMES_AT_TIME, "" , "" , "" , shortCode , tradeDateString);
