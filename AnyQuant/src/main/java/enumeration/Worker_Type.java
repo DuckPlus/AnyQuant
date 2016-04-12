@@ -5,6 +5,7 @@ package enumeration;
  * @date 2016年4月10日
  */
 public enum Worker_Type {
-       initDayChart,initWeekChart,initMonthChart,
+       initDayChart,initWeekChart,initMonthChart,initTimeSharingChart,
        updateDayChart,updateWeekChart,updateMonthChart
+
 }

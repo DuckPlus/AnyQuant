@@ -43,7 +43,7 @@
                            <center>
                               <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <HBox fx:id="dayHBox" prefHeight="100.0" prefWidth="200.0" />
+                                    <ScrollPane fx:id="daySPane" prefHeight="200.0" prefWidth="200.0" />
                                     <GridPane fx:id="dayCachePane">
                                       <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -95,7 +95,7 @@
                            <center>
                               <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <HBox fx:id="weekHBox" prefHeight="100.0" prefWidth="200.0" />
+                                    <ScrollPane fx:id="weekSPane" prefHeight="200.0" prefWidth="200.0" />
                                     <GridPane fx:id="weekCachePane">
                                        <children>
                                           <ProgressIndicator fx:id="weekIndicator" progress="0.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
@@ -151,7 +151,7 @@
                            <center>
                               <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <HBox fx:id="monthHBox" prefHeight="100.0" prefWidth="200.0" />
+                                    <ScrollPane fx:id="monthSPane" prefHeight="200.0" prefWidth="200.0" />
                                     <GridPane fx:id="monthCachePane">
                                        <children>
                                           <ProgressIndicator fx:id="monthIndicator" progress="0.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
@@ -179,11 +179,34 @@
                   </Tab>
                   <Tab fx:id="timeSharing" text="分时图">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <HBox layoutX="20.0" prefHeight="27.0" prefWidth="250.0" />
+                              <ScrollPane fx:id="timeSharingSPane" prefHeight="200.0" prefWidth="200.0">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                </content>
+                              </ScrollPane>
+                              <GridPane fx:id="timeSharingCachePane">
+                                 <children>
+                                    <ProgressIndicator fx:id="timeSharingIndicator" progress="0.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                 </children>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                              </GridPane>
                            </children>
-                        </AnchorPane>
+                        </StackPane>
                      </content>
                   </Tab>
               </tabs>
