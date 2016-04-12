@@ -3,7 +3,7 @@
     -fx-border-color: derive(-fx-pie-color,-30%);
 }
 .chart-pie-label {
-    -fx-padding: 3px;
+    -fx-padding: 30px;
     -fx-fill: -fx-text-base-color;
 }
 .chart-pie-label-line {

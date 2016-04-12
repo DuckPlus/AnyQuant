@@ -13,6 +13,8 @@ import enumeration.MyDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -71,14 +73,14 @@ public class optionalStockController {
 	DatePicker cmpBgn,cmpEnd;
 	@FXML
 	AnchorPane cmpChartPane;
-	
+
 	MyLineChart cmpChart;
-	
+
 //	@FXML
 //	AnchorPane rightP;
-	
+
 	private ObservableList<Stock> observableList;
-	
+
 	private ObservableList<Stock> cmpTableData;
 
 	private OptionalStockBLService optionalBl = OptionalStockBLImpl.getOptionalBLService();
@@ -113,12 +115,12 @@ public class optionalStockController {
 		observableList = FXCollections.observableArrayList();
 		cmpTableData = FXCollections.observableArrayList();
 		stockDetailPane = instanceController.getStockDetailPane();
-		initPieChart();
+//		initPieChart();
 		getOptionalStock();
 		initChoice();
 		initCmpTable();
 	}
-	
+
 	private void initChoice(){
 	chartType.getItems().add("市盈率");
 	chartType.getItems().add("市净率");
@@ -127,7 +129,7 @@ public class optionalStockController {
 	}
 	private void initCmpTable(){
 		//init date picker
-		
+
 		cmpBgn.setValue(LocalDate.now());
 		cmpEnd.setValue(LocalDate.now());
 		//init table
@@ -141,7 +143,7 @@ public class optionalStockController {
 		cmpTableview.setItems(cmpTableData);
 		cmpName.setCellValueFactory(cell -> cell.getValue().name);
 		cmpCode.setCellValueFactory(cell -> cell.getValue().code);
-		
+
 		//init chart
 		cmpChart = new MyLineChart();
 		cmpChart.setSize(650, 650);
@@ -154,7 +156,7 @@ public class optionalStockController {
 		Stock selectedCmpStock = cmpTableview.getSelectionModel().getSelectedItem();
 		MyDate cmpB = new MyDate(cmpBgn.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
 		MyDate cmpE = new MyDate(cmpEnd.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
-		
+
 		switch(chartType.getSelectionModel().getSelectedItem()){
 			case "市盈率":drawCmpPEChart();break;
 			case "市净率":System.out.println("sjl");break;
@@ -164,36 +166,26 @@ public class optionalStockController {
 		}
 	}
 	private void drawCmpPEChart(){
-		
+
 	}
-	
+	@FXML
 	private void initPieChart(){
-		MyPieChart pc_board = new MyPieChart();
+		ObservableList<Data> datas_board = FXCollections.observableArrayList();
 		Iterator<Entry<String,Integer>>itr = optionalBl.getBorderDistribution();
 		while(itr.hasNext()){
 			Entry<String,Integer> temp = itr.next();
-			pc_board.addData(temp.getKey(), temp.getValue());
+			datas_board.add(new PieChart.Data(temp.getKey(), temp.getValue()));
 		}
+		MyPieChart pc_board = new MyPieChart(datas_board);
 		boardDis.setContent(pc_board.getPieChart());
 
-//		MyPieChart pc_board0 = new MyPieChart(50,50);
-//		Iterator<Entry<String,Integer>>itr0 = optionalBl.getBorderDistribution();
-//		while(itr0.hasNext()){
-//			Entry<String,Integer> temp = itr0.next();
-//			pc_board0.addData(temp.getKey(), temp.getValue());
-//		}
-
-//		Double x=new Double(0);
-//		rightP.setBottomAnchor(pc_board0.getPieChart(),x);
-
-		MyPieChart pc_geog = new MyPieChart();
+		ObservableList<Data> datas_geog = FXCollections.observableArrayList();
 		Iterator<Entry<String,Integer>>itr2 = optionalBl.getRegionDistribution();
 		while(itr2.hasNext()){
 			Entry<String,Integer> temp = itr2.next();
-			pc_geog.addData(temp.getKey(), temp.getValue());
+			datas_geog.add(new PieChart.Data(temp.getKey(), temp.getValue()));
 		}
-//		optionalBl.getBorderDistribution();
-		
+		MyPieChart pc_geog = new MyPieChart(datas_geog);
 		geographicalDis.setContent(pc_geog.getPieChart());
 
 	}

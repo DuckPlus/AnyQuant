@@ -1,114 +1,59 @@
 package ui;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.scene.chart.*;
+import javafx.scene.Group;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 
-import org.apache.commons.codec.EncoderException;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
+public class nettest extends Application {
 
-import enumeration.StaticMessage;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-public class nettest {
-    //创建http client
-    private static CloseableHttpClient httpClient = createHttpsClient();
-    private static final String ACCESS_TOKEN = "44a70d35d80240eaa3d9a66b0b090de5bef4c96914f39c4faa225b4570ee301c";
-    public static void main(String[] args) throws IOException, EncoderException {
-        //根据api store页面上实际的api url来发送get请求，获取数据
-        String url = "https://api.wmcloud.com:443/data/v1" 
-//        + "/api/master/getSecTypeRegion.json?field="; //用来获得地域
-//        + "/api/master/getSecType.json?field=";
-//        	 + "/api/master/getSecType.json?field=";
-//        		+ "/api/market/getMktEqud.json?field=&beginDate=20150310&endDate=20150409&secID=&ticker=600000&tradeDate=";
-//        		+ "/api/market/getBarRTIntraDay.json?securityID=600000.XSHG&startTime=&endTime=&unit=1";
-//        		+ "/api/master/getSecTypeRel.json?field=&typeID=101001004001001&secID=&ticker=";
-//        + "/api/market/getMktIdxd.json?field=&beginDate=20140401&endDate=20140530&indexID=&ticker=600001&tradeDate=";
-//        		+"/api/market/getBarRTIntraDay.json" + "?securityID=000001.XSHE&startTime=09:30&endTime=&unit=1";
-        		+  "/api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=&ticker=600006" 
-				+ "&tradeDate=20160407" ;
-        		
-        		
-        HttpGet httpGet = new HttpGet(url);
-        //在header里加入 Bearer {token}，添加认证的token，并执行get请求获取json数据
-        httpGet.addHeader("Authorization", "Bearer " + ACCESS_TOKEN);
-        CloseableHttpResponse response = httpClient.execute(httpGet);
-        HttpEntity entity = response.getEntity();
-        String body = EntityUtils.toString(entity);
-        System.out.println(body);
-        Map<String, String> regions = new HashMap<>(50);
-        Map<String, String> provinces = new HashMap<>(50);
-        Map<String, String> cities = new HashMap<>(3000);
-        JSONObject jsonObject = JSONObject.fromObject(body);
-        
-        JSONArray jsonArray = jsonObject.getJSONArray("data");
-        int len = jsonArray.size();
-       System.out.println(len);
-        JSONObject js ;
-        BufferedWriter writer = new BufferedWriter(new FileWriter(new File("BenchMarks2.txt")));
-        for (int i = 0; i < len; i++) {
-        		js = JSONObject.fromObject(jsonArray.get(i));
-			if (  (js.getInt("typeLevel")) == 4 && js.getString("typeID").charAt(8) == '1') {
-				
-				regions.put((String) js.get("typeID"), js.getString("typeName"));
-			}
-		}
-        for(Map.Entry<String, String> temp : regions.entrySet()){
-        		System.out.println(temp.getKey() + " " + temp.getValue());
-        		writer.write(temp.getKey() + " " + temp.getValue());
-        		writer.newLine();
+    @Override
+    public void start(Stage stage) {
+        Scene scene = new Scene(new Group());
+        stage.setTitle("Imported Fruits");
+        stage.setWidth(500);
+        stage.setHeight(500);
+
+        ObservableList<PieChart.Data> pieChartData =
+                FXCollections.observableArrayList(
+                new PieChart.Data("Grapefruit", 13),
+                new PieChart.Data("Oranges", 25),
+                new PieChart.Data("Plums", 10),
+                new PieChart.Data("Pears", 22),
+                new PieChart.Data("Apples", 30));
+
+        final PieChart chart = new PieChart(pieChartData);
+        chart.setTitle("Imported Fruits");
+        final Label caption = new Label("");
+        caption.setTextFill(Color.DARKORANGE);
+        caption.setStyle("-fx-font: 24 arial;");
+
+        for (final PieChart.Data data : chart.getData()) {
+            data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent e) {
+                            caption.setTranslateX(e.getSceneX());
+                            caption.setTranslateY(e.getSceneY());
+                            caption.setText(String.valueOf(data.getPieValue())
+                                + "%");
+                        }
+                    });
         }
-        
-        
-      writer.close();
-        
-        
-        
+
+        ((Group) scene.getRoot()).getChildren().addAll(chart, caption);
+        stage.setScene(scene);
+        //scene.getStylesheets().add("piechartsample/Chart.css");
+        stage.show();
     }
-    //创建http client
-    public static CloseableHttpClient createHttpsClient() {
-        X509TrustManager x509mgr = new X509TrustManager() {
-            @Override
-            public void checkClientTrusted(X509Certificate[] xcs, String string) {
-            }
-            @Override
-            public void checkServerTrusted(X509Certificate[] xcs, String string) {
-            }
-            @Override
-            public X509Certificate[] getAcceptedIssuers() {
-                return null;
-            }
-        };
-        //因为java客户端要进行安全证书的认证，这里我们设置ALLOW_ALL_HOSTNAME_VERIFIER来跳过认证，否则将报错
-        SSLConnectionSocketFactory sslsf = null;
-        try {
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(null, new TrustManager[]{x509mgr}, null);
-            sslsf = new SSLConnectionSocketFactory(
-                    sslContext,
-                    SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return HttpClients.custom().setSSLSocketFactory(sslsf).build();
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
