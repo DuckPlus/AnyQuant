@@ -18,6 +18,7 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
+import jnr.ffi.Struct.int16_t;
 import vo.OHLC_VO;
 
 /**
@@ -33,6 +34,8 @@ import vo.OHLC_VO;
  */
 
 public class CandleStickChart extends XYChart<String, Number> {
+	private static final int  Height=630;
+	private static final int  Width=770;
 
 	// TODO
 	// -------------- CONSTRUCTORS
@@ -300,11 +303,14 @@ public class CandleStickChart extends XYChart<String, Number> {
 
 	public static CandleStickChart createChart(ObservableList<OHLC_VO> obsevableList) {
     	//System.out.println(getMax(obsevableList)+"    "+getMin(obsevableList));
-    	double gap=(getMax(obsevableList)-getMin(obsevableList))/10;
+		double max=getMax(obsevableList);
+		double min =getMin(obsevableList);
+    	double gap=(max-min)/10;
+      	double HpixelPerValue=50;
     	//X轴
         final CategoryAxis xAxis = new CategoryAxis ();
         //Y轴
-        final NumberAxis yAxis = new NumberAxis(getMin(obsevableList)-gap,getMax(obsevableList)+gap*2,gap);
+        final NumberAxis yAxis = new NumberAxis(min-gap,max+gap*2,gap);
         final CandleStickChart candleStickChart = new CandleStickChart(xAxis,yAxis);
         // setup chart
        // candleStickChart.setTitle("Custom Candle Stick Chart");
@@ -327,8 +333,10 @@ public class CandleStickChart extends XYChart<String, Number> {
         } else {
             candleStickChart.getData().add(series);
         }
+        candleStickChart.setPrefSize(HpixelPerValue*obsevableList.size(),Height*0.95);
         return candleStickChart;
     }
+
 	private static double getMin(ObservableList<OHLC_VO>  obsevableList) {
 		double min = 100;
 		for (OHLC_VO temp : obsevableList) {

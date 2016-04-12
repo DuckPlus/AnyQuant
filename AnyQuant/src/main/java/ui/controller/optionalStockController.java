@@ -18,6 +18,8 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tab;
@@ -29,6 +31,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import ui.controller.candleStick.MyLineChart;
 import util.MyTime;
+import ui.helper.ColorHelper;
 import util.PanelType;
 import vo.Stock;
 import vo.StockVO;
@@ -48,9 +51,9 @@ public class optionalStockController {
 	@FXML
 	TableColumn<Stock, Double>close;// = new TableColumn<Stock, Double>();
 	@FXML
-	TableColumn<Stock, Double>turnover;// = new TableColumn<Stock, Double>();
+	TableColumn<Stock, Double>turnoverRate;// = new TableColumn<Stock, Double>();
 	@FXML
-	TableColumn<Stock, Long>volume;// = new TableColumn<Stock, Long>();
+	TableColumn<Stock, Long>turnoverVol;// = new TableColumn<Stock, Long>();
 	@FXML
 	TableColumn<Stock, String>amplitude;// = new TableColumn<Stock, Double>();
 	@FXML
@@ -76,14 +79,14 @@ public class optionalStockController {
 	DatePicker cmpBgn,cmpEnd;
 	@FXML
 	AnchorPane cmpChartPane;
-	
+
 	MyLineChart cmpChart;
-	
+
 //	@FXML
 //	AnchorPane rightP;
-	
+
 	private ObservableList<Stock> observableList;
-	
+
 	private ObservableList<Stock> cmpTableData;
 
 	private OptionalStockBLService optionalBl = OptionalStockBLImpl.getOptionalBLService();
@@ -127,21 +130,21 @@ public class optionalStockController {
 		observableList = FXCollections.observableArrayList();
 		cmpTableData = FXCollections.observableArrayList();
 		stockDetailPane = instanceController.getStockDetailPane();
-		initPieChart();
+//		initPieChart();
 		getOptionalStock();
 		initChoice();
 		initCmpTable();
 	}
-	
+
 	private void initChoice(){
-	chartType.getItems().add("市盈率");
-	chartType.getItems().add("市净率");
-	chartType.getItems().add("成交量");
-	chartType.getSelectionModel().select(0);
+		chartType.getItems().add("市盈率");
+		chartType.getItems().add("市净率");
+		chartType.getItems().add("成交量");
+		chartType.getSelectionModel().select(0);
 	}
 	private void initCmpTable(){
 		//init date picker
-		
+
 		cmpBgn.setValue(LocalDate.now());
 		cmpEnd.setValue(LocalDate.now());
 		//init table
@@ -155,7 +158,7 @@ public class optionalStockController {
 		cmpTableview.setItems(cmpTableData);
 		cmpName.setCellValueFactory(cell -> cell.getValue().name);
 		cmpCode.setCellValueFactory(cell -> cell.getValue().code);
-		
+
 		//init chart
 		cmpChart = new MyLineChart();
 		cmpChart.setSize(650, 650);
@@ -165,7 +168,9 @@ public class optionalStockController {
 	private void addCmpStock(){
 		if(cmpTableview.getSelectionModel().getSelectedIndex()!=-1){
 		Stock selectedCmpStock = cmpTableview.getSelectionModel().getSelectedItem();
-		
+		MyDate cmpB = new MyDate(cmpBgn.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
+		MyDate cmpE = new MyDate(cmpEnd.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
+
 		switch(chartType.getSelectionModel().getSelectedItem()){
 			case "市盈率":drawCmpPEChart(selectedCmpStock.code.get());break;
 			case "市净率":drawCmpPBChart(selectedCmpStock.code.get());;break;
@@ -211,35 +216,26 @@ public class optionalStockController {
 	@FXML
 	private void clearCmpChart(){
 		cmpChart.removeAllSeries();
+
 	}
-	
+	@FXML
 	private void initPieChart(){
-		MyPieChart pc_board = new MyPieChart();
+		ObservableList<Data> datas_board = FXCollections.observableArrayList();
 		Iterator<Entry<String,Integer>>itr = optionalBl.getBorderDistribution();
 		while(itr.hasNext()){
 			Entry<String,Integer> temp = itr.next();
-			pc_board.addData(temp.getKey(), temp.getValue());
+			datas_board.add(new PieChart.Data(temp.getKey(), temp.getValue()));
 		}
+		MyPieChart pc_board = new MyPieChart(datas_board);
 		boardDis.setContent(pc_board.getPieChart());
 
-//		MyPieChart pc_board0 = new MyPieChart(50,50);
-//		Iterator<Entry<String,Integer>>itr0 = optionalBl.getBorderDistribution();
-//		while(itr0.hasNext()){
-//			Entry<String,Integer> temp = itr0.next();
-//			pc_board0.addData(temp.getKey(), temp.getValue());
-//		}
-
-//		Double x=new Double(0);
-//		rightP.setBottomAnchor(pc_board0.getPieChart(),x);
-
-		MyPieChart pc_geog = new MyPieChart();
+		ObservableList<Data> datas_geog = FXCollections.observableArrayList();
 		Iterator<Entry<String,Integer>>itr2 = optionalBl.getRegionDistribution();
 		while(itr2.hasNext()){
 			Entry<String,Integer> temp = itr2.next();
-			pc_geog.addData(temp.getKey(), temp.getValue());
+			datas_geog.add(new PieChart.Data(temp.getKey(), temp.getValue()));
 		}
-//		optionalBl.getBorderDistribution();
-		
+		MyPieChart pc_geog = new MyPieChart(datas_geog);
 		geographicalDis.setContent(pc_geog.getPieChart());
 
 	}
@@ -270,10 +266,14 @@ public class optionalStockController {
 		high.setCellValueFactory(cell ->cell.getValue().high.asObject());
 		low.setCellValueFactory(cell ->cell.getValue().low.asObject());
 		close.setCellValueFactory(cell ->cell.getValue().close.asObject());
-		turnover.setCellValueFactory(cell ->cell.getValue().turnoverRate.asObject());
-		volume.setCellValueFactory(cell ->cell.getValue().turnoverVol.asObject());
+		turnoverRate.setCellValueFactory(cell ->cell.getValue().turnoverRate.asObject());
+		turnoverVol.setCellValueFactory(cell ->cell.getValue().turnoverVol.asObject());
 		amplitude.setCellValueFactory(cell ->cell.getValue().getStringAmplitude());
 		changeRate.setCellValueFactory(cell ->cell.getValue().getStringChangeRate());
+		
+		ColorHelper.setColorForStock(observableList, tableview.getColumns());
+		
+		
 	}
 
 	@FXML
@@ -315,4 +315,7 @@ public class optionalStockController {
 //	public AnchorPane getRightBorderPane(){
 //		return rightP;
 //	}
+
+
+
 }

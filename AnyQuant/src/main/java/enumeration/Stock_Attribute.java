@@ -7,6 +7,8 @@ package enumeration;
  *
  */
 public enum Stock_Attribute {
+	name,
+	code,
 	high,
 	low,
 	open,
@@ -16,5 +18,7 @@ public enum Stock_Attribute {
 	turnover,
 	pb,
 	amplitude,
-	changeRate
+	changeRate,
+	turnoverRate,
+	turnoverVol
 }

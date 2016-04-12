@@ -25,8 +25,8 @@
                               <TableColumn fx:id="high" prefWidth="75.0" text="最高价" />
                               <TableColumn fx:id="low" prefWidth="75.0" text="最低价" />
                               <TableColumn fx:id="close" prefWidth="75.0" text="收盘价" />
-                              <TableColumn fx:id="turnover" prefWidth="75.0" text="换手率" />
-                              <TableColumn fx:id="volume" prefWidth="75.0" text="成交量" />
+                              <TableColumn fx:id="turnoverRate" prefWidth="75.0" text="换手率" />
+                              <TableColumn fx:id="turnoverVol" prefWidth="75.0" text="成交量" />
                               <TableColumn fx:id="amplitude" prefWidth="75.0" text="振幅" />
                               <TableColumn fx:id="changeRate" prefWidth="75.0" text="涨跌幅" />
                           </columns>
@@ -39,7 +39,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="boardDis" text="板块分布">
+          <Tab fx:id="boardDis" onSelectionChanged="#initPieChart" text="板块分布">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>

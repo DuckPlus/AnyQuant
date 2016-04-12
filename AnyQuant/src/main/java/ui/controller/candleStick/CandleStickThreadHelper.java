@@ -13,11 +13,13 @@ import javafx.application.Platform;
 import javafx.beans.property.Property;
 import javafx.concurrent.Task;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import jnr.ffi.Struct.int16_t;
 import ui.controller.CandleStickController;
 import ui.controller.StockDetailController;
+import vo.Stock;
 
 /**
  *
@@ -29,7 +31,7 @@ public class CandleStickThreadHelper {
     private static CandleStickController  candleController = CandleStickController.getCandleStickController();
     private static StockDetailController stockDetailController = StockDetailController.getStockDetailController();
 
-	public static Task createInitWorker(Worker_Type type , String code) {
+	public static Task createKChartInitWorker(Worker_Type type , String code) {
        candleController.SetStockCode(code);
 
 		switch (type) {
@@ -43,11 +45,8 @@ public class CandleStickThreadHelper {
 					Platform.runLater(() -> {
 						// on the JavaFX Application Thread....
                         candleController.dayChart= CandleStickChart.createChart(candleController.dayList);
-                    	if(stockDetailController.dayHBox.getChildren().size()!=0){
-							stockDetailController.dayHBox.getChildren().clear();
-						}
-                    	HBox.setHgrow(candleController.dayChart,Priority.ALWAYS);
-                        stockDetailController.dayHBox.getChildren().add(candleController.dayChart);
+                        stockDetailController.daySPane.setContent(candleController.dayChart);
+              
 						System.out.println("done init Charts");
 					});
 					return true;
@@ -63,11 +62,7 @@ public class CandleStickThreadHelper {
 					Platform.runLater(() -> {
 						// on the JavaFX Application Thread....
 						candleController.weekChart= CandleStickChart.createChart(candleController.weekList);
-						if(stockDetailController.weekHBox.getChildren().size()!=0){
-							stockDetailController.weekHBox.getChildren().clear();
-						}
-						HBox.setHgrow(candleController.weekChart,Priority.ALWAYS);
-                        stockDetailController.weekHBox.getChildren().add(candleController.weekChart);
+                        stockDetailController.weekSPane.setContent(candleController.weekChart);
 						System.out.println("done init Charts");
 						// removeProgressIndicator();
 
@@ -84,11 +79,7 @@ public class CandleStickThreadHelper {
 					Platform.runLater(() -> {
 						// on the JavaFX Application Thread....
 						candleController.monthChart= CandleStickChart.createChart(candleController.monthList);
-						if(stockDetailController.monthHBox.getChildren().size()!=0){
-							stockDetailController.monthHBox.getChildren().clear();
-						}
-						HBox.setHgrow(candleController.monthChart,Priority.ALWAYS);
-                        stockDetailController.monthHBox.getChildren().add(candleController.monthChart);
+                        stockDetailController.monthSPane.setContent(candleController.monthChart);
 						System.out.println("done init Charts");
 						// removeProgressIndicator();
 
@@ -102,7 +93,7 @@ public class CandleStickThreadHelper {
 		}
 	}
 
-	public static Task createUpdateChartWorker(Worker_Type type, String code, MyDate start, MyDate end) {
+	public static Task createUpdateKChartWorker(Worker_Type type, String code, MyDate start, MyDate end) {
 		candleController.SetStockCode(code);
 		candleController.SetStartDate(start);
 		candleController.SetEndDate(end);
@@ -118,11 +109,7 @@ public class CandleStickThreadHelper {
 
 						// on the JavaFX Application Thread....
 						candleController.dayChart= CandleStickChart.createChart(candleController.dayList);
-						if(stockDetailController.dayHBox.getChildren().size()!=0){
-							stockDetailController.dayHBox.getChildren().clear();
-						}
-						HBox.setHgrow(candleController.dayChart,Priority.ALWAYS);
-                        stockDetailController.dayHBox.getChildren().add(candleController.dayChart);
+                        stockDetailController.daySPane.setContent(candleController.dayChart);
 						System.out.println("done updateCharts");
 
 					});
@@ -140,11 +127,7 @@ public class CandleStickThreadHelper {
 
 						// on the JavaFX Application Thread....
 						candleController.weekChart= CandleStickChart.createChart(candleController.weekList);
-						if(stockDetailController.weekHBox.getChildren().size()!=0){
-							stockDetailController.weekHBox.getChildren().clear();
-						}
-						HBox.setHgrow(candleController.weekChart,Priority.ALWAYS);
-                        stockDetailController.weekHBox.getChildren().add(candleController.weekChart);
+                        stockDetailController.weekSPane.setContent(candleController.weekChart);
 						System.out.println("done updateCharts");
 
 					});
@@ -162,21 +145,37 @@ public class CandleStickThreadHelper {
 
 						// on the JavaFX Application Thread....
 						candleController.monthChart= CandleStickChart.createChart(candleController.monthList);
-						if(stockDetailController.monthHBox.getChildren().size()!=0){
-							stockDetailController.monthHBox.getChildren().clear();
-						}
-						HBox.setHgrow(candleController.monthChart,Priority.ALWAYS);
-                        stockDetailController.monthHBox.getChildren().add(candleController.monthChart);
+                        stockDetailController.monthSPane.setContent(candleController.monthChart);
 						System.out.println("done updateCharts");
 
 					});
 					return true;
 				}
 			};
+
+
+
 		default:
 			return null;
 		}
 
+	}
+
+	public static Task createTimeSharingInitWorker(Stock stock){
+		return new Task() {
+			@Override
+			protected Object call() throws Exception {
+				// on the worker thread...
+				TimeSharingChart timeChart = new TimeSharingChart(stock);
+
+				Platform.runLater(() -> {
+					// on the JavaFX Application Thread....
+                    stockDetailController.timeSharingSPane.setContent(timeChart.getTimeSharingChart());
+					System.out.println("done init Charts");
+				});
+				return true;
+			}
+		};
 	}
 
 }
