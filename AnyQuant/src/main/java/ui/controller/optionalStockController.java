@@ -122,10 +122,10 @@ public class optionalStockController {
 	}
 
 	private void initChoice(){
-	chartType.getItems().add("市盈率");
-	chartType.getItems().add("市净率");
-	chartType.getItems().add("成交量");
-	chartType.getSelectionModel().select(0);
+		chartType.getItems().add("市盈率");
+		chartType.getItems().add("市净率");
+		chartType.getItems().add("成交量");
+		chartType.getSelectionModel().select(0);
 	}
 	private void initCmpTable(){
 		//init date picker
@@ -253,4 +253,7 @@ public class optionalStockController {
 //	public AnchorPane getRightBorderPane(){
 //		return rightP;
 //	}
+
+
+
 }
