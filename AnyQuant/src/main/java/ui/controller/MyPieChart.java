@@ -34,6 +34,7 @@ public class MyPieChart {
 		init();
 	}
 
+
 	private void init(){
 		caption.setTextFill(Color.CHOCOLATE);
 		caption.setStyle("-fx-font: 24 arial;");
