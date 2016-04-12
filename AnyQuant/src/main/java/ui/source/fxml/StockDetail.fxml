@@ -98,7 +98,7 @@
                                     <HBox fx:id="weekHBox" prefHeight="100.0" prefWidth="200.0" />
                                     <GridPane fx:id="weekCachePane">
                                        <children>
-                                          <ProgressIndicator fx:id="weekIndicator" progress="0.0" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <ProgressIndicator fx:id="weekIndicator" progress="0.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                        </children>
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -154,7 +154,7 @@
                                     <HBox fx:id="monthHBox" prefHeight="100.0" prefWidth="200.0" />
                                     <GridPane fx:id="monthCachePane">
                                        <children>
-                                          <ProgressIndicator fx:id="monthIndicator" progress="0.0" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <ProgressIndicator fx:id="monthIndicator" progress="0.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                        </children>
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
