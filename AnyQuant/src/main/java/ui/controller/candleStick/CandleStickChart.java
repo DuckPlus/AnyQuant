@@ -306,7 +306,7 @@ public class CandleStickChart extends XYChart<String, Number> {
 		double max=getMax(obsevableList);
 		double min =getMin(obsevableList);
     	double gap=(max-min)/10;
-      	double HpixelPerValue=50;
+      	double HpixelPerValue=30;
     	//X轴
         final CategoryAxis xAxis = new CategoryAxis ();
         //Y轴

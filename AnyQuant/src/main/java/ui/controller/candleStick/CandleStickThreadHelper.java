@@ -2,21 +2,10 @@ package ui.controller.candleStick;
 
 
 
-import javax.sound.midi.ControllerEventListener;
-
-
-import org.python.modules.itertools.combinations;
-
+import enumeration.Candle_Type;
 import enumeration.MyDate;
-import enumeration.Worker_Type;
 import javafx.application.Platform;
-import javafx.beans.property.Property;
 import javafx.concurrent.Task;
-import javafx.scene.Node;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import jnr.ffi.Struct.int16_t;
 import ui.controller.CandleStickController;
 import ui.controller.StockDetailController;
 import vo.Stock;
@@ -31,12 +20,13 @@ public class CandleStickThreadHelper {
     private static CandleStickController  candleController = CandleStickController.getCandleStickController();
     private static StockDetailController stockDetailController = StockDetailController.getStockDetailController();
 
-	public static Task createKChartInitWorker(Worker_Type type , String code) {
+
+	public static Task createKChartInitWorker(Candle_Type type , String code) {
        candleController.SetStockCode(code);
 
 		switch (type) {
 
-		case initDayChart:
+		case day:
 			return new Task() {
 				@Override
 				protected Object call() throws Exception {
@@ -46,14 +36,14 @@ public class CandleStickThreadHelper {
 						// on the JavaFX Application Thread....
                         candleController.dayChart= CandleStickChart.createChart(candleController.dayList);
                         stockDetailController.daySPane.setContent(candleController.dayChart);
-              
+
 						System.out.println("done init Charts");
 					});
 					return true;
 				}
 			};
 
-		case initWeekChart:
+		case week:
 			return new Task() {
 				@Override
 				protected Object call() throws Exception {
@@ -70,7 +60,7 @@ public class CandleStickThreadHelper {
 					return true;
 				}
 			};
-		case initMonthChart:
+		case month:
 			return new Task() {
 				@Override
 				protected Object call() throws Exception {
@@ -93,13 +83,13 @@ public class CandleStickThreadHelper {
 		}
 	}
 
-	public static Task createUpdateKChartWorker(Worker_Type type, String code, MyDate start, MyDate end) {
+	public static Task createUpdateKChartWorker(Candle_Type type, String code, MyDate start, MyDate end) {
 		candleController.SetStockCode(code);
 		candleController.SetStartDate(start);
 		candleController.SetEndDate(end);
 
 		switch (type) {
-		case updateDayChart:
+		case day:
 			return new Task() {
 				@Override
 				protected Object call() throws Exception {
@@ -117,7 +107,7 @@ public class CandleStickThreadHelper {
 				}
 			};
 
-		case updateWeekChart:
+		case week:
 			return new Task() {
 				@Override
 				protected Object call() throws Exception {
@@ -135,7 +125,7 @@ public class CandleStickThreadHelper {
 				}
 			};
 
-		case updateMonthChart:
+		case month:
 			return new Task() {
 				@Override
 				protected Object call() throws Exception {

@@ -5,11 +5,10 @@ import java.time.LocalDate;
 
 import blimpl.OptionalStockBLImpl;
 import blservice.OptionalStockBLService;
+import enumeration.Candle_Type;
 import enumeration.MyDate;
-import enumeration.Worker_Type;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -17,16 +16,9 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import ui.controller.candleStick.CandleStickChart;
 import ui.controller.candleStick.CandleStickThreadHelper;
 import ui.controller.candleStick.ProgressIndicatorHelper;
-import ui.controller.candleStick.TimeSharingChart;
 import util.PanelType;
 import vo.Stock;
 
@@ -141,13 +133,13 @@ public class StockDetailController {
 
 
          Task initDayTask=CandleStickThreadHelper.
-        		          createKChartInitWorker(Worker_Type.initDayChart,currentStock.code.get());
+        		          createKChartInitWorker(Candle_Type.day,currentStock.code.get());
 
          Task initWeekTask= CandleStickThreadHelper.
-        		          createKChartInitWorker(Worker_Type.initWeekChart, currentStock.code.get());
+        		          createKChartInitWorker(Candle_Type.week, currentStock.code.get());
 
          Task initMonthTask= CandleStickThreadHelper.
-		          createKChartInitWorker(Worker_Type.initMonthChart, currentStock.code.get());
+		          createKChartInitWorker(Candle_Type.month, currentStock.code.get());
 
          ProgressIndicatorHelper.showProgressIndicator(initDayTask.progressProperty(),
         		 initDayTask.runningProperty(), dayIndicator, dayCachePane);
@@ -165,7 +157,7 @@ public class StockDetailController {
 		MyDate start = new MyDate(dayStart.getValue().getYear(),dayStart.getValue().getMonthValue(),dayStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(dayEnd.getValue().getYear(),dayEnd.getValue().getMonthValue(),dayEnd.getValue().getDayOfMonth());
 		Task updateDayTask=CandleStickThreadHelper.
-		          createUpdateKChartWorker(Worker_Type.updateDayChart,currentStock.code.get(),start,end);
+		          createUpdateKChartWorker(Candle_Type.day,currentStock.code.get(),start,end);
 		ProgressIndicatorHelper.showProgressIndicator(updateDayTask.progressProperty(),
 				updateDayTask.runningProperty(), dayIndicator, dayCachePane);
 		new Thread(updateDayTask).start();
@@ -175,7 +167,7 @@ public class StockDetailController {
 		MyDate start = new MyDate(weekStart.getValue().getYear(),weekStart.getValue().getMonthValue(),weekStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(weekEnd.getValue().getYear(),weekEnd.getValue().getMonthValue(),weekEnd.getValue().getDayOfMonth());
 		Task updateWeekTask=CandleStickThreadHelper.
-		          createUpdateKChartWorker(Worker_Type.updateWeekChart,currentStock.code.get(),start,end);
+		          createUpdateKChartWorker(Candle_Type.week,currentStock.code.get(),start,end);
 		ProgressIndicatorHelper.showProgressIndicator(updateWeekTask.progressProperty(),
 				updateWeekTask.runningProperty(), weekIndicator, weekCachePane);
 		new Thread(updateWeekTask).start();
@@ -185,7 +177,7 @@ public class StockDetailController {
 		MyDate start = new MyDate(monthStart.getValue().getYear(),monthStart.getValue().getMonthValue(),monthStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(monthEnd.getValue().getYear(),monthEnd.getValue().getMonthValue(),monthEnd.getValue().getDayOfMonth());
 		Task updateMonthTask=CandleStickThreadHelper.
-		          createUpdateKChartWorker(Worker_Type.updateMonthChart,currentStock.code.get(),start,end);
+		          createUpdateKChartWorker(Candle_Type.month,currentStock.code.get(),start,end);
 		ProgressIndicatorHelper.showProgressIndicator(updateMonthTask.progressProperty(),
 				updateMonthTask.runningProperty(), monthIndicator, monthCachePane);
 		new Thread(updateMonthTask).start();

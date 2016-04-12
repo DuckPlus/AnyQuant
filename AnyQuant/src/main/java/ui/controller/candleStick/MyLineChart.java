@@ -6,13 +6,11 @@ package ui.controller.candleStick;
 */
 
 import java.time.LocalDateTime;
-import java.util.Iterator;
 
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import vo.StockVO;
 
 public class MyLineChart {
 	private Mytime beginTime = new Mytime("6", "30");
@@ -25,27 +23,25 @@ public class MyLineChart {
 		init();
 	}
 	//==========================
-	 
+
 
 	   public void init(){
 	        xAxis.setLabel("xAxis");
 	        yAxis.setAutoRanging(false);
 
-	        
+
 	        //defining a series
 	        series = new XYChart.Series<String,Number>();
 	        series.setName("series_name");
 	        //creating the chart
 	        //set basic property of chart
-	        
+
 	        lineChart  = new LineChart<String,Number>(xAxis,yAxis);
 	        lineChart.setLegendVisible(false);
-	        lineChart.setTitle("chart title");// the title depend on code name	        
+	        lineChart.setTitle("chart title");// the title depend on code name
 	        lineChart.getData().add(series);
-	        lineChart.setPrefHeight(300);
-	        lineChart.setPrefWidth(500);
 	        lineChart.setCreateSymbols(false);
-	 
+
 	    }
 	   public void setSize(int width,int height){
 		   lineChart.setPrefHeight(height);
@@ -62,7 +58,7 @@ public class MyLineChart {
 	   public void addData(String time,Double value){
 		   series.getData().add(new XYChart.Data<String,Number>(time,value));
 	   }
-	   
+
 	    private void toCurrentTime(){
 	    	int currentHour = LocalDateTime.now().getHour();
 	    	int currentMinute = LocalDateTime.now().getMinute();
@@ -80,7 +76,7 @@ public class MyLineChart {
 class Mytime {
 	String hour;
 	String minute;
-	
+
 	Mytime(String hour,String minute){
 		this.hour = hour;
 		this.minute = minute;
@@ -96,5 +92,5 @@ class Mytime {
 			hour = String.valueOf(Integer.valueOf(hour)+1);
 		}
 	}
-	
+
 }

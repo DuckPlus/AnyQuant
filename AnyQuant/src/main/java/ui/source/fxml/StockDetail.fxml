@@ -44,7 +44,7 @@
                               <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                  <children>
                                     <ScrollPane fx:id="daySPane" prefHeight="200.0" prefWidth="200.0" />
-                                    <GridPane fx:id="dayCachePane">
+                                    <GridPane fx:id="dayCachePane" prefHeight="643.0" prefWidth="767.0">
                                       <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
