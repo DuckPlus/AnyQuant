@@ -42,27 +42,27 @@ import vo.StockVO;
  */
 public class StockListController {
 	@FXML
-	TableColumn<Stock, String> code = new TableColumn<Stock, String>();
+	TableColumn<Stock, String> code;// = new TableColumn<Stock, String>();
 	@FXML
-	TableColumn<Stock, String> name = new TableColumn<Stock, String>();
+	TableColumn<Stock, String> name;// = new TableColumn<Stock, String>();
 	@FXML
-	TableColumn<Stock, Double> open = new TableColumn<Stock, Double>();
+	TableColumn<Stock, Double> open ;//= new TableColumn<Stock, Double>();
 	@FXML
-	TableColumn<Stock, Double> high = new TableColumn<Stock, Double>();
+	TableColumn<Stock, Double> high ;//= new TableColumn<Stock, Double>();
 	@FXML
-	TableColumn<Stock, Double> low = new TableColumn<Stock, Double>();
+	TableColumn<Stock, Double> low ;//= new TableColumn<Stock, Double>();
 	@FXML
-	TableColumn<Stock, Double> close = new TableColumn<Stock, Double>();
+	TableColumn<Stock, Double> close ;//= new TableColumn<Stock, Double>();
 	@FXML
-	TableColumn<Stock, Double> turnoverRate = new TableColumn<Stock, Double>();
+	TableColumn<Stock, Double> turnoverRate;// = new TableColumn<Stock, Double>();
 	@FXML
-	TableColumn<Stock, Long> turnoverVol = new TableColumn<Stock, Long>();
+	TableColumn<Stock, Long> turnoverVol ;//= new TableColumn<Stock, Long>();
 	@FXML
-	TableColumn<Stock, String> amplitude = new TableColumn<Stock, String>();
+	TableColumn<Stock, String> amplitude ;//= new TableColumn<Stock, String>();
 	@FXML
-	TableColumn<Stock, String> changeRate = new TableColumn<Stock, String>();
+	TableColumn<Stock, String> changeRate ;//= new TableColumn<Stock, String>();
 	@FXML
-	TableView<Stock> tableview = new TableView<Stock>();
+	TableView<Stock> tableview ;//= new TableView<Stock>();
 	@FXML
 	TextField searchBar;
 
@@ -126,7 +126,7 @@ public class StockListController {
 		amplitude.setCellValueFactory(cell -> cell.getValue().getStringAmplitude());
 		changeRate.setCellValueFactory(cell -> cell.getValue().getStringChangeRate());
 		// change the color of each row
-		setColor();
+		ColorHelper.setColorForStock(observableList , tableview.getColumns());
 
 		tableview.setItems(observableList);
 
@@ -178,40 +178,12 @@ public class StockListController {
 		// new SearchThread(searchBar, this).start();
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private void setColor() {
-		List<Stock> stocks = observableList;
-		List<TableColumn<Stock, ?>> columns = tableview.getColumns();
-		for (int i = 0; i < columns.size(); i++) {
-			TableColumn column = columns.get(i);
-			String name = column.getId();
-			column.setCellFactory(new Callback<TableColumn, TableCell>() {
-				@Override
-				public TableCell call(TableColumn param) {
-					return new TableCell() {
-						@Override
-						protected void updateItem(Object item, boolean empty) {
-							super.updateItem(item, empty);
-							if (!isEmpty()) {
-								this.setTextFill(ColorHelper.getColor(stocks.get(getIndex()), name));
-								if (item instanceof String) {
-									setText((String) item);
-								} else if (item instanceof Double) {
-									setText(((Double) item).toString());
-								} else if (item instanceof Long) {
-									setText(((Long) item).toString());
-								} else {
-									setText(String.valueOf(item));
-								}
+	
 
-							}
-						}
-					};
-
-				}
-			});
-		}
-
-	}
-
+	
+	
+	
+	
+	
+	
 }

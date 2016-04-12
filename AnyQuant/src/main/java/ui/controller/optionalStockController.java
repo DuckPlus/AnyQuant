@@ -13,7 +13,6 @@ import enumeration.MyDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tab;
@@ -24,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import ui.controller.candleStick.MyLineChart;
+import ui.helper.ColorHelper;
 import util.PanelType;
 import vo.Stock;
 import vo.StockVO;
@@ -43,9 +43,9 @@ public class optionalStockController {
 	@FXML
 	TableColumn<Stock, Double>close;// = new TableColumn<Stock, Double>();
 	@FXML
-	TableColumn<Stock, Double>turnover;// = new TableColumn<Stock, Double>();
+	TableColumn<Stock, Double>turnoverRate;// = new TableColumn<Stock, Double>();
 	@FXML
-	TableColumn<Stock, Long>volume;// = new TableColumn<Stock, Long>();
+	TableColumn<Stock, Long>turnoverVol;// = new TableColumn<Stock, Long>();
 	@FXML
 	TableColumn<Stock, String>amplitude;// = new TableColumn<Stock, Double>();
 	@FXML
@@ -217,10 +217,14 @@ public class optionalStockController {
 		high.setCellValueFactory(cell ->cell.getValue().high.asObject());
 		low.setCellValueFactory(cell ->cell.getValue().low.asObject());
 		close.setCellValueFactory(cell ->cell.getValue().close.asObject());
-		turnover.setCellValueFactory(cell ->cell.getValue().turnoverRate.asObject());
-		volume.setCellValueFactory(cell ->cell.getValue().turnoverVol.asObject());
+		turnoverRate.setCellValueFactory(cell ->cell.getValue().turnoverRate.asObject());
+		turnoverVol.setCellValueFactory(cell ->cell.getValue().turnoverVol.asObject());
 		amplitude.setCellValueFactory(cell ->cell.getValue().getStringAmplitude());
 		changeRate.setCellValueFactory(cell ->cell.getValue().getStringChangeRate());
+		
+		ColorHelper.setColorForStock(observableList, tableview.getColumns());
+		
+		
 	}
 
 	@FXML
