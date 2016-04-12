@@ -7,12 +7,16 @@ import java.util.Map.Entry;
 
 import blimpl.BenchMarkBLImpl;
 import blimpl.OptionalStockBLImpl;
+import blimpl.StockBLImpl;
 import blservice.BenchMarkBLService;
 import blservice.OptionalStockBLService;
+import blservice.StockBLService;
 import enumeration.MyDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -24,6 +28,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import ui.controller.candleStick.MyLineChart;
+import util.MyTime;
 import util.PanelType;
 import vo.Stock;
 import vo.StockVO;
@@ -84,6 +89,8 @@ public class optionalStockController {
 	private OptionalStockBLService optionalBl = OptionalStockBLImpl.getOptionalBLService();
 
 	private BenchMarkBLService benchMarkBl = BenchMarkBLImpl.getBenchMarkBLService();
+	
+	private StockBLService stockBl = StockBLImpl.getAPIBLService();
 
 	private StockDetailController stockDetailController;
 
@@ -91,6 +98,7 @@ public class optionalStockController {
 
 	private BorderPane stockDetailPane;
 //	private AnchorPane chartPane;
+	private optionalStockController currentController;
 	CandleStickController candleStickController;
 
 	private static optionalStockController instance;
@@ -99,9 +107,13 @@ public class optionalStockController {
 		if(instance == null ){
 			instance = this;
 		}
+		currentController = this;
+		System.out.println(currentController.toString()+"current");
+		System.out.println(this.toString()+"this");
 	}
 	public static optionalStockController getOptionalStockController() {
 		if (instance == null) {
+			System.err.println("get a new one");
 			instance = new optionalStockController();
 		}
 		return instance;
@@ -110,6 +122,8 @@ public class optionalStockController {
 
 	@FXML
 	private void initialize(){
+		InstanceController insc = InstanceController.getInstance();
+		insc.registOptionalStockController(this);
 		observableList = FXCollections.observableArrayList();
 		cmpTableData = FXCollections.observableArrayList();
 		stockDetailPane = instanceController.getStockDetailPane();
@@ -149,22 +163,54 @@ public class optionalStockController {
 	}
 	@FXML
 	private void addCmpStock(){
-		System.out.println("ouch");
 		if(cmpTableview.getSelectionModel().getSelectedIndex()!=-1){
 		Stock selectedCmpStock = cmpTableview.getSelectionModel().getSelectedItem();
-		MyDate cmpB = new MyDate(cmpBgn.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
-		MyDate cmpE = new MyDate(cmpEnd.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
 		
 		switch(chartType.getSelectionModel().getSelectedItem()){
-			case "市盈率":drawCmpPEChart();break;
-			case "市净率":System.out.println("sjl");break;
+			case "市盈率":drawCmpPEChart(selectedCmpStock.code.get());break;
+			case "市净率":drawCmpPBChart(selectedCmpStock.code.get());;break;
 			case "成交量":System.out.println("cjl");break;
 			default:System.out.println("default");break;
 		}
 		}
 	}
-	private void drawCmpPEChart(){
+	private void drawCmpPEChart(String code){
 		
+		MyDate cmpB = new MyDate(cmpBgn.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
+		MyDate cmpE = new MyDate(cmpEnd.getValue().getYear(), cmpEnd.getValue().getMonthValue(), cmpEnd.getValue().getDayOfMonth());
+
+		if(!MyTime.ifEarlier(cmpB, cmpE)){
+			return;
+		}
+		Iterator<StockVO>itr = stockBl.getStocksByTime(code, cmpB, cmpE);
+		Series<String, Number> series = new Series<String,Number>();
+		while(itr.hasNext()){
+			StockVO temp = itr.next();
+			String date = temp.date;
+			series.getData().add(new XYChart.Data<String, Number>(date, temp.pe));
+		}
+		cmpChart.addSeries(series);
+	}
+	private void drawCmpPBChart(String code){
+		MyDate cmpB = new MyDate(cmpBgn.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
+		MyDate cmpE = new MyDate(cmpEnd.getValue().getYear(), cmpEnd.getValue().getMonthValue(), cmpEnd.getValue().getDayOfMonth());
+
+		if(!MyTime.ifEarlier(cmpB, cmpE)){
+			return;
+		}
+		Iterator<StockVO>itr = stockBl.getStocksByTime(code, cmpB, cmpE);
+		Series<String, Number> series = new Series<String,Number>();
+		while(itr.hasNext()){
+			StockVO temp = itr.next();
+			String date = temp.date;
+			series.getData().add(new XYChart.Data<String, Number>(date, temp.pb));
+		}
+		cmpChart.addSeries(series);
+	}
+	
+	@FXML
+	private void clearCmpChart(){
+		cmpChart.removeAllSeries();
 	}
 	
 	private void initPieChart(){
@@ -199,7 +245,14 @@ public class optionalStockController {
 	}
 	@FXML
 	public void getOptionalStock(){
+		
+		System.out.println("refresh "+currentController.toString());
 		Iterator<StockVO>itr = optionalBl.getOptionalStocks();
+		Iterator<StockVO>itrBack = optionalBl.getOptionalStocks();
+		while(itrBack.hasNext()){
+			StockVO temp = itrBack.next();
+			System.out.println(temp.name);
+		}
 		showTableData(itr);
 		initPieChart();
 	}
@@ -229,6 +282,7 @@ public class optionalStockController {
 			String stockCode = tableview.getSelectionModel().getSelectedItem().code.get();
 			boolean status = optionalBl.deleteStockCode(stockCode);
 			getOptionalStock();
+//			System.out.println(currentController.toString()+"deleteCurrent");
 		}
 	}
 	@FXML

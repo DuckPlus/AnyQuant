@@ -200,6 +200,9 @@ public class StockDetailController {
 			if (optionBl.deleteStockCode(stockCode)) {// 删除成功
 				addBtn.setText("加入自选股");
 				exist = false;
+//				optionalStockController op = InstanceController.getInstance().getOptionalStockController();
+//				op.getOptionalStock();
+//				System.out.println("delete "+op.toString());
 			} else {
 				addBtn.setText("删除失败");// TODO 失败原因？。。
 			}
