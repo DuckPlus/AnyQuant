@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
@@ -50,11 +51,11 @@ public class StockDetailController {
 	@FXML
 	private Button dayBT,weekBT,monthBT;
 	@FXML
-	public HBox dayHBox,weekHBox,monthHBox;
+	public ScrollPane  daySPane,weekSPane,monthSPane,timeSharingSPane;
 	@FXML
-	private GridPane dayCachePane,weekCachePane,monthCachePane;
+	private GridPane dayCachePane,weekCachePane,monthCachePane,timeSharingCachePane;
 	@FXML
-	 private ProgressIndicator dayIndicator,weekIndicator,monthIndicator;
+	 private ProgressIndicator dayIndicator,weekIndicator,monthIndicator,timeSharingIndicator;
 	@FXML
 	TabPane tabPane;
 	private Boolean exist;
@@ -125,8 +126,14 @@ public class StockDetailController {
 	}
 
 	private void initTimeSharing() {
-		TimeSharingChart timeChart = new TimeSharingChart(currentStock);
-		timeSharing.setContent(timeChart.getTimeSharingChart());
+//		TimeSharingChart timeChart = new TimeSharingChart(currentStock);
+//		timeSharing.setContent(timeChart.getTimeSharingChart());
+		Task initTimeSharingTask = CandleStickThreadHelper.createTimeSharingInitWorker(currentStock);
+
+		ProgressIndicatorHelper.showProgressIndicator(initTimeSharingTask.progressProperty(),
+        		 initTimeSharingTask.runningProperty(), timeSharingIndicator, timeSharingCachePane);
+
+		new Thread(initTimeSharingTask).start();
 	}
 
 	private void initKLine() {
@@ -134,13 +141,13 @@ public class StockDetailController {
 
 
          Task initDayTask=CandleStickThreadHelper.
-        		          createInitWorker(Worker_Type.initDayChart,currentStock.code.get());
+        		          createKChartInitWorker(Worker_Type.initDayChart,currentStock.code.get());
 
          Task initWeekTask= CandleStickThreadHelper.
-        		          createInitWorker(Worker_Type.initWeekChart, currentStock.code.get());
+        		          createKChartInitWorker(Worker_Type.initWeekChart, currentStock.code.get());
 
          Task initMonthTask= CandleStickThreadHelper.
-		          createInitWorker(Worker_Type.initMonthChart, currentStock.code.get());
+		          createKChartInitWorker(Worker_Type.initMonthChart, currentStock.code.get());
 
          ProgressIndicatorHelper.showProgressIndicator(initDayTask.progressProperty(),
         		 initDayTask.runningProperty(), dayIndicator, dayCachePane);
@@ -158,7 +165,7 @@ public class StockDetailController {
 		MyDate start = new MyDate(dayStart.getValue().getYear(),dayStart.getValue().getMonthValue(),dayStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(dayEnd.getValue().getYear(),dayEnd.getValue().getMonthValue(),dayEnd.getValue().getDayOfMonth());
 		Task updateDayTask=CandleStickThreadHelper.
-		          createUpdateChartWorker(Worker_Type.updateDayChart,currentStock.code.get(),start,end);
+		          createUpdateKChartWorker(Worker_Type.updateDayChart,currentStock.code.get(),start,end);
 		ProgressIndicatorHelper.showProgressIndicator(updateDayTask.progressProperty(),
 				updateDayTask.runningProperty(), dayIndicator, dayCachePane);
 		new Thread(updateDayTask).start();
@@ -168,7 +175,7 @@ public class StockDetailController {
 		MyDate start = new MyDate(weekStart.getValue().getYear(),weekStart.getValue().getMonthValue(),weekStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(weekEnd.getValue().getYear(),weekEnd.getValue().getMonthValue(),weekEnd.getValue().getDayOfMonth());
 		Task updateWeekTask=CandleStickThreadHelper.
-		          createUpdateChartWorker(Worker_Type.updateWeekChart,currentStock.code.get(),start,end);
+		          createUpdateKChartWorker(Worker_Type.updateWeekChart,currentStock.code.get(),start,end);
 		ProgressIndicatorHelper.showProgressIndicator(updateWeekTask.progressProperty(),
 				updateWeekTask.runningProperty(), weekIndicator, weekCachePane);
 		new Thread(updateWeekTask).start();
@@ -178,7 +185,7 @@ public class StockDetailController {
 		MyDate start = new MyDate(monthStart.getValue().getYear(),monthStart.getValue().getMonthValue(),monthStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(monthEnd.getValue().getYear(),monthEnd.getValue().getMonthValue(),monthEnd.getValue().getDayOfMonth());
 		Task updateMonthTask=CandleStickThreadHelper.
-		          createUpdateChartWorker(Worker_Type.updateMonthChart,currentStock.code.get(),start,end);
+		          createUpdateKChartWorker(Worker_Type.updateMonthChart,currentStock.code.get(),start,end);
 		ProgressIndicatorHelper.showProgressIndicator(updateMonthTask.progressProperty(),
 				updateMonthTask.runningProperty(), monthIndicator, monthCachePane);
 		new Thread(updateMonthTask).start();

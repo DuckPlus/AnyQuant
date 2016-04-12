@@ -16,6 +16,8 @@ import vo.Stock;
 import vo.TimeSharingVO;
 
 public class TimeSharingChart {
+	private static final int  Height=630;
+	private static final int  Width=770;
 	MyLineChart lineChart;
 	StockBLService stockBl = StockBLImpl.getAPIBLService();
 	Stock currentStock;
@@ -25,6 +27,7 @@ public class TimeSharingChart {
 		init();
 	}
 	private void init(){
+		double HpixelPerValue=4;
 		lineChart = new MyLineChart();
 		List<TimeSharingVO> timeSharingData = stockBl.getSharingVOs(currentStock.code.get());
     	//get the upperBounds and lowerBounds
@@ -48,6 +51,8 @@ public class TimeSharingChart {
     		TooltipContentTimeSharing tip=(TooltipContentTimeSharing)tooltip.getGraphic();
     		tip.update(temp.nowTime.TimeToString(), temp.nowPrice);
     	}
+    	lineChart.setSize((int)(HpixelPerValue*timeSharingData.size()), Height);
+
 
 
 	}
