@@ -6,11 +6,13 @@ package ui.controller.candleStick;
 */
 
 import java.time.LocalDateTime;
-
+import java.util.LinkedList;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
+
 
 public class MyLineChart {
 	private Mytime beginTime = new Mytime("6", "30");
@@ -18,6 +20,8 @@ public class MyLineChart {
 	private CategoryAxis xAxis = new CategoryAxis();
     private NumberAxis yAxis = new NumberAxis();
 	private LineChart<String,Number> lineChart ;
+	private int seriseNum = 1;
+	private LinkedList<Series<String, Number>>seriesKeeper = new LinkedList<Series<String, Number>>();
 	public MyLineChart() {
 		// TODO Auto-generated constructor stub
 		init();
@@ -43,6 +47,21 @@ public class MyLineChart {
 	        lineChart.setCreateSymbols(false);
 
 	    }
+	   /**
+	    * 自选比较 专用！
+	    */
+	   public void addSeries(Series<String, Number> series){
+		   lineChart.getData().add(series);
+		   seriseNum++;
+		   seriesKeeper.add(series);
+	   }
+	   public void removeAllSeries(){
+		   for(int i=1;i<seriseNum;i++){
+//			   lineChart.getData().remove(i);
+			   lineChart.getData().removeAll(seriesKeeper);
+		   }
+		   seriseNum=1;
+	   }
 	   public void setSize(int width,int height){
 		   lineChart.setPrefHeight(height);
 	       lineChart.setPrefWidth(width);
