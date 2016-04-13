@@ -54,7 +54,6 @@ public class TimeSharingChart {
     	lineChart.setSize((int)(HpixelPerValue*timeSharingData.size()), Height);
 
 
-
 	}
 
 	public LineChart<String, Number> getTimeSharingChart(){

@@ -69,72 +69,10 @@ public class CandleStickController implements Initializable {
 
 	}
 
-
-	public Node getInitialDayChart(String code) {
-
-		this.stockCode = code;
-		getDayData();
-        dayChart = CandleStickChart.createChart(dayList);
-		return dayChart;
-	}
-
-	public Node getInitialWeekChart(String code){
-	    this.stockCode=code;
-	   getWeekData();
-	    weekChart= CandleStickChart.createChart(weekList);
-	    return weekChart;
-	}
-
-	public Node getInitialMonthChart(String code){
-       this.stockCode=code;
-      getMonthData();
-       monthChart=CandleStickChart.createChart(monthList);
-       return monthChart;
-	}
-
-	// set date to update charts
-	public Node getUpdatedDayChart(String code, MyDate start, MyDate end) {
-		this.stockCode = code;
-		this.startDate = start;
-		this.endDate = end;
-        getDayDataByDate();
-      dayChart = CandleStickChart.createChart(dayList);
-
-		return dayChart;
-
-	}
-
-
-	public Node getUpdatedWeekChart(String code, MyDate start, MyDate end) {
-		this.stockCode = code;
-		this.startDate = start;
-		this.endDate = end;
-		getWeekDataByDate();
-        weekChart=CandleStickChart.createChart(weekList);
-		return weekChart;
-
-	}
-
-
-	public Node getUpdatedMonthChart(String code, MyDate start, MyDate end) {
-		this.stockCode = code;
-		this.startDate = start;
-		this.endDate = end;
-	//	Task updateTask = createUpdateMonthChartWorker();
-		// showProgressIndicator(
-		// updateTask.progressProperty(),updateTask.runningProperty());
-	//	new Thread(updateTask).start();
-		getMonthDataByDate();
-		monthChart=CandleStickChart.createChart(monthList);
-		return dayChart;
-
-	}
-
-
 	public void getDayData() {
-		// 默认显示近一个月的数据
+		// 默认显示近两个月的数据
 		MyDate end = MyTime.getToDay();
-		MyDate start = MyTime.getAnotherDay(-30);
+		MyDate start = MyTime.getAnotherDay(-60);
 		List<OHLC_VO> list = stockBl.getDayOHLC_Data(stockCode, start, end);
 		dayList.clear();
 		for (OHLC_VO temp : list) {

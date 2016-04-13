@@ -67,7 +67,7 @@
                         <ComboBox fx:id="chartType" layoutX="7.0" layoutY="542.0" prefHeight="27.0" prefWidth="235.0" />
                         <DatePicker fx:id="cmpEnd" editable="false" layoutX="127.0" layoutY="572.0" prefHeight="27.0" prefWidth="115.0" />
                         <DatePicker fx:id="cmpBgn" editable="false" layoutX="7.0" layoutY="572.0" prefHeight="27.0" prefWidth="115.0" />
-                        <Button layoutX="8.0" layoutY="632.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="235.0" text="移除" />
+                        <Button layoutX="8.0" layoutY="632.0" mnemonicParsing="false" onMouseClicked="#clearCmpChart" prefHeight="27.0" prefWidth="235.0" text="移除" />
                      </children>
                   </AnchorPane>
               </content>

@@ -3,31 +3,27 @@
 .candlestick-tooltip-label {
     -fx-font-size: 0.75em;
     -fx-font-weight: bold;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #666666;
     -fx-padding: 2 5 2 0;
 }
-.candlestick-average-line {
+.candlestick-average-line {              /*折线 */
     -fx-stroke: #106ece;
-    -fx-stroke-width: 1px;
+    -fx-stroke-width: 2px;
 }
 .candlestick-candle {
-    /*-fx-effect: dropshadow( two-pass-box , rgba(0,0,0,0.4) , 10, 0.0 , 2 , 4 );*/
+    -fx-effect: dropshadow( two-pass-box , rgba(0,0,0,0.4) , 10, 0.0 , 2 , 4 );
 }
 
-.candlestick-line {
+.candlestick-line {                  /* 最高价和最低价的竖线 */
     -fx-stroke: #666666;
-    -fx-stroke-width: 2px;
+    -fx-stroke-width: 3px;
 }
 .candlestick-bar {
     -fx-padding: 5;
-   /* -demo-bar-fill: red;*/
-/*     -fx-background-color: linear-gradient(derive(-demo-bar-fill,-30%), derive(-demo-bar-fill,-40%)),
-                           linear-gradient(derive(-demo-bar-fill,100%), derive(-demo-bar-fill, 10%)),
+    -demo-bar-fill: red;
+    -fx-background-color: linear-gradient(derive(-demo-bar-fill,-30%), derive(-demo-bar-fill,-40%)),
+                          linear-gradient(derive(-demo-bar-fill,100%), derive(-demo-bar-fill, 10%)),
                           linear-gradient(derive(-demo-bar-fill,30%), derive(-demo-bar-fill,-10%));
-*/                          
-     -fx-background-color: /*linear-gradient(derive(-demo-bar-fill,-30%), derive(-demo-bar-fill,-40%)),*/
-                           linear-gradient(derive(-demo-bar-fill,100%), derive(-demo-bar-fill, 100%)),
-                          linear-gradient(derive(-demo-bar-fill,0%), derive(-demo-bar-fill,0%));
     -fx-background-insets: 0,1,2;
 }
 .candlestick-bar.close-above-open {
@@ -36,5 +32,4 @@
 
 .candlestick-bar.open-above-close {
     -demo-bar-fill: #ce2700;
-    -demo-bar-border:black
 }

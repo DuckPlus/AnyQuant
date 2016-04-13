@@ -19,7 +19,7 @@ public class GraphicsUtils {
 
 	public static Parent getParent(String fileName){
 
-
+		System.err.println(fileName);
 	try {
 		fxmlLoader = new FXMLLoader();
 //		System.out.println(MainAPP.class.getResource(fxmlPath + fileName + postfix));

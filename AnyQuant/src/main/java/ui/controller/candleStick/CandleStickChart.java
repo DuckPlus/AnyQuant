@@ -306,7 +306,7 @@ public class CandleStickChart extends XYChart<String, Number> {
 		double max=getMax(obsevableList);
 		double min =getMin(obsevableList);
     	double gap=(max-min)/10;
-      	double HpixelPerValue=50;
+      	double HpixelPerValue=20;
     	//X轴
         final CategoryAxis xAxis = new CategoryAxis ();
         //Y轴
@@ -333,7 +333,12 @@ public class CandleStickChart extends XYChart<String, Number> {
         } else {
             candleStickChart.getData().add(series);
         }
-        candleStickChart.setPrefSize(HpixelPerValue*obsevableList.size(),Height*0.95);
+
+        double curWidth = HpixelPerValue*obsevableList.size();
+        if(curWidth<Width){
+        	curWidth=Width;
+        }
+        candleStickChart.setPrefSize(curWidth,Height*0.95);
         return candleStickChart;
     }
 
