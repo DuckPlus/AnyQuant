@@ -7,6 +7,7 @@ import enumeration.MyDate;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import ui.controller.CandleStickController;
+import ui.controller.MyBarChart;
 import ui.controller.StockDetailController;
 import vo.Stock;
 
@@ -167,5 +168,22 @@ public class CandleStickThreadHelper {
 			}
 		};
 	}
+	//TODO
 
+	public static Task createDealAmountInitWorker(Stock stock){
+		return new Task() {
+			@Override
+			protected Object call() throws Exception {
+				// on the worker thread...
+//				MyBarChart barChart = new MyBarChart(stock);
+
+				Platform.runLater(() -> {
+					// on the JavaFX Application Thread....
+//                    stockDetailController.dealSPane.setContent(barChart.getTimeSharingChart());
+					System.out.println("done init Charts");
+				});
+				return true;
+			}
+		};
+	}
 }

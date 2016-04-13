@@ -57,6 +57,15 @@
                               </ScrollPane>
                            </content>
                         </Tab>
+                        <Tab id="dayTab" fx:id="dealTab" onSelectionChanged="#selectDeal" text="成交量图">
+                           <content>
+                              <ScrollPane prefHeight="690.0" prefViewportHeight="691.0" prefViewportWidth="905.0" prefWidth="905.0">
+                                 <content>
+                                    <HBox prefHeight="690.0" prefWidth="905.0" />
+                                 </content>
+                              </ScrollPane>
+                           </content>
+                        </Tab>
                     </tabs>
                   </TabPane>
                   <GridPane id="cachePane" StackPane.alignment="CENTER">
