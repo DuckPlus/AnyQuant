@@ -29,11 +29,12 @@ public class TransferHelper {
 		po.setTurnoverValue(jo.getDouble("turnoverValue"));
 		po.setTurnoverRate(jo.getDouble("turnoverRate"));
 		po.setPb(jo.getDouble("PB"));
-		po.setPe(jo.getDouble("PE")); 
+		po.setPe(jo.getDouble("PE"));
 		po.setAccAdjFactor(jo.getDouble("accumAdjFactor"));
 		po.setCirMarketValue(jo.getDouble("negMarketValue"));
 		po.setTotalMarketValue(jo.getDouble("marketValue"));
 		po.computeAmplitude();  po.computeChangeRate();
+		po.computeTurnOverRate();
 
 		String [] industryAndLoc = IndustryLocationMap.get(code);
 		po.setBoard(industryAndLoc[0]);   po.setRegion(industryAndLoc[1]);

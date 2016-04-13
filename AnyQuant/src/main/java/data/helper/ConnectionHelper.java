@@ -70,7 +70,7 @@ public class ConnectionHelper {
 			buffer.append(urls.get(i+1) );
 			buffer.append(param[i]);
 		}
-//		System.err.println(buffer.toString());
+		System.err.println(buffer.toString());
 //		if(API_TYPE.GET_TIMESAHRING == type)
 		System.out.println(request(buffer.toString()));
 		

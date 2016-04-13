@@ -1,22 +1,23 @@
-//package Duck_Plus.AnyQuant;
-//
-//import java.util.List;
-//
-//import data.APIInterfaceImpl;
-//import po.BenchMarkPO;
-//import po.StockPO;
-//import util.MyTime;
-//import dataservice.APIDataFactory;
-//import dataservice.APIInterface;
-//import dataservice.StockDataService;
-//import enumeration.MyDate;
-//
-//public class APITest {
-//	public static void main(String a[]) {
-//		getStockMesByNewAPI();
-//		//getBenchMesByNewAPI();
-//	}
-//
+package Duck_Plus.AnyQuant;
+
+import java.util.List;
+
+import data.helper.FileIOHelper;
+import po.BenchMarkPO;
+import po.StockPO;
+import util.MyTime;
+import dataservice.APIDataFactory;
+import dataservice.APIInterface;
+import dataservice.StockDataService;
+import enumeration.MyDate;
+
+public class APITest {
+	public static void main(String a[]) {
+		FileIOHelper.updateLatestStockMes();
+
+		//getBenchMesByNewAPI();
+	}
+
 //	public static void getAllstocksMessageByAPI() {
 //		APIInterface api = APIInterfaceImpl.getAPIInterfaceImpl();
 //		// MyDate start = new MyDate(2016, 2, 29);
@@ -155,5 +156,5 @@
 //			System.out.print("date: " + stock.getDate() + '\n');
 //		}
 //	}
-//
-//}
+
+}
