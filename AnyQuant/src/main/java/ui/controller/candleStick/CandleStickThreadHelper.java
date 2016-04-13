@@ -158,10 +158,12 @@ public class CandleStickThreadHelper {
 			@Override
 			protected Object call() throws Exception {
 				// on the worker thread...
+//				System.err.println("called");
 				TimeSharingChart timeChart = new TimeSharingChart(stock);
 
 				Platform.runLater(() -> {
 					// on the JavaFX Application Thread....
+					System.err.println("time sharing woker init complete aaaa");
                     stockDetailController.timeSharingSPane.setContent(timeChart.getTimeSharingChart());
 					System.out.println("done init Charts");
 				});

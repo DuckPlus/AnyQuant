@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
@@ -20,19 +21,24 @@
                            <top>
                               <HBox prefHeight="30.0" prefWidth="555.0" spacing="10.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <DatePicker fx:id="dayStart" editable="false" prefHeight="30.0" prefWidth="120.0" promptText="起始时间">
+                                    <DatePicker fx:id="dayStart" editable="false" prefHeight="30.0" prefWidth="151.0" promptText="起始时间">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </DatePicker>
-                                    <DatePicker fx:id="dayEnd" editable="false" prefHeight="30.0" prefWidth="120.0" promptText="终止时间">
+                                    <Pane prefHeight="30.0" prefWidth="141.0" />
+                                    <DatePicker fx:id="dayEnd" editable="false" prefHeight="30.0" prefWidth="195.0" promptText="终止时间">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin></DatePicker>
-                                    <Button fx:id="dayBT" alignment="CENTER" mnemonicParsing="false" onAction="#updateDayChart" prefHeight="30.0" prefWidth="80.0" text="查询" textAlignment="JUSTIFY">
+                                    <Pane layoutX="150.0" layoutY="10.0" prefHeight="30.0" prefWidth="141.0" />
+                                    <Button fx:id="dayBT" alignment="CENTER" mnemonicParsing="false" onAction="#updateDayChart" prefHeight="30.0" prefWidth="80.0" styleClass="candlestick-bar" stylesheets="@../css/buttons.css" text="查询" textAlignment="JUSTIFY">
                                        <font>
-                                          <Font size="14.0" />
+                                          <Font size="7.0" />
                                        </font>
+                                       <effect>
+                                          <Glow />
+                                       </effect>
                                     </Button>
                                  </children>
                                  <BorderPane.margin>
@@ -181,11 +187,7 @@
                      <content>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <ScrollPane fx:id="timeSharingSPane" prefHeight="200.0" prefWidth="200.0">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-                                </content>
-                              </ScrollPane>
+                              <ScrollPane fx:id="timeSharingSPane" prefHeight="200.0" prefWidth="200.0" />
                               <GridPane fx:id="timeSharingCachePane">
                                  <children>
                                     <ProgressIndicator fx:id="timeSharingIndicator" progress="0.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
