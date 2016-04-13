@@ -8,6 +8,7 @@ import org.python.antlr.PythonParser.else_clause_return;
 import blimpl.StockBLImpl;
 import blservice.StockBLService;
 import enumeration.MyDate;
+import enumeration.PanelType;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -31,7 +32,6 @@ import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import ui.GraphicsUtils;
 import ui.helper.ColorHelper;
-import util.PanelType;
 import vo.Stock;
 import vo.StockVO;
 

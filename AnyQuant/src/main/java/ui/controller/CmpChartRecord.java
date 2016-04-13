@@ -1,5 +1,6 @@
 package ui.controller;
 
+import enumeration.CmpChartType;
 import javafx.scene.chart.XYChart.Series;
 
 public class CmpChartRecord {

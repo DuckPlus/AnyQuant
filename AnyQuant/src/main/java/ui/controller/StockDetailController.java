@@ -7,6 +7,7 @@ import blimpl.OptionalStockBLImpl;
 import blservice.OptionalStockBLService;
 import enumeration.Candle_Type;
 import enumeration.MyDate;
+import enumeration.PanelType;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,10 +18,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
-import ui.controller.candleStick.CandleStickThreadHelper;
-import ui.controller.candleStick.ProgressIndicatorHelper;
-import ui.controller.candleStick.TimeSharingChart;
-import util.PanelType;
+import util.candleStick.CandleStickThreadHelper;
+import util.candleStick.ProgressIndicatorHelper;
 import vo.Stock;
 
 public class StockDetailController {

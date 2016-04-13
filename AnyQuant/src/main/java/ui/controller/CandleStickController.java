@@ -9,12 +9,9 @@ import blservice.StockBLService;
 import enumeration.MyDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.ProgressIndicator;
-import ui.controller.candleStick.CandleStickChart;
 import util.MyTime;
+import util.candleStick.CandleStickChart;
 import vo.OHLC_VO;
 
 /**
