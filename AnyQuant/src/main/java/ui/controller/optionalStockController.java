@@ -40,7 +40,11 @@ import vo.Stock;
 import vo.StockVO;
 
 public class optionalStockController {
-
+	BarChart boardBarChart,regionBarChart;
+	MyPieChart  myPieChart_b = new MyPieChart();
+	MyPieChart  myPieChart_r = new MyPieChart();
+	MyBarChart myBarChart = new MyBarChart();
+	Map<String, Integer>  boardMap,regionMap;
 	@FXML
 	TableColumn<Stock, String>code;// = new TableColumn<Stock,String>();
 	@FXML
@@ -129,7 +133,34 @@ public class optionalStockController {
 
 @FXML
 public void selectPie(){
-	initPieAndBarChart();
+	barChartAddData();
+}
+
+private void initPieAndBarChart(){
+	System.out.println("自选股的柱状图");
+	 boardMap= optionalBl.getBoardDistributionMap();
+    PieChart boardPieChart = myPieChart_b.createPieChart(boardMap);
+    boardBarChart = myBarChart.getBarChart();
+    boardHBox.getChildren().clear();
+    boardHBox.getChildren().addAll(boardPieChart,boardBarChart);
+
+    regionMap= optionalBl.getRegionDistributionMap();
+	PieChart regionPieChart = myPieChart_r.createPieChart(regionMap);
+	regionBarChart = myBarChart.createBarChart(regionMap);
+	regionHBox.getChildren().clear();
+	regionHBox.getChildren().addAll(regionPieChart,regionBarChart);
+
+	//    boardBarChart.getData().add(boardMap);
+//    myBarChart.addData(boardBarChart,boardMap);
+//    myBarChart.addData(regionBarChart,regionMap);
+}
+private void barChartAddData() {
+	myPieChart_b.animate();
+	myPieChart_r.animate();
+	regionBarChart.getData().clear();
+	boardBarChart.getData().clear();
+	myBarChart.addData(regionBarChart,regionMap);
+	myBarChart.addData(boardBarChart,boardMap);
 }
 	@FXML
 	private void initialize(){
@@ -228,29 +259,6 @@ public void selectPie(){
 
 	}
 
-	private void initPieAndBarChart(){
-		MyPieChart  myPieChart = new MyPieChart();
-		MyBarChart myBarChart = new MyBarChart();
-
-		Map<String, Integer>  boardMap= optionalBl.getBoardDistributionMap();
-        PieChart boardPieChart = myPieChart.createPieChart(boardMap);
-        BarChart boardBarChart = myBarChart.createBarChart(boardMap);
-        boardHBox.getChildren().clear();
-        boardHBox.getChildren().addAll(boardPieChart,boardBarChart);
-        myPieChart.animate();
-        myBarChart.addData();
-
-
-        Map<String, Integer>  regionMap= optionalBl.getRegionDistributionMap();
-		PieChart regionPieChart = myPieChart.createPieChart(regionMap);
-		BarChart regionBarChart = myBarChart.createBarChart(regionMap);
-		regionHBox.getChildren().clear();
-		regionHBox.getChildren().addAll(regionPieChart,regionBarChart);
-        myPieChart.animate();
-        myBarChart.addData();
-
-	}
-
 
 
 	@FXML
@@ -264,7 +272,7 @@ public void selectPie(){
 			System.out.println(temp.name);
 		}
 		showTableData(itr);
-		initPieAndBarChart();
+//		initPieAndBarChart();
 	}
 	private void showTableData(Iterator<StockVO>itr){
 		tableview.getItems().removeAll(observableList);

@@ -48,7 +48,7 @@
                      </children></AnchorPane>
             </content>
           </Tab>
-            <Tab fx:id="geoDisTab" text="地域分布">
+            <Tab fx:id="geoDisTab" onSelectionChanged="#selectPie" text="地域分布">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
