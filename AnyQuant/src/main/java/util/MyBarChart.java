@@ -12,9 +12,6 @@ public class MyBarChart {
 
 	private BarChart<String, Number> barchart;
 	XYChart.Series series;
-	final static String itemA = "A";
-	final static String itemB = "B";
-	final static String itemC = "F";
 
 	public MyBarChart() {
 		init();
