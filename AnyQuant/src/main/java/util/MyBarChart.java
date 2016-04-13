@@ -1,4 +1,4 @@
-package ui.controller;
+package util;
 
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -44,30 +44,4 @@ public class MyBarChart {
 		return barchart;
 	}
 
-	public void start(Stage stage) {
-		//
-		//
-		// series1.setName("2003");
-		// series1.getData().add(new XYChart.Data(itemA,2));
-		// series1.getData().add(new XYChart.Data( itemB,20));
-		// series1.getData().add(new XYChart.Data(itemC,10));
-		//
-		// XYChart.Series series2 = new XYChart.Series();
-		// series2.setName("2004");
-		// series2.getData().add(new XYChart.Data(itemA,50));
-		// series2.getData().add(new XYChart.Data(itemB,41));
-		// series2.getData().add(new XYChart.Data(itemC,45));
-		//
-		// XYChart.Series series3 = new XYChart.Series();
-		// series3.setName("2005");
-		// series3.getData().add(new XYChart.Data( itemA,45));
-		// series3.getData().add(new XYChart.Data(itemB,44));
-		// series3.getData().add(new XYChart.Data(itemC,88));
-		//
-		// Scene scene = new Scene(bc, 800, 600);
-		// bc.getData().addAll(series1);
-		// stage.setScene(scene);
-		// stage.show();
-		// }
-	}
 }

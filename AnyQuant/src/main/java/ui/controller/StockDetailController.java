@@ -119,7 +119,7 @@ public class StockDetailController {
 		// add time sharing then
 		initTimeSharing();
 		//add dealAmount
-//		initDealAmount();
+		initDealAmount();
 
 	}
 

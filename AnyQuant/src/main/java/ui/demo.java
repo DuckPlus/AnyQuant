@@ -8,7 +8,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
-import ui.controller.MyBarChart;
+import util.MyBarChart;
 
 public class demo extends Application {
 

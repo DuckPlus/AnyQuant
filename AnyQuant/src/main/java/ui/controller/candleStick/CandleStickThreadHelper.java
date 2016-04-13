@@ -6,9 +6,10 @@ import enumeration.Candle_Type;
 import enumeration.MyDate;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.scene.chart.XYChart;
 import ui.controller.CandleStickController;
-import ui.controller.MyBarChart;
 import ui.controller.StockDetailController;
+import util.MyBarChart;
 import vo.Stock;
 
 /**
@@ -174,13 +175,20 @@ public class CandleStickThreadHelper {
 		return new Task() {
 			@Override
 			protected Object call() throws Exception {
+				 XYChart.Series series = new XYChart.Series();
+		          series.setName("2003");
+		          series.getData().add(new XYChart.Data("2000",2));
+		          series.getData().add(new XYChart.Data( "2005",20));
+		          series.getData().add(new XYChart.Data("2010",10));
+
 				// on the worker thread...
-//				MyBarChart barChart = new MyBarChart(stock);
+				MyBarChart barChart = new MyBarChart(stock);
 
 				Platform.runLater(() -> {
 					// on the JavaFX Application Thread....
-//                    stockDetailController.dealSPane.setContent(barChart.getTimeSharingChart());
-					System.out.println("done init Charts");
+                    stockDetailController.dealSPane.setContent(barChart.getBarChart());
+					barChart.addData(series);
+                    System.out.println("done init Charts");
 				});
 				return true;
 			}
