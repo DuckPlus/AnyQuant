@@ -39,7 +39,7 @@
 }
 
 .optionalButton-clicked {
-	-fx-background-image: url('../img/optional.png');
+	-fx-background-image: url('../img/optionalStock.png');
 	-fx-background-size:176px 42px;
 }
 
