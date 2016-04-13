@@ -1,16 +1,18 @@
 package ui.controller;
 
+import java.util.Map;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Side;
 import javafx.scene.chart.PieChart;
-import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -24,7 +26,7 @@ import javafx.util.Duration;
 public class MyPieChart {
 	private static final int width = 500, height = 500;
     private PieChart pieChart;
-    private ObservableList<Data> datas;
+    private Map<String, ? extends Number> valueMap;
 
 	public MyPieChart() {
 
@@ -32,9 +34,9 @@ public class MyPieChart {
 
 
 
-	public  PieChart createPieChart(ObservableList<Data> items){
+	public  PieChart createPieChart(Map<String, Integer> map){
 		 this.pieChart = new PieChart();
-		 this.datas=items;
+		 this.valueMap=map;
 		 this.InitPieChart();
 		 return this.pieChart;
 	}
@@ -72,17 +74,32 @@ public class MyPieChart {
    }
 
     private  void initAnimation(){
-//    	boolean isFirst = true;
-    	pieChart.getData().addAll(datas);
-	//	setToolTip();
-		KeyValue[] keyValues = new KeyValue[pieChart.getData().size()];
+    //	boolean isFirst = true;
+		ObservableList<PieChart.Data> chartData = FXCollections.observableArrayList();
 
-		for (int i = 0; i < keyValues.length; i++) {
-			PieChart.Data oneData = pieChart.getData().get(i);
-			keyValues[i] = new KeyValue(oneData.pieValueProperty() , oneData.getPieValue() );
+		if (valueMap.size() > 1) {
+			for (String key : valueMap.keySet()) {
+				chartData.add(new PieChart.Data(key, 100.0/valueMap.size()));
+			}
+		}else{
+
+			for (String key : valueMap.keySet()) {
+				chartData.add(new PieChart.Data(key, valueMap.get(key).doubleValue()));
+			}
 		}
 
-		KeyFrame frame = new KeyFrame(new Duration(20000), keyValues);
+		pieChart.setData(chartData);
+		//setToolTip();
+		KeyValue[] keyValues = new KeyValue[valueMap.size()];
+
+		for (int i = 0; i < keyValues.length; i++) {
+
+			PieChart.Data oneData = chartData.get(i);
+
+			keyValues[i] = new KeyValue(oneData.pieValueProperty(), valueMap.get(oneData.getName()));
+		}
+
+		KeyFrame frame = new KeyFrame(new Duration(1500), keyValues);
 		Timeline timeline = new Timeline(frame);
 		timeline.play();
     }
@@ -91,14 +108,14 @@ public class MyPieChart {
 		pieChart.getData().stream().forEach(pieData -> {
 			pieData.getNode().addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
 				Bounds b1 = pieData.getNode().getBoundsInLocal();
-				double newX = (b1.getWidth()) / 2 + b1.getMinX();
-				double newY = (b1.getHeight()) / 2 + b1.getMinY();
+				double newX = b1.getWidth() / 2 + b1.getMinX();
+				double newY = b1.getHeight() / 2 + b1.getMinY();
 				// Make sure pie wedge location is reset
 				pieData.getNode().setTranslateX(0);
 				pieData.getNode().setTranslateY(0);
-				TranslateTransition tt = new TranslateTransition(Duration.millis(1500), pieData.getNode());
-				tt.setByX(newX);
-				tt.setByY(newY);
+				TranslateTransition tt = new TranslateTransition(Duration.millis(500), pieData.getNode());
+				tt.setByX(newX*0.2);
+				tt.setByY(newY*0.2);
 				tt.setAutoReverse(true);
 				tt.setCycleCount(2);
 				tt.play();

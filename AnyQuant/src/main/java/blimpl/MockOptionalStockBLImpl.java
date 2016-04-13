@@ -114,7 +114,7 @@ public class MockOptionalStockBLImpl implements OptionalStockBLService {
 	 * @see blservice.OptionalStockBLService#getBorderDistribution()
 	 */
 	@Override
-	public Iterator<Entry<String, Integer>> getBorderDistribution() {
+	public Iterator<Entry<String, Integer>> getBoardDistribution() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -126,6 +126,18 @@ public class MockOptionalStockBLImpl implements OptionalStockBLService {
 	public boolean ifStockExist(String stockCode) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public Map<String, Integer> getRegionDistributionMap() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Integer> getBoardDistributionMap() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

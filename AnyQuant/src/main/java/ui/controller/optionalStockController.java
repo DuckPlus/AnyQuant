@@ -3,6 +3,7 @@ package ui.controller;
 
 import java.time.LocalDate;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import blimpl.BenchMarkBLImpl;
@@ -227,24 +228,14 @@ public void selectPie(){
 	private void initPieChart(){
 		MyPieChart  myPieChart = new MyPieChart();
 
-		ObservableList<Data> datas_board = FXCollections.observableArrayList();
-		Iterator<Entry<String,Integer>>itr = optionalBl.getBorderDistribution();
-		while(itr.hasNext()){
-			Entry<String,Integer> temp = itr.next();
-			datas_board.add(new PieChart.Data(temp.getKey(), temp.getValue()));
-		}
-        PieChart boardPieChart = myPieChart.createPieChart(datas_board);
+		Map<String, Integer>  boardMap= optionalBl.getBoardDistributionMap();
+        PieChart boardPieChart = myPieChart.createPieChart(boardMap);
         boardDisTab.setContent(boardPieChart);
         myPieChart.animate();
 
 
-		ObservableList<Data> datas_geog = FXCollections.observableArrayList();
-		Iterator<Entry<String,Integer>>itr2 = optionalBl.getRegionDistribution();
-		while(itr2.hasNext()){
-			Entry<String,Integer> temp = itr2.next();
-			datas_geog.add(new PieChart.Data(temp.getKey(), temp.getValue()));
-		}
-		PieChart regionPieChart = myPieChart.createPieChart(datas_geog);
+        Map<String, Integer>  regionMap= optionalBl.getRegionDistributionMap();
+		PieChart regionPieChart = myPieChart.createPieChart(regionMap);
         geoDisTab.setContent(regionPieChart);
         myPieChart.animate();
 
