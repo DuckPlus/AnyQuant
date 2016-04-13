@@ -46,7 +46,14 @@ public class MyBarChart {
 
 		final NumberAxis yAxis = new NumberAxis();
 		final CategoryAxis xAxis = new CategoryAxis();
-		barchart = new BarChart<String, Number>(xAxis, yAxis);
+		barchart = new BarChart<String, Number>(xAxis, yAxis){/* (non-Javadoc)
+		 * @see javafx.scene.chart.Chart#layoutChildren()
+		 */
+		@Override
+		protected void layoutChildren() {
+			super.layoutChildren();
+		}};
+
 		barchart.setOnMouseMoved(
 		new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent e){
@@ -57,7 +64,6 @@ public class MyBarChart {
 
 //            	}
 //            	System.out.println(barchart.getData().);
-              System.out.println();
             }
           });
 
