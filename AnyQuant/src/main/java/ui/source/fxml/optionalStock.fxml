@@ -35,7 +35,7 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <Button layoutX="845.0" layoutY="636.0" mnemonicParsing="false" onMouseClicked="#deleteOptionalStock" text="移除" />
+                        <Button layoutX="766.0" layoutY="636.0" mnemonicParsing="false" onMouseClicked="#deleteOptionalStock" prefHeight="35.0" prefWidth="134.0" styleClass="dark-blue" text="移除" />
                      </children>
                   </AnchorPane>
             </content>
@@ -58,7 +58,7 @@
             </Tab>
             <Tab text="自选比较">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@../css/Optional/OptinalCompareView.css">
                      <children>
                         <TableView fx:id="cmpTableview" layoutX="7.0" layoutY="14.0" prefHeight="511.0" prefWidth="235.0">
                           <columns>
@@ -92,5 +92,7 @@
    <stylesheets>
       <URL value="@../css/Optional/optional.css" />
       <URL value="@../css/Optional/OptinalCommon.css" />
+      <URL value="@../css/buttons.css" />
+      <URL value="@../css/datePicker.css" />
    </stylesheets>
 </BorderPane>
