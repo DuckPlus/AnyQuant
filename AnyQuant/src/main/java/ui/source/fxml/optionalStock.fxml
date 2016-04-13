@@ -18,7 +18,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0">
                      <children>
-                        <TableView fx:id="tableview" onMouseClicked="#handleMouseClick" prefHeight="435.0" prefWidth="697.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="tableview" onMouseClicked="#handleMouseClick" prefHeight="614.0" prefWidth="900.0" AnchorPane.bottomAnchor="53.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="name" prefWidth="75.0" text="股票名称" />
                             <TableColumn fx:id="code" prefWidth="75.0" text="股票代码" />
@@ -35,7 +35,8 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <Button layoutX="766.0" layoutY="636.0" mnemonicParsing="false" onMouseClicked="#deleteOptionalStock" prefHeight="35.0" prefWidth="134.0" styleClass="dark-blue" text="移除" />
+                        <Button layoutX="760.0" layoutY="623.0" mnemonicParsing="false" onMouseClicked="#deleteOptionalStock" prefHeight="35.0" prefWidth="134.0" styleClass="dark-blue" text="移除" />
+                        <Button layoutX="602.0" layoutY="623.0" mnemonicParsing="false" onAction="#refreshOptionalStockData" prefHeight="37.0" prefWidth="134.0" text="刷新列表" />
                      </children>
                   </AnchorPane>
             </content>
@@ -60,7 +61,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@../css/Optional/OptinalCompareView.css">
                      <children>
-                        <TableView fx:id="cmpTableview" layoutX="7.0" layoutY="14.0" prefHeight="511.0" prefWidth="235.0">
+                        <TableView fx:id="cmpTableview" layoutX="7.0" layoutY="14.0" prefHeight="441.0" prefWidth="235.0">
                           <columns>
                             <TableColumn fx:id="cmpCode" prefWidth="75.0" text="股票代码" />
                             <TableColumn fx:id="cmpName" prefWidth="75.0" text="股票名称" />
@@ -69,12 +70,12 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <Button layoutX="8.0" layoutY="602.0" mnemonicParsing="false" onMouseClicked="#addCmpStock" prefHeight="27.0" prefWidth="235.0" text="加入比较" />
+                        <Button layoutX="8.0" layoutY="576.0" mnemonicParsing="false" onMouseClicked="#addCmpStock" prefHeight="27.0" prefWidth="235.0" text="加入比较" />
                         <AnchorPane fx:id="cmpChartPane" layoutX="252.0" layoutY="15.0" prefHeight="635.0" prefWidth="627.0" />
-                        <ComboBox fx:id="chartType" layoutX="7.0" layoutY="542.0" prefHeight="27.0" prefWidth="235.0" />
-                        <DatePicker fx:id="cmpEnd" editable="false" layoutX="127.0" layoutY="572.0" prefHeight="27.0" prefWidth="115.0" />
-                        <DatePicker fx:id="cmpBgn" editable="false" layoutX="7.0" layoutY="572.0" prefHeight="27.0" prefWidth="115.0" />
-                        <Button layoutX="8.0" layoutY="632.0" mnemonicParsing="false" onMouseClicked="#clearCmpChart" prefHeight="27.0" prefWidth="235.0" text="移除" />
+                        <ComboBox fx:id="chartType" layoutX="7.0" layoutY="510.0" prefHeight="27.0" prefWidth="235.0" />
+                        <DatePicker fx:id="cmpEnd" editable="false" layoutX="127.0" layoutY="543.0" prefHeight="27.0" prefWidth="115.0" />
+                        <DatePicker fx:id="cmpBgn" editable="false" layoutX="7.0" layoutY="543.0" prefHeight="27.0" prefWidth="115.0" />
+                        <Button layoutX="8.0" layoutY="619.0" mnemonicParsing="false" onMouseClicked="#clearCmpChart" prefHeight="27.0" prefWidth="235.0" text="移除" />
                      </children>
                   </AnchorPane>
               </content>
@@ -94,5 +95,7 @@
       <URL value="@../css/Optional/OptinalCommon.css" />
       <URL value="@../css/buttons.css" />
       <URL value="@../css/datePicker.css" />
+      <URL value="@../css/Chart/barChart.css" />
+      <URL value="@../css/Chart/pieChart.css" />
    </stylesheets>
 </BorderPane>
