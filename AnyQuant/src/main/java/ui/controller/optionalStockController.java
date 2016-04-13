@@ -66,9 +66,9 @@ public class optionalStockController {
 	@FXML
 	AnchorPane bottomPane;
 	@FXML
-	Tab geographicalDis;
+	Tab geoDisTab;
 	@FXML
-	Tab boardDis;
+	Tab boardDisTab;
 	// compare below
 	@FXML
 	ComboBox<String>chartType;
@@ -227,13 +227,8 @@ public class optionalStockController {
 			Entry<String,Integer> temp = itr.next();
 			datas_board.add(new PieChart.Data(temp.getKey(), temp.getValue()));
 		}
-//		MyPieChart piechartCreator = new MyPieChart();
-	    PieChart pc_board=MyPieChart.createPieChart();
-
-
-	    boardDis.setContent(pc_board);
-	    MyPieChart.addAllData(pc_board, datas_board);
-	    MyPieChart.init(pc_board);
+        PieChart boardPieChart = MyPieChart.createPieChart(datas_board);
+        boardDisTab.setContent(boardPieChart);
 
 		ObservableList<Data> datas_geog = FXCollections.observableArrayList();
 		Iterator<Entry<String,Integer>>itr2 = optionalBl.getRegionDistribution();
@@ -241,13 +236,13 @@ public class optionalStockController {
 			Entry<String,Integer> temp = itr2.next();
 			datas_geog.add(new PieChart.Data(temp.getKey(), temp.getValue()));
 		}
-//		MyPieChart pc_geog = new MyPieChart();
-		PieChart pc_geog=MyPieChart.createPieChart();
-		geographicalDis.setContent(pc_geog);
-		MyPieChart.addAllData(pc_geog, datas_geog);
-		MyPieChart.init(pc_geog);
+		PieChart regionPieChart = MyPieChart.createPieChart(datas_geog);
+        geoDisTab.setContent(regionPieChart);
 
 	}
+
+
+
 	@FXML
 	public void getOptionalStock(){
 

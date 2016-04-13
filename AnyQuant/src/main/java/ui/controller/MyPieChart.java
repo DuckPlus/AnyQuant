@@ -19,12 +19,13 @@ import javafx.util.Duration;
  * @date:Apr 9, 2016
  */
 public class MyPieChart {
-	private ObservableList<Data> items = FXCollections.observableArrayList();
-	private PieChart pc;
+	private ObservableList<Data> data = FXCollections.observableArrayList();
 	private int width = 500, height = 500;
 
 	public MyPieChart() {
+
 	}
+
 	public static PieChart createPieChart(){
 		int width = 500, height = 500;
 		PieChart piechart = new PieChart();
@@ -37,19 +38,27 @@ public class MyPieChart {
 		return piechart;
 	}
 
+	public static PieChart createPieChart(ObservableList<Data> items){
+		int width = 500, height = 500;
+		PieChart piechart = new PieChart();
+		piechart.setMaxSize(width, height);
+		piechart.setMinSize(width, height);
+		piechart.setPrefSize(width, height);
+		piechart.setLabelLineLength(10);
+		piechart.setLegendSide(Side.RIGHT);
+		piechart.getStylesheets().add("ui/source/css/pieChart.css");
+		piechart.getData().addAll(items);
+		init(piechart);
+		return piechart;
+	}
+
 
 	public static void addAllData(PieChart piechart,ObservableList<Data> items) {
 		piechart.getData().addAll(items);
 	}
 
 	public static void init(PieChart piechart) {
-//		piechart = new PieChart();
-//		piechart.setMaxSize(width, height);
-//		piechart.setMinSize(width, height);
-//		piechart.setPrefSize(width, height);
-//		piechart.setLabelLineLength(10);
-//		piechart.setLegendSide(Side.RIGHT);
-//		piechart.getStylesheets().add("ui/source/css/pieChart.css");
+
 		final Label caption = new Label("");
 		caption.setTextFill(Color.DARKORANGE);
 		caption.setStyle("-fx-font: 24 arial;");
