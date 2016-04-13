@@ -295,5 +295,14 @@ public class StockDSImpl implements StockDataService {
 		FileIOHelper.updateLatestStockMes();
 		return true;
 	}
+	
+	
+	public static void main(String[] args) {
+		StockDSImpl dsImpl = new StockDSImpl();
+		List<TimeSharingPO> pos  =dsImpl.getTimeSharingPOs("sh600000");
+		for (TimeSharingPO timeSharingPO : pos) {
+			System.out.println(timeSharingPO.nowPrice);
+		}
+	}
 
 }

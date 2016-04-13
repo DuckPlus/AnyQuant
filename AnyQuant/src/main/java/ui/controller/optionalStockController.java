@@ -277,13 +277,15 @@ private void barChart_r_AddData() {
 		cmpChart.removeAllSeries();
 
 	}
-
+	@FXML
+	private void refreshOptionalStockData(){
+		getOptionalStock();
+		initPieAndBarChart();
+	}
 
 
 	@FXML
 	public void getOptionalStock(){
-
-		System.out.println("refresh "+currentController.toString());
 		Iterator<StockVO>itr = optionalBl.getOptionalStocks();
 		Iterator<StockVO>itrBack = optionalBl.getOptionalStocks();
 		while(itrBack.hasNext()){

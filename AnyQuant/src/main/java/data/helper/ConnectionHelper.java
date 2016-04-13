@@ -72,7 +72,7 @@ public class ConnectionHelper {
 		}
 		System.err.println(buffer.toString());
 //		if(API_TYPE.GET_TIMESAHRING == type)
-		System.out.println(request(buffer.toString()));
+//		System.out.println(request(buffer.toString()));
 		
 		if(urls.get(0).startsWith(API_PREFIX)){
 			return JSONObject.fromObject(request(buffer.toString()));
