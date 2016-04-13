@@ -326,6 +326,12 @@ public class CandleStickChart extends XYChart<String, Number> {
         }
         // candleStickChart.getData()  return type:ObservableList<XYChart.Series<Number,Number>>
         ObservableList<XYChart.Series<String,Number>> data = candleStickChart.getData();
+        
+        //关闭横纵坐标
+        xAxis.setLabel("");
+        yAxis.setLabel("");
+        
+        
         if (data == null) {
 
             data = FXCollections.observableArrayList(series);

@@ -44,8 +44,11 @@ public class MyPieChart {
 		pieChart.setMaxSize(width, height);
 		pieChart.setMinSize(width, height);
 		pieChart.setPrefSize(width, height);
+		pieChart.setLayoutX(100);
+		pieChart.setLayoutY(100);
+
 		pieChart.setLabelLineLength(10);
-		pieChart.setLegendSide(Side.RIGHT);
+//		pieChart.setLegendSide(Side.RIGHT);
 		pieChart.getStylesheets().add("ui/source/css/pieChart.css");
 
 

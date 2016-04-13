@@ -23,19 +23,18 @@ public class MyBarChart {
 		barchart.getData().add(series);
 	}
 
-	public void addData(){
+	public void addData(BarChart bc,Map<String , Integer>  data){
+		bc.getData().clear();
 		XYChart.Series series = new XYChart.Series();
-		this.barchart.getData().add(series);
-
-		for(Entry<String, Integer> entry:this.data.entrySet()){
-
+		for(Entry<String, Integer> entry:data.entrySet()){
         	series.getData().add(new XYChart.Data(entry.getKey(),entry.getValue()));
         }
+		bc.getData().add(series);
 	}
 
 	public BarChart<String, Number> createBarChart(Map<String , Integer>  data){
 		this.data=data;
-		this.barchart.setAnimated(true);
+//		this.barchart.setAnimated(true);
 		init();
 		return this.barchart;
 	}
@@ -53,3 +52,4 @@ public class MyBarChart {
 	}
 
 }
+
