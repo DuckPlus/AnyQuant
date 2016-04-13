@@ -1,59 +1,153 @@
 package ui;
 
+/**
+
+ * Copyright (c) 2008, 2011 Oracle and/or its affiliates.
+
+ * All rights reserved. Use is subject to license terms.
+
+ */
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.PieChart.Data;
 import javafx.stage.Stage;
-import javafx.scene.chart.*;
-import javafx.scene.Group;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
+import ui.controller.MyPieChart;
+
+
+
+/**
+
+ * An advanced pie chart with a variety of actions and settable properties.
+
+ *
+
+ * @see javafx.scene.chart.PieChart
+
+ * @see javafx.scene.chart.Chart
+
+ */
 
 public class nettest extends Application {
 
+    private int itemNameIndex = 1;
+
+
+
+    private void init(Stage primaryStage) {
+
+//        Group root = new Group();
+PieChart pc=MyPieChart.createPieChart();
+
+        Scene scene=new Scene(pc,800,600);
+        primaryStage.setScene(scene);
+        ObservableList<Data> items= FXCollections.observableArrayList(
+
+                new PieChart.Data("Sun", 20),
+
+                new PieChart.Data("IBM", 12),
+
+                new PieChart.Data("HP", 25),
+
+                new PieChart.Data("Dell", 22),
+
+                new PieChart.Data("Apple", 30)
+
+            );
+        MyPieChart.addAllData(pc, items);
+        MyPieChart.init(pc);
+//        pc.getData().addAll(items);
+//        root.getChildren().add(createChart());
+
+    }
+
+
+
+    protected PieChart createChart() {
+
+        final PieChart pc = new PieChart();
+
+
+        // setup chart
+
+        pc.setId("BasicPie");
+
+        pc.setTitle("Pie Chart Example");
+
+        return pc;
+
+    }
+
+
+
+    @Override public void start(Stage primaryStage) throws Exception {
+
+        init(primaryStage);
+
+        primaryStage.show();
+
+    }
+
+    public static void main(String[] args) { launch(args); }
+/*
+ * package ui;
+
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.stage.Stage;
+
+public class nettest extends Application {
+
+    final static String itemA = "A";
+    final static String itemB = "B";
+    final static String itemC = "F";
     @Override
     public void start(Stage stage) {
-        Scene scene = new Scene(new Group());
-        stage.setTitle("Imported Fruits");
-        stage.setWidth(500);
-        stage.setHeight(500);
+        final NumberAxis yAxis = new NumberAxis();
+        final CategoryAxis xAxis = new CategoryAxis();
+        final BarChart<String,Number> bc = new BarChart<String,Number>(xAxis, yAxis);
+        bc.setTitle("Summary");
+        yAxis.setLabel("Value");
+//        yAxis.setTickLabelRotation(90);
+        xAxis.setLabel("Item");
 
-        ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList(
-                new PieChart.Data("Grapefruit", 13),
-                new PieChart.Data("Oranges", 25),
-                new PieChart.Data("Plums", 10),
-                new PieChart.Data("Pears", 22),
-                new PieChart.Data("Apples", 30));
+        XYChart.Series series1 = new XYChart.Series();
+        series1.setName("2003");
+        series1.getData().add(new XYChart.Data(itemA,2));
+        series1.getData().add(new XYChart.Data( itemB,20));
+        series1.getData().add(new XYChart.Data(itemC,10));
 
-        final PieChart chart = new PieChart(pieChartData);
-        chart.setTitle("Imported Fruits");
-        final Label caption = new Label("");
-        caption.setTextFill(Color.DARKORANGE);
-        caption.setStyle("-fx-font: 24 arial;");
+        XYChart.Series series2 = new XYChart.Series();
+        series2.setName("2004");
+        series2.getData().add(new XYChart.Data(itemA,50));
+        series2.getData().add(new XYChart.Data(itemB,41));
+        series2.getData().add(new XYChart.Data(itemC,45));
 
-        for (final PieChart.Data data : chart.getData()) {
-            data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED,
-                    new EventHandler<MouseEvent>() {
-                        @Override public void handle(MouseEvent e) {
-                            caption.setTranslateX(e.getSceneX());
-                            caption.setTranslateY(e.getSceneY());
-                            caption.setText(String.valueOf(data.getPieValue())
-                                + "%");
-                        }
-                    });
-        }
+        XYChart.Series series3 = new XYChart.Series();
+        series3.setName("2005");
+        series3.getData().add(new XYChart.Data( itemA,45));
+        series3.getData().add(new XYChart.Data(itemB,44));
+        series3.getData().add(new XYChart.Data(itemC,88));
 
-        ((Group) scene.getRoot()).getChildren().addAll(chart, caption);
+        Scene scene = new Scene(bc, 800, 600);
+        bc.getData().addAll(series1);
         stage.setScene(scene);
-        //scene.getStylesheets().add("piechartsample/Chart.css");
         stage.show();
     }
 
     public static void main(String[] args) {
         launch(args);
     }
+}
+
+
+ */
 }

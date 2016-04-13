@@ -19,6 +19,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 import ui.controller.candleStick.CandleStickThreadHelper;
 import ui.controller.candleStick.ProgressIndicatorHelper;
+import ui.controller.candleStick.TimeSharingChart;
 import util.PanelType;
 import vo.Stock;
 
@@ -39,15 +40,19 @@ public class StockDetailController {
 	@FXML
 	private Tab timeSharing;
 	@FXML
+	private Tab deal;
+	@FXML
 	private DatePicker  dayStart,dayEnd,weekStart,weekEnd,monthStart,monthEnd;
 	@FXML
 	private Button dayBT,weekBT,monthBT;
 	@FXML
-	public ScrollPane  daySPane,weekSPane,monthSPane,timeSharingSPane;
+	public ScrollPane  daySPane,weekSPane,monthSPane,timeSharingSPane,dealSPane;
 	@FXML
-	private GridPane dayCachePane,weekCachePane,monthCachePane,timeSharingCachePane;
+	private GridPane dayCachePane,weekCachePane,monthCachePane
+	                ,timeSharingCachePane,dealCachePane;
 	@FXML
-	 private ProgressIndicator dayIndicator,weekIndicator,monthIndicator,timeSharingIndicator;
+	private ProgressIndicator dayIndicator,weekIndicator,monthIndicator,
+	 		timeSharingIndicator,dealIndicator;
 	@FXML
 	TabPane tabPane;
 	private Boolean exist;
@@ -114,17 +119,28 @@ public class StockDetailController {
 		initKLine();
 		// add time sharing then
 		initTimeSharing();
+		//add dealAmount
+		initDealAmount();
 
+	}
+
+	/**
+	 *
+	 */
+	private void initDealAmount() {
+		Task dealTask = CandleStickThreadHelper.createDealAmountInitWorker(currentStock);
+		ProgressIndicatorHelper.showProgressIndicator(dealTask.progressProperty(),
+       		dealTask.runningProperty(), dealIndicator,dealCachePane);
+
+		new Thread(dealTask).start();
 	}
 
 	private void initTimeSharing() {
 //		TimeSharingChart timeChart = new TimeSharingChart(currentStock);
 //		timeSharing.setContent(timeChart.getTimeSharingChart());
 		Task initTimeSharingTask = CandleStickThreadHelper.createTimeSharingInitWorker(currentStock);
-
 		ProgressIndicatorHelper.showProgressIndicator(initTimeSharingTask.progressProperty(),
         		 initTimeSharingTask.runningProperty(), timeSharingIndicator, timeSharingCachePane);
-
 		new Thread(initTimeSharingTask).start();
 	}
 

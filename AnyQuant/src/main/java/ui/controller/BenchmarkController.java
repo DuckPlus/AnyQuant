@@ -1,5 +1,7 @@
 package ui.controller;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.Iterator;
 
@@ -87,6 +89,17 @@ public class BenchmarkController {
 //			System.out.println("hello table");
 			BenchMarkVO temp = itr.next();
 			System.out.println(temp.date+" "+temp.name);
+//			NumberFormat nf = NumberFormat.getNumberInstance();
+//			nf.setMaximumFractionDigits(4);
+			temp.turnoverValue = temp.turnoverValue/1000000;
+			BigDecimal bigDecimal = new BigDecimal(temp.turnoverValue);
+			temp.turnoverValue = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+//			System.err.println(temp.turnoverValue);
+//			String fmtString = nf.format(temp.turnoverValue);
+//			System.err.println(fmtString);
+//			double fmtDouble = Double.valueOf(fmtString);
+//			temp.turnoverValue = fmtDouble;
+//			temp.turnoverValue = Double.valueOf(nf.format(temp.turnoverValue/1000000));
 			BenchMark dataProperty = new BenchMark(temp);
 			observableList.add(dataProperty);
 		}
