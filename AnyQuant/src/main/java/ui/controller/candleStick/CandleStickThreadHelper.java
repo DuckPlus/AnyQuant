@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.chart.XYChart;
 import ui.controller.CandleStickController;
+import ui.controller.DealChart;
 import ui.controller.StockDetailController;
 import util.MyBarChart;
 import vo.Stock;
@@ -139,20 +140,30 @@ public class CandleStickThreadHelper {
 						candleController.monthChart= CandleStickChart.createChart(candleController.monthList);
                         stockDetailController.monthSPane.setContent(candleController.monthChart);
 						System.out.println("done updateCharts");
-
 					});
 					return true;
 				}
 			};
-
-
-
 		default:
 			return null;
 		}
-
 	}
-
+	public static Task createDealAmountInitWorker(Stock stock){
+		return new Task() {
+			@Override
+			protected Object call() throws Exception {
+				// on the worker thread...
+				DealChart barChart = new DealChart(stock);
+				Platform.runLater(() -> {
+					// on the JavaFX Application Thread....
+					stockDetailController.dealSPane.setContent(barChart.getBarChart());
+					barChart.addData();
+					System.out.println("done init Charts");
+				});
+				return true;
+			}
+		};
+	}
 	public static Task createTimeSharingInitWorker(Stock stock){
 		return new Task() {
 			@Override
@@ -169,29 +180,5 @@ public class CandleStickThreadHelper {
 			}
 		};
 	}
-	//TODO
-
-	public static Task createDealAmountInitWorker(Stock stock){
-		return new Task() {
-			@Override
-			protected Object call() throws Exception {
-				 XYChart.Series series = new XYChart.Series();
-		          series.setName("2003");
-		          series.getData().add(new XYChart.Data("2000",2));
-		          series.getData().add(new XYChart.Data( "2005",20));
-		          series.getData().add(new XYChart.Data("2010",10));
-
-				// on the worker thread...
-				MyBarChart barChart = new MyBarChart(stock);
-
-				Platform.runLater(() -> {
-					// on the JavaFX Application Thread....
-                    stockDetailController.dealSPane.setContent(barChart.getBarChart());
-					barChart.addData(series);
-                    System.out.println("done init Charts");
-				});
-				return true;
-			}
-		};
-	}
 }
+

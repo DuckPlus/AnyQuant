@@ -16,7 +16,7 @@ public class MyBarChart {
 	final static String itemB = "B";
 	final static String itemC = "F";
 
-	public MyBarChart(Stock stock) {
+	public MyBarChart() {
 		init();
 	}
 
