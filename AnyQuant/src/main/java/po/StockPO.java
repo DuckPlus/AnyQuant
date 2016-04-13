@@ -267,9 +267,15 @@ public class StockPO {
 		this.changeRate = (int) (temp * 10000) / 10000.0;
 	}
 
+	public void computeTurnOverRate() {
 
-	
-	
+		this.turnoverRate = (int) (this.turnoverRate * 10000) / 10000.0;
+
+	}
+
+
+
+
 	public String MyToString(String splitChar) {
 		return TransferHelper.ObjectToString(StaticMessage.STOCK_PO , this , splitChar);
 //		try {
