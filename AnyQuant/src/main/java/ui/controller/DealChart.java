@@ -27,6 +27,17 @@ public class DealChart {
 		start=MyTime.getAnotherDay(end, -30);
 		init();
 	}
+	/**
+	 * @param stock2
+	 * @param start2
+	 * @param end2
+	 */
+	public DealChart(Stock stock, MyDate start, MyDate end) {
+		this.stock=stock;
+		this.end=end;
+		this.start=start;
+		init();
+	}
 	private void init(){
         barchart.getBarChart().setMinSize(width,height);
         barchart.getBarChart().setMaxSize(width,height);
@@ -36,6 +47,7 @@ public class DealChart {
 	}
 	public void addData(){
 		list=ctr.getDayDealVOs(stock.code.get(), start, end);
+		System.out.println("list.length "+list.size());
 		XYChart.Series series = new XYChart.Series();
 		series.setName("成交量");
 		for(DealVO vo:list){

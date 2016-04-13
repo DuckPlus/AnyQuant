@@ -158,12 +158,29 @@ public class CandleStickThreadHelper {
 					// on the JavaFX Application Thread....
 					stockDetailController.dealSPane.setContent(barChart.getBarChart());
 					barChart.addData();
-					System.out.println("done init Charts");
 				});
 				return true;
 			}
 		};
 	}
+	public static Task createUpdateDealAmountInitWorker(Stock stock,MyDate start,MyDate end){
+		return new Task() {
+			@Override
+			protected Object call() throws Exception {
+				// on the worker thread...
+				DealChart barChart = new DealChart(stock,start,end);
+				Platform.runLater(() -> {
+					// on the JavaFX Application Thread....
+					stockDetailController.dealSPane.setContent(barChart.getBarChart());
+					barChart.addData();
+				});
+				System.out.println("刷新成交量的图~");
+				System.out.println(start.DateToString()+"--"+end.DateToString());
+				return true;
+			}
+		};
+	}
+
 	public static Task createTimeSharingInitWorker(Stock stock){
 		return new Task() {
 			@Override

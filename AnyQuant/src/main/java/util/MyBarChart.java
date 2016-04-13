@@ -31,12 +31,6 @@ public class MyBarChart {
 		final NumberAxis yAxis = new NumberAxis();
 		final CategoryAxis xAxis = new CategoryAxis();
 		barchart = new BarChart<String, Number>(xAxis, yAxis);
-		yAxis.setLabel("数值");
-		// yAxis.setTickLabelRotation(90);
-		xAxis.setLabel("日期");
-
-		barchart.setTitle("成交量图");
-
 
 	}
 

@@ -1,7 +1,9 @@
 package ui.controller;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -15,45 +17,41 @@ import javafx.util.Duration;
 
 /**
  *
- * @author:duanzhengmou
+ * @author:duanzhengmou,dsn,ss
  * @date:Apr 9, 2016
  */
 public class MyPieChart {
-	private ObservableList<Data> items = FXCollections.observableArrayList();
-	private PieChart pc;
-	private int width = 500, height = 500;
+	private static final int width = 500, height = 500;
+    private PieChart pieChart;
+    private ObservableList<Data> datas;
 
 	public MyPieChart() {
-	}
-	public static PieChart createPieChart(){
-		int width = 500, height = 500;
-		PieChart piechart = new PieChart();
-		piechart.setMaxSize(width, height);
-		piechart.setMinSize(width, height);
-		piechart.setPrefSize(width, height);
-		piechart.setLabelLineLength(10);
-		piechart.setLegendSide(Side.RIGHT);
-		piechart.getStylesheets().add("ui/source/css/pieChart.css");
-		return piechart;
+
 	}
 
 
-	public static void addAllData(PieChart piechart,ObservableList<Data> items) {
-		piechart.getData().addAll(items);
+
+	public  PieChart createPieChart(ObservableList<Data> items){
+		 this.pieChart = new PieChart();
+		 this.datas=items;
+		 this.InitPieChart();
+		 return this.pieChart;
 	}
 
-	public static void init(PieChart piechart) {
-//		piechart = new PieChart();
-//		piechart.setMaxSize(width, height);
-//		piechart.setMinSize(width, height);
-//		piechart.setPrefSize(width, height);
-//		piechart.setLabelLineLength(10);
-//		piechart.setLegendSide(Side.RIGHT);
-//		piechart.getStylesheets().add("ui/source/css/pieChart.css");
+
+	private  void InitPieChart() {
+		pieChart.setMaxSize(width, height);
+		pieChart.setMinSize(width, height);
+		pieChart.setPrefSize(width, height);
+		pieChart.setLabelLineLength(10);
+		pieChart.setLegendSide(Side.RIGHT);
+		pieChart.getStylesheets().add("ui/source/css/pieChart.css");
+
+
 		final Label caption = new Label("");
 		caption.setTextFill(Color.DARKORANGE);
 		caption.setStyle("-fx-font: 24 arial;");
-		for (final PieChart.Data data : piechart.getData()) {
+		for (final PieChart.Data data : pieChart.getData()) {
 			data.getNode().addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent e) {
@@ -64,7 +62,33 @@ public class MyPieChart {
 				}
 			});
 		}
-		piechart.getData().stream().forEach(pieData -> {
+
+	}
+
+   public void animate(){
+	   pieChart.setAnimated(false);
+	   initAnimation();
+	   extensionAnimation();
+   }
+
+    private  void initAnimation(){
+//    	boolean isFirst = true;
+    	pieChart.getData().addAll(datas);
+	//	setToolTip();
+		KeyValue[] keyValues = new KeyValue[pieChart.getData().size()];
+
+		for (int i = 0; i < keyValues.length; i++) {
+			PieChart.Data oneData = pieChart.getData().get(i);
+			keyValues[i] = new KeyValue(oneData.pieValueProperty() , oneData.getPieValue() );
+		}
+
+		KeyFrame frame = new KeyFrame(new Duration(20000), keyValues);
+		Timeline timeline = new Timeline(frame);
+		timeline.play();
+    }
+
+	private   void  extensionAnimation(){
+		pieChart.getData().stream().forEach(pieData -> {
 			pieData.getNode().addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
 				Bounds b1 = pieData.getNode().getBoundsInLocal();
 				double newX = (b1.getWidth()) / 2 + b1.getMinX();
@@ -81,6 +105,8 @@ public class MyPieChart {
 			});
 		});
 	}
+
+
 
 
 }

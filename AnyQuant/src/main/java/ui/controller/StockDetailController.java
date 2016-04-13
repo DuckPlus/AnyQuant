@@ -19,6 +19,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 import ui.controller.candleStick.CandleStickThreadHelper;
 import ui.controller.candleStick.ProgressIndicatorHelper;
+import ui.controller.candleStick.TimeSharingChart;
 import util.PanelType;
 import vo.Stock;
 
@@ -91,9 +92,10 @@ public class StockDetailController {
 		monthEnd.setValue(LocalDate.now());
 	}
 	@FXML
-	public void refreshBarChart(){
+	public void selectDeal(){
 		initDealAmount();
 	}
+
 
 	public void setData(Stock stock,PanelType panelType) {
 		parentPanelType=panelType;
@@ -130,21 +132,19 @@ public class StockDetailController {
 	 *
 	 */
 	private void initDealAmount() {
-		Task dealTask = CandleStickThreadHelper.createDealAmountInitWorker(currentStock);
-		ProgressIndicatorHelper.showProgressIndicator(dealTask.progressProperty(),
-       		dealTask.runningProperty(), dealAmountIndicator,dealCachePane);
+		Task initdealTask = CandleStickThreadHelper.createDealAmountInitWorker(currentStock);
+		ProgressIndicatorHelper.showProgressIndicator(initdealTask.progressProperty(),
+       		initdealTask.runningProperty(), dealAmountIndicator,dealCachePane);
 
-		new Thread(dealTask).start();
+		new Thread(initdealTask).start();
 	}
 
 	private void initTimeSharing() {
 //		TimeSharingChart timeChart = new TimeSharingChart(currentStock);
 //		timeSharing.setContent(timeChart.getTimeSharingChart());
 		Task initTimeSharingTask = CandleStickThreadHelper.createTimeSharingInitWorker(currentStock);
-
 		ProgressIndicatorHelper.showProgressIndicator(initTimeSharingTask.progressProperty(),
         		 initTimeSharingTask.runningProperty(), timeSharingIndicator, timeSharingCachePane);
-
 		new Thread(initTimeSharingTask).start();
 	}
 	private void initKLine() {
@@ -200,6 +200,16 @@ public class StockDetailController {
 		ProgressIndicatorHelper.showProgressIndicator(updateMonthTask.progressProperty(),
 				updateMonthTask.runningProperty(), monthIndicator, monthCachePane);
 		new Thread(updateMonthTask).start();
+	}
+	@FXML
+	private void updateDealChart(){
+		MyDate start = new MyDate(dealStart.getValue().getYear(),dealStart.getValue().getMonthValue(),dealStart.getValue().getDayOfMonth());
+		MyDate end = new MyDate(dealEnd.getValue().getYear(),dealEnd.getValue().getMonthValue(),dealEnd.getValue().getDayOfMonth());
+		Task updateDealTask=CandleStickThreadHelper.
+		          createUpdateDealAmountInitWorker(currentStock, start, end);
+		ProgressIndicatorHelper.showProgressIndicator(updateDealTask.progressProperty(),
+				updateDealTask.runningProperty(), dealAmountIndicator, dealCachePane);
+		new Thread(updateDealTask).start();
 	}
 	@FXML
 	private void back(){

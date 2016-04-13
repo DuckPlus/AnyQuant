@@ -14,7 +14,7 @@ import javafx.beans.property.StringProperty;
  */
 public class BenchMark {
 	public StringProperty code,date,name;
-	public DoubleProperty preclose,open,close,high,low,turnoverValue;
+	public DoubleProperty preClose,open,close,high,low,turnoverValue;
 	public LongProperty turnoverVol;
 
     public BenchMark(BenchMarkVO b){
@@ -22,7 +22,7 @@ public class BenchMark {
     	date = new SimpleStringProperty(b.date);
     	name = new SimpleStringProperty(b.name);
     	turnoverVol = new SimpleLongProperty(b.turnoverVol);
-    	preclose = new SimpleDoubleProperty(b.preclose);
+    	preClose = new SimpleDoubleProperty(b.preclose);
     	open = new SimpleDoubleProperty(b.open);
     	close = new SimpleDoubleProperty(b.close);
     	high = new SimpleDoubleProperty(b.high);

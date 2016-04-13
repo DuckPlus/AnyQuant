@@ -12,6 +12,8 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
+import ui.controller.CmpChartRecord;
+import ui.controller.CmpChartType;
 
 
 public class MyLineChart {
@@ -21,7 +23,7 @@ public class MyLineChart {
     private NumberAxis yAxis = new NumberAxis();
 	private LineChart<String,Number> lineChart ;
 	private int seriseNum = 1;
-	private LinkedList<Series<String, Number>>seriesKeeper = new LinkedList<Series<String, Number>>();
+	private LinkedList<CmpChartRecord>seriesKeeper = new LinkedList<CmpChartRecord>();
 	public MyLineChart() {
 		// TODO Auto-generated constructor stub
 		init();
@@ -50,10 +52,10 @@ public class MyLineChart {
 	   /**
 	    * 自选比较 专用！
 	    */
-	   public void addSeries(Series<String, Number> series){
+	   public void addSeries(Series<String, Number> series,String code,CmpChartType type){
 		   lineChart.getData().add(series);
 		   seriseNum++;
-		   seriesKeeper.add(series);
+		   seriesKeeper.add(new CmpChartRecord(type, code, series));
 	   }
 	   public void removeAllSeries(){
 		   for(int i=1;i<seriseNum;i++){
