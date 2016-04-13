@@ -8,7 +8,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
-import ui.controller.MyBarChart;
+import util.MyBarChart;
 
 public class demo extends Application {
 
@@ -23,7 +23,7 @@ public class demo extends Application {
           series1.getData().add(new XYChart.Data( itemB,20));
           series1.getData().add(new XYChart.Data(itemC,10));
 
-    	MyBarChart barCreator=new MyBarChart();
+    	MyBarChart barCreator=new MyBarChart(null);
 //    	barCreator.addData("2010", 35);
         BarChart<String, Number> barchart=barCreator.getBarChart();
 
