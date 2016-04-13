@@ -25,6 +25,7 @@ public class MyBarChart {
 	}
 
 	public void addData(BarChart bc,Map<String , Integer>  data){
+		bc.getData().clear();
 		XYChart.Series series = new XYChart.Series();
 		for(Entry<String, Integer> entry:data.entrySet()){
         	series.getData().add(new XYChart.Data(entry.getKey(),entry.getValue()));

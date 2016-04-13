@@ -43,7 +43,8 @@ public class optionalStockController {
 	BarChart boardBarChart,regionBarChart;
 	MyPieChart  myPieChart_b = new MyPieChart();
 	MyPieChart  myPieChart_r = new MyPieChart();
-	MyBarChart myBarChart = new MyBarChart();
+	MyBarChart myBarChart_b,myBarChart_r;
+	PieChart boardPieChart,regionPieChart;
 	Map<String, Integer>  boardMap,regionMap;
 	@FXML
 	TableColumn<Stock, String>code;// = new TableColumn<Stock,String>();
@@ -132,21 +133,37 @@ public class optionalStockController {
 	}
 
 @FXML
-public void selectPie(){
-	barChartAddData();
+public void selectRegion(){
+	myBarChart_b=new MyBarChart();
+	boardBarChart = myBarChart_b.getBarChart();
+	boardHBox.getChildren().clear();
+	boardHBox.getChildren().addAll(boardPieChart,boardBarChart);
+
+	barChart_r_AddData();
+}
+@FXML
+public void selectBoard(){
+	myBarChart_r=new MyBarChart();
+	regionBarChart = myBarChart_r.getBarChart();
+	regionHBox.getChildren().clear();
+	regionHBox.getChildren().addAll(regionPieChart,regionBarChart);
+
+	barChart_b_AddData();
 }
 
 private void initPieAndBarChart(){
+	myBarChart_b=new MyBarChart();
 	System.out.println("自选股的柱状图");
-	 boardMap= optionalBl.getBoardDistributionMap();
-    PieChart boardPieChart = myPieChart_b.createPieChart(boardMap);
-    boardBarChart = myBarChart.getBarChart();
+	boardMap= optionalBl.getBoardDistributionMap();
+    boardPieChart = myPieChart_b.createPieChart(boardMap);
+    boardBarChart = myBarChart_b.getBarChart();
     boardHBox.getChildren().clear();
     boardHBox.getChildren().addAll(boardPieChart,boardBarChart);
 
+    myBarChart_r=new MyBarChart();
     regionMap= optionalBl.getRegionDistributionMap();
-	PieChart regionPieChart = myPieChart_r.createPieChart(regionMap);
-	regionBarChart = myBarChart.createBarChart(regionMap);
+	regionPieChart = myPieChart_r.createPieChart(regionMap);
+	regionBarChart = myBarChart_r.getBarChart();
 	regionHBox.getChildren().clear();
 	regionHBox.getChildren().addAll(regionPieChart,regionBarChart);
 
@@ -154,13 +171,15 @@ private void initPieAndBarChart(){
 //    myBarChart.addData(boardBarChart,boardMap);
 //    myBarChart.addData(regionBarChart,regionMap);
 }
-private void barChartAddData() {
+private void barChart_b_AddData() {
 	myPieChart_b.animate();
+	boardBarChart.getData().clear();
+	myBarChart_b.addData(boardBarChart,boardMap);
+}
+private void barChart_r_AddData() {
 	myPieChart_r.animate();
 	regionBarChart.getData().clear();
-	boardBarChart.getData().clear();
-	myBarChart.addData(regionBarChart,regionMap);
-	myBarChart.addData(boardBarChart,boardMap);
+	myBarChart_r.addData(regionBarChart,regionMap);
 }
 	@FXML
 	private void initialize(){
