@@ -1,20 +1,21 @@
 package util;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.python.antlr.PythonParser.return_stmt_return;
+
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
-import javafx.stage.Stage;
-import vo.Stock;
+import vo.DealVO;
 
 public class MyBarChart {
 
 	private BarChart<String, Number> barchart;
-	XYChart.Series series;
-	final static String itemA = "A";
-	final static String itemB = "B";
-	final static String itemC = "F";
+	private Map<String , Integer>  data;
 
 	public MyBarChart() {
 		init();
@@ -22,8 +23,22 @@ public class MyBarChart {
 
 
 	public void addData(Series series) {
-		this.series=series;
 		barchart.getData().add(series);
+	}
+
+	public void addData(){
+		XYChart.Series series = new XYChart.Series();
+		for(Entry<String, Integer> entry:this.data.entrySet()){
+        	series.getData().add(new XYChart.Data(entry.getKey(),entry.getValue()));
+        }
+		this.barchart.getData().add(series);
+	}
+
+	public BarChart<String, Number> createBarChart(Map<String , Integer>  data){
+		this.data=data;
+		this.barchart.setAnimated(true);
+		init();
+		return this.barchart;
 	}
 
 	private void init() {
