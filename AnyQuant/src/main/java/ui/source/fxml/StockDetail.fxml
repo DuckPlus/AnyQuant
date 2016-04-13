@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="720.0" prefWidth="905.0" stylesheets="@../css/buttons.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.StockDetailController">
+<BorderPane prefHeight="720.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.StockDetailController">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -31,7 +31,7 @@
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin></DatePicker>
-                                    <Button fx:id="dayBT" alignment="CENTER" mnemonicParsing="false" onAction="#updateDayChart" prefHeight="30.0" prefWidth="80.0" styleClass="rich-blue" text="查询" textAlignment="JUSTIFY">
+                                    <Button fx:id="dayBT" alignment="CENTER" mnemonicParsing="false" onAction="#updateDayChart" prefHeight="30.0" prefWidth="80.0" styleClass="myblueButton" text="查询" textAlignment="JUSTIFY">
                                        <font>
                                           <Font size="7.0" />
                                        </font>
@@ -89,7 +89,7 @@
                                        </HBox.margin>
                                     </DatePicker>
                                     <DatePicker fx:id="weekEnd" prefHeight="30.0" prefWidth="188.0" promptText="终止时间" />
-                                    <Button fx:id="weekBT" mnemonicParsing="false" onAction="#updateWeekChart" prefHeight="30.0" prefWidth="80.0" styleClass="rich-blue" stylesheets="@../css/buttons.css" text="查询">
+                                    <Button fx:id="weekBT" mnemonicParsing="false" onAction="#updateWeekChart" prefHeight="30.0" prefWidth="80.0" styleClass="myblueButton" stylesheets="@../css/buttons.css" text="查询">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -145,7 +145,7 @@
                                           <Insets />
                                        </HBox.margin>
                                     </DatePicker>
-                                    <Button fx:id="monthBT" mnemonicParsing="false" onAction="#updateMonthChart" prefHeight="30.0" prefWidth="80.0" styleClass="rich-blue" text="查询">
+                                    <Button fx:id="monthBT" mnemonicParsing="false" onAction="#updateMonthChart" prefHeight="30.0" prefWidth="80.0" styleClass="myblueButton" text="查询">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -252,7 +252,7 @@
                                           <Insets />
                                        </HBox.margin>
                                     </DatePicker>
-                                    <Button fx:id="dealBT" alignment="CENTER" mnemonicParsing="false" onAction="#updateDealChart" prefHeight="30.0" prefWidth="80.0" styleClass="rich-blue" text="查询" textAlignment="JUSTIFY">
+                                    <Button fx:id="dealBT" alignment="CENTER" mnemonicParsing="false" onAction="#updateDealChart" prefHeight="30.0" prefWidth="80.0" styleClass="myblueButton" text="查询" textAlignment="JUSTIFY">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -378,8 +378,8 @@
 
                    <VBox layoutX="-2.0" layoutY="282.0" spacing="2.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="282.0">
                 <children>
-   	            <Button fx:id="addBtn" layoutX="21.0" layoutY="196.0" mnemonicParsing="false" onAction="#addOptionalStock" prefHeight="27.0" prefWidth="130.0" text="加入自选" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="196.0" />
-   	            <Button fx:id="backBtn" layoutX="21.0" layoutY="400.0" mnemonicParsing="false" onAction="#back" prefHeight="27.0" prefWidth="130.0" text="返回" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="196.0" />
+   	            <Button fx:id="addBtn" layoutX="21.0" layoutY="196.0" mnemonicParsing="false" onAction="#addOptionalStock" prefHeight="27.0" prefWidth="130.0" styleClass="dark-blue" text="加入自选" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="196.0" />
+   	            <Button fx:id="backBtn" layoutX="21.0" layoutY="400.0" mnemonicParsing="false" onAction="#back" prefHeight="27.0" prefWidth="130.0" styleClass="dark-blue" text="返回" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="196.0" />
                 </children>
              </VBox>
 
@@ -391,4 +391,8 @@
          </children>
       </AnchorPane>
    </right>
+   <stylesheets>
+      <URL value="@../css/buttons.css" />
+      <URL value="@../css/datePicker.css" />
+   </stylesheets>
 </BorderPane>
