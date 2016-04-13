@@ -27,7 +27,7 @@
     -fx-background-color: rgba(95, 209, 213, 0.83);
     -fx-background-insets: 0;
     -fx-background-radius: 15;
-    -fx-cell-size: 60px;
+    -fx-cell-size: 30px;
     -fx-border: rgb(178, 17, 47);
 
 }

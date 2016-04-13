@@ -124,7 +124,10 @@ public class optionalStockController {
 		return instance;
 	}
 
-
+@FXML
+public void selectPie(){
+	initPieChart();
+}
 	@FXML
 	private void initialize(){
 		InstanceController insc = InstanceController.getInstance();

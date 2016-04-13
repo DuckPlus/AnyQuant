@@ -23,7 +23,7 @@ public class demo extends Application {
           series1.getData().add(new XYChart.Data( itemB,20));
           series1.getData().add(new XYChart.Data(itemC,10));
 
-    	MyBarChart barCreator=new MyBarChart(null);
+    	MyBarChart barCreator=new MyBarChart();
 //    	barCreator.addData("2010", 35);
         BarChart<String, Number> barchart=barCreator.getBarChart();
 

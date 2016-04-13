@@ -251,7 +251,7 @@ public class StockBLImpl implements StockBLService {
 	public List<DealVO> getDayDealVOs(String stockCode, MyDate start, MyDate end) {
 		List<StockPO> pos = APIDataSer.getStockMes(stockCode, start, end);
 		List<DealVO> results;
-
+		System.out.println("StockBLImpl.getDayDealVO "+start.DateToString()+"--"+end.DateToString());
 		if (pos == null) {
 			return null;
 		} else {
@@ -378,18 +378,18 @@ public class StockBLImpl implements StockBLService {
 	@Override
 	public void updateAllStockMes() {
 		new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				if(APIDataSer.updateAllMes()){
 					//send success message
-					
-					
+
+
 				}
-				
+
 			}
 		}).start();
-		
+
 	}
 
 }

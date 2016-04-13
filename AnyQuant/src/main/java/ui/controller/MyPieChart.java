@@ -9,6 +9,7 @@ import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Side;
 import javafx.scene.chart.PieChart;
@@ -39,7 +40,6 @@ public class MyPieChart {
 		 this.InitPieChart();
 		 return this.pieChart;
 	}
-
 
 	private  void InitPieChart() {
 		pieChart.setMaxSize(width, height);
