@@ -144,8 +144,9 @@ public class optionalStockController {
 	}
 	private void initCmpTable(){
 		//init date picker
+		MyDate monthAgo = MyTime.getAnotherDay(new MyDate(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()), -30);
 
-		cmpBgn.setValue(LocalDate.now());
+		cmpBgn.setValue(LocalDate.of(monthAgo.getYear(), monthAgo.getMonth(), monthAgo.getDay()));
 		cmpEnd.setValue(LocalDate.now());
 		//init table
 		cmpTableview.getItems().removeAll(cmpTableData);
@@ -168,8 +169,8 @@ public class optionalStockController {
 	private void addCmpStock(){
 		if(cmpTableview.getSelectionModel().getSelectedIndex()!=-1){
 		Stock selectedCmpStock = cmpTableview.getSelectionModel().getSelectedItem();
-		MyDate cmpB = new MyDate(cmpBgn.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
-		MyDate cmpE = new MyDate(cmpEnd.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
+//		MyDate cmpB = new MyDate(cmpBgn.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
+//		MyDate cmpE = new MyDate(cmpEnd.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
 
 		switch(chartType.getSelectionModel().getSelectedItem()){
 			case "市盈率":drawCmpPEChart(selectedCmpStock.code.get());break;
@@ -194,7 +195,7 @@ public class optionalStockController {
 			String date = temp.date;
 			series.getData().add(new XYChart.Data<String, Number>(date, temp.pe));
 		}
-		cmpChart.addSeries(series);
+		cmpChart.addSeries(series, code, CmpChartType.peChart);
 	}
 	private void drawCmpPBChart(String code){
 		MyDate cmpB = new MyDate(cmpBgn.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
@@ -210,7 +211,7 @@ public class optionalStockController {
 			String date = temp.date;
 			series.getData().add(new XYChart.Data<String, Number>(date, temp.pb));
 		}
-		cmpChart.addSeries(series);
+		cmpChart.addSeries(series,code,CmpChartType.pbChart);
 	}
 	
 	@FXML

@@ -181,11 +181,7 @@
                      <content>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <ScrollPane fx:id="timeSharingSPane" prefHeight="200.0" prefWidth="200.0">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-                                </content>
-                              </ScrollPane>
+                              <ScrollPane fx:id="timeSharingSPane" prefHeight="200.0" prefWidth="200.0" />
                               <GridPane fx:id="timeSharingCachePane">
                                  <children>
                                     <ProgressIndicator fx:id="timeSharingIndicator" progress="0.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
