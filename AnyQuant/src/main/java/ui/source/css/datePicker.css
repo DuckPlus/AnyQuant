@@ -1,0 +1,8 @@
+.date-picker-popup > .month-year-pane {
+    -fx-padding: 0.588883em 0.5em 0.666667em 0.5em; /* 7 6 8 6 */
+    -fx-background-color: derive(-fx-box-border,30%),
+    linear-gradient(to bottom, derive(-fx-base,-3%),
+            derive(-fx-base,5%) 50%,
+            derive(-fx-base,-3%));
+    -fx-background-insets: 0 0 0 0, 0 0 1 0;
+}
