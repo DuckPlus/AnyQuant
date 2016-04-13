@@ -10,7 +10,7 @@
 }
 
 .stockButton-entered {
-	-fx-background-image: url('../img/stockList.png');
+	-fx-background-image: url('../img/stockList_hover.png');
 	-fx-background-size:176px 42px;
 	-fx-text-fill:black
 }
@@ -27,13 +27,13 @@
 }
 
 .benchButton-entered {
-	-fx-background-image: url('../img/benchMark.png');
+	-fx-background-image: url('../img/benchMark_hover.png');
 	-fx-background-size:176px 42px;
 	-fx-text-fill:black
 }
 
 .optionalButton {
-  -fx-background-image: url('../img/optional.png');
+  -fx-background-image: url('../img/optionalStock.png');
   -fx-background-size:176px 42px;
    -fx-text-fill:white
 }
@@ -44,7 +44,7 @@
 }
 
 .optionalButton-entered {
-	-fx-background-image: url('../img/optional.png');
+	-fx-background-image: url('../img/optionalStock_hover.png');
 	-fx-background-size:176px 42px;
 	-fx-text-fill:black
 }
