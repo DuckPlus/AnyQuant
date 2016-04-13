@@ -95,5 +95,7 @@
       <URL value="@../css/Optional/OptinalCommon.css" />
       <URL value="@../css/buttons.css" />
       <URL value="@../css/datePicker.css" />
+      <URL value="@../css/Chart/barChart.css" />
+      <URL value="@../css/Chart/pieChart.css" />
    </stylesheets>
 </BorderPane>
