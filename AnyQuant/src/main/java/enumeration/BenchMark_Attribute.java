@@ -7,7 +7,7 @@ package enumeration;
 */
 public enum BenchMark_Attribute {
 	  code,date,name,
-	 preclose,open,close,high,low,turnoverValue,
+	 preClose,open,close,high,low,turnoverValue,
 	 turnoverVol;
 
 }

@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import ui.helper.ColorHelper;
 import vo.BenchMark;
 import vo.BenchMarkVO;
 
@@ -93,11 +94,15 @@ public class BenchmarkController {
 		name.setCellValueFactory(cell -> cell.getValue().name);
 		open.setCellValueFactory(cell -> cell.getValue().open.asObject());
 		close.setCellValueFactory(cell -> cell.getValue().close.asObject());
-		preClose.setCellValueFactory(cell -> cell.getValue().preclose.asObject());
+		preClose.setCellValueFactory(cell -> cell.getValue().preClose.asObject());
 		high.setCellValueFactory(cell -> cell.getValue().high.asObject());
 		low.setCellValueFactory(cell -> cell.getValue().low.asObject());
 		turnoverVol.setCellValueFactory(cell -> cell.getValue().turnoverVol.asObject());
 		turnoverValue.setCellValueFactory(cell -> cell.getValue().turnoverValue.asObject());
+		
+		ColorHelper.setColorForBench(observableList, tableview.getColumns());
+		
+		
 		tableview.setItems(observableList);
 
 	}
