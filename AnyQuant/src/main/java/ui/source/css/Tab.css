@@ -1,3 +1,5 @@
+/*存放 tabbed Pane 的 CSS*/
+
 .tab-pane .tab-header-area .tab-header-background {
     -fx-opacity: 0;
 }
@@ -12,7 +14,7 @@
 }
 .tab-pane .tab
 {
-    -fx-background-color: #e6e6e6;
+    -fx-background-color: rgba(132, 126, 87, 0.16);
 
 }
 

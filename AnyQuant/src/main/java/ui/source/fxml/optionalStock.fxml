@@ -10,7 +10,7 @@
 
 <!--  <BorderPane prefHeight="700.0" prefWidth="900.0" stylesheets="@../css/optional.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.optionalStockController">-->
 
-<BorderPane prefWidth="850.0" stylesheets="@../css/optional.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.optionalStockController">
+<BorderPane prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.optionalStockController">
    <left>
       <TabPane prefHeight="700.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -84,9 +84,13 @@
             <Insets />
          </BorderPane.margin>
          <stylesheets>
-            <URL value="@../css/optional.css" />
+            <URL value="@../css/Optional/optional.css" />
             <URL value="@../css/Tab.css" />
          </stylesheets>
       </TabPane>
    </left>
+   <stylesheets>
+      <URL value="@../css/Optional/optional.css" />
+      <URL value="@../css/Optional/OptinalCommon.css" />
+   </stylesheets>
 </BorderPane>

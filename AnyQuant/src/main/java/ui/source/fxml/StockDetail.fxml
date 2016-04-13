@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="720.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.StockDetailController">
+<BorderPane prefHeight="720.0" prefWidth="905.0" stylesheets="@../css/buttons.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.StockDetailController">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -20,20 +20,18 @@
                      <content>
                         <BorderPane fx:id="dayBorderPane" prefHeight="200.0" prefWidth="200.0">
                            <top>
-                              <HBox prefHeight="30.0" prefWidth="555.0" spacing="10.0" BorderPane.alignment="CENTER">
+                              <HBox prefHeight="30.0" prefWidth="555.0" spacing="100.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <DatePicker fx:id="dayStart" editable="false" prefHeight="30.0" prefWidth="151.0" promptText="起始时间">
+                                    <DatePicker fx:id="dayStart" editable="false" prefHeight="30.0" prefWidth="215.0" promptText="起始时间" styleClass="close-above-open" stylesheets="@../css/datePicker.css">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </DatePicker>
-                                    <Pane prefHeight="30.0" prefWidth="141.0" />
                                     <DatePicker fx:id="dayEnd" editable="false" prefHeight="30.0" prefWidth="195.0" promptText="终止时间">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin></DatePicker>
-                                    <Pane layoutX="150.0" layoutY="10.0" prefHeight="30.0" prefWidth="141.0" />
-                                    <Button fx:id="dayBT" alignment="CENTER" mnemonicParsing="false" onAction="#updateDayChart" prefHeight="30.0" prefWidth="80.0" styleClass="candlestick-bar" stylesheets="@../css/buttons.css" text="查询" textAlignment="JUSTIFY">
+                                    <Button fx:id="dayBT" alignment="CENTER" mnemonicParsing="false" onAction="#updateDayChart" prefHeight="30.0" prefWidth="80.0" styleClass="rich-blue" text="查询" textAlignment="JUSTIFY">
                                        <font>
                                           <Font size="7.0" />
                                        </font>
@@ -85,13 +83,13 @@
                                     <Insets top="10.0" />
                                  </BorderPane.margin>
                                  <children>
-                                    <DatePicker fx:id="weekStart" prefHeight="30.0" prefWidth="120.0" promptText="起始时间">
+                                    <DatePicker fx:id="weekStart" prefHeight="30.0" prefWidth="189.0" promptText="起始时间">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </DatePicker>
-                                    <DatePicker fx:id="weekEnd" prefHeight="30.0" prefWidth="120.0" promptText="终止时间" />
-                                    <Button fx:id="weekBT" mnemonicParsing="false" onAction="#updateWeekChart" prefHeight="30.0" prefWidth="80.0" text="查询">
+                                    <DatePicker fx:id="weekEnd" prefHeight="30.0" prefWidth="188.0" promptText="终止时间" />
+                                    <Button fx:id="weekBT" mnemonicParsing="false" onAction="#updateWeekChart" prefHeight="30.0" prefWidth="80.0" styleClass="rich-blue" stylesheets="@../css/buttons.css" text="查询">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -132,22 +130,22 @@
                      <content>
                         <BorderPane fx:id="monthBorderPane" prefHeight="200.0" prefWidth="200.0">
                            <top>
-                              <HBox prefHeight="29.0" prefWidth="775.0" spacing="10.0" BorderPane.alignment="CENTER">
+                              <HBox prefHeight="29.0" prefWidth="775.0" spacing="100.0" BorderPane.alignment="CENTER">
                                  <BorderPane.margin>
                                     <Insets top="10.0" />
                                  </BorderPane.margin>
                                  <children>
-                                    <DatePicker fx:id="monthStart" prefHeight="30.0" prefWidth="120.0" promptText="起始时间">
+                                    <DatePicker fx:id="monthStart" prefHeight="29.0" prefWidth="175.0" promptText="起始时间">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </DatePicker>
-                                    <DatePicker fx:id="monthEnd" prefHeight="30.0" prefWidth="120.0" promptText="终止时间">
+                                    <DatePicker fx:id="monthEnd" prefHeight="29.0" prefWidth="203.0" promptText="终止时间">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>
                                     </DatePicker>
-                                    <Button fx:id="monthBT" mnemonicParsing="false" onAction="#updateMonthChart" prefHeight="30.0" prefWidth="80.0" text="查询">
+                                    <Button fx:id="monthBT" mnemonicParsing="false" onAction="#updateMonthChart" prefHeight="30.0" prefWidth="80.0" styleClass="rich-blue" text="查询">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -254,7 +252,7 @@
                                           <Insets />
                                        </HBox.margin>
                                     </DatePicker>
-                                    <Button fx:id="dealBT" alignment="CENTER" mnemonicParsing="false" onAction="#updateDealChart" prefHeight="30.0" prefWidth="80.0" text="查询" textAlignment="JUSTIFY">
+                                    <Button fx:id="dealBT" alignment="CENTER" mnemonicParsing="false" onAction="#updateDealChart" prefHeight="30.0" prefWidth="80.0" styleClass="rich-blue" text="查询" textAlignment="JUSTIFY">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
