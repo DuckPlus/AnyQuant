@@ -127,7 +127,9 @@ public class StockListController {
 		changeRate.setCellValueFactory(cell -> cell.getValue().getStringChangeRate());
 		// change the color of each row
 		ColorHelper.setColorForStock(observableList , tableview.getColumns());
-
+		
+//		tableview.get
+		
 		tableview.setItems(observableList);
 
 	}
