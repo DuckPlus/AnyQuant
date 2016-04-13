@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
@@ -11,7 +12,7 @@
 
 <BorderPane prefWidth="850.0" stylesheets="@../css/optional.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.optionalStockController">
    <left>
-      <TabPane prefHeight="700.0" prefWidth="900.0" stylesheets="@../css/optional.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane prefHeight="700.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
           <Tab text="自选列表">
             <content>
@@ -76,6 +77,10 @@
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
+         <stylesheets>
+            <URL value="@../css/optional.css" />
+            <URL value="@../css/Tab.css" />
+         </stylesheets>
       </TabPane>
    </left>
 </BorderPane>
