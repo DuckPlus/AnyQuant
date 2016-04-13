@@ -17,6 +17,7 @@ import enumeration.PanelType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
@@ -29,7 +30,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import ui.helper.ColorHelper;
+import util.MyBarChart;
 import util.MyPieChart;
 import util.MyTime;
 import util.candleStick.MyLineChart;
@@ -68,6 +71,8 @@ public class optionalStockController {
 	Tab geoDisTab;
 	@FXML
 	Tab boardDisTab;
+	@FXML
+	HBox boardHBox,regionHBox;
 	// compare below
 	@FXML
 	ComboBox<String>chartType;
@@ -124,7 +129,7 @@ public class optionalStockController {
 
 @FXML
 public void selectPie(){
-	initPieChart();
+	initPieAndBarChart();
 }
 	@FXML
 	private void initialize(){
@@ -133,7 +138,7 @@ public void selectPie(){
 		observableList = FXCollections.observableArrayList();
 		cmpTableData = FXCollections.observableArrayList();
 		stockDetailPane = instanceController.getStockDetailPane();
-		initPieChart();
+		initPieAndBarChart();
 		getOptionalStock();
 		initChoice();
 		initCmpTable();
@@ -222,20 +227,27 @@ public void selectPie(){
 		cmpChart.removeAllSeries();
 
 	}
-	@FXML
-	private void initPieChart(){
+
+	private void initPieAndBarChart(){
 		MyPieChart  myPieChart = new MyPieChart();
+		MyBarChart myBarChart = new MyBarChart();
 
 		Map<String, Integer>  boardMap= optionalBl.getBoardDistributionMap();
         PieChart boardPieChart = myPieChart.createPieChart(boardMap);
-        boardDisTab.setContent(boardPieChart);
+        BarChart boardBarChart = myBarChart.createBarChart(boardMap);
+        boardHBox.getChildren().clear();
+        boardHBox.getChildren().addAll(boardPieChart,boardBarChart);
         myPieChart.animate();
+        myBarChart.addData();
 
 
         Map<String, Integer>  regionMap= optionalBl.getRegionDistributionMap();
 		PieChart regionPieChart = myPieChart.createPieChart(regionMap);
-        geoDisTab.setContent(regionPieChart);
+		BarChart regionBarChart = myBarChart.createBarChart(regionMap);
+		regionHBox.getChildren().clear();
+		regionHBox.getChildren().addAll(regionPieChart,regionBarChart);
         myPieChart.animate();
+        myBarChart.addData();
 
 	}
 
@@ -252,7 +264,7 @@ public void selectPie(){
 			System.out.println(temp.name);
 		}
 		showTableData(itr);
-		initPieChart();
+		initPieAndBarChart();
 	}
 	private void showTableData(Iterator<StockVO>itr){
 		tableview.getItems().removeAll(observableList);
