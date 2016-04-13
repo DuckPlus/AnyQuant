@@ -124,6 +124,7 @@ public class StockDetailController {
 		// add time sharing then
 		initTimeSharing();
 		//add dealAmount
+		initDealAmount();
 
 	}
 
@@ -148,6 +149,7 @@ public class StockDetailController {
         		 initTimeSharingTask.runningProperty(), timeSharingIndicator, timeSharingCachePane);
 		new Thread(initTimeSharingTask).start();
 	}
+
 	private void initKLine() {
 		System.out.println("initKLine()"+currentStock.code.get());
 
