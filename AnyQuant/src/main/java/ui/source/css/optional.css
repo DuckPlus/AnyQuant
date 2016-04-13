@@ -24,7 +24,7 @@
     -fx-padding: 0 0 0 0;
 }
 .table-row-cell:selected {
-    -fx-background-color: rgba(95, 209, 213, 0.83);
+    -fx-background-color: rgba(131,139,139, 0.83);
     -fx-background-insets: 0;
     -fx-background-radius: 15;
     -fx-cell-size: 30px;

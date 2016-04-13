@@ -132,6 +132,8 @@ public class StockDetailController {
 	 *
 	 */
 	private void initDealAmount() {
+		dealStart.setValue(LocalDate.now());
+		dealEnd.setValue(LocalDate.now());
 		Task initdealTask = CandleStickThreadHelper.createDealAmountInitWorker(currentStock);
 		ProgressIndicatorHelper.showProgressIndicator(initdealTask.progressProperty(),
        		initdealTask.runningProperty(), dealAmountIndicator,dealCachePane);
