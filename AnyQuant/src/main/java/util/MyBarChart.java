@@ -23,6 +23,7 @@ public class MyBarChart {
 
 
 	public void addData(Series series) {
+		barchart.getData().clear();
 		barchart.getData().add(series);
 	}
 
@@ -46,14 +47,8 @@ public class MyBarChart {
 
 		final NumberAxis yAxis = new NumberAxis();
 		final CategoryAxis xAxis = new CategoryAxis();
-		barchart = new BarChart<String, Number>(xAxis, yAxis){/* (non-Javadoc)
-		 * @see javafx.scene.chart.Chart#layoutChildren()
-		 */
-		@Override
-		protected void layoutChildren() {
-			super.layoutChildren();
-		}};
-
+		barchart = new BarChart<String, Number>(xAxis, yAxis);
+		barchart.setLegendVisible(false);
 		barchart.setOnMouseMoved(
 		new EventHandler<MouseEvent>(){
             @Override public void handle(MouseEvent e){

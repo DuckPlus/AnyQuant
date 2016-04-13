@@ -203,7 +203,6 @@ public class optionalStockController {
 	 */
 	private void barChart_b_AddData() {
 		myPieChart_b.animate();
-		boardBarChart.getData().clear();
 		myBarChart_b.addData(boardBarChart, boardMap);
 	}
 
@@ -212,7 +211,6 @@ public class optionalStockController {
 	 */
 	private void barChart_r_AddData() {
 		myPieChart_r.animate();
-		regionBarChart.getData().clear();
 		myBarChart_r.addData(regionBarChart, regionMap);
 	}
 
