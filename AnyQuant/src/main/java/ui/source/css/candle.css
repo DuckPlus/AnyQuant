@@ -1,5 +1,5 @@
 
-/* ====== CANDLE STICK CHART =========================================================== */
+/*!* ====== CANDLE STICK CHART =========================================================== *!*/
 .candlestick-tooltip-label {
     -fx-font-size: 0.75em;
     -fx-font-weight: bold;
@@ -7,8 +7,8 @@
     -fx-padding: 2 5 2 0;
 }
 .candlestick-average-line {              /*折线 */
-    -fx-stroke: #106ece;
-    -fx-stroke-width: 2px;
+    -fx-stroke: #fff704;
+    -fx-stroke-width: 4px;
 }
 .candlestick-candle {
     -fx-effect: dropshadow( two-pass-box , rgba(0,0,0,0.4) , 10, 0.0 , 2 , 4 );
@@ -27,9 +27,96 @@
     -fx-background-insets: 0,1,2;
 }
 .candlestick-bar.close-above-open {
-    -demo-bar-fill: #95ce1b;
+    -demo-bar-fill: #ce2700;
 }
 
 .candlestick-bar.open-above-close {
-    -demo-bar-fill: #ce2700;
+
+    -demo-bar-fill: #95ce1b;
+}
+
+
+
+.candlestick-tooltip-label {
+    -fx-font-size: 0.75em;
+    -fx-font-weight: bold;
+    -fx-text-fill: #666666;
+    -fx-padding: 2 5 2 0;
+}
+
+.candlestick-average-line {   /**/
+    -fx-stroke: rgba(205, 206, 0, 0.51);
+    -fx-stroke-width: 1px;
+}
+
+.candlestick-candle {
+    -fx-background-color: rgba(255,34,34,1.00);
+}
+
+.candlestick-line {
+    -fx-stroke: #FFFFFF;
+    -fx-stroke-width: 1px;
+}
+
+/*涨跌颜色*/
+.candlestick-bar.close-above-open {
+    -fx-background-color: rgba(25,225,25,1.00);
+    -fx-border-width: 1, 1,1,1;
+    -fx-border-color: #e2e2e2;
+}
+
+.candlestick-bar.open-above-close {
+    -fx-background-color: rgba(255,34,34,1.00);
+    -fx-border-width: 1, 1,1,1;
+    -fx-font-weight: bold;
+    -fx-border-color: #e2e2e2;
+}
+
+
+.label-gray {
+    -fx-background-color: rgba(25,25,25,0.70);
+}
+
+.axis {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-color: #FFFFFF;
+    -fx-tick-label-fill: #FFFFFF;
+    -fx-font-size: 18pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-tick-length: 20;
+    -fx-minor-tick-length: 10;
+}
+
+.chart-title {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 20pt;
+    -fx-font-family: "Segoe UI Light";
+}
+
+.axis-label {
+    -fx-text-fill: #462300;
+}
+
+.axis-tick-mark {
+    -fx-stroke: #637040;
+    -fx-stroke-width: 3;
+}
+.axis-minor-tick-mark {
+    -fx-stroke: #859656;
+}
+
+/*{
+
+}
+*/
+.chart {
+    -fx-alternative-column-fill-visible : false;
+    -fx-vertical-grid-lines-visible: false;
+    -fx-background-color: #000000;
+}
+.fx-background-color {
+    -fx-background-color: red;
+}
+.chart-plot-background { /*图表的背景*/
+    -fx-background-color: rgba(0, 0, 0, 0.77);
 }
