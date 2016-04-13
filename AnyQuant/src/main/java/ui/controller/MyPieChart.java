@@ -99,7 +99,7 @@ public class MyPieChart {
 			keyValues[i] = new KeyValue(oneData.pieValueProperty(), valueMap.get(oneData.getName()));
 		}
 
-		KeyFrame frame = new KeyFrame(new Duration(2000), keyValues);
+		KeyFrame frame = new KeyFrame(new Duration(1500), keyValues);
 		Timeline timeline = new Timeline(frame);
 		timeline.play();
     }
@@ -108,14 +108,14 @@ public class MyPieChart {
 		pieChart.getData().stream().forEach(pieData -> {
 			pieData.getNode().addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
 				Bounds b1 = pieData.getNode().getBoundsInLocal();
-				double newX = (b1.getWidth()) / 2 + b1.getMinX();
-				double newY = (b1.getHeight()) / 2 + b1.getMinY();
+				double newX = b1.getWidth() / 2 + b1.getMinX();
+				double newY = b1.getHeight() / 2 + b1.getMinY();
 				// Make sure pie wedge location is reset
 				pieData.getNode().setTranslateX(0);
 				pieData.getNode().setTranslateY(0);
-				TranslateTransition tt = new TranslateTransition(Duration.millis(1500), pieData.getNode());
-				tt.setByX(newX);
-				tt.setByY(newY);
+				TranslateTransition tt = new TranslateTransition(Duration.millis(500), pieData.getNode());
+				tt.setByX(newX*0.2);
+				tt.setByY(newY*0.2);
 				tt.setAutoReverse(true);
 				tt.setCycleCount(2);
 				tt.play();
