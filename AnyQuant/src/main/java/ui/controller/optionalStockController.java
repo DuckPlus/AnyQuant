@@ -134,42 +134,34 @@ public class optionalStockController {
 
 @FXML
 public void selectRegion(){
-	myBarChart_b=new MyBarChart();
-	boardBarChart = myBarChart_b.getBarChart();
-	boardHBox.getChildren().clear();
-	boardHBox.getChildren().addAll(boardPieChart,boardBarChart);
-
+	initBoard();
 	barChart_r_AddData();
 }
 @FXML
 public void selectBoard(){
+	initRegion();
+	barChart_b_AddData();
+}
+private void initRegion() {
 	myBarChart_r=new MyBarChart();
 	regionBarChart = myBarChart_r.getBarChart();
 	regionHBox.getChildren().clear();
 	regionHBox.getChildren().addAll(regionPieChart,regionBarChart);
 
-	barChart_b_AddData();
 }
-
-private void initPieAndBarChart(){
+private void initBoard(){
 	myBarChart_b=new MyBarChart();
-	System.out.println("自选股的柱状图");
+	boardBarChart = myBarChart_b.getBarChart();
+	boardHBox.getChildren().clear();
+	boardHBox.getChildren().addAll(boardPieChart,boardBarChart);
+}
+private void initPieAndBarChart(){
 	boardMap= optionalBl.getBoardDistributionMap();
+	regionMap= optionalBl.getRegionDistributionMap();
     boardPieChart = myPieChart_b.createPieChart(boardMap);
-    boardBarChart = myBarChart_b.getBarChart();
-    boardHBox.getChildren().clear();
-    boardHBox.getChildren().addAll(boardPieChart,boardBarChart);
-
-    myBarChart_r=new MyBarChart();
-    regionMap= optionalBl.getRegionDistributionMap();
-	regionPieChart = myPieChart_r.createPieChart(regionMap);
-	regionBarChart = myBarChart_r.getBarChart();
-	regionHBox.getChildren().clear();
-	regionHBox.getChildren().addAll(regionPieChart,regionBarChart);
-
-	//    boardBarChart.getData().add(boardMap);
-//    myBarChart.addData(boardBarChart,boardMap);
-//    myBarChart.addData(regionBarChart,regionMap);
+    regionPieChart = myPieChart_r.createPieChart(regionMap);
+    initBoard();
+    initRegion();
 }
 private void barChart_b_AddData() {
 	myPieChart_b.animate();
