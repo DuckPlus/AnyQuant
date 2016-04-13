@@ -221,14 +221,18 @@ public class optionalStockController {
 	}
 	@FXML
 	private void initPieChart(){
+		MyPieChart  myPieChart = new MyPieChart();
+
 		ObservableList<Data> datas_board = FXCollections.observableArrayList();
 		Iterator<Entry<String,Integer>>itr = optionalBl.getBorderDistribution();
 		while(itr.hasNext()){
 			Entry<String,Integer> temp = itr.next();
 			datas_board.add(new PieChart.Data(temp.getKey(), temp.getValue()));
 		}
-        PieChart boardPieChart = MyPieChart.createPieChart(datas_board);
+        PieChart boardPieChart = myPieChart.createPieChart(datas_board);
         boardDisTab.setContent(boardPieChart);
+        myPieChart.animate();
+
 
 		ObservableList<Data> datas_geog = FXCollections.observableArrayList();
 		Iterator<Entry<String,Integer>>itr2 = optionalBl.getRegionDistribution();
@@ -236,8 +240,9 @@ public class optionalStockController {
 			Entry<String,Integer> temp = itr2.next();
 			datas_geog.add(new PieChart.Data(temp.getKey(), temp.getValue()));
 		}
-		PieChart regionPieChart = MyPieChart.createPieChart(datas_geog);
+		PieChart regionPieChart = myPieChart.createPieChart(datas_geog);
         geoDisTab.setContent(regionPieChart);
+        myPieChart.animate();
 
 	}
 

@@ -58,7 +58,7 @@ PieChart pc=MyPieChart.createPieChart();
 
             );
         MyPieChart.addAllData(pc, items);
-        MyPieChart.init(pc);
+        MyPieChart.InitPieChart(pc);
 //        pc.getData().addAll(items);
 //        root.getChildren().add(createChart());
 
