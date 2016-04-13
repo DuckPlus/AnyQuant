@@ -1,13 +1,12 @@
 package ui.controller;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 import javafx.stage.Stage;
+import vo.Stock;
 
 public class MyBarChart {
 
@@ -17,7 +16,7 @@ public class MyBarChart {
 	final static String itemB = "B";
 	final static String itemC = "F";
 
-	public MyBarChart() {
+	public MyBarChart(Stock stock) {
 		init();
 	}
 
