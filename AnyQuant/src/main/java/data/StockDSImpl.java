@@ -229,7 +229,7 @@ public class StockDSImpl implements StockDataService {
 		String tradeDateString = date.DateToStringSimple();
 	
 		JSONObject jo = ConnectionHelper.requestAPI(API_TYPE.CHECK_IF_TRADING, shortCodeString , tradeDateString);
-		//此时表示该天大盘未开盘
+		//此时表示该天大盘未开盘,或者今天还未收市
 		if(jo.getInt("retCode") == -1){
 			return null;
 		}

@@ -45,16 +45,8 @@ public class BenchMarkDSImpl implements BenchMarkDataService {
 	@Override
 	public BenchMarkPO getBenchMes(String benchCode) {
 		int offset = 0;
-		MyDate date = MyTime.getAnotherDay(offset);
-		while ((!checkIfHavaData(benchCode, date)) && offset > -10) {
-			offset--;
-			date = MyTime.getAnotherDay(offset);
-		}
+		MyDate date = StockMesHelper.getPrevTradeDay();
 
-		if (offset < -10) {
-			System.out.println(benchCode + "error-----------");
-			return null;
-		}
 		return getBenchMes(benchCode, date);
 	}
 
@@ -114,8 +106,5 @@ public class BenchMarkDSImpl implements BenchMarkDataService {
 		return CacheHelper.getCacheBenchPOs();
 	}
 
-	// 不确定请求的大盘信息在某日是否有数据，返回请求结果1为有，-1为没有
-	private boolean checkIfHavaData(String benchCode, MyDate date) {
-		return StockMesHelper.isTradeDay();
-	}
+
 }
