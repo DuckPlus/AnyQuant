@@ -46,7 +46,7 @@ public class MyBarChart {
 			values[i] = new KeyValue(oneData.YValueProperty(), (double)data.get(oneData.getXValue()));
 		}
 
-		KeyFrame frame = new KeyFrame(new Duration(1000), values);
+		KeyFrame frame = new KeyFrame(new Duration(500), values);
 		timeline.getKeyFrames().add(frame);
 		timeline.play();
 	}
