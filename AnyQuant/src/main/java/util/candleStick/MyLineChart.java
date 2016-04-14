@@ -6,6 +6,7 @@ package util.candleStick;
 */
 
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import enumeration.CmpChartType;
@@ -15,6 +16,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 import ui.controller.CmpChartRecord;
+import vo.Stock;
 
 
 public class MyLineChart {
@@ -23,8 +25,8 @@ public class MyLineChart {
 	private CategoryAxis xAxis = new CategoryAxis();
     private NumberAxis yAxis = new NumberAxis();
 	private LineChart<String,Number> lineChart ;
-	private int seriseNum = 1;
 	private LinkedList<CmpChartRecord>seriesKeeper = new LinkedList<CmpChartRecord>();
+	private LinkedList<Series<String, Number>>Allseries = new LinkedList<Series<String, Number>>();
 	public MyLineChart() {
 		// TODO Auto-generated constructor stub
 		init();
@@ -33,38 +35,56 @@ public class MyLineChart {
 
 
 	   public void init(){
-	        xAxis.setLabel("xAxis");
+//	        xAxis.setLabel("xAxis");
 	        yAxis.setAutoRanging(false);
 
 
 	        //defining a series
 	        series = new XYChart.Series<String,Number>();
-	        series.setName("series_name");
+//	        series.setName("series_name");
 	        //creating the chart
 	        //set basic property of chart
 
 	        lineChart  = new LineChart<String,Number>(xAxis,yAxis);
-	        lineChart.setLegendVisible(false);
+	        lineChart.setLegendVisible(true);
 	        lineChart.setTitle("chart title");// the title depend on code name
-	        lineChart.getData().add(series);
+//	        lineChart.getData().add(series);
 	        lineChart.setCreateSymbols(false);
 
 	    }
 	   /**
 	    * 自选比较 专用！
 	    */
-	   public void addSeries(Series<String, Number> series,String code,CmpChartType type){
+	   public void addSeries(Series<String, Number> series,Stock stock,CmpChartType type){
+		   if(seriesExist(stock, type)){
+			   return;
+		   }
+		   series.setName(stock.name.get()+"-"+type.toString().replace("Chart", ""));
 		   lineChart.getData().add(series);
-		   seriseNum++;
-		   seriesKeeper.add(new CmpChartRecord(type, code, series));
+		   seriesKeeper.add(new CmpChartRecord(type, stock.code.get(), series));
+		   Allseries.add(series);
 	   }
 	   public void removeAllSeries(){
-		   for(int i=1;i<seriseNum;i++){
-//			   lineChart.getData().remove(i);
-			   lineChart.getData().removeAll(seriesKeeper);
-		   }
-		   seriseNum=1;
+			   System.out.println("remove");
+			   lineChart.getData().removeAll(Allseries);
+			   Allseries.clear();
+			   seriesKeeper.clear();
 	   }
+	    private boolean seriesExist(Stock stock,CmpChartType type){
+	    	Iterator<CmpChartRecord>recordItr = seriesKeeper.iterator();
+	    	while(recordItr.hasNext()){
+	    		CmpChartRecord temp = recordItr.next();
+	    		System.out.println(temp.getStockCode()+"  "+stock.code.get()+"  "+temp.getType()+"  "+type);
+	    		if(temp.getStockCode()==stock.code.get()&&temp.getType()==type){
+	    			return true;
+	    		}
+	    	}
+	    	return false;
+	    }
+	   
+	   /**
+	    * 通用方法
+	    */
 	   public void setSize(int width,int height){
 		   lineChart.setPrefHeight(height);
 	       lineChart.setPrefWidth(width);
@@ -93,7 +113,12 @@ public class MyLineChart {
 	    	}
 	    }
 	//==========================
+	    public NumberAxis getYAxis(){
+	    	return yAxis;
+	    }
+
 }
+	 
 
 class Mytime {
 	String hour;

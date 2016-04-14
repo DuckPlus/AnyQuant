@@ -57,10 +57,10 @@ public class BenchmarkController {
 	private void initialize(){
 		System.out.println("init done");
 		showAllBenchmark();
-		beginDate.setValue(LocalDate.now());
-		endDate.setValue(LocalDate.now());
-		beginDate.setEditable(false);
-		endDate.setEditable(false);
+//		beginDate.setValue(LocalDate.now());
+//		endDate.setValue(LocalDate.now());
+//		beginDate.setEditable(false);
+//		endDate.setEditable(false);
 
 
 

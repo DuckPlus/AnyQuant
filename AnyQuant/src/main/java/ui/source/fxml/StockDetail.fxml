@@ -376,7 +376,7 @@
                </font>
             </Label>
 
-                   <VBox layoutX="-2.0" layoutY="282.0" spacing="2.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="282.0">
+                   <VBox layoutX="-2.0" layoutY="282.0" spacing="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="282.0">
                 <children>
    	            <Button fx:id="addBtn" layoutX="21.0" layoutY="196.0" mnemonicParsing="false" onAction="#addOptionalStock" prefHeight="27.0" prefWidth="130.0" styleClass="dark-blue" text="加入自选" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="196.0" />
    	            <Button fx:id="backBtn" layoutX="21.0" layoutY="400.0" mnemonicParsing="false" onAction="#back" prefHeight="27.0" prefWidth="130.0" styleClass="dark-blue" text="返回" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="196.0" />

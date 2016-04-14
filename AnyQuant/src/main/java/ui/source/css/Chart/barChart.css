@@ -13,14 +13,15 @@
     CHART_COLOR_6: #9a42c8;
     CHART_COLOR_7: #c84164;
     CHART_COLOR_8: #888888;
-	
 }
 
 
-
+.chart{
+    -fx-background-color: black;
+}
 .chart-bar {
-    -fx-bar-fill: CHART_COLOR_1;
-    -fx-background-color:   linear-gradient(to right, 
+    /*-fx-bar-fill: CHART_COLOR_1;*/
+    -fx-background-color:   linear-gradient(to right,
                                 derive(-fx-bar-fill, -4%),
                                 derive(-fx-bar-fill, -1%),
                                 derive(-fx-bar-fill, 0%),
@@ -45,8 +46,8 @@
                                 derive(-fx-bar-fill, -6%)
                               );
 }
-.default-color0.chart-bar { -fx-bar-fill: CHART_COLOR_1; }
-.default-color1.chart-bar { -fx-bar-fill: CHART_COLOR_2; }
+.default-color0.chart-bar { -fx-bar-fill: CHART_COLOR_2; }
+.default-color1.chart-bar { -fx-bar-fill: CHART_COLOR_1; }
 .default-color2.chart-bar { -fx-bar-fill: CHART_COLOR_3; }
 .default-color3.chart-bar { -fx-bar-fill: CHART_COLOR_4; }
 .default-color4.chart-bar { -fx-bar-fill: CHART_COLOR_5; }
