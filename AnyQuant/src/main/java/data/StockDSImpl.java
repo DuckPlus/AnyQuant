@@ -33,10 +33,10 @@ public class StockDSImpl implements StockDataService {
 	private static StockDSImpl stockDSImpl;
 	private static Map<String, String[]> IndustryLocationMap;
 	private static String nameFilePath = "data//StockIndustries&Regions.txt";
-	
-	
-	
-	
+
+
+
+
 	private StockDSImpl() {
 		SetMapUp();
 	}
@@ -148,11 +148,12 @@ public class StockDSImpl implements StockDataService {
 	 *
 	 */
 	public StockPO getStockMes(String stockCode) {
+
 		int offset = 0;
 		MyDate date = MyTime.getAnotherDay(offset);
-		
+
 		JSONObject jObject = null;
-		while (  ((jObject = checkDataValid(stockCode, date)) ==null) &&(offset>-30)) {
+		while (  ((jObject = checkDataValid(stockCode, date)) ==null) &&(offset>-3)) {
 			offset--;
 			date = MyTime.getAnotherDay(offset);
 		}
@@ -161,14 +162,15 @@ public class StockDSImpl implements StockDataService {
 //			System.out.println(stockCode+"error-----------------------");
 //			return null;
 //		}
-		
+
 		if(jObject == null){
+			FileIOHelper.writeDataToErrorLog(stockCode);
 			System.err.println("Error! 股票信息读取错误");
 			return null;
 		}
-		
-		
-		
+
+
+
 		return TransferHelper.JSONObjectToStockPO(IndustryLocationMap, jObject);
 	}
 
@@ -224,10 +226,11 @@ public class StockDSImpl implements StockDataService {
 	  * @return 若有的话，返回有效数据，若无效返回null
 	  */
 	private JSONObject checkDataValid(String code, MyDate date) {
-				
+
 		String shortCodeString = code.substring(2);
+
 		String tradeDateString = date.DateToStringSimple();
-	
+
 		JSONObject jo = ConnectionHelper.requestAPI(API_TYPE.CHECK_IF_TRADING, shortCodeString , tradeDateString);
 		//此时表示该天大盘未开盘,或者今天还未收市
 		if(jo.getInt("retCode") == -1){
@@ -236,7 +239,7 @@ public class StockDSImpl implements StockDataService {
 		//表示该天该股票停牌
 		jo =  jo.getJSONArray("data").getJSONObject(0);
 		return jo.isNullObject() ? null : (jo.getLong("turnoverVol") != 0 ? jo : null);
-		
+
 	}
 
 	/**
@@ -249,17 +252,17 @@ public class StockDSImpl implements StockDataService {
 
 	@Override
 	public List<TimeSharingPO> getTimeSharingPOs(String stockCode) {
-		
+
 
 		if (stockCode.startsWith("sh")) {
 			stockCode = stockCode.substring(2) + StaticMessage.SH_EXCHANGE;
 		} else {
 			stockCode = stockCode.substring(2) + StaticMessage.SZ_EXCHANGE;
 		}
-		
+
 		String endTime = StockMesHelper.isTradeDay() ? "" : StaticMessage.TRADE_OVER_TIME;
-		
-		
+
+
 //		String url = "https://api.wmcloud.com:443/data/v1/api/market/getBarRTIntraDay.json?securityID=" + stockCode
 //				+ "&startTime=&endTime="+ endTime +"&unit=1";
 		JSONObject jsonObject = ConnectionHelper.requestAPI(API_TYPE.GET_TIMESAHRING	,stockCode , "" , endTime , "1");

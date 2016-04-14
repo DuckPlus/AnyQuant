@@ -22,7 +22,7 @@ import vo.Stock;
 public class ColorHelper {
 
 	//
-	public static Color red = new Color(203 / 255.0, 93 / 255.0, 94 / 255.0, 1.0);
+	public static Color red = new Color(238 / 255.0, 44 / 255.0, 44 / 255.0, 1.0);
 
 	public static Color blue = new Color(45 / 255.0, 255 / 255.0, 254 / 255.0, 1.0);
 	public static Color yellow = new Color(255 / 255.0, 253 / 255.0, 56 / 255.0, 1.0);

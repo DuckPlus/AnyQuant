@@ -33,7 +33,6 @@ public class MyLineChart {
 
 
 	   public void init(){
-	        xAxis.setLabel("xAxis");
 	        yAxis.setAutoRanging(false);
 
 

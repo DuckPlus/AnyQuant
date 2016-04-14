@@ -144,10 +144,10 @@ public class StockDetailController {
 	private void initTimeSharing() {
 //		TimeSharingChart timeChart = new TimeSharingChart(currentStock);
 //		timeSharing.setContent(timeChart.getTimeSharingChart());
-		Task initTimeSharingTask = CandleStickThreadHelper.createTimeSharingInitWorker(currentStock);
-		ProgressIndicatorHelper.showProgressIndicator(initTimeSharingTask.progressProperty(),
-        		 initTimeSharingTask.runningProperty(), timeSharingIndicator, timeSharingCachePane);
-		new Thread(initTimeSharingTask).start();
+//		Task initTimeSharingTask = CandleStickThreadHelper.createTimeSharingInitWorker(currentStock);
+//		ProgressIndicatorHelper.showProgressIndicator(initTimeSharingTask.progressProperty(),
+//        		 initTimeSharingTask.runningProperty(), timeSharingIndicator, timeSharingCachePane);
+//		new Thread(initTimeSharingTask).start();
 	}
 
 	private void initKLine() {

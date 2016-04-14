@@ -3,11 +3,14 @@ package util;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javafx.event.EventHandler;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 
 public class MyBarChart {
 
@@ -20,6 +23,7 @@ public class MyBarChart {
 
 
 	public void addData(Series series) {
+		barchart.getData().clear();
 		barchart.getData().add(series);
 	}
 
@@ -44,6 +48,19 @@ public class MyBarChart {
 		final NumberAxis yAxis = new NumberAxis();
 		final CategoryAxis xAxis = new CategoryAxis();
 		barchart = new BarChart<String, Number>(xAxis, yAxis);
+		barchart.setLegendVisible(false);
+		barchart.setOnMouseMoved(
+		new EventHandler<MouseEvent>(){
+            @Override public void handle(MouseEvent e){
+//              System.out.println(e.getX());
+            	String x_=xAxis.getValueForDisplay(e.getX());
+            	barchart.getData().get(0);
+//            	for(XYChart.Data t:barchart.getData()){
+
+//            	}
+//            	System.out.println(barchart.getData().);
+            }
+          });
 
 	}
 
