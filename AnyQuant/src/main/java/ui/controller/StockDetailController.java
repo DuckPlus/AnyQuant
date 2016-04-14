@@ -26,6 +26,7 @@ import vo.Stock;
 /**
  * @status:code reviewed
  * @handler:dsn
+ * @reviewed date:2016-4-14
  */
 public class StockDetailController {
 
@@ -226,14 +227,16 @@ public class StockDetailController {
 
 
 	/**
-	 * 构造~
-	 * 单例模式
+	 * 别这么构造！除非你想搞个大新闻-o-
 	 */
 	public StockDetailController() {
 		if (instance == null) {
 			instance = this;
 		}
 	}
+	/**
+	 *单例模式[但由于构造器变为private的话fxml就找不到。。]
+	 */
 	public static StockDetailController getStockDetailController() {
 		if (instance == null) {
 			instance = new StockDetailController();

@@ -32,7 +32,7 @@ public class CandleStickThreadHelper {
 				@Override
 				protected Object call() throws Exception {
 					// on the worker thread...
-					 candleController.getDayData();
+					 candleController.getDefaultDayData();
 					Platform.runLater(() -> {
 						// on the JavaFX Application Thread....
                         candleController.dayChart= CandleStickChart.createChart(candleController.dayList);
@@ -49,7 +49,7 @@ public class CandleStickThreadHelper {
 				@Override
 				protected Object call() throws Exception {
 					// on the worker thread...
-					candleController.getWeekData();
+					candleController.getDefaultWeekData();
 					Platform.runLater(() -> {
 						// on the JavaFX Application Thread....
 						candleController.weekChart= CandleStickChart.createChart(candleController.weekList);
@@ -66,7 +66,7 @@ public class CandleStickThreadHelper {
 				@Override
 				protected Object call() throws Exception {
 					// on the worker thread...
-					candleController.getMonthData();
+					candleController.getDefaultMonthData();
 					Platform.runLater(() -> {
 						// on the JavaFX Application Thread....
 						candleController.monthChart= CandleStickChart.createChart(candleController.monthList);
