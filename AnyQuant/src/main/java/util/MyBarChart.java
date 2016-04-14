@@ -34,16 +34,9 @@ public class MyBarChart {
 	}
 
 	public void addData(){
-//		for(Entry<String, Integer> entry : this.data.entrySet()){
-//        	//this.dataSeries.getData().add(new XYChart.Data(entry.getKey(),entry.getValue()));
-//			for(XYChart.Data oneData:this.dataSeries.getData()){
-//
-//			}
-//		}
+
 		barchart.setAnimated(false);
-//		for(XYChart.Data oneData:this.dataSeries.getData()){
-//			oneData.setYValue(data.get(oneData.getXValue()));
-//		}
+
 
 		Timeline timeline = new Timeline();
 		KeyValue[] values = new KeyValue[data.size()];
@@ -57,21 +50,15 @@ public class MyBarChart {
 		timeline.play();
 	}
 
-	public void Animate(){
 
-        barchart.setAnimated(false);
-		XYChart.Series zeroSeries = new XYChart.Series();
-		for(Entry<String, Integer> entry : this.data.entrySet()){
-        	zeroSeries.getData().add(new XYChart.Data(entry.getKey(),0));
-        }
-	    this.barchart.getData().add(zeroSeries);
 
-	    barchart.setAnimated(true);
-		for(Entry<String, Integer> entry : this.data.entrySet()){
-        	zeroSeries.getData().add(new XYChart.Data(entry.getKey(),entry.getValue()));
-        }
-
+	public static BarChart<String, Number> createBarChart(){
+		final NumberAxis yAxis = new NumberAxis();
+		final CategoryAxis xAxis = new CategoryAxis();
+		 BarChart< String, Number> chart = new BarChart<String, Number>(xAxis, yAxis);
+		return chart;
 	}
+
 
 	public BarChart<String, Number> createBarChart(Map<String , Integer>  data){
 		this.data=data;
