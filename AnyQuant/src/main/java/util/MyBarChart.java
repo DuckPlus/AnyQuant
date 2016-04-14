@@ -3,6 +3,8 @@ package util;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.python.antlr.PythonParser.return_stmt_return;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -12,6 +14,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 import javafx.util.Duration;
+import jnr.ffi.Struct.int16_t;
 
 public class MyBarChart {
 
@@ -46,7 +49,7 @@ public class MyBarChart {
 		KeyValue[] values = new KeyValue[data.size()];
 		for(int i=0;i<values.length;i++){
 			XYChart.Data oneData = dataSeries.getData().get(i);
-			values[i] = new KeyValue(oneData.YValueProperty(), data.get(oneData.getXValue()));
+			values[i] = new KeyValue(oneData.YValueProperty(), (double)data.get(oneData.getXValue()));
 		}
 
 		KeyFrame frame = new KeyFrame(new Duration(1000), values);
@@ -80,8 +83,8 @@ public class MyBarChart {
 
 		final NumberAxis yAxis = new NumberAxis();
 		final CategoryAxis xAxis = new CategoryAxis();
-	//	yAxis.setUpperBound(4);
-	//	yAxis.setAutoRanging(false);
+		yAxis.setUpperBound(getMax()+1);
+		yAxis.setAutoRanging(false);
 		this.barchart = new BarChart<String, Number>(xAxis, yAxis);
 		this.barchart.setAnimated(false);
 		this.dataSeries = new XYChart.Series<String,Number>();
@@ -94,21 +97,18 @@ public class MyBarChart {
 		this.barchart.getData().add(dataSeries);
 		this.barchart.setAnimated(true);
 
-//		this.barchart.setAnimated(false);
-//		barchart.setLegendVisible(false);
-//		barchart.setOnMouseMoved(
-//		new EventHandler<MouseEvent>(){
-//            @Override public void handle(MouseEvent e){
-////              System.out.println(e.getX());
-//            	String x_=xAxis.getValueForDisplay(e.getX());
-//            	barchart.getData().get(0);
-////            	for(XYChart.Data t:barchart.getData()){
-//
-////            	}
-////            	System.out.println(barchart.getData().);
-//            }
-//          });
 
+	}
+
+
+	private int getMax(){
+		int max =0;
+		for(Entry<String, Integer> entry: data.entrySet()){
+			   if(entry.getValue()>max){
+				   max=entry.getValue();
+			   }
+		}
+		return max;
 	}
 
 	public BarChart getBarChart() {
