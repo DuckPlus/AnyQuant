@@ -50,7 +50,7 @@ public class MyPieChart {
 
 		pieChart.setLabelLineLength(10);
 //		pieChart.setLegendSide(Side.RIGHT);
-		pieChart.getStylesheets().add("ui/source/css/pieChart.css");
+//		pieChart.getStylesheets().add("ui/source/css/pieChart.css");
 
 
 		final Label caption = new Label("");
