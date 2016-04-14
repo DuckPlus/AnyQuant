@@ -92,11 +92,6 @@ public class StockDetailController {
 		monthStart.setValue(LocalDate.now());
 		monthEnd.setValue(LocalDate.now());
 	}
-	@FXML
-	public void selectDeal(){
-		initDealAmount();
-	}
-
 
 	public void setData(Stock stock,PanelType panelType) {
 		parentPanelType=panelType;
