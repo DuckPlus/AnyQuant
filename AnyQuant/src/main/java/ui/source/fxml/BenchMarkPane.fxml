@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="419.0" prefWidth="561.0" stylesheets="@../css/Benchmark.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.BenchmarkController">
    <children>
-      <TableView fx:id="tableview" layoutX="88.0" layoutY="59.0" prefHeight="389.0" prefWidth="562.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0">
+      <TableView fx:id="tableview" layoutX="88.0" layoutY="59.0" prefHeight="389.0" prefWidth="562.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columns>
           <TableColumn fx:id="code" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" text="大盘代号" />
             <TableColumn fx:id="name" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" text="大盘名称" />

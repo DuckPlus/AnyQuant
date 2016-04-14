@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.python.antlr.ast.cmpopType;
+
 import blimpl.BenchMarkBLImpl;
 import blimpl.OptionalStockBLImpl;
 import blimpl.StockBLImpl;
@@ -34,6 +36,7 @@ import ui.helper.ColorHelper;
 import util.MyBarChart;
 import util.MyPieChart;
 import util.MyTime;
+import util.StatisticUtil;
 import util.candleStick.MyLineChart;
 import vo.Stock;
 import vo.StockVO;
@@ -127,7 +130,7 @@ public class optionalStockController {
 	}
 	/**
 	 * 全局初始化
-	 */
+//	 */
 	@FXML
 	private void initialize() {
 		InstanceController insc = InstanceController.getInstance();
@@ -244,39 +247,27 @@ public class optionalStockController {
 		// init chart
 		cmpChart = new MyLineChart();
 		cmpChart.setSize(650, 650);
+		cmpChart.getTimesharingChart().setCreateSymbols(true);
+		cmpChart.getYAxis().setUpperBound(1);
+		cmpChart.getYAxis().setLowerBound(0);
 		cmpChartPane.getChildren().add(cmpChart.getTimesharingChart());
 	}
 
 	@FXML
-	private void addCmpStock() {
-		if (cmpTableview.getSelectionModel().getSelectedIndex() != -1) {
-			Stock selectedCmpStock = cmpTableview.getSelectionModel().getSelectedItem();
-			// MyDate cmpB = new MyDate(cmpBgn.getValue().getYear(),
-			// cmpBgn.getValue().getMonthValue(),
-			// cmpBgn.getValue().getDayOfMonth());
-			// MyDate cmpE = new MyDate(cmpEnd.getValue().getYear(),
-			// cmpBgn.getValue().getMonthValue(),
-			// cmpBgn.getValue().getDayOfMonth());
+//<<<<<<< HEAD
+	private void addCmpStock(){
+		if(cmpTableview.getSelectionModel().getSelectedIndex()!=-1){
+		Stock selectedCmpStock = cmpTableview.getSelectionModel().getSelectedItem();
 
-			switch (chartType.getSelectionModel().getSelectedItem()) {
-			case "市盈率":
-				drawCmpPEChart(selectedCmpStock.code.get());
-				break;
-			case "市净率":
-				drawCmpPBChart(selectedCmpStock.code.get());
-				;
-				break;
-			case "成交量":
-				System.out.println("cjl");
-				break;
-			default:
-				System.out.println("default");
-				break;
-			}
+		switch(chartType.getSelectionModel().getSelectedItem()){
+			case "市盈率":drawCmpPEChart(selectedCmpStock);break;
+			case "市净率":drawCmpPBChart(selectedCmpStock);;break;
+			case "成交量":drawCmpVolumeValueChart(selectedCmpStock);;break;
+			default:System.out.println("default");break;
+		}
 		}
 	}
-
-	private void drawCmpPEChart(String code) {
+	private void drawCmpPEChart(Stock stock){
 
 		MyDate cmpB = new MyDate(cmpBgn.getValue().getYear(), cmpBgn.getValue().getMonthValue(),
 				cmpBgn.getValue().getDayOfMonth());
@@ -286,34 +277,37 @@ public class optionalStockController {
 		if (!MyTime.ifEarlier(cmpB, cmpE)) {
 			return;
 		}
-		Iterator<StockVO> itr = stockBl.getStocksByTime(code, cmpB, cmpE);
-		Series<String, Number> series = new Series<String, Number>();
-		while (itr.hasNext()) {
-			StockVO temp = itr.next();
-			String date = temp.date;
-			series.getData().add(new XYChart.Data<String, Number>(date, temp.pe));
-		}
-		cmpChart.addSeries(series, code, CmpChartType.peChart);
+		
+		Iterator<StockVO>itr = stockBl.getStocksByTime(stock.code.get(), cmpB, cmpE);
+		Iterator<StockVO>itrMax = stockBl.getStocksByTime(stock.code.get(), cmpB, cmpE);
+		Iterator<StockVO>itrMin = stockBl.getStocksByTime(stock.code.get(), cmpB, cmpE);
+		cmpChart.addSeries(StatisticUtil.dimensionLessPE(itr,itrMax,itrMin),stock,CmpChartType.peChart);
 	}
-
-	private void drawCmpPBChart(String code) {
-		MyDate cmpB = new MyDate(cmpBgn.getValue().getYear(), cmpBgn.getValue().getMonthValue(),
-				cmpBgn.getValue().getDayOfMonth());
-		MyDate cmpE = new MyDate(cmpEnd.getValue().getYear(), cmpEnd.getValue().getMonthValue(),
-				cmpEnd.getValue().getDayOfMonth());
+	private void drawCmpPBChart(Stock stock){
+		MyDate cmpB = new MyDate(cmpBgn.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
+		MyDate cmpE = new MyDate(cmpEnd.getValue().getYear(), cmpEnd.getValue().getMonthValue(), cmpEnd.getValue().getDayOfMonth());
 
 		if (!MyTime.ifEarlier(cmpB, cmpE)) {
 			return;
 		}
-		Iterator<StockVO> itr = stockBl.getStocksByTime(code, cmpB, cmpE);
-		Series<String, Number> series = new Series<String, Number>();
-		while (itr.hasNext()) {
-			StockVO temp = itr.next();
-			String date = temp.date;
-			series.getData().add(new XYChart.Data<String, Number>(date, temp.pb));
-		}
-		cmpChart.addSeries(series, code, CmpChartType.pbChart);
+		Iterator<StockVO>itr = stockBl.getStocksByTime(stock.code.get(), cmpB, cmpE);
+		Iterator<StockVO>itrMax = stockBl.getStocksByTime(stock.code.get(), cmpB, cmpE);
+		Iterator<StockVO>itrMin = stockBl.getStocksByTime(stock.code.get(), cmpB, cmpE);
+		cmpChart.addSeries(StatisticUtil.dimensionLessPB(itr,itrMax,itrMin),stock,CmpChartType.pbChart);
 	}
+	private void drawCmpVolumeValueChart(Stock stock){
+		MyDate cmpB = new MyDate(cmpBgn.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
+		MyDate cmpE = new MyDate(cmpEnd.getValue().getYear(), cmpEnd.getValue().getMonthValue(), cmpEnd.getValue().getDayOfMonth());
+
+		if(!MyTime.ifEarlier(cmpB, cmpE)){
+			return;
+		}
+		Iterator<StockVO>itr = stockBl.getStocksByTime(stock.code.get(), cmpB, cmpE);
+		Iterator<StockVO>itrMax = stockBl.getStocksByTime(stock.code.get(), cmpB, cmpE);
+		Iterator<StockVO>itrMin = stockBl.getStocksByTime(stock.code.get(), cmpB, cmpE);
+		cmpChart.addSeries(StatisticUtil.dimensionLessVolumeValue(itr,itrMax,itrMin),stock,CmpChartType.turnoverVolChart);
+	}
+	
 
 	@FXML
 	private void clearCmpChart() {
