@@ -43,8 +43,7 @@ import vo.StockVO;
 
 public class optionalStockController {
 	BarChart boardBarChart, regionBarChart;
-	MyPieChart myPieChart_b = new MyPieChart();
-	MyPieChart myPieChart_r = new MyPieChart();
+	MyPieChart myPieChart_b,myPieChart_r;
 	MyBarChart myBarChart_b, myBarChart_r;
 	PieChart boardPieChart, regionPieChart;
 	Map<String, Integer> boardMap, regionMap;
@@ -156,16 +155,16 @@ public class optionalStockController {
 	 */
 	@FXML
 	public void selectRegion() {
-		initBoard();
-		barChart_r_AddData();
+		initRegion();
+		regionAnimate();
 	}
 	/**
 	 * 选择tabpanel的板块分区按钮时的响应
 	 */
 	@FXML
 	public void selectBoard() {
-		initRegion();
-		barChart_b_AddData();
+		initBoard();
+		boardAnimate();
 	}
 
 	/**
@@ -174,19 +173,19 @@ public class optionalStockController {
 	private void initPieAndBarChart() {
 		boardMap = optionalBl.getBoardDistributionMap();
 		regionMap = optionalBl.getRegionDistributionMap();
-		boardPieChart = myPieChart_b.createPieChart(boardMap);
-		regionPieChart = myPieChart_r.createPieChart(regionMap);
-		initBoard();
-		initRegion();
 	}
 
 	/**
 	 * 初始化的子步骤--初始化地域分区的两个图表
 	 */
 	private void initRegion() {
-		myBarChart_r = new MyBarChart();
-		regionBarChart = myBarChart_r.getBarChart();
 		regionHBox.getChildren().clear();
+		myPieChart_r=new MyPieChart();
+		regionPieChart = myPieChart_r.createPieChart(regionMap);
+
+		myBarChart_r = new MyBarChart();
+		regionBarChart = myBarChart_r.createBarChart(regionMap);
+
 		regionHBox.getChildren().addAll(regionPieChart, regionBarChart);
 
 	}
@@ -195,26 +194,32 @@ public class optionalStockController {
 	 * 初始化的子步骤--初始化板块分区的两个图表
 	 */
 	private void initBoard() {
-		myBarChart_b = new MyBarChart();
-		boardBarChart = myBarChart_b.getBarChart();
 		boardHBox.getChildren().clear();
+		myPieChart_b=new MyPieChart();
+		boardPieChart = myPieChart_b.createPieChart(boardMap);
+
+		myBarChart_b = new MyBarChart();
+		boardBarChart = myBarChart_b.createBarChart(boardMap);
+
 		boardHBox.getChildren().addAll(boardPieChart, boardBarChart);
 	}
 
 	/**
 	 * 加载 板块分区的图表的数据
 	 */
-	private void barChart_b_AddData() {
+	private void boardAnimate() {
 		myPieChart_b.animate();
-		myBarChart_b.addData(boardBarChart, boardMap);
+		myBarChart_b.addData();
+	//	myBarChart_b.Animate();
 	}
 
 	/**
 	 * 加载 地域分区的图表的数据
 	 */
-	private void barChart_r_AddData() {
+	private void regionAnimate() {
 		myPieChart_r.animate();
-		myBarChart_r.addData(regionBarChart, regionMap);
+		myBarChart_r.addData();
+		//myBarChart_r.Animate();
 	}
 
 	private void initChoice() {
