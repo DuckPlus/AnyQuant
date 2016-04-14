@@ -51,4 +51,11 @@
     -fx-text-fill: white;
     -fx-border-color: null;
 }
-.chart-legend { -fx-background-color: black; }
+.chart-legend { -fx-background-color: black;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-color: #FFFFFF;
+    -fx-tick-label-fill: #FFFFFF;
+
+}
+
+
