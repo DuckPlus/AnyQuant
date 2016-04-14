@@ -59,8 +59,8 @@ public class TimeSharingChart {
 
     	}
     	//end
-
-		lineChart.setChartProperty(currentStock.name.get()+"   Monitoring", upperBounds+0.02, lowerBounds-0.02);
+    	lineChart.getTimesharingChart().setLegendVisible(false);
+		lineChart.setChartProperty(currentStock.name.get(), upperBounds+0.02, lowerBounds-0.02);
 	}
 
 	public LineChart<String, Number> getTimeSharingChart(){

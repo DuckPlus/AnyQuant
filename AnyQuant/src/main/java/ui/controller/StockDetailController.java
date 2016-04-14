@@ -20,6 +20,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 import util.candleStick.CandleStickThreadHelper;
 import util.candleStick.ProgressIndicatorHelper;
+import util.candleStick.TimeSharingChart;
 import vo.Stock;
 
 public class StockDetailController {
@@ -142,8 +143,8 @@ public class StockDetailController {
 	}
 
 	private void initTimeSharing() {
-//		TimeSharingChart timeChart = new TimeSharingChart(currentStock);
-//		timeSharing.setContent(timeChart.getTimeSharingChart());
+		TimeSharingChart timeChart = new TimeSharingChart(currentStock);
+		timeSharing.setContent(timeChart.getTimeSharingChart());
 //		Task initTimeSharingTask = CandleStickThreadHelper.createTimeSharingInitWorker(currentStock);
 //		ProgressIndicatorHelper.showProgressIndicator(initTimeSharingTask.progressProperty(),
 //        		 initTimeSharingTask.runningProperty(), timeSharingIndicator, timeSharingCachePane);
