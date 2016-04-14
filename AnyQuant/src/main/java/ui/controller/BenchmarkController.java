@@ -73,7 +73,6 @@ public class BenchmarkController {
 		tableview.getItems().removeAll(observableList);
 			while(itr.hasNext()){
 				BenchMarkVO temp = itr.next();
-				System.out.println(temp.date+" "+temp.name);
 				temp.turnoverValue = temp.turnoverValue/1000000;
 				BigDecimal bigDecimal = new BigDecimal(temp.turnoverValue);
 				temp.turnoverValue = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();

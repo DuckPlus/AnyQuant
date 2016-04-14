@@ -116,8 +116,6 @@ public class optionalStockController {
 	@FXML
 	private void initialize() {
 		instanceController.registOptionalStockController(this);
-//		observableList 
-//		cmpTableData 
 		stockDetailPane = instanceController.getStockDetailPane();
 		initPieAndBarChart();
 		getOptionalStock();
@@ -127,7 +125,6 @@ public class optionalStockController {
 
 	public static optionalStockController getOptionalStockController() {
 		if (instance == null) {
-			System.err.println("get a new one");
 			instance = new optionalStockController();
 		}
 		return instance;
