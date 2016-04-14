@@ -19,7 +19,7 @@ import enumeration.StaticMessage;
 import jnr.ffi.Struct.int16_t;
 import po.BenchMarkPO;
 import po.StockPO;
-import util.MyTime;
+import util.DateCalculator;
 
 /**
  *
@@ -81,7 +81,7 @@ public class FileIOHelper {
 
 	public static void writeAllStockMes(List<StockPO> stocks) {
 		List<String> strings = new ArrayList<>();
-		strings.add(MyTime.getToDay().DateToString());
+		strings.add(DateCalculator.getToDay().DateToString());
 		for (StockPO stockPO : stocks) {
 			if (stockPO != null) {
 				strings.add(stockPO.MyToString(SPLIT_CHAR));
@@ -93,7 +93,7 @@ public class FileIOHelper {
 
 	public static void writeAllBenMes(List<BenchMarkPO> benchMarkPOs) {
 		List<String> strings = new ArrayList<>(benchMarkPOs.size() + 1);
-		strings.add(MyTime.getToDay().DateToString());
+		strings.add(DateCalculator.getToDay().DateToString());
 		for (BenchMarkPO po : benchMarkPOs) {
 			System.out.println(po.getChange());
 			strings.add(po.MyToString(SPLIT_CHAR));
@@ -104,7 +104,7 @@ public class FileIOHelper {
 
 	public static void writeOptionalStocks(List<StockPO> stocks) {
 		List<String> strings = new ArrayList<>(stocks.size() + 1);
-		strings.add(MyTime.getToDay().DateToString());
+		strings.add(DateCalculator.getToDay().DateToString());
 		for (StockPO stockPO : stocks) {
 			strings.add(stockPO.MyToString(SPLIT_CHAR));
 		}
@@ -181,7 +181,7 @@ public class FileIOHelper {
 				if (needUpdate(preDate)) {
 					System.out.println("更新 " + code + FILE_POSTFIX);
 					MyDate start = MyDate.getDateFromString("2006-01-01");
-					MyDate end = MyTime.getToDay();
+					MyDate end = DateCalculator.getToDay();
 					ArrayList<StockPO> stocks = (ArrayList<StockPO>) stockDSImpl.getStockMes(code, start, end);
 					// true = append file
 					FileWriter fileWritter = new FileWriter(file, false);
@@ -237,9 +237,9 @@ public class FileIOHelper {
 
 	public static boolean needUpdate(String preDate) {
 		// 如果昨天日期与上次纪录不符并且昨天不是周末
-		MyDate yesterday = MyTime.getAnotherDay(-1);
+		MyDate yesterday = DateCalculator.getAnotherDay(-1);
 		MyDate preMyDate = MyDate.getDateFromString(preDate);
-		if (MyTime.ifEarlier(preMyDate, yesterday) && (!MyTime.isWeekend(yesterday))) {
+		if (DateCalculator.ifEarlier(preMyDate, yesterday) && (!DateCalculator.isWeekend(yesterday))) {
 			return true;
 		}
 		return false;
@@ -262,7 +262,7 @@ public class FileIOHelper {
 				file.createNewFile();
 				System.out.println("create " + fileUrl);
 				MyDate start = MyDate.getDateFromString("2006-01-01");
-				MyDate end = MyTime.getToDay();
+				MyDate end = DateCalculator.getToDay();
 				ArrayList<StockPO> stocks = (ArrayList<StockPO>) stockDSImpl.getStockMes(code, start, end);
 				// true = append file
 				FileWriter fileWritter = new FileWriter(file, false);

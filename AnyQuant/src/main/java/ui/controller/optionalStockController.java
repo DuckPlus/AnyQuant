@@ -33,10 +33,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import ui.helper.ColorHelper;
 import util.MyBarChart;
+import util.MyLineChart;
 import util.MyPieChart;
-import util.MyTime;
+import util.DateCalculator;
 import util.StatisticUtil;
-import util.candleStick.MyLineChart;
 import vo.Stock;
 import vo.StockVO;
 
@@ -207,7 +207,7 @@ public class optionalStockController {
 	 */
 	private void initCmpModule() {
 		// init date picker
-		MyDate monthAgo = MyTime.getAnotherDay(
+		MyDate monthAgo = DateCalculator.getAnotherDay(
 				new MyDate(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()),
 				-30);
 
@@ -261,7 +261,7 @@ public class optionalStockController {
 		MyDate cmpE = new MyDate(cmpEnd.getValue().getYear(), cmpEnd.getValue().getMonthValue(),
 				cmpEnd.getValue().getDayOfMonth());
 
-		if (!MyTime.ifEarlier(cmpB, cmpE)) {
+		if (!DateCalculator.ifEarlier(cmpB, cmpE)) {
 			return;
 		}
 		
@@ -278,7 +278,7 @@ public class optionalStockController {
 		MyDate cmpB = new MyDate(cmpBgn.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
 		MyDate cmpE = new MyDate(cmpEnd.getValue().getYear(), cmpEnd.getValue().getMonthValue(), cmpEnd.getValue().getDayOfMonth());
 
-		if (!MyTime.ifEarlier(cmpB, cmpE)) {
+		if (!DateCalculator.ifEarlier(cmpB, cmpE)) {
 			return;
 		}
 		Iterator<StockVO>itr = stockBl.getStocksByTime(stock.code.get(), cmpB, cmpE);
@@ -294,7 +294,7 @@ public class optionalStockController {
 		MyDate cmpB = new MyDate(cmpBgn.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
 		MyDate cmpE = new MyDate(cmpEnd.getValue().getYear(), cmpEnd.getValue().getMonthValue(), cmpEnd.getValue().getDayOfMonth());
 
-		if(!MyTime.ifEarlier(cmpB, cmpE)){
+		if(!DateCalculator.ifEarlier(cmpB, cmpE)){
 			return;
 		}
 		Iterator<StockVO>itr = stockBl.getStocksByTime(stock.code.get(), cmpB, cmpE);

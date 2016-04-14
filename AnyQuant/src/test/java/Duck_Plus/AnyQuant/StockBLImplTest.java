@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import enumeration.Stock_Attribute;
-import util.MyTime;
+import util.DateCalculator;
 import vo.DealVO;
 import vo.OHLC_VO;
 import vo.StockVO;
@@ -107,13 +107,13 @@ public class StockBLImplTest {
 	@Test
 	public void testGetDayOHLC_Data() {
 		System.out.println("-------------------下面进入日K线测试------------------------");
-		Iterator<StockVO> vos = bl.getStocksByTime("sh600300", MyTime.getAnotherDay(-30), MyTime.getAnotherDay(0));
+		Iterator<StockVO> vos = bl.getStocksByTime("sh600300", DateCalculator.getAnotherDay(-30), DateCalculator.getAnotherDay(0));
 		List<Double> lows = new ArrayList<Double>();
 		while(vos.hasNext()){
 			lows.add(vos.next().low);
 		}
 		System.out.println("-************************-");
-		List<OHLC_VO> tmp = bl.getDayOHLC_Data("sh600300", MyTime.getAnotherDay(-30), MyTime.getAnotherDay(0));
+		List<OHLC_VO> tmp = bl.getDayOHLC_Data("sh600300", DateCalculator.getAnotherDay(-30), DateCalculator.getAnotherDay(0));
 		for (int i = 0; i < 15; i++) {
 			if(!lows.get(i).equals(tmp.get(i).low)){
 				fail();
@@ -124,7 +124,7 @@ public class StockBLImplTest {
 	@Test
 	public void testGetWeekOHLC_Data() {
 		System.out.println("-------------------下面进入周K线测试------------------------");
-		List<OHLC_VO> tmp = bl.getWeekOHLC_Data("sh600300", MyTime.getAnotherDay(-30), MyTime.getAnotherDay(0));
+		List<OHLC_VO> tmp = bl.getWeekOHLC_Data("sh600300", DateCalculator.getAnotherDay(-30), DateCalculator.getAnotherDay(0));
 		System.out.println(tmp.size());
 		for (OHLC_VO ohlc_VO : tmp) {
 			System.out.println("Day is " + ohlc_VO.date.getDay() + " low is " + ohlc_VO.low);
@@ -134,7 +134,7 @@ public class StockBLImplTest {
 	@Test
 	public void testGetMonthOHLC_Data() {
 		System.out.println("-------------------下面进入月K线测试------------------------");
-		List<OHLC_VO> tmp = bl.getMonthOHLC_Data("sh600300", MyTime.getAnotherDay(-100), MyTime.getAnotherDay(0));
+		List<OHLC_VO> tmp = bl.getMonthOHLC_Data("sh600300", DateCalculator.getAnotherDay(-100), DateCalculator.getAnotherDay(0));
 		System.out.println("长度为 + " + tmp.size());
 		for (OHLC_VO ohlc_VO : tmp) {
 			System.out.println("Year and Month is  " + ohlc_VO.date.getYear() + " " + ohlc_VO.date.getMonth() + " low is " + ohlc_VO.low);
@@ -150,7 +150,7 @@ public class StockBLImplTest {
 	@Test
 	public void testGetDayDealVOs() {
 		System.out.println("-------------------下面进入日成交量测试------------------------");
-		List<DealVO> dealVOs = bl.getDayDealVOs("sh600300", MyTime.getAnotherDay(-100), MyTime.getAnotherDay(0));
+		List<DealVO> dealVOs = bl.getDayDealVOs("sh600300", DateCalculator.getAnotherDay(-100), DateCalculator.getAnotherDay(0));
 		for (DealVO dealVO : dealVOs) {
 			System.out.println(dealVO.date.DateToString() + " " + dealVO.dealAmount+ " " + dealVO.volume);
 		}
@@ -160,7 +160,7 @@ public class StockBLImplTest {
 	@Test
 	public void testGetWeekDealVOs() {
 		System.out.println("-------------------下面进入周成交量测试------------------------");
-		List<DealVO> dealVOs = bl.getWeekDealVOs("sh600300", MyTime.getAnotherDay(-100), MyTime.getAnotherDay(0));
+		List<DealVO> dealVOs = bl.getWeekDealVOs("sh600300", DateCalculator.getAnotherDay(-100), DateCalculator.getAnotherDay(0));
 		for (DealVO dealVO : dealVOs) {
 			System.out.println(dealVO.date.DateToString() + " " + dealVO.dealAmount+ " " + dealVO.volume);
 		}
@@ -170,7 +170,7 @@ public class StockBLImplTest {
 	@Test
 	public void testGetMonthDealVOs() {
 		System.out.println("-------------------下面进入月成交量测试------------------------");
-		List<DealVO> dealVOs = bl.getMonthDealVOs("sh600300", MyTime.getAnotherDay(-100), MyTime.getAnotherDay(0));
+		List<DealVO> dealVOs = bl.getMonthDealVOs("sh600300", DateCalculator.getAnotherDay(-100), DateCalculator.getAnotherDay(0));
 		for (DealVO dealVO : dealVOs) {
 			System.out.println(dealVO.date.DateToString() + " " + dealVO.dealAmount+ " " + dealVO.volume);
 		}

@@ -24,8 +24,8 @@ public class DealChart {
 	 */
 	public DealChart(Stock stock) {
 		this.stock=stock;
-		end=MyTime.getToDay();
-		start=MyTime.getAnotherDay(end, -30);
+		end=DateCalculator.getToDay();
+		start=DateCalculator.getAnotherDay(end, -30);
 	}
 	/**
 	 * @param stock2

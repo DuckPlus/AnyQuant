@@ -15,7 +15,7 @@ import enumeration.MyDate;
 import enumeration.Stock_Attribute;
 import po.StockPO;
 import po.TimeSharingPO;
-import util.MyTime;
+import util.DateCalculator;
 import vo.DealVO;
 import vo.OHLC_VO;
 import vo.StockVO;
@@ -103,7 +103,7 @@ public class StockBLImpl implements StockBLService {
 
 	@Override
 	public Iterator<StockVO> getRecentStocks(String stockCode) {
-		return getStocksByTime(stockCode, MyTime.getAnotherDay(-30), MyTime.getToDay());
+		return getStocksByTime(stockCode, DateCalculator.getAnotherDay(-30), DateCalculator.getToDay());
 	}
 
 	@Override
@@ -164,8 +164,8 @@ public class StockBLImpl implements StockBLService {
 
 	@Override
 	public List<OHLC_VO> getWeekOHLC_Data(String stockCode, MyDate start, MyDate end) {
-		List<StockPO> pos = APIDataSer.getStockMes(stockCode, MyTime.getMondayofTheWeek(start),
-				MyTime.getFridayofTheWeek(end));
+		List<StockPO> pos = APIDataSer.getStockMes(stockCode, DateCalculator.getMondayofTheWeek(start),
+				DateCalculator.getFridayofTheWeek(end));
 		List<OHLC_VO> results;
 		int DAY_OF_WEEK = 5;
 		if (pos == null) {
@@ -202,7 +202,7 @@ public class StockBLImpl implements StockBLService {
 		MyDate monthEnd = thisMonth.clone();
 
 		thisMonth.setDay(1);
-		monthEnd.setDay(MyTime.getMonthEndDay(monthEnd));
+		monthEnd.setDay(DateCalculator.getMonthEndDay(monthEnd));
 		for (int i = 0; i < monthNum; i++) {
 
 
@@ -267,8 +267,8 @@ public class StockBLImpl implements StockBLService {
 
 	@Override
 	public List<DealVO> getWeekDealVOs(String stockCode, MyDate start, MyDate end) {
-		List<StockPO> pos = APIDataSer.getStockMes(stockCode, MyTime.getMondayofTheWeek(start),
-				MyTime.getFridayofTheWeek(end));
+		List<StockPO> pos = APIDataSer.getStockMes(stockCode, DateCalculator.getMondayofTheWeek(start),
+				DateCalculator.getFridayofTheWeek(end));
 		List<DealVO> results;
 		int DAY_OF_WEEK = 5;
 		if (pos == null) {
@@ -304,7 +304,7 @@ public class StockBLImpl implements StockBLService {
 		MyDate thisMonth = start.clone();
 		MyDate monthEnd = thisMonth.clone();
 		thisMonth.setDay(1);
-		monthEnd.setDay(MyTime.getMonthEndDay(monthEnd));
+		monthEnd.setDay(DateCalculator.getMonthEndDay(monthEnd));
 		for (int i = 0; i < monthNum; i++) {
 			pos = APIDataSer.getStockMes(stockCode, thisMonth, monthEnd);
 			vos.add(getSumDealVO(pos));

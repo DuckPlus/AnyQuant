@@ -2,7 +2,7 @@ package data.helper;
 
 import po.BenchMarkPO;
 import po.StockPO;
-import util.MyTime;
+import util.DateCalculator;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class CacheHelper {
 			tmp = FileIOHelper.readFiles(FileIOHelper.BENCHMARK_CACHE_FILE);
 		}
 
-		if (tmp == null || tmp.size() == 0 || !tmp.get(0).equals(MyTime.getToDay().DateToString())) {
+		if (tmp == null || tmp.size() == 0 || !tmp.get(0).equals(DateCalculator.getToDay().DateToString())) {
 			
 			System.out.println("今天第一次读取，请耐心等待");
 			

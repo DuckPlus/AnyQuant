@@ -10,7 +10,7 @@ import enumeration.MyDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
-import util.MyTime;
+import util.DateCalculator;
 import util.candleStick.CandleStickChart;
 import vo.OHLC_VO;
 
@@ -25,8 +25,8 @@ public class CandleStickController implements Initializable {
 
 	public void getDefaultDayData() {
 		// 默认显示近两个月的数据
-		MyDate end = MyTime.getToDay();
-		MyDate start = MyTime.getAnotherDay(-60);
+		MyDate end = DateCalculator.getToDay();
+		MyDate start = DateCalculator.getAnotherDay(-60);
 		List<OHLC_VO> list = stockBl.getDayOHLC_Data(stockCode, start, end);
 		dayList.clear();
 		for (OHLC_VO temp : list) {
@@ -45,8 +45,8 @@ public class CandleStickController implements Initializable {
 
 	public void getDefaultWeekData() {
 		// 默认显示最近一年的数据
-		MyDate end = MyTime.getToDay();
-		MyDate start = MyTime.getAnotherDay(-180);
+		MyDate end = DateCalculator.getToDay();
+		MyDate start = DateCalculator.getAnotherDay(-180);
 		List<OHLC_VO> list = stockBl.getWeekOHLC_Data(stockCode, start, end);
 		weekList.clear();
 		for (OHLC_VO temp : list) {
@@ -66,8 +66,8 @@ public class CandleStickController implements Initializable {
 
 	public void getDefaultMonthData() {
 		// 默认显示最近三年的数据
-		MyDate end = MyTime.getToDay();
-		MyDate start = MyTime.getAnotherDay(-365 * 2);
+		MyDate end = DateCalculator.getToDay();
+		MyDate start = DateCalculator.getAnotherDay(-365 * 2);
 		List<OHLC_VO> list = stockBl.getMonthOHLC_Data(stockCode, start, end);
 		monthList.clear();
 		for (OHLC_VO temp : list) {
@@ -105,7 +105,7 @@ public class CandleStickController implements Initializable {
 	private CandleStickController() {
 		if (instance == null) {
 			stockCode = "sh600000";
-			startDate = MyTime.getToDay();
+			startDate = DateCalculator.getToDay();
 			endDate = startDate;
 			stockBl = StockBLImpl.getAPIBLService();
 			dayList = FXCollections.observableArrayList();
