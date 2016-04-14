@@ -9,12 +9,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import data.StockDSImpl;
 import dataservice.StockDataService;
 import enumeration.MyDate;
 import enumeration.StaticMessage;
+import jnr.ffi.Struct.int16_t;
 import po.BenchMarkPO;
 import po.StockPO;
 import util.MyTime;
@@ -30,15 +32,16 @@ public class FileIOHelper {
 	public static final String benchCodeFileName = "data//benchCode.txt";
 	public static final String STOCK_CACHE_FILE_NAME = "cache//stockMes.txt";
 	public static final String SELECTED_FILE = "cache//selected.txt";
-	public static final String  BENCHMARK_CACHE_FILE = "cache//benchMarkCache.txt";
+	public static final String BENCHMARK_CACHE_FILE = "cache//benchMarkCache.txt";
 	public static final String SPLIT_CHAR = ",";
 	private static final String ENCODING = "utf-8";
 	private static final char LINE_WRAPPER = '\n';
 	private static final String FILE_POSTFIX = ".txt";
-	private static final String BENCHMARK_PO =StaticMessage.BENCHMARK_PO;
+	private static final String BENCHMARK_PO = StaticMessage.BENCHMARK_PO;
 	private static final String STOCK_PO = StaticMessage.STOCK_PO;
 	private static StockDataService stockDSImpl = StockDSImpl.getStockDSImpl();
-//	private static OptionalStockDataService optionalStockDSImpl = OptionalStockDSImpl.getOptionalStockDSImpl();
+	// private static OptionalStockDataService optionalStockDSImpl =
+	// OptionalStockDSImpl.getOptionalStockDSImpl();
 
 	public static List<BenchMarkPO> readAllBenches() {
 		List<String> data = readFiles(BENCHMARK_CACHE_FILE);
@@ -53,16 +56,16 @@ public class FileIOHelper {
 		}
 		return pos;
 	}
-	
+
 	public static List<StockPO> readAllSelectedStocks() {
 		return readStocks(SELECTED_FILE);
 	}
-	
+
 	public static List<StockPO> readAllStocks() {
 		return readStocks(STOCK_CACHE_FILE_NAME);
 	}
-	
-	private static List<StockPO> readStocks(String fileName){
+
+	private static List<StockPO> readStocks(String fileName) {
 		List<String> data = readFiles(fileName);
 		List<StockPO> pos = new ArrayList<>(data.size() - 1);
 		String[] attrs;
@@ -75,19 +78,21 @@ public class FileIOHelper {
 		}
 		return pos;
 	}
-	
-	public static void writeAllStockMes(List<StockPO> stocks ) {
-		List<String> strings = new ArrayList<>(stocks.size()+1);
+
+	public static void writeAllStockMes(List<StockPO> stocks) {
+		List<String> strings = new ArrayList<>();
 		strings.add(MyTime.getToDay().DateToString());
 		for (StockPO stockPO : stocks) {
-			strings.add(stockPO.MyToString(SPLIT_CHAR));
+			if (stockPO != null) {
+				strings.add(stockPO.MyToString(SPLIT_CHAR));
+			}
 		}
 		writeDataToFile(strings, STOCK_CACHE_FILE_NAME);
-		
+
 	}
 
 	public static void writeAllBenMes(List<BenchMarkPO> benchMarkPOs) {
-		List<String> strings = new ArrayList<>(benchMarkPOs.size()+1);
+		List<String> strings = new ArrayList<>(benchMarkPOs.size() + 1);
 		strings.add(MyTime.getToDay().DateToString());
 		for (BenchMarkPO po : benchMarkPOs) {
 			System.out.println(po.getChange());
@@ -96,18 +101,17 @@ public class FileIOHelper {
 		}
 		writeDataToFile(strings, BENCHMARK_CACHE_FILE);
 	}
-	
+
 	public static void writeOptionalStocks(List<StockPO> stocks) {
-		List<String> strings = new ArrayList<>(stocks.size()+1);
+		List<String> strings = new ArrayList<>(stocks.size() + 1);
 		strings.add(MyTime.getToDay().DateToString());
 		for (StockPO stockPO : stocks) {
 			strings.add(stockPO.MyToString(SPLIT_CHAR));
 		}
 		writeDataToFile(strings, SELECTED_FILE);
-		
+
 	}
-	
-	
+
 	// 调用此方法来更新股票列表的数据
 	public static void updateLatestStockMes() {
 		try {
@@ -127,7 +131,7 @@ public class FileIOHelper {
 					long time = System.currentTimeMillis();
 
 					List<StockPO> result = new ArrayList<>();
-					List<String> stockCodes = readFiles(stockCodeFileName);
+					List<String> stockCodes = readCode();
 
 					for (int i = 0; i < stockCodes.size(); i++) {
 
@@ -146,10 +150,10 @@ public class FileIOHelper {
 
 				System.out.println("找不到" + STOCK_CACHE_FILE_NAME + ",创建新文件");
 				List<StockPO> result = new ArrayList<>();
-				List<String> stockCodes = readFiles(stockCodeFileName);
+				List<String> stockCodes = readCode();
 
 				for (String code : stockCodes) {
-					result.add(stockDSImpl.getStockMes(code));
+						result.add(stockDSImpl.getStockMes(code));
 				}
 				// 覆盖写入
 				writeAllStockMes(result);
@@ -221,14 +225,15 @@ public class FileIOHelper {
 		}
 	}
 
-//	public static void updateSelectedStockInfo() {
-//		List<String> selectedStocks = optionalStockDSImpl.getSelectedStockCodes();
-//		for (String code : selectedStocks) {
-//			if (code != null && !code.equals("")) {
-//				updateStockInfo(code);
-//			}
-//		}
-//	}
+	// public static void updateSelectedStockInfo() {
+	// List<String> selectedStocks =
+	// optionalStockDSImpl.getSelectedStockCodes();
+	// for (String code : selectedStocks) {
+	// if (code != null && !code.equals("")) {
+	// updateStockInfo(code);
+	// }
+	// }
+	// }
 
 	public static boolean needUpdate(String preDate) {
 		// 如果昨天日期与上次纪录不符并且昨天不是周末
@@ -310,6 +315,30 @@ public class FileIOHelper {
 		}
 	}
 
+	private static List<String> readCode() {
+		try {
+			String encoding = ENCODING;
+			File file = new File(stockCodeFileName);
+
+			if (file.isFile() && file.exists()) { // 判断文件是否存在
+				InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);// 考虑到编码格式
+				BufferedReader bufferedReader = new BufferedReader(read);
+				String temp = bufferedReader.readLine();
+				String[] tempCodes = temp.split(SPLIT_CHAR);
+				List<String> codes = Arrays.asList(tempCodes);
+				read.close();
+				return codes;
+			} else {
+				System.out.println("找不到" + stockCodeFileName);
+				file.createNewFile();
+			}
+		} catch (Exception e) {
+			System.out.println("读取文件内容出错");
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public static List<String> readFiles(String filePath) {
 		try {
 			String encoding = ENCODING;
@@ -359,10 +388,27 @@ public class FileIOHelper {
 		}
 	}
 
-	
+	public static void writeDataToErrorLog(String code) {
+		try {
 
-	
+			File file = new File("cache//errorCode.txt");
+			// if file doesnt exists, then create it
+			if (!file.exists()) {
+				file.createNewFile();
+			}
 
+			// true = append file
+			FileWriter fileWritter = new FileWriter(file, true);
+			BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
 
+			bufferWritter.write(code + LINE_WRAPPER);
+			// System.out.println("write: "+line);
+
+			bufferWritter.close();
+			System.out.println("Done");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }
