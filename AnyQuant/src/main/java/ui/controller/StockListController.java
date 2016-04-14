@@ -1,3 +1,7 @@
+/**
+ * @status code reviewed
+ * @handler dzm
+ */
 package ui.controller;
 
 import java.util.Iterator;
@@ -42,75 +46,67 @@ import vo.StockVO;
  */
 public class StockListController {
 	@FXML
-	TableColumn<Stock, String> code;// = new TableColumn<Stock, String>();
+	TableColumn<Stock, String> code;
 	@FXML
-	TableColumn<Stock, String> name;// = new TableColumn<Stock, String>();
+	TableColumn<Stock, String> name;
 	@FXML
-	TableColumn<Stock, Double> open ;//= new TableColumn<Stock, Double>();
+	TableColumn<Stock, Double> open ;
 	@FXML
-	TableColumn<Stock, Double> high ;//= new TableColumn<Stock, Double>();
+	TableColumn<Stock, Double> high ;
 	@FXML
-	TableColumn<Stock, Double> low ;//= new TableColumn<Stock, Double>();
+	TableColumn<Stock, Double> low ;
 	@FXML
-	TableColumn<Stock, Double> close ;//= new TableColumn<Stock, Double>();
+	TableColumn<Stock, Double> close ;
 	@FXML
-	TableColumn<Stock, Double> turnoverRate;// = new TableColumn<Stock, Double>();
+	TableColumn<Stock, Double> turnoverRate;
 	@FXML
-	TableColumn<Stock, Long> turnoverVol ;//= new TableColumn<Stock, Long>();
+	TableColumn<Stock, Long> turnoverVol ;
 	@FXML
-	TableColumn<Stock, String> amplitude ;//= new TableColumn<Stock, String>();
+	TableColumn<Stock, String> amplitude ;
 	@FXML
-	TableColumn<Stock, String> changeRate ;//= new TableColumn<Stock, String>();
+	TableColumn<Stock, String> changeRate ;
 	@FXML
-	TableView<Stock> tableview ;//= new TableView<Stock>();
+	TableView<Stock> tableview ;
 	@FXML
 	TextField searchBar;
 
-	RightPaneController rightPaneController = RightPaneController.getRightPaneController();
-	StockDetailController stockDetailController;// =
-												// StockDetailController.getStockDetailController();
-	CandleStickController candleStickController;
-	// get the logic service
-	StockBLService stockBl = StockBLImpl.getAPIBLService();
-	//
-	ObservableList<Stock> observableList;
-
-	BorderPane stockDetailPane;
-	AnchorPane chartPane;
-	InstanceController instanceController = InstanceController.getInstance();
+	private RightPaneController rightPaneController = RightPaneController.getRightPaneController();
+	private StockDetailController stockDetailController;
+	private StockBLService stockBl = StockBLImpl.getAPIBLService();
+	private ObservableList<Stock> observableList= FXCollections.observableArrayList();;
+	private BorderPane stockDetailPane;
+	private InstanceController instanceController = InstanceController.getInstance();
 
 	public StockListController() {
-		observableList = FXCollections.observableArrayList();
+		//TODO controller here
 	}
 
 	@FXML
 	private void initialize() {
+		//新建对象后向实例管理类注册实例对象
 		stockDetailPane = (BorderPane) GraphicsUtils.getParent("StockDetail");
-		instanceController.registStockDetailPane(stockDetailPane);// add the
-																	// instance
-																	// into the
-																	// factory
-		System.err.println(instanceController.toString());
+		instanceController.registStockDetailPane(stockDetailPane);
 		showStocklist();
-		// searchBar.
 	}
 
 	/**
-	 *
+	 *获取并显示所有股票信息到表格中
+	 *@see showStocklist
 	 */
 	@FXML
 	public void showStocklist() {
-
 		Iterator<StockVO> itr = stockBl.getAllStocks();
 		showTableData(itr);
-
 	}
-
+	/**
+	 * 读取迭代器内容并显示到表格中
+	 * @param itr
+	 */
 	private void showTableData(Iterator<StockVO> itr) {
 		tableview.getItems().removeAll(observableList);
+		
 		while (itr.hasNext()) {
 			StockVO temp = itr.next();
-			// System.out.println("volume"+temp.turnoverVol);
 			Stock dataProperty = new Stock(temp);
 			observableList.add(dataProperty);
 		}
@@ -127,49 +123,46 @@ public class StockListController {
 		changeRate.setCellValueFactory(cell -> cell.getValue().getStringChangeRate());
 		// change the color of each row
 		ColorHelper.setColorForStock(observableList , tableview.getColumns());
-		
-//		tableview.get
-		
 		tableview.setItems(observableList);
-
 	}
 
+	/**
+	 * not used now
+	 */
 	@FXML
 	private void delAllData() {
-		// int sum = tableview.getItems().size();
 		tableview.getItems().removeAll(observableList);
 	}
 
+	/**
+	 * 处理选择某只股票并双击的事件
+	 * @param event
+	 */
 	@FXML
 	private void handleMouseClick(MouseEvent event) {
-		// System.out.println("hehe");
 		if (event.getClickCount() == 2) {
 			if (tableview.getSelectionModel().getSelectedIndex() == -1) {
-				System.out.println("empty line ");
+				//do noting if not a doubleClicked event or select nothing
 				return;
 			}
 
-			int row = tableview.getSelectionModel().getSelectedIndex();
-			String code = tableview.getSelectionModel().getSelectedItem().code.get();
 			Stock selectedStock = tableview.getSelectionModel().getSelectedItem();
-			// System.out.println(code);
 			// The stockDetailController is null at first, and it must generated
 			// after the fxml has initialize
 			// it, otherwise we will get a totally defferent object from the
 			// fxml's
 			if (stockDetailController == null) {
-				// System.err.println("============new controller============");
 				stockDetailController = StockDetailController.getStockDetailController();
 			}
-			System.err.println("stock instance:" + stockDetailController.toString());
 			stockDetailController.setData(selectedStock, PanelType.STOCK_LIST);
 			rightPaneController.showDetailPane(stockDetailPane);
 		}
 	}
-
+	/**
+	 * 处理输入框输入字符时的查找事件
+	 */
 	@FXML
 	private void searchStocklist() {
-		System.out.println("hello search in time:  [" + searchBar.getText() + "]end");
 		String stockCode = searchBar.getText();
 		if (stockCode.equals("")) {
 			showStocklist();
@@ -177,15 +170,6 @@ public class StockListController {
 		}
 		Iterator<StockVO> itr = stockBl.getStocksByStockCode(stockCode);
 		showTableData(itr);
-		// new SearchThread(searchBar, this).start();
 	}
 
-	
-
-	
-	
-	
-	
-	
-	
 }
