@@ -15,6 +15,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 
 /**
@@ -53,7 +54,7 @@ public class MyPieChart {
 
 
 		final Label caption = new Label("");
-		caption.setTextFill(Color.DARKORANGE);
+		caption.setTextFill(Color.WHITE);
 		caption.setStyle("-fx-font: 24 arial;");
 		for (final PieChart.Data data : pieChart.getData()) {
 			data.getNode().addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
@@ -63,6 +64,7 @@ public class MyPieChart {
 					caption.setTranslateX(e.getSceneX());
 					caption.setTranslateY(e.getSceneY());
 					caption.setText(String.valueOf(data.getPieValue()) + "%");
+
 				}
 			});
 		}
