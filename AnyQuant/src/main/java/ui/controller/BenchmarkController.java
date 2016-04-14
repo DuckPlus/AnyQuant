@@ -42,10 +42,7 @@ public class BenchmarkController {
 	TableColumn<BenchMark, Double> turnoverValue;
 	@FXML
 	TableView<BenchMark> tableview;
-	@FXML
-	DatePicker beginDate;
-	@FXML
-	DatePicker endDate;
+
 	private BenchMarkBLService benchmarkBl = BenchMarkBLImpl.getBenchMarkBLService();
 	ObservableList<BenchMark>observableList = FXCollections.observableArrayList();
 	public BenchmarkController() {
@@ -57,10 +54,7 @@ public class BenchmarkController {
 	private void initialize(){
 		System.out.println("init done");
 		showAllBenchmark();
-		beginDate.setValue(LocalDate.now());
-		endDate.setValue(LocalDate.now());
-		beginDate.setEditable(false);
-		endDate.setEditable(false);
+		
 
 
 
@@ -71,15 +65,7 @@ public class BenchmarkController {
 		showTableData(itr);
 
 	}
-	@FXML
-	private void searchByDate(){
-		MyDate start = new MyDate(beginDate.getValue().getYear(), beginDate.getValue().getMonthValue(), beginDate.getValue().getDayOfMonth());
-		MyDate end = new MyDate(endDate.getValue().getYear(), endDate.getValue().getMonthValue(), endDate.getValue().getDayOfMonth());
-		System.out.println(start.AllToString()+"   "+end.AllToString());
-		Iterator<BenchMarkVO>itr = benchmarkBl.getBenchMarkByTime("hs300", start, end);
-		System.out.println(benchmarkBl.getAllBenchMarks().next().name);
-		showTableData(itr);
-	}
+	
 	
 	private void showTableData(Iterator<BenchMarkVO>itr){
 		
