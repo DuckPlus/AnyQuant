@@ -90,7 +90,6 @@ public class CandleStickChart extends XYChart<String, Number> {
 			Iterator<Data<String, Number>> iter = getDisplayedDataIterator(series);
 			Path seriesPath = null;
 			if (series.getNode() instanceof Path) {
-				// System.out.println("clear path");
 				seriesPath = (Path) series.getNode();
 				seriesPath.getElements().clear();
 			}
@@ -98,11 +97,9 @@ public class CandleStickChart extends XYChart<String, Number> {
 				Data<String, Number> item = iter.next();
 				double x = getXAxis().getDisplayPosition(getCurrentDisplayedXValue(item));// 根据x的值得到绘图中的像素点横坐标
 				double y = getYAxis().getDisplayPosition(getCurrentDisplayedYValue(item));// 根据y的值得到绘图中的像素点纵坐标
-				// System.out.print("x: "+x+" y: "+y);
 				Node itemNode = item.getNode();
 				CandleStickExtraValues extra = (CandleStickExtraValues) item.getExtraValue();
 				if (itemNode instanceof Candle && extra != null) {
-					// System.out.println("iam a candle");
 					Candle candle = (Candle) itemNode;
 
 					double close = getYAxis().getDisplayPosition(extra.getClose());
@@ -112,11 +109,9 @@ public class CandleStickChart extends XYChart<String, Number> {
 					// calculate candle width
 					double candleWidth = -1;
 					if (getXAxis() instanceof CategoryAxis) {
-						// System.out.println("get in");
 						CategoryAxis xa = (CategoryAxis) getXAxis();
 						// candleWidth = xa.getDisplayPosition(xa.getTickUnit())
-						// ; // use 90% width between ticks
-						// System.out.println("candleWidth: "+candleWidth);
+						// use 90% width between ticks
 					}
 					// update candle
 					candle.update(close - y, high - y, low - y, candleWidth);
@@ -326,12 +321,12 @@ public class CandleStickChart extends XYChart<String, Number> {
         }
         // candleStickChart.getData()  return type:ObservableList<XYChart.Series<Number,Number>>
         ObservableList<XYChart.Series<String,Number>> data = candleStickChart.getData();
-        
+
         //关闭横纵坐标
         xAxis.setLabel("");
         yAxis.setLabel("");
-        
-        
+
+
         if (data == null) {
 
             data = FXCollections.observableArrayList(series);
