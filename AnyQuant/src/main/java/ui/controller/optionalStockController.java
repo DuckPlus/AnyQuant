@@ -250,6 +250,7 @@ public class optionalStockController {
 		cmpChart.getTimesharingChart().setCreateSymbols(true);
 		cmpChart.getYAxis().setUpperBound(1);
 		cmpChart.getYAxis().setLowerBound(0);
+		cmpChart.getTimesharingChart().setTitle("Compare Module");
 		cmpChartPane.getChildren().add(cmpChart.getTimesharingChart());
 	}
 

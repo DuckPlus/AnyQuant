@@ -39,6 +39,7 @@ public class TimeSharingChart {
     	Iterator<TimeSharingVO>itr = timeSharingData.iterator();
     	while(itr.hasNext()){
     		TimeSharingVO temp = itr.next();
+    		System.out.println(temp.nowTime.TimeToString()+"  "+temp.nowPrice);
     		lineChart.addData(temp.nowTime.TimeToString(), temp.nowPrice);
 //    		TooltipContentTimeSharing tip=(TooltipContentTimeSharing)tooltip.getGraphic();
 //    		tip.update(temp.nowTime.TimeToString(), temp.nowPrice);
@@ -60,7 +61,7 @@ public class TimeSharingChart {
     	}
     	//end
 
-		lineChart.setChartProperty(currentStock.name.get()+"   Monitoring", upperBounds+0.02, lowerBounds-0.02);
+		lineChart.setChartProperty(currentStock.name.get(), upperBounds+0.02, lowerBounds-0.02);
 	}
 
 	public LineChart<String, Number> getTimeSharingChart(){

@@ -47,7 +47,7 @@ public class MyLineChart {
 	        lineChart  = new LineChart<String,Number>(xAxis,yAxis);
 	        lineChart.setLegendVisible(true);
 	        lineChart.setTitle("chart title");// the title depend on code name
-//	        lineChart.getData().add(series);
+	        lineChart.getData().add(series);
 	        lineChart.setCreateSymbols(false);
 
 	    }
