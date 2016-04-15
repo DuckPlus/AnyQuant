@@ -1,4 +1,4 @@
-package data;
+package Duck_Plus.AnyQuant;
 
 import org.junit.Test;
 

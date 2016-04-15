@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import ui.controller.StockDetailController;
 import util.DealChart;
+import util.MyBarChart;
 
 public class DealChart_Task extends Task{
 	private DealChart dealchart;
@@ -23,7 +24,9 @@ public class DealChart_Task extends Task{
 		Platform.runLater(() -> {
 			// on the JavaFX Application Thread...
 			dealchart.initChart();
+			MyBarChart myBarChart = dealchart.getMyBarChart();
 			stock_ctr.dealSPane.setContent(dealchart.getBarChart());
+			myBarChart.animate();
 		});
 		return true;
 	}

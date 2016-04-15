@@ -1,16 +1,20 @@
+package Duck_Plus.AnyQuant;
 //package data;
 //
 //import org.junit.Before;
 //import org.junit.Test;
+//import org.python.antlr.PythonParser.else_clause_return;
+//import org.python.antlr.PythonParser.pass_stmt_return;
 //
-//import dataservice.BenchMarkDataService;
-//import dataservice.OptionalStockDataService;
-//import dataservice.StockDataService;
+//import blimpl.BusinessFactory;
+//import blimpl.StockBLImpl;
+//import dataservice.APIDataFactory;
 //import enumeration.Exchange;
 //import enumeration.MyDate;
 //import po.BenchMarkPO;
 //import po.StockPO;
 //import util.MyTime;
+//import vo.OHLC_VO;
 //
 //import static org.junit.Assert.*;
 //
@@ -20,48 +24,40 @@
 ///**
 // * Created by Qiang on 3/27/16.
 // */
-//public class APIInterfaceImplTest {
-//	StockDataService stockImpl ;
-//	BenchMarkDataService benchImpl ;
-//	OptionalStockDataService optionImpl ;
+//public class APIDataCacheTest {
+//
+//	APIDataCache api ;
+//
 //    @Before
 //    public void setUp() throws Exception {
-//    	 stockImpl =  StockDSImpl.getStockDSImpl();
-//    	 benchImpl = BenchMarkDSImpl.getBenchMarkDSImpl();
-//    	 optionImpl = OptionalStockDSImpl.getOptionalStockDSImpl();
-//    }
-//
-//    @Test
-//    public void getAPIInterfaceImpl() throws Exception {
-//
+//        api = (APIDataCache) APIDataFactory.getAPIDataService();
 //    }
 //
 //    @Test
 //    public void getAllStocks() throws Exception {
-//          List<String> codes = stockImpl.getAllStocks();
-//          if(codes==null){
-//        	  fail("fail to pass getAllStocks()--NULL");
-//          }
-//          if(!codes.get(0).equals("sz002644")||!codes.get(codes.size()-1).equals("sh600571")){
-//        	  fail("fail to pass getAllStocks()");
-//          }
+//   	     List<String> codes = api.getAllStocks();
+//         if(codes==null){
+//           	  fail("fail to pass getAllStocks()--NULL");
+//         }
+//         if(!codes.get(0).equals("sh600216")){
+//       	     fail("fail to pass getAllStocks()");
+//         }
 //    }
 //
 //    @Test
 //    public void getAllStocks1() throws Exception {
-//    	 List<String> codes =stockImpl.getAllStocks(Exchange.sh);
-//    	 if(codes==null){
-//       	  fail("fail to pass getAllStocks1()--NULL");
-//         }
-//    	 if(!codes.get(0).equals("sh600216")){
-//       	  fail("fail to pass getAllStocks1()");
-//         }
-//
+//   	 List<String> codes = api.getAllStocks(Exchange.sh);
+//	 if(codes==null){
+//   	  fail("fail to pass getAllStocks1()--NULL");
+//     }
+//	 if(!codes.get(0).equals("sh600216")){
+//   	  fail("fail to pass getAllStocks1()");
+//     }
 //    }
 //
 //    @Test
 //    public void getAllStocks2() throws Exception {
-//    	 List<String> codes = stockImpl.getAllStocks(2015);
+//    	 List<String> codes = api.getAllStocks(2015);
 //    	 if(codes==null){
 //       	  fail("fail to pass getAllStocks2()--NULL");
 //         }
@@ -72,18 +68,18 @@
 //
 //    @Test
 //    public void getAllStocks3() throws Exception {
-//    	List<String> codes = stockImpl.getAllStocks(2015,Exchange.sz);
-//    	 if(codes==null){
-//       	    fail("fail to pass getAllStocks3()--NULL");
-//         }
-//   	    if(!codes.get(0).equals("sz002644")){
-//      	  fail("fail to pass getAllStocks3()");
+//    	List<String> codes = api.getAllStocks(2015,Exchange.sz);
+//   	     if(codes==null){
+//      	    fail("fail to pass getAllStocks3()--NULL");
 //        }
+//  	    if(!codes.get(0).equals("sz002644")){
+//     	  fail("fail to pass getAllStocks3()");
+//       }
 //    }
 //
 //    @Test
 //    public void getStockMes() throws Exception {
-//        StockPO stockPO = stockImpl.getStockMes("sh600216");
+//        StockPO stockPO = api.getStockMes("sh600216");
 //        if(stockPO==null){
 //     	   fail("fail to pass getStockMes()--NULL");
 //        }else if(!stockPO.getCode().equals("sh600216")){
@@ -97,63 +93,63 @@
 //    public void getStockMes1() throws Exception {
 //    	MyDate end = MyTime.getToDay();
 //    	MyDate start = MyTime.getAnotherDay(-10);
-//        List<StockPO>  stocks = stockImpl.getStockMes("sh600216",start,end);
-//      //  System.out.println(stocks.get(0).getCode()+"   "+stocks.get(0).getName());
+//        List<StockPO>  stocks = api.getStockMes("sh600216",start,end);
+//
 //        if(stocks==null){
 //     	   fail("fail to pass getStockMes1()--NULL");
 //        }else if(!stocks.get(0).getCode().equals("sh600216")){
 //     	   fail("fail to pass getStockMes1()");
 //        }else if(!stocks.get(0).getName().equals("浙江医药")){
 //     	   fail("fail to pass getStockMes1()");
+//        }else if(!stocks.get(0).getDate().equals("2016-03-21")){
+//        	fail("fail to pass getStockMes1()");
 //        }
 //    }
 //
 //    @Test
 //    public void getAllStockMes() throws Exception {
-//    	List<StockPO> pos = stockImpl.getAllStockMes();
-//    	for(StockPO po : pos){
-//    		System.out.println(po.MyToString(','));
-//    	}
-//    	if(pos==null){
-//    		fail("fail to pass getAllBenchMes()");
-//    	}
+//        List<StockPO>  pos= api.getAllStockMes();
+//        if(pos==null){
+//                fail("fail to pass getAllStockMes()" );
+//        }else  if(!pos.get(0).getName().equals("浙江医药")){
+//        	  fail("fail to pass getAllStockMes()" );
+//        }
+//    }
+//
+//    @Test
+//    public void getAllBenchMarks() throws Exception {
+//    	List<String> markCodes = api.getAllBenchMarks();
+//        if(!markCodes.get(0).equals("hs300")){
+//     	   fail("fail to pass getAllBenchMarks()");
+//        }
 //    }
 //
 //    @Test
 //    public void getBenchMes() throws Exception {
-//    	BenchMarkPO  benchMark =  benchImpl.getBenchMes("000001");
+//    	BenchMarkPO  benchMark =  api.getBenchMes("hs300");
 //    	if(benchMark==null){
 //    		fail("fail to pass getBenMes()--NULL");
 //    	}
-//    	if(!benchMark.getCode().equals("000001")){
+//    	if(!benchMark.getCode().equals("hs300")){
 //    	    fail("fail to pass getBenchMes()");
 //    	}
-//
 //    }
 //
 //    @Test
 //    public void getBenchMes1() throws Exception {
 //    	MyDate endDate = MyTime.getToDay();
 //    	MyDate startDate = MyTime.getAnotherDay(endDate,-10);
-//    	List<BenchMarkPO>  benchMarks =  benchImpl.getBenchMes("000001",startDate,endDate);
+//    	List<BenchMarkPO>  benchMarks =  api.getBenchMes("hs300",startDate,endDate);
 //    	if(benchMarks==null){
 //    		fail("fail to pass getBenMes1()--NULL");
-//    	}else if(!benchMarks.get(0).getCode().equals("000001")){
+//    	}else if(!benchMarks.get(0).getCode().equals("hs300")){
 //    		fail("fail to pass getBenMes1()");
 //    	}
 //    }
 //
 //    @Test
-//    public void getAllBenchMarks() throws Exception {
-//       List<String> markCodes = benchImpl.getAllBenchMarks();
-//       if(!markCodes.get(0).equals("000001")){
-//    	   fail("fail to pass getAllBenchMarks()");
-//       }
-//    }
-//
-//    @Test
 //    public void getAllBenchMes() throws Exception {
-//    	List<BenchMarkPO> pos = benchImpl.getAllBenchMes();
+//    	List<BenchMarkPO> pos = api.getAllBenchMes();
 //    	if(pos==null){
 //    		fail("fail to pass getAllBenchMes()");
 //    	}
@@ -161,7 +157,7 @@
 //
 //    @Test
 //    public void getOptionalStocks() throws Exception {
-//    	Iterator<StockPO> it = optionImpl.getOptionalStocks();
+//    	Iterator<StockPO> it = api.getOptionalStocks();
 //    	if(it==null){
 //    		fail("fail to pass getOptionalStocks()");
 //    	}
@@ -169,8 +165,8 @@
 //
 //    @Test
 //    public void addOptionalStock() throws Exception {
-//    	optionImpl.addOptionalStock("sh600000");
-//        List<String> codes  = optionImpl.getSelectedStockCodes();
+//        api.addOptionalStock("sh600000");
+//        List<String> codes  = api.getSelectedStockCodes();
 //       for(String code:codes){
 //    	   if(code.equals("sh600000")){
 //    		    return;
@@ -181,13 +177,13 @@
 //
 //    @Test
 //    public void deleteOptionalStock() throws Exception {
-//    	optionImpl.addOptionalStock("sh600001");
-//    	 List<String> codes  = optionImpl.getSelectedStockCodes();
+//    	  api.addOptionalStock("sh600001");
+//    	 List<String> codes  = api.getSelectedStockCodes();
 //    	 if(codes.size()>=1){
 //    		 String toDeleteString = codes.get(codes.size()-1);
-//    		 optionImpl.deleteOptionalStock(toDeleteString);
+//            api.deleteOptionalStock(toDeleteString);
 //            System.out.println("delete "+toDeleteString);
-//            List<String> newcodes  = optionImpl.getSelectedStockCodes();
+//            List<String> newcodes  = api.getSelectedStockCodes();
 //            if(newcodes.size()==codes.size()){
 //               fail("fail to pass deleteOptionalStock()");
 //            }
@@ -203,13 +199,12 @@
 //    @Test
 //    public void clearOptionalStock() throws Exception {
 //
-//    	optionImpl.clearOptionalStocks();
-//       List<String> newcodes  = optionImpl.getSelectedStockCodes();
+//       api.clearOptionalStocks();
+//       List<String> newcodes  = api.getSelectedStockCodes();
 //     //  System.out.println(newcodes.get(0));
 //       if(newcodes.size()>=1){
+//    	   System.out.println("remains:"+newcodes.get(0));
 //           fail("fail to pass clearOptionalStock()");
 //       }
 //    }
-//
-//
 //}

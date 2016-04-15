@@ -58,7 +58,7 @@ public class MyLineChart {
 		   if(seriesExist(stock, type)){
 			   return;
 		   }
-		   series.setName(stock.name.get()+"-"+type.toString().replace("Chart", ""));
+		   series.setName(stock.name.get()+"-"+type.toFriendlyString().replace("Chart", ""));
 		   lineChart.getData().add(series);
 		   seriesKeeper.add(new CmpChartRecord(type, stock.code.get(), series));
 		   Allseries.add(series);

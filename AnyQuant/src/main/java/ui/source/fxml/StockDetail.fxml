@@ -210,7 +210,7 @@
                         </StackPane>
                      </content>
                   </Tab>
-                  <Tab fx:id="deal" text="成交量图">
+                  <Tab fx:id="deal" onSelectionChanged="#initDealAmount" text="成交量图" >
                      <content>
                         <BorderPane fx:id="dealBorderPane" prefHeight="200.0" prefWidth="200.0">
                            <center>

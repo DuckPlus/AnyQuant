@@ -177,6 +177,7 @@ public class StockDetailController {
 	/**
 	 *初始化成交量的图
 	 */
+	@FXML
 	private void initDealAmount() {
 		//datepicker初始化
 		dealStart.setValue(LocalDate.now());
@@ -223,7 +224,6 @@ public class StockDetailController {
 		 new Thread(initWeekTask).start();
 		 new Thread(initMonthTask).start();
 	}
-
 
 
 
