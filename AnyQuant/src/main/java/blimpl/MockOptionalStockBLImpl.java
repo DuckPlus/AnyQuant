@@ -125,6 +125,7 @@ public class MockOptionalStockBLImpl implements OptionalStockBLService {
 	@Override
 	public boolean ifStockExist(String stockCode) {
 		// TODO Auto-generated method stub
+
 		return false;
 	}
 

@@ -8,6 +8,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import ui.controller.HomeController;
+import util.TipsDialog;
 /**
  * JavaFX Launcher
  * @author Qiang
@@ -36,7 +37,7 @@ public class MainAPP extends Application {
 		 addDragListeners(rootPane, primaryStage);
 		stage.setResizable(false);
 		stage.show();
-
+		TipsDialog.setStage(stage);
 
 
 	}
