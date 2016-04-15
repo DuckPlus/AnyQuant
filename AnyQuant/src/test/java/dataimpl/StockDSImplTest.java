@@ -12,7 +12,6 @@ import org.junit.Test;
 import data.StockDSImpl;
 import dataservice.StockDataService;
 import enumeration.Exchange;
-import jnr.ffi.Struct.int16_t;
 import po.StockPO;
 
 /**
