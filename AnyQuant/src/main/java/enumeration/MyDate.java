@@ -1,6 +1,6 @@
 package enumeration;
 
-import util.MyTime;
+import util.DateCalculator;
 
 /**
  * 日期类
@@ -109,7 +109,7 @@ public class MyDate implements Cloneable{
 		try {
 			return (MyDate) super.clone();
 		} catch (CloneNotSupportedException e) {
-			return MyTime.getToDay();
+			return DateCalculator.getToDay();
 		}
 	}
 

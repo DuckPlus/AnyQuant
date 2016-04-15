@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.internal.runners.statements.Fail;
 import org.python.antlr.ast.Str;
-import util.MyTime;
+import util.DateCalculator;
 import vo.OHLC_VO;
 import vo.Stock;
 import vo.StockVO;
@@ -113,12 +113,12 @@ public class StockBLImplTest {
 
     @Test
     public void getDayOHLC_Data() throws Exception {
-        Iterator<StockVO> vos = bl.getStocksByTime("sh600300", MyTime.getAnotherDay(-30), MyTime.getAnotherDay(0));
+        Iterator<StockVO> vos = bl.getStocksByTime("sh600300", DateCalculator.getAnotherDay(-30), DateCalculator.getAnotherDay(0));
         List<Double> lows = new ArrayList<Double>();
         while(vos.hasNext()){
             lows.add(vos.next().low);
         }
-        List<OHLC_VO> tmp = bl.getDayOHLC_Data("sh600300", MyTime.getAnotherDay(-30), MyTime.getAnotherDay(0));
+        List<OHLC_VO> tmp = bl.getDayOHLC_Data("sh600300", DateCalculator.getAnotherDay(-30), DateCalculator.getAnotherDay(0));
         for (int i = 0; i < 15; i++) {
             if(!lows.get(i).equals(tmp.get(i).low)){
                 fail("Fail to get OHLC_DATA correctly.");

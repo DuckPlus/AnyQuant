@@ -9,10 +9,17 @@ import javafx.concurrent.Task;
 import ui.controller.CandleStickController;
 import ui.controller.StockDetailController;
 import util.DealChart;
+import util.candleStick.task.Day_KChart_Task;
+import util.candleStick.task.DealChart_Task;
+import util.candleStick.task.Month_KChart_Task;
+import util.candleStick.task.TimeChart_Task;
+import util.candleStick.task.Week_KChart_Task;
 import vo.Stock;
 
 /**
- *
+ *@status:code reviewed
+ *@handler:dsn
+ *@reviewed date:2016-4-14
  * @author ss
  * @date 2016年4月10日
  */
@@ -28,56 +35,11 @@ public class CandleStickThreadHelper {
 		switch (type) {
 
 		case day:
-			return new Task() {
-				@Override
-				protected Object call() throws Exception {
-					// on the worker thread...
-					 candleController.getDayData();
-					Platform.runLater(() -> {
-						// on the JavaFX Application Thread....
-                        candleController.dayChart= CandleStickChart.createChart(candleController.dayList);
-                        stockDetailController.daySPane.setContent(candleController.dayChart);
-
-						System.out.println("done init Charts");
-					});
-					return true;
-				}
-			};
-
+			return new Day_KChart_Task(true,candleController,stockDetailController);
 		case week:
-			return new Task() {
-				@Override
-				protected Object call() throws Exception {
-					// on the worker thread...
-					candleController.getWeekData();
-					Platform.runLater(() -> {
-						// on the JavaFX Application Thread....
-						candleController.weekChart= CandleStickChart.createChart(candleController.weekList);
-                        stockDetailController.weekSPane.setContent(candleController.weekChart);
-						System.out.println("done init Charts");
-						// removeProgressIndicator();
-
-					});
-					return true;
-				}
-			};
+			return new Week_KChart_Task(true,candleController, stockDetailController);
 		case month:
-			return new Task() {
-				@Override
-				protected Object call() throws Exception {
-					// on the worker thread...
-					candleController.getMonthData();
-					Platform.runLater(() -> {
-						// on the JavaFX Application Thread....
-						candleController.monthChart= CandleStickChart.createChart(candleController.monthList);
-                        stockDetailController.monthSPane.setContent(candleController.monthChart);
-						System.out.println("done init Charts");
-						// removeProgressIndicator();
-
-					});
-					return true;
-				}
-			};
+			return new Month_KChart_Task(true,candleController, stockDetailController);
 		default:
 			return null;
 
@@ -91,112 +53,27 @@ public class CandleStickThreadHelper {
 
 		switch (type) {
 		case day:
-			return new Task() {
-				@Override
-				protected Object call() throws Exception {
-					// on the worker thread...
-					 candleController.getDayDataByDate();
-					Platform.runLater(() -> {
-
-						// on the JavaFX Application Thread....
-						candleController.dayChart= CandleStickChart.createChart(candleController.dayList);
-                        stockDetailController.daySPane.setContent(candleController.dayChart);
-						System.out.println("done updateCharts");
-
-					});
-					return true;
-				}
-			};
-
+			return new Day_KChart_Task(false,candleController,stockDetailController);
 		case week:
-			return new Task() {
-				@Override
-				protected Object call() throws Exception {
-					// on the worker thread...
-					candleController.getWeekDataByDate();
-					Platform.runLater(() -> {
-
-						// on the JavaFX Application Thread....
-						candleController.weekChart= CandleStickChart.createChart(candleController.weekList);
-                        stockDetailController.weekSPane.setContent(candleController.weekChart);
-						System.out.println("done updateCharts");
-
-					});
-					return true;
-				}
-			};
-
+			return new Week_KChart_Task(false,candleController, stockDetailController);
 		case month:
-			return new Task() {
-				@Override
-				protected Object call() throws Exception {
-					// on the worker thread...
-					candleController.getMonthDataByDate();
-					Platform.runLater(() -> {
-
-						// on the JavaFX Application Thread....
-						candleController.monthChart= CandleStickChart.createChart(candleController.monthList);
-                        stockDetailController.monthSPane.setContent(candleController.monthChart);
-						System.out.println("done updateCharts");
-					});
-					return true;
-				}
-			};
+			return new Month_KChart_Task(false,candleController, stockDetailController);
 		default:
 			return null;
 		}
 	}
 	public static Task createDealAmountInitWorker(Stock stock){
-		return new Task() {
-			@Override
-			protected Object call() throws Exception {
-				// on the worker thread...
-				DealChart barChart = new DealChart(stock);
-				barChart.getData();
-				Platform.runLater(() -> {
-					// on the JavaFX Application Thread...
-					barChart.initChart();
-					stockDetailController.dealSPane.setContent(barChart.getBarChart());
-				});
-				return true;
-			}
-		};
+		DealChart barChart = new DealChart(stock);
+		return new DealChart_Task(barChart, stockDetailController);
+
 	}
 	public static Task createUpdateDealAmountInitWorker(Stock stock,MyDate start,MyDate end){
-		return new Task() {
-			@Override
-			protected Object call() throws Exception {
-				// on the worker thread...
-				DealChart barChart = new DealChart(stock,start,end);
-				barChart.getData();
-				Platform.runLater(() -> {
-					// on the JavaFX Application Thread....
-					barChart.initChart();
-					stockDetailController.dealSPane.setContent(barChart.getBarChart());
-
-				});
-				System.out.println("刷新成交量的图~");
-				System.out.println(start.DateToString()+"--"+end.DateToString());
-				return true;
-			}
-		};
+		DealChart barChart = new DealChart(stock,start,end);
+		return new DealChart_Task(barChart, stockDetailController);
 	}
 
 	public static Task createTimeSharingInitWorker(Stock stock){
-		return new Task() {
-			@Override
-			protected Object call() throws Exception {
-				// on the worker thread...
-				TimeSharingChart timeChart = new TimeSharingChart(stock);
-
-				Platform.runLater(() -> {
-					// on the JavaFX Application Thread....
-                    stockDetailController.timeSharingSPane.setContent(timeChart.getTimeSharingChart());
-					System.out.println("done init Charts");
-				});
-				return true;
-			}
-		};
+		return new TimeChart_Task(stock, stockDetailController);
 	}
 }
 

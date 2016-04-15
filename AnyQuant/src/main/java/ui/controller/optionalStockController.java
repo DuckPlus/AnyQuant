@@ -1,11 +1,12 @@
+/**
+ * @status reviewed
+ * @handler dzm
+ */
 package ui.controller;
 
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.Map;
-
-import org.python.antlr.ast.cmpopType;
-
 import blimpl.BenchMarkBLImpl;
 import blimpl.OptionalStockBLImpl;
 import blimpl.StockBLImpl;
@@ -20,8 +21,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tab;
@@ -34,42 +33,41 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import ui.helper.ColorHelper;
 import util.MyBarChart;
+import util.MyLineChart;
 import util.MyPieChart;
-import util.MyTime;
+import util.DateCalculator;
 import util.StatisticUtil;
-import util.candleStick.MyLineChart;
 import vo.Stock;
 import vo.StockVO;
 
 public class optionalStockController {
-	BarChart boardBarChart, regionBarChart;
+	BarChart<String,Number> boardBarChart, regionBarChart;
 	MyPieChart myPieChart_b,myPieChart_r;
 	MyBarChart myBarChart_b, myBarChart_r;
 	PieChart boardPieChart, regionPieChart;
 	Map<String, Integer> boardMap, regionMap;
 	@FXML
-	TableColumn<Stock, String> code;// = new TableColumn<Stock,String>();
+	TableColumn<Stock, String> code;
 	@FXML
-	TableColumn<Stock, String> name;// = new TableColumn<Stock,String>();
+	TableColumn<Stock, String> name;
 	@FXML
-	TableColumn<Stock, Double> open;// = new TableColumn<Stock, Double>();
+	TableColumn<Stock, Double> open;
 	@FXML
-	TableColumn<Stock, Double> high;// = new TableColumn<Stock, Double>();
+	TableColumn<Stock, Double> high;
 	@FXML
-	TableColumn<Stock, Double> low;// = new TableColumn<Stock, Double>();
+	TableColumn<Stock, Double> low;
 	@FXML
-	TableColumn<Stock, Double> close;// = new TableColumn<Stock, Double>();
+	TableColumn<Stock, Double> close;
 	@FXML
-	TableColumn<Stock, Double> turnoverRate;// = new TableColumn<Stock,
-											// Double>();
+	TableColumn<Stock, Double> turnoverRate;
 	@FXML
-	TableColumn<Stock, Long> turnoverVol;// = new TableColumn<Stock, Long>();
+	TableColumn<Stock, Long> turnoverVol;
 	@FXML
-	TableColumn<Stock, String> amplitude;// = new TableColumn<Stock, Double>();
+	TableColumn<Stock, String> amplitude;
 	@FXML
-	TableColumn<Stock, String> changeRate;// = new TableColumn<Stock, Double>();
+	TableColumn<Stock, String> changeRate;
 	@FXML
-	TableView<Stock> tableview;// = new TableView<Stock>();
+	TableView<Stock> tableview;
 	@FXML
 	TextField searchBar;
 	@FXML
@@ -91,31 +89,16 @@ public class optionalStockController {
 	DatePicker cmpBgn, cmpEnd;
 	@FXML
 	AnchorPane cmpChartPane;
-
 	MyLineChart cmpChart;
 
-	// @FXML
-	// AnchorPane rightP;
-
-	private ObservableList<Stock> observableList;
-
-	private ObservableList<Stock> cmpTableData;
-
+	private ObservableList<Stock> observableList = FXCollections.observableArrayList();
+	private ObservableList<Stock> cmpTableData = FXCollections.observableArrayList();;
 	private OptionalStockBLService optionalBl = OptionalStockBLImpl.getOptionalBLService();
-
-	private BenchMarkBLService benchMarkBl = BenchMarkBLImpl.getBenchMarkBLService();
-
 	private StockBLService stockBl = StockBLImpl.getAPIBLService();
-
 	private StockDetailController stockDetailController;
-
 	private RightPaneController rightPaneController;
-
 	private BorderPane stockDetailPane;
-	// private AnchorPane chartPane;
 	private optionalStockController currentController;
-	CandleStickController candleStickController;
-
 	private static optionalStockController instance;
 	InstanceController instanceController = InstanceController.getInstance();
 
@@ -124,28 +107,24 @@ public class optionalStockController {
 			instance = this;
 		}
 		currentController = this;
-		System.out.println(currentController.toString() + "current");
-		System.out.println(this.toString() + "this");
+		System.err.println(currentController.toString() + "current");
+		System.err.println(this.toString() + "this");
 	}
 	/**
 	 * 全局初始化
 //	 */
 	@FXML
 	private void initialize() {
-		InstanceController insc = InstanceController.getInstance();
-		insc.registOptionalStockController(this);
-		observableList = FXCollections.observableArrayList();
-		cmpTableData = FXCollections.observableArrayList();
+		instanceController.registOptionalStockController(this);
 		stockDetailPane = instanceController.getStockDetailPane();
 		initPieAndBarChart();
 		getOptionalStock();
 		initChoice();
-		initCmpTable();
+		initCmpModule();
 	}
 
 	public static optionalStockController getOptionalStockController() {
 		if (instance == null) {
-			System.err.println("get a new one");
 			instance = new optionalStockController();
 		}
 		return instance;
@@ -154,7 +133,7 @@ public class optionalStockController {
 	 * 选择tabpanel的地域分区按钮时的响应
 	 */
 	@FXML
-	public void selectRegion() {
+	private void selectRegion() {
 		initRegion();
 		regionAnimate();
 	}
@@ -162,7 +141,7 @@ public class optionalStockController {
 	 * 选择tabpanel的板块分区按钮时的响应
 	 */
 	@FXML
-	public void selectBoard() {
+	private void selectBoard() {
 		initBoard();
 		boardAnimate();
 	}
@@ -182,12 +161,9 @@ public class optionalStockController {
 		regionHBox.getChildren().clear();
 		myPieChart_r=new MyPieChart();
 		regionPieChart = myPieChart_r.createPieChart(regionMap);
-
 		myBarChart_r = new MyBarChart();
 		regionBarChart = myBarChart_r.createBarChart(regionMap);
-
 		regionHBox.getChildren().addAll(regionPieChart, regionBarChart);
-
 	}
 
 	/**
@@ -197,10 +173,8 @@ public class optionalStockController {
 		boardHBox.getChildren().clear();
 		myPieChart_b=new MyPieChart();
 		boardPieChart = myPieChart_b.createPieChart(boardMap);
-
 		myBarChart_b = new MyBarChart();
 		boardBarChart = myBarChart_b.createBarChart(boardMap);
-
 		boardHBox.getChildren().addAll(boardPieChart, boardBarChart);
 	}
 
@@ -210,7 +184,6 @@ public class optionalStockController {
 	private void boardAnimate() {
 		myPieChart_b.animate();
 		myBarChart_b.addData();
-	//	myBarChart_b.Animate();
 	}
 
 	/**
@@ -219,19 +192,22 @@ public class optionalStockController {
 	private void regionAnimate() {
 		myPieChart_r.animate();
 		myBarChart_r.addData();
-		//myBarChart_r.Animate();
 	}
-
+	/**
+	 * 初始化自选股比较模块的类型选择器
+	 */
 	private void initChoice() {
 		chartType.getItems().add("市盈率");
 		chartType.getItems().add("市净率");
 		chartType.getItems().add("成交量");
 		chartType.getSelectionModel().select(0);
 	}
-
-	private void initCmpTable() {
+	/**
+	 * 初始化
+	 */
+	private void initCmpModule() {
 		// init date picker
-		MyDate monthAgo = MyTime.getAnotherDay(
+		MyDate monthAgo = DateCalculator.getAnotherDay(
 				new MyDate(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()),
 				-30);
 
@@ -259,12 +235,14 @@ public class optionalStockController {
 		cmpChartPane.getChildren().add(cmpChart.getTimesharingChart());
 	}
 
+	/**
+	 * 在比较模块中点击加入比较后触发的一系列数据获取
+	 * 和显示图线的方法
+	 */
 	@FXML
-//<<<<<<< HEAD
 	private void addCmpStock(){
 		if(cmpTableview.getSelectionModel().getSelectedIndex()!=-1){
 		Stock selectedCmpStock = cmpTableview.getSelectionModel().getSelectedItem();
-
 		switch(chartType.getSelectionModel().getSelectedItem()){
 			case "市盈率":drawCmpPEChart(selectedCmpStock);break;
 			case "市净率":drawCmpPBChart(selectedCmpStock);;break;
@@ -273,14 +251,17 @@ public class optionalStockController {
 		}
 		}
 	}
+	/**
+	 * 画pe走势图的方法
+	 * @param stock
+	 */
 	private void drawCmpPEChart(Stock stock){
-
 		MyDate cmpB = new MyDate(cmpBgn.getValue().getYear(), cmpBgn.getValue().getMonthValue(),
 				cmpBgn.getValue().getDayOfMonth());
 		MyDate cmpE = new MyDate(cmpEnd.getValue().getYear(), cmpEnd.getValue().getMonthValue(),
 				cmpEnd.getValue().getDayOfMonth());
 
-		if (!MyTime.ifEarlier(cmpB, cmpE)) {
+		if (!DateCalculator.ifEarlier(cmpB, cmpE)) {
 			return;
 		}
 		
@@ -289,11 +270,15 @@ public class optionalStockController {
 		Iterator<StockVO>itrMin = stockBl.getStocksByTime(stock.code.get(), cmpB, cmpE);
 		cmpChart.addSeries(StatisticUtil.dimensionLessPE(itr,itrMax,itrMin),stock,CmpChartType.peChart);
 	}
+	/**
+	 * 画pb走势图的方法
+	 * @param stock
+	 */
 	private void drawCmpPBChart(Stock stock){
 		MyDate cmpB = new MyDate(cmpBgn.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
 		MyDate cmpE = new MyDate(cmpEnd.getValue().getYear(), cmpEnd.getValue().getMonthValue(), cmpEnd.getValue().getDayOfMonth());
 
-		if (!MyTime.ifEarlier(cmpB, cmpE)) {
+		if (!DateCalculator.ifEarlier(cmpB, cmpE)) {
 			return;
 		}
 		Iterator<StockVO>itr = stockBl.getStocksByTime(stock.code.get(), cmpB, cmpE);
@@ -301,11 +286,15 @@ public class optionalStockController {
 		Iterator<StockVO>itrMin = stockBl.getStocksByTime(stock.code.get(), cmpB, cmpE);
 		cmpChart.addSeries(StatisticUtil.dimensionLessPB(itr,itrMax,itrMin),stock,CmpChartType.pbChart);
 	}
+	/**
+	 * 画成交额走势图的方法
+	 * @param stock
+	 */
 	private void drawCmpVolumeValueChart(Stock stock){
 		MyDate cmpB = new MyDate(cmpBgn.getValue().getYear(), cmpBgn.getValue().getMonthValue(), cmpBgn.getValue().getDayOfMonth());
 		MyDate cmpE = new MyDate(cmpEnd.getValue().getYear(), cmpEnd.getValue().getMonthValue(), cmpEnd.getValue().getDayOfMonth());
 
-		if(!MyTime.ifEarlier(cmpB, cmpE)){
+		if(!DateCalculator.ifEarlier(cmpB, cmpE)){
 			return;
 		}
 		Iterator<StockVO>itr = stockBl.getStocksByTime(stock.code.get(), cmpB, cmpE);
@@ -315,12 +304,16 @@ public class optionalStockController {
 	}
 	
 
+	/**
+	 * 清除比较图表上的所有图线
+	 */
 	@FXML
 	private void clearCmpChart() {
 		cmpChart.removeAllSeries();
-
 	}
-
+	/**
+	 * 刷新自选股列表和图表
+	 */
 	@FXML
 	private void refreshOptionalStockData() {
 		getOptionalStock();
@@ -330,15 +323,13 @@ public class optionalStockController {
 	@FXML
 	public void getOptionalStock() {
 		Iterator<StockVO> itr = optionalBl.getOptionalStocks();
-		Iterator<StockVO> itrBack = optionalBl.getOptionalStocks();
-		while (itrBack.hasNext()) {
-			StockVO temp = itrBack.next();
-			System.out.println(temp.name);
-		}
 		showTableData(itr);
-		// initPieAndBarChart();
 	}
-
+	/**
+	 * 读取迭代器的信息并显示到表格中
+	 * @param itr
+	 */
+	
 	private void showTableData(Iterator<StockVO> itr) {
 		tableview.getItems().removeAll(observableList);
 		while (itr.hasNext()) {
@@ -359,24 +350,28 @@ public class optionalStockController {
 		changeRate.setCellValueFactory(cell -> cell.getValue().getStringChangeRate());
 
 		ColorHelper.setColorForStock(observableList, tableview.getColumns());
-
 	}
 
+	/**
+	 * 删除列表中选中的自选股
+	 */
 	@FXML
 	private void deleteOptionalStock() {
 		if (tableview.getSelectionModel().getSelectedIndex() != -1) {
 			String stockCode = tableview.getSelectionModel().getSelectedItem().code.get();
 			boolean status = optionalBl.deleteStockCode(stockCode);
 			getOptionalStock();
-			// System.out.println(currentController.toString()+"deleteCurrent");
 		}
 	}
-
+	/**
+	 * 处理双击选择一支股票后的股票细节显示，同StockList中的该方法
+	 * @param e
+	 */
 	@FXML
 	private void handleMouseClick(MouseEvent e) {
 		if (e.getClickCount() == 2) {
 			if (tableview.getSelectionModel().getSelectedIndex() == -1) {
-				System.out.println("empty line ");
+				//do nothing if not a doubleClicked event or select nothing
 				return;
 			}
 
@@ -386,24 +381,15 @@ public class optionalStockController {
 			// it, otherwise we will get a totally defferent object from the
 			// fxml's
 			if (stockDetailController == null) {
-				System.err.println("============new controller============");
 				stockDetailController = StockDetailController.getStockDetailController();
 			}
 			if (rightPaneController == null) {
 				rightPaneController = RightPaneController.getRightPaneController();
 			}
 
-			// chartPane =
-			// (AnchorPane)GraphicsUtils.getParent("CandleStickPane");
-			// stockDetailPane.setCenter(chartPane);
-
 			stockDetailController.setData(selectedStock, PanelType.OPTIONAL_STOCK);
 			rightPaneController.showDetailPane(stockDetailPane);
-
 		}
 	}
-	// public AnchorPane getRightBorderPane(){
-	// return rightP;
-	// }
 
 }

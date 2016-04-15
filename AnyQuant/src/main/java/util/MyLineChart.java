@@ -1,4 +1,4 @@
-package util.candleStick;
+package util;
 /**
 *
 *@author:duanzhengmou
@@ -20,7 +20,7 @@ import vo.Stock;
 
 
 public class MyLineChart {
-	private Mytime beginTime = new Mytime("6", "30");
+	private Mytaime beginTime = new Mytaime("6", "30");
 	private XYChart.Series<String,Number> series;
 	private CategoryAxis xAxis = new CategoryAxis();
     private NumberAxis yAxis = new NumberAxis();
@@ -80,7 +80,7 @@ public class MyLineChart {
 	    	}
 	    	return false;
 	    }
-	   
+
 	   /**
 	    * 通用方法
 	    */
@@ -117,13 +117,13 @@ public class MyLineChart {
 	    }
 
 }
-	 
 
-class Mytime {
+
+class Mytaime {
 	String hour;
 	String minute;
 
-	Mytime(String hour,String minute){
+	Mytaime(String hour,String minute){
 		this.hour = hour;
 		this.minute = minute;
 	}

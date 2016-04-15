@@ -12,6 +12,7 @@ import blimpl.StockBLImpl;
 import blservice.StockBLService;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Tooltip;
+import util.MyLineChart;
 import vo.Stock;
 import vo.TimeSharingVO;
 

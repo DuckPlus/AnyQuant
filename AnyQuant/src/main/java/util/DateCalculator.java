@@ -1,5 +1,6 @@
 package util;
 
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,29 +10,29 @@ import java.util.Date;
 import enumeration.MyDate;
 
 /**
- * 
+ *
  * @author ss14
  *
  */
-public class MyTime {
-	
+public class DateCalculator {
+
 	private static int[] MONTH_DAY = {31,28 , 31, 30 , 31, 30 ,31 ,31 , 30 , 31 ,30 ,31};
-	
-	
+
+
 	/**
 	 * 返回当前时期包括时间
-	 * 
+	 *
 	 * @return
 	 */
 	public static MyDate getToDay() {
 		Calendar calendar = Calendar.getInstance();
-		MyDate date = MyTime.CreateMyDate(calendar);
+		MyDate date = DateCalculator.CreateMyDate(calendar);
 		return date;
 	}
 
 	/**
 	 * 以某个日期为基准，偏移量的单位为天
-	 * 
+	 *
 	 * @param date
 	 * @param offset
 	 * @return
@@ -40,20 +41,20 @@ public class MyTime {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(date.getYear(), date.getMonth() - 1, date.getDay());
 		calendar.add(Calendar.DAY_OF_MONTH, offset);
-		MyDate date1 = MyTime.CreateMyDate(calendar);
+		MyDate date1 = DateCalculator.CreateMyDate(calendar);
 		return date1;
 	}
 
 	/**
 	 * 参数为距离今天的天数偏移量，-1表示昨天，1表示明天
-	 * 
+	 *
 	 * @param offset
 	 * @return
 	 */
 	public static MyDate getAnotherDay(int offset) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DAY_OF_MONTH, offset);
-		MyDate date = MyTime.CreateMyDate(calendar);
+		MyDate date = DateCalculator.CreateMyDate(calendar);
 		return date;
 	}
 
@@ -102,7 +103,7 @@ public class MyTime {
 
 	/**
 	 * 判断某日期是不是周末
-	 * 
+	 *
 	 * @param date
 	 * @return
 	 */
@@ -127,18 +128,18 @@ public class MyTime {
 
 	/**
 	 * 返回参数日期之前的第一个工作日
-	 * 
+	 *
 	 * @param date
 	 * @return
 	 */
 	public static MyDate getFirstPreWorkDay(MyDate date) {
 		int i = -1;
-		boolean bool = MyTime.isWeekend(MyTime.getAnotherDay(date, i));
+		boolean bool = DateCalculator.isWeekend(DateCalculator.getAnotherDay(date, i));
 		while (bool) {
 			i--;
-			bool = MyTime.isWeekend(MyTime.getAnotherDay(date, i));
+			bool = DateCalculator.isWeekend(DateCalculator.getAnotherDay(date, i));
 		}
-		return MyTime.getAnotherDay(date, i);
+		return DateCalculator.getAnotherDay(date, i);
 	}
 
 	// public static void main (String a[]){
@@ -157,7 +158,7 @@ public class MyTime {
 			calendar.add(Calendar.DATE, 2 - calendar.get(Calendar.DAY_OF_WEEK));
 
 		}
-		
+
 		return new MyDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DATE));
 	}
 
@@ -179,8 +180,8 @@ public class MyTime {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(MyTime.getToDay().DateToString());
-		System.out.println(getMondayofTheWeek(MyTime.getToDay()).DateToString());
+		System.out.println(DateCalculator.getToDay().DateToString());
+		System.out.println(getMondayofTheWeek(DateCalculator.getToDay()).DateToString());
 
 		Calendar c2 = Calendar.getInstance();
 		c2.clear();
@@ -235,9 +236,9 @@ public class MyTime {
 		int year = date.getYear();
 		return (year % 4 == 0) ? ((year % 100 == 0) ? ((year % 400 == 0) ? true : false) : true) : false;
 	}
-	
+
 	public static int getMonthEndDay(MyDate date){
-		
+
 			if(date.getMonth() != 2){
 				return MONTH_DAY[date.getMonth() - 1];
 			}else{
@@ -247,12 +248,12 @@ public class MyTime {
 					return MONTH_DAY[1];
 				}
 			}
-		
-		
-		
-		
-		
+
+
+
+
+
 	}
-	
-	
+
+
 }

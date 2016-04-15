@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import blHelper.VOPOchange;
 import blservice.BenchMarkBLService;
-import businessLogicHelper.VOPOchange;
 import dataservice.APIDataFactory;
 import dataservice.BenchMarkDataService;
 import enumeration.MyDate;
 import po.BenchMarkPO;
-import util.MyTime;
+import util.DateCalculator;
 import vo.BenchMarkVO;
 
 /**
@@ -56,7 +56,7 @@ public class BenchMarkBLImpl implements BenchMarkBLService {
 
 	@Override
 	public Iterator<BenchMarkVO> getRecentBenchMarks(String BenchMarkCode) {
-		return getBenchMarkByTime(BenchMarkCode, MyTime.getAnotherDay(-30), MyTime.getToDay());
+		return getBenchMarkByTime(BenchMarkCode, DateCalculator.getAnotherDay(-30), DateCalculator.getToDay());
 	}
 
 	@Override

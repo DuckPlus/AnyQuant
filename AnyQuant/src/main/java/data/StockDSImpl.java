@@ -22,7 +22,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import po.StockPO;
 import po.TimeSharingPO;
-import util.MyTime;
+import util.DateCalculator;
 
 /**
  *
@@ -150,12 +150,12 @@ public class StockDSImpl implements StockDataService {
 	public StockPO getStockMes(String stockCode) {
 
 		int offset = 0;
-		MyDate date = MyTime.getAnotherDay(offset);
+		MyDate date = DateCalculator.getAnotherDay(offset);
 
 		JSONObject jObject = null;
 		while (  ((jObject = checkDataValid(stockCode, date)) ==null) &&(offset>-3)) {
 			offset--;
-			date = MyTime.getAnotherDay(offset);
+			date = DateCalculator.getAnotherDay(offset);
 		}
 
 //		if(offset<=-30){
@@ -278,7 +278,7 @@ public class StockDSImpl implements StockDataService {
 	}
 
 	private TimeSharingPO makeTimeSharingPO(JSONObject jsonObject) {
-		MyDate date = MyTime.getToDay();
+		MyDate date = DateCalculator.getToDay();
 
 		String nowTime = jsonObject.getString("barTime");
 		String[] split = nowTime.split(":");

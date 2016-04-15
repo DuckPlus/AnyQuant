@@ -10,66 +10,23 @@ import enumeration.MyDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
-import util.MyTime;
+import util.DateCalculator;
 import util.candleStick.CandleStickChart;
 import vo.OHLC_VO;
 
 /**
- *
+ *@status：code reviewed
+ *@handler:dsn
+ *@reviewed date:2016-4-14
  * @author ss
  * @date 2016年3月24日 =。=
  */
 public class CandleStickController implements Initializable {
 
-
-
-
-	public CandleStickChart dayChart, weekChart, monthChart;
-	public ObservableList<OHLC_VO> dayList;
-	public ObservableList<OHLC_VO> weekList;
-	public ObservableList<OHLC_VO> monthList;
-	private String stockCode;
-	private MyDate startDate, endDate;
-
-
-
-
-	private static StockBLService stockBl;
-	private static CandleStickController instance;
-
-	public CandleStickController() {
-		if (instance == null) {
-			stockCode = "sh600000";
-			startDate = MyTime.getToDay();
-			endDate = startDate;
-			stockBl = StockBLImpl.getAPIBLService();
-			dayList = FXCollections.observableArrayList();
-			weekList = FXCollections.observableArrayList();
-			monthList = FXCollections.observableArrayList();
-			dayList.clear();
-			weekList.clear();
-			monthList.clear();
-			instance = this;
-		}
-	}
-
-	public static CandleStickController getCandleStickController() {
-		if (instance != null) {
-			return instance;
-		} else {
-			return new CandleStickController();
-		}
-	}
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-
-	}
-
-	public void getDayData() {
+	public void getDefaultDayData() {
 		// 默认显示近两个月的数据
-		MyDate end = MyTime.getToDay();
-		MyDate start = MyTime.getAnotherDay(-60);
+		MyDate end = DateCalculator.getToDay();
+		MyDate start = DateCalculator.getAnotherDay(-60);
 		List<OHLC_VO> list = stockBl.getDayOHLC_Data(stockCode, start, end);
 		dayList.clear();
 		for (OHLC_VO temp : list) {
@@ -86,10 +43,10 @@ public class CandleStickController implements Initializable {
 		}
 	}
 
-	public void getWeekData() {
+	public void getDefaultWeekData() {
 		// 默认显示最近一年的数据
-		MyDate end = MyTime.getToDay();
-		MyDate start = MyTime.getAnotherDay(-180);
+		MyDate end = DateCalculator.getToDay();
+		MyDate start = DateCalculator.getAnotherDay(-180);
 		List<OHLC_VO> list = stockBl.getWeekOHLC_Data(stockCode, start, end);
 		weekList.clear();
 		for (OHLC_VO temp : list) {
@@ -107,10 +64,10 @@ public class CandleStickController implements Initializable {
 		}
 	}
 
-	public void getMonthData() {
+	public void getDefaultMonthData() {
 		// 默认显示最近三年的数据
-		MyDate end = MyTime.getToDay();
-		MyDate start = MyTime.getAnotherDay(-365 * 2);
+		MyDate end = DateCalculator.getToDay();
+		MyDate start = DateCalculator.getAnotherDay(-365 * 2);
 		List<OHLC_VO> list = stockBl.getMonthOHLC_Data(stockCode, start, end);
 		monthList.clear();
 		for (OHLC_VO temp : list) {
@@ -139,6 +96,45 @@ public class CandleStickController implements Initializable {
 	public void SetEndDate(MyDate end){
 		endDate=end;
 	}
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+	}
+	/*************构造**********************
+	 * 单例模式
+	 */
+	private CandleStickController() {
+		if (instance == null) {
+			stockCode = "sh600000";
+			startDate = DateCalculator.getToDay();
+			endDate = startDate;
+			stockBl = StockBLImpl.getAPIBLService();
+			dayList = FXCollections.observableArrayList();
+			weekList = FXCollections.observableArrayList();
+			monthList = FXCollections.observableArrayList();
+			dayList.clear();
+			weekList.clear();
+			monthList.clear();
+			instance = this;
+		}
+	}
+	public static CandleStickController getCandleStickController() {
+		if (instance != null) {
+			return instance;
+		} else {
+			return new CandleStickController();
+		}
+	}
 
+	/***********************************************
+	 * 变量~
+	 */
+	public CandleStickChart dayChart, weekChart, monthChart;
+	public ObservableList<OHLC_VO> dayList;
+	public ObservableList<OHLC_VO> weekList;
+	public ObservableList<OHLC_VO> monthList;
+	private String stockCode;
+	private MyDate startDate, endDate;
+	private static StockBLService stockBl;
+	private static CandleStickController instance;
 
 }

@@ -40,8 +40,6 @@ class Candle extends Group {
     public void update(double closeOffset, double highOffset, double lowOffset, double candleWidth) {
         openAboveClose = closeOffset > 0;
         updateStyleClasses_Eastern();
-//        highLowLine.setStartY(highOffset);
-//        highLowLine.setEndY(lowOffset);
         highLowLine.setStartY(highOffset);
         highLowLine.setEndY(lowOffset);
         if (candleWidth == -1) {
@@ -57,7 +55,6 @@ class Candle extends Group {
     public void updateTooltip(double open, double close, double high, double low) {
         TooltipContentCandleStick tooltipContent = (TooltipContentCandleStick) tooltip.getGraphic();
         tooltipContent.update(open, close, high, low);
-//                tooltip.setText("Open: "+open+"\nClose: "+close+"\nHigh: "+high+"\nLow: "+low);
     }
 
     private void updateStyleClasses_Eastern() {

@@ -1,29 +1,5 @@
 package ui;
 
-import org.apache.commons.codec.EncoderException;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import org.python.antlr.PythonParser.list_for_return;
-import org.python.antlr.PythonParser.return_stmt_return;
-import org.python.bouncycastle.jcajce.provider.symmetric.AES.Wrap;
-import org.python.compiler.MTime;
-import org.python.icu.text.StringPrep;
-
-import enumeration.MyDate;
-import jnr.ffi.Struct.int16_t;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import util.MyTime;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -36,10 +12,23 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import org.apache.commons.codec.EncoderException;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 public class HttpUtil {
 	// 创建http client
