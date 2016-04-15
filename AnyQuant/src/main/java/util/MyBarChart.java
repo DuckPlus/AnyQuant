@@ -78,6 +78,7 @@ public class MyBarChart {
 		final NumberAxis yAxis = new NumberAxis();
 		final CategoryAxis xAxis = new CategoryAxis();
 		this.barchart = new BarChart<String, Number>(xAxis, yAxis);
+		this.barchart.setLegendVisible(false);
 		this.dataSeries = new XYChart.Series<String, Number>();
 		this.barchart.getData().add(dataSeries);
 
