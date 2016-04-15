@@ -41,11 +41,7 @@ import vo.Stock;
 import vo.StockVO;
 
 public class optionalStockController {
-	BarChart<String,Number> boardBarChart, regionBarChart;
-	MyPieChart myPieChart_b,myPieChart_r;
-	MyBarChart myBarChart_b, myBarChart_r;
-	PieChart boardPieChart, regionPieChart;
-	Map<String, Integer> boardMap, regionMap;
+
 	@FXML
 	TableColumn<Stock, String> code;
 	@FXML
@@ -117,7 +113,7 @@ public class optionalStockController {
 	private void initialize() {
 		instanceController.registOptionalStockController(this);
 		stockDetailPane = instanceController.getStockDetailPane();
-		initPieAndBarChart();
+
 		getOptionalStock();
 		initChoice();
 		initCmpModule();
@@ -135,7 +131,6 @@ public class optionalStockController {
 	@FXML
 	private void selectRegion() {
 		initRegion();
-		regionAnimate();
 	}
 	/**
 	 * 选择tabpanel的板块分区按钮时的响应
@@ -143,56 +138,47 @@ public class optionalStockController {
 	@FXML
 	private void selectBoard() {
 		initBoard();
-		boardAnimate();
 	}
 
-	/**
-	 * 仅初始化，还没加载数据
-	 */
-	private void initPieAndBarChart() {
-		boardMap = optionalBl.getBoardDistributionMap();
-		regionMap = optionalBl.getRegionDistributionMap();
-	}
 
 	/**
 	 * 初始化的子步骤--初始化地域分区的两个图表
 	 */
 	private void initRegion() {
+		Map<String, Integer> regionMap = optionalBl.getRegionDistributionMap();
+
+		MyPieChart myPieChart_r=new MyPieChart();
+		PieChart regionPieChart = myPieChart_r.createPieChart(regionMap);
+		MyBarChart myBarChart_r = new MyBarChart();
+		BarChart regionBarChart = myBarChart_r.createBarChart(regionMap);
+
 		regionHBox.getChildren().clear();
-		myPieChart_r=new MyPieChart();
-		regionPieChart = myPieChart_r.createPieChart(regionMap);
-		myBarChart_r = new MyBarChart();
-		regionBarChart = myBarChart_r.createBarChart(regionMap);
 		regionHBox.getChildren().addAll(regionPieChart, regionBarChart);
+
+		myPieChart_r.animate();
+		myBarChart_r.animate();
 	}
 
 	/**
 	 * 初始化的子步骤--初始化板块分区的两个图表
 	 */
 	private void initBoard() {
+		Map<String, Integer> boardMap = optionalBl.getBoardDistributionMap();
+
+		MyPieChart myPieChart_b=new MyPieChart();
+		PieChart boardPieChart = myPieChart_b.createPieChart(boardMap);
+		MyBarChart myBarChart_b = new MyBarChart();
+		BarChart boardBarChart = myBarChart_b.createBarChart(boardMap);
+
 		boardHBox.getChildren().clear();
-		myPieChart_b=new MyPieChart();
-		boardPieChart = myPieChart_b.createPieChart(boardMap);
-		myBarChart_b = new MyBarChart();
-		boardBarChart = myBarChart_b.createBarChart(boardMap);
 		boardHBox.getChildren().addAll(boardPieChart, boardBarChart);
-	}
 
-	/**
-	 * 加载 板块分区的图表的数据
-	 */
-	private void boardAnimate() {
 		myPieChart_b.animate();
-		myBarChart_b.addData();
+		myBarChart_b.animate();
 	}
 
-	/**
-	 * 加载 地域分区的图表的数据
-	 */
-	private void regionAnimate() {
-		myPieChart_r.animate();
-		myBarChart_r.addData();
-	}
+
+
 	/**
 	 * 初始化自选股比较模块的类型选择器
 	 */
@@ -264,7 +250,7 @@ public class optionalStockController {
 		if (!DateCalculator.ifEarlier(cmpB, cmpE)) {
 			return;
 		}
-		
+
 		Iterator<StockVO>itr = stockBl.getStocksByTime(stock.code.get(), cmpB, cmpE);
 		Iterator<StockVO>itrMax = stockBl.getStocksByTime(stock.code.get(), cmpB, cmpE);
 		Iterator<StockVO>itrMin = stockBl.getStocksByTime(stock.code.get(), cmpB, cmpE);
@@ -302,7 +288,7 @@ public class optionalStockController {
 		Iterator<StockVO>itrMin = stockBl.getStocksByTime(stock.code.get(), cmpB, cmpE);
 		cmpChart.addSeries(StatisticUtil.dimensionLessVolumeValue(itr,itrMax,itrMin),stock,CmpChartType.turnoverVolChart);
 	}
-	
+
 
 	/**
 	 * 清除比较图表上的所有图线
@@ -317,7 +303,6 @@ public class optionalStockController {
 	@FXML
 	private void refreshOptionalStockData() {
 		getOptionalStock();
-		initPieAndBarChart();
 	}
 
 	@FXML
@@ -329,7 +314,7 @@ public class optionalStockController {
 	 * 读取迭代器的信息并显示到表格中
 	 * @param itr
 	 */
-	
+
 	private void showTableData(Iterator<StockVO> itr) {
 		tableview.getItems().removeAll(observableList);
 		while (itr.hasNext()) {
