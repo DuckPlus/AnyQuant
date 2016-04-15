@@ -22,7 +22,7 @@ import vo.StockVO;
 import vo.TimeSharingVO;
 
 /**
- * API逻辑层实现
+ * Stocks Business logic implement
  *
  * @author Qiang
  * @date 2016年3月4日
@@ -39,39 +39,17 @@ public class StockBLImpl implements StockBLService {
 	private List<StockVO> stocks;
 	private Map<String, StockVO> stockMap;
 
-	/*
-	 * 为了加快测试速度，在开发阶段只引入100只股票
-	 */
+
 	private StockBLImpl() {
 		APIDataSer = APIDataFactory.getStockDataService();
 		List<StockPO> stocksCode = APIDataSer.getAllStockMes();
+		//use TreeMap to sort the stocks by stocks code automatically
 		stockMap = new TreeMap<String, StockVO>();
-
-		System.out.println("Reading Data-----------");// TODO
-
-		/*
-		 * 使用TreeMap支持自动排序
-		 */
-
-		System.out.println("股票数量：" + stocksCode.size());
 		stocks = new ArrayList<StockVO>(stocksCode.size());
 		for (StockPO po : stocksCode) {
 			stockMap.put(po.getCode(), (StockVO) VOPOchange.POtoVO(po));
 		}
 		stocks = new ArrayList<StockVO>(stockMap.values());
-
-		// Iterator<StockPO> temp = APIDataSer.getOptionalStocks();
-		// StockPO po;
-		// while (temp.hasNext()){
-		// po = temp.next();
-		// optionalStockMap.put(po.getCode() , (StockVO) VOPOchange.POtoVO(po));
-		// }
-		// for (String string : benchCodes) {
-		// benchMarkVOs.add( (BenchMarkVO)
-		// VOPOchange.POtoVO(APIDataSer.getBenchMes(string)));
-		// }
-
-		System.out.println("Reading Finish-----------");
 
 	}
 
@@ -146,12 +124,14 @@ public class StockBLImpl implements StockBLService {
 	public List<OHLC_VO> getDayOHLC_Data(String stockCode, MyDate start, MyDate end) {
 		List<StockPO> pos = APIDataSer.getStockMes(stockCode, start, end);
 		List<OHLC_VO> results;
+        OHLC_VO vo;
 		if (pos != null) {
 			results = new ArrayList<OHLC_VO>(pos.size());
 			for (StockPO stockPO : pos) {
-				if (judgeData(stockPO)) { // if the stock didn't trade that day , desert it
-					results.add(new OHLC_VO(MyDate.getDateFromString(stockPO.getDate()), stockPO.getOpen(),
-							stockPO.getClose(), stockPO.getHigh(), stockPO.getLow()));
+                vo = new OHLC_VO(MyDate.getDateFromString(stockPO.getDate()), stockPO.getOpen(),
+                        stockPO.getClose(), stockPO.getHigh(), stockPO.getLow());
+				if (judgeData(vo)) { // if the stock didn't trade that day , desert it
+					results.add(vo);
 				}
 
 			}
@@ -167,6 +147,7 @@ public class StockBLImpl implements StockBLService {
 		List<StockPO> pos = APIDataSer.getStockMes(stockCode, DateCalculator.getMondayofTheWeek(start),
 				DateCalculator.getFridayofTheWeek(end));
 		List<OHLC_VO> results;
+        OHLC_VO vo;
 		int DAY_OF_WEEK = 5;
 		if (pos == null) {
 			return null;
@@ -176,15 +157,17 @@ public class StockBLImpl implements StockBLService {
 			int monday;
 			int friday;
 			results = new ArrayList<OHLC_VO>(weekNum);
-			// System.out.println("pos len :" + pos.size());
-			// System.out.println();
-			for (int i = 0; i < weekNum; i++) {
+
+            for (int i = 0; i < weekNum; i++) {
 				monday = i * DAY_OF_WEEK;
 				friday = i == weekNum - 1 ? (len % DAY_OF_WEEK - 1) : 4;
+                vo = new OHLC_VO(MyDate.getDateFromString(pos.get(monday).getDate()), pos.get(monday).getOpen(),
+                        pos.get(monday + friday).getClose(), getHighInScope(pos.subList(monday, monday + friday + 1)),
+                        getLowInScope(pos.subList(monday, monday + friday + 1)));
 				// Friday sometimes means the last trading day in this week
-				results.add(new OHLC_VO(MyDate.getDateFromString(pos.get(monday).getDate()), pos.get(monday).getOpen(),
-						pos.get(monday + friday).getClose(), getHighInScope(pos.subList(monday, monday + friday + 1)),
-						getLowInScope(pos.subList(monday, monday + friday + 1))));
+                if (judgeData(vo)) { // if the stock didn't trade that day , desert it
+                    results.add(vo);
+                }
 			}
 			return results;
 		}
@@ -203,6 +186,7 @@ public class StockBLImpl implements StockBLService {
 
 		thisMonth.setDay(1);
 		monthEnd.setDay(DateCalculator.getMonthEndDay(monthEnd));
+        OHLC_VO vo;
 		for (int i = 0; i < monthNum; i++) {
 
 
@@ -211,8 +195,12 @@ public class StockBLImpl implements StockBLService {
 			if( pos==null || pos.size()==0){
 
 			}else{
-				vos.add(new OHLC_VO(thisMonth, pos.get(0).getOpen(), pos.get(pos.size() - 1).getClose(),
-						getHighInScope(pos), getLowInScope(pos)));
+                vo = new OHLC_VO(thisMonth, pos.get(0).getOpen(), pos.get(pos.size() - 1).getClose(),
+                        getHighInScope(pos), getLowInScope(pos));
+                if (judgeData(vo)) { // if the stock didn't trade that day , desert it
+                    vos.add(vo);
+                }
+
 			}
 
 
@@ -221,7 +209,6 @@ public class StockBLImpl implements StockBLService {
 			getNextMonth(monthEnd);
 
 		}
-		// System.out.println(vos.size());
 		return vos.isEmpty() ? null : vos;
 	}
 
@@ -251,7 +238,7 @@ public class StockBLImpl implements StockBLService {
 	public List<DealVO> getDayDealVOs(String stockCode, MyDate start, MyDate end) {
 		List<StockPO> pos = APIDataSer.getStockMes(stockCode, start, end);
 		List<DealVO> results;
-		System.out.println("StockBLImpl.getDayDealVO "+start.DateToString()+"--"+end.DateToString());
+//		System.out.println("StockBLImpl.getDayDealVO "+start.DateToString()+"--"+end.DateToString());
 		if (pos == null) {
 			return null;
 		} else {
@@ -278,7 +265,7 @@ public class StockBLImpl implements StockBLService {
 			int weekNum = len / DAY_OF_WEEK + (len % DAY_OF_WEEK > 0 ? 1 : 0);
 			int monday;
 			int friday;
-			System.out.println("pos:" + pos.size());
+//			System.out.println("pos:" + pos.size());
 			results = new ArrayList<DealVO>(weekNum);
 			for (int i = 0; i < weekNum; i++) {
 				monday = i * DAY_OF_WEEK;
@@ -316,11 +303,25 @@ public class StockBLImpl implements StockBLService {
 		return vos.isEmpty() ? null : vos;
 	}
 
+    @Override
+    public void updateAllStockMes() {
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                if(APIDataSer.updateAllMes()){
+                    //send success message
+
+
+                }
+
+            }
+        }).start();
+
+    }
 	/**
-	 * 计算给定范围内的成交量、成交额总量， 其中成交额暂时用每天开盘价作为平均价,乘以成交量得出
+	 * 计算给定范围内的成交量、成交额总量
 	 *
-	 * @param subList
-	 * @return
 	 */
 	private static DealVO getSumDealVO(List<StockPO> subList) {
 		long volume = 0;
@@ -362,34 +363,19 @@ public class StockBLImpl implements StockBLService {
 		}
 	}
 
-	private static boolean judgeData(StockPO stockPO) {
-		return !(stockPO.getLow() == stockPO.getHigh());
+	private static boolean judgeData(OHLC_VO vo) {
+		return !(vo.low == vo.high);
 	}
 
-	@SuppressWarnings("unused")
-	private void printList(List<StockPO> subList) {
-		for (StockPO stockPO : subList) {
-			System.out.print(stockPO.getDate() + " ");
-			// System.out.println(stockPO.getVolume());
-		}
-
-	}
-
-	@Override
-	public void updateAllStockMes() {
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				if(APIDataSer.updateAllMes()){
-					//send success message
+//	@SuppressWarnings("unused")
+//	private void printList(List<StockPO> subList) {
+//		for (StockPO stockPO : subList) {
+//			System.out.print(stockPO.getDate() + " ");
+//			// System.out.println(stockPO.getVolume());
+//		}
+//
+//	}
 
 
-				}
-
-			}
-		}).start();
-
-	}
 
 }

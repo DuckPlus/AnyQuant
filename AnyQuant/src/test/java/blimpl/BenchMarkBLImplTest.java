@@ -1,13 +1,24 @@
 package blimpl;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 /**
- * Created by Qiang on 3/27/16.
+ * @author Qiang
+ * @date 4/15/16
  */
 public class BenchMarkBLImplTest {
+    @Before
+    public void setUp() throws Exception {
+
+    }
+
+    @Test
+    public void getBenchMarkBLService() throws Exception {
+
+    }
 
     @Test
     public void getAllBenchMarks() throws Exception {
@@ -23,4 +34,5 @@ public class BenchMarkBLImplTest {
     public void getBenchMarkByTime() throws Exception {
 
     }
+
 }

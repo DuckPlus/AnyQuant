@@ -86,7 +86,7 @@ public class StockSortHelper {
     }
 
 
-    private final static int compareWith(double s1, double s2) {
+    private static int compareWith(double s1, double s2) {
         if (s1 == s2) {
             return 0;
         }

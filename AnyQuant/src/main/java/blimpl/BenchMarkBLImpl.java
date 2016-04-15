@@ -16,7 +16,7 @@ import util.DateCalculator;
 import vo.BenchMarkVO;
 
 /**
- *
+ * BenchMark Business Logic Implement
  * @author Qiang
  * @date 2016年3月10日
  */
@@ -40,7 +40,7 @@ public class BenchMarkBLImpl implements BenchMarkBLService {
 		}
 		benchMarkVOs = new ArrayList<BenchMarkVO>(benchMap.values());
 	}
-
+	/*Singleton */
 	public static BenchMarkBLService getBenchMarkBLService() {
 		if (bl == null) {
 			bl = new BenchMarkBLImpl();

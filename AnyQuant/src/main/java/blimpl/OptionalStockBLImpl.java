@@ -18,22 +18,18 @@ import po.StockPO;
 import vo.StockVO;
 
 /**
- *
+ * Optional Stocks Business Logic Implement
  * @author Qiang
  * @date 3/29/16.
  */
 public class OptionalStockBLImpl implements OptionalStockBLService {
 
-	/**
-	 * 单例模式
-	 */
+
 	private static OptionalStockBLService bl;
 	private OptionalStockDataService APIDataSer;
 
 	private List<StockVO> optionStocks;
 	private Map<String, StockVO> optionalStockMap;
-	private Map<String, Integer> regions;
-	private Map<String, Integer> boards;
 
 	public static OptionalStockBLService getOptionalBLService() {
 		if (bl == null) {
@@ -91,35 +87,34 @@ public class OptionalStockBLImpl implements OptionalStockBLService {
 	}
 
 
-
-	@Override
-	public Iterator<Entry<String, Integer>> getRegionDistribution() {
-		refreshOptionalStocks();
-
-		regions = new HashMap<>(34);
-		StockVO temp;
-		for (int i = 0; i < optionStocks.size(); i++) {
-			temp = optionStocks.get(i);
-			if (regions.containsKey(temp.region)) {
-				regions.put(temp.region, regions.get(temp.region).intValue() + 1);
-			} else {
-				regions.put(temp.region, 1);
-			}
-		}
-
-		return regions.entrySet().iterator();
-	}
+//
+//	@Override
+//	public Iterator<Entry<String, Integer>> getRegionDistribution() {
+//		refreshOptionalStocks();
+//
+//		regions = new HashMap<>(34);
+//		StockVO temp;
+//		for (int i = 0; i < optionStocks.size(); i++) {
+//			temp = optionStocks.get(i);
+//			if (regions.containsKey(temp.region)) {
+//				regions.put(temp.region, regions.get(temp.region).intValue() + 1);
+//			} else {
+//				regions.put(temp.region, 1);
+//			}
+//		}
+//
+//		return regions.entrySet().iterator();
+//	}
 	
 	@Override
 	public Map<String, Integer> getRegionDistributionMap() {
 		refreshOptionalStocks();
 
-		regions = new HashMap<>(34);
-		StockVO temp;
-		for (int i = 0; i < optionStocks.size(); i++) {
-			temp = optionStocks.get(i);
+		Map<String, Integer> regions = new HashMap<>(34);
+
+		for (StockVO temp : optionStocks) {
 			if (regions.containsKey(temp.region)) {
-				regions.put(temp.region, regions.get(temp.region).intValue() + 1);
+				regions.put(temp.region, regions.get(temp.region) + 1);
 			} else {
 				regions.put(temp.region, 1);
 			}
@@ -128,34 +123,33 @@ public class OptionalStockBLImpl implements OptionalStockBLService {
 		return regions;
 	}
 
-	@Override
-	public Iterator<Entry<String, Integer>> getBoardDistribution() {
-		refreshOptionalStocks();
-
-		boards = new HashMap<>(34);
-		StockVO temp;
-		for (int i = 0; i < optionStocks.size(); i++) {
-			temp = optionStocks.get(i);
-			if (boards.containsKey(temp.board)) {
-				boards.put(temp.board, boards.get(temp.board).intValue() + 1);
-			} else {
-				boards.put(temp.board, 1);
-			}
-		}
-
-		return boards.entrySet().iterator();
-
-	}
+//	@Override
+//	public Iterator<Entry<String, Integer>> getBoardDistribution() {
+//		refreshOptionalStocks();
+//
+//		boards = new HashMap<>(34);
+//		StockVO temp;
+//		for (int i = 0; i < optionStocks.size(); i++) {
+//			temp = optionStocks.get(i);
+//			if (boards.containsKey(temp.board)) {
+//				boards.put(temp.board, boards.get(temp.board) + 1);
+//			} else {
+//				boards.put(temp.board, 1);
+//			}
+//		}
+//
+//		return boards.entrySet().iterator();
+//
+//	}
 	@Override
 	public Map<String, Integer>  getBoardDistributionMap() {
 		refreshOptionalStocks();
 
-		boards = new HashMap<>(34);
-		StockVO temp;
-		for (int i = 0; i < optionStocks.size(); i++) {
-			temp = optionStocks.get(i);
+		Map<String, Integer> boards = new HashMap<>(34);
+
+		for (StockVO temp : optionStocks) {
 			if (boards.containsKey(temp.board)) {
-				boards.put(temp.board, boards.get(temp.board).intValue() + 1);
+				boards.put(temp.board, boards.get(temp.board) + 1);
 			} else {
 				boards.put(temp.board, 1);
 			}

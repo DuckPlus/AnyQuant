@@ -52,17 +52,6 @@ public interface OptionalStockBLService {
      */
     public boolean clearOptionalStocks();
 
-
-    /**
-     * Get the region's distribution of the optional stocks
-     * @return the iterator of a collection which contains the distribution
-     */
-    public Iterator<Map.Entry<String, Integer>> getRegionDistribution();
-    /**
-     * Get the board's distribution of the optional stocks
-     * @return the iterator of a collection which contains the distribution
-     */
-    public Iterator<Map.Entry<String, Integer>> getBoardDistribution();
     /**
      * if the stock exist return true
      * @param stockCode
@@ -74,13 +63,13 @@ public interface OptionalStockBLService {
      *  Get the region's distribution of the optional stocks
      * @return  map
      */
-	Map<String, Integer> getRegionDistributionMap();
+    public Map<String, Integer> getRegionDistributionMap();
 
 	   /**
      * Get the board's distribution of the optional stocks
      * @return map
      */
-	Map<String, Integer> getBoardDistributionMap();
+       public Map<String, Integer> getBoardDistributionMap();
 
 
 

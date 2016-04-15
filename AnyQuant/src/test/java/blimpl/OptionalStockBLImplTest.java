@@ -12,9 +12,10 @@ import static org.junit.Assert.*;
 
 /**
  * @author Qiang
- * @date 3/31/16.
+ * @date 4/15/16
  */
-public class OptionalStockBLServiceImplTest {
+public class OptionalStockBLImplTest {
+
     OptionalStockBLService bl;
     Iterator<StockVO> stocksForSave;
 
@@ -83,4 +84,20 @@ public class OptionalStockBLServiceImplTest {
             fail();
         }
     }
+
+    @Test
+    public void getRegionDistributionMap() throws Exception {
+        // no need to test
+    }
+
+    @Test
+    public void getBoardDistributionMap() throws Exception {
+        // no need to test
+    }
+
+    @Test
+    public void ifStockExist() throws Exception {
+        // no need to test
+    }
+
 }

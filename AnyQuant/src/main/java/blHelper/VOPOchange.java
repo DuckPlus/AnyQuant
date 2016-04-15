@@ -6,9 +6,11 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 /** 
- * VOPO互换类
+ * Transfer VO PO automatically
+ * It is based on reflection
+ * To use it , PO VO must have empty instructor as well as same field and their names
  * @author ymc，czq 
- * @version 创建时间：2015年11月18日 下午7:39:11 
+ * @version 2015年11月18日 下午7:39:11
  *
  */
 public class VOPOchange {
@@ -23,9 +25,9 @@ public class VOPOchange {
 		
 		Object vo = null;
 		
-		Class<? extends Object> poClass = o.getClass();
+		Class<?> poClass = o.getClass();
 		
-		Class< ? extends Object> voClass = null;
+		Class<?> voClass = null;
 		String poName = poClass.getName();
 		
 		String voName = "vo"+poName.substring(2,poName.length()-2)+"VO";
@@ -46,7 +48,7 @@ public class VOPOchange {
 			if(f.getName().equals("serialVersionUID"))
 				continue;
 
-				
+			//deal with field in arraylist
 			if(f.getType().toString().endsWith("ArrayList")&&!f.getGenericType().toString().endsWith("String>")){
 				
 				Type listType = f.getGenericType();

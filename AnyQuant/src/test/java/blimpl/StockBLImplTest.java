@@ -2,13 +2,11 @@ package blimpl;
 
 import blservice.StockBLService;
 import enumeration.Stock_Attribute;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.internal.runners.statements.Fail;
-import org.python.antlr.ast.Str;
 import util.DateCalculator;
 import vo.OHLC_VO;
-import vo.Stock;
 import vo.StockVO;
 import vo.TimeSharingVO;
 
@@ -16,16 +14,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
- *
  * @author Qiang
- * @version  3/27/16.
+ * @date 4/15/16
  */
 public class StockBLImplTest {
     private StockBLService bl;
-    enum testValue {};
     @Before
     public void setUp() throws Exception {
         bl = BusinessFactory.getStockBLService();
@@ -65,7 +61,7 @@ public class StockBLImplTest {
      */
     @Test
     public void getSortStocksInScope() throws Exception {
-       Iterator<StockVO> vos =  bl.getStocksByStockCode("600");
+        Iterator<StockVO> vos =  bl.getStocksByStockCode("600");
         List<String> vostr = new ArrayList<>();
         while(vos.hasNext()){
             vostr.add(vos.next().code);
@@ -131,6 +127,10 @@ public class StockBLImplTest {
 
     }
 
+
+
+
+
     @Test
     public void getMonthOHLC_Data() throws Exception {
 
@@ -138,32 +138,23 @@ public class StockBLImplTest {
 
     @Test
     public void getSharingVOs() throws Exception {
-    		List<TimeSharingVO> vos = bl.getSharingVOs("sh600000");
-    		for (int i = 0; i < vos.size(); i++) {
-    				System.out.println(vos.get(i).nowTime.getHour() +":"+ vos.get(i).nowTime.getMin());
-    				
-				System.out.println(vos.get(i).nowPrice);
-				
-			}
-    	
-    	
+        List<TimeSharingVO> vos = bl.getSharingVOs("sh600000");
+        for (int i = 0; i < vos.size(); i++) {
+            System.out.println(vos.get(i).nowTime.getHour() +":"+ vos.get(i).nowTime.getMin());
+
+            System.out.println(vos.get(i).nowPrice);
+
+        }
+
+
 
     }
+
+
 
     @Test
-    public void getDayDealVOs() throws Exception {
+    public void updateAllStockMes() throws Exception {
 
     }
-
-    @Test
-    public void getWeekDealVOs() throws Exception {
-
-    }
-
-    @Test
-    public void getMonthDealVOs() throws Exception {
-
-    }
-
 
 }
