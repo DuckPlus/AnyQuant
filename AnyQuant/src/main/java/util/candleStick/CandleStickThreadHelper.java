@@ -152,10 +152,11 @@ public class CandleStickThreadHelper {
 			protected Object call() throws Exception {
 				// on the worker thread...
 				DealChart barChart = new DealChart(stock);
+				barChart.getData();
 				Platform.runLater(() -> {
-					// on the JavaFX Application Thread....
+					// on the JavaFX Application Thread...
+					barChart.initChart();
 					stockDetailController.dealSPane.setContent(barChart.getBarChart());
-					barChart.addData();
 				});
 				return true;
 			}
@@ -167,10 +168,12 @@ public class CandleStickThreadHelper {
 			protected Object call() throws Exception {
 				// on the worker thread...
 				DealChart barChart = new DealChart(stock,start,end);
+				barChart.getData();
 				Platform.runLater(() -> {
 					// on the JavaFX Application Thread....
+					barChart.initChart();
 					stockDetailController.dealSPane.setContent(barChart.getBarChart());
-					barChart.addData();
+
 				});
 				System.out.println("刷新成交量的图~");
 				System.out.println(start.DateToString()+"--"+end.DateToString());

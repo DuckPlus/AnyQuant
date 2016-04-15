@@ -18,6 +18,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
+import util.MyTime;
 import util.candleStick.CandleStickThreadHelper;
 import util.candleStick.ProgressIndicatorHelper;
 import util.candleStick.TimeSharingChart;
@@ -91,11 +92,6 @@ public class StockDetailController {
 		monthStart.setValue(LocalDate.now());
 		monthEnd.setValue(LocalDate.now());
 	}
-	@FXML
-	public void selectDeal(){
-		initDealAmount();
-	}
-
 
 	public void setData(Stock stock,PanelType panelType) {
 		parentPanelType=panelType;
@@ -179,6 +175,10 @@ public class StockDetailController {
 	private  void updateDayChart(){
 		MyDate start = new MyDate(dayStart.getValue().getYear(),dayStart.getValue().getMonthValue(),dayStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(dayEnd.getValue().getYear(),dayEnd.getValue().getMonthValue(),dayEnd.getValue().getDayOfMonth());
+		if(!MyTime.ifEarlier(start, end)){
+			return;
+		}
+			
 		Task updateDayTask=CandleStickThreadHelper.
 		          createUpdateKChartWorker(Candle_Type.day,currentStock.code.get(),start,end);
 		ProgressIndicatorHelper.showProgressIndicator(updateDayTask.progressProperty(),
@@ -189,6 +189,9 @@ public class StockDetailController {
 	private  void updateWeekChart(){
 		MyDate start = new MyDate(weekStart.getValue().getYear(),weekStart.getValue().getMonthValue(),weekStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(weekEnd.getValue().getYear(),weekEnd.getValue().getMonthValue(),weekEnd.getValue().getDayOfMonth());
+		if(!MyTime.ifEarlier(start, end)){
+			return;
+		}
 		Task updateWeekTask=CandleStickThreadHelper.
 		          createUpdateKChartWorker(Candle_Type.week,currentStock.code.get(),start,end);
 		ProgressIndicatorHelper.showProgressIndicator(updateWeekTask.progressProperty(),
@@ -199,6 +202,9 @@ public class StockDetailController {
 	private  void updateMonthChart(){
 		MyDate start = new MyDate(monthStart.getValue().getYear(),monthStart.getValue().getMonthValue(),monthStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(monthEnd.getValue().getYear(),monthEnd.getValue().getMonthValue(),monthEnd.getValue().getDayOfMonth());
+		if(!MyTime.ifEarlier(start, end)){
+			return;
+		}
 		Task updateMonthTask=CandleStickThreadHelper.
 		          createUpdateKChartWorker(Candle_Type.month,currentStock.code.get(),start,end);
 		ProgressIndicatorHelper.showProgressIndicator(updateMonthTask.progressProperty(),

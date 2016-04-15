@@ -39,6 +39,7 @@ public class TimeSharingChart {
     	Iterator<TimeSharingVO>itr = timeSharingData.iterator();
     	while(itr.hasNext()){
     		TimeSharingVO temp = itr.next();
+    		System.out.println(temp.nowTime.TimeToString()+"  "+temp.nowPrice);
     		lineChart.addData(temp.nowTime.TimeToString(), temp.nowPrice);
 //    		TooltipContentTimeSharing tip=(TooltipContentTimeSharing)tooltip.getGraphic();
 //    		tip.update(temp.nowTime.TimeToString(), temp.nowPrice);
