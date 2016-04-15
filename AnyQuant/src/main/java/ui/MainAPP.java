@@ -1,6 +1,5 @@
 
 package ui;
-
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
