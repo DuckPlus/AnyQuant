@@ -20,7 +20,7 @@ public class BusinessFactory {
 	}
 
 	public static OptionalStockBLService getOptionalBLService(){
-		return  MockOptionalStockBLImpl.getOptionalBLService();
+		return OptionalStockBLImpl.getOptionalBLService();
 	}
 
 

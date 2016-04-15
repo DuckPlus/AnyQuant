@@ -8,11 +8,16 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.python.antlr.PythonParser.else_clause_return;
+import org.python.antlr.PythonParser.power_return;
 
 import data.StockDSImpl;
 import dataservice.StockDataService;
 import enumeration.Exchange;
+import enumeration.MyDate;
 import po.StockPO;
+import po.TimeSharingPO;
+import util.DateCalculator;
 
 /**
  *
@@ -122,27 +127,82 @@ public class StockDSImplTest {
 
 	@Test
 	public void testGetStockMesStringMyDate() {
-		fail("Not yet implemented");
+		MyDate date =DateCalculator.getToDay();
+		String code = "sh600216";
+		String nameString = "浙江医药";
+		String dateString = date.DateToString();
+
+		StockPO  po  =  stockDataService.getStockMes(code,date);
+
+		if(po==null){
+			fail("testGetStockMesStringMyDate() --NULL");
+		}else if(!po.getCode().equals(code)){
+			fail("testGetStockMesStringMyDate() --code");
+		}else if(!po.getName().equals(nameString)){
+			fail("testGetStockMesStringMyDate() --name");
+		}else if(!po.getDate().equals(dateString)){
+			fail("testGetStockMesStringMyDate() --date");
+		}
+
 	}
 
 	@Test
 	public void testGetStockMesStringMyDateMyDate() {
-		fail("Not yet implemented");
+		MyDate endDate =DateCalculator.getToDay();
+		MyDate startDate = DateCalculator.getAnotherDay(-30);
+		String code = "sh600216";
+		String nameString = "浙江医药";
+		String dateString = startDate.DateToString();
+
+		List<StockPO>  pos  =  stockDataService.getStockMes(code,startDate,endDate);
+
+		if(pos==null){
+			fail("testGetStockMesStringMyDateMyDate() --NULL");
+		}else if(!pos.get(0).getCode().equals(code)){
+			fail("testGetStockMesStringMyDateMyDate()--code");
+		}else if(!pos.get(0).getName().equals(nameString)){
+			fail("testGetStockMesStringMyDateMyDate() --name");
+		}else if(!pos.get(0).getDate().equals(dateString)){
+			fail("testGetStockMesStringMyDateMyDate() --date");
+		}
 	}
 
 	@Test
 	public void testGetAllStockMes() {
-		fail("Not yet implemented");
+		List<StockPO>  pos  =  stockDataService.getAllStockMes();
+		if(pos==null){
+			fail("testGetAllStockMes() --NULL");
+		}
+
 	}
 
 	@Test
 	public void testGetTimeSharingPOs() {
-		fail("Not yet implemented");
+		MyDate today = DateCalculator.getToDay();
+		String code = "sh600216";
+		String dateString = today.DateToString();
+		List<TimeSharingPO>  pos  =  stockDataService.getTimeSharingPOs(code);
+		if(pos==null){
+			fail("testGetTimeSharingPOs() --NULL");
+		}else if(!pos.get(0).nowTime.DateToString().equals(dateString)){
+			fail("testGetTimeSharingPOs()  --date");
+		}
 	}
 
 	@Test
 	public void testUpdateAllMes() {
-		fail("Not yet implemented");
+		MyDate today = DateCalculator.getToDay();
+		String dateString = today.DateToString();
+		stockDataService.updateAllMes();
+
+		List<StockPO>  pos  =  stockDataService.getAllStockMes();
+
+		if(pos==null){
+			fail("testUpdateAllMes()--NULL");
+		}else if(!pos.get(0).getDate().equals(dateString)){
+			fail("testUpdateAllMes()--date");
+		}
+
 	}
 
 }
