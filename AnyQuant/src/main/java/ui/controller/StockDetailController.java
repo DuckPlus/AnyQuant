@@ -19,6 +19,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 import util.DateCalculator;
+import util.TipsDialog;
 import util.candleStick.CandleStickThreadHelper;
 import util.candleStick.ProgressIndicatorHelper;
 import util.candleStick.TimeSharingChart;

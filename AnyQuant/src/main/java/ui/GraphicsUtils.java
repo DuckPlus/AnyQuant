@@ -1,10 +1,13 @@
 package ui;
 
+import java.io.File;
 import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
+
+import javax.imageio.ImageIO;
 
 /**
 *
@@ -38,5 +41,16 @@ public class GraphicsUtils {
 		return new Image(imagePath);
 	}
 
-	
+	public static final java.awt.Image getSwingImage(String fileName){
+		java.awt.Image image = null;
+		try {
+			image = ImageIO.read(new File("ui/source/img/" + fileName + ".png"));
+		} catch (IOException e) {
+			System.err.println("图片读取出错");
+//			System.err.println("图片路径为：" + StaticMessage.IMAGE_PATH + fileName + ".png" );
+			e.printStackTrace();
+		}
+		return image;
+	}
+
 }

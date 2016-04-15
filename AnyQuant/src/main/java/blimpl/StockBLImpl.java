@@ -284,7 +284,7 @@ public class StockBLImpl implements StockBLService {
 	public List<DealVO> getMonthDealVOs(String stockCode, MyDate start, MyDate end) {
 
 		List<DealVO> vos;
-		List<StockPO> pos = new ArrayList<StockPO>(25);
+		List<StockPO> pos;
 
 		int monthNum = 12 * (end.getYear() - start.getYear()) + end.getMonth() - start.getMonth() + 1;
 		vos = new ArrayList<>(monthNum);
