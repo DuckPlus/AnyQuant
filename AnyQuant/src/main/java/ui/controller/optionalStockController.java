@@ -200,6 +200,18 @@ public class optionalStockController {
 		cmpBgn.setValue(LocalDate.of(monthAgo.getYear(), monthAgo.getMonth(), monthAgo.getDay()));
 		cmpEnd.setValue(LocalDate.now());
 		// init table
+		initCmpTable();
+
+		// init chart
+		cmpChart = new MyLineChart();
+		cmpChart.setSize(650, 650);
+		cmpChart.getTimesharingChart().setCreateSymbols(true);
+		cmpChart.getYAxis().setUpperBound(1);
+		cmpChart.getYAxis().setLowerBound(0);
+		cmpChart.getTimesharingChart().setTitle("Compare Module");
+		cmpChartPane.getChildren().add(cmpChart.getTimesharingChart());
+	}
+	private void initCmpTable(){
 		cmpTableview.getItems().removeAll(cmpTableData);
 		Iterator<StockVO> itr = optionalBl.getOptionalStocks();
 		while (itr.hasNext()) {
@@ -210,15 +222,6 @@ public class optionalStockController {
 		cmpTableview.setItems(cmpTableData);
 		cmpName.setCellValueFactory(cell -> cell.getValue().name);
 		cmpCode.setCellValueFactory(cell -> cell.getValue().code);
-
-		// init chart
-		cmpChart = new MyLineChart();
-		cmpChart.setSize(650, 650);
-		cmpChart.getTimesharingChart().setCreateSymbols(true);
-		cmpChart.getYAxis().setUpperBound(1);
-		cmpChart.getYAxis().setLowerBound(0);
-		cmpChart.getTimesharingChart().setTitle("Compare Module");
-		cmpChartPane.getChildren().add(cmpChart.getTimesharingChart());
 	}
 
 	/**
@@ -303,6 +306,7 @@ public class optionalStockController {
 	@FXML
 	private void refreshOptionalStockData() {
 		getOptionalStock();
+		initCmpTable();
 	}
 
 	@FXML

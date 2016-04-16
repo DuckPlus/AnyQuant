@@ -105,7 +105,7 @@
     -fx-font-family: "Arial";
     -fx-text-fill: linear-gradient(white, #d0d0d0);
     -fx-font-size: 12px;
-    -fx-padding: 10 20 10 20;
+/*  -fx-padding: 10 20 10 20;*/
     -fx-border-width: 1, 1;
     -fx-border-color: -fx-focus-color, -fx-faint-focus-color;
 }
@@ -129,7 +129,7 @@
     -fx-font-family: "Arial";
     -fx-text-fill: linear-gradient(white, #d0d0d0);
     -fx-font-size: 12px;
-    -fx-padding: 10 20 10 20;
+    /*-fx-padding: 10 20 10 20;*/
 }
 
 .button:pressed {
