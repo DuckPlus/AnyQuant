@@ -40,8 +40,8 @@ public class StockDetailController {
 	private  void updateDayChart(){
 		MyDate start = new MyDate(dayStart.getValue().getYear(),dayStart.getValue().getMonthValue(),dayStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(dayEnd.getValue().getYear(),dayEnd.getValue().getMonthValue(),dayEnd.getValue().getDayOfMonth());
-		if(! (DateCalculator.ifEarlier(start, end) || DateCalculator.ifSame(start, end))){
-			new TipsDialog("起始时间不能晚于终止时间");
+		if(! (DateCalculator.ifEarlier(start, end) )){
+			new TipsDialog("起始时间不能晚于或等于终止时间");
 			return;
 		}
 
@@ -55,8 +55,8 @@ public class StockDetailController {
 	private  void updateWeekChart(){
 		MyDate start = new MyDate(weekStart.getValue().getYear(),weekStart.getValue().getMonthValue(),weekStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(weekEnd.getValue().getYear(),weekEnd.getValue().getMonthValue(),weekEnd.getValue().getDayOfMonth());
-		if(! (DateCalculator.ifEarlier(start, end) || DateCalculator.ifSame(start, end))){
-			new TipsDialog("起始时间不能晚于终止时间");
+		if(! (DateCalculator.ifEarlier(start, end) )){
+			new TipsDialog("起始时间不能晚于或等于终止时间");
 			return;
 		}
 		Task updateWeekTask=CandleStickThreadHelper.
@@ -69,8 +69,8 @@ public class StockDetailController {
 	private  void updateMonthChart(){
 		MyDate start = new MyDate(monthStart.getValue().getYear(),monthStart.getValue().getMonthValue(),monthStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(monthEnd.getValue().getYear(),monthEnd.getValue().getMonthValue(),monthEnd.getValue().getDayOfMonth());
-		if(! (DateCalculator.ifEarlier(start, end) || DateCalculator.ifSame(start, end))){
-			new TipsDialog("起始时间不能晚于终止时间");
+		if(! (DateCalculator.ifEarlier(start, end) )){
+			new TipsDialog("起始时间不能晚于或等于终止时间");
 			return;
 		}
 		Task updateMonthTask=CandleStickThreadHelper.
@@ -83,6 +83,10 @@ public class StockDetailController {
 	private void updateDealChart(){
 		MyDate start = new MyDate(dealStart.getValue().getYear(),dealStart.getValue().getMonthValue(),dealStart.getValue().getDayOfMonth());
 		MyDate end = new MyDate(dealEnd.getValue().getYear(),dealEnd.getValue().getMonthValue(),dealEnd.getValue().getDayOfMonth());
+		if(! (DateCalculator.ifEarlier(start, end) )){
+			new TipsDialog("起始时间不能晚于或等于终止时间");
+			return;
+		}
 		Task updateDealTask=CandleStickThreadHelper.
 		          createUpdateDealAmountInitWorker(currentStock, start, end);
 		ProgressIndicatorHelper.showProgressIndicator(updateDealTask.progressProperty(),

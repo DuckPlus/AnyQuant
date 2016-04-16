@@ -259,7 +259,7 @@ public class StockPO {
 	}
 
 	public void computeChangeRate() {
-		double temp = (close - open) / open;
+		double temp = (close - preClose) / preClose;
 		if (temp > 10) {
 			temp = 0;
 			return;

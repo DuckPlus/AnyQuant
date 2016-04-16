@@ -6,7 +6,7 @@ import blservice.StockBLService;
 
 /**
  * 逻辑层工厂
- * @author czq
+ * @author Qiang
  * @date 2016年3月10日
  */
 public class BusinessFactory {

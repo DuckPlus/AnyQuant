@@ -122,19 +122,7 @@ public class StockBLImplTest {
         }
     }
 
-    @Test
-    public void getWeekOHLC_Data() throws Exception {
 
-    }
-
-
-
-
-
-    @Test
-    public void getMonthOHLC_Data() throws Exception {
-
-    }
 
     @Test
     public void getSharingVOs() throws Exception {
