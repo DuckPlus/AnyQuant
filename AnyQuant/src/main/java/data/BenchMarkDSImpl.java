@@ -6,15 +6,14 @@ import java.util.List;
 import data.helper.CacheHelper;
 import data.helper.ConnectionHelper;
 import data.helper.FileIOHelper;
-import data.helper.TransferHelper;
 import data.helper.StockMesHelper;
+import data.helper.TransferHelper;
 import dataservice.BenchMarkDataService;
 import enumeration.API_TYPE;
 import enumeration.MyDate;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import po.BenchMarkPO;
-import util.DateCalculator;
 
 /**
  *
@@ -60,7 +59,7 @@ public class BenchMarkDSImpl implements BenchMarkDataService {
 			BenchMarkPO po = TransferHelper.JSONObjectToBenchMarkPO(benJsonObject);
 			return po;
 		} else {
-			return new BenchMarkPO();
+			return null;
 		}
 	}
 
@@ -91,8 +90,8 @@ public class BenchMarkDSImpl implements BenchMarkDataService {
 
 	@Override
 	public List<BenchMarkPO> getAllBenchMes() {
-		
-		
+
+
 		if(CacheHelper.needUpdate(false)){
 			List<BenchMarkPO> pos = new ArrayList<>();
 			List<String> benchs = FileIOHelper.readFiles(FileIOHelper.benchCodeFileName);
@@ -102,7 +101,7 @@ public class BenchMarkDSImpl implements BenchMarkDataService {
 			}
 			FileIOHelper.writeAllBenMes(pos);
 		}
-		
+
 		return CacheHelper.getCacheBenchPOs();
 	}
 

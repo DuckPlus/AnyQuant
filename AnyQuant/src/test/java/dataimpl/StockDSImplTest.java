@@ -1,6 +1,6 @@
 package dataimpl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +8,6 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.python.antlr.PythonParser.else_clause_return;
-import org.python.antlr.PythonParser.power_return;
 
 import data.StockDSImpl;
 import dataservice.StockDataService;
@@ -127,7 +125,7 @@ public class StockDSImplTest {
 
 	@Test
 	public void testGetStockMesStringMyDate() {
-		MyDate date =DateCalculator.getToDay();
+		MyDate date =DateCalculator.getAnotherDay(-1);
 		String code = "sh600216";
 		String nameString = "浙江医药";
 		String dateString = date.DateToString();
@@ -191,8 +189,8 @@ public class StockDSImplTest {
 
 	@Test
 	public void testUpdateAllMes() {
-		MyDate today = DateCalculator.getToDay();
-		String dateString = today.DateToString();
+		MyDate yestoday = DateCalculator.getAnotherDay(-1);
+		String dateString = yestoday.DateToString();
 		stockDataService.updateAllMes();
 
 		List<StockPO>  pos  =  stockDataService.getAllStockMes();
