@@ -11,7 +11,7 @@
       <AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="background" BorderPane.alignment="CENTER">
          <children>
             <Label text="股票查询" textFill="WHITE" AnchorPane.leftAnchor="4.0" AnchorPane.topAnchor="10.0" />
-            <TextField fx:id="searchBar" layoutX="78.0" layoutY="6.0" onKeyTyped="#searchStocklist" AnchorPane.topAnchor="6.0" />
+            <TextField fx:id="searchBar" layoutX="78.0" layoutY="6.0" onAction="#searchStocklist" AnchorPane.topAnchor="6.0" />
             <TableView fx:id="tableview" onMouseClicked="#handleMouseClick" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
               <columns>
                 <TableColumn fx:id="name" prefWidth="75.0" text="股票名称" />
@@ -29,6 +29,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
+            <Button layoutX="259.0" layoutY="6.0" mnemonicParsing="false" onAction="#searchStocklist" prefHeight="27.0" prefWidth="53.0" styleClass="myblueButton" stylesheets="@../css/buttons.css" text="查找" />
 
          </children></AnchorPane>
    </center>
