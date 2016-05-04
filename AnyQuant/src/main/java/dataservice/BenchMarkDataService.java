@@ -19,7 +19,6 @@ public interface BenchMarkDataService {
 
 	/**
 	 * 只需要传入大盘的代码例如"hs300"，返回当天的全部信息
-	 *
 	 * @param benchCode
 	 * @return
 	 */
