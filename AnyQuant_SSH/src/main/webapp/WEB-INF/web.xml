@@ -49,8 +49,8 @@
 
 
   <context-param>
-  <param-name>contextConfigLocation</param-name>
-  <param-value>classpath:/META-INF/applicationContext.xml,classpath:/META-INF/infrastructure.xml</param-value>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:/META-INF/applicationContext.xml,classpath:/META-INF/infrastructure.xml</param-value>
   </context-param>
 
 

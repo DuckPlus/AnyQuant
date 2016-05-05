@@ -171,7 +171,6 @@ public class BaseDAOImpl implements BaseDAO {
         Session session = getSession();
         Criteria criteria = session.createCriteria(c);
         criteria.add(eq(column, value));
-        List<?> list = criteria.list();
-        return list;
+        return criteria.list();
     }
 }

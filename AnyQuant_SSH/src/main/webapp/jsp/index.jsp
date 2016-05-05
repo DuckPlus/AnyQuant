@@ -26,7 +26,7 @@
 
 
     <a href="/json">All users</a>
-    <script src="index.jsp"></script>
+    <script src="../js/login.js"></script>
 
 
 </form>

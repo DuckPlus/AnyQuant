@@ -4,7 +4,7 @@
 $("#signup")
     .click(
         function() {
-            var username = $("#name").val();
+            var username = $("#username").val();
             var password = $("#password").val();
             var passwordTwice = $("#password-second").val();
             if (username == "") {

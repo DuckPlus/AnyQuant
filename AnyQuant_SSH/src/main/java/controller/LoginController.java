@@ -30,6 +30,7 @@ public class LoginController {
 
 //    public MainController(UserService userService) {
 //        this.userService = userService;
+
 //    }
 
     @RequestMapping("")
@@ -54,7 +55,6 @@ public class LoginController {
 
 
     @RequestMapping(value="/login",method= RequestMethod.POST)
-
     public String login(String username,String password , String addNewUser){
         System.out.print(addNewUser);
         UserEntity userEntity =  new UserEntity();

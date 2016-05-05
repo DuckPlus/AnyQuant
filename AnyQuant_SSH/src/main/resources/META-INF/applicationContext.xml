@@ -18,7 +18,7 @@
     <mvc:annotation-driven />
     <!-- 对模型视图添加前后缀 -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/pages/"/>
+        <property name="prefix" value="/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
@@ -27,7 +27,8 @@
         <property name="maxUploadSize" value="2000000"/>
     </bean>
 
-    <mvc:resources mapping="/static/**" location="/"/>
+    <!--静态资源存储在imgaes下,映射为static-->
+    <mvc:resources mapping="/static/**" location="/,classpath:/images"/>
 
     <mvc:default-servlet-handler />
 </beans>
