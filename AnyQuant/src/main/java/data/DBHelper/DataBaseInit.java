@@ -44,8 +44,11 @@ public class DataBaseInit {
 
 		  try {
 			  //连接URL为'jdbc:mysql//服务器地址/数据库名 ' ，后面的2个参数分别是登陆用户名和密码
+			  String  dbname="AnyQuant";
+			  String username = "Client";
+			  String password= "zxcvbnm123";
 			  conn = DriverManager.getConnection(
-					  "jdbc:mysql://localhost:3306/anyquant?useUnicode=true&characterEncoding=UTF-8","root","root"
+					  "jdbc:mysql://115.159.157.163:3306/"+dbname+"?useUnicode=true&characterEncoding=UTF-8",username,password
 					  );
 		  } catch (SQLException e) {
 			e.printStackTrace();

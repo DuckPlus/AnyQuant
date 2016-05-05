@@ -27,5 +27,6 @@
 	<classpathentry kind="lib" path="lib/httpclient-4.5.2.jar"/>
 	<classpathentry kind="lib" path="lib/httpcore-4.4.4.jar"/>
 	<classpathentry kind="lib" path="lib/SwingSets3(BeautyEyeLNFDemo).jar"/>
+	<classpathentry kind="lib" path="C:/Users/67534/Desktop/软工三/mysql-connector-java-5.1.22-bin.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

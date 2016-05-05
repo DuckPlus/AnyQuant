@@ -47,7 +47,7 @@ public class MyDate implements Cloneable{
 		return "" + year + SPLIT_STRING + month + SPLIT_STRING + day;
 	}
 
-	// 返回日期“2015-01-10”
+	// 返回日期“20150110”
 	public String DateToStringSimple() {
 		String month = "";
 		String day = "";
