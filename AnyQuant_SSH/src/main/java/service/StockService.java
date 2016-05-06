@@ -1,5 +1,7 @@
 package service;
 
+import entity.StockEntity;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -141,13 +143,16 @@ public interface StockService {
 //	 */
 //	public Iterator<StockVO> getRecentStocks(String stockCode);
 //
-//	/**
-//	 * Get today's(or last trading day)data of the given stockCode
-//	 *
-//	 * @param stockCode
-//	 * @return
-//	 */
-//	public StockVO getTodayStockVO(String stockCode);
+
+    List<StockEntity> getAllStocks();
+
+	/**
+	 * Get today's(or last trading day)data of the given stockCode
+	 *
+	 * @param stockCode
+	 * @return
+	 */
+	public StockEntity getTodayStockVO(String stockCode);
 //
 //	/**
 //	 * 获得某只股票一段时间内的数据
