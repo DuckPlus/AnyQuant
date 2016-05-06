@@ -25,19 +25,11 @@ public class TableViewController {
 
     @RequestMapping("/getStockList")
     @ResponseBody
-    public String getStockList(){
+    public  List<StockEntity> getStockList(){
         List<StockEntity> stockEntities = stockService.getAllStocks();
 
-        for (int i = 0; i < stockEntities.size(); i++) {
-            System.out.println(stockEntities.get(i).getRegion());
-        }
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.writeValueAsString(stockEntities);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+       return stockEntities;
+//
 
     }
 
