@@ -6,6 +6,7 @@
 
     </style>
     <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="stylesheet" type="text/css" href="css/buttons.css">
 </head>
 
 <body id="login_back">
@@ -30,6 +31,7 @@
 
 
 </form>
+<button class="button button-raised button-royal" onclick="location.href='/jsp/StockList.jsp'">直接进入</button>
 </body>
 
 </html>

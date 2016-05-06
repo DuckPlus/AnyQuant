@@ -35,7 +35,7 @@ public class LoginController {
 
     @RequestMapping("")
     public String index(){
-        return "/home.web";
+        return "/index";
     }
 
     @RequestMapping("/json")
