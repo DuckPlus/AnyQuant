@@ -13,6 +13,8 @@
 <h1>
     Login Page
 </h1>
+<a href="index" >asdsad</a>
+
 <form action="/login" method="post">
 
     <fieldset>
