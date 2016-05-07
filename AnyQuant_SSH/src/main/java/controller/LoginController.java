@@ -40,16 +40,9 @@ public class LoginController {
 
     @RequestMapping("/json")
     @ResponseBody
-    public String json(){
+    public List<UserEntity> json(){
 
-        ObjectMapper mapper =  new ObjectMapper();
-
-        try {
-            return mapper.writeValueAsString(userService.getAllUsernames());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "";
-        }
+        return userService.getAllUsernames();
     }
 
 

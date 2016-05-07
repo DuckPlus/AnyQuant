@@ -37,7 +37,7 @@
                 <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
                 <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
                 <prop key="hibernate.connection.autocommit">true</prop>
-                <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/Qiang</prop>
+                <prop key="hibernate.connection.url">jdbc:mysql://115.159.157.163:3306/AnyQuant</prop>
                 <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
 
 
