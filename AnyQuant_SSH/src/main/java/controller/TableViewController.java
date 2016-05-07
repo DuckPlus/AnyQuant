@@ -26,11 +26,7 @@ public class TableViewController {
     @RequestMapping("/getStockList")
     @ResponseBody
     public  List<StockEntity> getStockList(){
-        List<StockEntity> stockEntities = stockService.getAllStocks();
-
-       return stockEntities;
-//
-
+        return stockService.getAllStocks();
     }
 
 

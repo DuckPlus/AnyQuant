@@ -1,7 +1,6 @@
 package controller;
 
 import entity.UserEntity;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,11 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.UserService;
 
-import javax.jws.soap.SOAPBinding;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Qiang
@@ -30,7 +25,6 @@ public class LoginController {
 
 //    public MainController(UserService userService) {
 //        this.userService = userService;
-
 //    }
 
     @RequestMapping("")
@@ -51,8 +45,10 @@ public class LoginController {
     public String login(String username,String password , String addNewUser){
         System.out.print(addNewUser);
         UserEntity userEntity =  new UserEntity();
-        userEntity.setId(Integer.parseInt(username));
-        userEntity.setName(password);
+//        userEntity.setId(Integer.parseInt(username));
+
+        userEntity.setName(username);
+        userEntity.setPassword(password);
         if(addNewUser!= null && addNewUser.equals("on")){
 
 

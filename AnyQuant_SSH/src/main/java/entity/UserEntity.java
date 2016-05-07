@@ -3,14 +3,14 @@ package entity;
 import javax.persistence.*;
 
 /**
- * @author Qiang
- * @date 16/5/4
+ * Created by 67534 on 2016/5/7.
  */
 @Entity
-@Table(name = "user", schema = "Qiang", catalog = "")
+@Table(name = "user", schema = "AnyQuant", catalog = "")
 public class UserEntity {
     private int id;
     private String name;
+    private String password;
 
     @Id
     @Column(name = "id")
@@ -32,6 +32,16 @@ public class UserEntity {
         this.name = name;
     }
 
+    @Basic
+    @Column(name = "password")
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -41,6 +51,7 @@ public class UserEntity {
 
         if (id != that.id) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (password != null ? !password.equals(that.password) : that.password != null) return false;
 
         return true;
     }
@@ -49,6 +60,7 @@ public class UserEntity {
     public int hashCode() {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
     }
 }
