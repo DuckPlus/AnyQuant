@@ -3,8 +3,6 @@ package DAO.impl;
 import DAO.BaseDAO;
 import DAO.UserDAO;
 import entity.UserEntity;
-import org.hibernate.Criteria;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

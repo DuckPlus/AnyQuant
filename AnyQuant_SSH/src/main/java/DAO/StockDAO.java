@@ -9,6 +9,7 @@ import java.util.List;
  * @date 16/5/6
  */
 public interface StockDAO {
+
     List<StockEntity> findAllStocks();
 
 
