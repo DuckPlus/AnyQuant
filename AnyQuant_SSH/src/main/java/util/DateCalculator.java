@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 
+
 /**
  *
  * @author ss14
@@ -141,12 +142,6 @@ public class DateCalculator {
 		return DateCalculator.getAnotherDay(date, i);
 	}
 
-	// public static void main (String a[]){
-	// MyDate dateA = new MyDate(2016, 3, 5);
-	// MyDate dateB=new MyDate(2016, 4, 5);
-	// System.out.println(MyTime.ifSame(dateA, dateB));
-	//
-	// }
 
 	public static final MyDate getMondayofTheWeek(MyDate date) {
 
@@ -179,56 +174,63 @@ public class DateCalculator {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(DateCalculator.getToDay().DateToString());
-		System.out.println(getMondayofTheWeek(DateCalculator.getToDay()).DateToString());
+//		System.out.println(DateCalculator.getToDay().DateToString());
+//		System.out.println(getMondayofTheWeek(DateCalculator.getToDay()).DateToString());
+//
+//		Calendar c2 = Calendar.getInstance();
+//		c2.clear();
+//		c2.set(2016, 2, 7);
+//		// 年份
+//		int year = c2.get(Calendar.YEAR);
+//		// 月份
+//		int month = c2.get(Calendar.MONTH) + 1;
+//		// 日期
+//		int date = c2.get(Calendar.DATE);
+//		// 小时
+//		int hour = c2.get(Calendar.HOUR_OF_DAY);
+//		// 分钟
+//		int minute = c2.get(Calendar.MINUTE);
+//		// 秒
+//		int second = c2.get(Calendar.SECOND);
+//		// 星期几
+//		int day = c2.get(Calendar.DAY_OF_WEEK);
+//		System.out.println("年份：" + year);
+//		System.out.println("月份：" + month);
+//		System.out.println("日期：" + date);
+//		System.out.println("小时：" + hour);
+//		System.out.println("分钟：" + minute);
+//		System.out.println("秒：" + second);
+//		System.out.println("星期：" + day);
+//
+//		c2.add(Calendar.DATE, -6);
+//		// 年份
+//		year = c2.get(Calendar.YEAR);
+//		// 月份
+//		month = c2.get(Calendar.MONTH) + 1;
+//		// 日期
+//		date = c2.get(Calendar.DATE);
+//		// 小时
+//		hour = c2.get(Calendar.HOUR_OF_DAY);
+//		// 分钟
+//		minute = c2.get(Calendar.MINUTE);
+//		// 秒
+//		second = c2.get(Calendar.SECOND);
+//		// 星期几
+//		day = c2.get(Calendar.DAY_OF_WEEK);
+//		System.out.println("年份：" + year);
+//		System.out.println("月份：" + month);
+//		System.out.println("日期：" + date);
+//		System.out.println("小时：" + hour);
+//		System.out.println("分钟：" + minute);
+//		System.out.println("秒：" + second);
+//		System.out.println("星期：" + day);
 
-		Calendar c2 = Calendar.getInstance();
-		c2.clear();
-		c2.set(2016, 2, 7);
-		// 年份
-		int year = c2.get(Calendar.YEAR);
-		// 月份
-		int month = c2.get(Calendar.MONTH) + 1;
-		// 日期
-		int date = c2.get(Calendar.DATE);
-		// 小时
-		int hour = c2.get(Calendar.HOUR_OF_DAY);
-		// 分钟
-		int minute = c2.get(Calendar.MINUTE);
-		// 秒
-		int second = c2.get(Calendar.SECOND);
-		// 星期几
-		int day = c2.get(Calendar.DAY_OF_WEEK);
-		System.out.println("年份：" + year);
-		System.out.println("月份：" + month);
-		System.out.println("日期：" + date);
-		System.out.println("小时：" + hour);
-		System.out.println("分钟：" + minute);
-		System.out.println("秒：" + second);
-		System.out.println("星期：" + day);
+		java.sql.Date sqlDate = java.sql.Date.valueOf("2016-3-20");
+		MyDate myDate = SQLDateToMyDate(sqlDate);
+		System.out.println("MYDATE:"+myDate.DateToString());
 
-		c2.add(Calendar.DATE, -6);
-		// 年份
-		year = c2.get(Calendar.YEAR);
-		// 月份
-		month = c2.get(Calendar.MONTH) + 1;
-		// 日期
-		date = c2.get(Calendar.DATE);
-		// 小时
-		hour = c2.get(Calendar.HOUR_OF_DAY);
-		// 分钟
-		minute = c2.get(Calendar.MINUTE);
-		// 秒
-		second = c2.get(Calendar.SECOND);
-		// 星期几
-		day = c2.get(Calendar.DAY_OF_WEEK);
-		System.out.println("年份：" + year);
-		System.out.println("月份：" + month);
-		System.out.println("日期：" + date);
-		System.out.println("小时：" + hour);
-		System.out.println("分钟：" + minute);
-		System.out.println("秒：" + second);
-		System.out.println("星期：" + day);
+
+
 	}
 
 	public static boolean isLeapYear(MyDate date) {
@@ -253,6 +255,19 @@ public class DateCalculator {
 
 
 	}
+
+
+	public static java.sql.Date MyDateToSQLDate(MyDate myDate){
+		java.sql.Date date = java.sql.Date.valueOf(myDate.DateToString());
+		return date;
+	}
+
+	public static MyDate SQLDateToMyDate(java.sql.Date sqlDate){
+
+		MyDate myDate = MyDate.getDateFromString(sqlDate.toString());
+		return myDate;
+	}
+
 
 
 }
