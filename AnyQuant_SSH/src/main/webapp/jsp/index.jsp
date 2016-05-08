@@ -7,6 +7,8 @@
     </style>
     <link rel="stylesheet" type="text/css" href="css/login.css">
     <link rel="stylesheet" type="text/css" href="css/buttons.css">
+    <%--tab上的小图标--%>
+    <link rel="shortcut icon" href="/image/shoot_cut.png">
 </head>
 
 <body id="login_back">
@@ -33,7 +35,8 @@
 
 
 </form>
-<button class="button button-raised button-royal" onclick="location.href='/jsp/StockList.jsp'">直接进入</button>
+<button class="button button-raised button-primary button-pill" onclick="location.href='/jsp/StockList.jsp'">直接进入</button>
+<button class="button button-raised button-primary button-pill" onclick="location.href='/jsp/testPage.jsp'">test</button>
 </body>
 
 </html>

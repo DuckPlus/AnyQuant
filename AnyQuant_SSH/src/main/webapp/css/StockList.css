@@ -1,0 +1,10 @@
+.stock_list_pane{
+
+    background-color: #bbbbbb;
+    width: 70%;
+    height: 70%;
+    position: absolute;
+    right: 100px;
+    top: 100px;
+
+}
