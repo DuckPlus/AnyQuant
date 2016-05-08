@@ -1,9 +1,8 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="javax.swing.text.TabableView" %><%--
+<%--
   Created by IntelliJ IDEA.
-  User: duanzhengmou
-  Date: 5/6/16
-  Time: 3:57 PM
+  User: dsn
+  Date: 2016/5/8
+  Time: 4:11
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -13,19 +12,16 @@
     <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.js"></script>
 
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="/css/StockList.css">
-    <title>Duck_stockList</title>
+    //<link rel="stylesheet" type="text/css" href="/css/StockList.css">
+    <title>Duck_optionalList</title>
 </head>
 <body>
-<%
-
-%>
 <table id="stock_list">
     <thead >
     <tr>
         <td>股票名称</td>
         <td>股票代码</td>
-        <td>开盘价</td>
+        <td>地区</td>
         <td>最高价</td>
         <td>最低价</td>
         <td>收盘价</td>
@@ -33,39 +29,19 @@
         <td>换手率</td>
     </tr>
     </thead>
-    <tbody>
-
-    </tbody>
-
-    <tfoot>
-
-
-    </tfoot>
-
 </table>
 
 <script>
-        $.ajax({
-            type:'post',
-            url:'/TableView/getStockList',
-            contentType:'application/json;charset=utf-8',
-            success:function (data){
-                alert("welcome to 股票列表界面");
-//                var jsonData = eval('('+data+')');
-//                var result = "[";
-//                for (var i=0;i<jsonData.length;i++){
-//                    result+="[";
-//                    var item = jsonData[i];
-//                    result+="\"";
-//                    result = result + item.code + "\",\"";
-//                    result = result + item.name + "\"]";
-//                    if (i!=jsonData.length-1) result+=",";
-//                }
-//                result+="]";
-                initTable(data)
+    $.ajax({
+        type:'post',
+        url:'/TableView/getStockList',
+        contentType:'application/json;charset=utf-8',
+        success:function (data){
+            alert("welcome to 自选股界面");
+            initTable(data)
 
-            }
-        })
+        }
+    })
     function initTable(stock_data) {
         $(document).ready(function() {
             $('#stock_list').dataTable( {
@@ -84,7 +60,9 @@
         } );
 
     }
-//    initTable();
+    //    initTable();
 </script>
+
+
 </body>
 </html>
