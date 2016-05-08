@@ -36,7 +36,7 @@ public class StockChartDataViewController {
      */
     @RequestMapping("/deal")
     @ResponseBody
-    List<DealVO> getDealVO(@RequestParam("type") String type , @RequestParam("code") String stockCode , @RequestParam("start") String start, @RequestParam("end") String end){
+    public List<DealVO> getDealVO(@RequestParam("type") String type , @RequestParam("code") String stockCode , @RequestParam("start") String start, @RequestParam("end") String end){
 
         if(type.equals("month")){
             return  stockService.getMonthDealVOs(stockCode , MyDate.getDateFromString(start) , MyDate.getDateFromString(end));
@@ -54,13 +54,13 @@ public class StockChartDataViewController {
 
     @RequestMapping("/TimeSharingVO")
     @ResponseBody
-    List<TimeSharingVO> getTimeSharingVO(){
+    public List<TimeSharingVO> getTimeSharingVO(){
         return null;
     }
 
     @RequestMapping("/OHLC")
     @ResponseBody
-    List<OHLC_VO> getOHLC_VO(@RequestParam("type") String type , @RequestParam("code") String stockCode , @RequestParam("start") String start, @RequestParam("end") String end){
+    public List<OHLC_VO> getOHLC_VO(@RequestParam("type") String type , @RequestParam("code") String stockCode , @RequestParam("start") String start, @RequestParam("end") String end){
         if(type.equals("month")){
             return  stockService.getMonthOHLC_Data(stockCode , MyDate.getDateFromString(start) , MyDate.getDateFromString(end));
         }else if(type.equals("week")){
