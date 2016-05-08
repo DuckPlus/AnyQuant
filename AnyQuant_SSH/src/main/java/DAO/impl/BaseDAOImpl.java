@@ -8,7 +8,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.io.Serializable;
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.hibernate.criterion.Restrictions.*;
 
@@ -17,6 +19,7 @@ import static org.hibernate.criterion.Restrictions.*;
  * @date 16/5/4
  */
 @Repository
+@Transactional
 public class BaseDAOImpl implements BaseDAO {
     /**
      * Autowired 自动装配 相当于get() set()
@@ -53,6 +56,13 @@ public class BaseDAOImpl implements BaseDAO {
         Session session = getSession();
         return session.get(c, id);
     }
+
+    @Override
+    public Object load(Class<?> c, Serializable key) {
+        Session session = getSession();
+        return session.get(c,key);
+    }
+
 
     /**
      * 获取所有信息
