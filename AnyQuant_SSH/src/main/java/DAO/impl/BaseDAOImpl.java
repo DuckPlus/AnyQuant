@@ -63,6 +63,16 @@ public class BaseDAOImpl implements BaseDAO {
         return session.get(c,key);
     }
 
+    @Override
+    public Object load(String hql) {
+        Session session = getSession();
+        return session.createQuery(hql).setMaxResults(1).uniqueResult();
+
+
+    }
+
+
+
 
     /**
      * 获取所有信息
@@ -74,6 +84,12 @@ public class BaseDAOImpl implements BaseDAO {
         Session session = getSession();
         return session.createQuery(hql).list();
 
+    }
+
+    @Override
+    public List<?> getAllList(String hql) {
+        Session session = getSession();
+        return session.createQuery(hql).list();
     }
 
     /**
