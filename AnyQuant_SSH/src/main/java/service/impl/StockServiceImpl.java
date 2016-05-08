@@ -261,6 +261,11 @@ public class StockServiceImpl implements StockService {
         return stockDAO.findAllStocks();
     }
 
+    @Override
+    public List<StockdataEntity> getTodayAllStockData() {
+        return stockDataDAO.getAllStockData();
+    }
+
     /**
      * Get today's(or last trading day)data of the given stockCode
      *

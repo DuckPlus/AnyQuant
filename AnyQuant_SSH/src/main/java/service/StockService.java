@@ -120,6 +120,9 @@ public interface StockService {
 
     List<StockEntity> getAllStocks();
 
+
+	List<StockdataEntity> getTodayAllStockData();
+
 	/**
 	 * Get today's(or last trading day)data of the given stockCode
 	 *

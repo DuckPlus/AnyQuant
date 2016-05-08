@@ -2,6 +2,7 @@ package controller;
 
 import DAO.StockDAO;
 import entity.StockEntity;
+import entity.StockdataEntity;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,13 +22,37 @@ import java.util.List;
 public class TableViewController {
 
     @Autowired
-    StockService stockService;
+    private StockService stockService;
 
+    /**
+     * 返回所有股票的信息
+     * @return
+     */
     @RequestMapping("/getStockList")
     @ResponseBody
     public  List<StockEntity> getStockList(){
         return stockService.getAllStocks();
     }
+
+    /**
+     * 返回最近一个交易日所有股票的交易数据
+     * @return
+     */
+    @RequestMapping("/getStockDataList")
+    @ResponseBody
+    public  List<StockdataEntity> getStockDataList(){
+        return stockService.getTodayAllStockData();
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 }
