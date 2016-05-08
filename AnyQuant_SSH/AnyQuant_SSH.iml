@@ -26,9 +26,11 @@
     <facet type="hibernate" name="Hibernate">
       <configuration>
         <datasource-map>
+          <unit-entry name="hibernate.cfg.xml" />
           <unit-entry name="sessionFactory" value="712a49e5-85ac-48fa-b5b5-32d0e5fbfe05" />
         </datasource-map>
         <naming-strategy-map />
+        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/main/resources/hibernate.cfg.xml" />
       </configuration>
     </facet>
   </component>
@@ -57,6 +59,7 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-orm:4.0.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:4.0.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:4.0.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-test:4.2.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet.jsp.jstl:javax.servlet.jsp.jstl-api:1.2.1" level="project" />
     <orderEntry type="library" name="Maven: taglibs:standard:1.1.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: tomcat:servlet-api:5.5.23" level="project" />

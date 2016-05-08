@@ -1,32 +1,30 @@
 package DAO.impl;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import entity.StockdataEntity;
 import DAO.StockDataDAO;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 import util.MyDate;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 
 import static org.junit.Assert.*;
 
 /**
  * Created by 67534 on 2016/5/8.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration
+        (locations = {"classpath:/META-INF/applicationContext.xml","classpath:/META-INF/infrastructure.xml"})
+
+
 public class StockDataDAOImplTest {
-
+    @Autowired
     private StockDataDAO dao;
-    @Before
-    public void setUp() throws Exception {
-        ApplicationContext context = new ClassPathXmlApplicationContext
-                ("META-INF/applicationContext.xml");
-    }
 
-    @After
-    public void tearDown() throws Exception {
-
-    }
 
     @Test
     public void getStockData() throws Exception {
@@ -35,13 +33,13 @@ public class StockDataDAOImplTest {
 
     @Test
     public void getStockData1() throws Exception {
-        String code  = "sh600126";
+        String code  = "sh600216";
         MyDate myDate = new MyDate (2016,3,3);
         StockdataEntity entity =dao.getStockData(code,myDate);
-        System.out.println("code :"+entity.getCode());
-        System.out.print("date :"+entity.getDate().toString());
+    //    System.out.println("code :"+entity.getCode());
+    //    System.out.print("date :"+entity.getDate().toString());
         assertEquals("sh600216",entity.getCode());
-        assertEquals("2016-3-3",entity.getDate().toString());
+        assertEquals("2016-03-03",entity.getDate().toString());
     }
 
     @Test

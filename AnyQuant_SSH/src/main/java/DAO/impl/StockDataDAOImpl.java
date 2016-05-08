@@ -5,6 +5,7 @@ import DAO.StockDataDAO;
 import entity.StockdataEntity;
 import entity.StockdataEntityPK;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import util.MyDate;
 import util.DateCalculator;
 
@@ -14,6 +15,7 @@ import java.util.List;
 /**
  * Created by 67534 on 2016/5/7.
  */
+@Repository
 public class StockDataDAOImpl implements StockDataDAO {
 
     @Autowired
