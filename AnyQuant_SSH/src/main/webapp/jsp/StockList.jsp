@@ -66,38 +66,31 @@
     <%--</tr>--%>
     </tfoot>
 
-</table></div>
+</table>
+    <button class="button" id="button">Select Row</button>
+</div>
 
 <script>
     var allStock;
+    $(document).ready(function () {
         $.ajax({
             type:'post',
-            url:'/TableView/getStockList',
+            url:'/Stock/getStockList',
             contentType:'application/json;charset=utf-8',
             success:function (data){
 
-                alert("welcome to 股票列表界面");
-//                var jsonData = eval('('+data+')');
-//                var result = "[";
-//                for (var i=0;i<jsonData.length;i++){
-//                    result+="[";
-//                    var item = jsonData[i];
-//                    result+="\"";
-//                    result = result + item.code + "\",\"";
-//                    result = result + item.name + "\"]";
-//                    if (i!=jsonData.length-1) result+=",";
-//                }
-//                result+="]";
-//                initTable(data)
-                allStock = data;
-//                alert("HELLO"+ allStock);
+                initTable(data);
+            },
+            error:function () {
+                alert("请求失败");
             }
-        })
-    alert(allStock);
-//    function initTable(stock_data) {
-        $(document).ready(function() {
-            var teble = $('#stock_list').dataTable( {
-//                "processing": true,
+        });
+            }
+    );
+
+//    alert(allStock);
+        function initTable(allStock) {
+            var table = $('#stock_list').DataTable( {
 
                 data:allStock,
                 columns:[
@@ -151,7 +144,10 @@
 
 
             } );
-            $('#stock_list tbody').on('click', 'tr', function(){
+
+//以下是关于选择行的代码
+
+            $('#stock_list tbody').on( 'click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
                     $(this).removeClass('selected');
                 }
@@ -159,13 +155,20 @@
                     table.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                 }
-            });
+            } );
 
-        } );
+            $('#button').click( function () {
+//                var value = table.row('.selected').$element.getVal();
+                var selected_row = table.row('.selected').index();
+                var value = table.cell(selected_row,0).data();
 
-//    }
+                alert(value);
+            } );
+        }
 //    initTable();
 
 </script>
+
 </body>
+
 </html>
