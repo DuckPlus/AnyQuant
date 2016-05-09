@@ -46,15 +46,18 @@ public class StockDataDAOImpl implements StockDataDAO {
     @Override
     public List<StockdataEntity> getStockData(String stockCode, MyDate start, MyDate end)
     {
-        String hql = "from"+tableName+
-                "where date between "+start.DateToString()+" and "+end.DateToString();
+        String hql = "from "+tableName+
+                " where code = '"+stockCode+"' and date between '"+start.DateToString()+"' and '"+end.DateToString()+"'";
 
         return (List<StockdataEntity>) baseDAO.getAllList(hql);
     }
 
     @Override
-    public List<StockdataEntity> getAllStockData() {
-        return null;
+    public List<StockdataEntity> getAllStockData()
+    {
+        String hql = "from "+tableName+" where  date = "+
+                "(select max(date) from " +tableName+ ")" ;
+        return (List<StockdataEntity>) baseDAO.getAllList(hql);
     }
 
 

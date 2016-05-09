@@ -54,18 +54,26 @@ public class StockDataDAOImplTest {
     @Test
     public void getStockData2() throws Exception {
         String code  = "sh600216";
-        MyDate start = new MyDate (2016,3,20);
-        MyDate end = new MyDate (2016,3,1);
+        MyDate start = new MyDate (2016,3,1);
+        MyDate end = new MyDate (2016,3,20);
         ArrayList<StockdataEntity> list = ( ArrayList<StockdataEntity>)dao.getStockData(code,start,end);
         System.out.println("code :"+list.size());
         System.out.println("code :"+list.get(0).getCode());
         System.out.print("date :"+list.get(0).getDate().toString());
+        assertEquals("sh600216",list.get(0).getCode());
+     //   assertEquals(start.DateToString(),list.get(0).getDate().toString());
 
     }
 
     @Test
     public void getAllStockData() throws Exception {
-
+        ArrayList<StockdataEntity> list=
+        ( ArrayList<StockdataEntity>)dao.getAllStockData();
+        System.out.println("size :"+list.size());
+        for(int i=0;i<10;i++){
+            System.out.println("code: "+list.get(i).getCode()
+            +" date: "+list.get(i).getDate().toString());
+        }
     }
 
 }
