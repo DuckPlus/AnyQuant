@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import entity.StockdataEntity;
 import DAO.StockDataDAO;
 import util.MyDate;
+import java.util.ArrayList;
 
 
 import static org.junit.Assert.*;
@@ -29,6 +30,14 @@ public class StockDataDAOImplTest {
     @Test
     public void getStockData() throws Exception {
 
+        String code  = "sh600005";
+        String date = "2016-05-03";
+        StockdataEntity entity =dao.getStockData(code);
+        System.out.println("code :"+entity.getCode());
+        System.out.print("date :"+entity.getDate().toString());
+        assertEquals(code,entity.getCode());
+    //    assertEquals(date,entity.getDate().toString());
+
     }
 
     @Test
@@ -36,14 +45,21 @@ public class StockDataDAOImplTest {
         String code  = "sh600216";
         MyDate myDate = new MyDate (2016,3,3);
         StockdataEntity entity =dao.getStockData(code,myDate);
-    //    System.out.println("code :"+entity.getCode());
-    //    System.out.print("date :"+entity.getDate().toString());
+        System.out.println("code :"+entity.getCode());
+        System.out.print("date :"+entity.getDate().toString());
         assertEquals("sh600216",entity.getCode());
         assertEquals("2016-03-03",entity.getDate().toString());
     }
 
     @Test
     public void getStockData2() throws Exception {
+        String code  = "sh600216";
+        MyDate start = new MyDate (2016,3,20);
+        MyDate end = new MyDate (2016,3,1);
+        ArrayList<StockdataEntity> list = ( ArrayList<StockdataEntity>)dao.getStockData(code,start,end);
+        System.out.println("code :"+list.size());
+        System.out.println("code :"+list.get(0).getCode());
+        System.out.print("date :"+list.get(0).getDate().toString());
 
     }
 

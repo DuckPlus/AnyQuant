@@ -35,12 +35,14 @@ public interface BaseDAO {
 	Object load(Class<?> c, String id);
 	Object load(Class<?> c, int id);
 	Object load(Class<?> c, Serializable bean);
+	Object load(String hql);
 	/**
 	 * get all entities of this table
 	 * @param c
 	 * @return
      */
 	public List<?> getAllList(Class<?> c);
+	public List<?> getAllList(String hql);
 
 	/**
 	 * count the entites of a table
