@@ -328,6 +328,41 @@ public class DataBaseHelper {
 	     }
 	  }
 
-	  
+	  public void insertStockDataList(List<StockPO > pos){
+		  PreparedStatement preparedStatement =null;
+		     String sql= " INSERT INTO stockdata(code, date, high, low, open, close, preClose, turnoverVol,"+
+		"	 turnoverValue, turnoverRate,pb , pe, accAdjFactor , cirMarketValue, totalMarketValue,"+
+		"	 amplitude, changeRate) "  +   "VALUES(?,?,?,?,?,?,?,  ?,?,?,?,?,?,?,   ?,?,?   )";
+		     try {
+
+			    preparedStatement  = conn.prepareStatement(sql);
+			    for(StockPO po : pos){
+				preparedStatement.setString(1, po.getCode());
+				Date sqlDate = Date.valueOf(po.getDate());  
+			//	System.out.println(date);
+		    	preparedStatement.setDate(2, sqlDate);
+				preparedStatement.setDouble(3, po.getHigh());  preparedStatement.setDouble(4,po.getLow()); preparedStatement.setDouble(5,po.getOpen()); preparedStatement.setDouble(6,po.getClose());
+				preparedStatement.setDouble(7,po.getPreClose()); preparedStatement.setLong(8, po.getTurnoverVol());  preparedStatement.setDouble(9,po.getTurnoverValue());  preparedStatement.setDouble(10,po.getTurnoverRate());
+				preparedStatement.setDouble(11,po.getPb());  preparedStatement.setDouble(12,po.getPe());  preparedStatement.setDouble(13,po.getAccAdjFactor());  preparedStatement.setDouble(14,po.getCirMarketValue());preparedStatement.setDouble(15,po.getTotalMarketValue());
+				preparedStatement.setDouble(16,po.getAmplitude());preparedStatement.setDouble(17,po.getChangeRate());
+			   preparedStatement.addBatch();
+			//	preparedStatement.executeUpdate();
+			    	break;
+			    }
+				preparedStatement.executeBatch();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				if(preparedStatement!=null){
+					try {
+						preparedStatement.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+	     }
+	  }
 	  
 }

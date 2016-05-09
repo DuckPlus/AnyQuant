@@ -1,4 +1,22 @@
-#login_back{
-    background:  url("/image/Login.png");
+#huge_front{
+    /*background:  url("/image/Login.png");*/
+    /*background-size: cover;*/
+    background-image: url("/image/frontPage.jpg");
+    /*width: 100%;*/
+    height: 650px;
     background-size: cover;
+    margin-left: 0px;
+    /*margin-right: 0px;*/
+}
+#username{
+    margin-left: 20px;
+    height: 40px;
+}
+#password{
+    margin-left: 20px;
+    height: 40px;
+}
+#loginModule{
+    width: 300px;
+
 }

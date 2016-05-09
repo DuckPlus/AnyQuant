@@ -34,14 +34,11 @@
         <!--</property>-->
     <!--</bean>-->
 
-    <!--<context:component-scan base-package="controller"/>-->
+    <context:component-scan base-package="controller"/>
     <context:component-scan base-package="service"/>
     <context:component-scan base-package="entity"/>
     <context:component-scan base-package="DAO"/>
-
-
-    <!--<context:component-scan base-package="java"/>-->
-
+    <context:component-scan base-package="java"/>
 
 
 

@@ -48,6 +48,7 @@
             <th>成交量</th>
             <th>换手率</th>
         </tr>
+
     </thead>
     <tbody>
     </tbody>
@@ -74,7 +75,8 @@
             url:'/TableView/getStockList',
             contentType:'application/json;charset=utf-8',
             success:function (data){
-//                alert("welcome");
+
+                alert("welcome to 股票列表界面");
 //                var jsonData = eval('('+data+')');
 //                var result = "[";
 //                for (var i=0;i<jsonData.length;i++){

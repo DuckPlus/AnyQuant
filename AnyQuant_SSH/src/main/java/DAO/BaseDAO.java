@@ -1,5 +1,6 @@
 package DAO;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -33,6 +34,7 @@ public interface BaseDAO {
 	 */
 	Object load(Class<?> c, String id);
 	Object load(Class<?> c, int id);
+	Object load(Class<?> c, Serializable bean);
 	/**
 	 * get all entities of this table
 	 * @param c
