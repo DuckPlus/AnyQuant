@@ -1,68 +1,33 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: dsn
-  Date: 2016/5/8
-  Time: 4:11
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<html lang="en" class="no-js">
 <head>
-    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.0.min.js" type="text/javascript"></script>
-    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.css">
-    //<link rel="stylesheet" type="text/css" href="/css/StockList.css">
-    <title>Duck_optionalList</title>
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="../css/reset.css"> <!-- CSS reset -->
+    <link rel="stylesheet" href="../css/style.css"> <!-- Resource style -->
+    <script src="../js/modernizr.js"></script> <!-- Modernizr -->
+
+    <title>Animated Page Transition #2 | CodyHouse</title>
 </head>
 <body>
-<table id="stock_list">
-    <thead >
-    <tr>
-        <td>股票名称</td>
-        <td>股票代码</td>
-        <td>地区</td>
-        <td>最高价</td>
-        <td>最低价</td>
-        <td>收盘价</td>
-        <td>成交量</td>
-        <td>换手率</td>
-    </tr>
-    </thead>
-</table>
 
-<script>
-    $.ajax({
-        type:'post',
-        url:'/TableView/getStockList',
-        contentType:'application/json;charset=utf-8',
-        success:function (data){
-            alert("welcome to 自选股界面");
-            initTable(data)
+<main class="cd-main">
+    <section class="cd-section projects visible">
+        <header>
+            <div class="cd-title">
+                <h2>Optional.jsp</h2>
+                <span>Some text here</span>
+            </div>
+        </header>
 
-        }
-    })
-    function initTable(stock_data) {
-        $(document).ready(function() {
-            $('#stock_list').dataTable( {
-                "processing": true,
-                /*
-                 *自适应宽度 默认true 关闭可提升性能,同时方便管理布局
-                 */
-                "autoWidth":false,
-                data:stock_data,
-                columns:[
-                    {data:'code'},
-                    {data:'name'},
-                    {data:'region'}
-                ]
-            } );
-        } );
+    </section> <!-- .cd-section -->
+</main> <!-- .cd-main -->
 
-    }
-    //    initTable();
-</script>
-
-
+<div id="cd-loading-bar" data-scale="1" class="projects"></div> <!-- lateral loading bar -->
+<script src="../js/jquery-2.1.4.js"></script>
+<script src="../js/velocity.min.js"></script>
+<script src="../js/main.js"></script> <!-- Resource jQuery -->
 </body>
 </html>
