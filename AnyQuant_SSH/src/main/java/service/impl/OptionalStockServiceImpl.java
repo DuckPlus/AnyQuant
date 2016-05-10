@@ -1,8 +1,10 @@
 package service.impl;
 
+import entity.StockEntity;
 import entity.StockdataEntity;
 import service.OptionalStockService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,9 +19,20 @@ public class OptionalStockServiceImpl implements OptionalStockService {
      * @return a Collection's Iterator on StockVOs
      */
     @Override
-    public List<StockdataEntity> getOptionalStocks() {
+    public List<StockdataEntity> getOptionalStocksDatas() {
         return null;
     }
+
+    /**
+     * Get  the optional stocks
+     *
+     * @return a list
+     */
+    @Override
+    public List<StockEntity> getOptionalStocks() {
+        return null;
+    }
+
 
     /**
      * delete optional stocks
@@ -93,7 +106,18 @@ public class OptionalStockServiceImpl implements OptionalStockService {
      */
     @Override
     public Map<String, Integer> getRegionDistributionMap() {
-        return null;
+        List<StockEntity> optionStocks = getOptionalStocks();
+        Map<String, Integer> regions = new HashMap<>(34);
+
+        for (StockEntity temp : optionStocks) {
+            if (regions.containsKey(temp.getRegion())) {
+                regions.put(temp.getRegion(), regions.get(temp.getRegion()) + 1);
+            } else {
+                regions.put(temp.getRegion(), 1);
+            }
+        }
+
+        return regions;
     }
 
     /**

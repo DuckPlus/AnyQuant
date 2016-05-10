@@ -40,7 +40,7 @@
     <context:component-scan base-package="DAO"/>
     <context:component-scan base-package="java"/>
 
-
+    <bean id="exceptionHandler" class="exception.ExceptionHandler"/>
 
 
 </beans>

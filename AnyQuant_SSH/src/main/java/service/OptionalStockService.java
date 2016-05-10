@@ -17,7 +17,12 @@ public interface OptionalStockService {
      * Get today's(or last trading day)data of the optional stockCodes
      * @return a Collection's Iterator on StockVOs
      */
-    List<StockdataEntity> getOptionalStocks();
+    List<StockdataEntity> getOptionalStocksDatas();
+    /**
+     * Get  the optional stocks
+     * @return a list
+     */
+    List<StockEntity> getOptionalStocks();
     /**
      * delete optional stocks
      * @param stockCode the stock to delete

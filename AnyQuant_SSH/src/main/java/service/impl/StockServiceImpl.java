@@ -288,7 +288,6 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public List<StockdataEntity> getStocksByTime(String stockCode, MyDate start, MyDate end) {
-//        return stockDAO.;
         return stockDataDAO.getStockData(stockCode , start ,end);
     }
 
@@ -303,7 +302,6 @@ public class StockServiceImpl implements StockService {
             volume += stockPO.getTurnoverVol();
             turnoverval += stockPO.getTurnoverValue();
         }
-
         return new DealVO(turnoverval, volume, DateCalculator.SQLDateToMyDate(subList.get(0).getDate()));
     }
 
