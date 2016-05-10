@@ -8,10 +8,12 @@
 
 	<link rel="stylesheet" href="../css/reset.css"> <!-- CSS reset -->
 	<link rel="stylesheet" href="../css/style.css"> <!-- Resource style -->
+	<link rel="stylesheet" href="../css/tab_style.css">
 	<script src="../js/modernizr.js"></script> <!-- Modernizr -->
 
 </head>
 <body>
+
 <nav class="cd-side-navigation">
 	<ul>
 		<li>
@@ -37,6 +39,8 @@
 	</ul>
 </nav> <!-- .cd-side-navigation -->
 
+
+
 <main class="cd-main">
 		<section class="cd-section OptionalList visible">
 			<header>
@@ -44,13 +48,23 @@
 					<h2>自选股</h2>
 					<span>Some text here</span>
 				</div>
+			</header><!-- .装逼专用 -->
 
-			</header>
+			<nav class=".nav"><!-- .上方导航栏 -->
+				<ul class=".nav_ul">
+					<li class=".nav_ul_li"><a  class=".nav_ul_li_a" href="demo.html">自选列表</a></li>
+					<li class=".nav_ul_li"><a  class=".nav_ul_li_a" href="#">板块分布</a></li>
+					<li class=".nav_ul_li"><a  class=".nav_ul_li_a" href="#">地域分布</a></li>
+					<li class=".nav_ul_li"><a  class=".nav_ul_li_a" href="#">自选比较</a></li>
+				</ul>
+			</nav>
+			<div name="main">
+				自选列表
+			</div>
+		</section>
+</main> <!-- .cd-main -->
 
-		</section> <!-- .cd-section -->
-	</main> <!-- .cd-main -->
-
-	<div id="cd-loading-bar" data-scale="1" class="OptionalList"></div> <!-- lateral loading bar -->
+<div id="cd-loading-bar" data-scale="1" class="OptionalList"></div> <!-- lateral loading bar -->
 <script src="../js/jquery-2.1.4.js"></script>
 <script src="../js/velocity.min.js"></script>
 <script src="../js/main.js"></script> <!-- Resource jQuery -->
