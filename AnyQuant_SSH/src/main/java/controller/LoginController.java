@@ -28,24 +28,22 @@ public class LoginController {
         return "/index";
     }
 
-    @RequestMapping("/json")
-    @ResponseBody
-    public List<UserEntity> json(){
-
-        return userService.getAllUsernames();
-    }
+//    @RequestMapping("/json")
+//    @ResponseBody
+//    public List<UserEntity> json(){
+//
+//        return userService.getAllUsernames();
+//    }
 
 
 
     @RequestMapping(value="/login",method= RequestMethod.POST)
     public String login(HttpServletRequest request, String username, String password , String addNewUser){
-        System.out.print(addNewUser);
         UserEntity userEntity =  new UserEntity();
-//        userEntity.setId(Integer.parseInt(username));
 
         userEntity.setName(username);
         userEntity.setPassword(password);
-        if(addNewUser!= null && addNewUser.equals("on")){
+        if(addNewUser!= null && addNewUser.equals(Configure.BUTTON_CHOSEN)){
 
 
             userService.saveUser(userEntity);
