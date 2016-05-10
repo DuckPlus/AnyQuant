@@ -48,7 +48,7 @@ jQuery(document).ready(function($){
 	//start animation
 	function triggerAnimation(newSection, bool) {
 		isAnimating =  true;
-		newSection = ( newSection == '' ) ? 'index' : newSection;
+		newSection = ( newSection == '' ) ? 'StockList' : newSection;
 		
 		//update dashboard
 		dashboard.find('*[data-menu="'+newSection+'"]').addClass('selected').parent('li').siblings('li').children('.selected').removeClass('selected');
