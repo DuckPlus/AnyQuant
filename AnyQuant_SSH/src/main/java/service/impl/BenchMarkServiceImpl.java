@@ -1,12 +1,9 @@
 package service.impl;
 
-<<<<<<< HEAD
-=======
 import entity.BenchmarkEntity;
 import entity.BenchmarkdataEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
->>>>>>> 228161bcb06177ee1aee9bc68822c8c3f1495441
 import service.BenchMarkService;
 import util.MyDate;
 

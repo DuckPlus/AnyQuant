@@ -1,5 +1,8 @@
 package service;
 
+import entity.StockEntity;
+import entity.StockdataEntity;
+
 import java.util.List;
 import java.util.Map;
 
