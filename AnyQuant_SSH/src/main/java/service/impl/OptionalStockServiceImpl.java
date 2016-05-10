@@ -1,6 +1,5 @@
 package service.impl;
 
-import entity.StockdataEntity;
 import service.OptionalStockService;
 
 import java.util.List;

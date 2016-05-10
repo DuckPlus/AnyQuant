@@ -1,11 +1,7 @@
 package service;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import entity.StockEntity;
-import entity.StockdataEntity;
 
 /**
  * Business Logic Interface on Optional Stocks

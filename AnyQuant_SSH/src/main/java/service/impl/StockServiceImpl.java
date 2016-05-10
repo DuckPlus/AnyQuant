@@ -3,7 +3,6 @@ package service.impl;
 import DAO.StockDAO;
 import DAO.StockDataDAO;
 import entity.StockEntity;
-import entity.StockdataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +14,6 @@ import vo.OHLC_VO;
 import vo.TimeSharingVO;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**

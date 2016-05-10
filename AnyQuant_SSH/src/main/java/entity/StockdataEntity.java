@@ -4,8 +4,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 /**
- * @author Qiang
- * @date 16/5/6
+ * Created by 67534 on 2016/5/10.
  */
 @Entity
 @Table(name = "stockdata", schema = "AnyQuant", catalog = "")
@@ -13,6 +12,7 @@ import java.sql.Date;
 public class StockdataEntity {
     private String code;
     private Date date;
+    private String name;
     private double high;
     private double low;
     private double open;
@@ -47,6 +47,16 @@ public class StockdataEntity {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Basic
+    @Column(name = "name")
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Basic
@@ -204,25 +214,26 @@ public class StockdataEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        StockdataEntity that = (StockdataEntity) o;
+        StockdataEntity entity = (StockdataEntity) o;
 
-        if (Double.compare(that.high, high) != 0) return false;
-        if (Double.compare(that.low, low) != 0) return false;
-        if (Double.compare(that.open, open) != 0) return false;
-        if (Double.compare(that.close, close) != 0) return false;
-        if (Double.compare(that.preClose, preClose) != 0) return false;
-        if (turnoverVol != that.turnoverVol) return false;
-        if (Double.compare(that.turnoverValue, turnoverValue) != 0) return false;
-        if (Double.compare(that.turnoverRate, turnoverRate) != 0) return false;
-        if (Double.compare(that.pb, pb) != 0) return false;
-        if (Double.compare(that.pe, pe) != 0) return false;
-        if (Double.compare(that.accAdjFactor, accAdjFactor) != 0) return false;
-        if (Double.compare(that.cirMarketValue, cirMarketValue) != 0) return false;
-        if (Double.compare(that.totalMarketValue, totalMarketValue) != 0) return false;
-        if (Double.compare(that.amplitude, amplitude) != 0) return false;
-        if (Double.compare(that.changeRate, changeRate) != 0) return false;
-        if (code != null ? !code.equals(that.code) : that.code != null) return false;
-        if (date != null ? !date.equals(that.date) : that.date != null) return false;
+        if (Double.compare(entity.high, high) != 0) return false;
+        if (Double.compare(entity.low, low) != 0) return false;
+        if (Double.compare(entity.open, open) != 0) return false;
+        if (Double.compare(entity.close, close) != 0) return false;
+        if (Double.compare(entity.preClose, preClose) != 0) return false;
+        if (turnoverVol != entity.turnoverVol) return false;
+        if (Double.compare(entity.turnoverValue, turnoverValue) != 0) return false;
+        if (Double.compare(entity.turnoverRate, turnoverRate) != 0) return false;
+        if (Double.compare(entity.pb, pb) != 0) return false;
+        if (Double.compare(entity.pe, pe) != 0) return false;
+        if (Double.compare(entity.accAdjFactor, accAdjFactor) != 0) return false;
+        if (Double.compare(entity.cirMarketValue, cirMarketValue) != 0) return false;
+        if (Double.compare(entity.totalMarketValue, totalMarketValue) != 0) return false;
+        if (Double.compare(entity.amplitude, amplitude) != 0) return false;
+        if (Double.compare(entity.changeRate, changeRate) != 0) return false;
+        if (code != null ? !code.equals(entity.code) : entity.code != null) return false;
+        if (date != null ? !date.equals(entity.date) : entity.date != null) return false;
+        if (name != null ? !name.equals(entity.name) : entity.name != null) return false;
 
         return true;
     }
@@ -233,6 +244,7 @@ public class StockdataEntity {
         long temp;
         result = code != null ? code.hashCode() : 0;
         result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         temp = Double.doubleToLongBits(high);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(low);

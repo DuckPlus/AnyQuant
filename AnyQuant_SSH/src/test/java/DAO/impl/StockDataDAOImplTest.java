@@ -6,13 +6,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import entity.StockdataEntity;
 import DAO.StockDataDAO;
 import util.MyDate;
 import java.util.ArrayList;
-
-
-import static org.junit.Assert.*;
 
 /**
  * Created by 67534 on 2016/5/8.
