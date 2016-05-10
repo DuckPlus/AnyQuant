@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minHeight="22.0" minWidth="1000.0" prefHeight="22.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextFlow layoutX="-1.0" lineSpacing="30.0" prefHeight="30.0" prefWidth="911.0" style="-fx-background-color: blue;" />
+   </children>
+</AnchorPane>

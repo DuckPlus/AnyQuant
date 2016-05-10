@@ -1,0 +1,71 @@
+/*******************************************************************************
+ *                                                                             *
+ * BarChart                                                                    *
+ *                                                                             *
+ ******************************************************************************/
+.root{
+	 /* Chart Color Palette */
+    CHART_COLOR_1: #ff0020;
+    CHART_COLOR_2: #fba71b;
+    CHART_COLOR_3: #57b757;
+    CHART_COLOR_4: #41a9c9;
+    CHART_COLOR_5: #4258c9;
+    CHART_COLOR_6: #9a42c8;
+    CHART_COLOR_7: #c84164;
+    CHART_COLOR_8: #888888;
+}
+/*横向虚线 */
+.chart{
+	-fx-vertical-grid-lines-visible: false;
+}
+
+.chart{
+    -fx-background-color: black;
+}
+.chart-bar {
+
+   	
+    
+    -fx-bar-fill: CHART_COLOR_1;
+   
+    -fx-background-insets: 0;
+}
+.chart-plot-background {
+    -fx-background-color: black;    /*背景色 */
+}
+.bar-chart:horizontal .chart-bar {
+    -fx-background-insets: 0 0 0 1;
+}
+.bar-chart:horizontal .chart-bar, 
+.stacked-bar-chart:horizontal .chart-bar {
+    -fx-background-color:   linear-gradient(to bottom, 
+                                derive(-fx-bar-fill, -4%),
+                                derive(-fx-bar-fill, -1%),
+                                derive(-fx-bar-fill, 0%),
+                                derive(-fx-bar-fill, -1%),
+                                derive(-fx-bar-fill, -6%)
+                              );
+}
+.default-color0.chart-bar { -fx-bar-fill: CHART_COLOR_2; }
+.default-color1.chart-bar { -fx-bar-fill: CHART_COLOR_1; }
+.default-color2.chart-bar { -fx-bar-fill: CHART_COLOR_3; }
+.default-color3.chart-bar { -fx-bar-fill: CHART_COLOR_4; }
+.default-color4.chart-bar { -fx-bar-fill: CHART_COLOR_5; }
+.default-color5.chart-bar { -fx-bar-fill: CHART_COLOR_6; }
+.default-color6.chart-bar { -fx-bar-fill: CHART_COLOR_7; }
+.default-color7.chart-bar { -fx-bar-fill: CHART_COLOR_8; }
+.bar-legend-symbol {
+    -fx-padding: 8px;
+}
+
+
+
+.axis {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-color: #FFFFFF;
+    -fx-tick-label-fill: #FFFFFF;
+    -fx-font-size: 18pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-tick-length: 20;
+    -fx-minor-tick-length: 10;
+}

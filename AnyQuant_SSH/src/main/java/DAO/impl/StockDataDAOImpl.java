@@ -2,6 +2,8 @@ package DAO.impl;
 
 import DAO.BaseDAO;
 import DAO.StockDataDAO;
+import entity.StockdataEntity;
+import entity.StockdataEntityPK;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import util.MyDate;

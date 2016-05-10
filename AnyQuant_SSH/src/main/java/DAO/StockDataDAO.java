@@ -1,5 +1,6 @@
 package DAO;
 
+import entity.StockdataEntity;
 import util.MyDate;
 
 import java.util.List;
