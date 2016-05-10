@@ -31,6 +31,10 @@
 
     <script type = "text/javascript" src = "http://cdn.datatables.net/plug-ins/28e7751dbec/integration/jqueryui/dataTables.jqueryui.js"></script>
 
+        <%--highChart 的js支持--%>
+        <script src="https://code.highcharts.com/stock/highstock.js"></script>
+        <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+
     <title>Duck_stockList</title>
 </head>
 <body>
@@ -78,7 +82,7 @@
             url:'/Stock/getStockList',
             contentType:'application/json;charset=utf-8',
             success:function (data){
-
+//                alert("success");
                 initTable(data);
             },
             error:function () {
@@ -88,7 +92,9 @@
             }
     );
 
-//    alert(allStock);
+        /*
+         *初始化table的方法,包括样式的配置
+         */
         function initTable(allStock) {
             var table = $('#stock_list').DataTable( {
 
@@ -115,14 +121,6 @@
                             return "<span style='color:red;'>" + data + "</span>";
                         }
                     }
-                    // 增加一列，包括删除和修改，同时将需要传递的数据传递到链接中
-//                    {
-//                        "targets": [4], // 目标列位置，下标从0开始
-//                        "data": "name", // 数据列名
-//                        "render": function(data, type, full) { // 返回自定义内容
-//                            return "<button>加入自选</button>";
-//                        }
-//                    }
                 ],
                 //国际化
                 "oLanguage": {
@@ -161,13 +159,229 @@
 //                var value = table.row('.selected').$element.getVal();
                 var selected_row = table.row('.selected').index();
                 var value = table.cell(selected_row,0).data();
-
-                alert(value);
+                showStockChart(value);
+//                alert(value);
             } );
         }
 //    initTable();
 
 </script>
+
+<div id="duck_stock_chart" style="height: 400px; min-width: 310px; background-color: #2b542c;margin-top: 700px">
+
+
+</div>
+<script>
+    function showStockChart(stockCode) {
+        $.getJSON('http://localhost:8080/Stock/getStockDataListByTime/?code='+stockCode+'&start=2000-01-01&end=2015-01-11', function (data) {
+
+//            alert(new Date("2013-05-10").getTime());
+//            data = parseToHighStockData(data);
+            alert("current data:\n"+data[0].turnoverVol);
+            // split the data set into ohlc and volume
+            var ohlc = [],
+                    volume = [],
+                    dataLength = data.length,
+            // set the allowed units for data grouping
+                    groupingUnits = [[
+                        'week',                         // unit name
+                        [1]                             // allowed multiples
+                    ], [
+                        'month',
+                        [1, 2, 3, 4, 6]
+                    ]],
+
+                    i = 0;
+
+            for (i; i < dataLength; i += 1) {
+
+                ohlc.push([
+//                    data[i][0], // the date
+//                    data[i][1], // open
+//                    data[i][2], // high
+//                    data[i][3], // low
+//                    data[i][4] // close
+                    new Date(data[i].date).getTime(),
+                    data[i].open,
+                    data[i].high,
+                    data[i].low,
+                    data[i].close
+                ]);
+//                alert("loaded ohlc: open"+data[i].open+"high"+data[i].high+"low"+data[i].low+"close"+data[i].close);
+                volume.push([
+//                    data[i][0], // the date
+//                    data[i][5] // the volume
+                    new Date(data[i].date).getTime(),
+                    data[i].turnoverVol
+                ]);
+//                alert("loaded volume: date:"+new Date(data[i].date).getTime()+ "vol 1000");
+            }
+//            alert("OHLC: "+ohlc);
+
+
+            // create the chart
+            $('#duck_stock_chart').highcharts('StockChart', {
+
+                rangeSelector: {
+                    selected: 1
+                },
+
+                title: {
+                    text: 'AAPL Historical'
+                },
+
+                yAxis: [{
+                    labels: {
+                        align: 'right',
+                        x: -3
+                    },
+                    title: {
+                        text: 'OHLC'
+                    },
+                    height: '60%',
+                    lineWidth: 2
+                }, {
+                    labels: {
+                        align: 'right',
+                        x: -3
+                    },
+                    title: {
+                        text: 'Volume'
+                    },
+                    top: '65%',
+                    height: '35%',
+                    offset: 0,
+                    lineWidth: 2
+                }],
+
+                series: [{
+                    type: 'candlestick',
+                    name: 'AAPL',
+                    data: ohlc,
+                    dataGrouping: {
+                        units: groupingUnits
+                    }
+                }, {
+                    type: 'column',
+                    name: 'Volume',
+                    data: volume,
+                    yAxis: 1,
+                    dataGrouping: {
+                        units: groupingUnits
+                    }
+                }]
+            });
+
+        });
+    }
+</script>
+<%--<script>--%>
+    <%--$('#button').click(function () {--%>
+
+        <%--$.getJSON('http://localhost:8080/Stock/getStockDataListByTime/?code=sh600004&start=2012-01-01&end=2015-01-11', function (data) {--%>
+
+<%--//            alert(new Date("2013-05-10").getTime());--%>
+<%--//            data = parseToHighStockData(data);--%>
+            <%--alert("new data\n"+data);--%>
+            <%--alert("dateStamp:\n"+data[0].date);--%>
+            <%--// split the data set into ohlc and volume--%>
+            <%--var ohlc = [],--%>
+                    <%--volume = [],--%>
+                    <%--dataLength = data.length,--%>
+            <%--// set the allowed units for data grouping--%>
+                    <%--groupingUnits = [[--%>
+                        <%--'week',                         // unit name--%>
+                        <%--[1]                             // allowed multiples--%>
+                    <%--], [--%>
+                        <%--'month',--%>
+                        <%--[1, 2, 3, 4, 6]--%>
+                    <%--]],--%>
+
+                    <%--i = 0;--%>
+
+            <%--for (i; i < dataLength; i += 1) {--%>
+
+                <%--ohlc.push([--%>
+<%--//                    data[i][0], // the date--%>
+<%--//                    data[i][1], // open--%>
+<%--//                    data[i][2], // high--%>
+<%--//                    data[i][3], // low--%>
+<%--//                    data[i][4] // close--%>
+                      <%--new Date(data[i].date).getTime(),--%>
+                      <%--data[i].open,--%>
+                      <%--data[i].high,--%>
+                      <%--data[i].low,--%>
+                      <%--data[i].close--%>
+                <%--]);--%>
+<%--//                alert("loaded ohlc: open"+data[i].open+"high"+data[i].high+"low"+data[i].low+"close"+data[i].close);--%>
+                <%--volume.push([--%>
+<%--//                    data[i][0], // the date--%>
+<%--//                    data[i][5] // the volume--%>
+                    <%--new Date(data[i].date).getTime(),--%>
+                        <%--1000--%>
+                <%--]);--%>
+<%--//                alert("loaded volume: date:"+new Date(data[i].date).getTime()+ "vol 1000");--%>
+            <%--}--%>
+<%--//            alert("OHLC: "+ohlc);--%>
+
+
+            <%--// create the chart--%>
+            <%--$('#duck_stock_chart').highcharts('StockChart', {--%>
+
+                <%--rangeSelector: {--%>
+                    <%--selected: 1--%>
+                <%--},--%>
+
+                <%--title: {--%>
+                    <%--text: 'AAPL Historical'--%>
+                <%--},--%>
+
+                <%--yAxis: [{--%>
+                    <%--labels: {--%>
+                        <%--align: 'right',--%>
+                        <%--x: -3--%>
+                    <%--},--%>
+                    <%--title: {--%>
+                        <%--text: 'OHLC'--%>
+                    <%--},--%>
+                    <%--height: '60%',--%>
+                    <%--lineWidth: 2--%>
+                <%--}, {--%>
+                    <%--labels: {--%>
+                        <%--align: 'right',--%>
+                        <%--x: -3--%>
+                    <%--},--%>
+                    <%--title: {--%>
+                        <%--text: 'Volume'--%>
+                    <%--},--%>
+                    <%--top: '65%',--%>
+                    <%--height: '35%',--%>
+                    <%--offset: 0,--%>
+                    <%--lineWidth: 2--%>
+                <%--}],--%>
+
+                <%--series: [{--%>
+                    <%--type: 'candlestick',--%>
+                    <%--name: 'AAPL',--%>
+                    <%--data: ohlc,--%>
+                    <%--dataGrouping: {--%>
+                        <%--units: groupingUnits--%>
+                    <%--}--%>
+                <%--}, {--%>
+                    <%--type: 'column',--%>
+                    <%--name: 'Volume',--%>
+                    <%--data: volume,--%>
+                    <%--yAxis: 1,--%>
+                    <%--dataGrouping: {--%>
+                        <%--units: groupingUnits--%>
+                    <%--}--%>
+                <%--}]--%>
+            <%--});--%>
+
+        <%--});--%>
+
+    <%--});--%>
+<%--</script>--%>
 
 </body>
 
