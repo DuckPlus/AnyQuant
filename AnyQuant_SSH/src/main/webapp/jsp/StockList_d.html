@@ -1,19 +1,19 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="javax.swing.text.TabableView" %><%--
-  Created by IntelliJ IDEA.
-  User: duanzhengmou
-  Date: 5/6/16
-  Time: 3:57 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!--<%&#45;&#45;<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>&#45;&#45;%>-->
+<!--<%&#45;&#45;<%@ page import="javax.swing.text.TabableView" %>&lt;%&ndash;&#45;&#45;%>-->
+  <!--<%&#45;&#45;Created by IntelliJ IDEA.&#45;&#45;%>-->
+  <!--<%&#45;&#45;User: duanzhengmou&#45;&#45;%>-->
+  <!--<%&#45;&#45;Date: 5/6/16&#45;&#45;%>-->
+  <!--<%&#45;&#45;Time: 3:57 PM&#45;&#45;%>-->
+  <!--<%&#45;&#45;To change this template use File | Settings | File Templates.&#45;&#45;%>-->
+<!--<%&#45;&#45;&ndash;%&gt;&#45;&#45;%>-->
+<!--<%&#45;&#45;<%@ page contentType="text/html;charset=UTF-8" language="java" %>&#45;&#45;%>-->
 <html>
 <head>
 
-    <%--tab上的小图标--%>
+    <!--<%&#45;&#45;tab上的小图标&#45;&#45;%>-->
     <link rel="shortcut icon" href="/image/shoot_cut.png">
     <!-- DataTables CSS -->
-    <%--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">--%>
+    <!--<%&#45;&#45;<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">&#45;&#45;%>-->
 
     <!-- jQuery -->
     <script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -23,15 +23,15 @@
 
     <link rel="stylesheet" type="text/css" href="/css/StockList.css">
 
-    <%--表头css???奇葩--%>
+    <!--<%&#45;&#45;表头css???奇葩&#45;&#45;%>-->
     <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-        <%--tbody css--%>
+        <!--<%&#45;&#45;tbody css&#45;&#45;%>-->
     <link  rel="stylesheet" type="text/css" href ="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/jqueryui/dataTables.jqueryui.css">
 
 
     <script type = "text/javascript" src = "http://cdn.datatables.net/plug-ins/28e7751dbec/integration/jqueryui/dataTables.jqueryui.js"></script>
 
-        <%--highChart 的js支持--%>
+        <!--<%&#45;&#45;highChart 的js支持&#45;&#45;%>-->
         <script src="https://code.highcharts.com/stock/highstock.js"></script>
         <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
 
@@ -58,16 +58,6 @@
     </tbody>
 
     <tfoot>
-    <%--<tr>--%>
-        <%--<td>股票名称</td>--%>
-        <%--<td>股票代码</td>--%>
-        <%--<td>开盘价</td>--%>
-        <%--<td>最高价</td>--%>
-        <%--<td>最低价</td>--%>
-        <%--<td>收盘价</td>--%>
-        <%--<td>成交量</td>--%>
-        <%--<td>换手率</td>--%>
-    <%--</tr>--%>
     </tfoot>
 
 </table>
@@ -146,20 +136,23 @@
 //以下是关于选择行的代码
 
             $('#stock_list tbody').on( 'click', 'tr', function () {
-                if ( $(this).hasClass('selected') ) {
-                    $(this).removeClass('selected');
-                }
-                else {
+//                if ( $(this).hasClass('selected') ) {
+//                    $(this).removeClass('selected');
+//                }
+//                else {
                     table.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
-                }
+                var selected_row = table.row('.selected').index();
+                var value = table.cell(selected_row,0).data();
+                showStockChart(value);
+//                }
             } );
 
             $('#button').click( function () {
 //                var value = table.row('.selected').$element.getVal();
-                var selected_row = table.row('.selected').index();
-                var value = table.cell(selected_row,0).data();
-                showStockChart(value);
+//                var selected_row = table.row('.selected').index();
+//                var value = table.cell(selected_row,0).data();
+//                showStockChart(value);
 //                alert(value);
             } );
         }
@@ -177,7 +170,7 @@
 
 //            alert(new Date("2013-05-10").getTime());
 //            data = parseToHighStockData(data);
-            alert("current data:\n"+data[0].turnoverVol);
+//            alert("current data:\n"+data[0].turnoverVol);
             // split the data set into ohlc and volume
             var ohlc = [],
                     volume = [],
@@ -275,113 +268,6 @@
         });
     }
 </script>
-<%--<script>--%>
-    <%--$('#button').click(function () {--%>
-
-        <%--$.getJSON('http://localhost:8080/Stock/getStockDataListByTime/?code=sh600004&start=2012-01-01&end=2015-01-11', function (data) {--%>
-
-<%--//            alert(new Date("2013-05-10").getTime());--%>
-<%--//            data = parseToHighStockData(data);--%>
-            <%--alert("new data\n"+data);--%>
-            <%--alert("dateStamp:\n"+data[0].date);--%>
-            <%--// split the data set into ohlc and volume--%>
-            <%--var ohlc = [],--%>
-                    <%--volume = [],--%>
-                    <%--dataLength = data.length,--%>
-            <%--// set the allowed units for data grouping--%>
-                    <%--groupingUnits = [[--%>
-                        <%--'week',                         // unit name--%>
-                        <%--[1]                             // allowed multiples--%>
-                    <%--], [--%>
-                        <%--'month',--%>
-                        <%--[1, 2, 3, 4, 6]--%>
-                    <%--]],--%>
-
-                    <%--i = 0;--%>
-
-            <%--for (i; i < dataLength; i += 1) {--%>
-
-                <%--ohlc.push([--%>
-<%--//                    data[i][0], // the date--%>
-<%--//                    data[i][1], // open--%>
-<%--//                    data[i][2], // high--%>
-<%--//                    data[i][3], // low--%>
-<%--//                    data[i][4] // close--%>
-                      <%--new Date(data[i].date).getTime(),--%>
-                      <%--data[i].open,--%>
-                      <%--data[i].high,--%>
-                      <%--data[i].low,--%>
-                      <%--data[i].close--%>
-                <%--]);--%>
-<%--//                alert("loaded ohlc: open"+data[i].open+"high"+data[i].high+"low"+data[i].low+"close"+data[i].close);--%>
-                <%--volume.push([--%>
-<%--//                    data[i][0], // the date--%>
-<%--//                    data[i][5] // the volume--%>
-                    <%--new Date(data[i].date).getTime(),--%>
-                        <%--1000--%>
-                <%--]);--%>
-<%--//                alert("loaded volume: date:"+new Date(data[i].date).getTime()+ "vol 1000");--%>
-            <%--}--%>
-<%--//            alert("OHLC: "+ohlc);--%>
-
-
-            <%--// create the chart--%>
-            <%--$('#duck_stock_chart').highcharts('StockChart', {--%>
-
-                <%--rangeSelector: {--%>
-                    <%--selected: 1--%>
-                <%--},--%>
-
-                <%--title: {--%>
-                    <%--text: 'AAPL Historical'--%>
-                <%--},--%>
-
-                <%--yAxis: [{--%>
-                    <%--labels: {--%>
-                        <%--align: 'right',--%>
-                        <%--x: -3--%>
-                    <%--},--%>
-                    <%--title: {--%>
-                        <%--text: 'OHLC'--%>
-                    <%--},--%>
-                    <%--height: '60%',--%>
-                    <%--lineWidth: 2--%>
-                <%--}, {--%>
-                    <%--labels: {--%>
-                        <%--align: 'right',--%>
-                        <%--x: -3--%>
-                    <%--},--%>
-                    <%--title: {--%>
-                        <%--text: 'Volume'--%>
-                    <%--},--%>
-                    <%--top: '65%',--%>
-                    <%--height: '35%',--%>
-                    <%--offset: 0,--%>
-                    <%--lineWidth: 2--%>
-                <%--}],--%>
-
-                <%--series: [{--%>
-                    <%--type: 'candlestick',--%>
-                    <%--name: 'AAPL',--%>
-                    <%--data: ohlc,--%>
-                    <%--dataGrouping: {--%>
-                        <%--units: groupingUnits--%>
-                    <%--}--%>
-                <%--}, {--%>
-                    <%--type: 'column',--%>
-                    <%--name: 'Volume',--%>
-                    <%--data: volume,--%>
-                    <%--yAxis: 1,--%>
-                    <%--dataGrouping: {--%>
-                        <%--units: groupingUnits--%>
-                    <%--}--%>
-                <%--}]--%>
-            <%--});--%>
-
-        <%--});--%>
-
-    <%--});--%>
-<%--</script>--%>
 
 </body>
 
