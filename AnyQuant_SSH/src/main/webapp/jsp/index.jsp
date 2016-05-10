@@ -41,7 +41,7 @@
 
 
 </form>
-<button class="button button-raised button-royal" onclick="location.href='/jsp/StockList.jsp'">股票列表</button>
+<button class="button button-raised button-royal" onclick="location.href='/jsp/StockList_d.html'">股票列表</button>
 
  <button class="button button-raised button-royal" onclick="location.href='/jsp/OptionalList.jsp'">自选股</button>
     <br><br>
