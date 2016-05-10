@@ -2,6 +2,9 @@ package service;
 
 import java.util.List;
 
+
+import entity.BenchmarkEntity;
+import entity.BenchmarkdataEntity;
 import util.MyDate;
 
 /**
@@ -10,10 +13,17 @@ import util.MyDate;
  * @date 2016年3月10日
  */
 public interface BenchMarkService {
+
+
+    /**
+	 * 获得可用的大盘的列表
+	 * @return
+     */
+	List<BenchmarkEntity> getAllBenchMarksList();
 	/**
 	 * 获得所有大盘的所有数据
 	 */
-	List<BenchmarkdataEntity> getAllBenchMarks();
+	List<BenchmarkdataEntity> getAllBenchMarksDataList();
 	/**
 	 * 获得某只大盘最近一个月的所有数据
 	 * @param BenchMarkCode

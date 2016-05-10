@@ -8,3 +8,9 @@
     top: 100px;
 
 }
+#duck_stock_chart{
+    position: absolute;
+    right: 100px;
+    width: 70%;
+    height: 70%;
+}

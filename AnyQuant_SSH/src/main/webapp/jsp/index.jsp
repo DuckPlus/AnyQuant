@@ -41,7 +41,12 @@
 
 
 </form>
-<button class="button button-raised button-royal" onclick="location.href='/jsp/StockList.jsp'">get started</button>
+<button class="button button-raised button-royal" onclick="location.href='/jsp/StockList_d.html'">股票列表</button>
+
+ <button class="button button-raised button-royal" onclick="location.href='/jsp/OptionalList.jsp'">自选股</button>
+    <br><br>
+    <button class="button button-action button-rounded" onclick="location.href='../html/StockList.html'">这个才是真的主界面但是现在有问题。可以点过来看看导航栏长啥样【中文会乱码。。我不是故意装b的】</button>
+
 
 </div>
 

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 同时支持大盘
  * @author Qiang
  * @date 16/5/6
  */
@@ -286,7 +287,6 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public List<StockdataEntity> getStocksByTime(String stockCode, MyDate start, MyDate end) {
-//        return stockDAO.;
         return stockDataDAO.getStockData(stockCode , start ,end);
     }
 
@@ -301,7 +301,6 @@ public class StockServiceImpl implements StockService {
             volume += stockPO.getTurnoverVol();
             turnoverval += stockPO.getTurnoverValue();
         }
-
         return new DealVO(turnoverval, volume, DateCalculator.SQLDateToMyDate(subList.get(0).getDate()));
     }
 

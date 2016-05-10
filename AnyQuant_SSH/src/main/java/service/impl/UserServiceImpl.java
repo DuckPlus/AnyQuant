@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean checkIfValid(UserEntity u) {
+    public String checkIfValid(UserEntity u) {
         return userDao.checkIfValid(u);
     }
 }

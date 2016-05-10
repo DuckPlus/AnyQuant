@@ -1,5 +1,12 @@
 package service.impl;
 
+<<<<<<< HEAD
+=======
+import entity.BenchmarkEntity;
+import entity.BenchmarkdataEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+>>>>>>> 228161bcb06177ee1aee9bc68822c8c3f1495441
 import service.BenchMarkService;
 import util.MyDate;
 
@@ -10,12 +17,24 @@ import java.util.List;
  * @author Qiang
  * @date 16/5/8
  */
+@Service
+@Transactional
 public class BenchMarkServiceImpl implements BenchMarkService {
+    /**
+     * 获得可用的大盘的列表
+     *
+     * @return
+     */
+    @Override
+    public List<BenchmarkEntity> getAllBenchMarksList() {
+        return null;
+    }
+
     /**
      * 获得所有大盘的所有数据
      */
     @Override
-    public List<BenchmarkdataEntity> getAllBenchMarks() {
+    public List<BenchmarkdataEntity> getAllBenchMarksDataList() {
         return null;
     }
 
