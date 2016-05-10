@@ -194,6 +194,9 @@ Navigation
   background: #83b0b9;
   overflow: hidden;
 }
+.cd-section.StockList header {
+  background-color: #83b0b9;
+}
 .cd-section.BenchMark header {
   background-color: #d35657;
 }
@@ -201,30 +204,6 @@ Navigation
   background-color: #343943;
 }
 
-.cd-section .cd-scroll {
-  /* this is the arrow at the bottom of the header */
-  display: block;
-  position: absolute;
-  bottom: 60px;
-  left: -webkit-calc(50vw - (74px - 4px)/2);
-  left: calc(50vw - (74px - 4px)/2);
-  width: 44px;
-  height: 44px;
-  /* image replacement */
-  overflow: hidden;
-  text-indent: 100%;
-  white-space: nowrap;
-  visibility: hidden;
-  -webkit-transition: -webkit-transform 0s 0.5s, visibility 0s 0.5s;
-  -moz-transition: -moz-transform 0s 0.5s, visibility 0s 0.5s;
-  transition: transform 0s 0.5s, visibility 0s 0.5s;
-  -webkit-transform: translateX(-50%) scale(0);
-  -moz-transform: translateX(-50%) scale(0);
-  -ms-transform: translateX(-50%) scale(0);
-  -o-transform: translateX(-50%) scale(0);
-  transform: translateX(-50%) scale(0);
-  background: url("../img/cd-icon-arrow.svg") no-repeat center center;
-}
 .cd-section.visible {
   /* this is the visible/selected section */
   position: relative;
@@ -266,8 +245,51 @@ Navigation
   }
 }
 
-
-
+@-webkit-keyframes cd-scroll-down {
+  0% {
+    -webkit-transform: translateX(-50%) scale(1);
+  }
+  50% {
+    -webkit-transform: translateY(10px) translateX(-50%) scale(1);
+  }
+  100% {
+    -webkit-transform: translateX(-50%) scale(1);
+  }
+}
+@-moz-keyframes cd-scroll-down {
+  0% {
+    -moz-transform: translateX(-50%) scale(1);
+  }
+  50% {
+    -moz-transform: translateY(10px) translateX(-50%) scale(1);
+  }
+  100% {
+    -moz-transform: translateX(-50%) scale(1);
+  }
+}
+@keyframes cd-scroll-down {
+  0% {
+    -webkit-transform: translateX(-50%) scale(1);
+    -moz-transform: translateX(-50%) scale(1);
+    -ms-transform: translateX(-50%) scale(1);
+    -o-transform: translateX(-50%) scale(1);
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    -webkit-transform: translateY(10px) translateX(-50%) scale(1);
+    -moz-transform: translateY(10px) translateX(-50%) scale(1);
+    -ms-transform: translateY(10px) translateX(-50%) scale(1);
+    -o-transform: translateY(10px) translateX(-50%) scale(1);
+    transform: translateY(10px) translateX(-50%) scale(1);
+  }
+  100% {
+    -webkit-transform: translateX(-50%) scale(1);
+    -moz-transform: translateX(-50%) scale(1);
+    -ms-transform: translateX(-50%) scale(1);
+    -o-transform: translateX(-50%) scale(1);
+    transform: translateX(-50%) scale(1);
+  }
+}
 .cd-title {
   position: absolute;
   top: 50%;
@@ -370,7 +392,9 @@ Navigation
 #cd-loading-bar.OptionalList {
   background-color: #343943;
 }
-
+#cd-loading-bar.contact {
+  background-color: #e4b162;
+}
 #cd-loading-bar.loading {
   visibility: visible;
 }

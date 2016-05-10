@@ -21,7 +21,7 @@
     <title>Animated Page Transition #2 | CodyHouse</title>
 </head>
 <body>
-<%@include file="SideButton.html"%>
+<%@include file="../html/SideButton.html"%>
 <main class="cd-main">
     <section class="cd-section services visible">
         <header>

@@ -6,7 +6,7 @@
 
 </head>
 <body>
-<%@include file="tab.html"%>
+<%@include file="../html/tab.html"%>
 <!--<div w3-include-html="tab.html"></div>-->
 <div>好像又乱码了。。。</div>
 <div style="text-align:center;clear:both">
