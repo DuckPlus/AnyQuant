@@ -409,14 +409,17 @@ Navigation
 /*tab css*/
 
 .tab-container{
+      position: relative;
+      top: 10px;
+      left: 50px;
       width: 1137px;
       height: 1000px;
-      margin: 100px auto;
       background-color: #fff;
       box-shadow: 0 1px 3px rgba(0,0,0,.1);
     }
 .tab-wrapper{
   position: relative;
+  top: 0;
   width: 1137px;
   height: 60px;
   background-color: #33344a;
