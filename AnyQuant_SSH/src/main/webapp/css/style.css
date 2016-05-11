@@ -112,6 +112,7 @@ Navigation
 }
 .cd-side-navigation a.selected > svg *, .no-touch .cd-side-navigation a.selected:hover > svg * {
   stroke: #83b0b9;
+
 }
 .cd-side-navigation li:nth-of-type(2) .selected > svg *,
 .cd-side-navigation li:nth-of-type(2) .selected:hover > svg * {
@@ -196,9 +197,11 @@ Navigation
 }
 .cd-section.StockList header {
   background-color: #83b0b9;
+  background-color: #FFFFFF;
 }
 .cd-section.BenchMark header {
   background-color: #d35657;
+  background-color: #ffffff;
 }
 .cd-section.OptionalList header {
   background-color: #ffb72e;
