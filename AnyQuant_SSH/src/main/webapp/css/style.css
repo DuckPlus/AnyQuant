@@ -15,7 +15,7 @@ body {
   font-size: 1.6rem;
   font-family: "PT Sans", sans-serif;
   color: #83b0b9;
-  background-color: #343943;
+  background-color: #ffb72e;
 }
 
 a {
@@ -119,7 +119,7 @@ Navigation
 }
 .cd-side-navigation li:nth-of-type(3) .selected > svg *,
 .cd-side-navigation li:nth-of-type(3) .selected:hover > svg * {
-  stroke: #343943;
+  stroke: #ffb72e;
 }
 .cd-side-navigation li:nth-of-type(4) .selected > svg *,
 .cd-side-navigation li:nth-of-type(4) .selected:hover > svg * {
@@ -129,7 +129,7 @@ Navigation
   background-color: #d35657;
 }
 .cd-side-navigation li:nth-of-type(3) a::after {
-  background-color: #343943;
+  background-color: #ffb72e;
 }
 .cd-side-navigation li:nth-of-type(4) a::after {
   background-color: #e4b162;
@@ -201,7 +201,7 @@ Navigation
   background-color: #d35657;
 }
 .cd-section.OptionalList header {
-  background-color: #343943;
+  background-color: #ffb72e;
 }
 
 .cd-section.visible {
@@ -390,7 +390,7 @@ Navigation
   background-color: #d35657;
 }
 #cd-loading-bar.OptionalList {
-  background-color: #343943;
+  background-color: #ffb72e;
 }
 #cd-loading-bar.contact {
   background-color: #e4b162;
@@ -404,16 +404,17 @@ Navigation
   }
 }
 /*tab css*/
+
 .tab-container{
-      width: 800px;
-      height: 400px;
+      width: 1137px;
+      height: 1000px;
       margin: 100px auto;
       background-color: #fff;
       box-shadow: 0 1px 3px rgba(0,0,0,.1);
     }
 .tab-wrapper{
   position: relative;
-  width: 800px;
+  width: 1137px;
   height: 60px;
   background-color: #33344a;
 }
@@ -426,7 +427,7 @@ Navigation
   display: block;
   float: left;
   height: 60px;
-  padding: 0 40px;
+  padding: 0 110px;
   color: #717181;
   font-size: 16px;
   line-height: 60px;
@@ -454,7 +455,7 @@ Navigation
   font-size: 14px;
   line-height: 1.618em;
   background-color: #fff;
-  opacity: 0;
+  opacity: 1;
   transition: transform .5s, opacity .7s;
   transform: translateY(20px);
 }

@@ -1,0 +1,16 @@
+.optional_list_pane{
+
+    background-color: #bbbbbb;
+    width: 90%;
+    height: 70%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+
+}
+#duck_stock_chart{
+    position: absolute;
+    left: 0px;
+    width: 90%;
+    height: 70%;
+}
