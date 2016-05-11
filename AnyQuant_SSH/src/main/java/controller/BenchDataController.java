@@ -26,7 +26,7 @@ public class BenchDataController {
     private BenchMarkService benchMarkService;
 
     /**
-     * 返回所有股票的信息
+     * 返回大盘列表的信息
      * @return
      */
     @RequestMapping("/getBenchList")
@@ -36,7 +36,7 @@ public class BenchDataController {
     }
 
     /**
-     * 返回最近一个交易日所有股票的交易数据
+     * 返回最近一个交易日所有大盘的交易数据
      * @return
      */
     @RequestMapping("/getBenchDataList")

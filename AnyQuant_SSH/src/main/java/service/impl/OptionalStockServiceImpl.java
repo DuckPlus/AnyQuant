@@ -1,7 +1,9 @@
 package service.impl;
 
+import DAO.OptionalDAO;
 import entity.StockEntity;
 import entity.StockdataEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.OptionalStockService;
@@ -17,6 +19,8 @@ import java.util.Map;
 @Service
 @Transactional
 public class OptionalStockServiceImpl implements OptionalStockService {
+    @Autowired
+    OptionalDAO optionalDAO;
     /**
      * Get today's(or last trading day)data of the optional stockCodes
      *
@@ -25,7 +29,7 @@ public class OptionalStockServiceImpl implements OptionalStockService {
      */
     @Override
     public List<StockdataEntity> getOptionalStocksDatas(String userID) {
-        return null;
+        return optionalDAO.getOptionalStocksDatas(userID);
     }
 
     /**
@@ -36,7 +40,7 @@ public class OptionalStockServiceImpl implements OptionalStockService {
      */
     @Override
     public List<StockEntity> getOptionalStocks(String userID) {
-        return null;
+        return optionalDAO.getOptionalStocks(userID);
     }
 
     /**
@@ -48,7 +52,7 @@ public class OptionalStockServiceImpl implements OptionalStockService {
      */
     @Override
     public boolean deleteStockCode(String userID, String stockCode) {
-        return false;
+        return optionalDAO.deleteStockCode(userID  , stockCode);
     }
 
     /**
@@ -60,7 +64,12 @@ public class OptionalStockServiceImpl implements OptionalStockService {
      */
     @Override
     public boolean deleteStockCode(String userID, List<String> stockCode) {
-        return false;
+        for ( String code : stockCode){
+            if(!optionalDAO.deleteStockCode(userID , code)){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -72,7 +81,7 @@ public class OptionalStockServiceImpl implements OptionalStockService {
      */
     @Override
     public boolean addStockCode(String userID, String stockCode) {
-        return false;
+        return optionalDAO.addStockCode(userID , stockCode);
     }
 
     /**
@@ -84,7 +93,12 @@ public class OptionalStockServiceImpl implements OptionalStockService {
      */
     @Override
     public boolean addStockCode(String userID, List<String> stockCodes) {
-        return false;
+        for ( String code : stockCodes){
+            if(!optionalDAO.addStockCode(userID , code)){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -95,7 +109,7 @@ public class OptionalStockServiceImpl implements OptionalStockService {
      */
     @Override
     public boolean clearOptionalStocks(String userID) {
-        return false;
+        return optionalDAO.clearOptionalStocks(userID);
     }
 
     /**
@@ -107,7 +121,7 @@ public class OptionalStockServiceImpl implements OptionalStockService {
      */
     @Override
     public boolean ifStockExist(String userID, String stockCode) {
-        return false;
+        return optionalDAO.ifStockExist(userID , stockCode);
     }
 
     /**
