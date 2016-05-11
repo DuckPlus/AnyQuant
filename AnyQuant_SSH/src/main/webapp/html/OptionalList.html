@@ -1,3 +1,5 @@
+<!--author:dsn-->
+<!--date:2016-5-11-->
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -5,12 +7,26 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
-
+	<!--tab上的小图标-->
+	<link rel="shortcut icon" href="/image/shoot_cut.png">
 	<link rel="stylesheet" href="../css/reset.css"> <!-- CSS reset -->
 	<link rel="stylesheet" href="../css/style.css"> <!-- Resource style -->
-	<link rel="stylesheet" href="../css/tab_style.css">
 	<script src="../js/modernizr.js"></script> <!-- Modernizr -->
 
+
+    <!--都是外面的css-->
+	<!-- jQuery -->
+	<script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<!-- DataTables -->
+	<script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
+    <!--<%&#45;&#45;表头css???奇葩&#45;&#45;%>-->
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+	<!--<%&#45;&#45;tbody css&#45;&#45;%>-->
+	<link  rel="stylesheet" type="text/css" href ="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/jqueryui/dataTables.jqueryui.css">
+	<script type = "text/javascript" src = "http://cdn.datatables.net/plug-ins/28e7751dbec/integration/jqueryui/dataTables.jqueryui.js"></script>
+	<!--<%&#45;&#45;highChart 的js支持&#45;&#45;%>-->
+	<script src="https://code.highcharts.com/stock/highstock.js"></script>
+	<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
 </head>
 <body>
 
@@ -39,8 +55,6 @@
 	</ul>
 </nav> <!-- .cd-side-navigation -->
 
-
-
 <main class="cd-main">
 		<section class="cd-section OptionalList visible">
 			<header>
@@ -50,17 +64,54 @@
 				</div>
 			</header><!-- .装逼专用 -->
 
-			<nav class=".nav"><!-- .上方导航栏 -->
-				<ul class=".nav_ul">
-					<li class=".nav_ul_li"><a  class=".nav_ul_li_a" href="demo.html">自选列表</a></li>
-					<li class=".nav_ul_li"><a  class=".nav_ul_li_a" href="#">板块分布</a></li>
-					<li class=".nav_ul_li"><a  class=".nav_ul_li_a" href="#">地域分布</a></li>
-					<li class=".nav_ul_li"><a  class=".nav_ul_li_a" href="#">自选比较</a></li>
-				</ul>
-			</nav>
-			<div name="main">
-				自选列表
+			<div class="tab-container">
+				<div class="tab-wrapper">
+					<!--tab section 1-->
+					<input type="radio" name="tab-radio" class="tab-radio" id="tab-radio-1" checked>
+					<label for="tab-radio-1" class="tab-handler tab-handler-1">自选列表</label>
+					<div class="tab-content tab-content-1"><!--第一个标签~~~~是列表-->
+						<table id="optional_list" class="display">
+							<thead>
+							<tr>
+								<th>股票名称</th>
+								<th>股票代码</th>
+								<th>开盘价</th>
+								<th>最高价</th>
+								<th>最低价</th>
+								<th>收盘价</th>
+								<th>成交量</th>
+								<th>换手率</th>
+							</tr>
+
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+						<script>
+							$(document).ready(function () {
+								&ajax({
+									type:'post',
+									url:/java/
+
+								});
+							});
+						</script>
+					</div>
+					<!--tab section 2-->
+					<input type="radio" name="tab-radio" class="tab-radio" id="tab-radio-2">
+					<label for="tab-radio-2" class="tab-handler tab-handler-2">板块分布</label>
+					<div class="tab-content tab-content-2">《三国演义》是中国古典四大名著之一，全名为《三国志通俗演义》。作者是元末明初小说家罗贯中，是中国第一部长篇章回体历史演义小说。描写了从东汉末年到西晋初年之间近105年的历史风云。全书反映了三国时代的政治军事斗争，反映了三国时代各类社会矛盾的转化，并概括了这一时代的历史巨变，塑造了一批叱咤风云的三国英雄人物。</div>
+					<!--tab section 3-->
+					<input type="radio" name="tab-radio" class="tab-radio" id="tab-radio-3">
+					<label for="tab-radio-3" class="tab-handler tab-handler-3">地域分布</label>
+					<div class="tab-content tab-content-3">《西游记》是中国古典四大名著之一，是由明代小说家吴承恩所创作的中国古代第一部浪漫主义的长篇神魔小说。主要描写了唐朝太宗贞观年间孙悟空、猪八戒、沙僧、白龙马四弟子保护唐僧西行取经，沿途历经九九八十一难，一路降妖伏魔，化险为夷，最后到达西天，取得真经的故事。取材于《大唐三藏取经诗话》和汉族民间传说。 [1] </div>
+					<!--tab section 4-->
+					<input type="radio" name="tab-radio" class="tab-radio" id="tab-radio-4">
+					<label for="tab-radio-4" class="tab-handler tab-handler-4">自选比较</label>
+					<div class="tab-content tab-content-4">《红楼梦》，中国古典四大名著之首，清代作家曹雪芹创作的章回体长篇小说[1] 。早期仅有前八十回抄本流传，八十回后部分未完成且原稿佚失。原名《脂砚斋重评石头记》。程伟元邀请高鹗协同整理出版百二十回全本[2] ，定名《红楼梦》。亦有版本作《金玉缘》。</div>
+				</div>
 			</div>
+
 		</section>
 </main> <!-- .cd-main -->
 
