@@ -1,16 +1,32 @@
 .stock_list_pane{
-
-    background-color: #bbbbbb;
-    width: 70%;
-    height: 70%;
-    position: absolute;
-    right: 100px;
-    top: 100px;
+    margin-top: 50%;
+    /*background-color: #bbbbbb;*/
+    /*width: 70%;*/
+    /*height: 70%;*/
+    /*position: absolute;*/
+    /*right: 100px;*/
+    /*top: 100px;*/
 
 }
 #duck_stock_chart{
+    width: 99%;
+}
+#stock_h1{
+    /*font-family: "American Typewriter";*/
+    /*background-color: #00a1cb;*/
+    text-align: center;
+    font-size: xx-large;
+    color: whitesmoke;
     position: absolute;
-    right: 100px;
-    width: 70%;
-    height: 70%;
+    top: 40%;
+    left: 45%;
+}
+#stock_h2{
+    font-family: "Comic Sans MS";
+    text-align: center;
+    font-size: large;
+    color: whitesmoke;
+    position: absolute;
+    top: 50%;
+    left: 47%;
 }

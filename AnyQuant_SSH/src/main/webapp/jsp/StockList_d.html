@@ -31,13 +31,26 @@
 
     <script type = "text/javascript" src = "http://cdn.datatables.net/plug-ins/28e7751dbec/integration/jqueryui/dataTables.jqueryui.js"></script>
 
-        <!--<%&#45;&#45;highChart 的js支持&#45;&#45;%>-->
+        <!--highChart 的js支持-->
         <script src="https://code.highcharts.com/stock/highstock.js"></script>
         <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <!--动画的css支持-->
+    <link rel="stylesheet" type="text/css" href="/css/animate.css">
+
 
     <title>Duck_stockList</title>
 </head>
-<body>
+<body style=";margin-left: 0px;margin-left: 0px;margin-top: 0px;margin-right: 0px">
+<div id="curtain" style="background-color: #83b0b9; " >
+    <div id="stock_h1" class="animated fadeInLeft">股票列表<br>Stock List</div>
+    <!--<div id="stock_h2" class="animated fadeInLeft">Stock List</div>-->
+</div>
+<script>
+    function changeHeight() {
+        document.getElementById("curtain").style.height=window.screen.height;
+    }
+    window.onload=changeHeight;
+</script>
 
 <div id="stock_list_container" class="stock_list_pane">
 <table id="stock_list" class="display">
@@ -61,7 +74,7 @@
     </tfoot>
 
 </table>
-    <button class="button" id="button">Select Row</button>
+    <!--<button class="button" id="button">Select Row</button>-->
 </div>
 
 <script>
@@ -160,13 +173,14 @@
 
 </script>
 
-<div id="duck_stock_chart" style="height: 400px; min-width: 310px; background-color: #2b542c;margin-top: 700px">
+<div id="duck_stock_chart" style="background-color: #2b542c;margin-top: 0px;height: 400px;">
+
 
 
 </div>
 <script>
     function showStockChart(stockCode) {
-        $.getJSON('http://localhost:8080/Stock/getStockDataListByTime/?code='+stockCode+'&start=2000-01-01&end=2015-01-11', function (data) {
+        $.getJSON('http://localhost:8080/Stock/getStockDataListByTime/?code='+stockCode+'&start=2006-01-01&end=2016-01-11', function (data) {
 
 //            alert(new Date("2013-05-10").getTime());
 //            data = parseToHighStockData(data);
