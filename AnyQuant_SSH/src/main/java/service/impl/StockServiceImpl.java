@@ -15,10 +15,10 @@ import vo.OHLC_VO;
 import vo.TimeSharingVO;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
+ * 同时支持大盘
  * @author Qiang
  * @date 16/5/6
  */

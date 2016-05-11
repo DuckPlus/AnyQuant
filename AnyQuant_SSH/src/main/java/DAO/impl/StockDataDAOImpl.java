@@ -4,7 +4,6 @@ import DAO.BaseDAO;
 import DAO.StockDataDAO;
 import entity.StockdataEntity;
 import entity.StockdataEntityPK;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import util.MyDate;
@@ -12,7 +11,7 @@ import util.DateCalculator;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.ArrayList;
+
 
 /**
  * Created by 67534 on 2016/5/7.

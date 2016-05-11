@@ -1,9 +1,7 @@
 package controller;
 
-import DAO.StockDAO;
 import entity.StockEntity;
 import entity.StockdataEntity;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import service.StockService;
 import util.MyDate;
 
-import java.io.IOException;
 import java.util.List;
 
 /**

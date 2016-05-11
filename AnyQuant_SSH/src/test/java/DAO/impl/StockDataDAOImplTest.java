@@ -1,18 +1,17 @@
 package DAO.impl;
 
 
+import entity.StockdataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import entity.StockdataEntity;
 import DAO.StockDataDAO;
 import util.MyDate;
 import java.util.ArrayList;
 
-
-import static org.junit.Assert.*;
+import static junit.framework.Assert.assertEquals;
 
 /**
  * Created by 67534 on 2016/5/8.

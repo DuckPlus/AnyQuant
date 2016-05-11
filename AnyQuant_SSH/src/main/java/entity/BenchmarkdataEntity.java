@@ -4,8 +4,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 /**
- * @author Qiang
- * @date 16/5/6
+ * Created by 67534 on 2016/5/10.
  */
 @Entity
 @Table(name = "benchmarkdata", schema = "AnyQuant", catalog = "")
@@ -13,6 +12,7 @@ import java.sql.Date;
 public class BenchmarkdataEntity {
     private String code;
     private Date date;
+    private String name;
     private double high;
     private double low;
     private double open;
@@ -41,6 +41,16 @@ public class BenchmarkdataEntity {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Basic
+    @Column(name = "name")
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Basic
@@ -151,6 +161,7 @@ public class BenchmarkdataEntity {
         if (turnoverVol != that.turnoverVol) return false;
         if (code != null ? !code.equals(that.code) : that.code != null) return false;
         if (date != null ? !date.equals(that.date) : that.date != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
     }
@@ -161,6 +172,7 @@ public class BenchmarkdataEntity {
         long temp;
         result = code != null ? code.hashCode() : 0;
         result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         temp = Double.doubleToLongBits(high);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(low);
