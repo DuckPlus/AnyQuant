@@ -175,96 +175,104 @@
 </div>
 <script>
     function showStockChart(stockCode) {
-        $.getJSON('http://localhost:8080/Stock/getStockDataListByTime/?code='+stockCode+'&start=2006-01-01&end=2016-01-11', function (data) {
+        $.ajax({
+           url:"/Stock/getStockDataListByTime",
+            type:'post',
+            data:{code:stockCode,start:'2016-01-01',end:'2016-01-31'},
+            success:function (data) {
+                var ohlc = [],
+                        volume = [],
+                        dataLength = data.length,
+                // set the allowed units for data grouping
+                        groupingUnits = [[
+                            'week',                         // unit name
+                            [1]                             // allowed multiples
+                        ], [
+                            'month',
+                            [1, 2, 3, 4, 6]
+                        ]],
 
-            var ohlc = [],
-                    volume = [],
-                    dataLength = data.length,
-            // set the allowed units for data grouping
-                    groupingUnits = [[
-                        'week',                         // unit name
-                        [1]                             // allowed multiples
-                    ], [
-                        'month',
-                        [1, 2, 3, 4, 6]
-                    ]],
+                        i = 0;
 
-                    i = 0;
+                for (i; i < dataLength; i += 1) {
 
-            for (i; i < dataLength; i += 1) {
-
-                ohlc.push([
-                    new Date(data[i].date).getTime(),
-                    data[i].open,
-                    data[i].high,
-                    data[i].low,
-                    data[i].close
-                ]);
+                    ohlc.push([
+                        new Date(data[i].date).getTime(),
+                        data[i].open,
+                        data[i].high,
+                        data[i].low,
+                        data[i].close
+                    ]);
 //                alert("loaded ohlc: open"+data[i].open+"high"+data[i].high+"low"+data[i].low+"close"+data[i].close);
-                volume.push([
+                    volume.push([
 //                    data[i][0], // the date
 //                    data[i][5] // the volume
-                    new Date(data[i].date).getTime(),
-                    data[i].turnoverVol
-                ]);
+                        new Date(data[i].date).getTime(),
+                        data[i].turnoverVol
+                    ]);
 //                alert("loaded volume: date:"+new Date(data[i].date).getTime()+ "vol 1000");
+                }
+
+
+                // create the chart
+                $('#duck_stock_chart').highcharts('StockChart', {
+
+                    rangeSelector: {
+                        selected: 1
+                    },
+
+                    title: {
+                        text: stockCode+' AAPL Historical'
+                    },
+
+                    yAxis: [{
+                        labels: {
+                            align: 'right',
+                            x: -3
+                        },
+                        title: {
+                            text: 'OHLC'
+                        },
+                        height: '60%',
+                        lineWidth: 2
+                    }, {
+                        labels: {
+                            align: 'right',
+                            x: -3
+                        },
+                        title: {
+                            text: 'Volume'
+                        },
+                        top: '65%',
+                        height: '35%',
+                        offset: 0,
+                        lineWidth: 2
+                    }],
+
+                    series: [{
+                        type: 'candlestick',
+                        name: 'AAPL',
+                        data: ohlc,
+                        dataGrouping: {
+                            units: groupingUnits
+                        }
+                    }, {
+                        type: 'column',
+                        name: 'Volume',
+                        data: volume,
+                        yAxis: 1,
+                        dataGrouping: {
+                            units: groupingUnits
+                        }
+                    }]
+                });
+            },
+            error:function () {
+                alert("StockList_d.html!wrong!");
             }
 
-
-            // create the chart
-            $('#duck_stock_chart').highcharts('StockChart', {
-
-                rangeSelector: {
-                    selected: 1
-                },
-
-                title: {
-                    text: stockCode+' AAPL Historical'
-                },
-
-                yAxis: [{
-                    labels: {
-                        align: 'right',
-                        x: -3
-                    },
-                    title: {
-                        text: 'OHLC'
-                    },
-                    height: '60%',
-                    lineWidth: 2
-                }, {
-                    labels: {
-                        align: 'right',
-                        x: -3
-                    },
-                    title: {
-                        text: 'Volume'
-                    },
-                    top: '65%',
-                    height: '35%',
-                    offset: 0,
-                    lineWidth: 2
-                }],
-
-                series: [{
-                    type: 'candlestick',
-                    name: 'AAPL',
-                    data: ohlc,
-                    dataGrouping: {
-                        units: groupingUnits
-                    }
-                }, {
-                    type: 'column',
-                    name: 'Volume',
-                    data: volume,
-                    yAxis: 1,
-                    dataGrouping: {
-                        units: groupingUnits
-                    }
-                }]
-            });
-
         });
+
     }
 </script>
 
