@@ -6,6 +6,9 @@
     <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
     <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/exporting.js"></script>
     <script>
+        function showpie(){
+            $.getJSON('http://localhost:8080/getRegionDistribution')
+        }
         $(function () {
             $('#container').highcharts({
                 title: {
