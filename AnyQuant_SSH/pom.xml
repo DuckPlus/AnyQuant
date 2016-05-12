@@ -3,9 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>Duck_Plus</groupId>
   <artifactId>AnyQuant_SSH</artifactId>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>1 Maven Webapp</name>
+  <name>Duck_Plus_AnyQuant</name>
   <url>http://maven.apache.org</url>
   <properties>
     <!-- spring版本号 -->
@@ -140,7 +140,7 @@
         <version>2.8</version>
         <configuration>
           <includes>
-            <!--       Test.jave   -->
+            <!--       Test.java   -->
             <include>**/*Test.java</include>
           </includes>
         </configuration>

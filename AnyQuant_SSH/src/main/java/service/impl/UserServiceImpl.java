@@ -33,4 +33,9 @@ public class UserServiceImpl implements UserService {
     public String checkIfValid(UserEntity u) {
         return userDao.checkIfValid(u);
     }
+
+    @Override
+    public boolean changePassword(UserEntity user, String newPassword) {
+        return false;
+    }
 }
