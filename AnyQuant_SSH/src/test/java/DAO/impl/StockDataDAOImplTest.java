@@ -56,7 +56,7 @@ public class StockDataDAOImplTest {
         MyDate start = new MyDate (2016,3,1);
         MyDate end = new MyDate (2016,3,20);
         ArrayList<StockdataEntity> list = ( ArrayList<StockdataEntity>)dao.getStockData(code,start,end);
-        System.out.println("code :"+list.size());
+        System.out.println("size :"+list.size());
         System.out.println("code :"+list.get(0).getCode());
         System.out.print("date :"+list.get(0).getDate().toString());
         assertEquals("sh600216",list.get(0).getCode());
