@@ -12,6 +12,7 @@
     <mapping class="entity.UserEntity"/>
     <mapping class="entity.BenchmarkdataEntity"/>
     <mapping class="entity.StockdataEntity"/>
+    <mapping class="entity.OptionalstockEntity"/>
 
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
