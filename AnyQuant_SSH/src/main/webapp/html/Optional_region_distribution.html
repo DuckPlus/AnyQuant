@@ -19,9 +19,10 @@
                 var datalength=data.length,
                         series=[],
                         i=0;
-                for(i;i<datalength;i++){
-                    series.push([data[i][0],data[i][1]]);
+                for(var [ket,value] of data){
+                    series.push([key,value]);
                 }
+
             }
         });
         $(function () {
