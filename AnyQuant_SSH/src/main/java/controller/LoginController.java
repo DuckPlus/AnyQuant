@@ -10,6 +10,7 @@ import service.UserService;
 import util.Configure;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,7 +46,6 @@ public class LoginController {
         userEntity.setPassword(password);
         if(addNewUser!= null && addNewUser.equals(Configure.BUTTON_CHOSEN)){
 
-
             userService.saveUser(userEntity);
             return "/index";
         }else {
@@ -60,6 +60,8 @@ public class LoginController {
         }
 
     }
+
+
 
 
 }

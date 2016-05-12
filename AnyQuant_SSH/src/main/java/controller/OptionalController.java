@@ -73,7 +73,7 @@ public class OptionalController {
 
     @RequestMapping("/getBoardDistribution")
     @ResponseBody
-    public Map<String , Integer> getBoardDistribution(Model model , HttpServletRequest request , @RequestParam("code") String code){
+    public Map<String , Integer> getBoardDistribution(Model model , HttpServletRequest request){
         String id = (String) request.getSession().getAttribute(Configure.USERID_KEY);
         if(checkIfLogin(model , id)){
             return optionalService.getBoardDistributionMap(id);
@@ -108,7 +108,7 @@ public class OptionalController {
     }
     @RequestMapping("/getRegionDistribution")
     @ResponseBody
-    public Map<String , Integer> getRegionDistribution(Model model , HttpServletRequest request , @RequestParam("code") String code){
+    public Map<String , Integer> getRegionDistribution(Model model , HttpServletRequest request){
         String id = (String) request.getSession().getAttribute(Configure.USERID_KEY);
         if(checkIfLogin(model , id)){
             return optionalService.getRegionDistributionMap(id);
