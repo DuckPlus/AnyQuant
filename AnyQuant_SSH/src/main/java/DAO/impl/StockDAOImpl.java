@@ -21,4 +21,9 @@ public class StockDAOImpl implements StockDAO {
     public List<StockEntity> findAllStocks() {
         return (List<StockEntity>) baseDAO.getAllList(StockEntity.class);
     }
+
+    @Override
+    public StockEntity getStockEntity(String code) {
+        return (StockEntity) baseDAO.load(StockEntity.class,code);
+    }
 }

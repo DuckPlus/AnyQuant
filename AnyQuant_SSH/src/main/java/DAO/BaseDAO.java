@@ -27,6 +27,9 @@ public interface BaseDAO {
 	public void flush();
 
 	public void clear();
+
+
+	public int executeMyHQL(String hql);
 	/**
 	 * load a object through its ID
 	 * @param id   its primary key
@@ -68,6 +71,7 @@ public interface BaseDAO {
 	 * @param bean
      */
 	public void delete(Object bean);
+
 
 	/**
 	 * delete a object through its id

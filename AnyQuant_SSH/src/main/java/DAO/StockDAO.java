@@ -12,5 +12,7 @@ public interface StockDAO {
 
     List<StockEntity> findAllStocks();
 
+    StockEntity getStockEntity(String code);
+
 
 }
