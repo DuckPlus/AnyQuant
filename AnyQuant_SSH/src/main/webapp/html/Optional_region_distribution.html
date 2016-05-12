@@ -11,6 +11,19 @@
 </head>
 <body>
     <script>
+
+        $.ajax({
+           url:'/Optional/getMockRegionDistribution',
+            type:'get',
+            success:function (data) {
+                var datalength=data.length,
+                        series=[],
+                        i=0;
+                for(i;i<datalength;i++){
+                    series.push([data[i][0],data[i][1]]);
+                }
+            }
+        });
         $(function () {
             $('#container').highcharts({
                 chart: {
@@ -36,23 +49,7 @@
                         }
                     }
                 },
-                series: [{
-                    type: 'pie',
-                    name: 'Browser share',
-                    data: [
-                        ['Firefox',   45.0],
-                        ['IE',       26.8],
-                        {
-                            name: 'Chrome',
-                            y: 12.8,
-                            sliced: true,
-                            selected: true
-                        },
-                        ['Safari',    8.5],
-                        ['Opera',     6.2],
-                        ['Others',   0.7]
-                    ]
-                }]
+
             });
         });
     </script>
