@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <!-- jQuery -->
     <script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-
     <!-- DataTables -->
     <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
+    <!--<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">-->
+    <!--<link  rel="stylesheet" type="text/css" href ="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/jqueryui/dataTables.jqueryui.css">-->
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
+    <!--<script type = "text/javascript" src = "http://cdn.datatables.net/plug-ins/28e7751dbec/integration/jqueryui/dataTables.jqueryui.js"></script>-->
+    <!--<script type="text/javascript" src="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/bootstrap/3/dataTables.bootstrap.js"></script>-->
+    <!--<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/bootstrap/3/dataTables.bootstrap.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">-->
 
-
-    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-    <link  rel="stylesheet" type="text/css" href ="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/jqueryui/dataTables.jqueryui.css">
-    <script type = "text/javascript" src = "http://cdn.datatables.net/plug-ins/28e7751dbec/integration/jqueryui/dataTables.jqueryui.js"></script>
     <!--benchmark-->
     <link rel="stylesheet" type="text/css" href="/css/StockList.css">
     <!--fonts-->
@@ -31,13 +33,10 @@
         document.getElementById("curtain").style.height="800px";
     }
     window.onload=changeHeight1;
-    document.onload = fun1;
-    function fun1() {
-        alert("load");
-    }
+
 </script>
 <div id="content" style="min-height: 800px">
-<div id="stock_list_container" class="stock_list_pane">
+<div id="stock_list_container" class="stock_list_pane" style="border-width: 3px; border-color: #4a5261">
     <table id="benchmark_list" class="display">
         <thead>
         <tr>
@@ -48,7 +47,6 @@
             <th>最低价</th>
             <th>收盘价</th>
             <th>成交量</th>
-            <th>换手率</th>
         </tr>
 
         </thead>
@@ -62,92 +60,91 @@
 </div>
 </div>
 
-<!--<script>-->
-    <!--var allStock;-->
-    <!--$(document).ready(function () {-->
-                <!--$.ajax({-->
-                    <!--type:'post',-->
-                    <!--url:'/BenchMark/getBenchDataList',-->
-                    <!--contentType:'application/json;charset=utf-8',-->
-                    <!--success:function (data){-->
-<!--//                alert("success");-->
-                        <!--initTable(data);-->
-                    <!--},-->
-                    <!--error:function () {-->
-                        <!--alert("请求失败");-->
-                    <!--}-->
-                <!--});-->
-            <!--}-->
-    <!--);-->
+<script>
+//    var allStock;
+    $(document).ready(function () {
+                $.ajax({
+                    type:'get',
+                    url:'/BenchMark/getBenchDataList',
+                    contentType:'application/json;charset=utf-8',
+                    success:function (data){
+//                alert("success");
+                        initTable(data);
+                    },
+                    error:function () {
+                        alert("请求失败");
+                    }
+                });
+            }
+    );
 
-    <!--/*-->
-     <!--*初始化table的方法,包括样式的配置-->
-     <!--*/-->
-    <!--function initTable(allStock) {-->
-        <!--var table = $('#benchmark_list').DataTable( {-->
+    /*
+     *初始化table的方法,包括样式的配置
+     */
+    function initTable(allStock) {
+        var table = $('#benchmark_list').DataTable( {
 
-            <!--data:allStock,-->
-            <!--columns:[-->
-                <!--{data:'name'},-->
-                <!--{data:'code'},-->
-                <!--{data:'open'},-->
-                <!--{data:'high'},-->
-                <!--{data:'low'},-->
-                <!--{data:'close'},-->
-                <!--{data:'turnoverVol'},-->
-                <!--{data:'changeRate'}-->
-            <!--],-->
-<!--//                "scrollY":"500px",-->
-<!--//                "scrollY": "50%",-->
-<!--//                "scrollCollapse": true,-->
-<!--//                "padding":false,-->
-            <!--/*-->
-             <!--*自适应宽度 默认true 关闭可提升性能,同时方便管理布局-->
-             <!--*/-->
-            <!--"autoWidth":false,-->
-            <!--"columnDefs": [-->
-                <!--// 将name列变为红色-->
-                <!--{-->
-                    <!--"targets": [0], // 目标列位置，下标从0开始-->
-                    <!--"data": "name", // 数据列名-->
-                    <!--"render": function(data, type, full) { // 返回自定义内容-->
-                        <!--return "<span style='color:red;'>" + data + "</span>";-->
-                    <!--}-->
-                <!--}-->
-            <!--],-->
-            <!--//国际化-->
-            <!--"oLanguage": {-->
-                <!--"sProcessing": "疯狂加载数据中.",-->
-                <!--"sLengthMenu": "每页显示 _MENU_ 条记录",-->
-                <!--"sZeroRecords": "抱歉， 没有找到",-->
-                <!--"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",-->
-                <!--"sInfoEmpty": "没有数据",-->
-                <!--"sInfoFiltered": "(从 _MAX_ 条数据中检索)",-->
-                <!--"sZeroRecords": "没有检索到数据",-->
-                <!--"sSearch": "模糊查询:  ",-->
-                <!--"oPaginate": {-->
-                    <!--"sFirst": "首页",-->
-                    <!--"sPrevious": "前一页",-->
-                    <!--"sNext": "后一页",-->
-                    <!--"sLast": "尾页"-->
-                <!--}-->
-            <!--},-->
+            data:allStock,
+            columns:[
+                {data:'name'},
+                {data:'code'},
+                {data:'open'},
+                {data:'high'},
+                {data:'low'},
+                {data:'close'},
+                {data:'turnoverVol'},
+            ],
+//                "scrollY":"500px",
+//                "scrollY": "50%",
+//                "scrollCollapse": true,
+//                "padding":false,
+            /*
+             *自适应宽度 默认true 关闭可提升性能,同时方便管理布局
+             */
+            "autoWidth":false,
+            "columnDefs": [
+                // 将name列变为红色
+                {
+                    "targets": [0], // 目标列位置，下标从0开始
+                    "data": "name", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        return "<span style='color:red;'>" + data + "</span>";
+                    }
+                }
+            ],
+            //国际化
+            "oLanguage": {
+                "sProcessing": "疯狂加载数据中.",
+                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sZeroRecords": "抱歉， 没有找到",
+                "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+                "sInfoEmpty": "没有数据",
+                "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+                "sZeroRecords": "没有检索到数据",
+                "sSearch": "模糊查询:  ",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "前一页",
+                    "sNext": "后一页",
+                    "sLast": "尾页"
+                }
+            },
 
 
-        <!--} );-->
+        } );
 
-<!--//以下是关于选择行的代码-->
+//以下是关于选择行的代码
 
-        <!--$('#benchmark_list tbody').on( 'click', 'tr', function () {-->
-            <!--table.$('tr.selected').removeClass('selected');-->
-            <!--$(this).addClass('selected');-->
-            <!--var selected_row = table.row('.selected').index();-->
-            <!--var value = table.cell(selected_row,1).data();-->
-            <!--showStockChart(value);-->
-<!--//                }-->
-        <!--} );-->
-    <!--}-->
+        $('#benchmark_list tbody').on( 'click', 'tr', function () {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+            var selected_row = table.row('.selected').index();
+            var value = table.cell(selected_row,1).data();
+//            showStockChart(value);
+//                }
+        } );
+    }
 
-<!--</script>-->
+</script>
 </body>
 </html>
