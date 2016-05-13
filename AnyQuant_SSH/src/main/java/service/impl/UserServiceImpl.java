@@ -21,6 +21,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDao;
 
+    /**
+     * 检查用户名是否已存在
+     *
+     * @param name
+     * @return
+     */
+    @Override
+    public boolean checkIfUserNameExist(String name) {
+        return false;
+    }
+
     public void saveUser(UserEntity us) {
         userDao.save(us);
     }
@@ -32,5 +43,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public String checkIfValid(UserEntity u) {
         return userDao.checkIfValid(u);
+    }
+
+    @Override
+    public boolean changePassword(UserEntity user, String newPassword) {
+        return false;
     }
 }
