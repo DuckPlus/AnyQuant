@@ -410,9 +410,9 @@ Navigation
 
 .tab-container{
       position: relative;
-      top: 10px;
-      left: 50px;
-      width: 1137px;
+      top: 0px;
+      left: 0px;
+      width: 1260px;
       height: 1000px;
       background-color: #fff;
       box-shadow: 0 1px 3px rgba(0,0,0,.1);
@@ -420,7 +420,7 @@ Navigation
 .tab-wrapper{
   position: relative;
   top: 0;
-  width: 1137px;
+  width: 1260px;
   height: 60px;
   background-color: #33344a;
 }
@@ -433,7 +433,7 @@ Navigation
   display: block;
   float: left;
   height: 60px;
-  padding: 0 110px;
+  padding: 0 120px;
   color: #717181;
   font-size: 16px;
   line-height: 60px;
