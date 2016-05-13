@@ -16,9 +16,8 @@
            url:'/Optional/getMockRegionDistribution',
             type:'get',
             success:function (data) {
-
                 var datalength=data.length,
-                        series=[],
+                        content=[],
                         i=0;
 
                 for(i;i<datalength;i++){
@@ -52,6 +51,11 @@
                                 }
                             }
                         },
+                        series: [{
+                            type: 'pie',
+                            name: 'Browser share',
+                            data:content
+                        }]
 
                     });
                 });

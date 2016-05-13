@@ -163,9 +163,9 @@
                 end=year+"-"+month+"-"+day;
 
         $.ajax({
-            url:"/Stock/getStockDataListByTime",//TODO
-            type:'post',
-            data:{code:stockCode,start:start,end:end},
+            url:"/Stock/getStockDataListByOffset",//TODO
+            type:'get',
+            data:{code:stockCode,offset:-30,end:end},
             success:function (data) {
                 var ohlc = [],
                         volume = [],

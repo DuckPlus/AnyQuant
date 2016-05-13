@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.io.*,java.util.*" %>
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -53,5 +54,44 @@
 
 </div>
 <button class="button" id="button">Select Row</button>
+<div>
+    <h1>SESSION INFORMATION</h1>
+
+    <table border="1" align="center">
+        <tr bgcolor="#949494">
+            <th>Session info</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td><% out.print( session.getId()); %></td>
+        </tr>
+        <tr>
+            <td>Creation Time</td>
+            <td><% Date cTime = new Date(session.getCreationTime());out.print(cTime); %></td>
+        </tr>
+        <tr>
+            <td>Time of Last Access</td>
+            <td><%Date lTime = new Date(session.getLastAccessedTime()); out.print(lTime); %></td>
+        </tr>
+        <tr>
+            <td>User ID</td>
+            <td><% out.print("user id"); %></td>
+        </tr>
+        <tr>
+            <td>Number of visits</td>
+            <td><% out.print("visit account"); %></td>
+        </tr>
+    </table>
+    <script>
+        function record_info() {
+            var id = <%session.getId();%>
+
+            alert("record begin");
+            alert("your id is "+ id);
+        }
+        window.onload=record_info();
+    </script>
+</div>
 </body>
 </html>
