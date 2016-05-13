@@ -3,11 +3,14 @@ package controller;
 import entity.StockEntity;
 import entity.StockdataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 import service.StockService;
+import util.DateCalculator;
 import util.MyDate;
 
 import java.util.List;
@@ -54,8 +57,26 @@ public class StockDataController {
 
         return stockService.getStocksByTime(stockCode , MyDate.getDateFromString(start) ,MyDate.getDateFromString(end) );
     }
+    /**
+     * 返回某只股票以某段时间开始向前偏移一段时间的数据
+     * @param stockCode
+     * @param end 结束日期,若无,表示今天
+     * @param offset 偏移量
+     * @return
+     */
+    @RequestMapping("/getStockDataListByOffset")
+    @ResponseBody
+    public List<StockdataEntity> getStockDataByOffset(@RequestParam("code") String stockCode , @RequestParam("end") String end , @RequestParam("offset") String offset){
+        MyDate endDate;
+        if(end.equals("")){
+            endDate = DateCalculator.getToDay();
+        }else {
+            endDate = MyDate.getDateFromString(end);
+        }
 
 
+        return stockService.getStocksByTime(stockCode ,DateCalculator.getAnotherDay(endDate ,Integer.parseInt(offset)) , endDate );
+    }
 
 
 
