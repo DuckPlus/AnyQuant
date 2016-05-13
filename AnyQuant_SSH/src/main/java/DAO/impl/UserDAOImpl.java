@@ -31,7 +31,15 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public String checkIfValid(UserEntity u) {
-//        UserEntity entity = (UserEntity) baseDao.load(UserEntity.class , u.getId());
+        List<UserEntity> entity = (List<UserEntity>) baseDao.find("name" , u.getName() , UserEntity.class);
+
+        if(entity != null && entity.size() != 0){
+            if(entity.get(0).getPassword().equals(u.getPassword())){
+                return String.valueOf(entity.get(0).getId());
+            }
+
+
+        }
 //        if(entity.getName().equals(u.getName())){
 //            return true;
 //        }else {

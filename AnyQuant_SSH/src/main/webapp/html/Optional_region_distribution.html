@@ -16,15 +16,9 @@
            url:'/Optional/getMockRegionDistribution',
             type:'get',
             success:function (data) {
-                var datalength=data.length,
-                        content=[],
-                        i=0;
-
-                for(i;i<datalength;i++){
-                    alert(data[i]);
-                }
-                for(var [key,value] of data){
-                    alert(key+"~~~"+value);
+                var content=[];
+                for(var x in data){
+                    content.push([x,data[x]]);
                 }
                 $(function () {
                     $('#container').highcharts({

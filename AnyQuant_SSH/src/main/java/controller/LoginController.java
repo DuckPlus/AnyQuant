@@ -29,12 +29,12 @@ public class LoginController {
         return "/index";
     }
 
-//    @RequestMapping("/json")
-//    @ResponseBody
-//    public List<UserEntity> json(){
-//
-//        return userService.getAllUsernames();
-//    }
+    @RequestMapping("/json")
+    @ResponseBody
+    public List<UserEntity> json(){
+
+        return userService.getAllUsernames();
+    }
 
 
 
@@ -47,15 +47,16 @@ public class LoginController {
         if(addNewUser!= null && addNewUser.equals(Configure.BUTTON_CHOSEN)){
 
             userService.saveUser(userEntity);
-            return "/index";
+            return "/index.jsp";
         }else {
             String id;
             if((id = userService.checkIfValid(userEntity) ) != null){
                 //将用户的ID 写入到 Session中
                 request.getSession().setAttribute(Configure.USERID_KEY, id);
-                return "/welcome";
+                System.out.print("用户ID为"  + request.getSession().getAttribute(Configure.USERID_KEY));
+                return "../html/StockList.html";
             }else {
-                return "/index";
+                return "/index.jsp";
             }
         }
 
