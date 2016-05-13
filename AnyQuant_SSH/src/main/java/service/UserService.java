@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author Qiang
  * @date 16/5/4
- */
+ */pull
 
 public interface UserService {
 

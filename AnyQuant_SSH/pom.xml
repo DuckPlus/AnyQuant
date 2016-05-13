@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>Duck_Plus</groupId>
   <artifactId>AnyQuant_SSH</artifactId>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>Duck_Plus_AnyQuant</name>
   <url>http://maven.apache.org</url>
