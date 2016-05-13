@@ -164,7 +164,7 @@
 
         $.ajax({
             url:"/Stock/getStockDataListByOffset",//TODO
-            type:'post',
+            type:'get',
             data:{code:stockCode,offset:-30,end:end},
             success:function (data) {
                 var ohlc = [],
