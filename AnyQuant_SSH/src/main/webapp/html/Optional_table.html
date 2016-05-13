@@ -154,10 +154,18 @@
 </div>
 <script>
     function showStockChart(stockCode) {
+        var today=new Date();
+        var year=today.getFullYear(),
+                month=today.getMonth()+1,
+                day=today.getDate();
+
+        var start="2016-1-1",
+                end=year+"-"+month+"-"+day;
+
         $.ajax({
             url:"/Stock/getStockDataListByTime",//TODO
             type:'post',
-            data:{code:stockCode,start:'2016-01-01',end:'2016-01-31'},
+            data:{code:stockCode,start:start,end:end},
             success:function (data) {
                 var ohlc = [],
                         volume = [],

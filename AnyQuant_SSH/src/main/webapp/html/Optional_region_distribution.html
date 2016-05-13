@@ -16,43 +16,52 @@
            url:'/Optional/getMockRegionDistribution',
             type:'get',
             success:function (data) {
+
                 var datalength=data.length,
                         series=[],
                         i=0;
-                for(var [ket,value] of data){
-                    series.push([key,value]);
+
+                for(i;i<datalength;i++){
+                    alert(data[i]);
                 }
+                for(var [key,value] of data){
+                    alert(key+"~~~"+value);
+                }
+                $(function () {
+                    $('#container').highcharts({
+                        chart: {
+                            type: 'pie',
+                            options3d: {
+                                enabled: true,
+                                alpha: 45,
+                                beta: 0
+                            }
+                        },
 
-            }
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                depth: 20,
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '{point.name}'
+                                }
+                            }
+                        },
+
+                    });
+                });
+            },
+        error:function () {
+            alert("Optional_region.wrong!");
+        }
+
         });
-        $(function () {
-            $('#container').highcharts({
-                chart: {
-                    type: 'pie',
-                    options3d: {
-                        enabled: true,
-                        alpha: 45,
-                        beta: 0
-                    }
-                },
 
-                tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                },
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        depth: 20,
-                        dataLabels: {
-                            enabled: true,
-                            format: '{point.name}'
-                        }
-                    }
-                },
-
-            });
-        });
     </script>
     <div id="container" style="min-width:700px;height:400px"></div>
 </body>

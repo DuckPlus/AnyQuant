@@ -41,10 +41,10 @@
 
 
 </form>
-<button class="button button-raised button-royal" onclick="location.href='/jsp/StockList_d.html'">股票列表</button>
+<!--<button class="button button-raised button-royal" onclick="location.href='/jsp/StockList_d.html'">股票列表</button>-->
 
     <br><br>
-    <button class="button button-action button-rounded" onclick="location.href='../html/StockList.html'">这个才是真的主界面但是现在有问题。可以点过来看看导航栏长啥样</button>
+    <button class="button button-action button-rounded" onclick="location.href='../html/StockList.html'">主界面~</button>
 
 
 </div>
