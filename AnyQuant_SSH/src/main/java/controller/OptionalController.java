@@ -29,6 +29,8 @@ public class OptionalController {
     @ResponseBody
     public List<StockdataEntity> getOptionalStock(Model model , HttpServletRequest request){
         String id = (String) request.getSession().getAttribute(Configure.USERID_KEY);
+        System.out.print(id);
+
         return checkIfLogin(model , id) ? optionalService.getOptionalStocksDatas(id) : null;
 
     }

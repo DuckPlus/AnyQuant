@@ -54,7 +54,7 @@ public class LoginController {
                 //将用户的ID 写入到 Session中
                 request.getSession().setAttribute(Configure.USERID_KEY, id);
                 System.out.print("用户ID为"  + request.getSession().getAttribute(Configure.USERID_KEY));
-                return "../html/StockList.html";
+                return "redirect:/html/StockList.html";
             }else {
                 return "/index.jsp";
             }
