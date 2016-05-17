@@ -13,7 +13,7 @@
 <script>
 
     $.ajax({
-        url:'/Optional/getMockBoardDistribution',
+        url:'/Optional/getBoardDistribution',
         type:'get',
         success:function (data) {
             var content=[];
@@ -61,7 +61,7 @@
                 var chart = new Highcharts.Chart({
                     chart: {
                         renderTo: 'container2',
-                        type: 'column',
+                        type: 'column',0
                         margin: 75,
                         options3d: {
                             enabled: true,

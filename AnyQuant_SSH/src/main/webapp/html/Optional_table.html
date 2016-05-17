@@ -163,7 +163,7 @@
                 end=year+"-"+month+"-"+day;
 
         $.ajax({
-            url:"/Stock/getStockDataListByOffset",//TODO
+            url:"/Optional/get",//TODO
             type:'get',
             data:{code:stockCode,offset:-30,end:end},
             success:function (data) {
