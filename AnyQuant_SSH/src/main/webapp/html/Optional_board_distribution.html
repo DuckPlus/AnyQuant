@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:>
 <head>
     <meta charset="UTF-8">
     <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
     <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/exporting.js"></script>
     <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts-3d.js"></script>
-
 
 </head>
 <body>
@@ -61,7 +60,7 @@
                 var chart = new Highcharts.Chart({
                     chart: {
                         renderTo: 'container2',
-                        type: 'column',0
+                        type: 'column',
                         margin: 75,
                         options3d: {
                             enabled: true,
@@ -108,7 +107,7 @@
             });
         },
         error:function () {
-            alert("Optional_region.wrong!");
+            alert("Optional_board.wrong!");
         }
 
     });

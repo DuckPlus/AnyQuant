@@ -78,7 +78,7 @@ public class OptionalController {
     public Map<String , Integer> getBoardDistribution(Model model , HttpServletRequest request){
         String id = (String) request.getSession().getAttribute(Configure.USERID_KEY);
         if(checkIfLogin(model , id)){
-            return optionalService.getRegionDistributionMap(id);
+            return optionalService.getBoardDistributionMap(id);
         }else {
             return null;
         }
