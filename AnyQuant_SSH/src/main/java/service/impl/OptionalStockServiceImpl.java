@@ -154,6 +154,17 @@ public class OptionalStockServiceImpl implements OptionalStockService {
      */
     @Override
     public Map<String, Integer> getBoardDistributionMap(String userID) {
-        return null;
+        List<StockEntity> optionStocks = getOptionalStocks(userID);
+        Map<String, Integer> regions = new HashMap<>(34);
+
+        for (StockEntity temp : optionStocks) {
+            if (regions.containsKey(temp.getBoard())) {
+                regions.put(temp.getBoard(), regions.get(temp.getBoard()) + 1);
+            } else {
+                regions.put(temp.getBoard(), 1);
+            }
+        }
+
+        return regions;
     }
 }

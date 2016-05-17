@@ -85,18 +85,18 @@ public class OptionalController {
     }
 
 
-    @RequestMapping("/getMockBoardDistribution")
-    @ResponseBody
-    public Map<String , Integer> getMockBoardDistribution(){
-
-        Map<String, Integer> regions = new HashMap<>(34);
-        regions.put("汽油",30);
-        regions.put("猪肉",24);
-        regions.put("房地产",2);
-        regions.put("YSL",12);
-
-        return regions;
-    }
+//    @RequestMapping("/getMockBoardDistribution")
+//    @ResponseBody
+//    public Map<String , Integer> getMockBoardDistribution(){
+//
+//        Map<String, Integer> regions = new HashMap<>(34);
+//        regions.put("汽油",30);
+//        regions.put("猪肉",24);
+//        regions.put("房地产",2);
+//        regions.put("YSL",12);
+//
+//        return regions;
+//    }
     @RequestMapping("/getRegionDistribution")
     @ResponseBody
     public Map<String , Integer> getRegionDistribution(Model model , HttpServletRequest request){
