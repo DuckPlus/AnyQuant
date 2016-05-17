@@ -412,15 +412,15 @@ Navigation
       position: relative;
       top: 0px;
       left: 0px;
-      width: 1260px;
-      height: 1000px;
-      background-color: #fff;
+      /*width: 1260px;*/
+      height: 1500px;
+      background-color: #00a1cb;
       box-shadow: 0 1px 3px rgba(0,0,0,.1);
     }
 .tab-wrapper{
   position: relative;
   top: 0;
-  width: 1260px;
+  /*width: 1260px;*/
   height: 60px;
   background-color: #33344a;
 }
@@ -428,12 +428,14 @@ Navigation
   display: none;
 }
 .tab-handler{
+  width: 25%;
   position: relative;
   z-index: 2;
   display: block;
   float: left;
   height: 60px;
-  padding: 0 120px;
+  /*padding: 0 120px;*/
+  text-align: center;
   color: #717181;
   font-size: 16px;
   line-height: 60px;
@@ -455,7 +457,7 @@ Navigation
   position: absolute;
   top: 60px;
   left: 0;
-  width: 740px;
+  width: 100%;
   padding: 30px;
   color: #999;
   font-size: 14px;
