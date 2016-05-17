@@ -1,16 +1,14 @@
-<!--<%&#45;&#45;<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>&#45;&#45;%>-->
-<!--<%&#45;&#45;<%@ page import="javax.swing.text.TabableView" %>&lt;%&ndash;&#45;&#45;%>-->
-  <!--<%&#45;&#45;Created by IntelliJ IDEA.&#45;&#45;%>-->
-  <!--<%&#45;&#45;User: duanzhengmou&#45;&#45;%>-->
-  <!--<%&#45;&#45;Date: 5/6/16&#45;&#45;%>-->
-  <!--<%&#45;&#45;Time: 3:57 PM&#45;&#45;%>-->
-  <!--<%&#45;&#45;To change this template use File | Settings | File Templates.&#45;&#45;%>-->
-<!--<%&#45;&#45;&ndash;%&gt;&#45;&#45;%>-->
-<!--<%&#45;&#45;<%@ page contentType="text/html;charset=UTF-8" language="java" %>&#45;&#45;%>-->
+<%@ page import="java.util.Enumeration" %>
+<!--Created by IntelliJ IDEA.-->
+  <!--User: duanzhengmou-->
+  <!--Date: 5/6/16-->
+  <!--Time: 3:57 PM-->
+  <!--To change this template use File | Settings | File Templates.&#45;&#45;%>-->
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
 
-    <!--<%&#45;&#45;tab上的小图标&#45;&#45;%>-->
+
     <link rel="shortcut icon" href="/image/shoot_cut.png">
     <!--fonts-->
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:200' rel='stylesheet' type='text/css'>
@@ -23,9 +21,9 @@
 
     <link rel="stylesheet" type="text/css" href="/css/StockList.css">
 
-    <!--<%&#45;&#45;表头css???奇葩&#45;&#45;%>-->
+    <!--表头css???奇葩-->
     <!--<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">-->
-        <!--&lt;!&ndash;<%&#45;&#45;tbody css&#45;&#45;%>&ndash;&gt;-->
+        <!--tbody css-->
     <!--<link  rel="stylesheet" type="text/css" href ="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/jqueryui/dataTables.jqueryui.css">-->
 
 
@@ -46,10 +44,18 @@
 </div>
 <script>
     function changeHeight() {
+        <% Enumeration attrs = session.getAttributeNames();
+           while(attrs.hasMoreElements()){
+           System.out.println("element:"+attrs.nextElement());
+           }
+        %>
         document.getElementById("curtain").style.height=window.screen.height;
+
     }
     window.onload=changeHeight;
+
 </script>
+
 
 <div id="stock_list_container" class="stock_list_pane">
 <table id="stock_list" class="display">
