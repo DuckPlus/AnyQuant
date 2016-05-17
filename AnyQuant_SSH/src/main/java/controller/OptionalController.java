@@ -78,24 +78,13 @@ public class OptionalController {
     public Map<String , Integer> getBoardDistribution(Model model , HttpServletRequest request){
         String id = (String) request.getSession().getAttribute(Configure.USERID_KEY);
         if(checkIfLogin(model , id)){
-            return optionalService.getBoardDistributionMap(id);
+            return optionalService.getRegionDistributionMap(id);
         }else {
             return null;
         }
     }
 
-    @RequestMapping("/getMockRegionDistribution")
-    @ResponseBody
-    public Map<String , Integer> getMockRegionDistribution(){
 
-        Map<String, Integer> regions = new HashMap<>(34);
-        regions.put("南京",10);
-        regions.put("北京",2);
-        regions.put("上海",8);
-        regions.put("深证",18);
-
-        return regions;
-    }
     @RequestMapping("/getMockBoardDistribution")
     @ResponseBody
     public Map<String , Integer> getMockBoardDistribution(){

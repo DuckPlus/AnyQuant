@@ -1,46 +1,40 @@
-<!--<%&#45;&#45;<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>&#45;&#45;%>-->
-<!--<%&#45;&#45;<%@ page import="javax.swing.text.TabableView" %>&lt;%&ndash;&#45;&#45;%>-->
-<!--<%&#45;&#45;Created by IntelliJ IDEA.&#45;&#45;%>-->
-<!--<%&#45;&#45;User: duanzhengmou&#45;&#45;%>-->
-<!--<%&#45;&#45;Date: 5/6/16&#45;&#45;%>-->
-<!--<%&#45;&#45;Time: 3:57 PM&#45;&#45;%>-->
-<!--<%&#45;&#45;To change this template use File | Settings | File Templates.&#45;&#45;%>-->
-<!--<%&#45;&#45;&ndash;%&gt;&#45;&#45;%>-->
-<!--<%&#45;&#45;<%@ page contentType="text/html;charset=UTF-8" language="java" %>&#45;&#45;%>-->
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
 
-    <!--<%&#45;&#45;tab上的小图标&#45;&#45;%>-->
+
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+    <!--tab上的小图标-->
     <link rel="shortcut icon" href="/image/shoot_cut.png">
+        <!--jQuery dependencies-->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/themes/base/jquery-ui.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+
+    <!--都是外面的css-->
     <!--fonts-->
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:200' rel='stylesheet' type='text/css'>
     <!-- jQuery -->
     <script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-
     <!-- DataTables -->
     <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
-
-    <link rel="stylesheet" type="text/css" href="/css/StockList.css">
-
     <!--<%&#45;&#45;表头css???奇葩&#45;&#45;%>-->
-    <!--<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">-->
-    <!--&lt;!&ndash;<%&#45;&#45;tbody css&#45;&#45;%>&ndash;&gt;-->
-    <!--<link  rel="stylesheet" type="text/css" href ="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/jqueryui/dataTables.jqueryui.css">-->
-
-
-    <!--<script type = "text/javascript" src = "http://cdn.datatables.net/plug-ins/28e7751dbec/integration/jqueryui/dataTables.jqueryui.js"></script>-->
-
-    <!--highChart 的js支持-->
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+    <!--<%&#45;&#45;tbody css&#45;&#45;%>-->
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
+    <link  rel="stylesheet" type="text/css" href ="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/jqueryui/dataTables.jqueryui.css">
+    <script type = "text/javascript" src = "http://cdn.datatables.net/plug-ins/28e7751dbec/integration/jqueryui/dataTables.jqueryui.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/StockList.css">
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Titillium+Web:200' rel='stylesheet' type='text/css'>
     <!--动画的css支持-->
     <link rel="stylesheet" type="text/css" href="/css/animate.css">
-
-
-    <title>Duck_stockList</title>
+    <title>Title</title>
 </head>
-<body style=";margin-left: 0px;margin-left: 0px;margin-top: 0px;margin-right: 0px">
+<body>
+
 <script>
     function changeHeight() {
         document.getElementById("curtain").style.height=window.screen.height;
@@ -70,7 +64,6 @@
         </tfoot>
 
     </table>
-    <!--<button class="button" id="button">Select Row</button>-->
 </div>
 
 <script>
@@ -81,7 +74,6 @@
                     url:'/Optional/get',
                     contentType:'application/json;charset=utf-8',
                     success:function (data){
-//                alert("success");
                         initTable(data);
                     },
                     error:function () {
@@ -90,7 +82,6 @@
                 });
             }
     );
-
     /*
      *初始化table的方法,包括样式的配置
      */
@@ -108,10 +99,6 @@
                 {data:'turnoverVol'},
                 {data:'changeRate'}
             ],
-//                "scrollY":"500px",
-//                "scrollY": "50%",
-//                "scrollCollapse": true,
-//                "padding":false,
             /*
              *自适应宽度 默认true 关闭可提升性能,同时方便管理布局
              */
@@ -143,39 +130,26 @@
                     "sLast": "尾页"
                 }
             },
-
-
         } );
 
 //以下是关于选择行的代码
 
         $('#stock_list tbody').on( 'click', 'tr', function () {
-//                if ( $(this).hasClass('selected') ) {
-//                    $(this).removeClass('selected');
-//                }
-//                else {
             table.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
             var selected_row = table.row('.selected').index();
             var value = table.cell(selected_row,1).data();
             showStockChart(value);
-//                }
         } );
     }
-    //    initTable();
-
 </script>
 
 <div id="duck_stock_chart" style="background-color: #2b542c;margin-top: 0px;height: 400px;">
-
-
-
 </div>
 <script>
     function showStockChart(stockCode) {
         $.ajax({
             url:"/Stock//getStockDataListByOffset",
-
             type:'get',
             data:{code:stockCode,offset:'-30',end:''},
             success:function (data) {
@@ -201,17 +175,11 @@
                         data[i].low,
                         data[i].close
                     ]);
-//                alert("loaded ohlc: open"+data[i].open+"high"+data[i].high+"low"+data[i].low+"close"+data[i].close);
                     volume.push([
-//                    data[i][0], // the date
-//                    data[i][5] // the volume
                         new Date(data[i].date).getTime(),
                         data[i].turnoverVol
                     ]);
-//                alert("loaded volume: date:"+new Date(data[i].date).getTime()+ "vol 1000");
                 }
-
-
                 // create the chart
                 $('#duck_stock_chart').highcharts('StockChart', {
 
@@ -279,7 +247,8 @@
 
     }
 </script>
-
+<script>if(document.getElementById("tab-radio-1").checked==true){
+    //TODO 动态初始化效果
+}</script>
 </body>
-
 </html>
