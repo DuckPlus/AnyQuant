@@ -1,4 +1,4 @@
-package data.service;
+package data;
 
 import vo.NewsVO;
 
@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by 67534 on 2016/5/18.
  */
-public interface newsDataService {
+public interface NewsDataService {
     /**
      * 根据股票获取最近的新闻，默认为最近Max_dateGap天的新闻，最多返回Max_newsCount条
      * @param stockCode
