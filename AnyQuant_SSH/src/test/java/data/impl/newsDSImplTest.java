@@ -7,6 +7,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import vo.NewsVO;
 
+import static org.junit.Assert.fail;
+
 /**
  * Created by 67534 on 2016/5/18.
  */
@@ -27,12 +29,25 @@ public class newsDSImplTest {
         //21375210   21396338 21338303
         String newsID= "21375210";
         NewsVO vo = ds.getNewsVO(newsID);
-        System.out.println("newsID: "+vo.newsID);
-        System.out.println("date: "+vo.publishDate);
-        System.out.println("author: "+vo.author);
-        System.out.println("title: "+vo.title);
-        System.out.println("summary: "+vo.summary);
-        System.out.println("source: "+vo.source);
+        if(vo==null){
+            fail("null-------");
+        }else if(!vo.newsID.equals(newsID)) {
+            fail("id error-------");
+        }else{
+            System.out.println("newsID: "+vo.newsID);
+            System.out.println("date: "+vo.publishDate);
+            System.out.println("title: "+vo.title);
+            System.out.println("summary: "+vo.summary);
+            System.out.println("source: "+vo.source);
+        }
+
+
+    }
+
+    @Test
+    public void getRelatedNewsVO() throws Exception {
+        String code = "sh600216";
+        ds.getRelatedNewsVO(code);
     }
 
 

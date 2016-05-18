@@ -28,10 +28,6 @@ public class TransferHelper {
 			vo.summary=jo.getString("newsSummary");
 		}
 
-		if(jo.containsKey("newsAuthor")){
-			vo.author=jo.getString("vo.author");
-		}
-
 		if(jo.containsKey("newsPublishSite")){
 			vo.source=jo.getString("newsPublishSite");
 		}

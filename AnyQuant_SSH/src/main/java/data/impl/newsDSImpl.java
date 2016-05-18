@@ -23,6 +23,7 @@ import java.util.List;
 public class newsDSImpl implements newsDataService {
 
     private static final int Max_newsCount=10;
+    private static final int Max_dateGap=5;
     /**
      * 根据股票获取最近的新闻，默认为最近5天的新闻，最多返回Max_newsCount条
      * @param stockCode
@@ -34,7 +35,7 @@ public class newsDSImpl implements newsDataService {
 
         String shortCode = stockCode.substring(2);
         MyDate end = DateCalculator.getToDay();
-        MyDate start  = DateCalculator.getAnotherDay(-5);
+        MyDate start  = DateCalculator.getAnotherDay(-Max_dateGap);
         JSONObject jo = ConnectionHelper.requestAPI
                 (API_TYPE.GET_RelatedNews,shortCode,
                         start.DateToStringSimple(),end.DateToStringSimple());
@@ -69,11 +70,24 @@ public class newsDSImpl implements newsDataService {
         JSONArray ja = jo.getJSONArray("data");
         JSONObject vojo = ja.getJSONObject(0);
         vo=TransferHelper.JSONObjectToNewsVO(vojo);
+        System.out.println("newsID: "+vo.newsID);
+        System.out.println("date: "+vo.publishDate);
+        System.out.println("title: "+vo.title);
+        System.out.println("summary: "+vo.summary);
+        System.out.println("source: "+vo.source);
         return vo;
     }
 
     @Override
     public List<NewsVO> getRelatedNewsVO(String stockCode) {
-        return null;
+        ArrayList<NewsVO> result = new ArrayList<>();
+        List<String> newsIDs = getRelatedNewsID(stockCode);
+        for(String id:newsIDs){
+            NewsVO vo = getNewsVO(id);
+            if(id!=null){
+                result.add(vo);
+            }
+        }
+        return result.size()==0 ? null:result;
     }
 }

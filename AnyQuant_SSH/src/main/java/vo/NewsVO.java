@@ -9,21 +9,19 @@ public class NewsVO {
     public String publishDate;
     public String title;
     public String summary;
-    public String author;
     public String source;
 
     public NewsVO(){
-        this.author="Unknown";
+
 
     }
 
     public NewsVO(String id,String date,String title,
-                  String summary,String author,String source){
+                  String summary,String source){
         this.newsID=id;
         this.publishDate=date;
         this.title=title;
         this.summary=summary;
-        this.author=author;
         this.source=source;
     }
 
