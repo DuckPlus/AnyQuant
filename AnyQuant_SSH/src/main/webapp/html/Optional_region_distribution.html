@@ -16,9 +16,20 @@
             type:'get',
             success:function (data) {
                 var content=[];
+                var num=0;
                 for(var x in data){
-                    content.push([x,data[x]]);
+
+                    if(data[x]>0&&data[x]<100){
+                        content.push([x,data[x]]);
+                        num++;
+                    }
+
+
                 }
+                if(num==0){
+                    content.push(['没有股票',1]);
+                }
+
                 $(function () {
                     $('#container').highcharts({
                         title: {

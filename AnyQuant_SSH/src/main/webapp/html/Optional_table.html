@@ -139,6 +139,8 @@
             $(this).addClass('selected');
             var selected_row = table.row('.selected').index();
             var value = table.cell(selected_row,1).data();
+            var myurl="/jsp/Stock_detail.jsp"+"?"+"code="+value;
+            window.location.assign(myurl);
             showStockChart(value);
         } );
     }

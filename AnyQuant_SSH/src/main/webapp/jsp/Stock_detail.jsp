@@ -6,14 +6,25 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
-    <title>Title</title>
+    <title>test1</title>
+    <script type="text/javascript">
+        function getparm()
+        {
+            var url=location.href;
+            var tmp=url.split("?")[1];
+            var parm=tmp.split("=")[1];
+            alert(parm);
+        }
+
+    </script>
 </head>
 <body>
-<h1>hello world</h1>
-
-
-
+<label id="label1" >page test4</label>
+<br><br>
+<input type="button" id="bt1" value="get parm" onclick="getparm()">
+<br><br>
 </body>
 </html>
