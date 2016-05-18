@@ -15,11 +15,7 @@ import util.enumration.StaticMessage;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
@@ -36,24 +32,20 @@ import java.util.Map;
 public class ConnectionHelper {
 	
 	private static final String API_PREFIX = "https://api.wmcloud.com:443/data/v1/";
-	private static final String ZHUJIAO_API_PREFIX = "http://121.41.106.89:8010/api/";
+
 	/**
 	 * 存储API序列
 	 */
 	private static final Map<API_TYPE, List<String>>  API_Saver = new HashMap<>(30);
 	
 	static{
-		API_Saver.put(API_TYPE.GET_BENCHMARK_MES, Arrays.asList(API_PREFIX +"api/market/getMktIdxd.json?field=" , "&beginDate=" , "&endDate=" , "&indexID=" , "&ticker=" , "&tradeDate="));
-		API_Saver.put(API_TYPE.IS_TRADING_DAY, Arrays.asList(API_PREFIX +"api/master/getTradeCal.json?field=" ,  "&exchangeCD="  , "&beginDate=" , "&endDate=" ) );
-		API_Saver.put(API_TYPE.GET_STOCKMES_AT_TIME, Arrays.asList(API_PREFIX +"api/market/getMktEqud.json?field=" ,"&beginDate=","&endDate=","&secID=","&ticker=" ,"&tradeDate=") );
-//		API_Saver.put(API_TYPE.GET_STOCKMES_BETWEEN_TIME, Arrays.asList( "api/master/getTradeCal.json?field=" ,  "&exchangeCD="  , "&beginDate=" , "&endDate=" ) );
-		API_Saver.put(API_TYPE.GET_TIMESAHRING, Arrays.asList(API_PREFIX +"api/market/getBarRTIntraDay.json?" ,"securityID=" ,  "&startTime=" , "&endTime=" , "&unit="  ) );
-		API_Saver.put(API_TYPE.CHECK_IF_TRADING, Arrays.asList(API_PREFIX +"api/market/getMktEqud.json?field=&beginDate=&endDate=&secID=" , "&ticker=" , "&tradeDate=" ));
-	
-		/*================以下为助教API=======================================*/
-		API_Saver.put(API_TYPE.GET_STOCKS_LIST, Arrays.asList(ZHUJIAO_API_PREFIX + "stocks/?" , "year"));
-		API_Saver.put(API_TYPE.GET_STOCKS_LIST_WITH_EXCHANGE , Arrays.asList(ZHUJIAO_API_PREFIX + "stocks/?" , "year" ,"&exchange="));
-		
+		API_Saver.put(API_TYPE.GET_RelatedNews, Arrays.asList
+                (API_PREFIX +"api/subject/getNewsByTickers.json?field=&secID=&exchangeCD=&secShortName=",
+						"&ticker=","&beginDate=","&endDate="));
+
+        API_Saver.put(API_TYPE.GET_NewsInfo,Arrays.asList
+                (API_PREFIX +"/api/subject/getNewsInfo.json?field=&",
+                        "newsID="));
 	}
 	
 	/**
@@ -69,79 +61,22 @@ public class ConnectionHelper {
 			buffer.append(urls.get(i+1) );
 			buffer.append(param[i]);
 		}
-//		System.err.println(buffer.toString());
-//		if(API_TYPE.GET_TIMESAHRING == type)
-//		System.out.println(request(buffer.toString()));
-		
-		if(urls.get(0).startsWith(API_PREFIX)){
-			return JSONObject.fromObject(request(buffer.toString()));
-		}else{
-			return JSONObject.fromObject(SendGET(buffer.toString(), ""));
-		}
+		System.err.println(buffer.toString());
+		System.out.println(request(buffer.toString()));
+
+		return JSONObject.fromObject(request(buffer.toString()));
+
 		
 	}
 	
 	
 	
-	/**
-	 *此方法用来建立url-connection并返回助教提供的API所提供的初始数据
-	 */
-	private static String SendGET(String url, String param) {
-		String result = "";// 访问返回结果
-		BufferedReader read = null;// 读取访问结果
-		int times=0;
-		while (result.equals("")&&times<3) {
 
-			try {
-				// 创建url
-				URL realurl = new URL(url);
-				// 打开连接
-				URLConnection connection = realurl.openConnection();
-				// 设置通用的请求属性
-				connection.setRequestProperty("accept", "*/*");
-				connection.setRequestProperty("connection", "Keep-Alive");
-				connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-				connection.setRequestProperty("X-Auth-Code", "0d4cb00bb416d44daea6fb74f5bfcfc2");
-				// 建立连接
-				connection.connect();
-				// // 获取所有响应头字段
-				// Map<String, List<String>> map = connection.getHeaderFields();
-				// // 遍历所有的响应头字段，获取到cookies等
-				// for (String key : map.keySet()) {
-				// System.out.println(key + "--->" + map.get(key));
-				// }
-				// 定义 BufferedReader输入流来读取URL的响应
-				read = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
-				String line;// 循环读取
-				while ((line = read.readLine()) != null) {
-					result += line;
-				}
-			} catch (IOException e) {
-				 e.printStackTrace();
-			} finally {
-				if (read != null&&(!result.equals(""))) {// 关闭流
-					try {
-						read.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-//					 System.out.println("request successfully");
-				}else{
-					 times++;
-			         System.out.println("request failed , try again ,times : "+times);
-				}
-			}
 
-		}
-
-        if(result.equals("")){
-        	System.out.println("request failed fainally");
-        }
-		return result;
-	}
 	/**
 	 *此方法用来建立url-connection并返回通联API所提供的初始数据
 	 */
+
     private static String request(String url) {
 		final String ACCESS_TOKEN =
 				StaticMessage.ACCESS_TOKEN;
