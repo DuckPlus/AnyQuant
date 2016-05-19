@@ -1,6 +1,5 @@
 package data.impl;
 
-import data.NewsDataService;
 import data.helper.ConnectionHelper;
 import data.helper.TransferHelper;
 import net.sf.json.JSONArray;
