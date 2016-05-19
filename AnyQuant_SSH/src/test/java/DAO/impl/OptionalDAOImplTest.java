@@ -38,19 +38,22 @@ public class OptionalDAOImplTest {
 
     @Test
     public void getOptionalStocks() throws Exception {
-        int userID = 1;
+        int userID = 2;
         ArrayList<StockEntity> result =
                 (ArrayList<StockEntity>) dao.getOptionalStocks(userID+"");
         for(StockEntity temp : result){
-            System.out.println("code: "+temp.getCode());
-            System.out.println("name: "+temp.getName());
+            if(temp!=null){
+                System.out.println("code: "+temp.getCode());
+                System.out.println("name: "+temp.getName());
+            }
+
         }
 
     }
 
     @Test
     public void deleteStockCode() throws Exception {
-        int userID = 1;
+        int userID = 2;
         System.out.println("before delete:");
         ArrayList<StockEntity> result =
                 (ArrayList<StockEntity>) dao.getOptionalStocks(userID+"");

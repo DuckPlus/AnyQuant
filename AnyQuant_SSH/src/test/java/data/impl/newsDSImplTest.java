@@ -18,7 +18,7 @@ import static org.junit.Assert.fail;
 
 public class newsDSImplTest {
     @Autowired
-    newsDSImpl ds;
+    NewsDataServiceImpl ds;
     @Test
     public void getRelatedNews() throws Exception {
          String code = "sh600216";

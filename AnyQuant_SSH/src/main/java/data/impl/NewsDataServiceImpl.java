@@ -1,8 +1,8 @@
 package data.impl;
 
+import data.NewsDataService;
 import data.helper.ConnectionHelper;
 import data.helper.TransferHelper;
-import data.service.newsDataService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Repository;
@@ -20,7 +20,7 @@ import java.util.List;
 
 @Repository
 
-public class newsDSImpl implements newsDataService {
+public class NewsDataServiceImpl implements NewsDataService {
 
     private static final int Max_newsCount=10;
     private static final int Max_dateGap=5;

@@ -14,7 +14,8 @@ import java.util.List;
 
 
 /**
- * Created by 67534 on 2016/5/7.
+ * @author ss
+ * @date 16/5/7
  */
 @Repository
 public class StockDataDAOImpl implements StockDataDAO {
