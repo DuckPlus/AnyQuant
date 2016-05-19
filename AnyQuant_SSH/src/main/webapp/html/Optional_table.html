@@ -175,7 +175,7 @@
 <script>
     function showStockChart(stockCode) {
         $.ajax({
-            url:"/Stock//getStockDataListByOffset",
+            url:"/Stock/getStockDataListByOffset",
             type:'get',
             data:{code:stockCode,offset:'-30',end:''},
             success:function (data) {
