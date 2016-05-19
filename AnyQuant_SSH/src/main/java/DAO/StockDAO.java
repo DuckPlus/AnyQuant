@@ -14,5 +14,7 @@ public interface StockDAO {
 
     StockEntity getStockEntity(String code);
 
+    List<StockEntity> getBoardRelatedStock(String boardName);
+    List<StockEntity> getRegionRelatedStock(String regionName);
 
 }

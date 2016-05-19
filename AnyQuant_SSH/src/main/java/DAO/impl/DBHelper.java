@@ -15,9 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by 67534 on 2016/5/12.
+ * @author ss
+ * @date 16/5/12
  */
-
 @Repository
 public class DBHelper {
     @Autowired

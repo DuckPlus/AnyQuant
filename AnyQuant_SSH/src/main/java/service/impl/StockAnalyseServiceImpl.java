@@ -1,18 +1,24 @@
 package service.impl;
 
+import DAO.StockDAO;
+import DAO.StockDataDAO;
 import data.DataServiceFactory;
 import data.NewsDataService;
 import entity.StockEntity;
 import entity.StockdataEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.embedded.DataSourceFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import service.StockAnalyseService;
 import util.enumration.AnalysisFactor;
 import vo.EvaluationVO;
 import vo.Factor_VO;
 import vo.NewsVO;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 股票分析界面逻辑层
@@ -24,11 +30,15 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
 
 
     private NewsDataService newsDS = DataServiceFactory.getNewsDataService();
-
+    @Autowired
+    private StockDAO stockDAO;
+    @Autowired
+    private StockDataDAO stockDataDAO;
 
     @Override
+    @Transactional
     public StockEntity getStockFullMessage(String stockCode) {
-        return null;
+        return stockDAO.getStockEntity(stockCode);
     }
 
     @Override
@@ -42,13 +52,24 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
     }
 
     @Override
+    @Transactional
     public List<StockdataEntity> getBoardRelatedStockMessage(String stockCode) {
-        return null;
+        String board = getStockFullMessage(stockCode).getBoard();
+        List<StockEntity> relatedStocks = stockDAO.getBoardRelatedStock(board);
+        List<StockdataEntity> results = new ArrayList<>(relatedStocks.size());
+        results.addAll(relatedStocks.stream().map(entity -> stockDataDAO.getStockData(entity.getCode())).collect(Collectors.toList()));
+        return results;
     }
 
     @Override
+    @Transactional
     public List<StockdataEntity> getRegionRelatedStockMessage(String stockCode) {
-        return null;
+        String region = getStockFullMessage(stockCode).getRegion();
+        List<StockEntity> relatedStocks = stockDAO.getRegionRelatedStock(region);
+        List<StockdataEntity> results = new ArrayList<>(relatedStocks.size());
+
+        results.addAll(relatedStocks.stream().map(stockEntity -> stockDataDAO.getStockData(stockEntity.getCode())).collect(Collectors.toList()));
+        return results;
     }
 
     @Override

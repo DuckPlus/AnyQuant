@@ -5,7 +5,8 @@ import vo.NewsVO;
 import java.util.List;
 
 /**
- * Created by 67534 on 2016/5/18.
+ * @author ss
+ * @date 16/5/18
  */
 public interface NewsDataService {
     /**
