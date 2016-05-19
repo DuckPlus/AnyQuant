@@ -17,7 +17,7 @@
     <script>
         AmCharts.ready(function () {
             generateChartData();
-            createStockChart();
+//            createStockChart();
         });
 
         var chartData = [];
@@ -31,7 +31,7 @@
                     var dataLength = data.length;
 
                     for(var i=0;i<dataLength;i++){
-                        var newDate=new Date(data[i].date);
+                        var newDate=new Date(data[i].date).getTime();
                         var open = data[i].open;
                         var close =data[i].close;
                         var low=data[i].low;
@@ -39,7 +39,7 @@
                         var volume =data[i].turnoverVol;
 
                         var value = Math.round(Math.random() * (30) + 100);
-                        alert("date:"+newDate+"   open:"+open+"  close:"+close+"  low"+low+"  high:"+high+"  volume:"+volume+"  value"+value);
+//                        alert("date:"+newDate+"   open:"+open+"  close:"+close+"  low"+low+"  high:"+high+"  volume:"+volume+"  value"+value);
                         chartData[i] = ({
                             date: newDate,
                             open: open,
@@ -49,7 +49,9 @@
                             volume: volume,
                             value: value
                         });
+//                        alert("done");
                     }
+                    createStockChart(chartData);
                 },
                 error:function () {
                     alert("Stock_k_demo.html!wrong!");
@@ -60,10 +62,11 @@
 
         }
 
-        function createStockChart() {
+        function createStockChart(chartData) {
             var chart = new AmCharts.AmStockChart();
-
-
+//            alert("magic begin!");
+//        alert("chartdata" +chartData[0].open);
+//    alert("magic end");
             // DATASET //////////////////////////////////////////
             var dataSet = new AmCharts.DataSet();
             dataSet.fieldMappings = [{
