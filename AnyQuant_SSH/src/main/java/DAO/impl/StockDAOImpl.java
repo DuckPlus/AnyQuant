@@ -23,7 +23,8 @@ public class StockDAOImpl implements StockDAO {
     }
 
     @Override
-    public StockEntity getStockEntity(String code) {
+    public StockEntity getStockEntity(String code)
+    {
         return (StockEntity) baseDAO.load(StockEntity.class,code);
     }
 }
