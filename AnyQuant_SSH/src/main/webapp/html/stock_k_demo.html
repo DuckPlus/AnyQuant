@@ -38,7 +38,7 @@
                         var high=data[i].high;
                         var volume =data[i].turnoverVol;
 
-                        var value = Math.round(Math.random() * (30) + 100);
+                        var value = 100;
 //                        alert("date:"+newDate+"   open:"+open+"  close:"+close+"  low"+low+"  high:"+high+"  volume:"+volume+"  value"+value);
                         chartData[i] = ({
                             date: newDate,
@@ -51,7 +51,7 @@
                         });
 //                        alert("done");
                     }
-                    createStockChart(chartData);
+                    createStockChart();
                 },
                 error:function () {
                     alert("Stock_k_demo.html!wrong!");
@@ -62,12 +62,8 @@
 
         }
 
-        function createStockChart(chartData) {
+        function createStockChart() {
             var chart = new AmCharts.AmStockChart();
-//            alert("magic begin!");
-//        alert("chartdata" +chartData[0].open);
-//    alert("magic end");
-            // DATASET //////////////////////////////////////////
             var dataSet = new AmCharts.DataSet();
             dataSet.fieldMappings = [{
                 fromField: "open",
@@ -88,20 +84,20 @@
                 fromField: "value",
                 toField: "value"
             }];
-            dataSet.color = "#7f8da9";
+            dataSet.color = "#FFFF00";
             dataSet.dataProvider = chartData;
-            dataSet.title = "West Stock";
+            dataSet.title = "k线图";
             dataSet.categoryField = "date";
 
             var dataSet2 = new AmCharts.DataSet();
             dataSet2.fieldMappings = [{
-                fromField: "value",
-                toField: "value"
+                fromField: "open",
+                toField: "open"
             }];
             dataSet2.color = "#fac314";
             dataSet2.dataProvider = chartData;
             dataSet2.compared = true;
-            dataSet2.title = "East Stock";
+            dataSet2.title = "市值";
             dataSet2.categoryField = "date";
 
             chart.dataSets = [dataSet, dataSet2];
@@ -125,9 +121,9 @@
             graph.closeField = "close";
             graph.highField = "high";
             graph.lowField = "low";
-            graph.valueField = "close";
-            graph.lineColor = "#7f8da9";
-            graph.fillColors = "#7f8da9";
+            graph.valueField = "open";
+            graph.lineColor = "#00CD00";
+            graph.fillColors = "#00CD00";
             graph.negativeLineColor = "#db4c3c";
             graph.negativeFillColors = "#db4c3c";
             graph.proCandlesticks = true;
@@ -135,12 +131,12 @@
             graph.useDataSetColors = false;
             graph.comparable = true;
             graph.compareField = "value";
-            graph.showBalloon = false;
+            graph.showBalloon = true;
             stockPanel.addStockGraph(graph);
 
             var stockLegend = new AmCharts.StockLegend();
             stockLegend.valueTextRegular = undefined;
-            stockLegend.periodValueTextComparing = "[[percents.value.close]]%";
+            stockLegend.periodValueTextComparing = "[[percents.value.open]]  [[percents.value.close]]";
             stockPanel.stockLegend = stockLegend;
 
             var chartCursor = new AmCharts.ChartCursor();
@@ -149,8 +145,8 @@
             stockPanel.chartCursor = chartCursor;
 
             var stockPanel2 = new AmCharts.StockPanel();
-            stockPanel2.title = "Volume";
-            stockPanel2.percentHeight = 30;
+            stockPanel2.title = "成交量";
+            stockPanel2.percentHeight = 50;
             stockPanel2.marginTop = 1;
             stockPanel2.showCategoryAxis = true;
 
@@ -163,7 +159,7 @@
             var graph2 = new AmCharts.StockGraph();
             graph2.valueField = "volume";
             graph2.type = "column";
-            graph2.showBalloon = false;
+            graph2.showBalloon = true;
             graph2.fillAlphas = 1;
             stockPanel2.addStockGraph(graph2);
 
@@ -222,8 +218,8 @@
 
     </script>
 </head>
-<body style="background-color:#FFFFFF">
-<div id="chartdiv" style="width:80%; height:400px;"></div>
+<body >
+<div id="chartdiv" style="width:80%; height:400px;background-color:#FFFFFF"></div>
 </body>
 
 </html>
