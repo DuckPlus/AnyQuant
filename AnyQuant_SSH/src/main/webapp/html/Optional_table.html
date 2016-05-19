@@ -113,24 +113,17 @@
                     }
                 }
             ],
-            //国际化
-            "oLanguage": {
-                "sProcessing": "疯狂加载数据中.",
-                "sLengthMenu": "每页显示 _MENU_ 条记录",
-                "sZeroRecords": "抱歉， 没有找到",
-                "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
-                "sInfoEmpty": "没有数据",
-                "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
-                "sZeroRecords": "没有检索到数据",
-                "sSearch": "模糊查询:  ",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "前一页",
-                    "sNext": "后一页",
-                    "sLast": "尾页"
-                }
-            },
         } );
+        var tempTable=document.getElementById('stock_list');
+        var length=tempTable.rows.length,i;
+        for(i=0;i<length;i++){
+            var cells=tempTable.rows.item(i).cells;
+            var cellLength=cells.length;
+            for(var j=0;j<cellLength;j++){
+                var cell=cells.item(j).innerHTML;
+                alert(cell);
+            }
+        }
 
 //以下是关于选择行的代码
 

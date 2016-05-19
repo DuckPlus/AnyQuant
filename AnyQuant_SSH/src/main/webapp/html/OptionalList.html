@@ -3,6 +3,51 @@
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
+
+	<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+	<!--tab上的小图标-->
+	<link rel="shortcut icon" href="/image/shoot_cut.png">
+	<!--jQuery dependencies-->
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/themes/base/jquery-ui.css" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+
+	<!--都是外面的css-->
+	<!--fonts-->
+	<link href='https://fonts.googleapis.com/css?family=Titillium+Web:200' rel='stylesheet' type='text/css'>
+	<!-- jQuery -->
+	<script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<!-- DataTables -->
+	<script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
+	<!--<%&#45;&#45;表头css???奇葩&#45;&#45;%>-->
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+	<!--<%&#45;&#45;tbody css&#45;&#45;%>-->
+	<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
+	<link  rel="stylesheet" type="text/css" href ="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/jqueryui/dataTables.jqueryui.css">
+	<script type = "text/javascript" src = "http://cdn.datatables.net/plug-ins/28e7751dbec/integration/jqueryui/dataTables.jqueryui.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/StockList.css">
+	<script src="https://code.highcharts.com/stock/highstock.js"></script>
+	<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+	<link href='https://fonts.googleapis.com/css?family=Titillium+Web:200' rel='stylesheet' type='text/css'>
+	<!--动画的css支持-->
+	<link rel="stylesheet" type="text/css" href="/css/animate.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -84,8 +129,95 @@
 						<input type="radio" name="tab-radio" class="tab-radio" id="tab-radio-1" checked>
 						<label for="tab-radio-1" class="tab-handler tab-handler-1">自选列表</label>
 						<div class="tab-content tab-content-1">
+							<div>内容</div>
+							<div id="stock_list_container" class="stock_list_pane">
+								<table id="stock_list" class="display">
+									<thead>
+									<tr>
+										<th>股票名称</th>
+										<th>股票代码</th>
+										<th>开盘价</th>
+										<th>最高价</th>
+										<th>最低价</th>
+										<th>收盘价</th>
+										<th>成交量</th>
+										<th>换手率</th>
+									</tr>
 
-							<object type="text/x-scriptlet" data="Optional_table.html" width=100% height=1000></object>
+									</thead>
+									<tbody>
+									</tbody>
+
+									<tfoot>
+									</tfoot>
+
+								</table>
+							</div>
+							<script>
+								var allStock;
+								$(document).ready(function () {
+											$.ajax({
+												type:'post',
+												url:'/Optional/get',
+												contentType:'application/json;charset=utf-8',
+												success:function (allStock){
+													alert("Start now(success)~");
+													var table = $('#stock_list').DataTable( {
+														data:allStock,
+														columns:[
+															{data:'name'},
+															{data:'code'},
+															{data:'open'},
+															{data:'high'},
+															{data:'low'},
+															{data:'close'},
+															{data:'turnoverVol'},
+															{data:'changeRate'}
+														],
+
+														/*
+														 *自适应宽度 默认true 关闭可提升性能,同时方便管理布局
+														 */
+														"autoWidth":false,
+
+													} );
+
+													$('#stock_list tbody').on( 'click', 'tr', function () {
+														table.$('tr.selected').removeClass('selected');
+														$(this).addClass('selected');
+														var selected_row = table.row('.selected').index();
+														var value = table.cell(selected_row,1).data();
+														var myurl="/jsp/Stock_detail.jsp"+"?"+"code="+value;
+														window.location.assign(myurl);
+													} );
+
+
+													//initTable(allStock);
+												},
+												error:function () {
+													alert("请求失败");
+												}
+											});
+										}
+								);
+								var tempTable=document.getElementById('stock_list');
+								var length=tempTable.rows.length,i;
+								for(i=0;i<length;i++){
+									var cells=tempTable.rows.item(i).cells;
+									var cellLength=cells.length;
+									for(var j=0;j<cellLength;j++){
+										var cell=cells.item(j).innerHTML;
+										alert(cell);
+									}
+								}
+								/*
+								 *初始化table的方法,包括样式的配置
+								 */
+								function initTable(allStock) {
+									alert("in initTable");
+
+								}
+							</script>
 						</div>
 						<!--tab section 2-->
 						<input type="radio" name="tab-radio" class="tab-radio" id="tab-radio-2">
