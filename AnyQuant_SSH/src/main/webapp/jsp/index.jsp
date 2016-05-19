@@ -45,6 +45,7 @@
 
     <br><br>
     <button class="button button-action button-rounded" onclick="location.href='../html/StockList.html'">主界面~</button>
+    <button class="button button-action button-rounded" onclick="location.href='../html/BoardDetail.html'">板块详情</button>
 
 
 </div>

@@ -6,9 +6,34 @@
     <script src="http://code.highcharts.com/highcharts.js"></script>
     <script src="http://code.highcharts.com/modules/treemap.js"></script>
     <script src="http://code.highcharts.com/modules/heatmap.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/buttons.css">
+    <link rel="shortcut icon" href="/image/shoot_cut.png">
+    <script src="dist/js/flat-ui.min.js"></script>
 </head>
+<style>
+    .green{
+
+        color:#00CD00;
+    }
+    .red{
+
+        color:#FF0000;
+    }
+</style>
 <body>
-<span id=stockName style="left:200px;font-size:20px"></span>
+<span id=stockName style="position:relative;left:30px;font-size:30px"></span>
+<span style="position:relative;left:60px;">今日板块涨幅：</span>
+<span id=rate style="position:relative;left:60px;"></span>
+<span style="position:relative;left:100px;">涨跌个数：</span>
+<span id=upNum class="red" style="position:relative;left:108px;"></span>
+<span style="position:relative;left:115px">/</span>
+<span id=downNum class="green" style="position:relative;left:120px;"></span>
+<input id="searchCode" type="text" class="form-control"  placeholder="输入板块代号或名称" style="position:relative;left:600px;">
+<button id="searchbtn" class="button button-raised button-primary button-pill" onclick="dosearch()"  style="position:relative;left:630px;">
+    查询
+    </button>
+
 <div id="linechart" style="width: 80%; height: 400px; margin: 0 auto"></div>
 <div id="tree" style="width: 80%; height: 400px; margin: 0 auto"></div>
 
@@ -16,12 +41,31 @@
 
 
 <script>
+    function dosearch() {
+        alert(document.getElementById("searchCode").value);
+    }
     $(document).ready(function () {
+        var rate=0.5;
+        var upNum=20;
+        var downNum=2;
         document.getElementById('stockName').innerHTML="钢铁";
+
+        if(rate>=0){
+            document.getElementById('rate').className="red";
+            document.getElementById('rate').innerHTML="+"+rate;
+        }
+        else {
+            document.getElementById('rate').innerHTML=rate;
+            document.getElementById('rate').className="green";
+        }
+
+        document.getElementById('upNum').innerHTML="+"+upNum;
+        document.getElementById('downNum').innerHTML="-"+downNum;
         $('#linechart').highcharts({
             title: {
                 text: '与大盘趋势比较',
-                x: -15 //center
+                x: -20 ,//center
+                style:{fontWeight: 'bold'}
             },
 
             xAxis: {
@@ -66,7 +110,8 @@
 <script language="JavaScript">
     $(document).ready(function() {
         var title = {
-            text: '成分股票'
+            text: '成分股票',
+            style:{fontWeight: 'bold'}
         };
 
         var colorAxis = {
