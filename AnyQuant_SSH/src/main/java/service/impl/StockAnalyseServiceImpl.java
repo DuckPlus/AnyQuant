@@ -3,6 +3,7 @@ package service.impl;
 import DAO.StockDAO;
 import DAO.StockDataDAO;
 import data.DataServiceFactory;
+import data.NewsDataService;
 import entity.StockEntity;
 import entity.StockdataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
