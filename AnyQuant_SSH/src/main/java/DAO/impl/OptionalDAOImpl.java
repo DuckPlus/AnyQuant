@@ -70,6 +70,7 @@ public class OptionalDAOImpl implements OptionalDAO {
             return null;
         }
 
+
         for(String code : codes){
             StockEntity temp =stockDAO.getStockEntity(code);
             result.add(temp);
