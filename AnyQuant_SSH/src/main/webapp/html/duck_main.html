@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Duck</title>
+    <script src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/navigator.css">
+    <link rel="stylesheet" type="text/css" href="/css/duck_main.css">
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/StockList.css">
+
+
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+</head>
+<body>
+
+<!-- navigator begin -->
+<div id="nav_bar">
+    <img src="duck_icon.png" style="width: 35px;height: 35px;float: left;margin-top:7px;margin-left: 10px">
+    <div style="font-size: 30px;float: left;color: #ffffff;margin-left: 10px;margin-top: 7px;">DUCK</div>
+    <ul id="nav_box">
+        <li class="nav_item"><a class="nav_c" href="test_window.html?code=sh600000">股票列表</a></li>
+        <li class="nav_item"><a class="nav_c" href="http://www.baidu.com">大盘列表</a></li>
+        <li class="nav_item"><a class="nav_c" href="">自选股</a></li>
+        <li class="nav_item"><a class="nav_c" href="">回测系统</a></li>
+    </ul>
+</div>
+<div id="blank"></div>
+<!-- navigator end -->
+
+<div id="main_content">
+    <!--股票列表-->
+    <div id="stock_list_container" class="stock_list_pane">
+        <h1>股票列表</h1>
+        <table id="stock_list" class="display">
+            <thead>
+            <tr>
+                <th>股票名称</th>
+                <th>股票代码</th>
+                <th>开盘价</th>
+                <th>最高价</th>
+                <th>最低价</th>
+                <th>收盘价</th>
+                <th>成交量</th>
+                <th>换手率</th>
+            </tr>
+
+            </thead>
+            <tbody>
+            </tbody>
+
+            <tfoot>
+            </tfoot>
+
+        </table>
+    </div>
+
+
+
+</div>
+</body>
+
+<script>
+    var allStock;
+    $(document).ready(function () {
+                $.ajax({
+                    type:'post',
+                    url:'/Stock/getStockDataList',
+                    contentType:'application/json;charset=utf-8',
+                    success:function (data){
+//                alert("success");
+                        initTable(data);
+                    },
+                    error:function () {
+                        alert("请求失败");
+                    }
+                });
+            }
+    );
+
+    /*
+     *初始化table的方法,包括样式的配置
+     */
+    function initTable(allStock) {
+        var table = $('#stock_list').DataTable( {
+
+            data:allStock,
+            columns:[
+                {data:'name'},
+                {data:'code'},
+                {data:'open'},
+                {data:'high'},
+                {data:'low'},
+                {data:'close'},
+                {data:'turnoverVol'},
+                {data:'changeRate'}
+            ],
+
+            "autoWidth":false,
+            "columnDefs": [
+                // 将name列变为红色
+                {
+                    "targets": [0], // 目标列位置，下标从0开始
+                    "data": "name", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        return "<span style='color:red;'>" + data + "</span>";
+                    }
+                }
+            ],
+            //国际化
+            "oLanguage": {
+                "sProcessing": "疯狂加载数据中.",
+                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sZeroRecords": "抱歉， 没有找到",
+                "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+                "sInfoEmpty": "没有数据",
+                "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+                "sZeroRecords": "没有检索到数据",
+                "sSearch": "模糊查询:  ",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "前一页",
+                    "sNext": "后一页",
+                    "sLast": "尾页"
+                }
+            },
+
+
+        } );
+
+//以下是关于选择行的代码
+
+        $('#stock_list tbody').on( 'click', 'tr', function () {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+            var selected_row = table.row('.selected').index();
+            var value = table.cell(selected_row,1).data();
+            var url = "/html/duck_stockDetail.html"+"?"+value;
+            window.location.href = url;
+//            showStockChart(value);
+//                }
+        } );
+    }
+
+</script>
+
+</html>

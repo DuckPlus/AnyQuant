@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/css/window.css">
+    <!-- jQuery -->
+    <script src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+    <!-- highcharts -->
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="/js/echarts.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/navigator.css">
+    <!-- <h1 class="title1">hello this is a test page!</h1> -->
+</head>
+<body>
+<!-- navigator begin -->
+<div id="nav_bar">
+    <img src="duck_icon.png" style="width: 35px;height: 35px;float: left;margin-top:7px;margin-left: 10px">
+    <div style="font-size: 30px;float: left;color: #ffffff;margin-left: 10px;margin-top: 7px;">DUCK</div>
+    <ul id="nav_box">
+        <li class="nav_item"><a class="nav_c" href="/html/duck_main.html">股票列表</a></li>
+        <li class="nav_item"><a class="nav_c" href="http://www.baidu.com">大盘列表</a></li>
+        <li class="nav_item"><a class="nav_c" href="">自选股</a></li>
+        <li class="nav_item"><a class="nav_c" href="">回测系统</a></li>
+    </ul>
+</div>
+<div id="blank"></div>
+<!-- navigator end -->
+<div class="main_content">
+
+    <div class="duck_window" id="chart_stock_OHLC_window">
+        <div class="duck_title">
+            STOCK OHLC CHART
+        </div>
+        <div class="duck_content">
+            <div id="chart1"></div>
+        </div>
+    </div>
+
+    <div class="duck_window" id="relationship_window">
+        <div class="duck_title">
+            STOCK RELATIONSHIP CHART
+        </div>
+        <div class="duck_content">
+            <div id="chart2" style="width: 100%;height: 300px;"></div>
+        </div>
+    </div>
+
+    <div class="duck_window" id="stockinfo_window">
+        <div class="duck_title">
+            STOCK INFOMATION BLOCK
+        </div>
+        <div class="duck_content">
+            股票信息________   公司信息_______
+        </div>
+    </div>
+
+    <div class="duck_window" id="stockfactor_window">
+        <div class="duck_title">
+            STOCK FACTOR CHART
+        </div>
+        <div class="duck_content">
+            <div id="factor_chart"></div>
+        </div>
+    </div>
+
+    <div class="duck_window" id="score_window">
+        <div class="duck_title">
+            SYNTHETICAL SCORE
+        </div>
+        <div class="duck_content">
+            <div id="score_chart" style="width: 100%;height: 400px"></div>
+        </div>
+    </div>
+
+    <div class="duck_window" id="radar_window">
+        <div class="duck_title">
+            RADAR
+        </div>
+        <div class="duck_content">
+            <div id="radar_chart" style="width: 100%;height: 400px"></div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<!-- script -->
+<script type="text/javascript">
+    function getParam(paras) {
+        var url = location.href;
+        var paraString = url.substring(url.indexOf("?")+1,url.length).split("&");
+        var paraObj = {}
+        for (i=0; j=paraString[i]; i++){
+            paraObj[j.substring(0,j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=")+1,j.length);
+        }
+        var returnValue = paraObj[paras.toLowerCase()];
+        if(typeof(returnValue)=="undefined"){
+            return "";
+        }else{
+            return returnValue;
+        }
+    }
+</script>
+<!-- get OHLC chart -->
+<script type="text/javascript">
+    getCode();
+    $(function () {
+        $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-ohlcv.json&callback=?', function (data) {
+            // split the data set into ohlc and volume
+            var ohlc = [],
+                    volume = [],
+                    dataLength = data.length,
+            // set the allowed units for data grouping
+                    groupingUnits = [[
+                        'week',                         // unit name
+                        [1]                             // allowed multiples
+                    ], [
+                        'month',
+                        [1, 2, 3, 4, 6]
+                    ]],
+
+                    i = 0;
+
+            for (i; i < dataLength; i += 1) {
+                ohlc.push([
+                    data[i][0], // the date
+                    data[i][1], // open
+                    data[i][2], // high
+                    data[i][3], // low
+                    data[i][4] // close
+                ]);
+
+                volume.push([
+                    data[i][0], // the date
+                    data[i][5] // the volume
+                ]);
+            }
+
+
+            // create the chart
+            $('#chart1').highcharts('StockChart', {
+
+                rangeSelector: {
+                    selected: 1
+                },
+
+                title: {
+                    text: 'AAPL Historical'
+                },
+
+                yAxis: [{
+                    labels: {
+                        align: 'right',
+                        x: -3
+                    },
+                    title: {
+                        text: 'OHLC'
+                    },
+                    height: '60%',
+                    lineWidth: 2
+                }, {
+                    labels: {
+                        align: 'right',
+                        x: -3
+                    },
+                    title: {
+                        text: 'Volume'
+                    },
+                    top: '65%',
+                    height: '35%',
+                    offset: 0,
+                    lineWidth: 2
+                }],
+
+                series: [{
+                    type: 'candlestick',
+                    name: 'AAPL',
+                    data: ohlc,
+                    dataGrouping: {
+                        units: groupingUnits
+                    }
+                }, {
+                    type: 'column',
+                    name: 'Volume',
+                    data: volume,
+                    yAxis: 1,
+                    dataGrouping: {
+                        units: groupingUnits
+                    }
+                }]
+            });
+        });
+    });
+</script>
+<!-- relationship chart -->
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('chart2'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: 'ECharts 入门示例'
+        },
+        tooltip: {},
+        legend: {
+            data:['销量']
+        },
+        xAxis: {
+            data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+        },
+        yAxis: {},
+        series: [{
+            name: '销量',
+            type: 'bar',
+            data: [5, 20, 36, 10, 10, 20]
+        }]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+
+    myChart.setOption(option);
+</script>
+
+<script type="text/javascript">
+    $(function () {
+
+        $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
+            // Create the chart
+            $('#factor_chart').highcharts('StockChart', {
+
+
+                rangeSelector : {
+                    selected : 1
+                },
+
+                title : {
+                    text : 'STOCK FACTOR'
+                },
+
+                series : [{
+                    name : 'factor name',
+                    data : data,
+                    tooltip: {
+                        valueDecimals: 2
+                    }
+                }]
+            });
+        });
+
+    });
+</script>
+<script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('score_chart'));
+    option = {
+        // tooltip: {
+        //     trigger: 'item',
+        //     formatter: "{a} <br/>{b}: {c} ({d}%)"
+        // },
+        legend: {
+            orient: 'vertical',
+            x: 'left',
+            data:['总分','综合评分']
+        },
+        series: [
+            {
+                name:'评分',
+                type:'pie',
+                radius: ['40%', '80%'],
+                avoidLabelOverlap: true,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: true,
+                        textStyle: {
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data:[
+                    {value:160, name:'总分'},
+                    {value:60,name:'综合评分'}
+                ]
+            }
+        ]
+    };
+    myChart.setOption(option);
+</script>
+<!-- radar chart -->
+<script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('radar_chart'));
+    option = {
+        title: {
+            text: 'factor_radar'
+        },
+        tooltip: {},
+        legend: {
+            data: ['sh600004']
+        },
+        radar: {
+            // shape: 'circle',
+            indicator: [
+                { name: 'factor1', max: 1},
+                { name: 'factor2', max: 1},
+                { name: 'factor3', max: 1},
+                { name: 'factor4', max: 1},
+                { name: 'factor5', max: 1},
+                { name: 'factor6', max: 1}
+            ]
+        },
+        series: [{
+            name: '预算 vs 开销（Budget vs spending）',
+            type: 'radar',
+            // areaStyle: {normal: {}},
+            data : [
+                {
+                    value : [0.5, 0.1, 0.8, 0.35, 0.9, 0.1],
+                    name : 'sh600004'
+                }
+                //  {
+                //     value : [5000, 14000, 28000, 31000, 42000, 21000],
+                //     name : '实际开销（Actual Spending）'
+                // }
+            ]
+        }]
+    };
+    myChart.setOption(option);
+</script>
+
+<script>
+    function getCode() {
+        alert("done");
+        var result = window.location.search;
+        result = result.split('?')[1].split('=')[1];
+        return "sh66666";
+    }
+</script>
+</html>

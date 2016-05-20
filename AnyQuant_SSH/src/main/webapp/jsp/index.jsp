@@ -50,7 +50,7 @@
 
 </div>
 
-<button class="button button-raised button-primary button-pill" onclick="location.href='/jsp/testPage.jsp'">test</button>
+<button class="button button-raised button-primary button-pill" onclick="location.href='/html/duck_main.html'">test</button>
 </body>
 
 </html>
