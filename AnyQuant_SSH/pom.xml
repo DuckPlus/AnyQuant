@@ -131,7 +131,11 @@
       <!--<version>2.7</version>-->
     <!--</dependency>-->
 
-
+    <dependency>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-project-info-reports-plugin</artifactId>
+      <version>2.9</version>
+    </dependency>
   </dependencies>
 
 
@@ -159,6 +163,8 @@
           </includes>
         </configuration>
       </plugin>
+
+
     </plugins>
 
 

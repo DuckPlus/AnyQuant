@@ -14,12 +14,11 @@ import vo.NewsVO;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * Created by 67534 on 2016/5/18.
+ *
  */
-
 @Repository
-
 public class NewsDataServiceImpl implements NewsDataService {
 
     private static final int Max_newsCount=10;

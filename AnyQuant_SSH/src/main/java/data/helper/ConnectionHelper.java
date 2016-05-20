@@ -46,6 +46,7 @@ public class ConnectionHelper {
         API_Saver.put(API_TYPE.GET_NewsInfo,Arrays.asList
                 (API_PREFIX +"/api/subject/getNewsInfo.json?field=&",
                         "newsID="));
+
 	}
 	
 	/**
