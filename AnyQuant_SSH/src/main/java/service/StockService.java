@@ -119,6 +119,8 @@ public interface StockService {
 
     List<StockEntity> getAllStocks();
 
+	StockEntity getStockDescription(String code);
+
 
 	List<StockdataEntity> getTodayAllStockData();
 

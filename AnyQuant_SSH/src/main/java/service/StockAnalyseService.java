@@ -3,7 +3,9 @@ package service;
 import entity.StockEntity;
 import entity.StockdataEntity;
 import util.enumration.AnalysisFactor;
+import util.enumration.FactorJudge;
 import vo.EvaluationVO;
+import vo.FactorWeightVO;
 import vo.Factor_VO;
 import vo.NewsVO;
 
@@ -56,11 +58,25 @@ public interface StockAnalyseService {
      * 返回某个股票某个因子在最近一段时间内的变化
      * @param stockCode
      * @param factor
+     * @param offset a positive num represents the offset from now
      * @return
      */
-    List<Factor_VO> getFactorVO(String stockCode , AnalysisFactor factor);
+    List<Factor_VO> getFactorVO(String stockCode , AnalysisFactor factor , int offset);
 
-    //TODO 雷达图
+    /**
+     * Get all the usable factors
+     * 返回所有可用的评判因子
+     * @return
+     */
+    List<String> getAllFactors();
 
+    /**
+     * Get the most useful factors(may be )
+     * @param code
+     * @param timeLen
+     * @param factorJudge
+     * @return
+     */
+    List<FactorWeightVO> getMostUsefulFactors(String code , int timeLen, FactorJudge factorJudge);
 
 }
