@@ -69,6 +69,12 @@ public interface StockAnalyseService {
      * @return
      */
     List<String> getAllFactors();
+    /**
+     * Get all the usable factors that use to judge factors
+     * 返回所有可用的评判因子的因子
+     * @return
+     */
+    List<String> getAllFactorJudgeFactors();
 
     /**
      * Get the most useful factors(may be )

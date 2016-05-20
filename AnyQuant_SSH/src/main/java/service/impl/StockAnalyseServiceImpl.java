@@ -91,6 +91,15 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
     }
 
     @Override
+    public List<String> getAllFactorJudgeFactors() {
+        List<String> result = new ArrayList<>();
+        for (FactorJudge factor :  FactorJudge.values()){
+            result.add(factor.chinese);
+        }
+        return result;
+    }
+
+    @Override
     public List<FactorWeightVO> getMostUsefulFactors(String code, int timeLen , FactorJudge factorJudge) {
         return null;
     }
