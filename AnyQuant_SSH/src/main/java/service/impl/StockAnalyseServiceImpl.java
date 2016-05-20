@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.StockAnalyseService;
 import util.enumration.AnalysisFactor;
+import util.enumration.FactorJudge;
 import vo.EvaluationVO;
+import vo.FactorWeightVO;
 import vo.Factor_VO;
 import vo.NewsVO;
 
@@ -72,7 +74,24 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
     }
 
     @Override
-    public List<Factor_VO> getFactorVO(String stockCode, AnalysisFactor factor) {
+    public List<Factor_VO> getFactorVO(String stockCode, AnalysisFactor factor , int offset) {
+
+
+
+        return null;
+    }
+
+    @Override
+    public List<String> getAllFactors() {
+        List<String> result = new ArrayList<>();
+        for (AnalysisFactor factor :  AnalysisFactor.values()){
+            result.add(factor.chinese);
+        }
+        return result;
+    }
+
+    @Override
+    public List<FactorWeightVO> getMostUsefulFactors(String code, int timeLen , FactorJudge factorJudge) {
         return null;
     }
 

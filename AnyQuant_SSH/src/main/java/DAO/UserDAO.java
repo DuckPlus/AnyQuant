@@ -13,4 +13,7 @@ public interface UserDAO {
         void save(UserEntity u);
         List<UserEntity> findAll();
         String checkIfValid(UserEntity u);
+
+        boolean checkIfUsernameExist(String name);
+        boolean changePassword(UserEntity user, String newPassword);
 }
