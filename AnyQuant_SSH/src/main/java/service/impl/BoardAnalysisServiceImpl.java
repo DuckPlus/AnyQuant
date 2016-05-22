@@ -38,9 +38,10 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
     @Override
     public List<CompareBoardAndBenchVO> getBoardAndBenchChartData(String boardName, int offset, String bench) {
-        List<BenchmarkdataEntity> benchDatas = benchMarkDAO.getBenchMarkByTime(benchMarkDAO.getBenchMarkCodeByName(bench) , DateCalculator.getAnotherDay(-offset) , DateCalculator.getToDay());
+        List<BenchmarkdataEntity> benchDatas = benchMarkDAO.getBenchMarkByTime(benchMarkDAO.getBenchMarkCodeByName(boardName) , DateCalculator.getAnotherDay(-offset) , DateCalculator.getToDay());
+
         try {
-            if(benchDatas != null){
+            if(benchDatas != null && benchDatas.size() != 0){
                 double[] profits = new double[benchDatas.size()];
                 for (int i = 0; i < benchDatas.size(); i++) {
                     profits[i] = benchDatas.get(i).getClose();
@@ -96,13 +97,16 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
     private double[] computeBoardData(String boardName , int offset){
         List<String> stocks = stockDAO.getBoardRealatedStockCodes(boardName);
-
+        System.out.println(stocks.size());
         List<Double> boardDatas = new ArrayList<>(offset);
         List<StockdataEntity> dayData = new ArrayList<>(stocks.size());
         double[] result = new double[offset];
         for (int i = 0; i < offset; i++) {
             for (String stock : stocks){
-                dayData.add(stockDataDAO.getStockData(stock , DateCalculator.getAnotherDay(-i)));
+                StockdataEntity entity = stockDataDAO.getStockData(stock , DateCalculator.getAnotherDay(-i));
+                if(entity != null){
+                    dayData.add(entity);
+                }
             }
             result[i] = computeBoardDate(dayData);
 

@@ -49,7 +49,7 @@ public class BenchMarkDAOImpl implements BenchMarkDAO {
     {
         String hql = "from "+dataTableName+
                 " where code = '"+BenchMarkCode+"' and date between '"+start.DateToString()+"' and '"+end.DateToString()+"'";
-
+        System.out.print(hql);
         return (List<BenchmarkdataEntity>) baseDAO.getAllList(hql);
     }
 
