@@ -54,8 +54,8 @@ public class StockChartDataViewController {
 
     @RequestMapping("/TimeSharingVO")
     @ResponseBody
-    public List<TimeSharingVO> getTimeSharingVO(){
-        return null;
+    public List<TimeSharingVO> getTimeSharingVO(String code){
+        return stockService.getSharingVOs(code);
     }
 
     @RequestMapping("/OHLC")
