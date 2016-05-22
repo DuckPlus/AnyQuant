@@ -10,16 +10,17 @@
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
     <script src="/js/echarts.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
+
     <!-- <h1 class="title1">hello this is a test page!</h1> -->
 </head>
 <body>
 <!-- navigator begin -->
 <div id="nav_bar">
     <img src="duck_icon.png" style="width: 35px;height: 35px;float: left;margin-top:7px;margin-left: 10px">
-    <div style="font-size: 30px;float: left;color: #ffffff;margin-left: 10px;margin-top: 7px;">DUCK</div>
+    <div style="font-size: 30px;float: left;color: #ffffff;margin-left: 10px;margin-top: 7px; ">DUCK</div>
     <ul id="nav_box">
         <li class="nav_item"><a class="nav_c" href="/html/duck_main.html">股票列表</a></li>
-        <li class="nav_item"><a class="nav_c" href="http://www.baidu.com">大盘列表</a></li>
+        <li class="nav_item"><a class="nav_c" href="/html/duck_main.html/#benchmark_list_container">大盘列表</a></li>
         <li class="nav_item"><a class="nav_c" href="">自选股</a></li>
         <li class="nav_item"><a class="nav_c" href="">回测系统</a></li>
     </ul>
@@ -37,6 +38,7 @@
         </div>
     </div>
 
+    <div id="relation_and_info">
     <div class="duck_window" id="relationship_window">
         <div class="duck_title">
             STOCK RELATIONSHIP CHART
@@ -55,6 +57,7 @@
         </div>
     </div>
 
+    </div>
     <div class="duck_window" id="stockfactor_window">
         <div class="duck_title">
             STOCK FACTOR CHART
@@ -64,6 +67,7 @@
         </div>
     </div>
 
+    <div id="score_and_radar">
     <div class="duck_window" id="score_window">
         <div class="duck_title">
             SYNTHETICAL SCORE
@@ -81,6 +85,7 @@
             <div id="radar_chart" style="width: 100%;height: 400px"></div>
         </div>
     </div>
+    </div>
 
 </div>
 
@@ -90,7 +95,7 @@
     function getParam(paras) {
         var url = location.href;
         var paraString = url.substring(url.indexOf("?")+1,url.length).split("&");
-        var paraObj = {}
+        var paraObj = {};
         for (i=0; j=paraString[i]; i++){
             paraObj[j.substring(0,j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=")+1,j.length);
         }
@@ -104,9 +109,16 @@
 </script>
 <!-- get OHLC chart -->
 <script type="text/javascript">
-    getCode();
-    $(function () {
-        $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-ohlcv.json&callback=?', function (data) {
+
+    function getCode() {
+        var result = window.location.search;
+        result = result.split('?')[1].split('=')[1];
+        return result;
+    }
+    initOHLC_Chart(getCode());
+//    alert(getCode());
+    function initOHLC_Chart(code) {
+        $.getJSON('/Stock/getStockDataListByTime/?code='+code+'&start=2013-01-01&end=2015-01-30', function (data) {
             // split the data set into ohlc and volume
             var ohlc = [],
                     volume = [],
@@ -124,16 +136,16 @@
 
             for (i; i < dataLength; i += 1) {
                 ohlc.push([
-                    data[i][0], // the date
-                    data[i][1], // open
-                    data[i][2], // high
-                    data[i][3], // low
-                    data[i][4] // close
+                    new Date(data[i].date).getTime(),
+                    data[i].open,
+                    data[i].high,
+                    data[i].low,
+                    data[i].close
                 ]);
 
                 volume.push([
-                    data[i][0], // the date
-                    data[i][5] // the volume
+                    new Date(data[i].date).getTime(),
+                    data[i].turnoverVol
                 ]);
             }
 
@@ -191,7 +203,7 @@
                 }]
             });
         });
-    });
+    };
 </script>
 <!-- relationship chart -->
 <script type="text/javascript">
@@ -337,12 +349,5 @@
     myChart.setOption(option);
 </script>
 
-<script>
-    function getCode() {
-        alert("done");
-        var result = window.location.search;
-        result = result.split('?')[1].split('=')[1];
-        return "sh66666";
-    }
-</script>
+
 </html>
