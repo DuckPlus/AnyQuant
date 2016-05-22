@@ -4,7 +4,6 @@ import DAO.BaseDAO;
 import DAO.BenchMarkDAO;
 import entity.BenchmarkEntity;
 import entity.BenchmarkdataEntity;
-import entity.StockdataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import util.MyDate;
@@ -40,6 +39,7 @@ public class BenchMarkDAOImpl implements BenchMarkDAO {
 
     @Override
     public List<BenchmarkdataEntity> getRecentBenchMarks(String BenchMarkCode)
+
     {
         return null;
     }
@@ -56,5 +56,6 @@ public class BenchMarkDAOImpl implements BenchMarkDAO {
     @Override
     public String getBenchMarkCodeByName(String name) {
         return "000001";
+
     }
 }

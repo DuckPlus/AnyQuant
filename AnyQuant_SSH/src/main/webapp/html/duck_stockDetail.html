@@ -18,7 +18,7 @@
 <body>
 <!-- navigator begin -->
 <div id="nav_bar">
-    <img src="duck_icon.png" style="width: 35px;height: 35px;float: left;margin-top:7px;margin-left: 10px">
+    <img src="/image/duck_icon.png" style="width: 35px;height: 35px;float: left;margin-top:7px;margin-left: 10px">
     <div style="font-size: 30px;float: left;color: #ffffff;margin-left: 10px;margin-top: 7px; ">DUCK</div>
     <ul id="nav_box">
         <li class="nav_item"><a class="nav_c" href="/html/duck_main.html">股票列表</a></li>
@@ -48,28 +48,28 @@
     </div>
 
     <div id="relation_and_info">
-    <div class="duck_window" id="relationship_window">
-        <div class="duck_title">
-            STOCK RELATIONSHIP CHART
+        <div class="duck_window" id="relationship_window">
+            <div class="duck_title">
+                STOCK RELATIONSHIP CHART
+            </div>
+            <div class="duck_content">
+                <div id="chart2" style="width: 100%;height: 300px;"></div>
+            </div>
         </div>
-        <div class="duck_content">
-            <div id="chart2" style="width: 100%;height: 300px;"></div>
-        </div>
-    </div>
 
-    <div class="duck_window" id="stockinfo_window">
-        <div class="duck_title">
-            STOCK INFORMATION BLOCK
-        </div>
-        <div class="duck_content">
-            <div id="stock_info_name"></div>
-            <div id="stock_info_listDate"></div>
-            <div id="stock_info_totalShares"></div>
-            <div id="stock_info_region"></div>
-            <div id="stock_info_primeOperating"></div>
+        <div class="duck_window" id="stockinfo_window">
+            <div class="duck_title">
+                STOCK INFORMATION BLOCK
+            </div>
+            <div class="duck_content">
+                <div id="stock_info_name"></div>
+                <div id="stock_info_listDate"></div>
+                <div id="stock_info_totalShares"></div>
+                <div id="stock_info_region"></div>
+                <div id="stock_info_primeOperating"></div>
 
+            </div>
         </div>
-    </div>
 
     </div>
     <div class="duck_window" id="stockfactor_window">
@@ -82,23 +82,23 @@
     </div>
 
     <div id="score_and_radar">
-    <div class="duck_window" id="score_window">
-        <div class="duck_title">
-            SYNTHETICAL SCORE
+        <div class="duck_window" id="score_window">
+            <div class="duck_title">
+                SYNTHETICAL SCORE
+            </div>
+            <div class="duck_content">
+                <div id="score_chart" style="width: 100%;height: 400px"></div>
+            </div>
         </div>
-        <div class="duck_content">
-            <div id="score_chart" style="width: 100%;height: 400px"></div>
-        </div>
-    </div>
 
-    <div class="duck_window" id="radar_window">
-        <div class="duck_title">
-            RADAR
+        <div class="duck_window" id="radar_window">
+            <div class="duck_title">
+                RADAR
+            </div>
+            <div class="duck_content">
+                <div id="radar_chart" style="width: 100%;height: 400px"></div>
+            </div>
         </div>
-        <div class="duck_content">
-            <div id="radar_chart" style="width: 100%;height: 400px"></div>
-        </div>
-    </div>
     </div>
 
 </div>
@@ -106,6 +106,8 @@
 </body>
 <!-- script -->
 <script>
+    var myRed="#FF0000";
+    var myGreen="#00CD66";
     function init_info() {
         var code = getCode();
         var url = "/StockDetail/description/?code=" + getCode();
@@ -157,7 +159,7 @@
         return result;
     }
     initOHLC_Chart(getCode());
-//    alert(getCode());
+    //    alert(getCode());
     function initOHLC_Chart(code) {
         $.getJSON('/Stock/getStockDataListByTime/?code='+code+'&start=2013-01-01&end=2015-01-30', function (data) {
             // split the data set into ohlc and volume
@@ -195,64 +197,70 @@
             $('#chart1').highcharts('StockChart', {
                 plotOptions: {
                     candlestick: {
-                        color: '#00EE00',
-                        upColor: 'red'
+                        color: myGreen,
+                        upColor: myRed
                     }
                 },
                 tooltip: {
-                    pointFormat:'开盘：<b>{point.open}</b><br>最高：<b>{point.high}</b><br>最低：<b>{point.low}</b><br/>' +
-                    '收盘：<b>{point.close}</b><br>成交量：<b>{point.volume}</b>',
-                    valueDecimals: 2,
+                    xDateFormat:'%Y-%m-%d',
+                    //valueDecimals: 2,
+                    positioner: function () {
+                        return { x: 300, y: 10 };
+                    },
                 },
                 rangeSelector: {
-                    selected: 1
+                    selected: 0
                 },
 
                 title: {
                     text: 'k线图'
                 },
-
+                xAxis:{
+                    crosshair: {color:myRed},
+                },
                 yAxis: [{
+                    crosshair:{color:myRed},
                     labels: {
-                        align: 'right',
-                        x: -3
-                    },
-                    title: {
-                        text: 'k线图'
-                    },
+                         step:1,
+                         align: 'right',
+                         x: -3
+                     },
+                     title: {
+                         text: 'k线图'
+                     },
                     height: '60%',
                     lineWidth: 2
-                }, {
-                    labels: {
-                        align: 'right',
-                        x: -3
-                    },
-                    title: {
-                        text: '成交量'
-                    },
-                    top: '65%',
-                    height: '35%',
-                    offset: 0,
-                    lineWidth: 2
+                    }, {
+                        labels: {
+                            align: 'right',
+                            x: -3
+                        },
+                        title: {
+                            text: '成交量'
+                        },
+                        top: '65%',
+                        height: '35%',
+                        offset: 0,
+                        lineWidth: 2
                 }],
 
-                series: [{
-                    type: 'candlestick',
-                    name: 'AAPL',
-                    data: ohlc,
-                    dataGrouping: {
-                        units: groupingUnits
-                    }
-                }, {
-                    type: 'column',
-                    name: 'Volume',
-                    data: volume,
-                    yAxis: 1,
-                    dataGrouping: {
-                        units: groupingUnits
-                    }
-                }]
-            });
+                    series: [{
+                        type: 'candlestick',
+                        name: 'K线',
+                        data: ohlc,
+                        dataGrouping: {
+                            units: groupingUnits
+                        }
+                    }, {
+                        type: 'column',
+                        name: '成交量',
+                        data: volume,
+                        yAxis: 1,
+                        dataGrouping: {
+                            units: groupingUnits
+                        }
+                    }]
+                });
         });
     };
 </script>
@@ -300,6 +308,10 @@
 
                 title : {
                     text : 'STOCK FACTOR'
+                },
+                yAxis:{
+                    crosshair:{//color:myRed
+                         },
                 },
 
                 series : [{

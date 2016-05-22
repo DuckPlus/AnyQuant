@@ -1,26 +1,22 @@
 package service.impl;
 
 import DAO.BenchMarkDAO;
-import DAO.BoardDAO;
+
 import DAO.StockDAO;
 import DAO.StockDataDAO;
 import entity.BenchmarkdataEntity;
-import entity.StockEntity;
+
 import entity.StockdataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 import service.BoardAnalysisService;
 import service.helper.StockHelper;
 import util.Configure;
 import util.DateCalculator;
-import util.MyDate;
 import vo.BoardDistributionVO;
 import vo.CompareBoardAndBenchVO;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,9 +27,6 @@ import java.util.List;
 public class BoardAnalysisServiceImpl implements BoardAnalysisService {
     @Autowired
     BenchMarkDAO benchMarkDAO;
-
-    @Autowired
-    BoardDAO boardDAO;
     @Autowired
     StockDataDAO stockDataDAO;
     @Autowired
@@ -45,12 +38,8 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
     @Override
     public List<CompareBoardAndBenchVO> getBoardAndBenchChartData(String boardName, int offset, String bench) {
-        List<BenchmarkdataEntity> benchDatas = benchMarkDAO.getBenchMarkByTime("000001" , DateCalculator.getAnotherDay(-offset) , DateCalculator.getToDay());
-        if(benchDatas == null){
-            System.out.print("sdsdfdsf");
-        }else if(benchDatas.size() == 0){
-            System.out.print("dfsdaaaaaa");
-        }
+        List<BenchmarkdataEntity> benchDatas = benchMarkDAO.getBenchMarkByTime(benchMarkDAO.getBenchMarkCodeByName(boardName) , DateCalculator.getAnotherDay(-offset) , DateCalculator.getToDay());
+
         try {
             if(benchDatas != null && benchDatas.size() != 0){
                 double[] profits = new double[benchDatas.size()];
@@ -83,7 +72,7 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
     @Override
     public List<BoardDistributionVO> getBoardDistributionChartData(String boardName) {
-        List<String> stocks = boardDAO.getAllStocks(boardName);
+        List<String> stocks = stockDAO.getBoardRealatedStockCodes(boardName);
 
         List<BoardDistributionVO> vos = new ArrayList<>(stocks.size());
         double sum = 0;
@@ -107,14 +96,17 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
     }
 
     private double[] computeBoardData(String boardName , int offset){
-        List<String> stocks = boardDAO.getAllStocks(boardName);
-
+        List<String> stocks = stockDAO.getBoardRealatedStockCodes(boardName);
+        System.out.println(stocks.size());
         List<Double> boardDatas = new ArrayList<>(offset);
         List<StockdataEntity> dayData = new ArrayList<>(stocks.size());
         double[] result = new double[offset];
         for (int i = 0; i < offset; i++) {
             for (String stock : stocks){
-                dayData.add(stockDataDAO.getStockData(stock , DateCalculator.getAnotherDay(-i)));
+                StockdataEntity entity = stockDataDAO.getStockData(stock , DateCalculator.getAnotherDay(-i));
+                if(entity != null){
+                    dayData.add(entity);
+                }
             }
             result[i] = computeBoardDate(dayData);
 
