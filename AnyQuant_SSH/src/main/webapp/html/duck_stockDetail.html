@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="/css/window.css">
+    <!--button-->
+    <link rel="stylesheet" type="text/css" href="/css/buttons.css">
     <!-- jQuery -->
     <script src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
     <!-- highcharts -->
@@ -20,7 +22,7 @@
     <div style="font-size: 30px;float: left;color: #ffffff;margin-left: 10px;margin-top: 7px; ">DUCK</div>
     <ul id="nav_box">
         <li class="nav_item"><a class="nav_c" href="/html/duck_main.html">股票列表</a></li>
-        <li class="nav_item"><a class="nav_c" href="">板块分布</a></li>
+        <li class="nav_item"><a class="nav_c" href="BoardDetail.html">行业分布</a></li>
         <li class="nav_item"><a class="nav_c" href="/html/duck_optional.html">自选股</a></li>
         <li class="nav_item"><a class="nav_c" href="">回测系统</a></li>
     </ul>
@@ -33,7 +35,7 @@
         <div id="title_name"></div>
         <div id="title_code"></div>
         <div id="title_open"></div>
-        <button id="add_stock_btn">加入自选股</button>
+        <button id="add_stock_btn" class="button button-raised button-primary button-pill">加入自选股            </button>
     </div>
 
     <div class="duck_window" id="chart_stock_OHLC_window">
@@ -193,16 +195,21 @@
             $('#chart1').highcharts('StockChart', {
                 plotOptions: {
                     candlestick: {
-                        color: 'green',
+                        color: '#00EE00',
                         upColor: 'red'
                     }
+                },
+                tooltip: {
+                    pointFormat:'开盘：<b>{point.open}</b><br>最高：<b>{point.high}</b><br>最低：<b>{point.low}</b><br/>' +
+                    '收盘：<b>{point.close}</b><br>成交量：<b>{point.volume}</b>',
+                    valueDecimals: 2,
                 },
                 rangeSelector: {
                     selected: 1
                 },
 
                 title: {
-                    text: 'AAPL Historical'
+                    text: 'k线图'
                 },
 
                 yAxis: [{
@@ -211,7 +218,7 @@
                         x: -3
                     },
                     title: {
-                        text: 'OHLC'
+                        text: 'k线图'
                     },
                     height: '60%',
                     lineWidth: 2
@@ -221,7 +228,7 @@
                         x: -3
                     },
                     title: {
-                        text: 'Volume'
+                        text: '成交量'
                     },
                     top: '65%',
                     height: '35%',

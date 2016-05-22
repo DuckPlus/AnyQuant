@@ -44,7 +44,7 @@
     <!--<button class="button button-raised button-royal" onclick="location.href='/jsp/StockList_d.jsp'">股票列表</button>-->
 
     <br>
-    <button class="button button-action button-rounded" onclick="location.href='../html/StockList.html'"style="text-align: center">主界面~</button>
+    <button class="button button-action button-rounded" onclick="location.href='../html/duck_main.html'"style="text-align: center">主界面~</button>
     <button class="button button-action button-rounded" onclick="location.href='../html/BoardDetail.html'"style="margin-left: auto;margin-right: auto">板块详情</button>
 
 

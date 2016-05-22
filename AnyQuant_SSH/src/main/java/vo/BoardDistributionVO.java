@@ -1,5 +1,7 @@
 package vo;
 
+import java.sql.Date;
+
 /**
  * 板块内部股票分布图
  * @author Qiang
@@ -18,5 +20,11 @@ public class BoardDistributionVO {
      */
     public double weight;
 
-
+    public double high;
+    public double low;
+    public double open;
+    public double close;
+    public long turnoverVol;
+    public double turnoverValue;
+    public double turnoverRate;
 }

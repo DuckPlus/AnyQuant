@@ -18,5 +18,14 @@ public class CompareBoardAndBenchVO {
 
     public double boardData;
 
+    public CompareBoardAndBenchVO(){
 
+    }
+
+    public CompareBoardAndBenchVO(MyDate date, String boardName, double boardData, double huShen300Data) {
+        this.date = date;
+        this.boardName = boardName;
+        this.boardData = boardData;
+        this.huShen300Data = huShen300Data;
+    }
 }
