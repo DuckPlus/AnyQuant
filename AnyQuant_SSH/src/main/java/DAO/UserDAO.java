@@ -11,6 +11,7 @@ import java.util.List;
  */
 public interface UserDAO {
         void save(UserEntity u);
+        UserEntity getUserEntityByID(String id);
         List<UserEntity> findAll();
         String checkIfValid(UserEntity u);
 

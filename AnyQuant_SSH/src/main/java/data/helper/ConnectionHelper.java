@@ -46,7 +46,8 @@ public class ConnectionHelper {
         API_Saver.put(API_TYPE.GET_NewsInfo,Arrays.asList
                 (API_PREFIX +"/api/subject/getNewsInfo.json?field=&",
                         "newsID="));
-
+		API_Saver.put(API_TYPE.GET_TIMESAHRING, Arrays.asList(API_PREFIX +"api/market/getBarRTIntraDay.json?" ,"securityID=" ,  "&startTime=" , "&endTime=" , "&unit="  ) );
+		API_Saver.put(API_TYPE.IS_TRADING_DAY, Arrays.asList(API_PREFIX +"api/master/getTradeCal.json?field=" ,  "&exchangeCD="  , "&beginDate=" , "&endDate=" ) );
 	}
 	
 	/**
@@ -62,8 +63,8 @@ public class ConnectionHelper {
 			buffer.append(urls.get(i+1) );
 			buffer.append(param[i]);
 		}
-	//	System.err.println(buffer.toString());
-	//	System.out.println(request(buffer.toString()));
+		System.err.println(buffer.toString());
+		System.out.println(request(buffer.toString()));
 
 		return JSONObject.fromObject(request(buffer.toString()));
 

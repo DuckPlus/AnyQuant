@@ -45,9 +45,17 @@ public class BaseDAOImpl implements BaseDAO {
     }
 
     @Override
-    public int executeMyHQL(String hql) {
+    public int updateByHQL(String hql) {
         Session session = getSession();
         int num= session.createQuery(hql).executeUpdate();
+        return num;
+    }
+
+    @Override
+    public long countByHQL(String hql) {
+
+        Session session = getSession();
+        long num= (long)session.createQuery(hql).uniqueResult();
         return num;
     }
 

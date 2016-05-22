@@ -9,8 +9,7 @@ public class StaticMessage {
 	public static final String SZ_EXCHANGE = ".XSHE";
 	public static final String TRADE_OVER_TIME = "15:00";
 //	public static final String ACCESS_TOKEN = "44a70d35d80240eaa3d9a66b0b090de5bef4c96914f39c4faa225b4570ee301c";
-	public static final String ACCESS_TOKEN = "b5ebf051272e8afaba629b5699f21fffd9a7886e75683501b2987e2890712106";
+	public static final String ACCESS_TOKEN = "12fabf1cffde06f252152f84779e712db6f2b978fbf30023086237ee7cc55708";
 
-	public static final String STOCK_PO = "po.StockPO";
-	public static final String BENCHMARK_PO = "po.BenchMarkPO";
+
 }
