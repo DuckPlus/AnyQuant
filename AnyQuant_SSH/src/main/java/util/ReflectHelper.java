@@ -1,8 +1,5 @@
 package util;
 
-import entity.FactorEntity;
-import util.enumration.AnalysisFactor;
-
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
@@ -45,13 +42,5 @@ public class ReflectHelper {
         return attr;
     }
 
-
-    public static void main(String[] args){
-        FactorEntity entity = new FactorEntity();
-        entity.setMa5(5); entity.setMa10(10);
-        Object attr=getValueByAttrName(entity, AnalysisFactor.MA5.name().toLowerCase());
-        System.out.println(AnalysisFactor.MA5.name().toLowerCase()+" value is "+attr);
-
-    }
 
 }
