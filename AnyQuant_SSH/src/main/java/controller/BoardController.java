@@ -42,7 +42,7 @@ public class BoardController {
      */
     @RequestMapping("/getBoardDistribution")
     List<BoardDistributionVO> getBoardDistributionChartData(String boardName){
-        return service.getBoardDistributionChartData(boardName , 180);
+        return service.getBoardDistributionChartData(boardName);
     }
 
     /**
@@ -52,7 +52,7 @@ public class BoardController {
      */
     @RequestMapping("/getBoardDistributionWithOffset")
     List<BoardDistributionVO> getBoardDistributionChartData(String boardName , int offset){
-        return service.getBoardDistributionChartData(boardName , offset);
+        return service.getBoardDistributionChartData(boardName);
     }
 
 
