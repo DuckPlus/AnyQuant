@@ -2,8 +2,10 @@ package service.impl;
 
 import DAO.BenchMarkDAO;
 import DAO.BoardDAO;
+import DAO.StockDAO;
 import DAO.StockDataDAO;
 import entity.BenchmarkdataEntity;
+import entity.StockEntity;
 import entity.StockdataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -18,6 +20,7 @@ import vo.CompareBoardAndBenchVO;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,7 +36,8 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
     BoardDAO boardDAO;
     @Autowired
     StockDataDAO stockDataDAO;
-
+    @Autowired
+    StockDAO stockDAO;
     @Override
     public List<CompareBoardAndBenchVO> getBoardAndBenchChartData(String boardName, int offset) {
         return getBoardAndBenchChartData(boardName , offset , Configure.HUSHEN300);
@@ -98,9 +102,37 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
     }
 
     private double[] computeBoardData(String boardName , int offset){
+        List<String> stocks = boardDAO.getAllStocks(boardName);
+
+        List<Double> boardDatas = new ArrayList<>(offset);
+        List<StockdataEntity> dayData = new ArrayList<>(stocks.size());
+        double[] result = new double[offset];
+        for (int i = 0; i < offset; i++) {
+            for (String stock : stocks){
+                dayData.add(stockDataDAO.getStockData(stock , DateCalculator.getAnotherDay(-i)));
+            }
+            result[i] = computeBoardDate(dayData);
+
+            dayData.clear();
+        }
+        return result;
+    }
 
 
-        return null;
+
+    //目前按照总市值占板块总的总市值的比值作为板块股票权重
+    private static double computeBoardDate(List<StockdataEntity> entities){
+
+        double sum = 0;
+        for (StockdataEntity entity : entities){
+            sum += entity.getTotalMarketValue();
+        }
+        double value = 0;
+        for (StockdataEntity entity : entities){
+            value += entity.getClose()*(entity.getTotalMarketValue()/sum);
+        }
+
+        return value;
     }
 
     private static BoardDistributionVO makeDistributionVO(StockdataEntity entity){

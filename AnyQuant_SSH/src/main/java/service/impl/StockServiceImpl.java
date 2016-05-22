@@ -2,6 +2,8 @@ package service.impl;
 
 import DAO.StockDAO;
 import DAO.StockDataDAO;
+import data.DataServiceFactory;
+import data.StockDataService;
 import entity.StockEntity;
 import entity.StockdataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +32,7 @@ public class StockServiceImpl implements StockService {
     @Autowired
     StockDataDAO stockDataDAO;
 
-    /**
-     * Get the stock's OHLC data by day in the given time
-     *
-     * @param stockCode
-     * @param start     startTime
-     * @param end       endTime
-     * @return will be null if the stockCode is invalid
-     */
+    private StockDataService stockDataService = DataServiceFactory.getStockDataService();
     @Override
     public List<OHLC_VO> getDayOHLC_Data(String stockCode, MyDate start, MyDate end) {
         List<StockdataEntity> entities = getStocksByTime(stockCode ,start ,end);
@@ -59,14 +54,7 @@ public class StockServiceImpl implements StockService {
         }
     }
 
-    /**
-     * Get the stock's OHLC data by week in the given time
-     *
-     * @param stockCode
-     * @param start     startTime
-     * @param end       endTime
-     * @return will be null if the stockCode is invalid
-     */
+
     @Override
     public List<OHLC_VO> getWeekOHLC_Data(String stockCode, MyDate start, MyDate end) {
         List<StockdataEntity> pos = getStocksByTime(stockCode ,start ,end);
@@ -97,14 +85,7 @@ public class StockServiceImpl implements StockService {
         }
     }
 
-    /**
-     * Get the stock's OHLC data by month in the given time
-     *
-     * @param stockCode
-     * @param start     startTime
-     * @param end       endTime
-     * @return will be null if the stockCode is invalid
-     */
+
     @Override
     public List<OHLC_VO> getMonthOHLC_Data(String stockCode, MyDate start, MyDate end) {
         List<OHLC_VO> vos;
@@ -140,28 +121,13 @@ public class StockServiceImpl implements StockService {
         }
         return vos.isEmpty() ? null : vos;
     }
-    /**
-     * Get the timeSharing datas by the given stockCode
-     *
-     * @param stockCode
-     * @return the recent message from opening quotation(开盘) up to now if today
-     * is weekend or festival ,then if will return last time's data
-     * result will be null if any exception happens
-     */
+
     @Override
     public List<TimeSharingVO> getSharingVOs(String stockCode) {
-        return null;  //TODO
+        return stockDataService.getTimeSharingVOs(stockCode);
     }
 
-    /**
-     * Get the day deal datas by the date and stockcode
-     *
-     * @param stockCode
-     * @param start
-     * @param end
-     * @return Stock deal datas between this time interval in a List ordered by
-     * time Will be null if stcokCode or the date is invalid
-     */
+
     @Override
     public List<DealVO> getDayDealVOs(String stockCode, MyDate start, MyDate end) {
         List<StockdataEntity> pos = getStocksByTime(stockCode ,start ,end);
@@ -179,15 +145,7 @@ public class StockServiceImpl implements StockService {
         return results.isEmpty() ? null : results;
     }
 
-    /**
-     * Get the we deal datas by the date and stockcode
-     *
-     * @param stockCode
-     * @param start
-     * @param end
-     * @return Stock deal datas between this time interval in a List ordered by
-     * time Will be null if stcokCode or the date is invalid
-     */
+
     @Override
     public List<DealVO> getWeekDealVOs(String stockCode, MyDate start, MyDate end) {
         List<StockdataEntity> pos = getStocksByTime(stockCode, DateCalculator.getMondayofTheWeek(start),
@@ -213,15 +171,7 @@ public class StockServiceImpl implements StockService {
             return results.isEmpty() ? null : results;
         }
     }
-    /**
-     * Get the month deal datas（成交量&成交额） by the date and stockcode
-     *
-     * @param stockCode
-     * @param start
-     * @param end
-     * @return Stock deal datas between this time interval(时间区间) in a List
-     * ordered by time Will be null if stcokCode or the date is invalid
-     */
+
     @Override
     public List<DealVO> getMonthDealVOs(String stockCode, MyDate start, MyDate end) {
         List<DealVO> vos;
@@ -244,13 +194,7 @@ public class StockServiceImpl implements StockService {
         return vos.isEmpty() ? null : vos;
     }
 
-    /**
-     * /**
-     * Get the recent datas(last month) of the given stockCode
-     *
-     * @param stockCode
-     * @return
-     */
+
     @Override
     public List<StockdataEntity> getRecentStocks(String stockCode) {
         return (List<StockdataEntity>) stockDataDAO.getStockData(stockCode , DateCalculator.getAnotherDay(-30));
@@ -271,26 +215,14 @@ public class StockServiceImpl implements StockService {
         return stockDataDAO.getAllStockData();
     }
 
-    /**
-     * Get today's(or last trading day)data of the given stockCode
-     *
-     * @param stockCode
-     * @return
-     */
+
     @Override
     public StockdataEntity getTodayStockVO(String stockCode) {
         return stockDataDAO.getStockData(stockCode);
     }
 
 
-    /**
-     * 获得某只股票一段时间内的数据
-     *
-     * @param stockCode
-     * @param start     start date
-     * @param end       end date
-     * @return if the stockCode is invalid will return <b>NULL</b>
-     */
+
     @Override
     public List<StockdataEntity> getStocksByTime(String stockCode, MyDate start, MyDate end) {
         return stockDataDAO.getStockData(stockCode , start ,end);
