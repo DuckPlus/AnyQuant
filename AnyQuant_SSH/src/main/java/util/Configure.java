@@ -1,5 +1,7 @@
 package util;
 
+import vo.StrategyArgumentVO;
+
 /**
  * @author Qiang
  * @date 16/5/10
@@ -14,7 +16,7 @@ public class Configure {
 
     public static final String ERROR_REASON = "ERROR_REASON";
 
-
+    public static final String HUSHEN300 = "";
 
 
     /*

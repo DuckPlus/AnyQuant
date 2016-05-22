@@ -4,7 +4,7 @@ import service.StrategyService;
 import util.MyDate;
 
 /**
- * 沪深300和行业行情V
+ * 沪深300和行业行情VO
  * @author Qiang
  * @date 16/5/19
  */

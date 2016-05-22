@@ -2,6 +2,7 @@ package service;
 
 import vo.BoardDistributionVO;
 import vo.CompareBoardAndBenchVO;
+import vo.StrategyArgumentVO;
 
 import java.util.List;
 
@@ -12,11 +13,6 @@ import java.util.List;
  */
 public interface BoardAnalysisService {
     /**
-     * 获得沪深300和板块的对比数据,默认返回半年的数据
-     * @return
-     */
-    List<CompareBoardAndBenchVO> getBoardAndBenchChartData(String boardName);
-    /**
      * 获得沪深300和板块的对比数据
      * @param offset 偏移量,即回溯的数据时间,可为任意整数值,如30天表示一个月
      * @return
@@ -24,12 +20,13 @@ public interface BoardAnalysisService {
     List<CompareBoardAndBenchVO> getBoardAndBenchChartData(String boardName , int offset);
 
     /**
-     * Get the distribution of the board
-     * 返回板块所属的股票的分布,暂时根据 《股票权重、ID、名称、涨跌幅》
+     * 获得大盘和板块的对比数据
      * @param boardName
+     * @param offset
+     * @param bench 大盘代码
      * @return
      */
-    List<BoardDistributionVO> getBoardDistributionChartData(String boardName);
+    List<CompareBoardAndBenchVO> getBoardAndBenchChartData(String boardName , int offset , String bench);
 
     /**
      * Get the distribution of the board

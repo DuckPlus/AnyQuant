@@ -1,5 +1,6 @@
 package service.impl;
 
+import DAO.FactorDAO;
 import DAO.StockDAO;
 import DAO.StockDataDAO;
 import data.DataServiceFactory;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.StockAnalyseService;
+import util.DateCalculator;
 import util.enumration.AnalysisFactor;
 import util.enumration.FactorJudge;
 import vo.EvaluationVO;
@@ -35,7 +37,8 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
     private StockDAO stockDAO;
     @Autowired
     private StockDataDAO stockDataDAO;
-
+    @Autowired
+    private FactorDAO factorDAO;
     @Override
     @Transactional
     public StockEntity getStockFullMessage(String stockCode) {
@@ -49,6 +52,7 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
 
     @Override
     public EvaluationVO getEvaluation(String stockCode) {
+        //TODO
         return null;
     }
 
@@ -76,9 +80,7 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
     @Override
     public List<Factor_VO> getFactorVO(String stockCode, AnalysisFactor factor , int offset) {
 
-
-
-        return null;
+        return factorDAO.getFactors(stockCode , factor , DateCalculator.getAnotherDay(-offset) , DateCalculator.getToDay());
     }
 
     @Override
@@ -101,6 +103,7 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
 
     @Override
     public List<FactorWeightVO> getMostUsefulFactors(String code, int timeLen , FactorJudge factorJudge) {
+        //TODO
         return null;
     }
 
