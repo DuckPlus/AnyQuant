@@ -45,9 +45,14 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
     @Override
     public List<CompareBoardAndBenchVO> getBoardAndBenchChartData(String boardName, int offset, String bench) {
-        List<BenchmarkdataEntity> benchDatas = benchMarkDAO.getBenchMarkByTime(benchMarkDAO.getBenchMarkCodeByName(bench) , DateCalculator.getAnotherDay(-offset) , DateCalculator.getToDay());
+        List<BenchmarkdataEntity> benchDatas = benchMarkDAO.getBenchMarkByTime("000001" , DateCalculator.getAnotherDay(-offset) , DateCalculator.getToDay());
+        if(benchDatas == null){
+            System.out.print("sdsdfdsf");
+        }else if(benchDatas.size() == 0){
+            System.out.print("dfsdaaaaaa");
+        }
         try {
-            if(benchDatas != null){
+            if(benchDatas != null && benchDatas.size() != 0){
                 double[] profits = new double[benchDatas.size()];
                 for (int i = 0; i < benchDatas.size(); i++) {
                     profits[i] = benchDatas.get(i).getClose();

@@ -74,6 +74,7 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
     public List<StockdataEntity> getRegionRelatedStockMessage(String stockCode) {
         String region = getStockFullMessage(stockCode).getRegion();
         List<StockEntity> relatedStocks = stockDAO.getRegionRelatedStock(region);
+        System.out.print(relatedStocks.size());
         List<StockdataEntity> results = new ArrayList<>(relatedStocks.size());
 
         results.addAll(relatedStocks.stream().map(stockEntity -> stockDataDAO.getStockData(stockEntity.getCode())).collect(Collectors.toList()));
