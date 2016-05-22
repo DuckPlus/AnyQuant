@@ -1,22 +1,19 @@
 package service.impl;
 
 import DAO.BenchMarkDAO;
-import DAO.BoardDAO;
+import DAO.StockDAO;
 import DAO.StockDataDAO;
 import entity.BenchmarkdataEntity;
 import entity.StockdataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 import service.BoardAnalysisService;
 import service.helper.StockHelper;
 import util.Configure;
 import util.DateCalculator;
-import util.MyDate;
 import vo.BoardDistributionVO;
 import vo.CompareBoardAndBenchVO;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +27,7 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
     BenchMarkDAO benchMarkDAO;
 
     @Autowired
-    BoardDAO boardDAO;
+    StockDAO stockDAO;
     @Autowired
     StockDataDAO stockDataDAO;
 
@@ -74,7 +71,7 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
     @Override
     public List<BoardDistributionVO> getBoardDistributionChartData(String boardName) {
-        List<String> stocks = boardDAO.getAllStocks(boardName);
+        List<String> stocks = stockDAO.getBoardRealatedStockCodes(boardName);
 
         List<BoardDistributionVO> vos = new ArrayList<>(stocks.size());
         double sum = 0;

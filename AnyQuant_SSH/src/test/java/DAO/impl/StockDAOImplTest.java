@@ -42,7 +42,18 @@ public class StockDAOImplTest {
             System.out.println("code: "+temp.getCode());
         }
     }
-
+    @Test
+    public void getBoardRelatedStockCodes() throws Exception
+    {
+        String board = "汽车零部件";
+        List<String>  codes = dao.getBoardRealatedStockCodes(board);
+        if(codes==null){
+            fail("null");
+        }else{
+            System.out.println(codes.size()+"codes in board "+board);
+            System.out.println(codes);
+        }
+    }
     @Test
     public void getBoardRelatedStock() throws Exception
     {

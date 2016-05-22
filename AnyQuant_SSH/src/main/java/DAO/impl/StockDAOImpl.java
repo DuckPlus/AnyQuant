@@ -40,6 +40,13 @@ public class StockDAOImpl implements StockDAO {
     }
 
     @Override
+    public List<String> getBoardRealatedStockCodes(String boardName) {
+        String hql = "select code from "+tableName+" where board = '"+boardName+"'" ;
+
+        return (List<String>) baseDAO.getAllList(hql);
+    }
+
+    @Override
     public List<StockEntity> getBoardRelatedStock(String boardName)
     {
 
