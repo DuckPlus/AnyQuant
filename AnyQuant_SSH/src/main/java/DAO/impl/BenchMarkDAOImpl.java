@@ -54,8 +54,10 @@ public class BenchMarkDAOImpl implements BenchMarkDAO {
     }
 
     @Override
-    public String getBenchMarkCodeByName(String name) {
-        return "000001";
+    public String getBenchMarkCodeByName(String name)
+    {
+        String hql = "select code from "+tableName+" where name = '"+name+"'";
 
+        return (String) baseDAO.load(hql);
     }
 }

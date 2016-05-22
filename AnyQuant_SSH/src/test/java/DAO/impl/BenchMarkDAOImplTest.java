@@ -3,7 +3,6 @@ package DAO.impl;
 import DAO.BenchMarkDAO;
 import entity.BenchmarkEntity;
 import entity.BenchmarkdataEntity;
-import entity.StockdataEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import util.MyDate;
 import java.util.ArrayList;
 
 import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.*;
 
 /**
  * Created by 67534 on 2016/5/12.
@@ -72,5 +70,15 @@ public class BenchMarkDAOImplTest {
         assertEquals(code,list.get(0).getCode());
 
     }
+
+    @Test
+    public void getBenchMarkCodeByName() throws Exception {
+        String name = "上证综指";
+        String code = "000001";
+        assertEquals(code,dao.getBenchMarkCodeByName(name));
+
+    }
+
+
 
 }
