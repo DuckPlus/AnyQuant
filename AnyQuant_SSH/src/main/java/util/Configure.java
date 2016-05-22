@@ -16,7 +16,7 @@ public class Configure {
 
     public static final String ERROR_REASON = "ERROR_REASON";
 
-    public static final String HUSHEN300 = "";
+    public static final String HUSHEN300 = "";//TODO
 
 
     /*

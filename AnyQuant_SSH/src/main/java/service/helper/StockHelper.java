@@ -42,9 +42,6 @@ public class StockHelper {
 
 
     public static double[] computeStockProfit(double[] datas){
-        if(datas.length < 2){
-            return null;
-        }
         double[] results = new double[datas.length - 1];
         for (int i = 0; i < results.length - 1; i++) {
             results[i] = computeStockProfit(datas[i] , datas[i+1]);
