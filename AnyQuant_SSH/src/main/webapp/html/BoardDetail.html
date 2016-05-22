@@ -9,10 +9,10 @@
     <link rel="stylesheet" type="text/css" href="/css/buttons.css">
     <link rel="stylesheet" type="text/css" href="/css/flat-ui.css">
 
-    <link rel="shortcut icon" href="/image/shoot_cut.png">
-    <script src="http://cdn.anychart.com/js/7.10.0/anychart-bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.anychart.com/css/latest/anychart-ui.min.css" />
 
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/treemap.js"></script>
+    <link rel="shortcut icon" href="/image/shoot_cut.png">
 </head>
 <style>
     .green{
@@ -38,7 +38,7 @@
 </button>
 
 <div id="linechart" style="width: 80%; height: 400px; margin: 0 auto"></div>
-<div id="tree" style="width: 80%; height:800px; margin: 0 auto"></div>
+<div id="treechart" style="width: 80%; height:800px; margin: 0 auto"></div>
 
 
 
@@ -111,97 +111,102 @@
 </script>
 
 <script type="text/javascript">
-    anychart.onDocumentReady(function() {
-
-        // define themes settings for font
-        var customTheme = {
-            defaultFontSettings: {fontFamily: '"Source Sans Pro", sans-serif', fontSize: 13}
-        };
-        anychart.theme(customTheme);
-
-        // makes tree from the data for the sample
-        var data = anychart.data.tree(starbucks_data, anychart.enums.TreeFillingMethod.AS_TABLE);
-        chart = anychart.treeMap(data);
-
-        // sets credits for this sample
-        chart.credits(true);
-        chart.credits().url('//opendata.socrata.com/Business/All-Starbucks-Locations-in-the-World/xy4y-c4mk');
-        chart.credits().text('Data source: https://opendata.socrata.com');
-        chart.credits().logoSrc('http://opendata.socrata.com/stylesheets/images/common/favicon.ico');
-
-        // sets title
-        chart.title().enabled(true).fontSize(18).useHtml(true)
-                .text('Starbucks Distribution by Country<br/>' +
-                        '<span style="color: #212121; font-size: 14px">' +
-                        'According to opendata.socrata.com</span>');
-
-        // sets chart settings
-        chart.hoverFill('#fcece2');
-        chart.hoverStroke('#a1887f');
-        chart.selectionMode('none');
-
-        // sets scale
-        var scale = anychart.scales.ordinalColor([
-            {less: 10},
-            {from: 10, to: 100},
-            {from: 100, to: 500},
-            {from: 500, to: 1000},
-            {greater: 1000}
-        ]);
-
-        // sets colors for scale
-        scale.colors(['#87CEFA', '#87CEEB', '#00BFFF', '#1E90FF', '#4682B4']);
-        chart.colorScale(scale);
-
-        // turns legend on
-        chart.legend().enabled(true).padding([0,0,20,0]);
-
-        // sets labels settings
-        chart.labels().fontSize(16).enabled(true);
-        chart.labels().textOverflow(anychart.graphics.vector.Text.TextOverflow.CLIP).textWrap("noWrap");
-
-        // sets tooltip settings and formatter
-        var tooltip = chart.tooltip();
-        tooltip.background({fill: "#d7ccc8 0.9", stroke: "3 #bcaaa4", corners: 7});
-        tooltip.title().padding({bottom: 8}).fontSize(16).fontColor('#5d4037');
-        tooltip.separator(false);
-        tooltip.padding({top: 10, right: 20, bottom: 10, left: 20}).fontColor('#3e2723');
-        chart.tooltip().useHtml(true).textFormatter(function(){
-            return '<span style="color: #3e2723">Number of Starbucks: ' + '</span>' + parseInt(this.value).toLocaleString();
+    var myCode;//大盘的代号
+    $(function () {
+        $('#treechart').highcharts({
+            plotOptions: {
+                series: {
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function () {
+                                alert(this.id);
+                                location.href="http://bing.com/search?q="+this.id;
+                            }
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: "treemap",
+                layoutAlgorithm: 'stripes',
+                alternateStartingDirection: true,
+                levels: [{
+                    level: 1,
+                    layoutAlgorithm: 'sliceAndDice',
+                    dataLabels: {
+                        enabled: true,
+                        align: 'left',
+                        verticalAlign: 'top',
+                        style: {
+                            fontSize: '15px',
+                            fontWeight: 'bold'
+                        }
+                    }
+                }],
+                data: [{
+                    id: '60005',
+                    name: 'Apples',
+                    color: "#EC2500"
+                }, {
+                    id: '60001',
+                    name: 'Bananas',
+                    color: "#ECE100"
+                }, {
+                    id: 'O',
+                    name: 'Oranges',
+                    color: '#EC9800'
+                }, {
+                    id:"555",
+                    name: 'Anne',
+                    parent: 'A',
+                    value: 5
+                }, {
+                    name: 'Rick',
+                    parent: 'A',
+                    value: 3
+                }, {
+                    name: 'Peter',
+                    parent: 'A',
+                    value: 4
+                }, {
+                    name: 'Anne',
+                    parent: 'B',
+                    value: 4
+                }, {
+                    name: 'Rick',
+                    parent: 'B',
+                    value: 10
+                }, {
+                    name: 'Peter',
+                    parent: 'B',
+                    value: 1
+                }, {
+                    name: 'Anne',
+                    parent: 'O',
+                    value: 1
+                }, {
+                    name: 'Rick',
+                    parent: 'O',
+                    value: 3
+                }, {
+                    name: 'Peter',
+                    parent: 'O',
+                    value: 3
+                }, {
+                    name: 'Susanne',
+                    parent: 'Kiwi',
+                    value: 2,
+                    color: '#9EDE00'
+                }]
+            }],
+            title: {
+                text: 'Fruit consumption'
+            }
         });
-
-        // set container id for the chart
-        chart.container('tree');
-
-        // initiate chart drawing
-        chart.draw();
     });
-
-    // create data for the sample
-    var starbucks_data = [
-        {parent: null, name: "Starbucks Distribution by Country", id: "STBS"},
-        {parent: "STBS", id: "US", name: "United States", value: "13026"},
-        {parent: "STBS", id: "CN", name: "China", value: "2215"},
-        {parent: "STBS", id: "CA", name: "Canada", value: "1421"},
-        {parent: "STBS", id: "JP", name: "Japan", value: "1171"},
-
-        {parent: "CN", id: "LA", name: "Los An", value: "10"},
-        {parent: "STBS", id: "KR", name: "South Korea", value: "879"},
-        {parent: "STBS", id: "GB", name: "United Kingdom", value: "865"},
-        {parent: "STBS", id: "MX", name: "Mexico", value: "511"},
-        {parent: "STBS", id: "TW", name: "Taiwan", value: "367"},
-        {parent: "STBS", id: "PH", name: "Philippines", value: "274"},
-        {parent: "STBS", id: "TR", name: "Turkey", value: "271"},
-        {parent: "STBS", id: "TH", name: "Thailand", value: "255"},
-        {parent: "STBS", id: "ID", name: "Indonesia", value: "231"},
-        {parent: "STBS", id: "MY", name: "Malaysia", value: "209"},
-        {parent: "STBS", id: "DE", name: "Germany", value: "159"},
-        {parent: "STBS", id: "AE", name: "United Arab Emirates", value: "133"},
-        {parent: "STBS", id: "SG", name: "Singapore", value: "120"},
-        {parent: "STBS", id: "FR", name: "France", value: "112"}
-    ]
-
 </script>
+
 
 </body>
 </html>
