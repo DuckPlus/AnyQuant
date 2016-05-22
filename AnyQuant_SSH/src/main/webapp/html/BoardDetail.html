@@ -8,8 +8,8 @@
 
     <link rel="stylesheet" type="text/css" href="/css/buttons.css">
     <link rel="stylesheet" type="text/css" href="/css/flat-ui.css">
-
-
+<!--导航栏的css-->
+    <link rel="stylesheet" type="text/css" href="/css/navigator.css">
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/treemap.js"></script>
     <link rel="shortcut icon" href="/image/shoot_cut.png">
@@ -25,6 +25,17 @@
     }
 </style>
 <body>
+<div id="nav_bar">
+    <img src="duck_icon.png" style="width: 35px;height: 35px;float: left;margin-top:7px;margin-left: 10px">
+    <div style="font-size: 30px;float: left;color: #ffffff;margin-left: 10px;margin-top: 7px; ">DUCK</div>
+    <ul id="nav_box">
+        <li class="nav_item"><a class="nav_c" href="/html/duck_main.html">股票列表</a></li>
+        <li class="nav_item"><a class="nav_c" href="BoardDetail.html">行业分布</a></li>
+        <li class="nav_item"><a class="nav_c" href="/html/duck_optional.html">自选股</a></li>
+        <li class="nav_item"><a class="nav_c" href="">回测系统</a></li>
+    </ul>
+</div>
+<br><br>
 <span id=stockName style="position:relative;left:30px;font-size:30px"></span>
 <span style="position:relative;left:60px;">今日板块涨幅：</span>
 <span id=rate style="position:relative;left:60px;"></span>
@@ -128,7 +139,6 @@
                     point: {
                         events: {
                             click: function () {
-                                alert(this.code);
                                 location.href="duck_stockDetail.html"+"?code="+this.code;
                             }
                         }
@@ -158,37 +168,37 @@
                     }
                 }],
                 data: [{
-                    code: '60001',
+                    code: 'sh600520',
                     name: '汽油',
                     value:22.5,
                     rate:'0.01%'
                 }, {
-                    code: '60002',
+                    code: 'sz000659',
                     name: '万达',
                     value:22.5,
                     rate:'0.02%'
                 }, {
-                    code: '60003',
+                    code: 'sh600725',
                     name: '三星',
                     value:22.5,
                     rate:'0.03%'
                 }, {
-                    code: '60004',
+                    code: 'sz000831',
                     name: '小米',
                     value:22.5,
                     rate:'0.04%'
                 }, {
-                    code: '60005',
+                    code: 'sh600853',
                     name: '戴尔',
                     value:22.5,
                     rate:'0.05%'
                 }, {
-                    code: '60006',
+                    code: 'sz002408',
                     name: '屈臣氏',
                     value:22.5,
                     rate:'0.06%'
                 }, {
-                    code: '60007',
+                    code: 'sz002625',
                     name: 'NJU',
                     value:22.5,
                     rate:'0.07%'
