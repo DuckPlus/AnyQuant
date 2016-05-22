@@ -47,4 +47,14 @@ public class UserDAOImpl implements UserDAO {
 //        }
         return null;
     }
+
+    @Override
+    public boolean checkIfUsernameExist(String name) {
+        return false;
+    }
+
+    @Override
+    public boolean changePassword(UserEntity user, String newPassword) {
+        return false;
+    }
 }

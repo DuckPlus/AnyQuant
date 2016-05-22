@@ -262,6 +262,11 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
+    public StockEntity getStockDescription(String code) {
+        return stockDAO.getStockEntity(code);
+    }
+
+    @Override
     public List<StockdataEntity> getTodayAllStockData() {
         return stockDataDAO.getAllStockData();
     }

@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+    <script src="//cdn.anychart.com/js/7.10.0/anychart-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.anychart.com/css/latest/anychart-ui.min.css" />
+    <style>
+        html, body, #container {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    anychart.onDocumentReady(function() {
+//Data set using tree method
+        var data = anychart.data.tree([
+            {name: 'Eurasia',
+                children:[
+                    {name: "Asia", children:[
+                        {name: "Eastern Asia", children:[
+                            {name:"Mongolia", value: 1564116, capital: 'Ulan-Bator'},
+                            {name: "China", value: 1564116, capital: 'Beijing'},
+                            {name: "Southern Korea", value: 1564116, capital: 'Seoul'},
+                            {name: "Northern Korea", value: 120540, capital: 'Pyongyang'},
+                            {name: "Japan", value: 1564116, capital: 'Tokio', children:[
+                                {name: "Hokkaido", value: 83400},
+                                {name: "Kyushu", value: 35640},
+                                {name: "Honshu", value: 230500},
+                                {name: "Shikoku", value: 1200}
+                            ]}
+                        ]},
+                    ]},
+                    {name: "Europe", children: [
+                        {name: "Northern Europe", children:[
+                            {name: "Finland", value: 338424, capital: 'Helsinki'},
+                            {name: "Great Britain", value: 209331, capital: 'London'},
+                            {name: "Ireland", value: 84421, capital: 'Dublin'},
+                            {name: "Scandinavia", value: 928057, children:[
+                                {name: "Sweden", value: 450295, capital: 'Stockholm'},
+                                {name: "Norway", value: 385178, capital: 'Oslo'},
+                                {name: "Denmark", value: 42923.53, capital: 'Copenhagen'}
+                            ]},
+                        ]}
+                    ]}
+                ]}
+        ], anychart.enums.TreeFillingMethod.AS_TREE);
+
+// set data and data type settings
+        chart = anychart.treeMap(data);
+
+        chart.headers().textFormatter("{%name}");
+        chart.labels().textFormatter("{%name}");
+        chart.tooltip().titleFormatter("{%name}");
+        chart.tooltip().textFormatter("Area: {%Value} square km");
+
+        chart.title("Setting the data as tree");
+
+        chart.container('container');
+        chart.draw();
+    });
+</script>
+</body>
+</html>
