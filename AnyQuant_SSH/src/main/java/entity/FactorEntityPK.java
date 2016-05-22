@@ -6,8 +6,7 @@ import java.io.Serializable;
 import java.sql.Date;
 
 /**
- * @author Qiang
- * @date 16/5/20
+ * Created by 67534 on 2016/5/22.
  */
 public class FactorEntityPK implements Serializable {
     private String code;

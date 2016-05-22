@@ -202,7 +202,7 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public List<StockEntity> getAllStocks() {
-        return stockDAO.findAllStocks();
+        return stockDAO.getAllStocks();
     }
 
     @Override
