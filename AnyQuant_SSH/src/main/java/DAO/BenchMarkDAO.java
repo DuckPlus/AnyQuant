@@ -34,4 +34,7 @@ public interface BenchMarkDAO {
      */
     List<BenchmarkdataEntity> getBenchMarkByTime(String BenchMarkCode, MyDate start, MyDate end);
 
+
+    String getBenchMarkCodeByName(String name);
+
 }

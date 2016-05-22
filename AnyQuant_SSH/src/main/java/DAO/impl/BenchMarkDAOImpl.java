@@ -52,4 +52,9 @@ public class BenchMarkDAOImpl implements BenchMarkDAO {
 
         return (List<BenchmarkdataEntity>) baseDAO.getAllList(hql);
     }
+
+    @Override
+    public String getBenchMarkCodeByName(String name) {
+        return null;
+    }
 }
