@@ -1,0 +1,82 @@
+
+#main_title{
+    height: 50px;
+    background-color: #ffffff;
+}
+#title_name{
+    font-size: 30px;
+    /*background-color: #2b542c;*/
+    width: 150px;
+    height: 40px;
+    float: left;
+}
+#title_code{
+    /*background-color: #00bdef;*/
+    margin-top: 20px;
+    width: 100px;
+    height: 20px;
+    float: left;
+}
+#title_open{
+    /*background-color: #1bc5a3;*/
+    width: 100px;
+    height: 40px;
+    float: left;
+}
+#stock_info_listDate{
+    /*background-color: #2b542c;*/
+    min-height: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    width: 90%;
+    word-break: break-all;
+}
+#stock_info_name{
+    /*background-color: #00a1cb;*/
+    min-height: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    width: 90%;
+    word-break: break-all;
+}
+#stock_info_totalShares{
+    /*background-color: #1abc9c;*/
+    min-height: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    width: 90%;
+    word-break: break-all;
+}
+#stock_info_region{
+    /*background-color: #2f4b93;*/
+    min-height: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    width: 90%;
+    word-break: break-all;
+}
+#stock_info_primeOperating{
+    /*background-color: #00bdef;*/
+    min-height: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    width: 90%;
+    word-break: break-all;
+
+}
+#add_stock_btn{
+    float: right;
+    width: 100px;
+    height: 80%;
+    margin-top: 5px;
+    margin-right: 5px;
+    /*margin-bottom: 10%;*/
+}
+/*#stock_info_name,#stock_info_listdate,#stock_info_totalshares,#stock_info_region,#stock_info_primeoperating{*/
+    /*font-family:"Microsoft YaHei",微软雅黑,"Microsoft JhengHei",华文细黑,STHeiti,MingLiu;*/
+/*}*/

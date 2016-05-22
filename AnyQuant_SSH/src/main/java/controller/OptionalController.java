@@ -34,7 +34,17 @@ public class OptionalController {
         return checkIfLogin(model , id) ? optionalService.getOptionalStocksDatas(id) : null;
 
     }
+    @RequestMapping("/check")
+    @ResponseBody
+    public boolean checkIfStockExist(Model model ,HttpServletRequest request , @RequestParam("code") String code){
+        String id = (String) request.getSession().getAttribute(Configure.USERID_KEY);
 
+        if(checkIfLogin(model , id)){
+            return optionalService.ifStockExist(id , code);
+        }else {
+            return false;
+        }
+    }
 
     @RequestMapping("/add")
     @ResponseBody

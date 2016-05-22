@@ -20,4 +20,8 @@ public class Factor_VO {
      * 因子值
      */
     public double value;
+
+
+
+
 }

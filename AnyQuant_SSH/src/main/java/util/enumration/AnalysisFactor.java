@@ -45,6 +45,7 @@ public enum AnalysisFactor {
      *
      */
     DAREC("分析师推荐评级变化");
+
     public String chinese;
 
     AnalysisFactor(String chinese){
