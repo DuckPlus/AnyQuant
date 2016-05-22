@@ -24,7 +24,7 @@ public interface StockDataDAO {
      * @return
      */
     public StockdataEntity getStockData(String stockCode, MyDate date);
-
+    public StockdataEntity getStockData(List<String> stockCodes, MyDate date);
 
     /**
      * 增加了时间限制，可以查看某段时间内的数据
@@ -34,6 +34,7 @@ public interface StockDataDAO {
      * @return
      */
     public List<StockdataEntity> getStockData(String stockCode, MyDate start, MyDate end);
+    public List<StockdataEntity> getStockData(List<String> stockCodes, MyDate start, MyDate end);
 
     /**
      * 返回当天的全部股票具体信息
