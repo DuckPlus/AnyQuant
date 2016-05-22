@@ -38,7 +38,7 @@
 </button>
 
 <div id="linechart" style="width: 80%; height: 400px; margin: 0 auto"></div>
-<div id="treechart" style="width: 80%; height:800px; margin: 0 auto"></div>
+<div id="treechart" style="width: 80%; height:600px; margin: 0 auto"></div>
 
 
 
@@ -73,6 +73,13 @@
 
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            plotOptions: {
+                series: {
+                    marker: {
+                        enabled: false
+                    }
+                }
             },
             yAxis: {
                 title: {
@@ -117,16 +124,22 @@
             plotOptions: {
                 series: {
                     cursor: 'pointer',
+
                     point: {
                         events: {
                             click: function () {
-                                alert(this.id);
-                                location.href="http://bing.com/search?q="+this.id;
+                                alert(this.code);
+                                location.href="duck_stockDetail.html"+"?code="+this.code;
                             }
                         }
                     }
                 }
             },
+            tooltip: {
+                pointFormat:'<b>{point.name}  </b>{point.code}: <br>市值：<b>{point.value}</b><br/>涨跌幅：<b>{point.rate}</b>',
+                valueDecimals: 2
+            },
+
             series: [{
                 type: "treemap",
                 layoutAlgorithm: 'stripes',
@@ -145,59 +158,40 @@
                     }
                 }],
                 data: [{
-                    id: '60005',
-                    name: 'Apples',
-                    color: "#EC2500"
+                    code: '60001',
+                    name: '汽油',
+                    value:22.5,
+                    rate:'0.01%'
                 }, {
-                    id: '60001',
-                    name: 'Bananas',
-                    color: "#ECE100"
+                    code: '60002',
+                    name: '万达',
+                    value:22.5,
+                    rate:'0.02%'
                 }, {
-                    id: 'O',
-                    name: 'Oranges',
-                    color: '#EC9800'
+                    code: '60003',
+                    name: '三星',
+                    value:22.5,
+                    rate:'0.03%'
                 }, {
-                    id:"555",
-                    name: 'Anne',
-                    parent: 'A',
-                    value: 5
+                    code: '60004',
+                    name: '小米',
+                    value:22.5,
+                    rate:'0.04%'
                 }, {
-                    name: 'Rick',
-                    parent: 'A',
-                    value: 3
+                    code: '60005',
+                    name: '戴尔',
+                    value:22.5,
+                    rate:'0.05%'
                 }, {
-                    name: 'Peter',
-                    parent: 'A',
-                    value: 4
+                    code: '60006',
+                    name: '屈臣氏',
+                    value:22.5,
+                    rate:'0.06%'
                 }, {
-                    name: 'Anne',
-                    parent: 'B',
-                    value: 4
-                }, {
-                    name: 'Rick',
-                    parent: 'B',
-                    value: 10
-                }, {
-                    name: 'Peter',
-                    parent: 'B',
-                    value: 1
-                }, {
-                    name: 'Anne',
-                    parent: 'O',
-                    value: 1
-                }, {
-                    name: 'Rick',
-                    parent: 'O',
-                    value: 3
-                }, {
-                    name: 'Peter',
-                    parent: 'O',
-                    value: 3
-                }, {
-                    name: 'Susanne',
-                    parent: 'Kiwi',
-                    value: 2,
-                    color: '#9EDE00'
+                    code: '60007',
+                    name: 'NJU',
+                    value:22.5,
+                    rate:'0.07%'
                 }]
             }],
             title: {
