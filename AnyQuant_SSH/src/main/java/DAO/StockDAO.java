@@ -10,7 +10,8 @@ import java.util.List;
  */
 public interface StockDAO {
 
-    List<StockEntity> findAllStocks();
+    List<StockEntity> getAllStocks();
+    List<String> getAllStockCodes();
 
     StockEntity getStockEntity(String code);
 
