@@ -21,47 +21,25 @@ import java.util.Map;
 public class OptionalStockServiceImpl implements OptionalStockService {
     @Autowired
     OptionalDAO optionalDAO;
-    /**
-     * Get today's(or last trading day)data of the optional stockCodes
-     *
-     * @param userID
-     * @return a Collection's Iterator on StockVOs
-     */
+
     @Override
     public List<StockdataEntity> getOptionalStocksDatas(String userID) {
         return optionalDAO.getOptionalStocksDatas(userID);
     }
 
-    /**
-     * Get  the optional stocks
-     *
-     * @param userID
-     * @return a Collection's Iterator on StockVOs
-     */
+
     @Override
     public List<StockEntity> getOptionalStocks(String userID) {
         return optionalDAO.getOptionalStocks(userID);
     }
 
-    /**
-     * delete optional stocks
-     *
-     * @param userID
-     * @param stockCode the stock to delete
-     * @return if not exist, return false , if success return true
-     */
+
     @Override
     public boolean deleteStockCode(String userID, String stockCode) {
         return optionalDAO.deleteStockCode(userID  , stockCode);
     }
 
-    /**
-     * delete optional stocks
-     *
-     * @param userID
-     * @param stockCode the list of the stockCodes to delete
-     * @return if not exist, return false , if success return true
-     */
+
     @Override
     public boolean deleteStockCode(String userID, List<String> stockCode) {
         for ( String code : stockCode){
@@ -72,25 +50,13 @@ public class OptionalStockServiceImpl implements OptionalStockService {
         return true;
     }
 
-    /**
-     * add optional stocks
-     *
-     * @param userID
-     * @param stockCode the stock to add
-     * @return if this stock has existed in the optional list or the stock not actually exists , return false
-     */
+
     @Override
     public boolean addStockCode(String userID, String stockCode) {
         return optionalDAO.addStockCode(userID , stockCode);
     }
 
-    /**
-     * add optional stocks
-     *
-     * @param userID
-     * @param stockCodes the list of stock to add
-     * @return if this stock has existed in the optional list or the stock not actually exists , return false
-     */
+
     @Override
     public boolean addStockCode(String userID, List<String> stockCodes) {
         for ( String code : stockCodes){
@@ -101,35 +67,19 @@ public class OptionalStockServiceImpl implements OptionalStockService {
         return true;
     }
 
-    /**
-     * clear all the optional stocks
-     *
-     * @param userID
-     * @return success or fail
-     */
+
     @Override
     public boolean clearOptionalStocks(String userID) {
         return optionalDAO.clearOptionalStocks(userID);
     }
 
-    /**
-     * if the stock exist return true
-     *
-     * @param userID
-     * @param stockCode
-     * @return
-     */
+
     @Override
     public boolean ifStockExist(String userID, String stockCode) {
         return optionalDAO.ifStockExist(userID , stockCode);
     }
 
-    /**
-     * Get the region's distribution of the optional stocks
-     *
-     * @param userID
-     * @return map
-     */
+
     @Override
     public Map<String, Integer> getRegionDistributionMap(String userID) {
         List<StockEntity> optionStocks = getOptionalStocks(userID);
@@ -146,12 +96,7 @@ public class OptionalStockServiceImpl implements OptionalStockService {
         return regions;
     }
 
-    /**
-     * Get the board's distribution of the optional stocks
-     *
-     * @param userID
-     * @return map
-     */
+
     @Override
     public Map<String, Integer> getBoardDistributionMap(String userID) {
         List<StockEntity> optionStocks = getOptionalStocks(userID);

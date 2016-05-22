@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.BenchMarkService;
+import util.DateCalculator;
 import util.MyDate;
 
 import java.util.List;
@@ -49,7 +50,7 @@ public class BenchMarkServiceImpl implements BenchMarkService {
      */
     @Override
     public List<BenchmarkdataEntity> getRecentBenchMarks(String benchMarkCode) {
-        return benchMarkDAO.getRecentBenchMarks(benchMarkCode);
+        return benchMarkDAO.getBenchMarkByTime(benchMarkCode , DateCalculator.getAnotherDay(-30) , DateCalculator.getToDay());
     }
 
     /**
