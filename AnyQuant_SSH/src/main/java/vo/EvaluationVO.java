@@ -20,7 +20,6 @@ public class EvaluationVO {
      * 评级
      */
     private Suggestion suggestion;
-
     /**
      * 说明
      */

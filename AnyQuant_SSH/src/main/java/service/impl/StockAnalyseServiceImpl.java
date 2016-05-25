@@ -57,6 +57,7 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
     @Override
     public EvaluationVO getEvaluation(String stockCode) {
         //TODO
+
         return null;
     }
 
