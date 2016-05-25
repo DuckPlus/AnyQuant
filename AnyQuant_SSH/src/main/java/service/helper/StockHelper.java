@@ -1,6 +1,7 @@
 package service.helper;
 
 import entity.StockdataEntity;
+import vo.Factor_VO;
 
 import java.util.List;
 
@@ -11,20 +12,24 @@ import java.util.List;
 public class StockHelper {
 
 
+    public static double computeIC(List<StockdataEntity> stockdataEntities , List<Factor_VO> factor_vos){
+        int len = Math.min(stockdataEntities.size() , factor_vos.size());
 
+        double[] stocks = new double[len];
+        double[] factors = new  double[len];
 
-
-    public static double computeIC(List<StockdataEntity> datas , double[] factors , int leap){
-        int len = factors.length;
-
-        double[] closes = new double[datas.size()];
-        for (int i = 0; i < datas.size(); i++) {
-            closes[i] = datas.get(i).getClose();
+        for (int i = 0; i <  len; i++) {
+            stocks[i] = stockdataEntities.get(i).getClose();
+            factors[i] = factor_vos.get(i).value;
         }
+        return computeIC(stocks , factors);
+    }
 
-        double[] profits = computeStockProfit(closes);
 
-        return AnalysisAlgorithm.OLS(factors , profits);
+    private static double computeIC(double[] stocks,  double[] factors){
+        double[] profits = computeStockProfit(stocks);
+
+        return AnalysisAlgorithm.computeRelated(factors , profits);
     }
 
 

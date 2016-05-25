@@ -129,7 +129,7 @@ public class OptionalDAOImpl implements OptionalDAO {
     public boolean clearOptionalStocks(String userID)
     {
         String hql = "delete   from "+tableName+" where userID = "+userID;
-        int result = baseDAO.executeMyHQL(hql);
+        int result = baseDAO.updateByHQL(hql);
         return result>0? true : false;
     }
 

@@ -1,22 +1,21 @@
 package service.impl;
 
 import DAO.BenchMarkDAO;
-import DAO.BoardDAO;
+
+import DAO.StockDAO;
 import DAO.StockDataDAO;
 import entity.BenchmarkdataEntity;
+
 import entity.StockdataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 import service.BoardAnalysisService;
 import service.helper.StockHelper;
 import util.Configure;
 import util.DateCalculator;
-import util.MyDate;
 import vo.BoardDistributionVO;
 import vo.CompareBoardAndBenchVO;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,12 +27,10 @@ import java.util.List;
 public class BoardAnalysisServiceImpl implements BoardAnalysisService {
     @Autowired
     BenchMarkDAO benchMarkDAO;
-
-    @Autowired
-    BoardDAO boardDAO;
     @Autowired
     StockDataDAO stockDataDAO;
-
+    @Autowired
+    StockDAO stockDAO;
     @Override
     public List<CompareBoardAndBenchVO> getBoardAndBenchChartData(String boardName, int offset) {
         return getBoardAndBenchChartData(boardName , offset , Configure.HUSHEN300);
@@ -41,9 +38,10 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
     @Override
     public List<CompareBoardAndBenchVO> getBoardAndBenchChartData(String boardName, int offset, String bench) {
-        List<BenchmarkdataEntity> benchDatas = benchMarkDAO.getBenchMarkByTime(benchMarkDAO.getBenchMarkCodeByName(bench) , DateCalculator.getAnotherDay(-offset) , DateCalculator.getToDay());
+        List<BenchmarkdataEntity> benchDatas = benchMarkDAO.getBenchMarkByTime(benchMarkDAO.getBenchMarkCodeByName(boardName) , DateCalculator.getAnotherDay(-offset) , DateCalculator.getToDay());
+
         try {
-            if(benchDatas != null){
+            if(benchDatas != null && benchDatas.size() != 0){
                 double[] profits = new double[benchDatas.size()];
                 for (int i = 0; i < benchDatas.size(); i++) {
                     profits[i] = benchDatas.get(i).getClose();
@@ -74,7 +72,7 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
     @Override
     public List<BoardDistributionVO> getBoardDistributionChartData(String boardName) {
-        List<String> stocks = boardDAO.getAllStocks(boardName);
+        List<String> stocks = stockDAO.getBoardRealatedStockCodes(boardName);
 
         List<BoardDistributionVO> vos = new ArrayList<>(stocks.size());
         double sum = 0;
@@ -98,9 +96,40 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
     }
 
     private double[] computeBoardData(String boardName , int offset){
+        List<String> stocks = stockDAO.getBoardRealatedStockCodes(boardName);
+        System.out.println(stocks.size());
+        List<Double> boardDatas = new ArrayList<>(offset);
+        List<StockdataEntity> dayData = new ArrayList<>(stocks.size());
+        double[] result = new double[offset];
+        for (int i = 0; i < offset; i++) {
+            for (String stock : stocks){
+                StockdataEntity entity = stockDataDAO.getStockData(stock , DateCalculator.getAnotherDay(-i));
+                if(entity != null){
+                    dayData.add(entity);
+                }
+            }
+            result[i] = computeBoardDate(dayData);
+
+            dayData.clear();
+        }
+        return result;
+    }
 
 
-        return null;
+
+    //目前按照总市值占板块总的总市值的比值作为板块股票权重
+    private static double computeBoardDate(List<StockdataEntity> entities){
+
+        double sum = 0;
+        for (StockdataEntity entity : entities){
+            sum += entity.getTotalMarketValue();
+        }
+        double value = 0;
+        for (StockdataEntity entity : entities){
+            value += entity.getClose()*(entity.getTotalMarketValue()/sum);
+        }
+
+        return value;
     }
 
     private static BoardDistributionVO makeDistributionVO(StockdataEntity entity){

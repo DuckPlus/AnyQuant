@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.StockAnalyseService;
+import service.helper.StockHelper;
 import util.DateCalculator;
+import util.MyDate;
 import util.enumration.AnalysisFactor;
 import util.enumration.FactorJudge;
 import vo.EvaluationVO;
@@ -20,6 +22,7 @@ import vo.Factor_VO;
 import vo.NewsVO;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,6 +74,7 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
     public List<StockdataEntity> getRegionRelatedStockMessage(String stockCode) {
         String region = getStockFullMessage(stockCode).getRegion();
         List<StockEntity> relatedStocks = stockDAO.getRegionRelatedStock(region);
+        System.out.print(relatedStocks.size());
         List<StockdataEntity> results = new ArrayList<>(relatedStocks.size());
 
         results.addAll(relatedStocks.stream().map(stockEntity -> stockDataDAO.getStockData(stockEntity.getCode())).collect(Collectors.toList()));
@@ -79,7 +83,6 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
 
     @Override
     public List<Factor_VO> getFactorVO(String stockCode, AnalysisFactor factor , int offset) {
-
         return factorDAO.getFactors(stockCode , factor , DateCalculator.getAnotherDay(-offset) , DateCalculator.getToDay());
     }
 
@@ -103,8 +106,37 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
 
     @Override
     public List<FactorWeightVO> getMostUsefulFactors(String code, int timeLen , FactorJudge factorJudge) {
-        //TODO
-        return null;
+        MyDate start = DateCalculator.getAnotherDay(-timeLen);
+        MyDate end = DateCalculator.getToDay();
+
+        List<StockdataEntity> entities = stockDataDAO.getStockData(code , start ,end);
+        List<FactorWeightVO> factorWeightVOs = new ArrayList<>(AnalysisFactor.values().length);
+        for (AnalysisFactor factor : AnalysisFactor.values()){
+            List<Factor_VO> factor_vos = factorDAO.getFactors(code , factor , start , end);
+
+            double factorJudgeVal = computeFactorJudgeValue(entities , factor_vos , factorJudge);
+
+
+            factorWeightVOs.add(new FactorWeightVO(factorJudgeVal , factor.chinese ));
+        }
+
+
+
+
+        return factorWeightVOs;
+    }
+
+    private double computeFactorJudgeValue(List<StockdataEntity> entities, List<Factor_VO> factor_vos, FactorJudge factorJudge) {
+        switch (factorJudge){
+            case IC:
+                 return StockHelper.computeIC(entities ,factor_vos);
+            case IR:
+                 return StockHelper.computeIR();
+            case WIN_RATE:
+                 return StockHelper.computeWIN_RATE();
+
+        }
+        return 0;
     }
 
 

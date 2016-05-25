@@ -17,9 +17,20 @@ public class StockDAOImpl implements StockDAO {
 
     @Autowired
     BaseDAO baseDAO;
+    private static String tableName = StockEntity.class.getName();
+
+
     @Override
-    public List<StockEntity> findAllStocks() {
+    public List<StockEntity> getAllStocks()
+    {
         return (List<StockEntity>) baseDAO.getAllList(StockEntity.class);
+    }
+
+    @Override
+    public List<String> getAllStockCodes()
+    {
+        String hql = "select code from "+ tableName;
+        return (List<String>) baseDAO.getAllList(hql);
     }
 
     @Override
@@ -29,12 +40,27 @@ public class StockDAOImpl implements StockDAO {
     }
 
     @Override
-    public List<StockEntity> getBoardRelatedStock(String boardName) {
-        return null;
+    public List<String> getBoardRealatedStockCodes(String boardName) {
+        String hql = "select code from "+tableName+" where board = '"+boardName+"'" ;
+
+        return (List<String>) baseDAO.getAllList(hql);
     }
 
     @Override
-    public List<StockEntity> getRegionRelatedStock(String regionName) {
-        return null;
+    public List<StockEntity> getBoardRelatedStock(String boardName)
+    {
+
+        String hql = "from "+tableName+" where board = '"+boardName+"'" ;
+
+        return (List<StockEntity>) baseDAO.getAllList(hql);
+    }
+
+    @Override
+    public List<StockEntity> getRegionRelatedStock(String regionName)
+
+    {
+        String hql = "from "+tableName+" where region = '"+regionName+"'" ;
+
+        return (List<StockEntity>) baseDAO.getAllList(hql);
     }
 }

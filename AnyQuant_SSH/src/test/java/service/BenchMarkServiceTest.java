@@ -1,26 +1,14 @@
 package service;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 /**
  * @author Qiang
- * @date 16/5/12
+ * @date 16/5/22
  */
 public class BenchMarkServiceTest {
-    @Before
-    public void setUp() throws Exception {
-
-    }
-
-    @After
-    public void tearDown() throws Exception {
-
-    }
-
     @Test
     public void getAllBenchMarksList() throws Exception {
 

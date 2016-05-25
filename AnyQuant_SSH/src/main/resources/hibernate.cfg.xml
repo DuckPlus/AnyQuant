@@ -14,6 +14,7 @@
     <mapping class="entity.StockdataEntity"/>
     <mapping class="entity.OptionalstockEntity"/>
     <mapping class="entity.StockEntity"/>
+    <mapping class="entity.FactorEntity"/>
 
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->

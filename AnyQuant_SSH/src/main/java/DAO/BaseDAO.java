@@ -1,9 +1,9 @@
 package DAO;
 
+import org.hibernate.Session;
+
 import java.io.Serializable;
 import java.util.List;
-
-import org.hibernate.Session;
 /**
  * The conventional interface of DAO objects
  * @author Qiang
@@ -28,8 +28,14 @@ public interface BaseDAO {
 
 	public void clear();
 
+	/**
+	 * 统计更新语句影响的行数
+	 * @param hql
+	 * @return
+     */
+	public int updateByHQL(String hql);
 
-	public int executeMyHQL(String hql);
+    public long countByHQL(String hql);
 	/**
 	 * load a object through its ID
 	 * @param id   its primary key

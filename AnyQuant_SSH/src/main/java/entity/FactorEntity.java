@@ -4,8 +4,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 /**
- * @author Qiang
- * @date 16/5/20
+ * Created by 67534 on 2016/5/22.
  */
 @Entity
 @Table(name = "factor", schema = "AnyQuant", catalog = "")
@@ -14,7 +13,7 @@ public class FactorEntity {
     private String code;
     private Date date;
     private double vol5;
-    private double vol20;
+    private double vol10;
     private double vol60;
     private double vol120;
     private double ma5;
@@ -60,13 +59,13 @@ public class FactorEntity {
     }
 
     @Basic
-    @Column(name = "vol20")
-    public double getVol20() {
-        return vol20;
+    @Column(name = "vol10")
+    public double getVol10() {
+        return vol10;
     }
 
-    public void setVol20(double vol20) {
-        this.vol20 = vol20;
+    public void setVol10(double vol10) {
+        this.vol10 = vol10;
     }
 
     @Basic
@@ -204,25 +203,25 @@ public class FactorEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        FactorEntity that = (FactorEntity) o;
+        FactorEntity entity = (FactorEntity) o;
 
-        if (Double.compare(that.vol5, vol5) != 0) return false;
-        if (Double.compare(that.vol20, vol20) != 0) return false;
-        if (Double.compare(that.vol60, vol60) != 0) return false;
-        if (Double.compare(that.vol120, vol120) != 0) return false;
-        if (Double.compare(that.ma5, ma5) != 0) return false;
-        if (Double.compare(that.ma10, ma10) != 0) return false;
-        if (Double.compare(that.ma60, ma60) != 0) return false;
-        if (Double.compare(that.ma120, ma120) != 0) return false;
-        if (Double.compare(that.pb, pb) != 0) return false;
-        if (Double.compare(that.pe, pe) != 0) return false;
-        if (Double.compare(that.pcf, pcf) != 0) return false;
-        if (Double.compare(that.ps, ps) != 0) return false;
-        if (Double.compare(that.psy, psy) != 0) return false;
-        if (Double.compare(that.rec, rec) != 0) return false;
-        if (Double.compare(that.darec, darec) != 0) return false;
-        if (code != null ? !code.equals(that.code) : that.code != null) return false;
-        if (date != null ? !date.equals(that.date) : that.date != null) return false;
+        if (Double.compare(entity.vol5, vol5) != 0) return false;
+        if (Double.compare(entity.vol10, vol10) != 0) return false;
+        if (Double.compare(entity.vol60, vol60) != 0) return false;
+        if (Double.compare(entity.vol120, vol120) != 0) return false;
+        if (Double.compare(entity.ma5, ma5) != 0) return false;
+        if (Double.compare(entity.ma10, ma10) != 0) return false;
+        if (Double.compare(entity.ma60, ma60) != 0) return false;
+        if (Double.compare(entity.ma120, ma120) != 0) return false;
+        if (Double.compare(entity.pb, pb) != 0) return false;
+        if (Double.compare(entity.pe, pe) != 0) return false;
+        if (Double.compare(entity.pcf, pcf) != 0) return false;
+        if (Double.compare(entity.ps, ps) != 0) return false;
+        if (Double.compare(entity.psy, psy) != 0) return false;
+        if (Double.compare(entity.rec, rec) != 0) return false;
+        if (Double.compare(entity.darec, darec) != 0) return false;
+        if (code != null ? !code.equals(entity.code) : entity.code != null) return false;
+        if (date != null ? !date.equals(entity.date) : entity.date != null) return false;
 
         return true;
     }
@@ -235,7 +234,7 @@ public class FactorEntity {
         result = 31 * result + (date != null ? date.hashCode() : 0);
         temp = Double.doubleToLongBits(vol5);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(vol20);
+        temp = Double.doubleToLongBits(vol10);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(vol60);
         result = 31 * result + (int) (temp ^ (temp >>> 32));

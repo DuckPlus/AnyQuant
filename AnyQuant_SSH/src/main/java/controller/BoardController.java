@@ -45,15 +45,7 @@ public class BoardController {
         return service.getBoardDistributionChartData(boardName);
     }
 
-    /**
-     * Get the distribution of the board
-     * 返回板块所属的股票的分布,暂时根据 《股票权重、ID、名称、涨跌幅》
-     * @param offset 偏移量,即回溯的数据时间,可为任意整数值,如30天表示一个月, 正值!!
-     */
-    @RequestMapping("/getBoardDistributionWithOffset")
-    List<BoardDistributionVO> getBoardDistributionChartData(String boardName , int offset){
-        return service.getBoardDistributionChartData(boardName);
-    }
+
 
 
 
