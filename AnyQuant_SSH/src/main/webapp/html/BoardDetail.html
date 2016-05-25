@@ -1,18 +1,22 @@
 <html>
 <head>
     <title>板块详情</title>
+
     <meta charset="UTF-8">
     <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
-    <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
-    <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/exporting.js"></script>
-
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/buttons.css">
     <link rel="stylesheet" type="text/css" href="/css/flat-ui.css">
-<!--导航栏的css-->
+    <!--导航栏的css-->
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/BoardDetail.css">
+    <link rel="shortcut icon" href="/image/short_cut.png">
+
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/treemap.js"></script>
-    <link rel="shortcut icon" href="/image/short_cut.png">
+
 </head>
 <style>
     .green{
@@ -29,10 +33,10 @@
     <img src="/image/duck_icon.png" style="width: 35px;height: 35px;float: left;margin-top:7px;margin-left: 10px">
     <div style="font-size: 30px;float: left;color: #ffffff;margin-left: 10px;margin-top: 7px; ">DUCK</div>
     <ul id="nav_box">
-        <li class="nav_item"><a class="nav_c" href="/html/duck_main.html">股票列表</a></li>
-        <li class="nav_item"><a class="nav_c" href="BoardDetail.html">行业分布</a></li>
-        <li class="nav_item"><a class="nav_c" href="/html/duck_optional.html">自选股</a></li>
-        <li class="nav_item"><a class="nav_c" href="">回测系统</a></li>
+        <li class="nav_item"><a class="nav_c" href="duck_main.html">股票列表</a></li>
+        <li class="nav_item"><a class="nav_c" href="BoardList.html">行业分布</a></li>
+        <li class="nav_item"><a class="nav_c" href="duck_optional.html">自选股</a></li>
+        <li class="nav_item"><a class="nav_c" href="Analyse.html">回测系统</a></li>
     </ul>
 </div>
 <br><br>
@@ -43,26 +47,90 @@
 <span id=upNum class="red" style="position:relative;left:108px;"></span>
 <span style="position:relative;left:115px">/</span>
 <span id=downNum class="green" style="position:relative;left:120px;"></span>
-<input id="searchCode" type="text" class="form-control"  placeholder="输入板块代号或名称" style="position:relative;left:600px;">
-<button id="searchbtn" class="button button-raised button-primary button-pill" onclick="dosearch()"  style="position:relative;left:620px;">
+<input id="searchCode" type="text" class="form-control"  placeholder="输入板块名称" style="position:relative;left:500px;">
+<button id="searchbtn" class="button button-raised button-primary button-pill" onclick="dosearch()"  style="position:relative;left:520px;">
     查询
 </button>
 
-<div id="linechart" style="width: 80%; height: 400px; margin: 0 auto"></div>
-<div id="treechart" style="width: 80%; height:600px; margin: 0 auto"></div>
+<div id="linechart" class="linechart"></div>
+<div id="treechart" class="treechart"></div>
 
 
 
 
 <script>
+    var myBoardName="汽车零部件";//板块的名称
     function dosearch() {
         alert(document.getElementById("searchCode").value);
     }
-    $(document).ready(function () {
-        var rate=0.5;
-        var upNum=20;
-        var downNum=2;
-        document.getElementById('stockName').innerHTML="钢铁";
+    function initTree(data){
+        var myData=[],length=data.length;
+        for(var j=0;j<length;j++){
+            myData[j]= ({
+                code: data[j].code,
+                name: data[j].stockName,
+                price:((data[j].open+data[j].close)/2).toFixed(2),
+                value:data[j].turnoverVol,
+                rate:data[j].turnoverRate,
+                volume:(data[j].turnoverVol/10000).toFixed(2)
+            });
+            if(myData[j].value==0) myData[j].value=100000;
+        }
+
+        $('#treechart').highcharts({
+            plotOptions: {
+                series: {
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function () {
+                                location.href="duck_stockDetail.html"+"?code="+this.code;
+                            }
+                        }
+                    }
+                }
+            },
+            tooltip: {
+                pointFormat:'<b>{point.name}  </b>{point.code}<br>市值：<b>{point.price}</b><br/>换手率：<b>{point.rate}</b>' +
+                '<br/>成交量：<b>{point.volume}万</b>',
+                //valueDecimals: 2
+            },
+
+            series: [{
+                type: "treemap",
+                layoutAlgorithm: 'stripes',
+                alternateStartingDirection: true,
+                levels: [{
+                    level: 1,
+                    layoutAlgorithm: 'sliceAndDice',
+                    dataLabels: {
+                        enabled: true,
+                        align: 'center',
+                        //verticalAlign: 'center',
+                        style: {
+                            fontSize: '15px',
+                            fontWeight: 'bold'
+                        }
+                    }
+                }],
+                data: myData
+            }],
+            title: {
+                text: '成分股'
+            }
+        });
+    }
+    function initNumbers(data){
+        var stockNum=data.length;
+        var upNum=0,downNum=0;
+        for(var i=0;i<stockNum;i++){
+            if(data[i].close>=data[i].open){//涨
+                upNum++;
+            }
+        }
+        downNum=stockNum-upNum;
+        var rate=0.5;//TODO 板块的涨跌幅怎么算
+
 
         if(rate>=0){
             document.getElementById('rate').className="red";
@@ -75,143 +143,72 @@
 
         document.getElementById('upNum').innerHTML="+"+upNum;
         document.getElementById('downNum').innerHTML="-"+downNum;
-        $('#linechart').highcharts({
-            title: {
-                text: '与大盘趋势比较',
-                x: -20 ,//center
-                style:{fontWeight: 'bold'}
-            },
+    }
+    function initLine(data){
+        var boardData=[],benchData=[],length=data.length;
 
-            xAxis: {
-                crosshair:true,
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            },
-            plotOptions: {
-                series: {
-                    marker: {
-                        enabled: false
-                    }
-                }
-            },
-            yAxis: {
-                crosshair:true,
-                title: {
-                    text: 'Temperature (°C)'
-                },
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
-                }]
-            },
-            tooltip: {
-                valueSuffix: '°C'
-            },
+        for(var i=0;i<length;i++){
+            var date=data[i].date;
+            boardData[i]=[
+                new Date(date.year,date.month-1,date.day+1).getTime(),
+                data[i].boardData
+            ];
+            benchData[i]=[
+                new Date(date.year,date.month-1,date.day+1).getTime(),
+                data[i].huShen300Data
+            ];
+        }
+        $('#linechart').highcharts('StockChart', {
             legend: {
-                layout: 'horizontal',
-                align: 'center',
-                borderWidth: 0
+                enabled: true,
+                shadow: true
             },
-            series: [{
-                name: 'Tokyo',
-                data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-            }, {
-                name: 'New York',
-                data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
-            }, {
-                name: 'Berlin',
-                data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
-            }, {
-                name: 'London',
-                data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-            }]
-        });
-    });
-
-</script>
-
-<script type="text/javascript">
-    var myCode;//大盘的代号
-    $(function () {
-        $('#treechart').highcharts({
-            plotOptions: {
-                series: {
-                    cursor: 'pointer',
-
-                    point: {
-                        events: {
-                            click: function () {
-                                location.href="duck_stockDetail.html"+"?code="+this.code;
-                            }
-                        }
+            tooltip:{
+                xDateFormat:'%Y-%m-%d'
+            },
+            rangeSelector: {
+                selected: 1
+            },
+            title: {
+                text: '与大盘走势比较'
+            },
+            series: [
+                {
+                    name: myBoardName,
+                    data: boardData,
+                    type: 'spline',
+                    tooltip: {
+                        valueDecimals: 2
+                    }
+                },
+                {
+                    name: '沪深300',
+                    data: benchData,
+                    type: 'spline',
+                    tooltip: {
+                        valueDecimals: 2
                     }
                 }
-            },
-            tooltip: {
-                pointFormat:'<b>{point.name}  </b>{point.code}: <br>市值：<b>{point.value}</b><br/>涨跌幅：<b>{point.rate}</b>',
-                valueDecimals: 2
-            },
-
-            series: [{
-                type: "treemap",
-                layoutAlgorithm: 'stripes',
-                alternateStartingDirection: true,
-                levels: [{
-                    level: 1,
-                    layoutAlgorithm: 'sliceAndDice',
-                    dataLabels: {
-                        enabled: true,
-                        align: 'left',
-                        verticalAlign: 'top',
-                        style: {
-                            fontSize: '15px',
-                            fontWeight: 'bold'
-                        }
-                    }
-                }],
-                data: [{
-                    code: 'sh600520',
-                    name: '汽油',
-                    value:22.5,
-                    rate:'0.01%'
-                }, {
-                    code: 'sz000659',
-                    name: '万达',
-                    value:22.5,
-                    rate:'0.02%'
-                }, {
-                    code: 'sh600725',
-                    name: '三星',
-                    value:22.5,
-                    rate:'0.03%'
-                }, {
-                    code: 'sz000831',
-                    name: '小米',
-                    value:22.5,
-                    rate:'0.04%'
-                }, {
-                    code: 'sh600853',
-                    name: '戴尔',
-                    value:22.5,
-                    rate:'0.05%'
-                }, {
-                    code: 'sz002408',
-                    name: '屈臣氏',
-                    value:22.5,
-                    rate:'0.06%'
-                }, {
-                    code: 'sz002625',
-                    name: 'NJU',
-                    value:22.5,
-                    rate:'0.07%'
-                }]
-            }],
-            title: {
-                text: '成分股'
-            }
+            ]
         });
+
+
+    }
+    $(document).ready(function () {
+        document.getElementById('stockName').innerHTML=myBoardName;
+        $.getJSON('/Board/getBoardDistribution?boardName='+"", function (data) {//TODO 这里要加上板块名字
+            initTree(data);
+            initNumbers(data);
+        });
+        $.getJSON('/Mock/getCompareData?boardName='+myBoardName, function (data) {
+
+            initLine(data);
+        });
+
     });
+
 </script>
+
 
 
 </body>
