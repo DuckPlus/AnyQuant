@@ -168,7 +168,7 @@
                 xDateFormat:'%Y-%m-%d'
             },
             rangeSelector: {
-                selected: 1
+                selected: 0
             },
             title: {
                 text: '与大盘走势比较'
@@ -197,7 +197,7 @@
     }
     $(document).ready(function () {
         document.getElementById('stockName').innerHTML=myBoardName;
-        $.getJSON('/Board/getBoardDistribution?boardName='+"", function (data) {//TODO 这里要加上板块名字
+        $.getJSON('/Board/getBoardDistribution?boardName='+myBoardName, function (data) {//TODO 这里要加上板块名字
             initTree(data);
             initNumbers(data);
         });
