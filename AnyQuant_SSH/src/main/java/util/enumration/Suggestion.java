@@ -7,14 +7,28 @@ package util.enumration;
  */
 public enum Suggestion {
 
-    STRONGLY_RECOMMEND("强烈推荐") , RECOMMEND("推荐买入") , NORMAL("建议观望") ,  DEPRECATED("适度减仓") , STRONGLY_DEPRECATED("建议抛售");
+    STRONGLY_RECOMMEND("强烈推荐" , 80) , RECOMMEND("推荐买入" , 60 ) , NORMAL("建议观望" ,  40 ) ,  DEPRECATED("适度减仓" , 20 ) , STRONGLY_DEPRECATED("建议抛售" , 0);
 
 
     public String chinese;
-
-    Suggestion(String chinese){
+    public int mark;
+    Suggestion(String chinese, int mark){
         this.chinese = chinese;
+        this.mark = mark;
     }
 
+    public static String getSuggestion(int mark){
+       for (Suggestion suggestion : Suggestion.values()){
+
+           if(suggestion.mark < mark){
+               return suggestion.chinese;
+           }
+
+
+       }
+
+
+        return STRONGLY_DEPRECATED.chinese;
+    }
 
 }
