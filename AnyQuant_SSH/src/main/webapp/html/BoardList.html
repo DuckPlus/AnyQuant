@@ -32,7 +32,6 @@
   手气不错
 </button>
 <div id="bubble" style="width:80%;height:500px; margin: 0 auto"></div>
-<a href="BoardDetail.html">点我跳到某个版块的界面去</a>
 <script type="text/javascript">
     var globalData=[];
     $.getJSON('/Board/getAllBoards', function (data) {
@@ -107,7 +106,7 @@
                             click: function (data) {
                                 var boardName=data.point.name;
                                 location.href="BoardDetail.html"+"?name="+boardName;
-                                alert(data.point.name);
+
                             }
                         },
                         dataLabels: {
