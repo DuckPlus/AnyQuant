@@ -74,6 +74,7 @@ public class StockDataDAOImpl implements StockDataDAO {
         String hql = "from "+tableName+" where code = ? and date between '"+start.DateToString()+"' and '"+end.DateToString()+"'";
         List result  = baseDAO.batchListQuery(hql,stockCodes);
         return result;
+
     }
 
     @Override
