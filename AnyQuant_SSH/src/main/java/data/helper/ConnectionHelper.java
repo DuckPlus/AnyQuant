@@ -10,7 +10,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import util.enumration.API_TYPE;
-import util.enumration.StaticMessage;
+import util.StaticMessage;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -63,8 +63,8 @@ public class ConnectionHelper {
 			buffer.append(urls.get(i+1) );
 			buffer.append(param[i]);
 		}
-		System.err.println(buffer.toString());
-		System.out.println(request(buffer.toString()));
+//		System.err.println(buffer.toString());
+//		System.out.println(request(buffer.toString()));
 
 		return JSONObject.fromObject(request(buffer.toString()));
 

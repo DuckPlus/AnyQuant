@@ -1,14 +1,13 @@
 package DAO.impl;
 
 import DAO.BaseDAO;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hibernate.criterion.Restrictions.eq;
@@ -106,6 +105,63 @@ public class BaseDAOImpl implements BaseDAO {
         return session.createQuery(hql).list();
     }
 
+    @Override
+    public List<?> batchSingleQuery(String hql, List<String> paras) {
+        List result = new ArrayList<>();
+
+        try {
+            Session session = getNewSession();
+            //开始事务
+            Transaction tx = session.beginTransaction();
+            Query query= session.createQuery(hql);
+            for (int i = 0 ; i < paras.size() ; i++ )
+            {
+                query.setString(0, paras.get(i));
+                Object temp = query.uniqueResult();
+
+                if(temp!=null){
+                    result.add(temp);
+                }
+
+            }
+            //提交事务
+            tx.commit();
+            //关闭事务
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public List<?> batchListQuery(String hql, List<String> paras) {
+        List result = new ArrayList<>();
+
+        try {
+            Session session = getNewSession();
+            //开始事务
+            Transaction tx = session.beginTransaction();
+            Query query= session.createQuery(hql);
+            for (int i = 0 ; i < paras.size() ; i++ )
+            {
+                query.setString(0,paras.get(i));
+                List tempList = query.list();
+                if(tempList!=null){
+                    result.addAll(tempList);
+                }
+
+            }
+            //提交事务
+            tx.commit();
+            //关闭事务
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     /**
      * 获取总数量
      * @param c
@@ -129,6 +185,35 @@ public class BaseDAOImpl implements BaseDAO {
             session.save(bean);
             session.flush();
             session.clear();
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void saveList(List<?> beans) {
+        try {
+            Session session = getNewSession();
+            //开始事务
+            Transaction tx = session.beginTransaction();
+            for (int i = 0 ; i < beans.size() ; i++ )
+            {
+                //在Session级别缓存User实例
+                session.save(beans.get(i));
+                //每当累加器是20的倍数时，将Session中的数据刷入数据库，并清空Session缓存
+
+                if (i % 100 == 0)
+                {
+                    session.flush();
+                    session.clear();
+                    tx.commit();
+                    tx = session.beginTransaction();
+                }
+            }
+            //提交事务
+            tx.commit();
+            //关闭事务
             session.close();
         } catch (Exception e) {
             e.printStackTrace();

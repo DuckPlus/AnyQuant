@@ -18,14 +18,18 @@ public class FactorWeightVO {
      */
     public double judgeFactorValue;
 
+    /**
+     * 正相关 或  负相关
+     */
+    public boolean postive;
 
     public FactorWeightVO(){
 
     }
 
-
-    public FactorWeightVO( double judgeFactorValue, String name) {
+    public FactorWeightVO(double judgeFactorValue, String name, boolean postive) {
         this.judgeFactorValue = judgeFactorValue;
         this.name = name;
+        this.postive = postive;
     }
 }

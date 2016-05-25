@@ -18,13 +18,29 @@ public interface StockDataDAO {
     public StockdataEntity getStockData(String stockCode);
 
     /**
+     * 只需要传入股票的代码例如"sh600126"，返回最新信息
+     *
+     * @param stockCode
+     * @return
+     */
+    public List<StockdataEntity> getStockData(List<String> stockCode);
+
+
+    /**
      *增加了时间限制，可以设置只查看某一天的数据
      * @param stockCode
      * @param date
      * @return
      */
     public StockdataEntity getStockData(String stockCode, MyDate date);
-    public StockdataEntity getStockData(List<String> stockCodes, MyDate date);
+
+    /**
+     * 同时为多只股票提供上面的请求服务
+     * @param stockCodes
+     * @param date
+     * @return
+     */
+    public List<StockdataEntity> getStockData(List<String> stockCodes, MyDate date);
 
     /**
      * 增加了时间限制，可以查看某段时间内的数据
@@ -34,6 +50,14 @@ public interface StockDataDAO {
      * @return
      */
     public List<StockdataEntity> getStockData(String stockCode, MyDate start, MyDate end);
+
+    /**
+     * 同时为多只股票提供上面的请求服务
+     * @param stockCodes
+     * @param start
+     * @param end
+     * @return
+     */
     public List<StockdataEntity> getStockData(List<String> stockCodes, MyDate start, MyDate end);
 
     /**

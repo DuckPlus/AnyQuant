@@ -22,7 +22,8 @@ import vo.Factor_VO;
 import vo.NewsVO;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,22 +64,23 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
     @Transactional
     public List<StockdataEntity> getBoardRelatedStockMessage(String stockCode) {
         String board = getStockFullMessage(stockCode).getBoard();
-        List<StockEntity> relatedStocks = stockDAO.getBoardRelatedStock(board);
-        List<StockdataEntity> results = new ArrayList<>(relatedStocks.size());
-        results.addAll(relatedStocks.stream().map(entity -> stockDataDAO.getStockData(entity.getCode())).collect(Collectors.toList()));
-        return results;
+        List<String> relatedStocks = stockDAO.getBoardRealatedStockCodes(board);
+
+        return stockDataDAO.getStockData(relatedStocks);
+
+
     }
 
     @Override
     @Transactional
     public List<StockdataEntity> getRegionRelatedStockMessage(String stockCode) {
         String region = getStockFullMessage(stockCode).getRegion();
-        List<StockEntity> relatedStocks = stockDAO.getRegionRelatedStock(region);
-        System.out.print(relatedStocks.size());
-        List<StockdataEntity> results = new ArrayList<>(relatedStocks.size());
+        System.out.println("get region related stocks~");
+        System.out.println(region);
+        List<String> relatedStockCodes = stockDAO.getRegionRealatedStockCodes(region);
 
-        results.addAll(relatedStocks.stream().map(stockEntity -> stockDataDAO.getStockData(stockEntity.getCode())).collect(Collectors.toList()));
-        return results;
+        return stockDataDAO.getStockData(relatedStockCodes);
+
     }
 
     @Override
@@ -117,22 +119,21 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
             double factorJudgeVal = computeFactorJudgeValue(entities , factor_vos , factorJudge);
 
 
-            factorWeightVOs.add(new FactorWeightVO(factorJudgeVal , factor.chinese ));
+            factorWeightVOs.add(new FactorWeightVO(factorJudgeVal , factor.chinese , factorJudgeVal > 0 ));
         }
-
-
-
+        //进行因子绝对值的简单排序
+        factorWeightVOs.sort( (v1 , v2) ->  Math.abs(v1.judgeFactorValue) > Math.abs(v2.judgeFactorValue) ? 1 : -1  );
 
         return factorWeightVOs;
     }
 
-    private double computeFactorJudgeValue(List<StockdataEntity> entities, List<Factor_VO> factor_vos, FactorJudge factorJudge) {
+    private static double computeFactorJudgeValue(List<StockdataEntity> entities, List<Factor_VO> factor_vos, FactorJudge factorJudge) {
         switch (factorJudge){
             case IC:
                  return StockHelper.computeIC(entities ,factor_vos);
             case IR:
                  return StockHelper.computeIR();
-            case WIN_RATE:
+            case T_CHECK:
                  return StockHelper.computeWIN_RATE();
 
         }

@@ -37,6 +37,6 @@ public interface BoardAnalysisService {
     List<BoardDistributionVO> getBoardDistributionChartData(String boardName );
 
 
-//    List<>
+    List<String> getAllBoradName();
 
 }

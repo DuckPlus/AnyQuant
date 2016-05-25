@@ -17,17 +17,27 @@ public class StockHelper {
 
         double[] stocks = new double[len];
         double[] factors = new  double[len];
-
+        System.out.println(factor_vos.get(0).name);
+        System.out.println(stockdataEntities.size() + " " + factor_vos.size());
         for (int i = 0; i <  len; i++) {
             stocks[i] = stockdataEntities.get(i).getClose();
             factors[i] = factor_vos.get(i).value;
+            System.out.print(stockdataEntities.get(i).getDate().toString());
+            System.out.print(factor_vos.get(i).date.DateToString());
+            System.out.println("stock " + i + " " + stocks[i] +  " " + factors[i]);
         }
-        return computeIC(stocks , factors);
+        double resulr = computeIC(stocks , factors);
+        System.out.println("IC is" + resulr);
+        return resulr;
     }
 
 
     private static double computeIC(double[] stocks,  double[] factors){
         double[] profits = computeStockProfit(stocks);
+
+        for (int i = 0; i < profits.length; i++) {
+            System.out.println(profits[i]);
+        }
 
         return AnalysisAlgorithm.computeRelated(factors , profits);
     }
@@ -48,14 +58,19 @@ public class StockHelper {
 
     public static double[] computeStockProfit(double[] datas){
         double[] results = new double[datas.length - 1];
-        for (int i = 0; i < results.length - 1; i++) {
+        for (int i = 0; i < datas.length - 1; i++) {
             results[i] = computeStockProfit(datas[i] , datas[i+1]);
+//            System.out.println("aaa"+datas[i] + datas[i + 1]);
         }
         return results;
     }
 
 
     private static double computeStockProfit(double start ,  double end){
+        if(start == 0 || end == 0){
+            return 0.1; //TODO 由于数据不全,出现为0错误暂时使用0.1代替
+        }
+
         return (end-start)/start;
     }
 }
