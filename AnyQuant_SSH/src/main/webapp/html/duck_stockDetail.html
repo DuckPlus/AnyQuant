@@ -111,7 +111,7 @@
     var myRed="#FF0000";
     var myGreen="#00CD66";
     function init_info() {
-        handle_login_statu();
+//        handle_login_statu();
         var code = getCode();
         var url = "/StockDetail/description/?code=" + getCode();
 
@@ -203,12 +203,12 @@
         document.getElementById('add_stock_btn').setAttribute("statu","delete");
     }
     function handle_login_statu() {
-        var user = '<%=session.getAttribute("user")%>';
-        if(user==null){
-            alert("no user online");
-        }else{
-            alert("user: "+user);
-        }
+//        var user = '<%=session.getAttribute("user")%>';
+//        if(user==null){
+//            alert("no user online");
+//        }else{
+//            alert("user: "+user);
+//        }
     }
 </script>
 <script type="text/javascript">
@@ -279,8 +279,9 @@
                     }
                 },
                 tooltip: {
+
                     pointFormat:'开盘：<b>{point.open}</b><br>最高：<b>{point.high}</b><br>最低：<b>{point.low}</b><br/>' +
-                    '收盘：<b>{point.close}</b><br>成交量：<b>{point.turnoverVol}</b>',
+                    '收盘：<b>{point.close}</b><br>成交量：<b>{point.turnoverVol}</b><br>',
                     valueDecimals: 2,
 
                 },
