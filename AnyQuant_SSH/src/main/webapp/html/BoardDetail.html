@@ -58,26 +58,70 @@
 
 
 <script>
-    var myRed="#FF0000",myGreen="#00EE76"
+    var myRed="#EE2C2C",myGreen="#00CD66",myGrey="#8B7E66"
     var myBoardName="汽车零部件";//板块的名称
     function dosearch() {
         alert(document.getElementById("searchCode").value);
     }
     function initTree(data){
         var myData=[],length=data.length;
-        for(var j=0;j<length;j++){
-            myData[j]= ({
-                code: data[j].code,
-                name: data[j].stockName,
-                price:((data[j].open+data[j].close)/2).toFixed(2),
-                value:data[j].turnoverVol,
-                rate:data[j].changeRate,
-                volume:(data[j].turnoverVol/10000).toFixed(2)
-            });
-            if(myData[j].value==0) myData[j].value=100000;
-            if(myData[j].rate<0){
+        for(var i=0;i<5;i++){
+            var tt=i+'';
+            myData[i]=({
+                id: tt,
+                name: ' ',
+                color: "#EC2500"
 
+            });
+        }
+
+
+       /* myData[1]=({
+            parent: 'A',
+            name: 'aaa',
+            value:50,
+            color: "#EC2500"
+        });*/
+
+        for(var j=5;j<length+5;j++){
+            var par=j%5+'';
+            if(data[j-5].changeRate>0){
+                myData[j]= ({
+                    parent: par,
+                    code: data[j-5].code,
+                    name: data[j-5].stockName,
+                    price:((data[j-5].open+data[j-5].close)/2).toFixed(2),
+                    value:data[j-5].turnoverVol,
+                    rate:data[j-5].changeRate,
+                    volume:(data[j-5].turnoverVol/10000).toFixed(2),
+                    color:myRed
+                });
+            }else if(data[j-5].changeRate<0){
+                myData[j]= ({
+                    parent: par,
+                    code: data[j-5].code,
+                    name: data[j-5].stockName,
+                    price:((data[j-5].open+data[j-5].close)/2).toFixed(2),
+                    value:data[j-5].turnoverVol,
+                    rate:data[j-5].changeRate,
+                    volume:(data[j-5].turnoverVol/10000).toFixed(2),
+                    color:myGreen
+                });
+            }else{
+                myData[j]= ({
+                    parent: par,
+                    code: data[j-5].code,
+                    name: data[j-5].stockName,
+                    price:((data[j-5].open+data[j-5].close)/2).toFixed(2),
+                    value:data[j-5].turnoverVol,
+                    rate:data[j-5].changeRate,
+                    volume:(data[j-5].turnoverVol/10000).toFixed(2),
+                    color:myGrey
+                });
             }
+
+            if(myData[j].value==0) myData[j].value=100000;
+
         }
 
         $('#treechart').highcharts({
@@ -101,8 +145,8 @@
 
             series: [{
                 type: "treemap",
-                layoutAlgorithm: 'stripes',
-                alternateStartingDirection: true,
+               // layoutAlgorithm: 'squarified',
+                alternateStartingDirection: false,
                 levels: [{
                     level: 1,
                     layoutAlgorithm: 'sliceAndDice',
@@ -201,8 +245,9 @@
     $(document).ready(function () {
         document.getElementById('stockName').innerHTML=myBoardName;
         $.getJSON('/Board/getBoardDistribution?boardName='+myBoardName, function (data) {//TODO 这里要加上板块名字
-            initTree(data);
             initNumbers(data);
+            initTree(data);
+
         });
         $.getJSON('/Board/getCompareData?boardName='+myBoardName, function (data) {
 
