@@ -1,13 +1,12 @@
 package service.impl.strategy;
 
-import service.StrategyBehavior;
 import util.MyDate;
 import vo.ReportVO;
 
 /**
  * Created by 67534 on 2016/5/25.
  */
-public  class BaseStrategy  {
+public abstract class BaseStrategy  {
 
     /**
      * 资金
@@ -23,11 +22,6 @@ public  class BaseStrategy  {
      * 基准大盘代码
      */
     public String baseCode;
-
-    /**
-     * 具体的策略算法
-     */
-    StrategyBehavior  strategy;
 
     /**
      * 回测周期开始日期
@@ -52,12 +46,21 @@ public  class BaseStrategy  {
 
     }
 
-    public void setStrategy(StrategyBehavior strategy){
-          this.strategy=strategy;
-    }
+    /**
+     * 初始化算法
+     */
+    public abstract  void init();
 
-    public ReportVO analyse(){
-        return strategy.doAnalysis();
-    }
+    /**
+     * 如果是设定了调仓频率的策略，该方法即调仓时的动作
+     * 如果是无需设定调仓频率的策略，该方法即算法主体
+     */
+    public abstract  void handleData();
+
+    /**
+     * 面向ui的接口
+     * @return
+     */
+    public abstract ReportVO analyse();
 
 }

@@ -1,12 +1,11 @@
 package service.impl.strategy;
 
-import service.StrategyBehavior;
 import vo.ReportVO;
 
 /**
  * Created by 67534 on 2016/5/25.
  */
-public class Strategy_MA implements StrategyBehavior{
+public class Strategy_MA extends BaseStrategy{
 
     public String stockCode;
 
@@ -14,8 +13,19 @@ public class Strategy_MA implements StrategyBehavior{
         this.stockCode=stockCode;
     }
 
+
     @Override
-    public ReportVO doAnalysis() {
+    public void init() {
+
+    }
+
+    @Override
+    public void handleData() {
+
+    }
+
+    @Override
+    public ReportVO analyse() {
         return null;
     }
 }
