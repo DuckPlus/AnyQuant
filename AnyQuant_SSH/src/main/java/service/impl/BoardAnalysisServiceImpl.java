@@ -51,12 +51,12 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
                 }
 //                System.out.println("***************");
 //                System.out.println("大盘未计算数据" + Arrays.toString(profits)+ "len" + profits.length);
-                profits = StockHelper.computeStockProfit(profits);
+                profits = StockHelper.computeAccumulativeProfit(profits);
 //                System.out.println("大盘数据" + Arrays.toString(profits) + "len"+ profits.length);
                 double[] boardProfit = computeBoardData(boardName , offset);
 //                System.out.println("--------------");
 //                System.out.println("板块未计算前数据" +Arrays.toString(boardProfit));
-                boardProfit = StockHelper.computeStockProfit(boardProfit);
+                boardProfit = StockHelper.computeAccumulativeProfit(boardProfit);
 
 //                System.out.println("板块计算后数据" + Arrays.toString(boardProfit));
                 int len = Math.min(profits.length , boardProfit.length);
@@ -108,15 +108,18 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
     }
 
     private double[] computeBoardData(String boardName , int offset){
-        System.out.println(boardName);
+//        System.out.println(boardName);
         List<String> stocks = stockDAO.getBoardRealatedStockCodes(boardName);
-        System.out.println(stocks.size());
+        if(stocks.size() == 0){
+            return null;
+        }
         List<StockdataEntity> dayData = new ArrayList<>(stocks.size());
         double[] result = new double[offset];
         List<StockdataEntity> allData = stockDataDAO.getStockData(stocks , DateCalculator.getAnotherDay(-offset) , DateCalculator.getToDay());
-        for (StockdataEntity entity : allData){
-            System.out.println(entity.getDate().toString() + entity.getName()  + entity.getClose());
-        }
+//        for (StockdataEntity entity : allData){
+//            System.out.println(entity.getDate().toString() + entity.getName()  + entity.getClose());
+//        }
+
         int days = allData.size()/stocks.size();
 
         for (int i = 0; i < days; i++) {

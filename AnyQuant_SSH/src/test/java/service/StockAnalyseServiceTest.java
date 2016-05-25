@@ -60,6 +60,7 @@ public class StockAnalyseServiceTest {
     @Test
     public void getEvaluation() throws Exception {
         //TODO
+        stockAnalyseService.getEvaluation("sh600004");
     }
 
     @Test
