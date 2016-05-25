@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.fail;
@@ -82,5 +83,20 @@ public class StockDAOImplTest {
             System.out.println("board: "+entities.get(0).getRegion());
         }
     }
+
+    @Test
+    public void getAllBoard() throws Exception {
+        ArrayList<String> boards =
+                (ArrayList<String>) dao.getAllBoardName();
+        if(boards!=null){
+            System.out.println("size: "+boards.size());
+            for(String temp : boards){
+                System.out.println(temp);
+            }
+        }
+
+    }
+
+
 
 }

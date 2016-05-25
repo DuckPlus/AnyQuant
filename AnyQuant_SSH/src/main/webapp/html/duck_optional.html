@@ -6,6 +6,7 @@
     <script src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
     <link rel="stylesheet" type="text/css" href="/css/window.css">
+    <link rel="stylesheet" href="/css/duck_optional.css">
 
     <!-- DataTables -->
     <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
@@ -14,6 +15,8 @@
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
 
+    <!--tab上的小图标-->
+    <link rel="shortcut icon" href="/image/short_cut.png">
 </head>
 <body>
 <!-- navigator begin -->
@@ -24,11 +27,366 @@
         <li class="nav_item"><a class="nav_c" href="duck_main.html">股票列表</a></li>
         <li class="nav_item"><a class="nav_c" href="BoardList.html">行业分布</a></li>
         <li class="nav_item"><a class="nav_c" href="duck_optional.html">自选股</a></li>
-        <li class="nav_item"><a class="nav_c">回测系统</a></li>
+        <li class="nav_item"><a class="nav_c" href="Analyse.html">回测系统</a></li>
     </ul>
 </div>
 <div id="blank"></div>
 <!-- navigator end -->
-自选股界面
+<div id="main_content">
+
+    <div class="duck_window" id="optional_stock_window">
+        <div class="duck_title">
+            自选股列表
+        </div>
+        <div class="duck_content">
+            <table id="stock_list" class="display">
+                <thead>
+                <tr>
+                    <th>股票名称</th>
+                    <th>股票代码</th>
+                    <th>开盘价</th>
+                    <th>最高价</th>
+                    <th>最低价</th>
+                    <th>收盘价</th>
+                    <th>成交量</th>
+                    <th>换手率</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                </tbody>
+
+                <tfoot>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <div class="duck_window" id="region_distribution_window">
+        <div class="duck_title">
+            地域分布
+        </div>
+        <div class="duck_content">
+            <div id="region_pie_chart"></div>
+            <div id="region_bar_chart"></div>
+        </div>
+
+    </div>
+
+    <div class="duck_window" id="board_distribution_window">
+        <div class="duck_title">
+            板块分布
+        </div>
+        <div class="duck_content">
+            <div id="board_pie_chart"></div>
+            <div id="board_bar_chart"></div>
+        </div>
+
+    </div>
+
+</div>
+
 </body>
+
+<script>
+    var allStock;
+    $(document).ready(function () {
+                $.ajax({
+                    type:'post',
+                    url:"/Optional/get",
+                    contentType:'application/json;charset=utf-8',
+                    success:function (data){
+                        initTable(data);
+                    },
+                    error:function () {
+                        alert("请求失败");
+                    }
+                });
+            }
+    );
+    /*
+     *初始化table的方法,包括样式的配置
+     */
+    function initTable(allStock) {
+        var table = $('#stock_list').DataTable( {
+
+            data:allStock,
+            columns:[
+                {data:'name'},
+                {data:'code'},
+                {data:'open'},
+                {data:'high'},
+                {data:'low'},
+                {data:'close'},
+                {data:'turnoverVol'},
+                {data:'changeRate'}
+            ],
+            /*
+             *自适应宽度 默认true 关闭可提升性能,同时方便管理布局
+             */
+            "autoWidth":false,
+            "columnDefs": [
+                // 将name列变为红色
+                {
+                    "targets": [0], // 目标列位置，下标从0开始
+                    "data": "name", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        return "<span style='color:red;'>" + data + "</span>";
+                    }
+                }
+            ],
+            /*
+             *自适应宽度 默认true 关闭可提升性能,同时方便管理布局
+             */
+            "autoWidth":false,
+            "columnDefs": [
+                // 将name列变为红色
+                {
+                    "targets": [0], // 目标列位置，下标从0开始
+                    "data": "name", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        return "<span style='color:red;'>" + data + "</span>";
+                    }
+                }
+            ],
+            //国际化
+            "oLanguage": {
+                "sProcessing": "疯狂加载数据中.",
+                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sZeroRecords": "抱歉， 没有找到",
+                "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+                "sInfoEmpty": "没有数据",
+                "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+                "sZeroRecords": "没有检索到数据",
+                "sSearch": "模糊查询:  ",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "前一页",
+                    "sNext": "后一页",
+                    "sLast": "尾页"
+                }
+            },
+        } );
+
+//以下是关于选择行的代码
+
+        $('#stock_list tbody').on( 'click', 'tr', function () {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+            var selected_row = table.row('.selected').index();
+            var value = table.cell(selected_row,1).data();
+            var url = "/html/duck_stockDetail.html"+"?code="+value;
+            window.location.href = url;
+        } );
+    }
+</script>
+
+<!--init region pie chart and bar chart-->
+<script>
+    $.ajax({
+        type:'post',
+        url :'/Optional/getRegionDistribution',
+        success:function (data) {
+            var result=[];
+            for(var x in data){
+                result.push([x,data[x]]);
+            }
+            init_region_pie(result);
+            init_region_bar(result);
+        }
+    });
+    function init_region_pie(data) {
+        $('#region_pie_chart').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: '地域分布'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                name: 'Brands',
+                colorByPoint: true,
+                data: data
+            }]
+        });
+    }
+
+    function init_region_bar(data) {
+        $('#region_bar_chart').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'World\'s largest cities per 2014'
+            },
+            subtitle: {
+                text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
+            },
+            xAxis: {
+                type: 'category',
+                labels: {
+                    rotation: -45,
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Population (millions)'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                pointFormat: '包含股票数量: <b>{point.y:.1f}</b>'
+            },
+            series: [{
+                name: 'Population',
+                data: data,
+                dataLabels: {
+                    enabled: true,
+                    rotation: -90,
+                    color: '#FFFFFF',
+                    align: 'right',
+                    format: '{point.y:.1f}', // one decimal
+                    y: 10, // 10 pixels down from the top
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            }]
+        });
+    }
+</script>
+<!--#############################################################-->
+<!--##############init board pie chart and bar chart#############-->
+<!--#############################################################-->
+<script>
+    $.ajax({
+        type:'post',
+        url :'/Optional/getBoardDistribution',
+        success:function (data) {
+            var result=[];
+            for(var x in data){
+                if(x==""){
+                    result.push(["未知",data[x]]);
+                }else {
+                    result.push([x, data[x]]);
+                }
+            }
+            init_board_pie(result);
+            init_board_bar(result);
+        }
+    });
+    function init_board_pie(data) {
+        $('#board_pie_chart').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: '行业分布'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                name: 'Brands',
+                colorByPoint: true,
+                data: data
+            }]
+        });
+    }
+
+    function init_board_bar(data) {
+        $('#board_bar_chart').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'World\'s largest cities per 2014'
+            },
+            subtitle: {
+                text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
+            },
+            xAxis: {
+                type: 'category',
+                labels: {
+                    rotation: -45,
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Population (millions)'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                pointFormat: '包含股票数量: <b>{point.y:.1f}</b>'
+            },
+            series: [{
+                name: 'Population',
+                data: data,
+                dataLabels: {
+                    enabled: true,
+                    rotation: -90,
+                    color: '#FFFFFF',
+                    align: 'right',
+                    format: '{point.y:.1f}', // one decimal
+                    y: 10, // 10 pixels down from the top
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            }]
+        });
+    }
+</script>
 </html>

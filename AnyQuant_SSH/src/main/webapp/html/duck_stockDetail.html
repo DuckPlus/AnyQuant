@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
     <link rel="stylesheet" href="/css/duck_stock_detail.css" type="text/css">
     <!-- <h1 class="title1">hello this is a test page!</h1> -->
+    <!--tab上的小图标-->
+    <link rel="shortcut icon" href="/image/short_cut.png">
 </head>
 <body>
 <!-- navigator begin -->
@@ -21,10 +23,10 @@
     <img src="/image/duck_icon.png" style="width: 35px;height: 35px;float: left;margin-top:7px;margin-left: 10px">
     <div style="font-size: 30px;float: left;color: #ffffff;margin-left: 10px;margin-top: 7px; ">DUCK</div>
     <ul id="nav_box">
-        <li class="nav_item"><a class="nav_c" href="/html/duck_main.html">股票列表</a></li>
+        <li class="nav_item"><a class="nav_c" href="duck_main.html">股票列表</a></li>
         <li class="nav_item"><a class="nav_c" href="BoardList.html">行业分布</a></li>
-        <li class="nav_item"><a class="nav_c" href="/html/duck_optional.html">自选股</a></li>
-        <li class="nav_item"><a class="nav_c" href="">回测系统</a></li>
+        <li class="nav_item"><a class="nav_c" href="duck_optional.html">自选股</a></li>
+        <li class="nav_item"><a class="nav_c" href="Analyse.html">回测系统</a></li>
     </ul>
 </div>
 <div id="blank"></div>
@@ -35,7 +37,7 @@
         <div id="title_name"></div>
         <div id="title_code"></div>
         <div id="title_open"></div>
-        <button id="add_stock_btn" class="button button-raised button-primary button-pill">加入自选股            </button>
+        <button id="add_stock_btn" class="button button-rounded button-tiny">加入自选股</button>
     </div>
 
     <div class="duck_window" id="chart_stock_OHLC_window">
@@ -109,6 +111,7 @@
     var myRed="#FF0000";
     var myGreen="#00CD66";
     function init_info() {
+        handle_login_statu();
         var code = getCode();
         var url = "/StockDetail/description/?code=" + getCode();
 
@@ -127,12 +130,86 @@
             document.getElementById('stock_info_region').innerHTML = region;
             document.getElementById('stock_info_totalShares').innerHTML = totalShare;
             document.getElementById('stock_info_primeOperating').innerHTML = primeOperating;
-            document.getElementById('add_stock_btn').innerHTML = "从自选列表删除";
+
         }, function () {
             alert("fail");
         });
+        //确认该股票是否存在自选股中,以确定添加按钮的内容
+        $.ajax({
+            type:'post',
+            url:"/Optional/check",
+            data:{code:getCode()},
+            success:function (data){
+                if(data == true){
+//                    document.getElementById('add_stock_btn').innerHTML = "删除自选股";
+//                    document.getElementById('add_stock_btn').style.backgroundColor = "#990000";
+//                    document.getElementById('add_stock_btn').setAttribute("statu","delete");
+                    set_delete_button();
+                }else if(data==false){
+//                    document.getElementById('add_stock_btn').innerHTML = "加入自选股";
+//                    document.getElementById('add_stock_btn').style.backgroundColor = "#00CC99";
+//                    document.getElementById('add_stock_btn').setAttribute("statu","add");
+                    set_add_button();
+                }else{
+                    alert("自选股存在性验证出错")
+                }
+            },
+            error:function () {
+                alert("请求失败");
+            }
+        });
+        document.getElementById('add_stock_btn').addEventListener('click',function () {
+//            alert("clicked!");
+           if(document.getElementById('add_stock_btn').getAttribute('statu')=='add'){
+//               alert("adddddd");
+               $.ajax({
+                   type:'post',
+                   url :'/Optional/add',
+                   data:{code:getCode()},
+                   success:function () {
+//                       document.getElementById('add_stock_btn').innerHTML = "删除自选股";
+//                       document.getElementById('add_stock_btn').style.backgroundColor = "#990000";
+//                       document.getElementById('add_stock_btn').setAttribute("statu","delete");
+                       set_delete_button();
+                   }
+               });
+           }else if(document.getElementById('add_stock_btn').getAttribute('statu')=='delete'){
+//               alert("deletee");
+               $.ajax({
+                   type:'post',
+                   url :'/Optional/del',
+                   data:{code:getCode()},
+                   success:function () {
+//                       document.getElementById('add_stock_btn').innerHTML = "加入自选股";
+//                       document.getElementById('add_stock_btn').style.backgroundColor = "#00CC99";
+//                       document.getElementById('add_stock_btn').setAttribute("statu","add");
+                       set_add_button();
+                   }
+               });
+           }else{
+               alert("删除按钮状态错误");
+           }
+        });
     }
     window.onload = init_info;
+    function set_add_button() {
+        document.getElementById('add_stock_btn').innerHTML = "加入自选股";
+        document.getElementById('add_stock_btn').style.backgroundColor = "#00CC99";
+        document.getElementById('add_stock_btn').setAttribute("statu","add");
+    }
+    function set_delete_button() {
+        document.getElementById('add_stock_btn').innerHTML = "删除自选股";
+        document.getElementById('add_stock_btn').style.backgroundColor = "#990000";
+        document.getElementById('add_stock_btn').setAttribute("statu","delete");
+    }
+    function handle_login_statu() {
+        var user = '<%=session.getAttribute("user")%>';
+        if(user==null){
+            alert("no user online");
+        }else{
+            alert("user: "+user);
+        }
+    }
 </script>
 <script type="text/javascript">
     function getParam(paras) {
@@ -202,11 +279,10 @@
                     }
                 },
                 tooltip: {
-                    xDateFormat:'%Y-%m-%d',
-                    //valueDecimals: 2,
-                    positioner: function () {
-                        return { x: 300, y: 10 };
-                    },
+                    pointFormat:'开盘：<b>{point.open}</b><br>最高：<b>{point.high}</b><br>最低：<b>{point.low}</b><br/>' +
+                    '收盘：<b>{point.close}</b><br>成交量：<b>{point.turnoverVol}</b>',
+                    valueDecimals: 2,
+
                 },
                 rangeSelector: {
                     selected: 0

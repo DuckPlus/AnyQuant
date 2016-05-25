@@ -1,15 +1,17 @@
 package DAO.impl;
 
 
+import DAO.StockDataDAO;
 import entity.StockdataEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import DAO.StockDataDAO;
 import util.MyDate;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -64,6 +66,66 @@ public class StockDataDAOImplTest {
 
     }
 
+
+    @Test
+    public void getStockData3() throws Exception {
+        String [] codes  = {"sh603306","sh600137","sh600858"};
+        MyDate date = new MyDate (2016,3,1);
+
+        ArrayList<StockdataEntity> list =
+                ( ArrayList<StockdataEntity>)
+                        dao.getStockData(Arrays.asList(codes),date);
+
+        assertEquals("sh603306",list.get(0).getCode());
+        assertEquals(date.DateToString(),list.get(0).getDate().toString());
+
+        System.out.println("size :"+list.size());
+        for(int i=0;i<list.size();i++){
+            System.out.print("code :"+list.get(i).getCode()+" ");
+            System.out.println("date :"+list.get(i).getDate().toString());
+        }
+
+
+
+    }
+
+    @Test
+    public void getStockData4() throws Exception {
+        String [] codes  = {"sh603306","sh600137","sh600858"};
+        MyDate start = new MyDate (2015,3,15);
+        MyDate end = new MyDate (2016,3,20);
+
+        ArrayList<StockdataEntity> list =
+                ( ArrayList<StockdataEntity>)
+                        dao.getStockData(Arrays.asList(codes),start,end);
+
+        assertEquals("sh603306",list.get(0).getCode());
+
+        System.out.println("size :"+list.size());
+        for(int i=0;i<list.size();i++){
+            System.out.print("code :"+list.get(i).getCode()+" ");
+            System.out.println("date :"+list.get(i).getDate().toString());
+        }
+    }
+
+
+    @Test
+    public void getStockDataByList()throws Exception{
+        String [] codes  = {"sh603306","sh600137","sh600858"};
+        ArrayList<StockdataEntity> entities =
+                (ArrayList<StockdataEntity>) dao.getStockData(Arrays.asList(codes));
+        if(entities!=null){
+            System.out.println("size: "+entities.size());
+            for(int i=0;i<entities.size();i++){
+                System.out.println("code: "+entities.get(i).getCode());
+                System.out.println("date: "+entities.get(i).getDate().toString());
+            }
+        }else{
+            System.out.println("null");
+        }
+    }
+
+
     @Test
     public void getAllStockData() throws Exception {
         ArrayList<StockdataEntity> list=
@@ -74,5 +136,9 @@ public class StockDataDAOImplTest {
             +" date: "+list.get(i).getDate().toString());
         }
     }
+
+
+
+
 
 }

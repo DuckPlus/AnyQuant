@@ -1,14 +1,24 @@
 package service;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.*;
 
 /**
  * @author Qiang
- * @date 16/5/12
+ * @date 16/5/23
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration
+        (locations = {"classpath:/META-INF/applicationContext.xml","classpath:/META-INF/infrastructure.xml"})
 public class StockServiceTest {
+
+    @Autowired
+    StockService service;
     @Test
     public void getDayOHLC_Data() throws Exception {
 
@@ -51,6 +61,11 @@ public class StockServiceTest {
 
     @Test
     public void getAllStocks() throws Exception {
+
+    }
+
+    @Test
+    public void getStockDescription() throws Exception {
 
     }
 

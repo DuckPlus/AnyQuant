@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" type="text/css" href="css/buttons.css">
     <%--tab上的小图标--%>
-    <link rel="shortcut icon" href="/image/shoot_cut.png">
+    <link rel="shortcut icon" href="/image/short_cut.png">
 
     <script src="dist/js/flat-ui.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/flat-ui.css">

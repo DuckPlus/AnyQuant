@@ -429,7 +429,10 @@
     border-style: solid;
     line-height: 36px; }
 .button-border:hover, .button-border-thin:hover, .button-border-thick:hover {
-    background-color: rgba(255, 255, 255, 0.9); }
+
+    background-color: rgba(255, 255, 255, 0.9);
+
+}
 .button-border:active, .button-border-thin:active, .button-border-thick:active, .button-border.active, .active.button-border-thin, .active.button-border-thick, .button-border.is-active, .is-active.button-border-thin, .is-active.button-border-thick {
     -webkit-box-shadow: none;
     box-shadow: none;
@@ -1490,4 +1493,5 @@
     font-size: 9.6px;
     height: 24px;
     line-height: 24px;
-    padding: 0 24px; }
+    padding: 0 0px;
+}

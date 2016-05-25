@@ -71,10 +71,12 @@
 }
 #add_stock_btn{
     float: right;
+    color: #FFFFFF;
     width: 100px;
     height: 80%;
     margin-top: 5px;
     margin-right: 5px;
+    background-color: #00CC99;
     /*margin-bottom: 10%;*/
 }
 /*#stock_info_name,#stock_info_listdate,#stock_info_totalshares,#stock_info_region,#stock_info_primeoperating{*/

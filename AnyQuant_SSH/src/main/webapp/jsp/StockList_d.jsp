@@ -9,7 +9,7 @@
 <head>
 
 
-    <link rel="shortcut icon" href="/image/shoot_cut.png">
+    <link rel="shortcut icon" href="/image/short_cut.png">
     <!--fonts-->
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:200' rel='stylesheet' type='text/css'>
     <!-- jQuery -->

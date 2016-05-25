@@ -19,7 +19,7 @@ public class BoardDistributionVO {
      * 股票权重
      */
     public double weight;
-
+    public double changeRate;
     public double high;
     public double low;
     public double open;

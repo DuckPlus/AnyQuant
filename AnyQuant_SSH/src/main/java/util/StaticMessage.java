@@ -1,4 +1,4 @@
-package util.enumration;
+package util;
 /**
 *
 * @author Qiang

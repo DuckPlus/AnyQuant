@@ -2,21 +2,17 @@
 <head>
     <title>板块详情</title>
 
-
-
-
-
     <meta charset="UTF-8">
     <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/buttons.css">
     <link rel="stylesheet" type="text/css" href="/css/flat-ui.css">
-<!--导航栏的css-->
+    <!--导航栏的css-->
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
 
     <link rel="stylesheet" type="text/css" href="/css/BoardDetail.css">
-    <link rel="shortcut icon" href="/image/shoot_cut.png">
+    <link rel="shortcut icon" href="/image/short_cut.png">
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/treemap.js"></script>
@@ -37,10 +33,10 @@
     <img src="/image/duck_icon.png" style="width: 35px;height: 35px;float: left;margin-top:7px;margin-left: 10px">
     <div style="font-size: 30px;float: left;color: #ffffff;margin-left: 10px;margin-top: 7px; ">DUCK</div>
     <ul id="nav_box">
-        <li class="nav_item"><a class="nav_c" href="/html/duck_main.html">股票列表</a></li>
+        <li class="nav_item"><a class="nav_c" href="duck_main.html">股票列表</a></li>
         <li class="nav_item"><a class="nav_c" href="BoardList.html">行业分布</a></li>
-        <li class="nav_item"><a class="nav_c" href="/html/duck_optional.html">自选股</a></li>
-        <li class="nav_item"><a class="nav_c" href="">回测系统</a></li>
+        <li class="nav_item"><a class="nav_c" href="duck_optional.html">自选股</a></li>
+        <li class="nav_item"><a class="nav_c" href="Analyse.html">回测系统</a></li>
     </ul>
 </div>
 <br><br>
@@ -51,8 +47,8 @@
 <span id=upNum class="red" style="position:relative;left:108px;"></span>
 <span style="position:relative;left:115px">/</span>
 <span id=downNum class="green" style="position:relative;left:120px;"></span>
-<input id="searchCode" type="text" class="form-control"  placeholder="输入板块代号或名称" style="position:relative;left:600px;">
-<button id="searchbtn" class="button button-raised button-primary button-pill" onclick="dosearch()"  style="position:relative;left:620px;">
+<input id="searchCode" type="text" class="form-control"  placeholder="输入板块名称" style="position:relative;left:500px;">
+<button id="searchbtn" class="button button-raised button-primary button-pill" onclick="dosearch()"  style="position:relative;left:520px;">
     查询
 </button>
 
@@ -63,7 +59,7 @@
 
 
 <script>
-    var myBoardName="钢铁";//大盘的名称
+    var myBoardName="汽车零部件";//板块的名称
     function dosearch() {
         alert(document.getElementById("searchCode").value);
     }
@@ -81,7 +77,7 @@
             if(myData[j].value==0) myData[j].value=100000;
         }
 
-            $('#treechart').highcharts({
+        $('#treechart').highcharts({
             plotOptions: {
                 series: {
                     cursor: 'pointer',
@@ -149,29 +145,53 @@
         document.getElementById('downNum').innerHTML="-"+downNum;
     }
     function initLine(data){
-        var myData=[],length=data.length,xaxis=[];
+        var boardData=[],benchData=[],length=data.length;
+
         for(var i=0;i<length;i++){
-            xaxis[i]=data[i].date;
+            var date=data[i].date;
+            boardData[i]=[
+                new Date(date.year,date.month-1,date.day+1).getTime(),
+                data[i].boardData
+            ];
+            benchData[i]=[
+                new Date(date.year,date.month-1,date.day+1).getTime(),
+                data[i].huShen300Data
+            ];
         }
-            $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data0) {
-                                // Create the chart
-                $('#linechart').highcharts('StockChart', {
-                    rangeSelector: {
-                        selected: 1
-                    },
-                    title: {
-                        text: 'AAPL Stock Price'
-                    },
-                    series: [{
-                        name: 'AAPL Stock Price',
-                        data: data0,
-                        type: 'spline',
-                        tooltip: {
-                            valueDecimals: 2
-                        }
-                    }]
-                });
-            });
+        $('#linechart').highcharts('StockChart', {
+            legend: {
+                enabled: true,
+                shadow: true
+            },
+            tooltip:{
+                xDateFormat:'%Y-%m-%d'
+            },
+            rangeSelector: {
+                selected: 1
+            },
+            title: {
+                text: '与大盘走势比较'
+            },
+            series: [
+                {
+                    name: myBoardName,
+                    data: boardData,
+                    type: 'spline',
+                    tooltip: {
+                        valueDecimals: 2
+                    }
+                },
+                {
+                    name: '沪深300',
+                    data: benchData,
+                    type: 'spline',
+                    tooltip: {
+                        valueDecimals: 2
+                    }
+                }
+            ]
+        });
+
 
     }
     $(document).ready(function () {
@@ -180,7 +200,8 @@
             initTree(data);
             initNumbers(data);
         });
-        $.getJSON('/Mock/getCompareData?boardName='+"", function (data) {
+        $.getJSON('/Mock/getCompareData?boardName='+myBoardName, function (data) {
+
             initLine(data);
         });
 
