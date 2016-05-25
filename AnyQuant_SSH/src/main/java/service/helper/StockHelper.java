@@ -66,6 +66,18 @@ public class StockHelper {
     }
 
 
+    public static double[] computeAccumulativeProfit(double[] datas){
+        double[] results = new double[datas.length - 1];
+        for (int i = 0; i < datas.length - 1; i++) {
+
+            results[i] = computeStockProfit(datas[i] , datas[i+1]) + (i > 0 ? results[i - 1] : 0) ;
+//            System.out.println("aaa"+datas[i] + datas[i + 1]);
+        }
+        return results;
+    }
+
+
+
     private static double computeStockProfit(double start ,  double end){
         if(start == 0 || end == 0){
             return 0.1; //TODO 由于数据不全,出现为0错误暂时使用0.1代替

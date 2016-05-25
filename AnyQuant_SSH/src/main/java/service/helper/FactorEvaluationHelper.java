@@ -2,10 +2,12 @@ package service.helper;
 
 import entity.FactorEntity;
 import entity.StockdataEntity;
+import org.jcp.xml.dsig.internal.MacOutputStream;
+import util.enumration.AnalysisFactor;
 import vo.EvaluationVO;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 /**
  * 分析股票因子
@@ -22,17 +24,35 @@ public class FactorEvaluationHelper {
      */
     public static EvaluationVO evaluateStockByFactor(List<StockdataEntity> entities , List<FactorEntity> factors){
         List<FactorEvaluationVO> vos = new ArrayList<>();
-//        vos.add(analyseMA5())
+        int len = Math.min(entities.size() , factors.size());
+        Map<AnalysisFactor , double[]> factorArrays = getFactorArray(factors);
+        System.out.println(entities.size() + " " + factors.size());
+        for (Map.Entry<AnalysisFactor , double[]> entry : factorArrays.entrySet()){
+            System.out.println(entry.getKey().name() + " " + Arrays.toString(entry.getValue()));
+        }
+
+
+
+        vos.add(analyseMA5(entities , factorArrays.get(AnalysisFactor.MA5)));
+
+
+
+
+
+
+
+        return makeEvaluation(vos);
+    }
+
+    private static EvaluationVO makeEvaluation(List<FactorEvaluationVO> vos) {
+
+
 
 
 
 
         return null;
     }
-
-
-
-
 
 
     /**
@@ -79,7 +99,7 @@ public class FactorEvaluationHelper {
         }
 
 
-        return new FactorEvaluationVO(analysis , mark);
+        return new FactorEvaluationVO(analysis , mark , 2,  2);
     }
 
     /**
@@ -111,12 +131,53 @@ public class FactorEvaluationHelper {
         int mark;
 
         List<String> analysis;
+        /**
+         * the num of positive factor
+         */
+        int positiveFactor;
+        /**
+         * the sum of negative factor
+         */
+        int negativeFactor;
 
-        FactorEvaluationVO(List<String> analysis, int mark) {
+        FactorEvaluationVO(List<String> analysis, int mark , int positiveFactor , int negativeFactor) {
             this.analysis = analysis;
             this.mark = mark;
+            this.positiveFactor = positiveFactor;
+            this.negativeFactor = negativeFactor;
         }
     }
+
+
+    private static Map<AnalysisFactor , double[]> getFactorArray(List<FactorEntity> entities){
+        Map<AnalysisFactor , double[]> factorArrays = new HashMap<>(20);
+
+
+
+
+        for (AnalysisFactor factor : AnalysisFactor.values()){
+            factorArrays.put(factor , new double[entities.size()]);
+        }
+        try {
+            Class<?> factorClass =  Class.forName("entity.FactorEntity");
+
+            for (int i = 0; i < entities.size(); i++) {
+                FactorEntity entity = entities.get(i);
+                for (AnalysisFactor factor : AnalysisFactor.values()){
+                    factorArrays.get(factor)[i] = (double) factorClass.getDeclaredMethod("get" + factor.name().substring(0 ,1) + factor.name().substring(1).toLowerCase()).invoke(entity);
+                }
+
+
+            }
+
+        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+
+        return factorArrays;
+    }
+
 
 }
 
