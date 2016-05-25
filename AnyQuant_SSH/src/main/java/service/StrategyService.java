@@ -1,8 +1,7 @@
 package service;
 
+import vo.ReportVO;
 import vo.StrategyArgumentVO;
-
-import javax.security.auth.callback.Callback;
 
 /**
  * 用户策略处理逻辑层接口
@@ -11,7 +10,7 @@ import javax.security.auth.callback.Callback;
  */
 public interface StrategyService {
 
-    void doAnalysis(StrategyArgumentVO vo , Callback handler);
+    ReportVO doAnalysis(StrategyArgumentVO vo);
 
 
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="MySQL - AnyQuant@115.159.157.163" uuid="a6d7eaa7-c395-48aa-9649-4b740c24f633">
+      <secret-storage>master_key</secret-storage>
+      <user-name>Client</user-name>
+    </data-source>
+  </component>
+</project>
