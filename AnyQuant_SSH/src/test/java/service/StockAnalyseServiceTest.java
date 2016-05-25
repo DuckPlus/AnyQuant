@@ -12,10 +12,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import util.DateCalculator;
 import util.enumration.AnalysisFactor;
 import util.enumration.FactorJudge;
+import vo.EvaluationVO;
 import vo.FactorWeightVO;
 import vo.Factor_VO;
 import vo.NewsVO;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -60,6 +62,25 @@ public class StockAnalyseServiceTest {
     @Test
     public void getEvaluation() throws Exception {
         //TODO
+
+        for (int i = 10; i < 50; i++) {
+            try {
+                EvaluationVO vo = stockAnalyseService.getEvaluation("sh6000" + i);
+                System.out.println(Arrays.toString(vo.analysis.toArray()));
+                System.out.println(vo.code);
+                System.out.println(vo.mark + " "  +vo.suggestion);
+            }catch (Exception e){
+            }
+
+
+        }
+
+
+
+//        EvaluationVO vo = stockAnalyseService.getEvaluation("sh600004");
+//        System.out.println(Arrays.toString(vo.analysis.toArray()));
+//        System.out.println(vo.code);
+//        System.out.println(vo.mark + " "  +vo.suggestion);
     }
 
     @Test

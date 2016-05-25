@@ -36,7 +36,10 @@ public interface BoardAnalysisService {
      */
     List<BoardDistributionVO> getBoardDistributionChartData(String boardName );
 
-
+    /**
+     * 获得所有板块的名字
+     * @return
+     */
     List<String> getAllBoradName();
 
 }

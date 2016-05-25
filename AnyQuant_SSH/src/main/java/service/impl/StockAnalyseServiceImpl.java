@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.StockAnalyseService;
+import service.helper.FactorEvaluationHelper;
 import service.helper.StockHelper;
 import util.DateCalculator;
 import util.MyDate;
@@ -21,10 +22,7 @@ import vo.FactorWeightVO;
 import vo.Factor_VO;
 import vo.NewsVO;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -57,7 +55,9 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
     @Override
     public EvaluationVO getEvaluation(String stockCode) {
         //TODO
-        return null;
+
+
+        return FactorEvaluationHelper.evaluateStockByFactor(stockDataDAO.getStockData(stockCode , DateCalculator.getAnotherDay( - 30) , DateCalculator.getToDay()) , factorDAO.getFactorByDate(stockCode , DateCalculator.getAnotherDay( - 30) , DateCalculator.getToDay()));
     }
 
     @Override

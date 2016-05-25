@@ -11,21 +11,25 @@ import java.util.List;
  */
 public class EvaluationVO {
 
-    private String code;
+    public String code;
     /**
      * 股票评分
      */
-    private int mark;
+    public int mark;
     /**
      * 评级
      */
-    private Suggestion suggestion;
-
+    public String suggestion;
     /**
      * 说明
      */
-    private List<String> analysis;
+    public List<String> analysis;
 
 
-
+    public EvaluationVO(List<String> analysis, String code, int mark, String suggestion) {
+        this.analysis = analysis;
+        this.code = code;
+        this.mark = mark;
+        this.suggestion = suggestion;
+    }
 }

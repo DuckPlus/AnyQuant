@@ -13,6 +13,8 @@ import java.util.Map;
  */
 public class StrategyArgumentVO {
 
+    public double money;
+
     public MyDate start;
     public MyDate end;
     /**

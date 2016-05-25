@@ -12,20 +12,66 @@ import java.sql.Date;
 public class FactorEntity {
     private String code;
     private Date date;
+
+    /**
+     *  5日平均换手率（Turnover Rate）。
+     *  属于成交量型因子
+     */
     private double vol5;
     private double vol10;
     private double vol60;
     private double vol120;
+    /**
+     * 5日移动均线（Moving average）。
+     * 取最近N天的前复权价格的均值。
+     * 属于均线型因子。
+     */
     private double ma5;
     private double ma10;
     private double ma60;
     private double ma120;
+    /**
+     * 市净率（Price-to-book ratio）。
+     * 计算方法：市净率=总市值/归属于母公司所有者权益合计。
+     * 属于估值与市值类因子。
+     */
     private double pb;
+
+    /**
+     * 市盈率（Price-earnings ratio）。
+     * 使用TTM算法。市盈率=总市值/归属于母公司所有者的净利润（TTM）。
+     * 属于估值与市值类因子。
+     */
     private double pe;
+    /**
+     * 市现率（Price-to-cash-flow ratio）。
+     * 计算方法：总市值/经营活动产生的现金流量净额（TTM）。
+     * 属于估值与市值类因子。
+     */
     private double pcf;
+    /**
+     * 市销率（Price-to-sales ratio）。
+     * 计算方法：市销率=总市值/营业总收入（TTM）。
+     * 属于估值与市值类因子。
+     */
     private double ps;
+    /**
+     * 心理线指标（Psychological line index）
+     * 是一定时期内投资者趋向买方或卖方的心理事实转的数值度量，
+     * 用于判断股价的未来趋势。
+     * 属于能量型因子。
+     */
     private double psy;
+    /**
+     * 分析师推荐评级（Recommended rating score by analyst）
+     * 属于分析师预期类因子。
+     */
     private double rec;
+    /**
+     * 分析师推荐评级变化（Changes of recommended rating score by analyst）
+     * 相比于60 个交易日前。
+     * 属于分析师预期类因子。
+     */
     private double darec;
 
     @Id
