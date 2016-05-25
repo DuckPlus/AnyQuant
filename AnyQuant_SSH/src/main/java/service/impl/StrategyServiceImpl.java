@@ -10,6 +10,7 @@ import vo.StrategyArgumentVO;
  */
 public class StrategyServiceImpl implements StrategyService {
 
+
     @Override
     public ReportVO doAnalysis(StrategyArgumentVO vo) {
 

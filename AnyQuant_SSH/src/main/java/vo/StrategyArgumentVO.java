@@ -14,7 +14,6 @@ import java.util.Map;
 public class StrategyArgumentVO {
 
     public double money;
-    public int type;
 
     public MyDate start;
     public MyDate end;
