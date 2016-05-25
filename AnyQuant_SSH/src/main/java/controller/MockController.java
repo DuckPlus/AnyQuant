@@ -23,7 +23,9 @@ public class MockController {
     public List<CompareBoardAndBenchVO> getBoardAndBenchChartData(String boardName){
        List<CompareBoardAndBenchVO> ans=new ArrayList<>(180);
         for(int i=0;i<30;i++){
+
             CompareBoardAndBenchVO vo= new CompareBoardAndBenchVO(new MyDate(2016,1,i),"钢铁",i*10,i*10+20);
+
             ans.add(vo);
         }
         return ans;
