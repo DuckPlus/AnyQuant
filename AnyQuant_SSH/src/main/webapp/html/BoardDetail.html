@@ -153,6 +153,7 @@
                 new Date(date.year,date.month-1,date.day+1).getTime(),
                 data[i].boardData
             ];
+
             benchData[i]=[
                 new Date(date.year,date.month-1,date.day+1).getTime(),
                 data[i].huShen300Data
@@ -200,7 +201,7 @@
             initTree(data);
             initNumbers(data);
         });
-        $.getJSON('/Mock/getCompareData?boardName='+myBoardName, function (data) {
+        $.getJSON('/Board/getCompareData?boardName='+myBoardName, function (data) {
 
             initLine(data);
         });

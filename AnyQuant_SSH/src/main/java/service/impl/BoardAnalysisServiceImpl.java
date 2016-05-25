@@ -108,6 +108,7 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
     }
 
     private double[] computeBoardData(String boardName , int offset){
+        System.out.println(boardName);
         List<String> stocks = stockDAO.getBoardRealatedStockCodes(boardName);
         System.out.println(stocks.size());
         List<StockdataEntity> dayData = new ArrayList<>(stocks.size());
