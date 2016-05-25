@@ -14,6 +14,7 @@ import util.enumration.AnalysisFactor;
 import util.enumration.FactorJudge;
 import vo.FactorWeightVO;
 import vo.Factor_VO;
+import vo.NewsVO;
 
 import java.util.List;
 
@@ -50,6 +51,10 @@ public class StockAnalyseServiceTest {
     @Test
     public void getRelatedNewsVO() throws Exception {
         //no need to test
+        List<NewsVO> vos = stockAnalyseService.getRelatedNewsVO("sh600004");
+        for (NewsVO vo : vos) {
+            System.out.println(vo.newsID + vo.summary);
+        }
     }
 
     @Test
@@ -60,6 +65,7 @@ public class StockAnalyseServiceTest {
     @Test
     public void getBoardRelatedStockMessage() throws Exception {
         List<StockdataEntity> entities = stockAnalyseService.getBoardRelatedStockMessage("sh600004");
+        System.out.println(entities.size());
         for (StockdataEntity entity : entities){
             System.out.println(entity.getName());
         }
@@ -68,6 +74,7 @@ public class StockAnalyseServiceTest {
     @Test
     public void getRegionRelatedStockMessage() throws Exception {
         List<StockdataEntity> entities = stockAnalyseService.getRegionRelatedStockMessage("sh600004");
+        System.out.println(entities.size());
         for (StockdataEntity entity : entities){
             System.out.println(entity.getName());
         }
@@ -75,7 +82,7 @@ public class StockAnalyseServiceTest {
 
     @Test
     public void getFactorVO() throws Exception {
-        List<Factor_VO> factor_vos = stockAnalyseService.getFactorVO("sh600004" , AnalysisFactor.MA5 , 30);
+        List<Factor_VO> factor_vos = stockAnalyseService.getFactorVO("sh600004" , AnalysisFactor.MA5 , 10);
         for(Factor_VO vo : factor_vos){
             System.out.println(vo.name + vo.date.DateToString() + vo.value);
         }
@@ -83,7 +90,7 @@ public class StockAnalyseServiceTest {
 
     @Test
     public void getMostUsefulFactors() throws Exception {
-        List<FactorWeightVO> factorWeightVOs = stockAnalyseService.getMostUsefulFactors("sh600004" , 30 , FactorJudge.IC );
+        List<FactorWeightVO> factorWeightVOs = stockAnalyseService.getMostUsefulFactors("sh600004" , 70 , FactorJudge.IC );
         for (FactorWeightVO vo : factorWeightVOs){
             System.out.println(vo.judgeFactorValue + " " + vo.name);
         }

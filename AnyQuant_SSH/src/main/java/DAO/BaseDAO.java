@@ -54,6 +54,23 @@ public interface BaseDAO {
 	public List<?> getAllList(String hql);
 
 	/**
+	 * each query need a para and return one object
+	 * bind many ops above together
+	 * @param hql
+	 * @param paras
+     * @return
+     */
+	public List<?> batchSingleQuery(String hql, List<String> paras );
+	/**
+	 * each query need a para and return a list of object
+	 * bind many ops above together
+	 * @param hql
+	 * @param paras
+	 * @return
+	 */
+	public List<?> batchListQuery(String hql, List<String> paras);
+
+	/**
 	 * count the entites of a table
 	 * @param c
 	 * @return
@@ -65,6 +82,7 @@ public interface BaseDAO {
 	 * @param bean
      */
 	public void save(Object bean);
+	public void saveList(List<?> beans);
 
 	/**
 	 * update a object

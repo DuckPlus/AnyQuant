@@ -20,6 +20,15 @@ import java.util.List;
 public class BoardController {
     @Autowired
     private BoardAnalysisService service;
+
+    /**
+     * 获得所有板块的名称
+     */
+    @RequestMapping("/getAllBoards")
+    public List<String> getAllBoardName(){
+        return service.getAllBoradName();
+    }
+
     /**
      * 获得沪深300和板块的对比数据,默认返回半年的数据
      */
@@ -44,6 +53,8 @@ public class BoardController {
     List<BoardDistributionVO> getBoardDistributionChartData(String boardName){
         return service.getBoardDistributionChartData(boardName);
     }
+
+
 
 
 
