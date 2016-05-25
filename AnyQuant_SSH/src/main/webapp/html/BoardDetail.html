@@ -58,6 +58,11 @@
 
 
 <script>
+    function getCode() {
+        var result = window.location.search;
+        result = result.split('?')[1].split('=')[1];
+        return result;
+    }
     var myRed="#EE2C2C",myGreen="#00CD66",myGrey="#8B7E66"
     var myBoardName="汽车零部件";//板块的名称
     function dosearch() {
@@ -74,15 +79,6 @@
 
             });
         }
-
-
-       /* myData[1]=({
-            parent: 'A',
-            name: 'aaa',
-            value:50,
-            color: "#EC2500"
-        });*/
-
         for(var j=5;j<length+5;j++){
             var par=j%5+'';
             if(data[j-5].changeRate>0){
@@ -243,6 +239,8 @@
 
     }
     $(document).ready(function () {
+        myBoardName=getCode();
+        alert(myBoardName);
         document.getElementById('stockName').innerHTML=myBoardName;
         $.getJSON('/Board/getBoardDistribution?boardName='+myBoardName, function (data) {//TODO 这里要加上板块名字
             initNumbers(data);
