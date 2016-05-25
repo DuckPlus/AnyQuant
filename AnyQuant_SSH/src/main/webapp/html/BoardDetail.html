@@ -52,13 +52,13 @@
     查询
 </button>
 
-<div id="linechart" class="linechart"></div>
+<div id="linechart" class="linechart"><h2 class="wait"><br>加载需要时间请耐心等待哦~  ^o^</h2></div>
 <div id="treechart" class="treechart"></div>
 
 
 
-
 <script>
+    var myRed="#FF0000",myGreen="#00EE76"
     var myBoardName="汽车零部件";//板块的名称
     function dosearch() {
         alert(document.getElementById("searchCode").value);
@@ -71,10 +71,13 @@
                 name: data[j].stockName,
                 price:((data[j].open+data[j].close)/2).toFixed(2),
                 value:data[j].turnoverVol,
-                rate:data[j].turnoverRate,
+                rate:data[j].changeRate,
                 volume:(data[j].turnoverVol/10000).toFixed(2)
             });
             if(myData[j].value==0) myData[j].value=100000;
+            if(myData[j].rate<0){
+
+            }
         }
 
         $('#treechart').highcharts({
@@ -91,7 +94,7 @@
                 }
             },
             tooltip: {
-                pointFormat:'<b>{point.name}  </b>{point.code}<br>市值：<b>{point.price}</b><br/>换手率：<b>{point.rate}</b>' +
+                pointFormat:'<b>{point.name}  </b>{point.code}<br>市值：<b>{point.price}</b><br/>涨跌幅：<b>{point.rate}</b>' +
                 '<br/>成交量：<b>{point.volume}万</b>',
                 //valueDecimals: 2
             },
@@ -133,12 +136,12 @@
 
 
         if(rate>=0){
-            document.getElementById('rate').className="red";
+            document.getElementById('rate').style.color=myRed;
             document.getElementById('rate').innerHTML="+"+rate;
         }
         else {
             document.getElementById('rate').innerHTML=rate;
-            document.getElementById('rate').className="green";
+            document.getElementById('rate').style.color=myGreen;
         }
 
         document.getElementById('upNum').innerHTML="+"+upNum;
@@ -168,7 +171,7 @@
                 xDateFormat:'%Y-%m-%d'
             },
             rangeSelector: {
-                selected: 1
+                selected: 0
             },
             title: {
                 text: '与大盘走势比较'
@@ -197,7 +200,7 @@
     }
     $(document).ready(function () {
         document.getElementById('stockName').innerHTML=myBoardName;
-        $.getJSON('/Board/getBoardDistribution?boardName='+"", function (data) {//TODO 这里要加上板块名字
+        $.getJSON('/Board/getBoardDistribution?boardName='+myBoardName, function (data) {//TODO 这里要加上板块名字
             initTree(data);
             initNumbers(data);
         });
