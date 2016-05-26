@@ -86,3 +86,18 @@
     margin-top: 20px;
     float: left;
 }
+#score_chart{
+    border-bottom: dotted 1px;
+}
+#comment_analysis{
+    height: 100px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+#comment_suggestion{
+    height: 50px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
