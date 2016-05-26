@@ -6,6 +6,7 @@ import DAO.StockDAO;
 import DAO.StockDataDAO;
 import entity.BenchmarkdataEntity;
 
+import entity.StockEntity;
 import entity.StockdataEntity;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -13,15 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.BoardAnalysisService;
 import service.helper.StockHelper;
+import sun.text.normalizer.SymbolTable;
 import util.Configure;
 import util.DateCalculator;
 import vo.BoardDistributionVO;
 import vo.CompareBoardAndBenchVO;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Qiang
@@ -35,6 +34,10 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
     private StockDataDAO stockDataDAO;
     @Autowired
     private StockDAO stockDAO;
+
+    private List<String> boards;
+    private Map<String , List<String>> boardDistribution;
+    private Map<String , List<StockEntity>> boardDistributionEntity;
     @Override
     public List<CompareBoardAndBenchVO> getBoardAndBenchChartData(String boardName, int offset) {
         return getBoardAndBenchChartData(boardName , offset , Configure.HUSHEN300);
@@ -84,7 +87,7 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
     @Override
     public List<BoardDistributionVO> getBoardDistributionChartData(String boardName) {
-        List<String> stocks = stockDAO.getBoardRealatedStockCodes(boardName);
+        List<String> stocks = getBoardDistribution().get(boardName);
 
         List<BoardDistributionVO> vos = new ArrayList<>(stocks.size());
         double sum = 0;
@@ -107,33 +110,51 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
     @Override
     public List<String> getAllBoradName() {
-        return stockDAO.getAllBoardName();
+        if(boards == null){
+            boards = stockDAO.getAllBoardName();
+        }
+
+        return boards;
     }
 
     @Override
     public JSONArray getAllBoardAndStockData() {
         JSONArray array = new JSONArray();
-        List<String> allBoard = getAllBoradName();
-        List<String> stocks;
-        List<StockdataEntity> stockdataEntities;
-        for (String boardName : allBoard){
+        List<String> boards = getAllBoradName();
+
+        Map<String , List<String>> boardDistribution = getBoardDistribution();
+        List<StockdataEntity> stockData = stockDataDAO.getAllStockData();
+        List<StockdataEntity> boardEntities = new ArrayList<>(50);
+        for (String boardName : boards){
             JSONObject board = new JSONObject();
             board.put("boardName" , boardName);
 
+            List<String> stocks = boardDistribution.get(boardName);
 
-            stocks = stockDAO.getBoardRealatedStockCodes(boardName);
-            System.out.println(boardName);
-            stockdataEntities = stockDataDAO.getStockData(stocks);
+            for (StockdataEntity entity  : stockData){
 
-            double[] changeRate = new double[stockdataEntities.size()];
-            double[] turnOverVol = new double[stockdataEntities.size()];
+                if (stocks.contains(entity.getCode())){
+
+                    boardEntities.add(entity);
+
+                }
+//                stockData.removeAll(boardEntities);
+
+
+            }
+//            stocks = stockDAO.getBoardRealatedStockCodes(boardName);
+//            System.out.println(boardName);
+//            stockdataEntities = stockDataDAO.getStockData(stocks);
+//
+            double[] changeRate = new double[boardEntities.size()];
+            double[] turnOverVol = new double[boardEntities.size()];
             double sum = 0;
             JSONArray boardStocks = new JSONArray();
             for (int i = 0; i < changeRate.length; i++) {
-                StockdataEntity entity = stockdataEntities.get(i);
+                StockdataEntity entity = boardEntities.get(i);
                 changeRate[i] = entity.getChangeRate();
                 sum += turnOverVol[i] = entity.getTurnoverVol();
-                boardStocks.add(new BoardAndStockDataVO(entity));
+                boardStocks.add(makeBoardAndStockVO(entity));
             }
             for (int i = 0; i < changeRate.length; i++) {
                 turnOverVol[i] = turnOverVol[i]/sum;
@@ -142,7 +163,7 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
             board.put("stocks" , boardStocks );
 
-
+            boardEntities.clear();
 
 
             array.add(board);
@@ -217,20 +238,44 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
     }
 
+    private static JSONObject makeBoardAndStockVO(StockdataEntity entity){
+        JSONObject object = new JSONObject();
+        object.put("code" , entity.getCode());
+        object.put("name" , entity.getName());
+        object.put("changeRate" , entity.getChangeRate());
+        object.put("turnoverVol" , entity.getTurnoverVol());
+        return object;
+    }
 
-    private class BoardAndStockDataVO {
-        String code;
-        String name;
-        double changeRate;
-        long turnover;
 
-        BoardAndStockDataVO(StockdataEntity entity){
-            this.code = entity.getCode();
-            this.name = entity.getName();
-            this.changeRate = entity.getChangeRate();
-            this.turnover = entity.getTurnoverVol();
-        }
+
+
+    /**
+     * 获得所有板块和他们对应的股票代号
+     */
+    private Map<String , List<String> > getBoardDistribution(){
+
+       if(boardDistribution == null){
+           boardDistribution = new HashMap<>(500);
+
+           List<String> boards = stockDAO.getAllBoardName();
+           List<StockEntity> stocks = stockDAO.getAllStocks();
+
+           for (String board : boards){
+               boardDistribution.put(board , new ArrayList<>(50));
+           }
+
+           for (StockEntity entity : stocks){
+               boardDistribution.get(entity.getBoard()).add(entity.getCode());
+           }
+
+       }
+
+
+        return boardDistribution;
 
 
     }
+
+
 }
