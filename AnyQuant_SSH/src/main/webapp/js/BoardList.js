@@ -2,6 +2,8 @@
  * Created by dsn on 2016/5/26.
  */
 var globalData=[];
+var boards=[];
+var startDraw=0;
 $.getJSON('/Board/getAllBoards', function (data) {
     globalData=data;
     initBubble(data);
@@ -16,7 +18,9 @@ function ifExist(index,num){
     return 0;
 }
 function  initBubble(data) {
-    var index=[],myData=[],length=globalData.length,i=0;
+    var index=[],length=globalData.length,i=0;
+
+    
     while(i<9){
         var newNum=Math.floor(Math.random()*(length+1));
         if(ifExist(index,newNum)==0){
@@ -24,25 +28,26 @@ function  initBubble(data) {
             i++;
         }
     }
+    //把板块的泡泡放进去
     for(var i=0;i<index.length;i++){
         if(i<index.length/3){
-            myData[i]=({
-                x: 5*i,
+            boards[i]=({
+                x: 5*i+Math.random(),
                 y: 50+Math.random()*10,
                 z: 50,//大小
                 name: globalData[index[i]]
             });
         }else if(i<2*index.length/3){
-                myData[i]=({
-                    x: (i-index.length/3),
+            boards[i]=({
+                    x: (i-index.length/3)*3+Math.random(),
                     y: 100+Math.random()*10,
                     z: 50,//大小
                     name: globalData[index[i]]
                 });
             
         }else{
-                myData[i]=({
-                    x: (i-2*index.length/3),
+            boards[i]=({
+                    x: (i-2*index.length/3)*3+Math.random(),
                     y: 150+Math.random()*10,
                     z: 50,//大小
                     name: globalData[index[i]]
@@ -50,7 +55,37 @@ function  initBubble(data) {
         }
         
     }
+    var l=boards.length,j=boards.length;
+    startDraw=1;
+    draw();
+   /* for(var i=0;i<l;i++){
+         alert(boards[i].name);
+        $.getJSON('/Board/getBoardDistribution'+boards[i].name, function (data) {
+            alert("success");
+           for(var m=0;m<data.length;m++){
+               alert("hello!!");
+               alert(data[m].stockName);
+               boards[j]=({
+                   x: 700,
+                   y: 50,
+                   z: -20,//大小
+                   name: data[m].stockName
+               });
+               j++;
+           }
+            
+            if(i==l-1){
+                startDraw=1;
+            }
+            draw();
+        });
+    }*/
     
+}
+
+
+function draw(){
+if(startDraw==1){
     $('#bubble').highcharts({
         chart: {
             type: 'bubble',
@@ -72,19 +107,15 @@ function  initBubble(data) {
         legend: {
             enabled: false
         },
-
         title: {
             text: ''
         },
-
         xAxis: {
             visible:false
         },
-
         yAxis: {
             visible:false
         },
-
         plotOptions: {
             series: {
                 //color:"#FFFFFF",
@@ -92,8 +123,12 @@ function  initBubble(data) {
                 cursor:'pointer',
                 events: {
                     click: function (data) {
-                        var boardName=data.point.name;
-                        location.href="BoardDetail.html"+"?name="+boardName;
+                        var name=data.point.name;
+                        if(data.point.z>0){
+                            location.href="BoardDetail.html"+"?name="+name;
+                        }else{
+                            location.href="duck_stockDetail.html"+"?name="+name;
+                        }
 
                     }
                 },
@@ -103,10 +138,10 @@ function  initBubble(data) {
                 }
             }
         },
-
         series: [{
-            data: myData
+            data: boards
         }]
-
     });
+}
+ 
 }

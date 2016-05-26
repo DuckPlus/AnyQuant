@@ -3,18 +3,27 @@
  */
 
     function getCode() {
-        var result = window.location.search;
-        result = result.split('?')[1].split('=')[1];
+        var loc = window.location.search;
+        var result = loc.split('?')[1].split('&')[0].split("=")[1];
+        if(loc.indexOf("parent")!=-1){
+            parentName= loc.split('?')[1].split('&')[1].split('=')[1];
+        }
+        
         return result;
     }
 var myRed="#EE2C2C",myGreen="#00CD66",myGrey="#8B7E66"
-var myBoardName="汽车零部件";//板块的名称
+var myBoardName="";//板块的名称
+var parentName="汽车零部件";//搜索前的页面的板块名
 function dosearch() {
-    alert(document.getElementById("searchCode").value);
+    var boardName=document.getElementById("searchCode").value;
+    location.href="BoardDetail.html"+"?name="+boardName+"&parent="+myBoardName;
 }
 function initTree(data){
     var myData=[],length=data.length;
-
+    if(length==0){
+        alert("对不起不存在该板块");
+        location.href="BoardDetail.html"+"?name="+parentName;
+    }
     if(length>=10){
         for(var i=0;i<5;i++){
             var tt=i+'';
@@ -64,41 +73,26 @@ function initTree(data){
 
         }
     }else{
-        for(var j=0;j<length;j++){
+        for(var j=0;j<length;j++){           
+            myData[j]= ({
+                code: data[j].code,
+                name: data[j].stockName,
+                price:((data[j].open+data[j].close)/2).toFixed(2),
+                value:data[j].turnoverVol,
+                rate:data[j].changeRate,
+                volume:(data[j].turnoverVol/10000).toFixed(2),
+                color:myGreen
+            });
+            if(myData[j].value==0) myData[j].value=100000;
             if(data[j].changeRate>0){
-                myData[j]= ({
-                    code: data[j].code,
-                    name: data[j].stockName,
-                    price:((data[j].open+data[j].close)/2).toFixed(2),
-                    value:data[j].turnoverVol,
-                    rate:data[j].changeRate,
-                    volume:(data[j].turnoverVol/10000).toFixed(2),
-                    color:myRed
-                });
+                myData[j].color=myRed;
             }else if(data[j].changeRate<0){
-                myData[j]= ({
-                    code: data[j].code,
-                    name: data[j].stockName,
-                    price:((data[j].open+data[j].close)/2).toFixed(2),
-                    value:data[j].turnoverVol,
-                    rate:data[j].changeRate,
-                    volume:(data[j].turnoverVol/10000).toFixed(2),
-                    color:myGreen
-                });
+                myData[j].color=myGreen;
             }else{
-                myData[j]= ({
-                    parent: par,
-                    code: data[j-5].code,
-                    name: data[j-5].stockName,
-                    price:((data[j-5].open+data[j-5].close)/2).toFixed(2),
-                    value:data[j-5].turnoverVol,
-                    rate:data[j-5].changeRate,
-                    volume:(data[j-5].turnoverVol/10000).toFixed(2),
-                    color:myGrey
-                });
+                myData[j].color=myGrey;
             }
 
-            if(myData[j].value==0) myData[j].value=100000;
+            
 
         }
     }
@@ -178,7 +172,11 @@ function initNumbers(data){
 }
 function initLine(data){
     var boardData=[],benchData=[],length=data.length;
-
+    
+    if(length==0){
+        alert("对不起不存在该板块");
+        location.href="BoardDetail.html"+"?name="+parentName;
+    }
     for(var i=0;i<length;i++){
         var date=data[i].date;
         boardData[i]=[
@@ -199,7 +197,7 @@ function initLine(data){
             xDateFormat:'%Y-%m-%d'
         },
         rangeSelector: {
-            selected: 1
+            selected: 5
         },
         title: {
             text: '与大盘走势比较'
