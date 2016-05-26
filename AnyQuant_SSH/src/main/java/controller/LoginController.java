@@ -1,16 +1,17 @@
 package controller;
 
 import entity.UserEntity;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import service.CacheService;
 import service.UserService;
 import util.Configure;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,16 +19,13 @@ import java.util.List;
  * @date 16/5/4
  */
 @Controller
-@RequestMapping("/")
-public class LoginController {
+public class LoginController implements InitializingBean{
     @Autowired
     private UserService userService;
+    @Autowired
+    private CacheService cacheService;
 
 
-    @RequestMapping("")
-    public String index(){
-        return "/index";
-    }
 
     @RequestMapping("/json")
     @ResponseBody
@@ -41,6 +39,8 @@ public class LoginController {
     @RequestMapping(value="/login",method= RequestMethod.POST)
     public String login(HttpServletRequest request, String username, String password , String addNewUser){
         UserEntity userEntity =  new UserEntity();
+
+
 
         userEntity.setName(username);
         userEntity.setPassword(password);
@@ -63,6 +63,13 @@ public class LoginController {
     }
 
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println("preparing cache");
+        new Thread(() -> {
+            cacheService.prepareCache();
+            System.out.println("Reading cache finish = = =");
+        }).start();
 
-
+    }
 }

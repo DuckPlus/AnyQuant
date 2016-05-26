@@ -13,6 +13,7 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.BoardAnalysisService;
+import service.helper.StableDataCacheHelper;
 import service.helper.StockHelper;
 import sun.text.normalizer.SymbolTable;
 import util.Configure;
@@ -34,10 +35,11 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
     private StockDataDAO stockDataDAO;
     @Autowired
     private StockDAO stockDAO;
+    @Autowired
+    private StableDataCacheHelper cacheHelper;
 
-    private List<String> boards;
-    private Map<String , List<String>> boardDistribution;
-    private Map<String , List<StockEntity>> boardDistributionEntity;
+
+
     @Override
     public List<CompareBoardAndBenchVO> getBoardAndBenchChartData(String boardName, int offset) {
         return getBoardAndBenchChartData(boardName , offset , Configure.HUSHEN300);
@@ -87,7 +89,7 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
     @Override
     public List<BoardDistributionVO> getBoardDistributionChartData(String boardName) {
-        List<String> stocks = getBoardDistribution().get(boardName);
+        List<String> stocks = cacheHelper.getBoardDistribution().get(boardName);
 
         List<BoardDistributionVO> vos = new ArrayList<>(stocks.size());
         double sum = 0;
@@ -110,11 +112,7 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
     @Override
     public List<String> getAllBoradName() {
-        if(boards == null){
-            boards = stockDAO.getAllBoardName();
-        }
-
-        return boards;
+        return cacheHelper.getAllBoradName();
     }
 
     @Override
@@ -122,7 +120,7 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
         JSONArray array = new JSONArray();
         List<String> boards = getAllBoradName();
 
-        Map<String , List<String>> boardDistribution = getBoardDistribution();
+        Map<String , List<String>> boardDistribution = cacheHelper.getBoardDistribution();
         List<StockdataEntity> stockData = stockDataDAO.getAllStockData();
         List<StockdataEntity> boardEntities = new ArrayList<>(50);
         for (String boardName : boards){
@@ -250,32 +248,7 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
 
 
-    /**
-     * 获得所有板块和他们对应的股票代号
-     */
-    private Map<String , List<String> > getBoardDistribution(){
 
-       if(boardDistribution == null){
-           boardDistribution = new HashMap<>(500);
-
-           List<String> boards = stockDAO.getAllBoardName();
-           List<StockEntity> stocks = stockDAO.getAllStocks();
-
-           for (String board : boards){
-               boardDistribution.put(board , new ArrayList<>(50));
-           }
-
-           for (StockEntity entity : stocks){
-               boardDistribution.get(entity.getBoard()).add(entity.getCode());
-           }
-
-       }
-
-
-        return boardDistribution;
-
-
-    }
 
 
 }
