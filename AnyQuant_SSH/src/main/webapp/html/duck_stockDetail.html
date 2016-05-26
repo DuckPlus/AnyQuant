@@ -11,6 +11,10 @@
     <!-- highcharts -->
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
     <script src="/js/echarts.min.js"></script>
+    <!--for evaluation chart-->
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
     <link rel="stylesheet" href="/css/duck_stock_detail.css" type="text/css">
     <!-- <h1 class="title1">hello this is a test page!</h1> -->
@@ -20,8 +24,8 @@
 <body>
 <!-- navigator begin -->
 <div id="nav_bar">
-    <img src="/image/duck_icon.png" style="width: 35px;height: 35px;float: left;margin-top:7px;margin-left: 10px">
-    <div style="font-size: 30px;float: left;color: #ffffff;margin-left: 10px;margin-top: 7px; ">DUCK</div>
+    <img src="/image/duck_icon_pink.png" style="width: 73px;height: 35px;float: left;margin-top:7px;margin-left: 10px">
+    <!--<div style="font-size: 30px;float: left;color: #ffffff;margin-left: 10px;margin-top: 7px; ">DUCK</div>-->
     <ul id="nav_box">
         <li class="nav_item"><a class="nav_c" href="duck_main.html">股票列表</a></li>
         <li class="nav_item"><a class="nav_c" href="BoardList.html">行业分布</a></li>
@@ -89,7 +93,9 @@
                 SYNTHETICAL SCORE
             </div>
             <div class="duck_content">
-                <div id="score_chart" style="width: 100%;height: 400px"></div>
+                <div id="score_chart" style="height: 300px;"></div>
+                <div id="comment_suggestion"></div>
+                <div id="comment_analysis"></div>
             </div>
         </div>
 
@@ -416,49 +422,100 @@
     });
 </script>
 <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('score_chart'));
-    option = {
-        // tooltip: {
-        //     trigger: 'item',
-        //     formatter: "{a} <br/>{b}: {c} ({d}%)"
-        // },
-        legend: {
-            orient: 'vertical',
-            x: 'left',
-            data:['总分','综合评分']
-        },
-        series: [
-            {
-                name:'评分',
-                type:'pie',
-                radius: ['40%', '80%'],
-                avoidLabelOverlap: true,
-                label: {
-                    normal: {
-                        show: false,
-                        position: 'center'
-                    },
-                    emphasis: {
-                        show: true,
-                        textStyle: {
-                            fontSize: '30',
-                            fontWeight: 'bold'
-                        }
-                    }
+    $.ajax({
+        type:'post',
+        url:'/StockDetail/evaluation',
+        data:{code:getCode()},
+        success:function (data) {
+            init_score_chart(data.mark);
+            document.getElementById('comment_suggestion').textContent=data.suggestion;
+            document.getElementById('comment_analysis').textContent = data.analysis;
+        }
+    });
+    function init_score_chart(grade) {
+        var data = [];
+        data.push(grade);
+
+        var gaugeOptions = {
+
+            chart: {
+                type: 'solidgauge'
+            },
+
+            title: null,
+
+            pane: {
+                center: ['50%', '85%'],
+                size: '140%',
+                startAngle: -90,
+                endAngle: 90,
+                background: {
+
+                    innerRadius: '60%',
+                    outerRadius: '100%',
+                    shape: 'arc'
+                }
+            },
+
+            tooltip: {
+                enabled: false
+            },
+
+            // the value axis
+            yAxis: {
+                stops: [
+                    [0.1, '#55BF3B'], // green
+                    [0.5, '#DDDF0D'], // yellow
+                    [0.9, '#DF5353'] // red
+                ],
+                lineWidth: 0,
+                minorTickInterval: null,
+                tickPixelInterval: 400,
+                tickWidth: 0,
+                title: {
+                    y: -70
                 },
-                labelLine: {
-                    normal: {
-                        show: false
+                labels: {
+                    y: 16
+                }
+            },
+
+            plotOptions: {
+                solidgauge: {
+                    dataLabels: {
+                        y: 5,
+                        borderWidth: 0,
+                        useHTML: true
                     }
-                },
-                data:[
-                    {value:160, name:'总分'},
-                    {value:60,name:'综合评分'}
-                ]
+                }
             }
-        ]
-    };
-    myChart.setOption(option);
+        };
+
+        $('#score_chart').highcharts(Highcharts.merge(gaugeOptions, {
+            yAxis: {
+                min: 0,
+                max: 100,
+                title: {
+                    text: 'Evaluation'
+                }
+            },
+
+            credits: {
+                enabled: false
+            },
+
+            series: [{
+                name: 'mark',
+                data: data,
+                dataLabels: {
+                    format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                    ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                    '<span style="font-size:12px;color:silver">mark</span></div>'
+                },
+            }]
+
+        }));
+    }
 </script>
 <!-- radar chart -->
 <script type="text/javascript">

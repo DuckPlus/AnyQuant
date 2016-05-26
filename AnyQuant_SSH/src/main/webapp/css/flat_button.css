@@ -1,0 +1,41 @@
+/***************************/
+/******扁平化主题输入框1******/
+/***************************/
+.flat_input_text{
+    color: white;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    background-color: transparent;
+    outline: none;
+}
+.flat_input_text:hover{
+
+}
+
+.flat_input_text:focus{
+    border: solid 1px #00a1cb;
+}
+/***************************/
+/******扁平化主题按钮1********/
+/***************************/
+.flat_button_future{
+    color: white;
+    width: 100px;
+    height: 30px;
+    background-color: transparent;
+    border: 1px solid;
+    outline: none;
+    text-align: center;
+}
+.flat_button_future:hover{
+    color: black;
+    background-color: white;
+    border: white;
+    cursor: hand;
+}
+.flat_button_future:focus{
+
+}
+.flat_button_future_rounded{
+    border-radius: 5px;
+}
