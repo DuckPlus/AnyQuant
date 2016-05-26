@@ -39,6 +39,10 @@ body{
 #password_with_icon{
     margin-top:10px;
 }
+#login_btn{
+    margin-top:  10px;
+    margin-left: 35px;
+}
 .home_title{
     color: #FFFFFF;
     width: 700px;
@@ -72,7 +76,4 @@ body{
 }
 #start_btn_text:hover{
     cursor: hand;
-}
-#login_getUser{
-    margin-top: 20px;
 }

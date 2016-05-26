@@ -22,10 +22,10 @@
     </h1>
     <%--<a href="index" >asdsad</a>--%>
     <%--<img id="login_back" src="/image/frontPage.jpg">--%>
-    <form action="/login" method="post" autocomplete="off">
-         <br><br><br><br>
+
         <fieldset id="loginModule" style="margin-left: auto;margin-right: auto;">
             <%--<label >Username:</label>--%>
+            <form action="/login" method="post" autocomplete="off">
             <div id="account_with_icon">
                 <img src="/image/login_white.png" alt="ACC" id="account_icon">
                 <input id="username" name="username" type="text" placeholder="username" class="flat_input_text" required>
@@ -38,17 +38,18 @@
 
             <%--<label>添加账户</label>--%>
             <%--<input id="addNewUser" name="addNewUser" type="checkbox" class="checkbox"><br>--%>
-            <div id="login_getUser">
-                <input type="submit" value="登录" class="flat_button_future flat_button_future_rounded">
-                <button class="flat_button_future flat_button_future_rounded" location.href="/json">所有账户(test)</button>
-            </div>
-            <%--<a href="/json">所有账户</a>--%>
+            <%--<div id="login_getUser">--%>
+                <input type="submit" value="登录" class="flat_button_future flat_button_future_rounded" id="login_btn">
+
+            <%--</div>--%>
+            <a href="/json">所有账户</a>
+
+
+            <script src="../js/login.js"></script>
+            </form>
+                <%--<button class="flat_button_future flat_button_future_rounded" location.href="/json">所有账户(test)</button>--%>
         </fieldset>
 
-        <script src="../js/login.js"></script>
-
-
-    </form>
     <!--<button class="button button-raised button-royal" onclick="location.href='/jsp/StockList_d.jsp'">股票列表</button>-->
     <%--<div id="start_button_div">--%>
         <%--<button class="flat_button_future" id="start_btn" onclick="location.href='/html/duck_main.html'" style="text-align: center">GET START</button>--%>
