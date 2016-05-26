@@ -1,10 +1,13 @@
 package service;
 
+import entity.StockdataEntity;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import vo.BoardDistributionVO;
 import vo.CompareBoardAndBenchVO;
-import vo.StrategyArgumentVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 行业分析接口
@@ -42,4 +45,5 @@ public interface BoardAnalysisService {
      */
     List<String> getAllBoradName();
 
+    JSONArray getAllBoardAndStockData();
 }

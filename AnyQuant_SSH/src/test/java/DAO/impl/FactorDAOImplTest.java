@@ -63,7 +63,9 @@ public class FactorDAOImplTest {
             System.out.println("code :"+list.get(0).getCode());
             System.out.print("date :"+list.get(0).getDate().toString());
         }
-
     }
+
+
+
 
 }
