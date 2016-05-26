@@ -12,8 +12,11 @@ import util.MyDate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 
 /**
  * Created by 67534 on 2016/5/8.
@@ -139,6 +142,32 @@ public class StockDataDAOImplTest {
 
 
 
+    @Test
+    public void getStockByPE() throws Exception{
+        MyDate date = MyDate.getDateFromString("2015-04-03");
+        ArrayList<String> list= (ArrayList<String>) dao.getStockCodeByPE(date,20);
+        if(list==null){
+            fail("null");
+        }else{
+            System.out.println(list);
+        }
+    }
+
+    @Test
+    public void getTradeDates() throws Exception{
+        MyDate start = MyDate.getDateFromString("2015-01-01");
+        MyDate end = MyDate.getDateFromString("2016-01-01");
+        List<MyDate> dates = dao.getTradeDates(start,end);
+        if(dates!=null){
+            System.out.println("size: "+dates.size());
+            for(MyDate date:dates){
+                System.out.println(date.DateToString());
+            }
+
+        }else{
+            fail("null");
+        }
+    }
 
 
 }

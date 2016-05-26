@@ -65,4 +65,16 @@ public interface StockDataDAO {
      * @return
      */
     public List<StockdataEntity> getAllStockData();
+
+
+    /**
+     * 返回某天pe>=?的股票列表
+     * @param date
+     * @return
+     */
+    public List<String> getStockCodeByPE(MyDate date,double target);
+
+
+    public List<MyDate> getTradeDates(MyDate start, MyDate end);
+
 }

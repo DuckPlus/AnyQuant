@@ -10,6 +10,7 @@ import util.DateCalculator;
 import util.MyDate;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -86,7 +87,6 @@ public class StockDataDAOImpl implements StockDataDAO {
     }
 
 
-
     private StockdataEntityPK getStockKey(String stockCode, MyDate date){
         Date sqlDate = DateCalculator.MyDateToSQLDate(date);
         StockdataEntityPK stockDataKey = new StockdataEntityPK();
@@ -94,4 +94,32 @@ public class StockDataDAOImpl implements StockDataDAO {
         stockDataKey.setDate(sqlDate);
         return stockDataKey;
     }
+
+
+
+
+    @Override
+    public List<String> getStockCodeByPE(MyDate date , double target) {
+        String hql = "select code from "+tableName+
+                " where pe >= "+target+" and date = '"+date.DateToString()+"'";
+        return (List<String>) baseDAO.getAllList(hql);
+    }
+
+    @Override
+    public List<MyDate> getTradeDates(MyDate start, MyDate end) {
+        String hql = "select distinct date from "+tableName+
+                " where date between '"+start.DateToString()+"' and '"+end.DateToString()+"'"+
+                " order by date asc";
+        List<Date> dates = (List<Date>) baseDAO.getAllList(hql);
+        List<MyDate> myDates = new ArrayList<>();
+        for(Date date:dates){
+            if(date!=null){
+                MyDate myDate = DateCalculator.SQLDateToMyDate(date);
+                myDates.add(myDate);
+            }
+        }
+        return myDates;
+    }
+
+
 }

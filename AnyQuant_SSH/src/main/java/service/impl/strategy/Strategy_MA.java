@@ -16,7 +16,7 @@ public class Strategy_MA extends BaseStrategy{
 
     public Strategy_MA(double capital, double taxRate, String baseCode ,
                        MyDate start , MyDate end , String stockCode){
-        super(capital,taxRate,baseCode,start,end);
+        super.initBaseStrategy(capital,taxRate,baseCode,start,end);
         this.stockCode=stockCode;
     }
 

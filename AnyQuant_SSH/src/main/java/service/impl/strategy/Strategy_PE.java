@@ -1,5 +1,6 @@
 package service.impl.strategy;
 
+import org.springframework.stereotype.Service;
 import util.MyDate;
 import vo.ReportVO;
 
@@ -9,7 +10,9 @@ import java.util.List;
 /**
  * Created by 67534 on 2016/5/25.
  */
+@Service
 public class Strategy_PE extends BaseStrategy {
+
     /**
      * 调仓间隔
      */
@@ -19,21 +22,37 @@ public class Strategy_PE extends BaseStrategy {
      */
     public List<String> stocks;
 
-    public Strategy_PE(){
+    public Strategy_PE()
+    {
         super();
     }
-    public Strategy_PE(double capital, double taxRate, String baseCode ,
+
+    public void initStrategy_PE(double capital, double taxRate, String baseCode ,
                        MyDate start , MyDate end , int interval ){
-        super(capital,taxRate,baseCode,start,end);
+        super.initBaseStrategy(capital,taxRate,baseCode,start,end);
         this.interval=interval;
         this.stocks = new ArrayList<>();
     }
 
 
-
-
+    /**
+     * 初始任意买入10只PE大于20的股票
+     */
     @Override
-    public void init() {
+    public void init()
+    {
+
+
+        List<String> codes = stockDataDAO.getStockCodeByPE(start,20);
+
+        int i=0;
+        for(String code:codes){
+            stocks.add(code);
+            i++;
+            if(i==10){
+                break;
+            }
+        }
 
 
     }
@@ -41,10 +60,14 @@ public class Strategy_PE extends BaseStrategy {
     @Override
     public void handleData() {
 
+
+
     }
 
     @Override
     public ReportVO analyse() {
+        init();
+
         return null;
     }
 }
