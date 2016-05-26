@@ -79,6 +79,10 @@
     background-color: #00CC99;
     /*margin-bottom: 10%;*/
 }
-/*#stock_info_name,#stock_info_listdate,#stock_info_totalshares,#stock_info_region,#stock_info_primeoperating{*/
-    /*font-family:"Microsoft YaHei",微软雅黑,"Microsoft JhengHei",华文细黑,STHeiti,MingLiu;*/
-/*}*/
+#news_window{
+    /*background-color: #5dade2;*/
+    height: 400px;
+    width: 100%;
+    margin-top: 20px;
+    float: left;
+}

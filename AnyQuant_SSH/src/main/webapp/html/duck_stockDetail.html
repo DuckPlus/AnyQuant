@@ -103,6 +103,17 @@
         </div>
     </div>
 
+    <div class="duck_window" id="news_window">
+        <div class="duck_title">
+            NEWS
+        </div>
+        <div class="duck_content" style="overflow-y: scroll;height: 370px" id="news_content">
+
+
+        </div>
+
+    </div>
+
 </div>
 
 </body>
@@ -111,7 +122,7 @@
     var myRed="#FF0000";
     var myGreen="#00CD66";
     function init_info() {
-        handle_login_statu();
+//        handle_login_statu();
         var code = getCode();
         var url = "/StockDetail/description/?code=" + getCode();
 
@@ -203,12 +214,12 @@
         document.getElementById('add_stock_btn').setAttribute("statu","delete");
     }
     function handle_login_statu() {
-        var user = '<%=session.getAttribute("user")%>';
-        if(user==null){
-            alert("no user online");
-        }else{
-            alert("user: "+user);
-        }
+//        var user = '<%=session.getAttribute("user")%>';
+//        if(user==null){
+//            alert("no user online");
+//        }else{
+//            alert("user: "+user);
+//        }
     }
 </script>
 <script type="text/javascript">
@@ -279,6 +290,7 @@
                     }
                 },
                 tooltip: {
+
                     xDateFormat:'%Y-%m-%d'
 
                 },
@@ -484,6 +496,47 @@
         }]
     };
     myChart.setOption(option);
+</script>
+<script>
+    $.ajax({
+       type:'post',
+       url :'/StockDetail/news',
+       data:{code:getCode()},
+       success:function (data) {
+           var len = data.length;
+//           alert(data[0].summary);
+           for(var i=0;i<len;i++){
+                load_news(data[i].title,data[i].publishDate,data[i].summary);
+           }
+       }
+    });
+    function load_news(title,date,summary){
+
+        var board = document.getElementById('news_content');
+        var item_bar = document.createElement("div");
+        // item_bar.style.backgroundColor="#666666";
+        // item_bar.style.height="70px";
+        // item_bar.style.border-bottom="1px solid #000000"
+        // item_bar.style.fontSize="10px";
+        item_bar.style.width = "90%";
+        item_bar.style.marginRight = "auto";
+        item_bar.style.marginLeft = "auto";
+        item_bar.style.marginTop = "20px";
+//        item_bar.style.backgroundColor="#CCCCCC";
+        var title_div = document.createElement("div");
+        title_div.appendChild(document.createTextNode("标题: "+title));
+        title_div.style.fontSize="25px";
+        var date_div = document.createElement("div");
+        date_div.appendChild(document.createTextNode("日期: "+date));
+        var summary_div = document.createElement("div");
+        summary_div.appendChild(document.createTextNode("内容："+summary));
+
+        item_bar.appendChild(title_div);
+        item_bar.appendChild(date_div);
+        item_bar.appendChild(summary_div);
+        board.appendChild(item_bar);
+    }
+
 </script>
 
 
