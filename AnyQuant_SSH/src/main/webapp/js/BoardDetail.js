@@ -5,7 +5,6 @@
     function getCode() {
         var result = window.location.search;
         result = result.split('?')[1].split('=')[1];
-    alert("in function getcode:"+result);
         return result;
     }
 var myRed="#EE2C2C",myGreen="#00CD66",myGrey="#8B7E66"
@@ -226,8 +225,7 @@ function initLine(data){
 
 }
 $(document).ready(function () {
-    myBoardName=getCode();
-    alert(myBoardName);
+    myBoardName=decodeURI(getCode());
     document.getElementById('stockName').innerHTML=myBoardName;
     $.getJSON('/Board/getBoardDistribution?boardName='+myBoardName, function (data) {
         initNumbers(data);
