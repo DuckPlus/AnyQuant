@@ -18,13 +18,7 @@ public class ReflectHelper {
         try {
             field = ob.getClass().getDeclaredField(attrName.toLowerCase());
             return getValueByProperty(ob, field.getName());
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IntrospectionException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (NoSuchFieldException | IntrospectionException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
 
@@ -38,8 +32,7 @@ public class ReflectHelper {
         // get property by the argument propertyName.
         PropertyDescriptor pd = new PropertyDescriptor(propertyName, p.getClass());
         Method method = pd.getReadMethod();
-        Object attr = method.invoke(p);
-        return attr;
+        return method.invoke(p);
     }
 
 

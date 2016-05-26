@@ -7,6 +7,8 @@ import DAO.StockDataDAO;
 import entity.BenchmarkdataEntity;
 
 import entity.StockdataEntity;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.BoardAnalysisService;
@@ -19,6 +21,7 @@ import vo.CompareBoardAndBenchVO;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Qiang
@@ -107,6 +110,51 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
         return stockDAO.getAllBoardName();
     }
 
+    @Override
+    public JSONArray getAllBoardAndStockData() {
+        JSONArray array = new JSONArray();
+        List<String> allBoard = getAllBoradName();
+        List<String> stocks;
+        List<StockdataEntity> stockdataEntities;
+        for (String boardName : allBoard){
+            JSONObject board = new JSONObject();
+            board.put("boardName" , boardName);
+
+
+            stocks = stockDAO.getBoardRealatedStockCodes(boardName);
+            System.out.println(boardName);
+            stockdataEntities = stockDataDAO.getStockData(stocks);
+
+            double[] changeRate = new double[stockdataEntities.size()];
+            double[] turnOverVol = new double[stockdataEntities.size()];
+            double sum = 0;
+            JSONArray boardStocks = new JSONArray();
+            for (int i = 0; i < changeRate.length; i++) {
+                StockdataEntity entity = stockdataEntities.get(i);
+                changeRate[i] = entity.getChangeRate();
+                sum += turnOverVol[i] = entity.getTurnoverVol();
+                boardStocks.add(new BoardAndStockDataVO(entity));
+            }
+            for (int i = 0; i < changeRate.length; i++) {
+                turnOverVol[i] = turnOverVol[i]/sum;
+            }
+            board.put("boardChangeRate" ,StockHelper.computeAvgWithPower(changeRate , turnOverVol));
+
+            board.put("stocks" , boardStocks );
+
+
+
+
+            array.add(board);
+        }
+
+
+
+
+
+        return array;
+    }
+
     private double[] computeBoardData(String boardName , int offset){
 //        System.out.println(boardName);
         List<String> stocks = stockDAO.getBoardRealatedStockCodes(boardName);
@@ -165,6 +213,23 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
         vo.changeRate = entity.getChangeRate();
 
         return vo;
+
+
+    }
+
+
+    private class BoardAndStockDataVO {
+        String code;
+        String name;
+        double changeRate;
+        long turnover;
+
+        BoardAndStockDataVO(StockdataEntity entity){
+            this.code = entity.getCode();
+            this.name = entity.getName();
+            this.changeRate = entity.getChangeRate();
+            this.turnover = entity.getTurnoverVol();
+        }
 
 
     }

@@ -2,6 +2,7 @@ package service.helper;
 
 import entity.FactorEntity;
 import entity.StockdataEntity;
+import util.ReflectHelper;
 import util.enumration.AnalysisFactor;
 import util.enumration.Suggestion;
 import vo.EvaluationVO;
@@ -119,24 +120,20 @@ public class FactorEvaluationHelper {
         return new FactorEvaluationVO(analysis , computeMark(positiveMark , negativeMark , 3 , 3) );
     }
 
-    private static int computeMark(int positiveMark, int negativeMark, int positiveNum, int negativeNum) {
-        int base = 50;
-
-        return (int) (base + positiveMark*(50.0/positiveNum) - negativeMark*(50.0/negativeNum));
+    private static FactorEvaluationVO analyseMA10(List<StockdataEntity> data , double[] ma10){
 
 
 
+
+        return null;
     }
 
-    /**
-     *
-     * @param lastTenDay
-     * @param ma10
-     * @return
-     */
-    private static FactorEvaluationVO analyseMA10(List<StockdataEntity> lastTenDay , double[] ma10){
-        return null;//TODO
-    }
+
+
+
+
+
+
 
     /**
      * 分析均线间穿来穿去的关系
@@ -148,6 +145,8 @@ public class FactorEvaluationHelper {
     }
 
     private static FactorEvaluationVO analyseVol5(List<StockdataEntity> lastFiveDay , double[] vol5){
+
+
         return null;//TODO
     }
 
@@ -170,32 +169,30 @@ public class FactorEvaluationHelper {
         Map<AnalysisFactor , double[]> factorArrays = new HashMap<>(20);
 
 
-
-
         for (AnalysisFactor factor : AnalysisFactor.values()){
             factorArrays.put(factor , new double[entities.size()]);
         }
-        try {
-            Class<?> factorClass =  Class.forName("entity.FactorEntity");
 
             for (int i = 0; i < entities.size(); i++) {
                 FactorEntity entity = entities.get(i);
                 for (AnalysisFactor factor : AnalysisFactor.values()){
-                    factorArrays.get(factor)[i] = (double) factorClass.getDeclaredMethod("get" + factor.name().substring(0 ,1) + factor.name().substring(1).toLowerCase()).invoke(entity);
+                    factorArrays.get(factor)[i] = (double) ReflectHelper.getValueByAttrName(entity , factor.name().toLowerCase());
                 }
 
 
             }
 
-        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-
-
         return factorArrays;
     }
 
+    private static int computeMark(int positiveMark, int negativeMark, int positiveNum, int negativeNum) {
+        int base = 50;
 
+        return (int) (base + positiveMark*(50.0/positiveNum) - negativeMark*(50.0/negativeNum));
+
+
+
+    }
 }
 
 

@@ -85,4 +85,19 @@ public class StockHelper {
 
         return (end-start)/start;
     }
+
+
+    public static double computeAvgWithPower(double[] value , double[] power ) {
+        if(value.length != power .length){
+            return 0;
+        }
+
+        double avg = 0;
+        for (int i = 0; i < value.length; i++) {
+            avg+= value[i]*power[i];
+        }
+
+
+        return avg;
+    }
 }
