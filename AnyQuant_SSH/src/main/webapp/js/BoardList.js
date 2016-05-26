@@ -34,14 +34,14 @@ function  initBubble(data) {
             boards[i]=({
                 x: 5*i+Math.random(),
                 y: 50+Math.random()*10,
-                z: 50,//大小
+                z: 70,//大小
                 name: globalData[index[i]]
             });
         }else if(i<2*index.length/3){
             boards[i]=({
                     x: (i-index.length/3)*3+Math.random(),
                     y: 100+Math.random()*10,
-                    z: 50,//大小
+                    z: 70,//大小
                     name: globalData[index[i]]
                 });
             
@@ -49,7 +49,7 @@ function  initBubble(data) {
             boards[i]=({
                     x: (i-2*index.length/3)*3+Math.random(),
                     y: 150+Math.random()*10,
-                    z: 50,//大小
+                    z: 70,//大小
                     name: globalData[index[i]]
                 });
         }

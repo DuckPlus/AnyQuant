@@ -236,6 +236,7 @@ function initLine(data){
 }
 $(document).ready(function () {
     myBoardName=decodeURI(getCode());
+    document.title="Duck "+myBoardName;
     document.getElementById('stockName').innerHTML=myBoardName;
     $.getJSON('/Board/getBoardDistribution?boardName='+myBoardName, function (data) {
         initNumbers(data);
