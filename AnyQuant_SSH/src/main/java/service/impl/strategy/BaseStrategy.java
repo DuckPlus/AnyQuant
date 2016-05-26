@@ -1,18 +1,26 @@
 package service.impl.strategy;
 
+import DAO.StockDataDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import util.MyDate;
+import vo.CumRtnVO;
 import vo.ReportVO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 67534 on 2016/5/25.
  */
 public abstract class BaseStrategy  {
 
+    @Autowired
+    StockDataDAO stockDataDAO;
+
     /**
-     * 资金
+     * 起始资金
      */
     public double capital;
-
     /**
      * 交易费率
      */
@@ -33,9 +41,49 @@ public abstract class BaseStrategy  {
      */
     public MyDate end;
 
-    public BaseStrategy(){}
 
-    public BaseStrategy(double capital,double taxRate,String baseCode ,
+
+
+    /**
+     * 卖出股票累积收益
+     */
+    public double income;
+    /**
+     * 买入股票的累积花费
+     */
+    public double expense;
+    /**
+     * 累积纯利润
+     */
+    public double profit;
+    /**
+     * 累积收益率(回测)
+     */
+    public double cumRtnRate;
+    /**
+     * 基线的累积收益率
+     */
+    public double baseRtnRate;
+
+
+    /**
+     * 每次调仓时的累积收益率
+     */
+    public List<CumRtnVO> cumRtnVOList;
+    /**
+     * 存储start--end间的交易日
+     */
+
+
+    public MyDate[] validDates;
+
+
+
+    public BaseStrategy(){
+
+    }
+
+    public void initBaseStrategy(double capital,double taxRate,String baseCode ,
      MyDate start , MyDate end){
 
         this.capital=capital;
@@ -44,8 +92,26 @@ public abstract class BaseStrategy  {
         this.start=start;
         this.end=end;
 
+        this.income=0;
+        this.expense=0;
+        this.profit=0;
+        this.cumRtnRate=0;
+        this.baseRtnRate=0;
+        this.cumRtnVOList=new ArrayList<>();
+
+        this.computeValidDates();
+
     }
 
+
+    public void computeValidDates(){
+
+        List<MyDate> tempDates=stockDataDAO.getTradeDates(start,end);
+        this.validDates = tempDates.toArray(new MyDate[tempDates.size()]);
+        this.start=validDates[0];
+        this.end=validDates[validDates.length-1];
+        tempDates=null;
+    }
     /**
      * 初始化算法
      */

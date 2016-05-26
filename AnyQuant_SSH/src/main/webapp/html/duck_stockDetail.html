@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>股票详情</title>
     <link rel="stylesheet" type="text/css" href="/css/window.css">
     <!--button-->
     <link rel="stylesheet" type="text/css" href="/css/buttons.css">
@@ -121,6 +121,7 @@
 <script>
     var myRed="#FF0000";
     var myGreen="#00CD66";
+    var myName;
     function init_info() {
 //        handle_login_statu();
         var code = getCode();
@@ -128,6 +129,8 @@
 
         $.getJSON(url, function (data) {
             document.getElementById('title_name').innerHTML = data.name;
+            myName=data.name;
+            document.title="Duck "+myName;
             document.getElementById('title_code').innerHTML = data.code;
 //            document.getElementById('title_open').innerHTML = data.open;
 
