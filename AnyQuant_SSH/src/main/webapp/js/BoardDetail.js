@@ -151,27 +151,30 @@ function initTree(data){
 }
 function initNumbers(data){
     var stockNum=data.length;
-    var upNum=0,downNum=0;
+    var upNum=0,downNum=0,stopNum=0,rate=0;
     for(var i=0;i<stockNum;i++){
-        if(data[i].close>=data[i].open){//涨
+        rate+=data[i].changeRate*data[i].weight;
+        if(data[i].changeRate>=0){//涨
             upNum++;
+        }else if(data[i].changeRate==0){
+            stopNum++;
         }
     }
-    downNum=stockNum-upNum;
-    var rate=0.5;//TODO 板块的涨跌幅怎么算
-
-
+    downNum=stockNum-stopNum-upNum;
+    rate*=100;
+    rate=Math.floor(rate);
     if(rate>=0){
         document.getElementById('rate').style.color=myRed;
-        document.getElementById('rate').innerHTML="+"+rate;
+        document.getElementById('rate').innerHTML="+"+rate+"%";
     }
     else {
-        document.getElementById('rate').innerHTML=rate;
+        document.getElementById('rate').innerHTML=rate+"%";
         document.getElementById('rate').style.color=myGreen;
     }
 
     document.getElementById('upNum').innerHTML="+"+upNum;
     document.getElementById('downNum').innerHTML="-"+downNum;
+    document.getElementById('stopNum').innerHTML=stopNum;
 }
 function initLine(data){
     var boardData=[],benchData=[],length=data.length;
@@ -182,7 +185,6 @@ function initLine(data){
             new Date(date.year,date.month-1,date.day+1).getTime(),
             data[i].boardData
         ];
-
         benchData[i]=[
             new Date(date.year,date.month-1,date.day+1).getTime(),
             data[i].huShen300Data
@@ -197,7 +199,7 @@ function initLine(data){
             xDateFormat:'%Y-%m-%d'
         },
         rangeSelector: {
-            selected: 0
+            selected: 1
         },
         title: {
             text: '与大盘走势比较'

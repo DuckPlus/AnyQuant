@@ -17,7 +17,7 @@ function ifExist(index,num){
 }
 function  initBubble(data) {
     var index=[],myData=[],length=globalData.length,i=0;
-    while(i<10){
+    while(i<9){
         var newNum=Math.floor(Math.random()*(length+1));
         if(ifExist(index,newNum)==0){
             index[i]=newNum;
@@ -25,14 +25,32 @@ function  initBubble(data) {
         }
     }
     for(var i=0;i<index.length;i++){
-        myData[i]=({
-            x: Math.random()*100,
-            y: Math.random()*100,
-            z: 25,
-            name: globalData[index[i]]
-        });
+        if(i<index.length/3){
+            myData[i]=({
+                x: 5*i,
+                y: 50+Math.random()*10,
+                z: 50,//大小
+                name: globalData[index[i]]
+            });
+        }else if(i<2*index.length/3){
+                myData[i]=({
+                    x: (i-index.length/3),
+                    y: 100+Math.random()*10,
+                    z: 50,//大小
+                    name: globalData[index[i]]
+                });
+            
+        }else{
+                myData[i]=({
+                    x: (i-2*index.length/3),
+                    y: 150+Math.random()*10,
+                    z: 50,//大小
+                    name: globalData[index[i]]
+                });
+        }
+        
     }
-
+    
     $('#bubble').highcharts({
         chart: {
             type: 'bubble',
@@ -69,11 +87,12 @@ function  initBubble(data) {
 
         plotOptions: {
             series: {
+                //color:"#FFFFFF",
+                negativeColor:"",
                 cursor:'pointer',
                 events: {
                     click: function (data) {
                         var boardName=data.point.name;
-                        alert("BoardList:"+boardName);
                         location.href="BoardDetail.html"+"?name="+boardName;
 
                     }
