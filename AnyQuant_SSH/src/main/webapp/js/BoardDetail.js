@@ -120,8 +120,8 @@ function initTree(data){
         },
         tooltip: {
             pointFormat:'<b>{point.name}  </b>{point.code}<br>市值：<b>{point.price}</b><br/>涨跌幅：<b>{point.rate}</b>' +
-            '<br/>成交量：<b>{point.volume}万</b><br>parent:' +
-            //'<b>{point.parent}</b>' +
+            '<br/>成交量：<b>{point.volume}万</b>' +
+            //'<br>parent:' +<b>{point.parent}</b>' +
             '',
             //valueDecimals: 2
         },
