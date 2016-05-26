@@ -154,7 +154,7 @@ function initNumbers(data){
     var upNum=0,downNum=0,stopNum=0,rate=0;
     for(var i=0;i<stockNum;i++){
         rate+=data[i].changeRate*data[i].weight;
-        if(data[i].changeRate>=0){//涨
+        if(data[i].changeRate>0){//涨
             upNum++;
         }else if(data[i].changeRate==0){
             stopNum++;
@@ -203,6 +203,16 @@ function initLine(data){
         },
         title: {
             text: '与大盘走势比较'
+        },
+        yAxis:{
+            labels: {
+                align: 'left',
+                x: 0,
+                y: -2
+            },
+          title:{
+              text:"收益率"
+          }
         },
         series: [
             {
