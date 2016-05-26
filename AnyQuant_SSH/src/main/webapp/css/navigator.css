@@ -17,6 +17,7 @@ body{
     text-align: center;
     color: #E6E6E6;
     border-bottom: 0px solid #FFFF00;
+    font-family: "Microsoft Sans Serif";
 }
 .nav_c:hover{
     /*background-color: #0080FF;*/
