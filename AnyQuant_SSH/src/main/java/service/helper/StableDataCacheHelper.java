@@ -31,7 +31,8 @@ public class StableDataCacheHelper implements CacheService{
     private Map<String , List<String>> boardDistribution;
     private Map<String , List<StockEntity>> boardDistributionEntity;
     private List<String> boards;
-    private List<StockdataEntity> todayAllStockData;
+//    private List<StockdataEntity> todayAllStockData;
+    private Map<String , StockdataEntity> todayAllStockData;
 
     private boolean hasPrepared = false;
     @Override
@@ -48,13 +49,31 @@ public class StableDataCacheHelper implements CacheService{
     }
 
     public List<StockdataEntity> getTodayAllStockData() {
-        if (todayAllStockData == null || todayAllStockData.get(0).getDate().before(new Date())) {
-            todayAllStockData = stockDataDAO.getAllStockData();
+        return new ArrayList<>(getTodayAllStockMap().values());
+    }
+
+    public List<StockdataEntity> getTodaySomeStocks(List<String> codes){
+        List<StockdataEntity> entities = new ArrayList<>(codes.size());
+        Map<String , StockdataEntity> entitiesMap = getTodayAllStockMap();
+        for (String code : codes){
+            entities.add(entitiesMap.get(code));
         }
+        return entities;
 
+    }
 
+    private Map<String , StockdataEntity> getTodayAllStockMap(){
+        if (todayAllStockData == null || todayAllStockData.get("sh600004").getDate().before(new Date())) {
+            List<StockdataEntity> entities = stockDataDAO.getAllStockData();
+            todayAllStockData = new HashMap<>(entities.size()*2);
+            for (StockdataEntity entity : entities){
+                todayAllStockData.put(entity.getCode() , entity);
+            }
+        }
         return todayAllStockData;
     }
+
+
     public List<StockEntity> getAllStocks() {
         if(stockEntities == null){
             List<StockEntity> entities = stockDAO.getAllStocks();
