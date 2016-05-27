@@ -1,19 +1,20 @@
 /**
  * Created by dsn on 2016/5/26.
  */
-
+var myRed="#EE2C2C",myGreen="#00CD66",myGrey="#8B7E66";
+var myBoardName="";//板块的名称
+var parentName="汽车零部件";//搜索前的页面的板块名
     function getCode() {
         var loc = window.location.search;
         var result = loc.split('?')[1].split('&')[0].split("=")[1];
         if(loc.indexOf("parent")!=-1){
-            parentName= loc.split('?')[1].split('&')[1].split('=')[1];
+            parentName=decodeURI(loc.split('?')[1].split('&')[1].split('=')[1]);
         }
         
         return result;
     }
-var myRed="#EE2C2C",myGreen="#00CD66",myGrey="#8B7E66"
-var myBoardName="";//板块的名称
-var parentName="汽车零部件";//搜索前的页面的板块名
+
+
 function dosearch() {
     var boardName=document.getElementById("searchCode").value;
     location.href="BoardDetail.html"+"?name="+boardName+"&parent="+myBoardName;
@@ -22,7 +23,8 @@ function initTree(data){
     var myData=[],length=data.length;
     if(length==0){
         alert("对不起不存在该板块");
-        location.href="BoardDetail.html"+"?name="+parentName;
+        if(parentName=="list") location.href="BoardList.html";
+        else  location.href="BoardDetail.html"+"?name="+parentName;
     }
     if(length>=10){
         for(var i=0;i<5;i++){
@@ -172,10 +174,10 @@ function initNumbers(data){
 }
 function initLine(data){
     var boardData=[],benchData=[],length=data.length;
-    
     if(length==0){
         alert("对不起不存在该板块");
-        location.href="BoardDetail.html"+"?name="+parentName;
+        if(parentName=="list") location.href="BoardList.html";
+        else  location.href="BoardDetail.html"+"?name="+parentName;
     }
     for(var i=0;i<length;i++){
         var date=data[i].date;

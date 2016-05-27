@@ -1,13 +1,21 @@
 /**
  * Created by dsn on 2016/5/26.
  */
-var globalData=[];
 var boards=[];
-var startDraw=0;
-$.getJSON('/Board/getAllBoards', function (data) {
+var globalData;
+var ifshowDataLabel=true;
+var myRed="#EE2C2C",myGreen="#00CD66",myGrey="#8B7E66"
+$.getJSON('/Board/getAllBoardsAndStockData', function (data) {
     globalData=data;
-    initBubble(data);
+    initBubble();
+
 });
+
+function dosearch() {
+    
+    var boardName=document.getElementById("searchCode").value;
+    location.href="BoardDetail.html"+"?name="+boardName+"&parent=list";
+}
 //防止重复
 function ifExist(index,num){
     for(var i=0;i<index.length;i++){
@@ -17,10 +25,8 @@ function ifExist(index,num){
     }
     return 0;
 }
-function  initBubble(data) {
-    var index=[],length=globalData.length,i=0;
-
-    
+function  initBubble() {
+    var index=[],length=globalData.length,m=0,i=0;
     while(i<9){
         var newNum=Math.floor(Math.random()*(length+1));
         if(ifExist(index,newNum)==0){
@@ -30,75 +36,80 @@ function  initBubble(data) {
     }
     //把板块的泡泡放进去
     for(var i=0;i<index.length;i++){
-        if(i<index.length/3){
-            boards[i]=({
-                x: 5*i+Math.random(),
-                y: 50+Math.random()*10,
-                z: 70,//大小
-                name: globalData[index[i]]
-            });
-        }else if(i<2*index.length/3){
-            boards[i]=({
-                    x: (i-index.length/3)*3+Math.random(),
-                    y: 100+Math.random()*10,
-                    z: 70,//大小
-                    name: globalData[index[i]]
-                });
-            
-        }else{
-            boards[i]=({
-                    x: (i-2*index.length/3)*3+Math.random(),
-                    y: 150+Math.random()*10,
-                    z: 70,//大小
-                    name: globalData[index[i]]
-                });
-        }
-        
-    }
-    var l=boards.length,j=boards.length;
-    startDraw=1;
-    draw();
-   /* for(var i=0;i<l;i++){
-         alert(boards[i].name);
-        $.getJSON('/Board/getBoardDistribution'+boards[i].name, function (data) {
-            alert("success");
-           for(var m=0;m<data.length;m++){
-               alert("hello!!");
-               alert(data[m].stockName);
-               boards[j]=({
-                   x: 700,
-                   y: 50,
-                   z: -20,//大小
-                   name: data[m].stockName
-               });
-               j++;
-           }
-            
-            if(i==l-1){
-                startDraw=1;
-            }
-            draw();
+        boards[m]=({
+            x: 5*i+Math.random(),
+            y: 50+Math.random()*10,
+            z: 50,//大小
+            ifStock:0,
+            name: globalData[index[i]].boardName,
+            rate:(globalData[index[i]].boardChangeRate).toFixed(4),
+            color:myRed
         });
-    }*/
-    
+        if(boards[m].rate<0) boards[m].color=myGreen;
+        if(i<index.length/3){
+            boards[m].x= 5*i+Math.random();
+            boards[m].y=Math.random()*10;
+        }else if(i<2*index.length/3){
+            boards[m].x= (i-index.length/3)*3+Math.random();
+            boards[m].y=70+Math.random()*10;
+        }else{
+            boards[m].x= (i-2*index.length/3)*3+Math.random();
+            boards[m].y=150+Math.random()*10;
+        }
+        m++;
+        var parBoard=m-1;//记录这一圈股票所属板块的board序号
+        for(var j=0;j<4&&j<globalData[index[i]].stocks.length;j++){
+            //ifshowDataLabel=false;
+            boards[m]=({
+                x: boards[parBoard].x-1-Math.random(),
+                y: boards[parBoard].y,
+                z: 30,
+                ifStock:1,
+                name: globalData[index[i]].stocks[j].name,
+                code:globalData[index[i]].stocks[j].code,
+                rate:(globalData[index[i]].stocks[j].changeRate).toFixed(6),
+                color:myRed,
+                board:boards[parBoard].name
+            });
+            if(j==1){
+                boards[m].x=boards[parBoard].x+1+Math.random();
+            }else if(j==2){
+                boards[m].x=boards[parBoard].x;
+                boards[m].y=boards[parBoard].y-40-Math.random();
+            }else if(j==3){
+                boards[m].x=boards[parBoard].x;
+                boards[m].y=boards[parBoard].y+40+Math.random();
+            }
+            if(boards[m].rate<0) boards[m].color=myGreen;
+            else if(boards[m].rate=0) boards[m].color=myGrey;            
+            m++;
+            
+        }
+
+    }
+
+    draw();
+
 }
 
 
 function draw(){
-if(startDraw==1){
     $('#bubble').highcharts({
         chart: {
             type: 'bubble',
             plotBorderWidth: 0,
-            zoomType: 'xy'
+           // zoomType: 'xy'
         },
         tooltip: {
             useHTML: true,
             headerFormat: '<table>',
-            pointFormat: '<tr><th colspan="2"><h3>{point.name}</h3></th></tr>'
-            /*+'<tr><th>Fat intake:</th><td>{point.x}g</td></tr>' +
-             '<tr><th>Sugar intake:</th><td>{point.y}g</td></tr>' +
-             '<tr><th>Obesity (adults):</th><td>{point.z}%</td></tr>'*/
+            pointFormat: 
+            '<tr><th colspan="2"><h3>{point.name}</h3></th></tr>'+
+            '<tr><th>板块涨跌：</th><td>{point.rate}</td></tr>'+
+            '<tr><th>x:</th><td>{point.x}</td></tr>' +
+            '<tr><th>y:</th><td>{point.y}</td></tr>' +
+             '<tr><th>z:</th><td>{point.z}</td></tr>'+
+            '<tr><th>所属板块:</th><td>{point.board}</td></tr>'
             ,
 
             footerFormat: '</table>',
@@ -124,16 +135,17 @@ if(startDraw==1){
                 events: {
                     click: function (data) {
                         var name=data.point.name;
-                        if(data.point.z>0){
+                        var code=data.point.code;
+                        if(data.point.ifStock==0){
                             location.href="BoardDetail.html"+"?name="+name;
                         }else{
-                            location.href="duck_stockDetail.html"+"?name="+name;
+                            location.href="duck_stockDetail.html"+"?code="+code;
                         }
 
                     }
                 },
                 dataLabels: {
-                    enabled: true,
+                    enabled: ifshowDataLabel,
                     format: '{point.name}'
                 }
             }
@@ -142,6 +154,5 @@ if(startDraw==1){
             data: boards
         }]
     });
-}
  
 }
