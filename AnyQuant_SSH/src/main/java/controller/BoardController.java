@@ -42,7 +42,7 @@ public class BoardController {
 
     @RequestMapping("/checkBoard")
     public boolean checkIfBoardExist(String board){
-        return
+        return service.checkIfBoardExist(board);
     }
 
     /**
