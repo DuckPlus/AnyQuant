@@ -10,6 +10,13 @@ $.getJSON('/Board/getAllBoardsAndStockData', function (data) {
     initBubble();
 
 });
+
+function dosearch() {
+    
+    var boardName=document.getElementById("searchCode").value;
+    alert("boardName");
+    location.href="BoardDetail.html"+"?name="+boardName+"&parent=list";
+}
 //防止重复
 function ifExist(index,num){
     for(var i=0;i<index.length;i++){

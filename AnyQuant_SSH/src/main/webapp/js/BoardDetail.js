@@ -8,7 +8,7 @@ var parentName="汽车零部件";//搜索前的页面的板块名
         var loc = window.location.search;
         var result = loc.split('?')[1].split('&')[0].split("=")[1];
         if(loc.indexOf("parent")!=-1){
-            parentName= loc.split('?')[1].split('&')[1].split('=')[1];
+            parentName=decodeURI(loc.split('?')[1].split('&')[1].split('=')[1]);
         }
         
         return result;
@@ -21,9 +21,11 @@ function dosearch() {
 }
 function initTree(data){
     var myData=[],length=data.length;
+    alert("initTree length:"+length);
     if(length==0){
         alert("对不起不存在该板块");
-        location.href="BoardDetail.html"+"?name="+parentName;
+        if(parentName=="list") location.href="BoardList.html";
+        else  location.href="BoardDetail.html"+"?name="+parentName;
     }
     if(length>=10){
         for(var i=0;i<5;i++){
@@ -173,10 +175,11 @@ function initNumbers(data){
 }
 function initLine(data){
     var boardData=[],benchData=[],length=data.length;
-    
+    alert("initLine length:"+length);
     if(length==0){
         alert("对不起不存在该板块");
-        location.href="BoardDetail.html"+"?name="+parentName;
+        if(parentName=="list") location.href="BoardList.html";
+        else  location.href="BoardDetail.html"+"?name="+parentName;
     }
     for(var i=0;i<length;i++){
         var date=data[i].date;
@@ -239,6 +242,7 @@ $(document).ready(function () {
     myBoardName=decodeURI(getCode());
     document.title="Duck "+myBoardName;
     document.getElementById('stockName').innerHTML=myBoardName;
+    alert("hi");
     $.getJSON('/Board/getBoardDistribution?boardName='+myBoardName, function (data) {
         initNumbers(data);
         initTree(data);
