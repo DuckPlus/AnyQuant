@@ -56,11 +56,27 @@ public interface BaseDAO {
 	/**
 	 * each query need a para and return one object
 	 * bind many ops above together
+	 * if one of the query is null then the return list won't have it
 	 * @param hql
 	 * @param paras
      * @return
      */
 	public List<?> batchSingleQuery(String hql, List<String> paras );
+
+
+	/**
+	 * each query need a para and return one object
+	 * bind many ops above together
+	 * if one of the query is null
+	 * then the return list will contain a null value to replace it;
+	 * @param hql
+	 * @param paras
+	 * @return
+	 */
+	public List<?> batchSingleQuery_Exact(String hql, List<String> paras );
+
+
+
 	/**
 	 * each query need a para and return a list of object
 	 * bind many ops above together
@@ -69,6 +85,7 @@ public interface BaseDAO {
 	 * @return
 	 */
 	public List<?> batchListQuery(String hql, List<String> paras);
+
 
 	/**
 	 * count the entites of a table

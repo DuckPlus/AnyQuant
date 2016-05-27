@@ -34,6 +34,11 @@ public class Strategy_PE extends BaseStrategy {
     private int low_PE ,high_PE;
 
     /**
+     * 界定price的合理界限()
+     */
+    private int low_Price ,high_Price;
+
+    /**
      * 记录每只股票购买的手数
      */
     private int [] lots;
@@ -62,8 +67,10 @@ public class Strategy_PE extends BaseStrategy {
         this.stocks = new ArrayList<>();
 
         this.vol=10;
-        this.low_PE=20;
-        this.high_PE=40;
+        this.low_PE=25;
+        this.high_PE=30;
+        this.low_Price=4;
+        this.high_Price=15;
         this.lots=new int [vol];
         this.buy_Prices=new double [vol];
         this.sell_Prices=new double [vol];
@@ -71,7 +78,7 @@ public class Strategy_PE extends BaseStrategy {
 
 
     /**
-     * 初始任意买入10只PE大于20的股票
+     * 初始任意买入vol只PE大于20的股票
      */
     @Override
     public void init()
@@ -99,7 +106,7 @@ public class Strategy_PE extends BaseStrategy {
         init();
         for(int i=interval;i<this.validDates.length;i+=interval){
             curTradeDay=this.validDates[i];
-            System.out.println("handle the "+i+"th day"+"date : "+curTradeDay.DateToString());
+            System.out.println("handle "+i+"th day date: "+curTradeDay.DateToString());
             this.handleData();
         }
         ReportVO reportVO = new ReportVO();
@@ -121,39 +128,52 @@ public class Strategy_PE extends BaseStrategy {
         List<String> codes = stockDataDAO.getStockCodeByPE(curTradeDay,low_PE,high_PE);
 
         /**
-         * 随机挑选vol只股票加入股票池
+         * 挑选vol只股票加入股票池
+         * 其中股票价格处于合理区间内
          */
         int i=0;
         for(String code:codes){
-            stocks.add(code);
-            System.out.println(code);
-            i++;
+            double price =stockDataDAO.getAvgPriceByCode(code,curTradeDay);
+
+           // if(  low_Price<price & price<high_Price ){
+                stocks.add(code);
+                //System.out.println(code);
+                i++;
+          //  }
+
             if(i==vol){
                 break;
             }
         }
-        System.out.println("size: "+stocks.size());
+        System.out.println("size: "+stocks.size()+"---------------------");
 
         /**
          * 获取每只股票交易日当天的均价（总交易额/总交易量）
+         * 因为可能会出现返回值不足vol个数据，因此先补充0，再赋值
          */
         double [] temp=stockDataDAO.getAvgPriceByCodes(stocks,curTradeDay);
-        buy_Prices= new double[vol];
+        buy_Prices= new double[vol]; //这里讲买入价格全设为0
         for( i=0;i<temp.length;i++){
             buy_Prices[i]=temp[i];
         }
 
-        System.out.println("lots.lenth:"+lots.length);
-        System.out.println("buy_prices.lenth:"+buy_Prices.length);
-        System.out.println("sell_prices.lenth:"+sell_Prices.length);
+
 
         /**
          * 确定每只股票买入的手数
          * 并记录花费
          */
         for(i=0;i<stocks.size();i++){
-            System.out.println("i: "+i);
-            lots[i]= (int) (capital/vol/(buy_Prices[i]*stocksPerLot));
+            /**
+             * 如果买入价格为0，就忽略该股票
+             * 把买入手数设为0
+             */
+            if(buy_Prices[i]==0){
+                lots[i]=0;
+            }else{
+                lots[i]= (int) (capital/vol/(buy_Prices[i]*stocksPerLot));
+            }
+
             System.out.println("buy "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+buy_Prices[i]);
             expense+=lots[i]*stocksPerLot*buy_Prices[i];
         }
@@ -169,10 +189,28 @@ public class Strategy_PE extends BaseStrategy {
          * 获取当日的股票池的均价
          */
         double [] temp=stockDataDAO.getAvgPriceByCodes(stocks,curTradeDay);
-        System.out.println("temp.size()"+temp.length);
+//        System.out.println("temp.size()"+temp.length);
+//        System.out.println(" get sell_Prices"+sell_Prices);
         sell_Prices= new double[vol];
         for(int i=0;i<temp.length;i++){
-            sell_Prices[i]=temp[i];
+            /**
+             * 如果买入价格是0，说明数据出错，
+             * 将卖出价格也设为0，从而忽略这只股票
+             */
+            if(buy_Prices[i]!=0){
+
+                /**
+                 * 如果卖出价格为0而买入不为0,说明数据出错，
+                 * 把卖出价格设为买入价，从而忽略这只股票
+                 */
+                if(temp[i]==0){
+                    sell_Prices[i]=buy_Prices[i];
+                }else{
+                    sell_Prices[i]=temp[i];
+                }
+
+            }
+
         }
 
         for(int i=0;i<stocks.size();i++){

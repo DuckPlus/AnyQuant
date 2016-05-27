@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import util.MyDate;
+import vo.CumRtnVO;
 import vo.ReportVO;
 
 import static org.junit.Assert.fail;
@@ -24,7 +25,7 @@ public class Strategy_PETest {
 
     double capital=100000;
     double taxRate=0.001;
-    String baseCode="000001";
+    String baseCode="000300";
     MyDate start =MyDate.getDateFromString("2015-01-01");
     MyDate end=MyDate.getDateFromString("2016-01-01");
     int interval=30;
@@ -54,7 +55,11 @@ public class Strategy_PETest {
     public void analyse() throws Exception {
         ReportVO vo = strategy_pe.analyse();
         if(vo==null){
-
+            fail();
+        }else{
+            for(CumRtnVO temp : vo.cumRtnVOList){
+                System.out.println("date: "+temp.date.DateToString()+" test: "+temp.testValue+" base: "+temp.baseValue);
+            }
         }
     }
 

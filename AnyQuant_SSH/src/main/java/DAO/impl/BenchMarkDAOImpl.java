@@ -66,6 +66,7 @@ public class BenchMarkDAOImpl implements BenchMarkDAO {
         String hql = "select turnoverValue / turnoverVol from "
                 +dataTableName+" where code = '"+code+"' and date = '"+date.DateToString()+"'"
                 + " and turnoverVol > 0";
-        return (double)baseDAO.load(hql);
+        Object temp = baseDAO.load(hql);
+        return  (temp==null? 0: (double)temp);
     }
 }
