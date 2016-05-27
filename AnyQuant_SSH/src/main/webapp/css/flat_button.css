@@ -7,6 +7,7 @@
     border-radius: 5px;
     background-color: transparent;
     outline: none;
+    transition: border .8s;
 }
 .flat_input_text:hover{
 
@@ -26,11 +27,13 @@
     border: 1px solid;
     outline: none;
     text-align: center;
+    transition: background-color .7s;
+    /*transition: color .7s;*/
 }
 .flat_button_future:hover{
     color: black;
-    background-color: white;
-    border: white;
+    background-color: #ffffff;
+    border: solid white 1px;
     cursor: hand;
 }
 .flat_button_future:focus{
