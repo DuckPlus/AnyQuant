@@ -106,6 +106,12 @@ public class StockDataDAOImpl implements StockDataDAO {
     }
 
     @Override
+    public double[] getAvgPriceByCodes(List<String> codes) {
+        return new double[0];
+    }
+
+
+    @Override
     public List<MyDate> getTradeDates(MyDate start, MyDate end) {
         String hql = "select distinct date from "+tableName+
                 " where date between '"+start.DateToString()+"' and '"+end.DateToString()+"'"+
