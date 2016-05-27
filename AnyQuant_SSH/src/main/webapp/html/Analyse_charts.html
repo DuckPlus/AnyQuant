@@ -5,7 +5,16 @@
     <!--tab上的小图标-->
     <link rel="shortcut icon" href="/image/short_cut.png">
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
-    <title>Duck 回测</title>
+    <link rel="stylesheet" type="text/css" href="/css/Analyse.css">
+    <title>Duck 回测结果展示</title>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="/js/Analyse.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/buttons.css">
+    <link rel="stylesheet" type="text/css" href="/css/flat-ui.css">
 </head>
 <body>
 <!-- navigator begin -->
@@ -16,10 +25,11 @@
         <li class="nav_item"><a class="nav_c" href="duck_main.html">股票列表</a></li>
         <li class="nav_item"><a class="nav_c" href="BoardList.html">行业分布</a></li>
         <li class="nav_item"><a class="nav_c" href="duck_optional.html">自选股</a></li>
-        <li class="nav_item"><a class="nav_c" href="Analyse.html">回测系统</a></li>
+        <li class="nav_item"><a class="nav_c" href="Analyse_input.html">回测系统</a></li>
     </ul>
 </div>
-<br><br>
-<h1>回测界面</h1>
+
+<div id="linechart" class="linechart"><h2 class="wait"><br></h2></div>
+
 </body>
 </html>

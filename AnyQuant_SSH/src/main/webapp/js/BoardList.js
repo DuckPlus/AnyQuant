@@ -8,13 +8,18 @@ var myRed="#EE2C2C",myGreen="#00CD66",myGrey="#8B7E66"
 $.getJSON('/Board/getAllBoardsAndStockData', function (data) {
     globalData=data;
     initBubble();
-
 });
 
-function dosearch() {
-    
+function dosearch() {//TODO 板块不存在 即在当前页面警告
     var boardName=document.getElementById("searchCode").value;
-    location.href="BoardDetail.html"+"?name="+boardName+"&parent=list";
+     alert("search:"+boardName);
+     var boardName=document.getElementById("searchCode").value;
+
+    $.getJSON('/Board/checkBoard?'+'board='+boardName, function (data) {
+     if(data==true)  location.href="BoardDetail.html"+"?name="+boardName;
+     else alert("对不起,不存在该板块");
+     });
+
 }
 //防止重复
 function ifExist(index,num){
@@ -81,7 +86,7 @@ function  initBubble() {
                 boards[m].y=boards[parBoard].y+40+Math.random();
             }
             if(boards[m].rate<0) boards[m].color=myGreen;
-            else if(boards[m].rate=0) boards[m].color=myGrey;            
+            else if(boards[m].rate==0) boards[m].color=myGrey;            
             m++;
             
         }
@@ -128,6 +133,9 @@ function draw(){
             visible:false
         },
         plotOptions: {
+            bubble:{
+              minSize:30  
+            },
             series: {
                 //color:"#FFFFFF",
                 negativeColor:"",
@@ -145,7 +153,7 @@ function draw(){
                     }
                 },
                 dataLabels: {
-                    enabled: ifshowDataLabel,
+                    enabled: true,//TODO 先暂时改成false
                     format: '{point.name}'
                 }
             }
