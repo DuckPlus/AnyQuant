@@ -21,7 +21,6 @@ function dosearch() {
 }
 function initTree(data){
     var myData=[],length=data.length;
-    alert("initTree length:"+length);
     if(length==0){
         alert("对不起不存在该板块");
         if(parentName=="list") location.href="BoardList.html";
@@ -175,7 +174,6 @@ function initNumbers(data){
 }
 function initLine(data){
     var boardData=[],benchData=[],length=data.length;
-    alert("initLine length:"+length);
     if(length==0){
         alert("对不起不存在该板块");
         if(parentName=="list") location.href="BoardList.html";
@@ -242,7 +240,6 @@ $(document).ready(function () {
     myBoardName=decodeURI(getCode());
     document.title="Duck "+myBoardName;
     document.getElementById('stockName').innerHTML=myBoardName;
-    alert("hi");
     $.getJSON('/Board/getBoardDistribution?boardName='+myBoardName, function (data) {
         initNumbers(data);
         initTree(data);

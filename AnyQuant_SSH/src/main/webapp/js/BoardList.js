@@ -14,7 +14,6 @@ $.getJSON('/Board/getAllBoardsAndStockData', function (data) {
 function dosearch() {
     
     var boardName=document.getElementById("searchCode").value;
-    alert("boardName");
     location.href="BoardDetail.html"+"?name="+boardName+"&parent=list";
 }
 //防止重复
