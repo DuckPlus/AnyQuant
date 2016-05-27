@@ -46,4 +46,6 @@ public interface BoardAnalysisService {
     List<String> getAllBoradName();
 
     JSONArray getAllBoardAndStockData();
+
+    boolean checkIfBoardExist(String board);
 }

@@ -47,6 +47,11 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
     @Override
     public List<CompareBoardAndBenchVO> getBoardAndBenchChartData(String boardName, int offset, String bench) {
+        if(!checkIfBoardExist(boardName)){
+            return null;
+        }
+
+
         List<BenchmarkdataEntity> benchData = benchMarkDAO.getBenchMarkByTime(benchMarkDAO.getBenchMarkCodeByName(bench) , DateCalculator.getAnotherDay(-offset) , DateCalculator.getToDay());
 
 
@@ -89,25 +94,29 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
     @Override
     public List<BoardDistributionVO> getBoardDistributionChartData(String boardName) {
-        List<String> stocks = cacheHelper.getBoardDistribution().get(boardName);
+        if(checkIfBoardExist(boardName)){
+            List<String> stocks = cacheHelper.getBoardDistribution().get(boardName);
 
-        List<BoardDistributionVO> vos = new ArrayList<>(stocks.size());
-        double sum = 0;
-        List<StockdataEntity> entities = stockDataDAO.getStockData(stocks);
-        for (StockdataEntity entity : entities){
-            sum += entity.getTurnoverValue();
-            vos.add(makeDistributionVO(entity));
-        }
+            List<BoardDistributionVO> vos = new ArrayList<>(stocks.size());
+            double sum = 0;
+            List<StockdataEntity> entities = stockDataDAO.getStockData(stocks);
+            for (StockdataEntity entity : entities){
+                sum += entity.getTurnoverValue();
+                vos.add(makeDistributionVO(entity));
+            }
 //        for (String stock :stocks){
 //            entity = stockDataDAO.getStockData(stock);
 //            sum += entity.getTurnoverValue();
 //            vos.add(makeDistributionVO(entity));
 //        }
-        for (BoardDistributionVO vo : vos){
-            vo.board = boardName;
-            vo.weight = vo.turnoverValue/sum;
+            for (BoardDistributionVO vo : vos){
+                vo.board = boardName;
+                vo.weight = vo.turnoverValue/sum;
+            }
+            return vos;
         }
-        return vos;
+
+        return null;
     }
 
     @Override
@@ -117,6 +126,9 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
     @Override
     public JSONArray getAllBoardAndStockData() {
+
+
+
         JSONArray array = new JSONArray();
         List<String> boards = getAllBoradName();
 
@@ -172,6 +184,12 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
 
         return array;
+    }
+
+    @Override
+    public boolean checkIfBoardExist(String board) {
+        return cacheHelper.getAllBoradName().contains(board);
+
     }
 
     private double[] computeBoardData(String boardName , int offset){

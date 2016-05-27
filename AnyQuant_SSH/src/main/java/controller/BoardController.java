@@ -40,8 +40,10 @@ public class BoardController {
     }
 
 
-
-
+    @RequestMapping("/checkBoard")
+    public boolean checkIfBoardExist(String board){
+        return
+    }
 
     /**
      * 获得沪深300和板块的对比数据,默认返回半年的数据
