@@ -1,7 +1,9 @@
 /**
  * Created by dsn on 2016/5/26.
  */
-
+var myRed="#EE2C2C",myGreen="#00CD66",myGrey="#8B7E66";
+var myBoardName="";//板块的名称
+var parentName="汽车零部件";//搜索前的页面的板块名
     function getCode() {
         var loc = window.location.search;
         var result = loc.split('?')[1].split('&')[0].split("=")[1];
@@ -11,9 +13,8 @@
         
         return result;
     }
-var myRed="#EE2C2C",myGreen="#00CD66",myGrey="#8B7E66"
-var myBoardName="";//板块的名称
-var parentName="汽车零部件";//搜索前的页面的板块名
+
+
 function dosearch() {
     var boardName=document.getElementById("searchCode").value;
     location.href="BoardDetail.html"+"?name="+boardName+"&parent="+myBoardName;

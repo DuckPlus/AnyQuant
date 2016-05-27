@@ -10,6 +10,7 @@
     <%--tab上的小图标--%>
     <link rel="shortcut icon" href="/image/short_cut.png">
 
+
     <%--<script src="dist/js/flat-ui.min.js"></script>--%>
     <%--<link rel="stylesheet" type="text/css" href="/css/flat-ui.css">--%>
     <link rel="stylesheet" href="/css/flat_button.css" type="text/css">

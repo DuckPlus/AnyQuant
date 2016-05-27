@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.BenchMarkService;
+import service.helper.StableDataCacheHelper;
 import util.DateCalculator;
 import util.MyDate;
 
@@ -23,6 +24,11 @@ public class BenchMarkServiceImpl implements BenchMarkService {
 
     @Autowired
     BenchMarkDAO benchMarkDAO;
+
+    @Autowired
+    StableDataCacheHelper cacheHelper;
+
+    private List<BenchmarkEntity> benchmarkEntityList;
     /**
      * 获得可用的大盘的列表
      *
@@ -30,7 +36,7 @@ public class BenchMarkServiceImpl implements BenchMarkService {
      */
     @Override
     public List<BenchmarkEntity> getAllBenchMarksList() {
-        return benchMarkDAO.getAllBenchMarksList();
+        return cacheHelper.getAllBenchMarksList();
     }
 
     /**

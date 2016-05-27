@@ -4,7 +4,8 @@
 var globalData=[];
 var boards=[];
 var startDraw=0;
-$.getJSON('/Board/getAllBoards', function (data) {
+var myRed="#EE2C2C",myGreen="#00CD66",myGrey="#8B7E66"
+$.getJSON('/Board/getAllBoardsAndStockData', function (data) {
     globalData=data;
     initBubble(data);
 });
@@ -30,28 +31,24 @@ function  initBubble(data) {
     }
     //把板块的泡泡放进去
     for(var i=0;i<index.length;i++){
+        boards[i]=({
+            x: 5*i+Math.random(),
+            y: 50+Math.random()*10,
+            z: 70,//大小
+            name: data[index[i]].boardName,
+            rate:(data[index[i]].boardChangeRate).toFixed(4),
+            color:myRed
+        });
+        if(boards[i].rate<0) boards[i].color=myGreen;
         if(i<index.length/3){
-            boards[i]=({
-                x: 5*i+Math.random(),
-                y: 50+Math.random()*10,
-                z: 70,//大小
-                name: globalData[index[i]]
-            });
+            boards[i].x= 5*i+Math.random();
+            boards[i].y=50+Math.random()*10;
         }else if(i<2*index.length/3){
-            boards[i]=({
-                    x: (i-index.length/3)*3+Math.random(),
-                    y: 100+Math.random()*10,
-                    z: 70,//大小
-                    name: globalData[index[i]]
-                });
-            
+            boards[i].x= (i-index.length/3)*3+Math.random();
+            boards[i].y=100+Math.random()*10;
         }else{
-            boards[i]=({
-                    x: (i-2*index.length/3)*3+Math.random(),
-                    y: 150+Math.random()*10,
-                    z: 70,//大小
-                    name: globalData[index[i]]
-                });
+            boards[i].x= (i-2*index.length/3)*3+Math.random();
+            boards[i].y=150+Math.random()*10;
         }
         
     }
@@ -96,8 +93,8 @@ if(startDraw==1){
             useHTML: true,
             headerFormat: '<table>',
             pointFormat: '<tr><th colspan="2"><h3>{point.name}</h3></th></tr>'
-            /*+'<tr><th>Fat intake:</th><td>{point.x}g</td></tr>' +
-             '<tr><th>Sugar intake:</th><td>{point.y}g</td></tr>' +
+            +'<tr><th>板块涨跌：</th><td>{point.rate}</td></tr>'
+            /* +'<tr><th>Sugar intake:</th><td>{point.y}g</td></tr>' +
              '<tr><th>Obesity (adults):</th><td>{point.z}%</td></tr>'*/
             ,
 

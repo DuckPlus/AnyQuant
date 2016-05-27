@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.StockService;
+import service.helper.StableDataCacheHelper;
 import util.DateCalculator;
 import util.MyDate;
 import vo.DealVO;
@@ -31,8 +32,10 @@ public class StockServiceImpl implements StockService {
     StockDAO stockDAO;
     @Autowired
     StockDataDAO stockDataDAO;
-
+    @Autowired
+    StableDataCacheHelper cacheHelper;
     private StockDataService stockDataService = DataServiceFactory.getStockDataService();
+
     @Override
     public List<OHLC_VO> getDayOHLC_Data(String stockCode, MyDate start, MyDate end) {
         List<StockdataEntity> entities = getStocksByTime(stockCode ,start ,end);
@@ -202,17 +205,17 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public List<StockEntity> getAllStocks() {
-        return stockDAO.getAllStocks();
+        return cacheHelper.getAllStocks();
     }
 
     @Override
     public StockEntity getStockDescription(String code) {
-        return stockDAO.getStockEntity(code);
+        return cacheHelper.getStockDescription(code);
     }
 
     @Override
     public List<StockdataEntity> getTodayAllStockData() {
-        return stockDataDAO.getAllStockData();
+        return cacheHelper.getTodayAllStockData();
     }
 
 
