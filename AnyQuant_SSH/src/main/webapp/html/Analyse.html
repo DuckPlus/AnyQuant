@@ -5,6 +5,7 @@
     <!--tab上的小图标-->
     <link rel="shortcut icon" href="/image/short_cut.png">
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
+    <link rel="stylesheet" type="text/css" href="/css/Analyse.css">
     <title>Duck 回测</title>
 </head>
 <body>
@@ -20,6 +21,24 @@
     </ul>
 </div>
 <br><br>
-<h1>回测界面</h1>
+<div class="duck_window" id="news_window">
+    <div class="duck_title">
+        NEWS
+    </div>
+    <div class="duck_content" style="overflow-y: scroll;height: 370px" id="news_content">
+
+
+    </div>
+
+</div>
+
+<div id="options" class="options">
+    <label for="capital" class="middle">起始资金</label>
+    <select id="capital" class="middle"><!--起始资金-->
+        <option value="1万">1万</option>
+        <option value="5万">5万</option>
+        <option value="10万">10万</option>
+    </select>
+</div>
 </body>
 </html>

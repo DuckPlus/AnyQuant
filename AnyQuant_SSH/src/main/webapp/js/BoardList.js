@@ -11,10 +11,17 @@ $.getJSON('/Board/getAllBoardsAndStockData', function (data) {
 
 });
 
-function dosearch() {
-    
+function dosearch() {//TODO 板块不存在 即在当前页面警告
     var boardName=document.getElementById("searchCode").value;
     location.href="BoardDetail.html"+"?name="+boardName+"&parent=list";
+    /*  alert("search:"+boardName);
+     var boardName=document.getElementById("searchCode").value;
+     $.getJSON('/Board/checkBoard'+'board='+boardName, function (data) {
+     alert("success");
+     if(data==true)  location.href="BoardDetail.html"+"?name="+boardName;
+     else alert("对不起,不存在该板块");
+     });
+     */
 }
 //防止重复
 function ifExist(index,num){
@@ -145,7 +152,7 @@ function draw(){
                     }
                 },
                 dataLabels: {
-                    enabled: ifshowDataLabel,
+                    enabled: true,//TODO 先暂时改成false
                     format: '{point.name}'
                 }
             }
