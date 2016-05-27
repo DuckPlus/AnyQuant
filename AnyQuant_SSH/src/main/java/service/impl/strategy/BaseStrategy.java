@@ -1,5 +1,6 @@
 package service.impl.strategy;
 
+import DAO.BenchMarkDAO;
 import DAO.StockDataDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import util.MyDate;
@@ -16,30 +17,40 @@ public abstract class BaseStrategy  {
 
     @Autowired
     StockDataDAO stockDataDAO;
+    @Autowired
+    BenchMarkDAO benchMarkDAO;
+    /**
+     * 每手100股
+     */
+    public static final int stocksPerLot=100;
 
     /**
      * 起始资金
      */
-    public double capital;
+    protected double capital;
     /**
      * 交易费率
      */
-    public double taxRate;
+    protected double taxRate;
 
     /**
      * 基准大盘代码
      */
-    public String baseCode;
+    protected String baseCode;
 
     /**
      * 回测周期开始日期
      */
-    public MyDate start;
+    protected MyDate start;
 
     /**
      * 回测周期结束日期
      */
-    public MyDate end;
+    protected MyDate end;
+    /**
+     * 当前的交易日
+     */
+    protected MyDate curTradeDay;
 
 
 
@@ -47,35 +58,47 @@ public abstract class BaseStrategy  {
     /**
      * 卖出股票累积收益
      */
-    public double income;
+    protected double income;
     /**
      * 买入股票的累积花费
      */
-    public double expense;
+    protected double expense;
+
     /**
-     * 累积纯利润
+     * 累积纯利润=累积收益-累积花费
      */
-    public double profit;
+    protected double profit;
+
     /**
      * 累积收益率(回测)
      */
-    public double cumRtnRate;
-    /**
-     * 基线的累积收益率
-     */
-    public double baseRtnRate;
+    protected double cumRtnRate;
 
+
+    /**
+     * 记录指数在调仓日的买入价格
+     */
+    protected double base_BuyPrice;
+    /**
+     * 记录指数在调仓日的卖出价格
+     */
+    protected double base_SellPrice;
+
+    /**
+     * 指数的累积收益率
+     */
+    protected double baseRtnRate;
 
     /**
      * 每次调仓时的累积收益率
      */
-    public List<CumRtnVO> cumRtnVOList;
+    protected List<CumRtnVO> cumRtnVOList;
+
+
     /**
      * 存储start--end间的交易日
      */
-
-
-    public MyDate[] validDates;
+    protected MyDate[] validDates;
 
 
 
@@ -91,11 +114,14 @@ public abstract class BaseStrategy  {
         this.baseCode=baseCode;
         this.start=start;
         this.end=end;
+        this.curTradeDay=start;
 
         this.income=0;
         this.expense=0;
         this.profit=0;
         this.cumRtnRate=0;
+        this.base_BuyPrice=0;
+        this.base_SellPrice=0;
         this.baseRtnRate=0;
         this.cumRtnVOList=new ArrayList<>();
 

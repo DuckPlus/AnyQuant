@@ -99,15 +99,24 @@ public class StockDataDAOImpl implements StockDataDAO {
 
 
     @Override
-    public List<String> getStockCodeByPE(MyDate date , double target) {
+    public List<String> getStockCodeByPE(MyDate date,double low_PE , double high_PE) {
         String hql = "select code from "+tableName+
-                " where pe >= "+target+" and date = '"+date.DateToString()+"'";
+                " where pe>= "+low_PE+" and pe<= "+high_PE+" and date = '"+date.DateToString()+"'";
         return (List<String>) baseDAO.getAllList(hql);
     }
 
     @Override
-    public double[] getAvgPriceByCodes(List<String> codes) {
-        return new double[0];
+    public double [] getAvgPriceByCodes(List<String> codes, MyDate date) {
+
+        String hql = "select turnoverValue / turnoverVol from "+tableName+" where code = ? and date = '"+date.DateToString()+"'"
+                +" and turnoverVol >0";
+        List result  = baseDAO.batchSingleQuery(hql,codes);
+        double [] prices = new double [result.size()];
+        for(int i=0;i<result.size();i++){
+            prices[i]= (double) result.get(i);
+        }
+        return prices;
+
     }
 
 

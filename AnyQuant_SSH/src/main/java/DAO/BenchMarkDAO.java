@@ -37,4 +37,7 @@ public interface BenchMarkDAO {
 
     String getBenchMarkCodeByName(String name);
 
+
+    double getAvgPrice(String code , MyDate date);
+
 }

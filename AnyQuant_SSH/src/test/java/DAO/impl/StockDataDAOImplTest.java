@@ -145,7 +145,7 @@ public class StockDataDAOImplTest {
     @Test
     public void getStockByPE() throws Exception{
         MyDate date = MyDate.getDateFromString("2015-04-03");
-        ArrayList<String> list= (ArrayList<String>) dao.getStockCodeByPE(date,20);
+        ArrayList<String> list= (ArrayList<String>) dao.getStockCodeByPE(date,20,40);
         if(list==null){
             fail("null");
         }else{
@@ -166,6 +166,19 @@ public class StockDataDAOImplTest {
 
         }else{
             fail("null");
+        }
+    }
+
+    @Test
+    public void getAvgPriceByCodes() throws Exception{
+        String[] codes = {"sh600004","sh600137","sh600858"};
+        MyDate date = MyDate.getDateFromString("2006-01-04");
+        double[]  prices = dao.getAvgPriceByCodes(Arrays.asList(codes),date);
+        if(prices==null){
+            fail("null");
+        }else{
+            for(int i=0;i<prices.length;i++)
+            System.out.println(codes[i]+" price: "+prices[i]);
         }
     }
 

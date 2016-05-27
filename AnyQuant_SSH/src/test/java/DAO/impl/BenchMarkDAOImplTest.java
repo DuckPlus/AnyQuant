@@ -13,6 +13,7 @@ import util.MyDate;
 import java.util.ArrayList;
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Created by 67534 on 2016/5/12.
@@ -76,6 +77,19 @@ public class BenchMarkDAOImplTest {
         String name = "上证综指";
         String code = "000001";
         assertEquals(code,dao.getBenchMarkCodeByName(name));
+
+    }
+
+    @Test
+    public void getAvgPrice() throws Exception {
+        String  code = "000001";
+        MyDate date = MyDate.getDateFromString("2006-01-04");
+        double  price = dao.getAvgPrice(code,date);
+        if(price==0){
+            fail();
+        }else{
+            System.out.println(code+" price: "+price);
+        }
 
     }
 

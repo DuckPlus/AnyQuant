@@ -72,10 +72,15 @@ public interface StockDataDAO {
      * @param date
      * @return
      */
-    public List<String> getStockCodeByPE(MyDate date,double target);
+    public List<String> getStockCodeByPE(MyDate date,double low_PE , double high_PE);
 
-
-    public double [] getAvgPriceByCodes(List<String> codes);
+    /**
+     * 返回某天多只股票的平均价格
+     * @param codes
+     * @param date
+     * @return
+     */
+    public double [] getAvgPriceByCodes(List<String> codes, MyDate date);
 
     /**
      * 返回给定日期段内的有效交易日日期

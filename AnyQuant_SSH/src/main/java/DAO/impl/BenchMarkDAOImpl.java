@@ -60,4 +60,12 @@ public class BenchMarkDAOImpl implements BenchMarkDAO {
 
         return (String) baseDAO.load(hql);
     }
+
+    @Override
+    public double getAvgPrice(String code ,MyDate date) {
+        String hql = "select turnoverValue / turnoverVol from "
+                +dataTableName+" where code = '"+code+"' and date = '"+date.DateToString()+"'"
+                + " and turnoverVol > 0";
+        return (double)baseDAO.load(hql);
+    }
 }
