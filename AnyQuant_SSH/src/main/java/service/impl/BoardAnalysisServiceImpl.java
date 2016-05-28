@@ -99,7 +99,7 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
             List<BoardDistributionVO> vos = new ArrayList<>(stocks.size());
             double sum = 0;
-            List<StockdataEntity> entities = stockDataDAO.getStockData(stocks);
+            List<StockdataEntity> entities = cacheHelper.getTodaySomeStocks(stocks);
             for (StockdataEntity entity : entities){
                 sum += entity.getTurnoverValue();
                 vos.add(makeDistributionVO(entity));
@@ -178,7 +178,6 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 
             array.add(board);
         }
-
 
 
 

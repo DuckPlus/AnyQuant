@@ -11,15 +11,15 @@ public class CumRtnVO {
     /**
      * 基线值
      */
-    double baseValue;
+    public double baseValue;
     /**
      * 回测值
      */
-    double testValue;
+    public double testValue;
     /**
      * 日期
      */
-    MyDate date;
+    public MyDate date;
 
     public CumRtnVO(){}
 
