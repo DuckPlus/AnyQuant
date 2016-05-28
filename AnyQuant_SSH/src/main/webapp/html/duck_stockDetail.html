@@ -524,17 +524,17 @@
         url:'/StockDetail/getMostUsefulFactors',
         success:function (data) {
             var result = [];
-//            alert("init data");
-            for(var i=data.length;i>data.length-6;i++) {
-                resultpush([name:data[0].name,])
-
+            var name = [];
+            for(var i=data.length;i>data.length-6;i--) {
+                result.push([data[i-1].name,Math.abs(data[i-1].judgeFactorValue)]);
+                name.push(data[i-1].name);
             }
+
 //            alert("data complete");
-            init_radar(result);
+            init_radar(result,name);
         }
     });
-    function init_radar(data) {
-    alert(data);
+    function init_radar(data,name) {
         $('#radar_chart').highcharts({
 
             chart: {
@@ -552,8 +552,7 @@
             },
 
             xAxis: {
-                categories: ['5日均线', '120日均线', '5日换手率', '120日换手率',
-                    '市盈率', '市净率', '分析师推荐评级'],
+                categories: name,
                 tickmarkPlacement: 'on',
                 lineWidth: 0
             },
