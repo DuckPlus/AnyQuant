@@ -46,7 +46,7 @@
 
     <div class="duck_window" id="chart_stock_OHLC_window">
         <div class="duck_title">
-            STOCK OHLC CHART
+            <div class="duck_title_text">k线图</div>
         </div>
         <div class="duck_content">
             <div id="chart1"></div>
@@ -56,7 +56,7 @@
     <div id="relation_and_info">
         <div class="duck_window" id="relationship_window">
             <div class="duck_title">
-                STOCK RELATIONSHIP CHART
+                <div class="duck_title_text">关系图</div>
             </div>
             <div class="duck_content">
                 <div id="chart2" style="width: 100%;height: 300px;"></div>
@@ -65,7 +65,7 @@
 
         <div class="duck_window" id="stockinfo_window">
             <div class="duck_title">
-                STOCK INFORMATION BLOCK
+                <div class="duck_title_text">股票信息</div>
             </div>
             <div class="duck_content">
                 <div id="stock_info_name"></div>
@@ -80,7 +80,7 @@
     </div>
     <div class="duck_window" id="stockfactor_window">
         <div class="duck_title">
-            STOCK FACTOR CHART
+            <div class="duck_title_text">股票因子走势图</div>
         </div>
         <div class="duck_content">
             <div id="factor_chart"></div>
@@ -90,7 +90,7 @@
     <div id="score_and_radar">
         <div class="duck_window" id="score_window">
             <div class="duck_title">
-                SYNTHETICAL SCORE
+                <div class="duck_title_text">综合评分</div>
             </div>
             <div class="duck_content">
                 <div id="score_chart" style="height: 300px;"></div>
@@ -101,7 +101,7 @@
 
         <div class="duck_window" id="radar_window">
             <div class="duck_title">
-                RADAR
+                <div class="duck_title_text">各项评分</div>
             </div>
             <div class="duck_content">
                 <div id="radar_chart" style="width: 100%;height: 400px"></div>
@@ -111,7 +111,7 @@
 
     <div class="duck_window" id="news_window">
         <div class="duck_title">
-            NEWS
+            <div class="duck_title_text">相关新闻</div>
         </div>
         <div class="duck_content" style="overflow-y: scroll;height: 370px" id="news_content">
 
@@ -435,7 +435,6 @@
     function init_score_chart(grade) {
         var data = [];
         data.push(grade);
-
         var gaugeOptions = {
 
             chart: {
@@ -519,43 +518,71 @@
 </script>
 <!-- radar chart -->
 <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('radar_chart'));
-    option = {
-        title: {
-            text: 'factor_radar'
-        },
-        tooltip: {},
-        legend: {
-            data: ['sh600004']
-        },
-        radar: {
-            // shape: 'circle',
-            indicator: [
-                { name: 'factor1', max: 1},
-                { name: 'factor2', max: 1},
-                { name: 'factor3', max: 1},
-                { name: 'factor4', max: 1},
-                { name: 'factor5', max: 1},
-                { name: 'factor6', max: 1}
-            ]
-        },
-        series: [{
-            name: '预算 vs 开销（Budget vs spending）',
-            type: 'radar',
-            // areaStyle: {normal: {}},
-            data : [
-                {
-                    value : [0.5, 0.1, 0.8, 0.35, 0.9, 0.1],
-                    name : 'sh600004'
-                }
-                //  {
-                //     value : [5000, 14000, 28000, 31000, 42000, 21000],
-                //     name : '实际开销（Actual Spending）'
-                // }
-            ]
-        }]
-    };
-    myChart.setOption(option);
+    $.ajax({
+        type:'get',
+        data:{code:getCode(),timeLen:30},
+        url:'/StockDetail/getMostUsefulFactors',
+        success:function (data) {
+            var result = [];
+//            alert("init data");
+            for(var i=data.length;i>data.length-6;i++) {
+                resultpush([name:data[0].name,])
+
+            }
+//            alert("data complete");
+            init_radar(result);
+        }
+    });
+    function init_radar(data) {
+    alert(data);
+        $('#radar_chart').highcharts({
+
+            chart: {
+                polar: true,
+                type: 'line'
+            },
+
+            title: {
+                text: 'Budget vs spending',
+                x: -80
+            },
+
+            pane: {
+                size: '80%'
+            },
+
+            xAxis: {
+                categories: ['5日均线', '120日均线', '5日换手率', '120日换手率',
+                    '市盈率', '市净率', '分析师推荐评级'],
+                tickmarkPlacement: 'on',
+                lineWidth: 0
+            },
+
+            yAxis: {
+                gridLineInterpolation: 'polygon',
+                lineWidth: 0,
+                min: 0
+            },
+
+            tooltip: {
+                shared: true,
+                pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y}</b><br/>'
+            },
+
+            legend: {
+                align: 'right',
+                verticalAlign: 'top',
+                y: 70,
+                layout: 'vertical'
+            },
+
+            series: [{
+                name:"因子值",
+                data:data
+            }]
+
+        });
+    }
 </script>
 <script>
     $.ajax({
@@ -574,10 +601,6 @@
 
         var board = document.getElementById('news_content');
         var item_bar = document.createElement("div");
-        // item_bar.style.backgroundColor="#666666";
-        // item_bar.style.height="70px";
-        // item_bar.style.border-bottom="1px solid #000000"
-        // item_bar.style.fontSize="10px";
         item_bar.style.width = "90%";
         item_bar.style.marginRight = "auto";
         item_bar.style.marginLeft = "auto";

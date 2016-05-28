@@ -154,7 +154,8 @@ function draw(){
                 },
                 dataLabels: {
                     enabled: true,//TODO 先暂时改成false
-                    format: '{point.name}'
+                    format: '{point.name}',
+                    allowOverlap:true
                 }
             }
         },
