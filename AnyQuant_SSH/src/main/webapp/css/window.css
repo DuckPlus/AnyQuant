@@ -1,5 +1,5 @@
 body{
-    background-color: #DADADA;
+    background-color: #ffffff;
 }
 .main_content{
     /*background-color: #66CCFF;*/
@@ -12,14 +12,24 @@ body{
     width: 500px;
     height: 400px;
     border: 1px solid #B3B3B3;
+    border-radius: 5px;
+    box-shadow: 0 0 6px gray;
 }
 .duck_title{
     height: 30px;
     background-color: #E6E6E6;
+    border-radius: 5px 5px 0 0;
     border: 1px solid #B3B3B3;
     border-right-width: 0px;
     border-left-width: 0px;
     border-top-width: 0px;
+    background-image: url(/image/congruent_outline.png);
+}
+.duck_title_text{
+    color: #f4f6f6;
+    float: left;
+    /*background-color: #1B9AF7;*/
+    margin-top:4px;
 }
 #relationship_window{
     margin-top: 20px;

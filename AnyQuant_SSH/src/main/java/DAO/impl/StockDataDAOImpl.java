@@ -110,13 +110,24 @@ public class StockDataDAOImpl implements StockDataDAO {
 
         String hql = "select turnoverValue / turnoverVol from "+tableName+" where code = ? and date = '"+date.DateToString()+"'"
                 +" and turnoverVol >0";
-        List result  = baseDAO.batchSingleQuery(hql,codes);
-        double [] prices = new double [result.size()];
-        for(int i=0;i<result.size();i++){
-            prices[i]= (double) result.get(i);
+        List result  = baseDAO.batchSingleQuery_Exact(hql,codes);
+        double [] prices = new double [codes.size()];
+        for(int i=0;i<codes.size();i++){
+            if(result.get(i)!=null){
+                prices[i]= (double) result.get(i);
+            }
         }
         return prices;
 
+    }
+
+    @Override
+    public double getAvgPriceByCode(String code, MyDate date) {
+        String hql = "select turnoverValue / turnoverVol from "
+                +tableName+" where code = '"+code+"' and date = '"+date.DateToString()+"'"
+                + " and turnoverVol > 0";
+        Object temp = baseDAO.load(hql);
+        return  (temp==null? 0: (double)temp);
     }
 
 

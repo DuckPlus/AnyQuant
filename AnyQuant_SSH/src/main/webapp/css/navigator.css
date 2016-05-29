@@ -35,6 +35,8 @@ body{
     height: 50px;
     width: 100%;
     z-index: 1;
+    background-color: rgb(51,51,51);
+    box-shadow: 0 -1px 35px rgb(70,70,70);
 }
 #nav_box{
     /*background-color: #00bdef;*/

@@ -135,6 +135,35 @@ public class BaseDAOImpl implements BaseDAO {
         return result;
     }
 
+
+    @Override
+    public List<?> batchSingleQuery_Exact(String hql, List<String> paras) {
+        List result = new ArrayList<>();
+
+        try {
+            Session session = getNewSession();
+            //开始事务
+            Transaction tx = session.beginTransaction();
+            Query query= session.createQuery(hql);
+            for (int i = 0 ; i < paras.size() ; i++ )
+            {
+                query.setString(0, paras.get(i));
+                Object temp = query.uniqueResult();
+
+                result.add(temp);
+
+            }
+            //提交事务
+            tx.commit();
+            //关闭事务
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     @Override
     public List<?> batchListQuery(String hql, List<String> paras) {
         List result = new ArrayList<>();

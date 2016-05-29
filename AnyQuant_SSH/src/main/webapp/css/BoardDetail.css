@@ -1,14 +1,31 @@
+#main_content{
+    margin-left: 3%;
+    margin-right: 3%;
+    /*background-color: #00bdef;*/
+}
+#top_bar{
+    border-radius: 5px;
+    box-shadow: 0 0 2px #333333;
+}
 #linechart{
-    width: 80%;
     height: 400px;
-    margin: 0 auto
+    /*margin: 0 auto*/
 }
 #treechart{
-    width: 80%;
     height: 600px;
-    margin: 0 auto
+    /*margin: 0 auto*/
 }
 #wait{
-    margin:0 auto;
+    margin: auto;
 
+}
+#compare_window{
+    margin-top: 10px;
+    width: 100%;
+    height: 450px;
+}
+#constituent_window{
+    margin-top: 10px;
+    width: 100%;
+    height: 650px;
 }
