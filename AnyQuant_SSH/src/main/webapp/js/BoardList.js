@@ -39,9 +39,9 @@ function  initBubble() {
             i++;
         }
     }
-    //把板块的泡泡放进去
+
     for(var i=0;i<index.length;i++){
-        boards[m]=({
+        boards[m]=({ //把板块的泡泡放进去
             x: 5*i+Math.random(),
             y: 50+Math.random()*10,
             z: 50,//大小
@@ -55,10 +55,10 @@ function  initBubble() {
             boards[m].x= 5*i+Math.random();
             boards[m].y=Math.random()*10;
         }else if(i<2*index.length/3){
-            boards[m].x= (i-index.length/3)*3+Math.random();
+            boards[m].x= (i-index.length/3)*5+Math.random();
             boards[m].y=70+Math.random()*10;
         }else{
-            boards[m].x= (i-2*index.length/3)*3+Math.random();
+            boards[m].x= (i-2*index.length/3)*5+Math.random();
             boards[m].y=150+Math.random()*10;
         }
         m++;
@@ -154,7 +154,8 @@ function draw(){
                 },
                 dataLabels: {
                     enabled: true,//TODO 先暂时改成false
-                    format: '{point.name}'
+                    format: '{point.name}',
+                    allowOverlap:true
                 }
             }
         },

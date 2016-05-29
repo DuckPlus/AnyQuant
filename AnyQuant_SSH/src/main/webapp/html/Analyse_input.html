@@ -31,16 +31,52 @@
 <br><br>
 
 <div id="options" class="options">
-    <label for="capital" class="middle">起始资金</label>
-    <select id="capital" class="middle"><!--起始资金-->
-        <option value="1万">1万</option>
-        <option value="5万">5万</option>
-        <option value="10万">10万</option>
-    </select>
+
+    <div>
+        <label for="basecode" class="middle">基准大盘</label>
+        <select id="basecode" class="middle">
+        </select>
+    </div>
+    <div>
+        <label for="capital" class="middle">起始资金</label>
+        <select id="capital" class="middle">
+            <option value="100000">10万</option>
+            <option value="500000">50万</option>
+            <option value="1000000">100万</option>
+            <option value="10000000">1000万</option>
+        </select>
+    </div>
+    <div>
+        <label for="taxRate" class="middle">交易费率</label>
+
+        <input id="taxRate" type="range" min="0" max="1"  step="0.001"  onclick="getTaxRate()"/>
+        <label id="taxRate_num">0</label>
+        <script>
+            function getTaxRate(){
+                document.getElementById("taxRate_num").innerHTML=
+                        document.getElementById("taxRate").value;
+            }
+
+        </script>
+    </div>
 </div>
+
 <button id="analysebtn" class="button button-raised button-primary button-pill" onclick="doAnalyse()"  style="position:relative;left:520px;">
     开始回测
 </button>
 
 </body>
+
+<script>
+    $.getJSON('/BenchMark/getBenchList', function (data) {
+       initBaseCode(data);
+    });
+    function initBaseCode(data){
+        alert("initBaseCode");
+        var list=document.getElementById("basecode");
+        for(var i=0;i<data.length;i++){
+            list.options.add(new Option(data[i].name,data[i].code));
+        }
+    }
+</script>
 </html>

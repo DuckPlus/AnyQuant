@@ -66,6 +66,7 @@ function initLine(data){
 
 }
 function doAnalyse(){
+    alert("选择的大盘代号："+document.getElementById("basecode").value);
     location.href="Analyse_charts.html";
 }
 $(document).ready(function () {
