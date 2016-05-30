@@ -6,6 +6,7 @@
     <link rel="shortcut icon" href="/image/short_cut.png">
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
     <link rel="stylesheet" type="text/css" href="/css/Analyse.css">
+    <link rel="stylesheet" href="/css/window.css" type="text/css">
     <title>Duck 回测参数配置</title>
     <meta charset="UTF-8">
     <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
@@ -19,8 +20,8 @@
 <body>
 <!-- navigator begin -->
 <div id="nav_bar">
-    <img src="/image/duck_icon.png" style="width: 35px;height: 35px;float: left;margin-top:7px;margin-left: 10px">
-    <div style="font-size: 30px;float: left;color: #ffffff;margin-left: 10px;margin-top: 7px;">DUCK</div>
+    <img src="/image/duck_icon_pink.png" style="width: 73px;height: 35px;float: left;margin-top:7px;margin-left: 10px">
+    <div style="font-size: 30px;float: left;color: #ffffff;margin-left: 10px;margin-top: 7px;"></div>
     <ul id="nav_box">
         <li class="nav_item"><a class="nav_c" href="duck_main.html">股票列表</a></li>
         <li class="nav_item"><a class="nav_c" href="BoardList.html">行业分布</a></li>
@@ -30,36 +31,47 @@
 </div>
 <br><br>
 
-<div id="options" class="options">
 
-    <div>
-        <label for="basecode" class="middle">基准大盘</label>
-        <select id="basecode" class="middle">
-        </select>
+<div class="duck_window" id="board_window">
+    <div class="duck_title">
+        <div class="duck_title_text">
+            参数配置
+        </div>
     </div>
-    <div>
-        <label for="capital" class="middle">起始资金</label>
-        <select id="capital" class="middle">
-            <option value="100000">10万</option>
-            <option value="500000">50万</option>
-            <option value="1000000">100万</option>
-            <option value="10000000">1000万</option>
-        </select>
-    </div>
-    <div>
-        <label for="taxRate" class="middle">交易费率</label>
+    <div class="duck_content">
 
-        <input id="taxRate" type="range" min="0" max="1"  step="0.001"  onclick="getTaxRate()"/>
-        <label id="taxRate_num">0</label>
-        <script>
-            function getTaxRate(){
-                document.getElementById("taxRate_num").innerHTML=
-                        document.getElementById("taxRate").value;
-            }
 
-        </script>
+        <div>
+            <label for="basecode" class="middle">基准大盘</label>
+            <select id="basecode" class="middle">
+            </select>
+        </div>
+        <div>
+            <label for="capital" class="middle">起始资金</label>
+            <select id="capital" class="middle">
+                <option value="100000">10万</option>
+                <option value="500000">50万</option>
+                <option value="1000000">100万</option>
+                <option value="10000000">1000万</option>
+            </select>
+        </div>
+        <div>
+            <label for="taxRate" class="middle">交易费率</label>
+            <input id="taxRate" type="range" min="0" max="1"  step="0.001"  onchange="getTaxRate()"/>
+            <label id="taxRate_num">0</label>
+            <script>
+                function getTaxRate(){
+                    document.getElementById("taxRate_num").innerHTML=
+                            document.getElementById("taxRate").value;
+                }
+
+            </script>
+        </div>
+
     </div>
 </div>
+
+
 
 <button id="analysebtn" class="button button-raised button-primary button-pill" onclick="doAnalyse()"  style="position:relative;left:520px;">
     开始回测
@@ -68,15 +80,6 @@
 </body>
 
 <script>
-    $.getJSON('/BenchMark/getBenchList', function (data) {
-       initBaseCode(data);
-    });
-    function initBaseCode(data){
-        alert("initBaseCode");
-        var list=document.getElementById("basecode");
-        for(var i=0;i<data.length;i++){
-            list.options.add(new Option(data[i].name,data[i].code));
-        }
-    }
+
 </script>
 </html>

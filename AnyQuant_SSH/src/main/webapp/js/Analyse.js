@@ -3,11 +3,7 @@
  */
 function initLine(data){
     var boardData=[],benchData=[],length=data.length;
-    if(length==0){
-        alert("对不起不存在该板块");
-        if(parentName=="list") location.href="BoardList.html";
-        else  location.href="BoardDetail.html"+"?name="+parentName;
-    }
+  
     for(var i=0;i<length;i++){
         var date=data[i].date;
         boardData[i]=[
@@ -69,10 +65,21 @@ function doAnalyse(){
     alert("选择的大盘代号："+document.getElementById("basecode").value);
     location.href="Analyse_charts.html";
 }
+
+
+function initBaseCode(data){
+    var list=document.getElementById("basecode");
+    for(var i=0;i<data.length;i++){
+        list.options.add(new Option(data[i].name,data[i].code));
+    }
+}
+
 $(document).ready(function () {
     myBoardName="氮肥";
     $.getJSON('/Board/getCompareData?boardName='+myBoardName, function (data) {
         initLine(data);
     });
-
+    $.getJSON('/BenchMark/getBenchList', function (data) {
+        initBaseCode(data);
+    });
 });

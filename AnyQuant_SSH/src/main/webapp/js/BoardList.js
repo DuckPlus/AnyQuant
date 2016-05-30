@@ -12,9 +12,6 @@ $.getJSON('/Board/getAllBoardsAndStockData', function (data) {
 
 function dosearch() {//TODO 板块不存在 即在当前页面警告
     var boardName=document.getElementById("searchCode").value;
-     alert("search:"+boardName);
-     var boardName=document.getElementById("searchCode").value;
-
     $.getJSON('/Board/checkBoard?'+'board='+boardName, function (data) {
      if(data==true)  location.href="BoardDetail.html"+"?name="+boardName;
      else alert("对不起,不存在该板块");
