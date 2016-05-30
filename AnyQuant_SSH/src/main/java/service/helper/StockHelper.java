@@ -17,17 +17,17 @@ public class StockHelper {
 
         double[] stocks = new double[len];
         double[] factors = new  double[len];
-        System.out.println(factor_vos.get(0).name);
-        System.out.println(stockdataEntities.size() + " " + factor_vos.size());
+//        System.out.println(factor_vos.get(0).name);
+//        System.out.println(stockdataEntities.size() + " " + factor_vos.size());
         for (int i = 0; i <  len; i++) {
             stocks[i] = stockdataEntities.get(i).getClose();
             factors[i] = factor_vos.get(i).value;
-            System.out.print(stockdataEntities.get(i).getDate().toString());
-            System.out.print(factor_vos.get(i).date.DateToString());
-            System.out.println("stock " + i + " " + stocks[i] +  " " + factors[i]);
+//            System.out.print(stockdataEntities.get(i).getDate().toString());
+//            System.out.print(factor_vos.get(i).date.DateToString());
+//            System.out.println("stock " + i + " " + stocks[i] +  " " + factors[i]);
         }
         double resulr = computeIC(stocks , factors);
-        System.out.println("IC is" + resulr);
+//        System.out.println("IC is" + resulr);
         return resulr;
     }
 
@@ -35,9 +35,9 @@ public class StockHelper {
     private static double computeIC(double[] stocks,  double[] factors){
         double[] profits = computeStockProfit(stocks);
 
-        for (int i = 0; i < profits.length; i++) {
-            System.out.println(profits[i]);
-        }
+//        for (int i = 0; i < profits.length; i++) {
+//            System.out.println(profits[i]);
+//        }
 
         return AnalysisAlgorithm.computeRelated(factors , profits);
     }

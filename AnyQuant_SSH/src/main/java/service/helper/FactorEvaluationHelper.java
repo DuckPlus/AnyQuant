@@ -7,7 +7,6 @@ import util.enumration.AnalysisFactor;
 import util.enumration.Suggestion;
 import vo.EvaluationVO;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
@@ -36,7 +35,7 @@ public class FactorEvaluationHelper {
 
         vos.add(analyseMA5(entities , factorArrays.get(AnalysisFactor.MA5)));
 
-
+        vos.add(analyseMA10(entities , factorArrays.get(AnalysisFactor.MA10)));
 
 
 
@@ -83,49 +82,58 @@ public class FactorEvaluationHelper {
             closes[i] = lastFiveDay.get(i).getClose();
         }
 
-        boolean allSmall = true;
-        boolean allLarge = true;
-        boolean smallToLarge = ma5[0] > closes[0] && ma5[len - 1 ] < closes[len-1];//从低于五日均线到高于
-        boolean largeToSmall = ma5[0] < closes[0] && ma5[len - 1 ] > closes[len-1];
-        for (int i = 0; i < len; i++) {
+        closes = MathHelper.getClipFromArray(closes , 5);
+        ma5 = MathHelper.getClipFromArray(ma5 , 5);
+        len = Math.min( 5, len);
 
-            if(ma5[i] > closes[i]){
-                allSmall = false;
-            }else {
-                allLarge = false;
-            }
-        }
-        if(allSmall){
+        if(MathHelper.checkIfAllSmallOrLarge(closes , ma5 , false)){
             positiveMark = positiveMark + 2;
             analysis.add("连续"+ len + "日股价高于五日均线,股票表现强劲");
-        }
-        if (allLarge) {
+        } else if (MathHelper.checkIfAllSmallOrLarge(closes , ma5 , true)) {
             negativeMark = negativeMark + 2;
             analysis.add("连续"+ len + "日股价低于五日均线,股票表现疲软");
-        }
-        if(smallToLarge){
+        } else if(MathHelper.passThrough(closes , ma5 , true)){
             positiveMark++;
             analysis.add("股价上穿五日均线,行情看好");
-        }
-        if(largeToSmall){
+        }else if(MathHelper.passThrough(closes , ma5 , false)){
             negativeMark++;
             analysis.add("股价下穿五日均线,行情看空");
         }
 
-
-
-
-
-
         return new FactorEvaluationVO(analysis , computeMark(positiveMark , negativeMark , 3 , 3) );
     }
 
-    private static FactorEvaluationVO analyseMA10(List<StockdataEntity> data , double[] ma10){
+    private static FactorEvaluationVO analyseMA10(List<StockdataEntity> data, double[] ma10){
+
+        int positiveMark = 0;
+        int negativeMark = 0;
+        int len = Math.min(ma10.length , data.size());
+        List<String> analysis = new ArrayList<>();
+
+        double[] closes = new double[len];
+        for (int i = 0; i < len; i++) {
+            closes[i] = data.get(i).getClose();
+        }
+        len = Math.min( 10, len);
+        closes = MathHelper.getClipFromArray(closes , len);
+        ma10 = MathHelper.getClipFromArray(ma10, len);
 
 
+        if(MathHelper.checkIfAllSmallOrLarge(closes , ma10, false)){
+            positiveMark = positiveMark + 2;
+            analysis.add("连续"+ len + "日股价高于十日均线,股票表现强劲");
+        } else if (MathHelper.checkIfAllSmallOrLarge(closes , ma10, true)) {
+            negativeMark = negativeMark + 2;
+            analysis.add("连续"+ len + "日股价低于十日均线,股票表现疲软");
+        } else if(MathHelper.passThrough(closes , ma10, true)){
+            positiveMark++;
+            analysis.add("股价上穿十日均线,行情看好");
+        }else if(MathHelper.passThrough(closes , ma10, false)){
+            negativeMark++;
+            analysis.add("股价下穿十日均线,行情看空");
+        }
 
-
-        return null;
+        return new FactorEvaluationVO(analysis , computeMark(positiveMark , negativeMark , 3 , 3) );
     }
 
 

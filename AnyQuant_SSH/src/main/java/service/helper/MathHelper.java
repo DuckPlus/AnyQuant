@@ -17,4 +17,66 @@ class MathHelper {
         }
         return sum;
     }
+
+
+    static boolean checkIfAllSmallOrLarge(double[] x , double[] y , boolean smallOrLarge){
+        int len = Math.min(x.length , y.length);
+        for (int i = 0; i < len; i++) {
+            if((smallOrLarge && (x[i] >= y[i])) || (!smallOrLarge && (x[i] <= y[i]))){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    static boolean checkIfAllSmallOrLarge(double[] x , double standard , boolean smallOrLarge){
+        for (double xVal : x){
+            if((smallOrLarge && (xVal >= standard)) || (!smallOrLarge && (xVal <= standard))){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     *  截取部分数组
+     */
+    static double[] getClipFromArray(double[] x , int len){
+        double[] y = new double[len];
+        System.out.println("*********");
+        System.out.println(x.length + " " + len) ;
+        System.arraycopy(x, x.length - len, y, 0, len);
+        return y;
+    }
+
+
+
+    static boolean passThrough(double[] x , double[] y , boolean smallToBig){
+        int len = Math.min(x.length , y.length);
+
+        if(!smallToBig){
+            double[] z = new double[len];
+            for (int i = 0; i < len; i++) {
+                z[i] = x[i];
+                x[i] = y[i];
+                y[i] = z[i];
+            }
+        }
+        if(x[0] < y[0]){
+            for (int i = 1; i < len; i++) {
+                if(x[i] >= y[i]){
+                    for (int j = i + 1 ; j < len; j++) {
+                        if(x[j] < y[j]){
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
 }
