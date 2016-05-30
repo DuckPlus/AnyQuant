@@ -62,7 +62,9 @@ function initLine(data){
 
 }
 function doAnalyse(){
-    alert("选择的大盘代号："+document.getElementById("basecode").value);
+    var startT=document.getElementById("start").value;
+    var endT=document.getElementById("end").value;
+    alert("选择的大盘代号："+document.getElementById("basecode").value+"\n起止时间："+startT+"~"+endT);
     location.href="Analyse_charts.html";
 }
 
