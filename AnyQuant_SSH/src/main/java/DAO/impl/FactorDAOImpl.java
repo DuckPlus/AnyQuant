@@ -4,6 +4,7 @@ import DAO.BaseDAO;
 import DAO.FactorDAO;
 import entity.FactorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.stereotype.Repository;
 import util.DateCalculator;
 import util.MyDate;
@@ -53,6 +54,15 @@ public class FactorDAOImpl implements FactorDAO {
 
         return (List<FactorEntity>) baseDAO.getAllList(hql);
     }
+
+    @Override
+    public List<FactorEntity> getListFactors(List<String> stockCodes) {
+        String hql = "from "+tableName+" where code = ? and date = "+"(select max(date) from " +tableName+")";
+
+        List result  = baseDAO.batchSingleQuery(hql, stockCodes);
+        return  result;
+    }
+
 
 
 

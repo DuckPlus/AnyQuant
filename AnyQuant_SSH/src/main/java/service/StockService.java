@@ -156,7 +156,7 @@ public interface StockService {
 //	 * Force to update all data of the stocks , will send back a message
 //	 */
 //	public void updateAllStockMes();
-	
+	StockEntity getStockEntity(String code);
 
 
 

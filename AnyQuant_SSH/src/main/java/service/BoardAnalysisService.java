@@ -48,4 +48,6 @@ public interface BoardAnalysisService {
     JSONArray getAllBoardAndStockData();
 
     boolean checkIfBoardExist(String board);
+
+
 }

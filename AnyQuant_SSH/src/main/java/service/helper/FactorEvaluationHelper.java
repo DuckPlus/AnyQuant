@@ -7,7 +7,9 @@ import util.enumration.AnalysisFactor;
 import util.enumration.Suggestion;
 import vo.EvaluationVO;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * 分析股票因子
@@ -18,11 +20,9 @@ public class FactorEvaluationHelper {
 
     /**
      * 分析股票因子,返回对其的评分
-     * @param entities
-     * @param factors
-     * @return
+     * @param boardsFactor 同行业的其他股票最近一个交易日的factor
      */
-    public static EvaluationVO evaluateStockByFactor(List<StockdataEntity> entities , List<FactorEntity> factors){
+    public static EvaluationVO evaluateStockByFactor(List<StockdataEntity> entities , List<FactorEntity> factors , List<FactorEntity> boardsFactor){
         List<FactorEvaluationVO> vos = new ArrayList<>();
         int len = Math.min(entities.size() , factors.size());
         Map<AnalysisFactor , double[]> factorArrays = getFactorArray(factors);
@@ -36,8 +36,8 @@ public class FactorEvaluationHelper {
         vos.add(analyseMA5(entities , factorArrays.get(AnalysisFactor.MA5)));
 
         vos.add(analyseMA10(entities , factorArrays.get(AnalysisFactor.MA10)));
-
-
+        vos.add(analyseVol5(entities , factorArrays.get(AnalysisFactor.VOL5)));
+        vos.add(analysePS( factorArrays.get(AnalysisFactor.PS) , boardsFactor));
 
 
 
@@ -67,9 +67,6 @@ public class FactorEvaluationHelper {
 
     /**
      * 分析五日均线走势,给出相应结论和分值
-     * @param lastFiveDay
-     * @param ma5
-     * @return
      */
     private static FactorEvaluationVO analyseMA5(List<StockdataEntity> lastFiveDay , double[] ma5){
         int positiveMark = 0;
@@ -136,7 +133,54 @@ public class FactorEvaluationHelper {
         return new FactorEvaluationVO(analysis , computeMark(positiveMark , negativeMark , 3 , 3) );
     }
 
+    /*分析市销率*/
+    private static FactorEvaluationVO analysePS(double[] ps, List<FactorEntity> boardsFactor){
+        List<String> analysis = new ArrayList<>();
+        int positiveMark = 0;
+        int negativeMark = 0;
+//        System.out.println("size = =" +boardsFactor.size());
+//        for (FactorEntity entity : boardsFactor){
+//            System.out.println(entity.getPs());
+//        }
 
+        double avg = MathHelper.computeAverage(ps);
+
+        double[] boardFactor = boardsFactor.stream().mapToDouble(FactorEntity::getPs).toArray();
+
+        Point rank = MathHelper.getRank(ps[ps.length - 1] , boardFactor , true);
+
+
+//        if(avg < 0.85){
+//            positiveMark+=2;
+//            analysis.add("该股票市销率较低,投资价值越高");
+//        } else if (avg > 1.75){
+//            negativeMark+=2;
+//            analysis.add("该股票市销率较高,投资价值较低");
+//        }
+//        System.out.print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+//        System.out.println(rank.getX() + " " + rank.getY());
+        double rankRate = rank.getX()/rank.getY();
+        if ( rankRate < 0.1){
+            positiveMark+= 2;
+            analysis.add("该股票市销率在同行业中居于极低的排名,投资价值较高");
+        }else if(rankRate < 0.3){
+            positiveMark+=1;
+            analysis.add("该股票市销率在同行业中居于比较低的排名,投资价值较高");
+        } else  if(rankRate < 0.7){
+
+        }else if(rankRate < 0.9){
+            negativeMark++;
+            analysis.add("该股票市销率在同行业中居于较高的位置,投资价值较低");
+        }else {
+            negativeMark+=2;
+            analysis.add("该股票市销率在同行业中居于较高的排名,投资价值较低,买入需谨慎");
+        }
+
+
+
+
+        return new FactorEvaluationVO(analysis , computeMark(positiveMark , negativeMark , 2 ,2));
+    }
 
 
 
@@ -145,17 +189,37 @@ public class FactorEvaluationHelper {
 
     /**
      * 分析均线间穿来穿去的关系
-     * @param factors
-     * @return
      */
     private static FactorEvaluationVO analyseMAs(List<FactorEntity> factors){
         return null;//TODO
     }
 
-    private static FactorEvaluationVO analyseVol5(List<StockdataEntity> lastFiveDay , double[] vol5){
+    private static FactorEvaluationVO analyseVol5(List<StockdataEntity> data , double[] vol5){
+        List<String> analysis = new ArrayList<>();
+        int positiveMark = 0;
+        int negativeMark = 0;
+
+        double avg = MathHelper.computeAverage(vol5);
+        if (avg < 0.01){
+            negativeMark += 2;
+            analysis.add("近期换手率极低,股票交易不活跃");
+
+        }else if(avg < 0.015){
+            negativeMark++;
+            analysis.add("近期股票换手率较低,交易较为温和");
+        }else if (avg < 0.03){
+            //Nothing
+        } else if (avg < 0.04){
+            positiveMark++;
+            analysis.add("该股票市场交易活跃");
+
+        }else if (avg >= 0.04){
+            positiveMark+= 2;
+            analysis.add("该股票近期交易十分活跃,建议密切关注");
+        }
 
 
-        return null;//TODO
+        return new FactorEvaluationVO(analysis , computeMark(positiveMark , negativeMark , 3 ,3));//TODO
     }
 
 

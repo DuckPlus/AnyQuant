@@ -231,7 +231,12 @@ public class StockServiceImpl implements StockService {
         return stockDataDAO.getStockData(stockCode , start ,end);
     }
 
-        /**
+    @Override
+    public StockEntity getStockEntity(String code) {
+        return cacheHelper.getStockEntity(code);
+    }
+
+    /**
          * 计算给定范围内的成交量、成交额总量
          *
          */

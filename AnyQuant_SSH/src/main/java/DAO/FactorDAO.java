@@ -32,6 +32,10 @@ public interface FactorDAO {
      */
     List<FactorEntity> getFactorByDate(String stockCode , MyDate start , MyDate end);
 
-
-
+    /**
+     * 获得一批股票最近一个交易日的因子值
+     * @param stockCode
+     * @return
+     */
+    List<FactorEntity> getListFactors(List<String> stockCode);
 }

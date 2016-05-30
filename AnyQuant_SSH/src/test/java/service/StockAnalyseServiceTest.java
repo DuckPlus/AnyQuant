@@ -63,11 +63,11 @@ public class StockAnalyseServiceTest {
     public void getEvaluation() throws Exception {
         //TODO
 
-        for (int i = 10; i < 50; i++) {
+        for (int i = 10; i < 90; i++) {
             try {
                 EvaluationVO vo = stockAnalyseService.getEvaluation("sh6000" + i);
                 System.out.println(Arrays.toString(vo.analysis.toArray()));
-                System.out.println(vo.code);
+//                System.out.println(vo.code);
                 System.out.println(vo.mark + " "  +vo.suggestion);
             }catch (Exception e){
             }

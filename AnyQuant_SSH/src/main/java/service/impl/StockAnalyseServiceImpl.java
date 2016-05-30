@@ -5,12 +5,15 @@ import DAO.StockDAO;
 import DAO.StockDataDAO;
 import data.DataServiceFactory;
 import data.NewsDataService;
+import entity.FactorEntity;
 import entity.StockEntity;
 import entity.StockdataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import service.BoardAnalysisService;
 import service.StockAnalyseService;
+import service.StockService;
 import service.helper.FactorEvaluationHelper;
 import service.helper.StockHelper;
 import util.DateCalculator;
@@ -36,6 +39,8 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
 
     private NewsDataService newsDS = DataServiceFactory.getNewsDataService();
     @Autowired
+    private StockService stockService;
+    @Autowired
     private StockDAO stockDAO;
     @Autowired
     private StockDataDAO stockDataDAO;
@@ -44,7 +49,7 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
     @Override
     @Transactional
     public StockEntity getStockFullMessage(String stockCode) {
-        return stockDAO.getStockEntity(stockCode);
+        return stockService.getStockEntity(stockCode);
     }
 
     @Override
@@ -54,10 +59,8 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
 
     @Override
     public EvaluationVO getEvaluation(String stockCode) {
-        //TODO
 
-
-        return FactorEvaluationHelper.evaluateStockByFactor(stockDataDAO.getStockData(stockCode , DateCalculator.getAnotherDay( - 30) , DateCalculator.getToDay()) , factorDAO.getFactorByDate(stockCode , DateCalculator.getAnotherDay( - 30) , DateCalculator.getToDay()));
+        return FactorEvaluationHelper.evaluateStockByFactor(stockService.getStocksByTime(stockCode , DateCalculator.getAnotherDay( - 50) , DateCalculator.getToDay()) , factorDAO.getFactorByDate(stockCode , DateCalculator.getAnotherDay( - 50) , DateCalculator.getToDay()), factorDAO.getListFactors(stockDAO.getBoardRealatedStockCodes(stockDAO.getStockEntity(stockCode).getBoard())));
     }
 
     @Override
@@ -75,9 +78,6 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
     @Transactional
     public List<StockdataEntity> getRegionRelatedStockMessage(String stockCode) {
         String region = getStockFullMessage(stockCode).getRegion();
-//        System.out.println("get
-
-
         List<String> relatedStockCodes = stockDAO.getRegionRealatedStockCodes(region);
 
         return stockDataDAO.getStockData(relatedStockCodes);
