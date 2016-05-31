@@ -2,18 +2,17 @@ package DAO.impl;
 
 import DAO.BaseDAO;
 import DAO.OptionalDAO;
-import DAO.StockDataDAO;
 import DAO.StockDAO;
+import DAO.StockDataDAO;
 import entity.OptionalstockEntity;
 import entity.OptionalstockEntityPK;
 import entity.StockEntity;
 import entity.StockdataEntity;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 /**
  * @author ss
  * @date 16/5/11

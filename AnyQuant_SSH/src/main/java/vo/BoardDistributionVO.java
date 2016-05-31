@@ -1,7 +1,5 @@
 package vo;
 
-import java.sql.Date;
-
 /**
  * 板块内部股票分布图
  * @author Qiang

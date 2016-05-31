@@ -5,13 +5,11 @@ import DAO.StockDAO;
 import DAO.StockDataDAO;
 import data.DataServiceFactory;
 import data.NewsDataService;
-import entity.FactorEntity;
 import entity.StockEntity;
 import entity.StockdataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import service.BoardAnalysisService;
 import service.StockAnalyseService;
 import service.StockService;
 import service.helper.FactorEvaluationHelper;
@@ -25,8 +23,8 @@ import vo.FactorWeightVO;
 import vo.Factor_VO;
 import vo.NewsVO;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 股票分析界面逻辑层

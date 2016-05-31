@@ -12,8 +12,6 @@ import util.DateCalculator;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 /**
  * @author Qiang
  * @date 16/5/23

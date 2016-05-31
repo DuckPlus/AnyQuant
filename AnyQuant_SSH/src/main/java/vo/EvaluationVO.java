@@ -1,7 +1,5 @@
 package vo;
 
-import util.enumration.Suggestion;
-
 import java.util.List;
 
 /**

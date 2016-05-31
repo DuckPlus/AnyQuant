@@ -1,12 +1,9 @@
 package service.impl;
 
 import DAO.BenchMarkDAO;
-
 import DAO.StockDAO;
 import DAO.StockDataDAO;
 import entity.BenchmarkdataEntity;
-
-import entity.StockEntity;
 import entity.StockdataEntity;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -15,13 +12,14 @@ import org.springframework.stereotype.Service;
 import service.BoardAnalysisService;
 import service.helper.StableDataCacheHelper;
 import service.helper.StockHelper;
-import sun.text.normalizer.SymbolTable;
 import util.Configure;
 import util.DateCalculator;
 import vo.BoardDistributionVO;
 import vo.CompareBoardAndBenchVO;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Qiang

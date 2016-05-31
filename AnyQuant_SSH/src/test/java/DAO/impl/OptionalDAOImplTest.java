@@ -3,13 +3,15 @@ package DAO.impl;
 import DAO.OptionalDAO;
 import entity.StockEntity;
 import entity.StockdataEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import java.util.ArrayList;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by 67534 on 2016/5/12.

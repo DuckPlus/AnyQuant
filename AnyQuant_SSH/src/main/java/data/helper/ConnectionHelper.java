@@ -9,8 +9,8 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import util.enumration.API_TYPE;
 import util.StaticMessage;
+import util.enumration.API_TYPE;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;

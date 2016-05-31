@@ -6,13 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.StockService;
-import util.DateCalculator;
 import util.MyDate;
 import vo.DealVO;
 import vo.OHLC_VO;
 import vo.TimeSharingVO;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**

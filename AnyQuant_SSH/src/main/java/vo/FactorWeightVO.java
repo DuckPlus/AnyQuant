@@ -1,7 +1,5 @@
 package vo;
 
-import util.MyDate;
-
 /**
  * 因子有效性VO
  * @author Qiang
