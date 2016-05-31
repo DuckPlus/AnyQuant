@@ -7,7 +7,7 @@ package util.enumration;
  */
 public enum Suggestion {
 
-    STRONGLY_RECOMMEND("强烈推荐" , 80) , RECOMMEND("推荐买入" , 60 ) , NORMAL("建议观望" ,  40 ) ,  DEPRECATED("适度减仓" , 20 ) , STRONGLY_DEPRECATED("建议抛售" , 0);
+    STRONGLY_RECOMMEND("强烈推荐" , 70) , RECOMMEND("推荐买入" , 55 ) , NORMAL("建议观望" ,  40 ) ,  DEPRECATED("适度减仓" , 20 ) , STRONGLY_DEPRECATED("建议抛售" , 0);
 
 
     public String chinese;

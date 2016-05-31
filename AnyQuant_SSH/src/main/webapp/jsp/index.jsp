@@ -26,7 +26,7 @@
 
         <fieldset id="loginModule" style="margin-left: auto;margin-right: auto;">
             <%--<label >Username:</label>--%>
-            <form action="/login" method="post" autocomplete="off">
+            <form action="/user/login" method="post" autocomplete="off">
             <div id="account_with_icon">
                 <img src="/image/login_white.png" alt="ACC" id="account_icon">
                 <input id="username" name="username" type="text" placeholder="username" class="flat_input_text" required>
@@ -43,7 +43,7 @@
                 <input type="submit" value="登录" class="flat_button_future flat_button_future_rounded" id="login_btn">
 
             <%--</div>--%>
-            <a href="/json">所有账户</a>
+            <a href="/user/json">所有账户</a>
 
 
             <script src="../js/login.js"></script>

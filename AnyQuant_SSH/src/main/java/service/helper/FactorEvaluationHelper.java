@@ -48,9 +48,16 @@ public class FactorEvaluationHelper {
 
         List<String> analysis = new ArrayList<>();
         int sum = 0;
+        int useFulSize = vos.size();
         for (FactorEvaluationVO vo : vos){
             analysis.addAll(vo.analysis);
-            sum += vo.mark;
+            if (vo.mark == 50){
+                useFulSize--;
+            }else {
+                sum+= vo.mark;
+            }
+
+
         }
         System.out.println(sum + " " + vos.size());
        int mark = (int) (sum/(double)vos.size());
