@@ -15,6 +15,7 @@
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
 
+    <script type="text/javascript" charset="utf-8" src="/js/LogStatusControl.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
     <link rel="stylesheet" href="/css/duck_stock_detail.css" type="text/css">
     <!-- <h1 class="title1">hello this is a test page!</h1> -->
@@ -83,6 +84,23 @@
             <div class="duck_title_text">股票因子走势图</div>
         </div>
         <div class="duck_content">
+            <select name="factor_type" id="factor_type" onchange=selectChange()>
+                <option value="市盈率">市盈率</option>
+                <option value="市净率">市净率</option>
+                <option value="五日换手率">五日换手率</option>
+                <option value="十日换手率">十日换手率</option>
+                <option value="120日换手率">120日换手率</option>
+                <option value="5日均线">5日均线</option>
+                <option value="10日均线">10日均线</option>
+                <option value="60日均线">60日均线</option>
+                <option value="120日均线">120日均线</option>
+                <option value="市销率">市销率</option>
+                <option value="市现率">市现率</option>
+                <option value="心理线指标">心理线指标</option>
+                <option value="分析师推荐评级">分析师推荐评级</option>
+                <option value="分析师推荐评级变化">分析师推荐评级变化</option>
+
+            </select>
             <div id="factor_chart"></div>
         </div>
     </div>
@@ -104,6 +122,8 @@
                 <div class="duck_title_text">各项评分</div>
             </div>
             <div class="duck_content">
+                    <input id="xinxixishu" type="radio" checked="checked" name="radar_type" value="信息系数" onclick="change_radar_type()">因子系数<br>
+                    <input id="xinxibi" type="radio" name="radar_type" value="信息比" onclick="change_radar_type()">信息比<br>
                 <div id="radar_chart" style="width: 100%;height: 400px"></div>
             </div>
         </div>
@@ -114,15 +134,29 @@
             <div class="duck_title_text">相关新闻</div>
         </div>
         <div class="duck_content" style="overflow-y: scroll;height: 370px" id="news_content">
-
-
         </div>
-
     </div>
 
 </div>
 
 </body>
+<script>
+
+    function selectChange() {
+        var selection = document.getElementById('factor_type');
+        var index = selection.selectedIndex;
+        var selectedValue = selection.options[index].value;
+        init_factor_chart(selectedValue);
+        isLogin();
+    }
+    function change_radar_type() {
+        if(document.getElementById('xinxixishu').checked){
+
+        }else if(document.getElementById('xinxibi')){
+
+        }
+    }
+</script>
 <!-- script -->
 <script>
     var myRed="#FF0000";
@@ -390,36 +424,55 @@
 </script>
 
 <script type="text/javascript">
-    $(function () {
+    function init_factor_chart(factor) {
+        $.ajax({
+            url: '/StockDetail/getFactorChange',
+            data: {code: getCode(), factor: factor, offset: 30},
+            type: 'get',
+            success: function (data) {
+                var result;
+                var date;
+                var dataset = [];
+                for(var i=0;i<data.length;i++){
+//                    alert(data[i].date.year);
+                    result = data[i].date.year+"-"+data[i].date.month+"-"+data[i].date.day;
+                    date = new Date(result);
+                    dataset.push([date.getTime(),data[i].value]);
+//                    alert(result);
+                }
+                // Create the chart
+                $('#factor_chart').highcharts('StockChart', {
 
-        $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
-            // Create the chart
-            $('#factor_chart').highcharts('StockChart', {
 
+                    rangeSelector : {
+                        selected : 1
+                    },
 
-                rangeSelector : {
-                    selected : 1
-                },
+                    title : {
+                        text : 'STOCK FACTOR'
+                    },
+                    yAxis:{
+                        crosshair:{//color:myRed
+                        },
+                    },
 
-                title : {
-                    text : 'STOCK FACTOR'
-                },
-                yAxis:{
-                    crosshair:{//color:myRed
-                         },
-                },
+                    series : [{
+                        name : 'factor name',
+                        data : dataset,
+                        tooltip: {
+                            valueDecimals: 2
+                        }
+                    }]
+                });
 
-                series : [{
-                    name : 'factor name',
-                    data : data,
-                    tooltip: {
-                        valueDecimals: 2
-                    }
-                }]
-            });
+            }
         });
+    }
 
-    });
+
+
+
+
 </script>
 <script type="text/javascript">
     $.ajax({
