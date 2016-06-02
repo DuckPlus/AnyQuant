@@ -50,12 +50,17 @@ public class StockHelper {
         }
 
         for (int i = 0; i < len; i++) {
-            divideEntites.get(len%divide).add(entities.get(i));
-            divideVos.get(len%divide).add(factor_vos.get(i));
+            System.out.println(i + " " + len + " " + i%divide);
+            divideEntites.get(i%divide).add(entities.get(i));
+            divideVos.get(i%divide).add(factor_vos.get(i));
         }
-
+//        for (int i = 0; i < len; i++) {
+//            System.out.println(divideEntites.get(i).size());
+//            System.out.println(divideVos.get(i).size());
+//        }
+//        System.out.println("***************************");
         double[] ICs = new double[divide];
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < divide; i++) {
             ICs[i] = computeIC(divideEntites.get(i) , divideVos.get(i));
         }
 
