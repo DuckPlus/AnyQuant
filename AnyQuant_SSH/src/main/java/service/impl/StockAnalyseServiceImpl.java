@@ -1,10 +1,12 @@
 package service.impl;
 
+import DAO.BenchMarkDAO;
 import DAO.FactorDAO;
 import DAO.StockDAO;
 import DAO.StockDataDAO;
 import data.DataServiceFactory;
 import data.NewsDataService;
+import entity.BenchmarkdataEntity;
 import entity.StockEntity;
 import entity.StockdataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +16,10 @@ import service.StockAnalyseService;
 import service.StockService;
 import service.helper.FactorEvaluationHelper;
 import service.helper.StockHelper;
+import util.Configure;
 import util.DateCalculator;
 import util.MyDate;
+import util.StaticMessage;
 import util.enumration.AnalysisFactor;
 import util.enumration.FactorJudge;
 import vo.EvaluationVO;
@@ -44,6 +48,8 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
     private StockDataDAO stockDataDAO;
     @Autowired
     private FactorDAO factorDAO;
+    @Autowired
+    private BenchMarkDAO benchMarkDAO;
     @Override
     @Transactional
     public StockEntity getStockFullMessage(String stockCode) {
@@ -115,7 +121,7 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
         for (AnalysisFactor factor : AnalysisFactor.values()){
             List<Factor_VO> factor_vos = factorDAO.getFactors(code , factor , start , end);
 
-            double factorJudgeVal = computeFactorJudgeValue(entities , factor_vos , factorJudge);
+            double factorJudgeVal = computeFactorJudgeValue(entities , factor_vos , factorJudge , timeLen);
 
 
             factorWeightVOs.add(new FactorWeightVO(factorJudgeVal , factor.chinese , factorJudgeVal > 0 ));
@@ -126,14 +132,15 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
         return factorWeightVOs;
     }
 
-    private static double computeFactorJudgeValue(List<StockdataEntity> entities, List<Factor_VO> factor_vos, FactorJudge factorJudge) {
+    private double computeFactorJudgeValue(List<StockdataEntity> entities, List<Factor_VO> factor_vos, FactorJudge factorJudge, int timeLen) {
         switch (factorJudge){
             case IC:
                  return StockHelper.computeIC(entities ,factor_vos);
             case IR:
-                 return StockHelper.computeIR();
+                 return StockHelper.computeIR(entities , factor_vos);
             case T_CHECK:
-                 return StockHelper.computeWIN_RATE();
+                List<BenchmarkdataEntity> hushen300 = benchMarkDAO.getBenchMarkByTime(Configure.HUSHEN300 , DateCalculator.getAnotherDay(-timeLen) , DateCalculator.getToDay());
+                 return StockHelper.computeTCheck(entities , factor_vos , hushen300);
 
         }
         return 0;

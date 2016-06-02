@@ -24,6 +24,8 @@ public enum FactorJudge {
      * 用于衡量 Alpha 因子是否具有显著的因子回报,因子的 t 检验概率 越小
      * 说明该因子的选股效果越好,经统计发现,t检验的概率小于0.2时,
      * 相应的Alpha 因子具有较好的选股效果!
+     *
+     * t 检验组合超额收益率与沪深 300 收益率的显著程度
      */
     T_CHECK("T检验");
     public String chinese;

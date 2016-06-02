@@ -1,8 +1,10 @@
 package service.helper;
 
+import entity.BenchmarkdataEntity;
 import entity.StockdataEntity;
 import vo.Factor_VO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,37 +28,62 @@ public class StockHelper {
 //            System.out.print(factor_vos.get(i).date.DateToString());
 //            System.out.println("stock " + i + " " + stocks[i] +  " " + factors[i]);
         }
-        double resulr = computeIC(stocks , factors);
-//        System.out.println("IC is" + resulr);
-        return resulr;
+        return computeIC(stocks , factors);
     }
 
 
     private static double computeIC(double[] stocks,  double[] factors){
         double[] profits = computeStockProfit(stocks);
-
-//        for (int i = 0; i < profits.length; i++) {
-//            System.out.println(profits[i]);
-//        }
-
         return AnalysisAlgorithm.computeRelated(factors , profits);
     }
 
 
 
-    public static double computeIR(){
+    public static double computeIR(List<StockdataEntity> entities, List<Factor_VO> factor_vos){
+        int len = Math.min(entities.size() , factor_vos.size());
+        int divide = 6;
+        List<List<StockdataEntity>> divideEntites = new ArrayList<>();
+        List<List<Factor_VO>> divideVos = new ArrayList<>();
+        for (int i = 0; i < len; i++) {
+            divideEntites.add(new ArrayList<>());
+            divideVos.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < len; i++) {
+            divideEntites.get(len%divide).add(entities.get(i));
+            divideVos.get(len%divide).add(factor_vos.get(i));
+        }
+
+        double[] ICs = new double[divide];
+        for (int i = 0; i < len; i++) {
+            ICs[i] = computeIC(divideEntites.get(i) , divideVos.get(i));
+        }
+
+
+        return MathHelper.computeAverage(ICs)/Math.sqrt(MathHelper.computeVar(ICs));
+    }
+
+    public static double computeTCheck(List<StockdataEntity> entities, List<Factor_VO> factor_vos, List<BenchmarkdataEntity> hushen300){
+        int len = Math.min(entities.size() , Math.min(factor_vos.size() , hushen300.size()));
+
+        double[] hushen300Profits = new double[len];
+        double[] entitesProfit = new double[len];
+        for (int i = 0; i < len; i++) {
+            hushen300Profits[i] = hushen300.get(i).getClose();
+            entitesProfit[i] = entities.get(i).getClose();
+        }
+        hushen300Profits = StockHelper.computeAccumulativeProfit(hushen300Profits);
+        entitesProfit = StockHelper.computeAccumulativeProfit(entitesProfit);
+
+
 
         return 0;
     }
 
-    public static double computeWIN_RATE(){
-        return 0;
-    }
 
 
 
-
-    public static double[] computeStockProfit(double[] datas){
+    private static double[] computeStockProfit(double[] datas){
         double[] results = new double[datas.length - 1];
         for (int i = 0; i < datas.length - 1; i++) {
             results[i] = computeStockProfit(datas[i] , datas[i+1]);
