@@ -52,6 +52,7 @@ public interface BaseDAO {
      */
 	public List<?> getAllList(Class<?> c);
 	public List<?> getAllList(String hql);
+	public List<?> getAllList(String hql , int num);
 
 	/**
 	 * each query need a para and return one object

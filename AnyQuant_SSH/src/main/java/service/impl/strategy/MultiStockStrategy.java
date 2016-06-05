@@ -1,7 +1,6 @@
 package service.impl.strategy;
 
 import util.MyDate;
-import vo.CumRtnVO;
 import vo.ReportVO;
 
 import java.util.ArrayList;
@@ -41,9 +40,10 @@ public abstract class MultiStockStrategy extends BaseStrategy {
         super();
     }
 
-    public void initSingleStockStrategy(double capital, double taxRate,
-                                        String baseCode , MyDate start , MyDate end,int vol){
-        super.initBaseStrategy(capital,taxRate,baseCode,start,end);
+
+    public void setPara_Mutil(double capital, double taxRate,
+                              String baseCode , MyDate start , MyDate end, int vol){
+        super.setPara(capital,taxRate,baseCode,start,end);
 
         this.stocks = new ArrayList<>();
         this.vol=vol;
@@ -69,60 +69,10 @@ public abstract class MultiStockStrategy extends BaseStrategy {
     protected abstract  void buyStocks();
 
     /**
-     * 简单平仓，并计算累计收益率
+     * 抽象的卖出方法
      */
-    protected void sellStocks(){
-        /**
-         * 获取当日的股票池的均价
-         */
-        double [] temp=stockDataDAO.getAvgPriceByCodes(stocks,curTradeDay);
-//        System.out.println("temp.size()"+temp.length);
-//        System.out.println(" get sell_Prices"+sell_Prices);
-        sell_Prices= new double[vol];
-        for(int i=0;i<temp.length;i++){
-            /**
-             * 如果买入价格是0，说明数据出错，
-             * 将卖出价格也设为0，从而忽略这只股票
-             */
-            if(buy_Prices[i]!=0){
+    protected abstract  void sellStocks();
 
-                /**
-                 * 如果卖出价格为0而买入不为0,说明数据出错，
-                 * 把卖出价格设为买入价，从而忽略这只股票
-                 */
-                if(temp[i]==0){
-                    sell_Prices[i]=buy_Prices[i];
-                }else{
-                    sell_Prices[i]=temp[i];
-                }
 
-            }
-
-        }
-
-        for(int i=0;i<stocks.size();i++){
-            System.out.println("sell "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+sell_Prices[i]);
-            income+=sell_Prices[i]*lots[i]*stocksPerLot;
-        }
-        stocks.clear();
-
-        /**
-         * 计算测试股票的累计收益率
-         */
-        profit=income-expense;
-        cumRtnRate=profit/expense;
-
-        /**
-         * 计算测试指数的累计收益率
-         */
-        base_SellPrice=benchMarkDAO.getAvgPrice(this.baseCode,curTradeDay);
-        baseRtnRate+=(base_SellPrice-base_BuyPrice)/base_BuyPrice;
-
-        /**
-         * 向结果链表中添加一个元素
-         */
-        CumRtnVO vo = new CumRtnVO(baseRtnRate,cumRtnRate,curTradeDay);
-        this.cumRtnVOList.add(vo);
-    }
 
 }

@@ -2,6 +2,7 @@ package service.impl.strategy;
 
 import org.springframework.stereotype.Service;
 import util.MyDate;
+import vo.CumRtnVO;
 import vo.ReportVO;
 
 import java.util.List;
@@ -27,10 +28,10 @@ public class Strategy_PE extends MultiStockStrategy {
         super();
     }
 
-    public void initStrategy_PE(double capital, double taxRate, String baseCode ,
-                       MyDate start , MyDate end , int vol, int interval ){
+    public void setPara_PE(double capital, double taxRate, String baseCode ,
+                           MyDate start , MyDate end , int vol, int interval ){
 
-        super.initSingleStockStrategy(capital,taxRate,baseCode,start,end,vol);
+        super.setPara_Mutil(capital,taxRate,baseCode,start,end,vol);
 
         this.interval=interval;
         this.low_PE=25;
@@ -146,7 +147,64 @@ public class Strategy_PE extends MultiStockStrategy {
     }
 
 
+    /**
+     * 简单平仓，并计算累计收益率
+     */
+    @Override
+    protected void sellStocks() {
+        /**
+         * 获取当日的股票池的均价
+         */
+        double [] temp=stockDataDAO.getAvgPriceByCodes(stocks,curTradeDay);
+//        System.out.println("temp.size()"+temp.length);
+//        System.out.println(" get sell_Prices"+sell_Prices);
+        sell_Prices= new double[vol];
+        for(int i=0;i<temp.length;i++){
+            /**
+             * 如果买入价格是0，说明数据出错，
+             * 将卖出价格也设为0，从而忽略这只股票
+             */
+            if(buy_Prices[i]!=0){
 
+                /**
+                 * 如果卖出价格为0而买入不为0,说明数据出错，
+                 * 把卖出价格设为买入价，从而忽略这只股票
+                 */
+                if(temp[i]==0){
+                    sell_Prices[i]=buy_Prices[i];
+                }else{
+                    sell_Prices[i]=temp[i];
+                }
+
+            }
+
+        }
+
+        for(int i=0;i<stocks.size();i++){
+            System.out.println("sell "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+sell_Prices[i]);
+            income+=sell_Prices[i]*lots[i]*stocksPerLot;
+            tax+=sell_Prices[i]*lots[i]*stocksPerLot*taxRate;
+        }
+        stocks.clear();
+
+        /**
+         * 计算测试股票的累计收益率
+         */
+//        profit=income-expense-tax;
+//        cumRtnRate=profit/expense;
+        computeCumRtnRate();
+        /**
+         * 计算测试指数的累计收益率
+         */
+//        base_SellPrice=benchMarkDAO.getAvgPrice(this.baseCode,curTradeDay);
+//        baseRtnRate+=(base_SellPrice-base_BuyPrice-base_SellPrice*taxRate)/base_BuyPrice;
+        computeBaseRtnRate();
+        /**
+         * 向结果链表中添加一个元素
+         */
+        CumRtnVO vo = new CumRtnVO(baseRtnRate,cumRtnRate,curTradeDay);
+        this.cumRtnVOList.add(vo);
+    }
 
 
 }

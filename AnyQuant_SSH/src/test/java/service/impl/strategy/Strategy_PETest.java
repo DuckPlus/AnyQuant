@@ -35,7 +35,7 @@ public class Strategy_PETest {
 
     @Before
     public void setUp() throws Exception {
-        strategy_pe.initStrategy_PE
+        strategy_pe.setPara_PE
                 (capital,taxRate,baseCode,start,end,vol,interval);
 
         if(strategy_pe!=null){

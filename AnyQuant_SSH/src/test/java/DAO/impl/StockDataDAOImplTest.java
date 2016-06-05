@@ -183,4 +183,17 @@ public class StockDataDAOImplTest {
     }
 
 
+    @Test
+    public void getStockCodeByVolDec() throws Exception{
+        MyDate date = MyDate.getDateFromString("2006-01-04");
+        int vol = 20;
+        List<String>  codes = dao.getStockCodeByVolDec(date,vol);
+        if(codes==null){
+            fail("null");
+        }else{
+            for(int i=0;i<codes.size();i++)
+                System.out.println(codes.get(i));
+        }
+    }
+
 }

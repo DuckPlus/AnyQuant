@@ -106,6 +106,12 @@ public class BaseDAOImpl implements BaseDAO {
     }
 
     @Override
+    public List<?> getAllList(String hql, int num) {
+        Session session = getSession();
+        return session.createQuery(hql).setMaxResults(num).list();
+    }
+
+    @Override
     public List<?> batchSingleQuery(String hql, List<String> paras) {
         List result = new ArrayList<>();
 

@@ -130,6 +130,16 @@ public class StockDataDAOImpl implements StockDataDAO {
         return  (temp==null? 0: (double)temp);
     }
 
+    @Override
+    public List<String> getStockCodeByVolDec(MyDate date, int vol) {
+
+        String hql = "select code from "
+                +tableName+" where date = '"+date.DateToString()+"'"
+                + "order by turnoverVol asc";
+        return (List<String>) baseDAO.getAllList(hql,vol);
+
+    }
+
 
     @Override
     public List<MyDate> getTradeDates(MyDate start, MyDate end) {
