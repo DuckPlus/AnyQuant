@@ -1,16 +1,19 @@
 /**
  * Created by duanzhengmou on 6/1/16.
  */
-function isLogin(){
+
+/**
+ * 检查是否登录,并依结果做出相应跳转
+ */
+function handle_Login(){
     $.ajax({
-       url:'',
+       url:'/user/checkIfLogin',
        type:'get',
         success:function (data) {
-            // alert("data:"+data);
             if(data){
-                alert("logged in!");
+                //do nothing
             }else{
-                alert('get the hell log in');
+                window.location.href = '/jsp/index.jsp';
             }
         }        
     });

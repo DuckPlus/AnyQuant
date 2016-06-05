@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Duck 自选股</title>
     <script src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+    <script src="/js/LogStatusControl.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
     <link rel="stylesheet" type="text/css" href="/css/window.css">
     <link rel="stylesheet" href="/css/duck_optional.css">
@@ -18,7 +19,7 @@
     <!--tab上的小图标-->
     <link rel="shortcut icon" href="/image/short_cut.png">
 </head>
-<body>
+<body onload=init()>
 <!-- navigator begin -->
 <div id="nav_bar">
     <img src="/image/duck_icon_pink.png" style="width: 73px;height: 35px;float: left;margin-top:7px;margin-left: 10px ">
@@ -89,6 +90,10 @@
 </body>
 
 <script>
+    function init() {
+        //verify if login
+        handle_Login();
+    }
     var allStock;
     $(document).ready(function () {
                 $.ajax({
