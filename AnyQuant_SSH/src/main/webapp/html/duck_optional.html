@@ -9,6 +9,8 @@
     <link rel="stylesheet" type="text/css" href="/css/window.css">
     <link rel="stylesheet" href="/css/duck_optional.css">
 
+    <script src="/js/loadingbar.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/loadingbar.css" />
     <!-- DataTables -->
     <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
     <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
@@ -86,6 +88,19 @@
                 <tfoot>
                 </tfoot>
             </table>
+            <div id="loading">
+                <br><br>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <p>加载中</p>
+            </div>
         </div>
     </div>
 
@@ -128,6 +143,7 @@
                     contentType:'application/json;charset=utf-8',
                     success:function (data){
                         initTable(data);
+                        $("#loading").remove();
                     },
                     error:function () {
                         alert("请求失败");

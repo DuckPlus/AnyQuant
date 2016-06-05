@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Duck</title>
     <script src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+    <script src="/js/loadingbar.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/loadingbar.css" />
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
     <link rel="stylesheet" type="text/css" href="/css/window.css">
     <link rel="stylesheet" type="text/css" href="/css/duck_main.css">
@@ -66,6 +68,11 @@
 <!-- navigator end -->
 
 <div id="main_content">
+
+    <!--大盘-->
+    <div id="benchmark_window" class="duck_window">
+        <div class="duck_title">
+            <div class="duck_title_text">大盘列表</div>
     <!--TAB-->
     <div id="usual1" class="usual">
 
@@ -103,6 +110,19 @@
                         </tfoot>
 
                     </table>
+                    <div id="loading">
+                        <br><br>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <p>加载中</p>
+                    </div>
                 </div>
             </div>
         <div id="tab2" style="display: none; ">
@@ -156,6 +176,7 @@
                     success:function (data){
 //                alert("success");
                         initTable(data);
+                        $("#loading").remove();
                     },
                     error:function () {
                         alert("请求失败");
