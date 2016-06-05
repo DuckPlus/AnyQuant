@@ -13,11 +13,6 @@ import java.util.List;
 public class Strategy_PE extends MultiStockStrategy {
 
     /**
-     * 调仓间隔
-     */
-    public int interval;
-
-    /**
      * 界定PE的合理界限（20,40）
      */
     private int low_PE ,high_PE;
@@ -27,10 +22,10 @@ public class Strategy_PE extends MultiStockStrategy {
         super();
     }
 
-    public void initStrategy_PE(double capital, double taxRate, String baseCode ,
-                       MyDate start , MyDate end , int vol, int interval ){
+    public void setPara_PE(double capital, double taxRate, String baseCode ,
+                           MyDate start , MyDate end , int vol, int interval ){
 
-        super.initSingleStockStrategy(capital,taxRate,baseCode,start,end,vol);
+        super.setPara_Mutil(capital,taxRate,baseCode,start,end,vol);
 
         this.interval=interval;
         this.low_PE=25;
@@ -64,19 +59,12 @@ public class Strategy_PE extends MultiStockStrategy {
 
     @Override
     public ReportVO analyse() {
-        init();
-        for(int i=interval;i<this.validDates.length;i+=interval){
-            curTradeDay=this.validDates[i];
-            System.out.println("handle "+i+"th day date: "+curTradeDay.DateToString());
-            this.handleData();
-        }
-        ReportVO reportVO = new ReportVO();
-        reportVO.cumRtnVOList=this.cumRtnVOList;
-
-        return reportVO;
+        return simpleAnalyse();
     }
 
-
+    /**
+     * 买入PE值在合理区间内的vol只股票
+     */
     @Override
     protected void buyStocks(){
         /**
@@ -146,7 +134,13 @@ public class Strategy_PE extends MultiStockStrategy {
     }
 
 
-
+    /**
+     * 简单平仓，并计算累计收益率
+     */
+    @Override
+    protected void sellStocks() {
+        this.simpleSellStocks();
+    }
 
 
 }

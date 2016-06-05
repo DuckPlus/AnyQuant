@@ -41,9 +41,10 @@ public abstract class MultiStockStrategy extends BaseStrategy {
         super();
     }
 
-    public void initSingleStockStrategy(double capital, double taxRate,
-                                        String baseCode , MyDate start , MyDate end,int vol){
-        super.initBaseStrategy(capital,taxRate,baseCode,start,end);
+
+    public void setPara_Mutil(double capital, double taxRate,
+                              String baseCode , MyDate start , MyDate end, int vol){
+        super.setPara(capital,taxRate,baseCode,start,end);
 
         this.stocks = new ArrayList<>();
         this.vol=vol;
@@ -69,9 +70,16 @@ public abstract class MultiStockStrategy extends BaseStrategy {
     protected abstract  void buyStocks();
 
     /**
+     * 抽象的卖出方法
+     */
+    protected abstract  void sellStocks();
+
+
+
+    /**
      * 简单平仓，并计算累计收益率
      */
-    protected void sellStocks(){
+    public void simpleSellStocks(){
         /**
          * 获取当日的股票池的均价
          */
@@ -103,26 +111,28 @@ public abstract class MultiStockStrategy extends BaseStrategy {
         for(int i=0;i<stocks.size();i++){
             System.out.println("sell "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+sell_Prices[i]);
             income+=sell_Prices[i]*lots[i]*stocksPerLot;
+            tax+=sell_Prices[i]*lots[i]*stocksPerLot*taxRate;
         }
         stocks.clear();
 
         /**
          * 计算测试股票的累计收益率
          */
-        profit=income-expense;
-        cumRtnRate=profit/expense;
-
+//        profit=income-expense-tax;
+//        cumRtnRate=profit/expense;
+        computeCumRtnRate();
         /**
          * 计算测试指数的累计收益率
          */
-        base_SellPrice=benchMarkDAO.getAvgPrice(this.baseCode,curTradeDay);
-        baseRtnRate+=(base_SellPrice-base_BuyPrice)/base_BuyPrice;
-
+//        base_SellPrice=benchMarkDAO.getAvgPrice(this.baseCode,curTradeDay);
+//        baseRtnRate+=(base_SellPrice-base_BuyPrice-base_SellPrice*taxRate)/base_BuyPrice;
+        computeBaseRtnRate();
         /**
          * 向结果链表中添加一个元素
          */
         CumRtnVO vo = new CumRtnVO(baseRtnRate,cumRtnRate,curTradeDay);
         this.cumRtnVOList.add(vo);
     }
+
 
 }

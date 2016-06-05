@@ -47,6 +47,11 @@ public abstract class BaseStrategy  {
      * 回测周期结束日期
      */
     protected MyDate end;
+
+    /**
+     * 调仓间隔
+     */
+    protected int interval;
     /**
      * 当前的交易日
      */
@@ -63,6 +68,10 @@ public abstract class BaseStrategy  {
      * 买入股票的累积花费
      */
     protected double expense;
+    /**
+     * 累积交的税
+     */
+    protected double tax;
 
     /**
      * 累积纯利润=累积收益-累积花费
@@ -106,8 +115,8 @@ public abstract class BaseStrategy  {
 
     }
 
-    public void initBaseStrategy(double capital,double taxRate,String baseCode ,
-     MyDate start , MyDate end){
+    public void setPara(double capital, double taxRate, String baseCode ,
+                        MyDate start , MyDate end){
 
         this.capital=capital;
         this.taxRate=taxRate;
@@ -115,9 +124,11 @@ public abstract class BaseStrategy  {
         this.start=start;
         this.end=end;
         this.curTradeDay=start;
+        this.interval=1;
 
         this.income=0;
         this.expense=0;
+        this.tax=0;
         this.profit=0;
         this.cumRtnRate=0;
         this.base_BuyPrice=0;
@@ -131,12 +142,10 @@ public abstract class BaseStrategy  {
 
 
     public void computeValidDates(){
-
         List<MyDate> tempDates=stockDataDAO.getTradeDates(start,end);
         this.validDates = tempDates.toArray(new MyDate[tempDates.size()]);
         this.start=validDates[0];
         this.end=validDates[validDates.length-1];
-        tempDates=null;
     }
     /**
      * 初始化算法
@@ -154,5 +163,38 @@ public abstract class BaseStrategy  {
      * @return
      */
     public abstract ReportVO analyse();
+
+    /**
+     * 计算利润
+     * @return
+     */
+    public double computeCumRtnRate(){
+        profit=income-expense-tax;
+        cumRtnRate=profit/expense;
+        return cumRtnRate;
+
+    }
+
+    public double computeBaseRtnRate(){
+        base_SellPrice=benchMarkDAO.getAvgPrice(this.baseCode,curTradeDay);
+        baseRtnRate+=(base_SellPrice-base_BuyPrice-base_SellPrice*taxRate)/base_BuyPrice;
+        return baseRtnRate;
+    }
+
+
+    public ReportVO simpleAnalyse(){
+        init();
+        for(int i=interval;i<this.validDates.length;i+=interval){
+            curTradeDay=this.validDates[i];
+            System.out.println("handle "+i+"th day date: "+curTradeDay.DateToString());
+            this.handleData();
+        }
+        ReportVO reportVO = new ReportVO();
+        reportVO.cumRtnVOList=this.cumRtnVOList;
+
+        return reportVO;
+    }
+
+
 
 }
