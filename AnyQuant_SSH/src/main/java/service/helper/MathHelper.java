@@ -21,6 +21,17 @@ class MathHelper {
         return sum;
     }
 
+    static double computeVar(double[] val){
+        double avg = computeAverage(val);
+        double sum = 0;
+        for (double a : val){
+            sum += Math.pow(a - avg , 2);
+        }
+        return sum/val.length;
+
+    }
+
+
 
     static Point getRank(double value, double[] values, boolean upOrDown) {
         System.out.println(Arrays.toString(values));
@@ -65,8 +76,7 @@ class MathHelper {
      */
     static double[] getClipFromArray(double[] x, int len) {
         double[] y = new double[len];
-        System.out.println("*********");
-        System.out.println(x.length + " " + len);
+//        System.out.println(x.length + " " + len);
         System.arraycopy(x, x.length - len, y, 0, len);
         return y;
     }

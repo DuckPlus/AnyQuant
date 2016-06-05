@@ -19,6 +19,7 @@ import java.util.List;
 @RequestMapping("/Board")
 @ResponseBody
 public class BoardController {
+
     @Autowired
     private BoardAnalysisService service;
 

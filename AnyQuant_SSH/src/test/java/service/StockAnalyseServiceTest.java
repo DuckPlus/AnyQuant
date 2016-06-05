@@ -112,6 +112,10 @@ public class StockAnalyseServiceTest {
         for (FactorWeightVO vo : factorWeightVOs){
             System.out.println(vo.judgeFactorValue + " " + vo.name);
         }
+        factorWeightVOs = stockAnalyseService.getMostUsefulFactors("sh600004" , 70 , FactorJudge.IR );
+        for (FactorWeightVO vo : factorWeightVOs){
+            System.out.println(vo.judgeFactorValue + " " + vo.name);
+        }
     }
 
 }
