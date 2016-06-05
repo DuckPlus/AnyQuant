@@ -32,8 +32,14 @@ public class FactorStrategy extends MultiStockStrategy {
         return null;
     }
 
+
     @Override
     protected void buyStocks() {
+
+    }
+
+    @Override
+    protected void sellStocks() {
 
     }
 }

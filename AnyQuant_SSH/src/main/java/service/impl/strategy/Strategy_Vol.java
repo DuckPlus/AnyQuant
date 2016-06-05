@@ -10,10 +10,7 @@ import java.util.List;
  */
 public class Strategy_Vol extends MultiStockStrategy{
 
-    /**
-     * 调仓间隔
-     */
-    public int interval;
+
     public Strategy_Vol()
     {
         super();
@@ -28,24 +25,36 @@ public class Strategy_Vol extends MultiStockStrategy{
     }
 
 
+    /**
+     * 初始买入交易日当天交易量最小的vol只股票
+     */
     @Override
     public void init() {
-        System.out.println("Strategy_PE init-------");
+        System.out.println("Strategy_VOL init-------");
         this.curTradeDay=start;
         this.buyStocks();
     }
 
+    /**
+     * 调仓日首先平仓，再购买
+     */
     @Override
     public void handleData() {
 
+        this.sellStocks();
+
+        this.buyStocks();
     }
 
     @Override
     public ReportVO analyse() {
-        return null;
+       return simpleAnalyse();
     }
 
 
+    /**
+     * 买入交易日当天交易量最小的vol只股票
+     */
     @Override
     protected void buyStocks() {
         /**
@@ -105,9 +114,13 @@ public class Strategy_Vol extends MultiStockStrategy{
         base_BuyPrice=benchMarkDAO.getAvgPrice(this.baseCode,curTradeDay);
     }
 
+
+    /**
+     * 简单平仓，并计算累计收益率
+     */
     @Override
     protected void sellStocks() {
-
+        simpleSellStocks();
     }
 
 

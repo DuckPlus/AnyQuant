@@ -47,6 +47,11 @@ public abstract class BaseStrategy  {
      * 回测周期结束日期
      */
     protected MyDate end;
+
+    /**
+     * 调仓间隔
+     */
+    protected int interval;
     /**
      * 当前的交易日
      */
@@ -119,6 +124,7 @@ public abstract class BaseStrategy  {
         this.start=start;
         this.end=end;
         this.curTradeDay=start;
+        this.interval=1;
 
         this.income=0;
         this.expense=0;
@@ -176,6 +182,18 @@ public abstract class BaseStrategy  {
     }
 
 
+    public ReportVO simpleAnalyse(){
+        init();
+        for(int i=interval;i<this.validDates.length;i+=interval){
+            curTradeDay=this.validDates[i];
+            System.out.println("handle "+i+"th day date: "+curTradeDay.DateToString());
+            this.handleData();
+        }
+        ReportVO reportVO = new ReportVO();
+        reportVO.cumRtnVOList=this.cumRtnVOList;
+
+        return reportVO;
+    }
 
 
 
