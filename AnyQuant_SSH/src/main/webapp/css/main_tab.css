@@ -25,13 +25,15 @@ ul.tab_ul{
 li.tab_li:hover{
     background-color: antiquewhite;
     cursor:pointer;
+    -webkit-transition: background-color .5s;
 }
 a.tab_item.selected{
-    color: #ffffff;
     background-color:rgb(94,94,94);
     color: aliceblue;
+    -webkit-transition: background-color .5s;
 }
 a.tab_item{
+    -webkit-transition: background-color .5s;
     text-decoration: none;
     display: block;
     height: 40px;
