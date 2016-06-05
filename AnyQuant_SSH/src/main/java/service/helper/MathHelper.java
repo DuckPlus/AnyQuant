@@ -32,7 +32,13 @@ class MathHelper {
     }
 
 
-
+    /**
+     * 获得排位
+     * @param value     排位值
+     * @param values    数组
+     * @param upOrDown  升序or降序
+     * @return          point(x 位置, y 总数)
+     */
     static Point getRank(double value, double[] values, boolean upOrDown) {
         System.out.println(Arrays.toString(values));
         System.out.println(value);

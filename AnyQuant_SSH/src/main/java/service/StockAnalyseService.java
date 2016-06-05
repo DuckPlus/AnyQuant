@@ -85,4 +85,6 @@ public interface StockAnalyseService {
      */
     List<FactorWeightVO> getMostUsefulFactors(String code , int timeLen, FactorJudge factorJudge);
 
+
+
 }

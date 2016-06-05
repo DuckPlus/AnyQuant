@@ -131,12 +131,10 @@ public abstract class BaseStrategy  {
 
 
     public void computeValidDates(){
-
         List<MyDate> tempDates=stockDataDAO.getTradeDates(start,end);
         this.validDates = tempDates.toArray(new MyDate[tempDates.size()]);
         this.start=validDates[0];
         this.end=validDates[validDates.length-1];
-        tempDates=null;
     }
     /**
      * 初始化算法
