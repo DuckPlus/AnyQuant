@@ -1,91 +1,221 @@
 
 #main_title{
-    height: 50px;
+    height: 830px;
     background-color: #ffffff;
-    border-radius: 5px;
-    box-shadow: 0 0 2px #333333;
+    /*border-radius: 5px;*/
+    /*box-shadow: 0 0 2px #333333;*/
+    width:300px;
+    float: left;
+    border-right: solid 1px rgb(151,151,151);
+}
+#title_part1{
+    /*background-color: #00bdef;*/
+    height: 110px;
+}
+#title_part1_name_open_change{
+    height: 50px;
+    /*background-color: turquoise;*/
 }
 #title_name{
-    font-size: 30px;
+    font-size: 35px;
     /*background-color: #2b542c;*/
-    width: 150px;
-    height: 40px;
+    /*width: 150px;*/
+    /*height: 40px;*/
     float: left;
+}
+#title_addBtn_code{
+    margin-top: 5px;
+    /*background-color: #9088ec;*/
+    height: 35px;
 }
 #title_code{
-    /*background-color: #00bdef;*/
-    margin-top: 20px;
-    width: 100px;
-    height: 20px;
+    /*background-color: #2c81ba;*/
+    height: 30px;
     float: left;
-}
-#title_open{
-    /*background-color: #1bc5a3;*/
-    width: 100px;
-    height: 40px;
-    float: left;
-}
-#stock_info_listDate{
-    /*background-color: #2b542c;*/
-    min-height: 30px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    width: 90%;
-    word-break: break-all;
-}
-#stock_info_name{
-    /*background-color: #00a1cb;*/
-    min-height: 30px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    width: 90%;
-    word-break: break-all;
-}
-#stock_info_totalShares{
-    /*background-color: #1abc9c;*/
-    min-height: 30px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    width: 90%;
-    word-break: break-all;
-}
-#stock_info_region{
-    /*background-color: #2f4b93;*/
-    min-height: 30px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    width: 90%;
-    word-break: break-all;
-}
-#stock_info_primeOperating{
-    /*background-color: #00bdef;*/
-    min-height: 30px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    width: 90%;
-    word-break: break-all;
-
+    font-size: 30px;
 }
 #add_stock_btn{
     float: right;
     color: #FFFFFF;
-    width: 100px;
-    height: 80%;
-    margin-top: 5px;
-    margin-right: 5px;
+    width: 150px;
+    height: 40px;
+    margin-right: 15px;
     background-color: #00CC99;
-    /*margin-bottom: 10%;*/
+    font-size: 20px;
 }
-#news_window{
+#title_open{
+    /*background-color: #5d6d7e;*/
+    font-size: 25px;
+    color: #d71414;
+    height: 50px;
+    float: left;
+    line-height: 70px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+#title_changeRate{
+    font-size: 25px;
+    color: #d71414;
+    height: 50px;
+    float: left;
+    line-height: 70px;
+    padding-left: 5px;
+    padding-right: 5px;
+    /*background-color: #00a1cb;*/
+}
+
+#stock_info_detail{
+    /*background-color: #9088ec;*/
+}
+.item_icon{
+    width: 40px;
+    height: 40px;
+    float: left;
+    /*background-color: #00a1cb;*/
+}
+#name_item{
+    height: 40px;
+}
+#stock_info_name{
+    /*background-color: #00a1cb;*/
+    min-height: 30px;
+    margin-top: 10px;
+    /*margin-bottom: auto;*/
+    /*margin-top: 10px;*/
+    /*width: 90%;*/
+    word-break: break-all;
+    float: left;
+}
+#name_content{
+    /*background-color: chartreuse;*/
+    float: left;
+    width: 180px;
+    margin-left: 10px;
+    text-align: center;
+    margin-top: 10px;
+}
+#listDate_item{
+    margin-top: 10px;
+    height: 40px;
+}
+#stock_info_listDate{
+    /*background-color: #2b542c;*/
+    margin-top: 10px;
+    /*width: 150px;*/
+    word-break: break-all;
+    float: left;
+}
+#listDate_content{
+    /*background-color: #9088ec;*/
+    float: left;
+    width: 180px;
+    margin-left: 10px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#totalShare_item{
+    margin-top:10px;
+    /*background-color: chocolate;*/
+    height: 40px;
+}
+#totalShare_content{
+    /*background-color: #00a1cb;*/
+    float: left;
+    width: 180px;
+    margin-left: 10px;
+    text-align: center;
+    margin-top: 10px;
+}
+#stock_info_totalShares{
+    float: left;
+    margin-top: 10px;
+    word-break: break-all;
+}
+#region_item{
+    margin-top:10px;
+    /*background-color: chocolate;*/
+    height: 40px;
+}
+#region_content{
+    /*background-color: #00a1cb;*/
+    float: left;
+    width: 180px;
+    margin-top: 10px;
+    margin-left: 10px;
+    text-align: center;
+    word-break: normal;
+}
+#stock_info_region{
+    float: left;
+    /*background-color: #2f4b93;*/
+    /*min-height: 30px;*/
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    margin-top: 10px;
+    /*width: 90%;*/
+    word-break: break-all;
+}
+#primeOperating_item{
+    margin-top:10px;
+    /*background-color: chocolate;*/
+    height: 500px;
+}
+#primeOperating_content{
+    float: left;
+    /*background-color: #00a1cb;*/
+}
+#stock_info_primeOperating{
+    float: left;
+    /*background-color: #00bdef;*/
+    /*min-height: 30px;*/
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    margin-top: 10px;
+    /*width: 90%;*/
+    word-break: break-all;
+
+}
+
+#chart1{
+    float: left;
+    width: 850px;
+    margin-left: 20px;
+    /*border: solid 1px #000000;*/
+}
+#divider_ohlc_factor{
+    font-size: 30px;
+    width: 850px;
+    margin-left: 20px;
+    float: left;
+    border-bottom: solid 1px rgb(151,151,151);
+}
+#factor_chart{
+    float: left;
+    width: 850px;
+    margin-left:20px;
+    /*border: solid 1px #000000;*/
+}
+
+#ohlc_factor_info_div{
+    margin-top: 20px;
+    /*background-color: #5d6d7e;*/
+}
+
+
+#news_board{
     /*background-color: #5dade2;*/
     height: 400px;
     width: 100%;
     margin-top: 20px;
+    float: left;
+}
+#divider_mark{
+    border-bottom: solid 1px rgb(151,151,151);
+    font-size: 30px;
+}
+#score{
+    width: 550px;
     float: left;
 }
 #score_chart{
@@ -102,4 +232,26 @@
     width: 90%;
     margin-left: auto;
     margin-right: auto;
+}
+#divider_score_radar{
+    height: 500px;
+    width: 1px;
+    background-color: rgb(151,151,151);
+    margin-top:20px;
+    margin-left:20px;
+    margin-right: 20px;
+    float: left;
+}
+#radar{
+    float: left;
+    width: 500px;
+    /*border: solid 1px #000000;*/
+}
+#divider_news{
+    font-size: 30px;
+    /*width: 1000px;*/
+    border-bottom: solid 1px rgb(151,151,151);
+}
+#score_and_radar{
+    height: 550px;
 }

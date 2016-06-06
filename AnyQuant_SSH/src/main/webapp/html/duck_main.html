@@ -59,7 +59,7 @@
         <li class="nav_item">
             <a class="nav_c" href="#">
                 <img id= "user_icon" src="/image/user.png">
-                <label class="nav_item_name">用户</label>
+                <label class="nav_item_name" id="user_name_label">用户</label>
             </a>
         </li>
     </ul>
@@ -69,10 +69,6 @@
 
 <div id="main_content">
 
-    <!--大盘-->
-    <!--<div id="benchmark_window" class="duck_window">-->
-        <!--<div class="duck_title">-->
-            <!--<div class="duck_title_text">大盘列表</div>-->
     <!--TAB-->
     <div id="usual1" class="usual">
 
@@ -148,27 +144,28 @@
                 </table>
             </div>
         </div>
-        <!--  <div id="tab3" style="display: none; ">This is lugu's 3rd Tab content!</div> -->
     </div>
      <!--TAB OVER-->
-
-
-    <!--<div id="benchmark_window" class="duck_window">-->
-        <!--<div class="duck_title">-->
-            <!--<div class="duck_title_text">大盘列表</div>-->
-        <!--</div>-->
-        <!--<div id="benchmark_list_container" class="duck_content">-->
-           <!---->
-        <!--</div>-->
-    <!--</div>-->
 
 
 </div>
 </body>
 
 <script>
+    function setUser() {
+        alert("begin");
+        $('#user_name_label').style.backgroundColor="red";
+        alert("set done");
+    }
+    window.onload = function () {
+        document.getElementById('user_name_label').innerHTML = "一朵野花";
+    }
+
+</script>
+<script>
     var allStock;
     $(document).ready(function () {
+
         $("ul").idTabs();
         $.ajax({
                     type:'post',
