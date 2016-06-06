@@ -1,27 +1,31 @@
 package vo;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Qiang
  * @date 6/5/16
  */
 public class FactorJudgmentVO {
-    /**
-     * 因子名称
-     */
-    public String name;
-    /**
-     * IC值
-     */
-    public double valueIC;
-    public double valueIR;
-    public double valueT_CHECK;
-    public double valueProfit;
 
-    public FactorJudgmentVO(String name, double valueIC, double valueIR, double valueProfit, double valueT_CHECK) {
-        this.name = name;
-        this.valueIC = valueIC;
-        this.valueIR = valueIR;
-        this.valueProfit = valueProfit;
-        this.valueT_CHECK = valueT_CHECK;
+    public Map<String ,  Double> rankIC;
+    public Map<String , Double> rankIR;
+    public Map<String , Double> rankWinRate;
+    public Map<String , Double> rankTCheck;
+
+    public FactorJudgmentVO(Map<String, Double> rankIC, Map<String, Double> rankIR, Map<String, Double> rankTCheck, Map<String, Double> rankWinRate) {
+        this.rankIC = rankIC;
+        this.rankIR = rankIR;
+        this.rankTCheck = rankTCheck;
+        this.rankWinRate = rankWinRate;
+    }
+
+    public FactorJudgmentVO() {
+        rankIC = new HashMap<>();
+        rankIR = new HashMap<>();
+        rankTCheck = new HashMap<>();
+        rankWinRate = new HashMap<>();
     }
 }

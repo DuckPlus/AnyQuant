@@ -127,7 +127,7 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
             factorWeightVOs.add(new FactorWeightVO(factorJudgeVal , factor.chinese , factorJudgeVal > 0 ));
         }
         //进行因子绝对值的简单排序
-        factorWeightVOs.sort( (v1 , v2) ->  Math.abs(v1.judgeFactorValue) > Math.abs(v2.judgeFactorValue) ? 1 : -1  );
+        factorWeightVOs.sort( (v1 , v2) ->  Double.compare(Math.abs(v1.judgeFactorValue) , Math.abs(v2.judgeFactorValue))  );
 
         return factorWeightVOs;
     }

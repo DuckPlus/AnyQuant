@@ -119,8 +119,8 @@ public class StockServiceImpl implements StockService {
             }
 
 
-            getNextMonth(thisMonth);
-            getNextMonth(monthEnd);
+            DateCalculator.getNextMonth(thisMonth);
+            DateCalculator.getNextMonth(monthEnd);
         }
         return vos.isEmpty() ? null : vos;
     }
@@ -190,8 +190,8 @@ public class StockServiceImpl implements StockService {
             pos = getStocksByTime(stockCode, thisMonth, monthEnd);
             vos.add(getSumDealVO(pos));
 
-            getNextMonth(monthEnd);
-            getNextMonth(thisMonth);
+            DateCalculator.getNextMonth(monthEnd);
+            DateCalculator.getNextMonth(thisMonth);
         }
 
         return vos.isEmpty() ? null : vos;
@@ -271,14 +271,7 @@ public class StockServiceImpl implements StockService {
         return result;
     }
 
-    private static void getNextMonth(MyDate date) {
-        if (date.getMonth() == 12) {
-            date.setMonth(1);
-            date.setYear(date.getYear() + 1);
-        } else {
-            date.setMonth(date.getMonth() + 1);
-        }
-    }
+
 
 
     private static boolean judgeData(OHLC_VO vo) {
