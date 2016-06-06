@@ -7,7 +7,6 @@ var ifshowDataLabel=true;
 var myRed="#EE2C2C",myGreen="#00CD66",myGrey="#8B7E66"
 $.getJSON('/Board/getAllBoardsAndStockData', function (data) {
     globalData=data;
-    alert()
     initBubble();
 });
 
