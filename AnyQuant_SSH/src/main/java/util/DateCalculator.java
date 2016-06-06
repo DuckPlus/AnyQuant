@@ -268,6 +268,13 @@ public class DateCalculator {
 		return myDate;
 	}
 
-
+	public static void getNextMonth(MyDate date) {
+		if (date.getMonth() == 12) {
+			date.setMonth(1);
+			date.setYear(date.getYear() + 1);
+		} else {
+			date.setMonth(date.getMonth() + 1);
+		}
+	}
 
 }
