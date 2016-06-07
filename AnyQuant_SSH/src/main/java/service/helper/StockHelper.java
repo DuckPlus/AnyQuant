@@ -110,7 +110,7 @@ public class StockHelper {
 
 
 
-    private static double computeStockProfit(double start ,  double end){
+    public static double computeStockProfit(double start ,  double end){
         if(start == 0 || end == 0){
             return 0.01; //TODO 由于数据不全,出现为0错误暂时使用0.1代替
         }

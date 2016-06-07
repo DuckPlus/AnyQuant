@@ -66,104 +66,127 @@
 <!-- navigator end -->
 <!--承载所有股票信息内容元素,控制两侧缩进-->
 <div class="main_content">
-    <div id="main_title">
-        <div id="title_name"></div>
-        <div id="title_code"></div>
-        <div id="title_open"></div>
-        <button id="add_stock_btn" class="button button-rounded button-tiny">加入自选股</button>
+
+    <div id="ohlc_factor_info_div">
+        <div id="main_title">
+            <div id="title_part1">
+                <div id="title_part1_name_open_change">
+                    <div id="title_name"></div>
+                    <div id="title_open">19.01</div>
+                    <div id="title_changeRate">+0.38%</div>
+                </div>
+
+                <div id="title_addBtn_code">
+                    <div id="title_code"></div>
+                    <button id="add_stock_btn" class="button button-rounded button-tiny">加入自选股</button>
+                </div>
+            </div>
+
+            <div id="stock_info_detail">
+                <div id="name_item">
+                    <img class="item_icon" src="/image/inc_name.png" alt="公司名称">
+                    <div id="stock_info_name">公司名称</div>
+                    <div id="name_content"></div>
+                </div>
+
+                <div id="listDate_item">
+                    <img class="item_icon" src="/image/market_date.png" alt="上市日期">
+                    <div id="stock_info_listDate">上市日期</div>
+                    <div id="listDate_content"></div>
+                </div>
+
+                <div id="totalShare_item">
+                    <img class="item_icon" src="/image/amount_of_distribution.png" alt="发行量">
+                    <div id="stock_info_totalShares">总发行量</div>
+                    <div id="totalShare_content"></div>
+                </div>
+
+                <div id="region_item">
+                    <img class="item_icon" src="/image/localtion.png" alt="地址">
+                    <div id="stock_info_region">所属地区</div>
+                    <div id="region_content"></div>
+                </div>
+                <div id="primeOperating_item">
+                    <img class="item_icon" src="/image/main_business.png" alt="主营业务">
+                    <div id="stock_info_primeOperating">主营业务</div>
+                    <div id="primeOperating_content"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="chart1"></div>
+
+        <div id="divider_ohlc_factor">因子走势</div>
+        <select name="factor_type" id="factor_type" onchange=selectChange();>
+            <option value="市盈率">市盈率</option>
+            <option value="市净率">市净率</option>
+            <option value="五日换手率">五日换手率</option>
+            <option value="十日换手率">十日换手率</option>
+            <option value="120日换手率">120日换手率</option>
+            <option value="5日均线">5日均线</option>
+            <option value="10日均线">10日均线</option>
+            <option value="60日均线">60日均线</option>
+            <option value="120日均线">120日均线</option>
+            <option value="市销率">市销率</option>
+            <option value="市现率">市现率</option>
+            <option value="心理线指标">心理线指标</option>
+            <option value="分析师推荐评级">分析师推荐评级</option>
+            <option value="分析师推荐评级变化">分析师推荐评级变化</option>
+        </select>
+
+        <div id="factor_chart"></div>
+
     </div>
 
-    <div class="duck_window" id="chart_stock_OHLC_window">
-        <div class="duck_title">
-            <div class="duck_title_text">k线图</div>
-        </div>
-        <div class="duck_content">
-            <div id="chart1"></div>
-        </div>
-    </div>
 
-    <div id="relation_and_info">
-        <div class="duck_window" id="relationship_window">
-            <div class="duck_title">
-                <div class="duck_title_text">关系图</div>
-            </div>
-            <div class="duck_content">
-                <div id="chart2" style="width: 100%;height: 300px;"></div>
-            </div>
-        </div>
+    <div id="divider_mark">评分</div>
+    <!--<div class="duck_window" id="stockfactor_window">-->
+        <!--<div class="duck_title">-->
+            <!--<div class="duck_title_text">股票因子走势图</div>-->
+        <!--</div>-->
+        <!--<div class="duck_content">-->
+            <!--<select name="factor_type" id="factor_type" onchange=selectChange()>-->
+                <!--<option value="市盈率">市盈率</option>-->
+                <!--<option value="市净率">市净率</option>-->
+                <!--<option value="五日换手率">五日换手率</option>-->
+                <!--<option value="十日换手率">十日换手率</option>-->
+                <!--<option value="120日换手率">120日换手率</option>-->
+                <!--<option value="5日均线">5日均线</option>-->
+                <!--<option value="10日均线">10日均线</option>-->
+                <!--<option value="60日均线">60日均线</option>-->
+                <!--<option value="120日均线">120日均线</option>-->
+                <!--<option value="市销率">市销率</option>-->
+                <!--<option value="市现率">市现率</option>-->
+                <!--<option value="心理线指标">心理线指标</option>-->
+                <!--<option value="分析师推荐评级">分析师推荐评级</option>-->
+                <!--<option value="分析师推荐评级变化">分析师推荐评级变化</option>-->
 
-        <div class="duck_window" id="stockinfo_window">
-            <div class="duck_title">
-                <div class="duck_title_text">股票信息</div>
-            </div>
-            <div class="duck_content">
-                <div id="stock_info_name"></div>
-                <div id="stock_info_listDate"></div>
-                <div id="stock_info_totalShares"></div>
-                <div id="stock_info_region"></div>
-                <div id="stock_info_primeOperating"></div>
-
-            </div>
-        </div>
-
-    </div>
-    <div class="duck_window" id="stockfactor_window">
-        <div class="duck_title">
-            <div class="duck_title_text">股票因子走势图</div>
-        </div>
-        <div class="duck_content">
-            <select name="factor_type" id="factor_type" onchange=selectChange()>
-                <option value="市盈率">市盈率</option>
-                <option value="市净率">市净率</option>
-                <option value="五日换手率">五日换手率</option>
-                <option value="十日换手率">十日换手率</option>
-                <option value="120日换手率">120日换手率</option>
-                <option value="5日均线">5日均线</option>
-                <option value="10日均线">10日均线</option>
-                <option value="60日均线">60日均线</option>
-                <option value="120日均线">120日均线</option>
-                <option value="市销率">市销率</option>
-                <option value="市现率">市现率</option>
-                <option value="心理线指标">心理线指标</option>
-                <option value="分析师推荐评级">分析师推荐评级</option>
-                <option value="分析师推荐评级变化">分析师推荐评级变化</option>
-
-            </select>
-            <div id="factor_chart"></div>
-        </div>
-    </div>
+            <!--</select>-->
+            <!--<div id="factor_chart"></div>-->
+        <!--</div>-->
+    <!--</div>-->
 
     <div id="score_and_radar">
-        <div class="duck_window" id="score_window">
-            <div class="duck_title">
-                <div class="duck_title_text">综合评分</div>
-            </div>
-            <div class="duck_content">
+            <div id="score">
                 <div id="score_chart" style="height: 300px;"></div>
                 <div id="comment_suggestion"></div>
                 <div id="comment_analysis"></div>
             </div>
-        </div>
-
-        <div class="duck_window" id="radar_window">
-            <div class="duck_title">
-                <div class="duck_title_text">各项评分</div>
-            </div>
-            <div class="duck_content">
-                    <input id="xinxixishu" type="radio" checked="checked" name="radar_type" value="信息系数" onclick="change_radar_type()">因子系数<br>
-                    <input id="xinxibi" type="radio" name="radar_type" value="信息比" onclick="change_radar_type()">信息比<br>
+            <div id="divider_score_radar"></div>
+            <div id="radar">
                 <div id="radar_chart" style="width: 100%;height: 400px"></div>
+                <input id="xinxixishu" type="radio" checked="checked" name="radar_type" value="信息系数" onclick="change_radar_type()">因子系数<br>
+                <input id="xinxibi" type="radio" name="radar_type" value="信息比" onclick="change_radar_type()">信息比<br>
             </div>
-        </div>
     </div>
 
-    <div class="duck_window" id="news_window">
-        <div class="duck_title">
-            <div class="duck_title_text">相关新闻</div>
-        </div>
-        <div class="duck_content" style="overflow-y: scroll;height: 370px" id="news_content">
-        </div>
-    </div>
+    <!--<div class="duck_window" id="news_window">-->
+        <!--<div class="duck_title">-->
+            <!--<div class="duck_title_text">相关新闻</div>-->
+        <!--</div>-->
+    <div id="divider_news">相关新闻</div>
+        <div id="news_board"></div>
+    <!--</div>-->
 
 </div>
 
@@ -175,7 +198,7 @@
         var index = selection.selectedIndex;
         var selectedValue = selection.options[index].value;
         init_factor_chart(selectedValue);
-        handle_Login();
+//        handle_Login();
     }
     function change_radar_type() {
         if(document.getElementById('xinxixishu').checked){
@@ -203,16 +226,16 @@
             document.getElementById('title_code').innerHTML = data.code;
 //            document.getElementById('title_open').innerHTML = data.open;
 
-            var company_name = "公司名称: "+data.name;
-            var listDate = "上市日期: "+data.listDate;
-            var region = "所属地区: "+data.officeAddr;
-            var primeOperating = "主营业务: "+data.primeOperating;
-            var totalShare = "发行量: "+(data.totalShares/10000)+" 万股";
-            document.getElementById('stock_info_name').innerHTML = company_name;
-            document.getElementById('stock_info_listDate').innerHTML = listDate;
-            document.getElementById('stock_info_region').innerHTML = region;
-            document.getElementById('stock_info_totalShares').innerHTML = totalShare;
-            document.getElementById('stock_info_primeOperating').innerHTML = primeOperating;
+            var company_name = data.name;
+            var listDate = data.listDate;
+            var region = data.officeAddr;
+            var primeOperating = data.primeOperating;
+            var totalShare = (data.totalShares/10000)+" 万股";
+            document.getElementById('name_content').innerHTML = company_name;
+            document.getElementById('listDate_content').innerHTML = listDate;
+            document.getElementById('region_content').innerHTML = region;
+            document.getElementById('totalShare_content').innerHTML = totalShare;
+            document.getElementById('primeOperating_content').innerHTML = primeOperating;
 
         }, function () {
             alert("fail");
@@ -366,7 +389,7 @@
                     text: 'k线图'
                 },
                 xAxis:{
-                    crosshair: {color:myRed},
+                    crosshair: {color:myRed}
                 },
                 yAxis: [{
                     crosshair:{color:myRed},
@@ -673,25 +696,61 @@
     });
     function load_news(title,date,summary){
 
-        var board = document.getElementById('news_content');
-        var item_bar = document.createElement("div");
-        item_bar.style.width = "90%";
-        item_bar.style.marginRight = "auto";
-        item_bar.style.marginLeft = "auto";
-        item_bar.style.marginTop = "20px";
-//        item_bar.style.backgroundColor="#CCCCCC";
-        var title_div = document.createElement("div");
-        title_div.appendChild(document.createTextNode("标题: "+title));
-        title_div.style.fontSize="25px";
-        var date_div = document.createElement("div");
-        date_div.appendChild(document.createTextNode("日期: "+date));
-        var summary_div = document.createElement("div");
-        summary_div.appendChild(document.createTextNode("内容："+summary));
-
-        item_bar.appendChild(title_div);
-        item_bar.appendChild(date_div);
-        item_bar.appendChild(summary_div);
-        board.appendChild(item_bar);
+//        var board = document.getElementById('news_board');
+//        var item_bar = document.createElement("div");
+//        item_bar.style.width = "90%";
+//        item_bar.style.marginRight = "auto";
+//        item_bar.style.marginLeft = "auto";
+//        item_bar.style.marginTop = "20px";
+////        item_bar.style.backgroundColor="#CCCCCC";
+//        var title_div = document.createElement("div");
+//        title_div.appendChild(document.createTextNode("标题: "+title));
+//        title_div.style.fontSize="25px";
+//        var date_div = document.createElement("div");
+//        date_div.appendChild(document.createTextNode("日期: "+date));
+//        var summary_div = document.createElement("div");
+//        summary_div.appendChild(document.createTextNode("内容："+summary));
+//
+//        item_bar.appendChild(title_div);
+//        item_bar.appendChild(date_div);
+//        item_bar.appendChild(summary_div);
+//        board.appendChild(item_bar);
+        var news_page = document.createElement("div");
+        news_page.style.minHeight = "140px";
+        news_page.style.marginTop = "20px";
+        news_page.style.width = "1180px";
+        news_page.style.backgroundColor = "aliceblue";
+        news_page.style.border = "solid 1px rgb(151,151,151)";
+        var news_content = document.createElement("div");
+        news_page.appendChild(news_content);
+        news_content.style.margin = "10px";
+        var title_line = document.createElement("div");
+        news_content.appendChild(title_line);
+        title_line.style.height = "50px";
+//        title_line.style.backgroundColor = "chocolate";
+        var news_icon = document.createElement("img");
+        news_icon.src = "/image/news.png";
+        news_icon.style.width = "50px";
+        news_icon.style.float = "left";
+        title_line.appendChild(news_icon);
+        var news_title = document.createElement("div");
+        title_line.appendChild(news_title);
+        news_title.style.marginLeft = "10px";
+        news_title.style.marginTop = "10px";
+        news_title.style.float = "left";
+//        news_title.style.backgroundColor = "blue";
+        news_title.style.fontSize="25px";
+        var title_text = document.createTextNode(title);
+        news_title.appendChild(title_text);
+        var divider_news = document.createElement("div");
+        news_content.appendChild(divider_news);
+        divider_news.style.height="1px";
+        divider_news.style.backgroundColor = "rgb(151,151,151)";
+        var text_content = document.createElement("div");
+        news_content.appendChild(text_content);
+        var news_summary_content = document.createTextNode(summary);
+        text_content.appendChild(news_summary_content);
+        document.getElementById('news_board').appendChild(news_page);
     }
 
 </script>
