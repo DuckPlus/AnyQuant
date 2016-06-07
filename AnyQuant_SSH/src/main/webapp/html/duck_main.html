@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <title>Duck</title>
     <script src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+    <script src="/js/loadingbar.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/loadingbar.css" />
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
     <link rel="stylesheet" type="text/css" href="/css/window.css">
     <link rel="stylesheet" type="text/css" href="/css/duck_main.css">
+    <link type="text/css" rel="stylesheet" href="/css/main_tab.css"/>
+    <script type="text/javascript" src="http://www.sunsean.com/idTabs/jquery.idTabs.min.js"></script>
     <!-- DataTables -->
     <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="/js/LogStatusControl.js"></script>
     <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
 
     <!--<link rel="stylesheet" type="text/css" href="/css/StockList.css">-->
@@ -17,6 +23,7 @@
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
     <!--tab上的小图标-->
     <link rel="shortcut icon" href="/image/short_cut.png">
+
 </head>
 <body>
 
@@ -25,89 +32,149 @@
     <img src="/image/duck_icon_pink.png" style="width: 73px;height: 35px;float: left;margin-top:7px;margin-left: 10px">
     <!--<div style="font-size: 30px;float: left;color: #ffffff;margin-left: 10px;margin-top: 7px;">DUCK</div>-->
     <ul id="nav_box">
-        <li class="nav_item"><a class="nav_c" href="duck_main.html">股票列表</a></li>
-        <li class="nav_item"><a class="nav_c" href="BoardList.html">行业分布</a></li>
-        <li class="nav_item"><a class="nav_c" href="duck_optional.html">自选股</a></li>
-        <li class="nav_item"><a class="nav_c" href="Analyse_input.html">回测系统</a></li>
+        <li class="nav_item">
+            <a class="nav_c" href="duck_main.html">
+                <img id= "data_icon" src="/image/data.png">
+                <label class="nav_item_name">数据</label>
+            </a>
+        </li>
+        <li class="nav_item">
+            <a class="nav_c" href="BoardList.html">
+                <img id= "distribute_icon" src="/image/distribute-horizontal-centers.png">
+                <label class="nav_item_name">分布</label>
+            </a>
+        </li>
+        <li class="nav_item">
+            <a class="nav_c" href="duck_optional.html">
+                <img id= "optional_icon" src="/image/optional_stocl.png">
+                <label class="nav_item_name">自选股</label>
+            </a>
+        </li>
+        <li class="nav_item">
+            <a class="nav_c" href="Analyse_input.html">
+                <img id= "regression_test_icon" src="/image/test.png">
+                <label class="nav_item_name">回测系统</label>
+            </a>
+        </li>
+        <li class="nav_item">
+            <a class="nav_c" href="#">
+                <img id= "user_icon" src="/image/user.png">
+                <label class="nav_item_name" id="user_name_label">用户</label>
+            </a>
+        </li>
     </ul>
 </div>
 <div id="blank"></div>
 <!-- navigator end -->
 
 <div id="main_content">
-    <!--股票列表-->
-    <div id="stock_list_window" class="duck_window">
-        <div class="duck_title">
-            <div class="duck_title_text">股票列表</div>
+
+    <!--TAB-->
+    <div id="usual1" class="usual">
+
+        <div id="tab_content">
+            <div id="input_space">
+                <input type="text" id="input_text" placeholder="Search..">
+                <img id="search_icon" src="/image/search_icon.png">
+            </div>
+            <ul class="tab_ul">
+                <li id="first_tab" class="left_radium tab_li"><a href="#tab1" class="selected left_radium tab_item" >股票</a></li>
+                <li id="second_tab" class="tab_li"><a href="#tab2" class="tab_item">大盘</a></li>
+            </ul>
         </div>
+        <div id="pointer_div">hh</div>
+            <div id="tab1" style="display: block; ">
+                <div id="stock_container">
+                    <table id="stock_list" class="display">
+                        <thead>
+                        <tr>
+                            <th>股票名称</th>
+                            <th>股票代码</th>
+                            <th>开盘价</th>
+                            <th>最高价</th>
+                            <th>最低价</th>
+                            <th>收盘价</th>
+                            <th>成交量</th>
+                            <th>换手率</th>
+                        </tr>
 
-        <div class="duck_content">
-        <table id="stock_list" class="display">
-            <thead>
-            <tr>
-                <th>股票名称</th>
-                <th>股票代码</th>
-                <th>开盘价</th>
-                <th>最高价</th>
-                <th>最低价</th>
-                <th>收盘价</th>
-                <th>成交量</th>
-                <th>换手率</th>
-            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
 
-            </thead>
-            <tbody>
-            </tbody>
+                        <tfoot>
+                        </tfoot>
 
-            <tfoot>
-            </tfoot>
+                    </table>
+                    <div id="loading">
+                        <br><br>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <p>加载中</p>
+                    </div>
+                </div>
+            </div>
+        <div id="tab2" style="display: none; ">
+            <div id="benchmark_container">
+                <table id="benchmark_list" class="display">
+                    <thead>
+                    <tr>
+                        <th>大盘名称</th>
+                        <th>大盘代码</th>
+                        <th>开盘价</th>
+                        <th>最高价</th>
+                        <th>最低价</th>
+                        <th>收盘价</th>
+                        <th>成交量</th>
+                    </tr>
 
-        </table>
+                    </thead>
+                    <tbody>
+                    </tbody>
+
+                    <tfoot>
+                    </tfoot>
+                </table>
+            </div>
         </div>
     </div>
-    <!--大盘-->
-    <div id="benchmark_window" class="duck_window">
-        <div class="duck_title">
-            <div class="duck_title_text">大盘列表</div>
-        </div>
-        <div id="benchmark_list_container" class="duck_content">
-            <table id="benchmark_list" class="display">
-                <thead>
-                <tr>
-                    <th>大盘名称</th>
-                    <th>大盘代码</th>
-                    <th>开盘价</th>
-                    <th>最高价</th>
-                    <th>最低价</th>
-                    <th>收盘价</th>
-                    <th>成交量</th>
-                </tr>
-
-                </thead>
-                <tbody>
-                </tbody>
-
-                <tfoot>
-                </tfoot>
-
-            </table>
-        </div>
-    </div>
+     <!--TAB OVER-->
 
 
 </div>
 </body>
 
 <script>
+    function setUser() {
+        alert("begin");
+        $('#user_name_label').style.backgroundColor="red";
+        alert("set done");
+    }
+    window.onload = function () {
+        document.getElementById('user_name_label').innerHTML = "一朵野花";
+    }
+
+</script>
+<script>
     var allStock;
     $(document).ready(function () {
-                $.ajax({
+
+        $("ul").idTabs();
+        $.ajax({
                     type:'post',
                     url:'/Stock/getStockDataList',
                     contentType:'application/json;charset=utf-8',
                     success:function (data){
 //                alert("success");
                         initTable(data);
+                        $("#loading").remove();
                     },
                     error:function () {
                         alert("请求失败");
@@ -121,8 +188,10 @@
      */
     function initTable(allStock) {
         var table = $('#stock_list').DataTable( {
-
             data:allStock,
+            lengthChange:false,
+            pageLength:10,
+            dom: 'lrtip',
             columns:[
                 {data:'name'},
                 {data:'code'},
@@ -135,25 +204,24 @@
             ],
 
             "autoWidth":false,
-            "columnDefs": [
-                // 将name列变为红色
-                {
-                    "targets": [0], // 目标列位置，下标从0开始
-                    "data": "name", // 数据列名
-                    "render": function(data, type, full) { // 返回自定义内容
-                        return "<span style='color:red;'>" + data + "</span>";
-                    }
-                }
-            ],
+//            "columnDefs": [
+//                // 将name列变为红色
+//                {
+//                    "targets": [0], // 目标列位置，下标从0开始
+//                    "data": "name", // 数据列名
+//                    "render": function(data, type, full) { // 返回自定义内容
+//                        return "<span style='color:red;'>" + data + "</span>";
+//                    }
+//                }
+//            ],
             //国际化
             "oLanguage": {
                 "sProcessing": "疯狂加载数据中.",
-                "sLengthMenu": "每页显示 _MENU_ 条记录",
-                "sZeroRecords": "抱歉， 没有找到",
-                "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+                "sLengthMenu": "每页显示 _MENU_ 支股票",
+                "sInfo": "共 _TOTAL_ 支股票",
                 "sInfoEmpty": "没有数据",
                 "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
-                "sZeroRecords": "没有检索到数据",
+                "sZeroRecords": "没有检索到股票",
                 "sSearch": "模糊查询:  ",
                 "oPaginate": {
                     "sFirst": "首页",
@@ -166,6 +234,11 @@
 
         } );
 
+
+        //以下关于自定义搜索框
+        $('#input_text').on('keyup',function () {
+           table.search(this.value).draw();
+        });
 //以下是关于选择行的代码
 
         $('#stock_list tbody').on( 'click', 'tr', function () {
@@ -205,7 +278,9 @@
      */
     function initBenchmarkTable(allStock) {
         var table = $('#benchmark_list').DataTable( {
-
+            lengthChange:false,
+            pageLength:10,
+            dom: 'lrtip',
             data:allStock,
             columns:[
                 {data:'name'},
@@ -214,30 +289,30 @@
                 {data:'high'},
                 {data:'low'},
                 {data:'close'},
-                {data:'turnoverVol'},
+                {data:'turnoverVol'}
             ],
 
             "autoWidth":false,
-            "columnDefs": [
-                // 将name列变为红色
-                {
-                    "targets": [0], // 目标列位置，下标从0开始
-                    "data": "name", // 数据列名
-                    "render": function(data, type, full) { // 返回自定义内容
-                        return "<span style='color:red;'>" + data + "</span>";
-                    }
-                }
-            ],
+//            "columnDefs": [
+//                // 将name列变为红色
+//                {
+//                    "targets": [0], // 目标列位置，下标从0开始
+//                    "data": "name", // 数据列名
+//                    "render": function(data, type, full) { // 返回自定义内容
+//                        return "<span style='color:red;'>" + data + "</span>";
+//                    }
+//                }
+//            ],
             //国际化
             "oLanguage": {
                 "sProcessing": "疯狂加载数据中.",
-                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sLengthMenu": "每页显示 _MENU_个大盘",
                 "sZeroRecords": "抱歉， 没有找到",
-                "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+                "sInfo": "共 _TOTAL_ 个大盘",
                 "sInfoEmpty": "没有数据",
                 "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
-                "sZeroRecords": "没有检索到数据",
-                "sSearch": "模糊查询:  ",
+                "sZeroRecords": "没有检索到大盘",
+//                "sSearch": "模糊查询:  ",
                 "oPaginate": {
                     "sFirst": "首页",
                     "sPrevious": "前一页",

@@ -7,7 +7,7 @@ import java.util.Arrays;
  * @author Qiang
  * @date 16/5/22
  */
-class MathHelper {
+public class MathHelper {
     static double computeAverage(double[] val) {
 
         return computeSum(val) / val.length;
@@ -21,23 +21,24 @@ class MathHelper {
         return sum;
     }
 
-    static double computeVar(double[] val){
+    static double computeVar(double[] val) {
         double avg = computeAverage(val);
         double sum = 0;
-        for (double a : val){
-            sum += Math.pow(a - avg , 2);
+        for (double a : val) {
+            sum += Math.pow(a - avg, 2);
         }
-        return sum/val.length;
+        return sum / val.length;
 
     }
 
 
     /**
      * 获得排位
-     * @param value     排位值
-     * @param values    数组
-     * @param upOrDown  升序or降序
-     * @return          point(x 位置, y 总数)
+     *
+     * @param value    排位值
+     * @param values   数组
+     * @param upOrDown 升序or降序
+     * @return point(x 位置, y 总数)
      */
     static Point getRank(double value, double[] values, boolean upOrDown) {
         System.out.println(Arrays.toString(values));
@@ -46,11 +47,11 @@ class MathHelper {
 
         Arrays.sort(values);
         for (int i = 0; i < len; i++) {
-            if(upOrDown && value < values[i]){
+            if (upOrDown && value < values[i]) {
                 return new Point(i + 1, len);
             }
-            if(!upOrDown && value > values[i]){
-                return new Point(len - i , len);
+            if (!upOrDown && value > values[i]) {
+                return new Point(len - i, len);
             }
         }
 

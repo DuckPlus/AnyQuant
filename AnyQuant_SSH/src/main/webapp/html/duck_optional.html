@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <title>Duck 自选股</title>
     <script src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+    <script src="/js/LogStatusControl.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
     <link rel="stylesheet" type="text/css" href="/css/window.css">
     <link rel="stylesheet" href="/css/duck_optional.css">
 
+    <script src="/js/loadingbar.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/loadingbar.css" />
     <!-- DataTables -->
     <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
     <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
@@ -18,16 +21,42 @@
     <!--tab上的小图标-->
     <link rel="shortcut icon" href="/image/short_cut.png">
 </head>
-<body>
+<body onload=init()>
 <!-- navigator begin -->
 <div id="nav_bar">
-    <img src="/image/duck_icon_pink.png" style="width: 73px;height: 35px;float: left;margin-top:7px;margin-left: 10px ">
+    <img src="/image/duck_icon_pink.png" style="width: 73px;height: 35px;float: left;margin-top:7px;margin-left: 10px">
     <!--<div style="font-size: 30px;float: left;color: #ffffff;margin-left: 10px;margin-top: 7px;">DUCK</div>-->
     <ul id="nav_box">
-        <li class="nav_item"><a class="nav_c" href="duck_main.html">股票列表</a></li>
-        <li class="nav_item"><a class="nav_c" href="BoardList.html">行业分布</a></li>
-        <li class="nav_item"><a class="nav_c" href="duck_optional.html">自选股</a></li>
-        <li class="nav_item"><a class="nav_c" href="Analyse_input.html">回测系统</a></li>
+        <li class="nav_item">
+            <a class="nav_c" href="duck_main.html">
+                <img id= "data_icon" src="/image/data.png">
+                <label class="nav_item_name">数据</label>
+            </a>
+        </li>
+        <li class="nav_item">
+            <a class="nav_c" href="BoardList.html">
+                <img id= "distribute_icon" src="/image/distribute-horizontal-centers.png">
+                <label class="nav_item_name">分布</label>
+            </a>
+        </li>
+        <li class="nav_item">
+            <a class="nav_c" href="duck_optional.html">
+                <img id= "optional_icon" src="/image/optional_stocl.png">
+                <label class="nav_item_name">自选股</label>
+            </a>
+        </li>
+        <li class="nav_item">
+            <a class="nav_c" href="Analyse_input.html">
+                <img id= "regression_test_icon" src="/image/test.png">
+                <label class="nav_item_name">回测系统</label>
+            </a>
+        </li>
+        <li class="nav_item">
+            <a class="nav_c" href="#">
+                <img id= "user_icon" src="/image/user.png">
+                <label class="nav_item_name">用户</label>
+            </a>
+        </li>
     </ul>
 </div>
 <div id="blank"></div>
@@ -59,6 +88,19 @@
                 <tfoot>
                 </tfoot>
             </table>
+            <div id="loading">
+                <br><br>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <p>加载中</p>
+            </div>
         </div>
     </div>
 
@@ -89,6 +131,10 @@
 </body>
 
 <script>
+    function init() {
+        //verify if login
+        handle_Login();
+    }
     var allStock;
     $(document).ready(function () {
                 $.ajax({
@@ -97,6 +143,7 @@
                     contentType:'application/json;charset=utf-8',
                     success:function (data){
                         initTable(data);
+                        $("#loading").remove();
                     },
                     error:function () {
                         alert("请求失败");

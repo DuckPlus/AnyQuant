@@ -31,7 +31,7 @@ public class StrategyController {
      * @param codes the stock universal
      * @return some of the most useful factors , which gives customer suggestions on strategy to analyse
      */
-    public List<FactorJudgmentVO> getStocksFactorJudgment(List<String> codes){
+    public FactorJudgmentVO getStocksFactorJudgment(List<String> codes){
         return service.getStocksFactorJudgment(codes);
     }
 

@@ -1,9 +1,7 @@
 package service;
 
 import util.MyDate;
-import util.enumration.FactorJudge;
 import vo.FactorJudgmentVO;
-import vo.FactorWeightVO;
 import vo.ReportVO;
 
 import java.util.List;
@@ -22,11 +20,11 @@ public interface StrategyService {
      * @param codes the stock universal
      * @return some of the most useful factors , which gives customer suggestions on strategy to analyse
      */
-    List<FactorJudgmentVO> getStocksFactorJudgment(List<String> codes);
+    FactorJudgmentVO getStocksFactorJudgment(List<String> codes);
 
     /**
-     * FactorAnalysis
-     * 因子分析
+     * FactorStrategy
+     * 根据给定的因子权重进行回测
      * @param codes 股票池
      * @param start 起始日期
      * @param end   结束日期

@@ -28,6 +28,7 @@ function ifExist(index,num){
     return 0;
 }
 function  initBubble() {
+    alert("initBubble");
     var index=[],length=globalData.length,m=0,i=0;
     while(i<9){
         var newNum=Math.floor(Math.random()*(length+1));
@@ -71,6 +72,7 @@ function  initBubble() {
                 code:globalData[index[i]].stocks[j].code,
                 rate:(globalData[index[i]].stocks[j].changeRate).toFixed(6),
                 color:myRed,
+                volume:globalData[index[i]].stocks[j].turnoverVol,
                 board:boards[parBoard].name
             });
             if(j==1){
@@ -111,6 +113,7 @@ function draw(){
             '<tr><th>x:</th><td>{point.x}</td></tr>' +
             '<tr><th>y:</th><td>{point.y}</td></tr>' +
              '<tr><th>z:</th><td>{point.z}</td></tr>'+
+                '<tr><th>成交量:</th><td>{point.volume}</td></tr>'+
             '<tr><th>所属板块:</th><td>{point.board}</td></tr>'
             ,
 

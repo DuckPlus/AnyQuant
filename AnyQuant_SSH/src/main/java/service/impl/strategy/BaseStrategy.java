@@ -27,11 +27,11 @@ public abstract class BaseStrategy  {
     /**
      * 起始资金
      */
-    protected double capital;
+    protected double capital = 100000;
     /**
      * 交易费率
      */
-    protected double taxRate;
+    protected double taxRate = 0.003;
 
     /**
      * 基准大盘代码

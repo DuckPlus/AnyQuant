@@ -63,8 +63,8 @@ public class ConnectionHelper {
 			buffer.append(urls.get(i+1) );
 			buffer.append(param[i]);
 		}
-//		System.err.println(buffer.toString());
-//		System.out.println(request(buffer.toString()));
+		System.err.println(buffer.toString());
+		System.out.println(request(buffer.toString()));
 
 		return JSONObject.fromObject(request(buffer.toString()));
 
