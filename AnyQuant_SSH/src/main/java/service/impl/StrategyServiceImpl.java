@@ -27,9 +27,6 @@ public class StrategyServiceImpl implements StrategyService {
 
     @Override
     public FactorJudgmentVO getStocksFactorJudgment(List<String> codes) {
-
-
-
         return factorAnalyseHelper.report(codes);
     }
 
