@@ -81,6 +81,7 @@
 
         <div id="pointer_div">hh</div>
 
+<<<<<<< HEAD
         <div id="tab1" style="display: block; ">
                 <div id="optional_table">
                     <table id="stock_list" class="display">
@@ -95,6 +96,26 @@
                             <th>成交量</th>
                             <th>换手率</th>
                         </tr>
+=======
+                <tfoot>
+                </tfoot>
+            </table>
+            <br><br>
+            <div id="loading">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <p>加载中</p>
+            </div>
+        </div>
+    </div>
+>>>>>>> 02fdeca469d75e4a737e850971b2b2b2410357d3
 
                         </thead>
                         <tbody>
@@ -181,11 +202,11 @@
      */
     function initTable(allStock) {
         var table = $('#stock_list').DataTable( {
-
             data:allStock,
             lengthChange:false,
             pageLength:10,
             dom: 'lrtip',
+            "order":[[1,"asc"]],
             columns:[
                 {data:'name'},
                 {data:'code'},

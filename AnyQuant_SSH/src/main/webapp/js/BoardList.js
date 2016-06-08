@@ -134,12 +134,12 @@ function draw(){
         title: {
             text: ''
         },
-        /*xAxis: {
+        xAxis: {
             visible:false
         },
         yAxis: {
             visible:false
-        },*/
+        },
         plotOptions: {
             bubble:{
               zMin:15
