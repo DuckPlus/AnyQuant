@@ -68,7 +68,7 @@ function doAnalyse(){
         "\n起始资金："+document.getElementById("capital").value+
         "\n交易费率："+document.getElementById("taxRate").value+
         "\n股票数量："+document.getElementById("numOfStock").value+
-        "\n调仓间隔"+document.getElementById("interval").value+
+        "\n调仓间隔："+document.getElementById("interval").value+
         "\n起止时间："+startT+"~"+endT);
     location.href="Analyse_charts.html";
 }
