@@ -99,7 +99,7 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
             double sum = 0;
             List<StockdataEntity> entities = cacheHelper.getTodaySomeStocks(stocks);
             for (StockdataEntity entity : entities){
-                sum += entity.getTurnoverValue();
+                sum += entity.getTurnoverVol();
                 vos.add(makeDistributionVO(entity));
             }
 //        for (String stock :stocks){
@@ -109,7 +109,7 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 //        }
             for (BoardDistributionVO vo : vos){
                 vo.board = boardName;
-                vo.weight = vo.turnoverValue/sum;
+                vo.weight = vo.turnoverVol/sum;
             }
             return vos;
         }
