@@ -82,7 +82,7 @@
                 <li id="second_tab" class="tab_li"><a href="#tab2" class="tab_item">大盘</a></li>
             </ul>
         </div>
-        <div id="pointer_div">hh</div>
+        <div id="pointer_div"></div>
             <div id="tab1" style="display: block; ">
                 <div id="stock_container">
                     <table id="stock_list" class="display">
@@ -95,7 +95,7 @@
                             <th>最低价</th>
                             <th>收盘价</th>
                             <th>成交量</th>
-                            <th>换手率</th>
+                            <th>涨跌幅</th>
                         </tr>
 
                         </thead>
@@ -106,8 +106,8 @@
                         </tfoot>
 
                     </table>
+                    <br><br> <br><br> <br><br>
                     <div id="loading">
-                        <br><br>
                         <span></span>
                         <span></span>
                         <span></span>
@@ -189,6 +189,7 @@
     function initTable(allStock) {
         var table = $('#stock_list').DataTable( {
             data:allStock,
+            "order":[[1,"asc"]],
             lengthChange:false,
             pageLength:10,
             dom: 'lrtip',

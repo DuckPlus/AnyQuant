@@ -88,8 +88,8 @@
                 <tfoot>
                 </tfoot>
             </table>
+            <br><br>
             <div id="loading">
-                <br><br>
                 <span></span>
                 <span></span>
                 <span></span>
@@ -156,8 +156,8 @@
      */
     function initTable(allStock) {
         var table = $('#stock_list').DataTable( {
-
             data:allStock,
+            "order":[[1,"asc"]],
             columns:[
                 {data:'name'},
                 {data:'code'},
@@ -308,7 +308,7 @@
                 enabled: false
             },
             tooltip: {
-                pointFormat: '包含股票数量: <b>{point.y:.1f}</b>'
+                pointFormat: '包含股票数量: <b>{point.y:.0f}</b>'
             },
             series: [{
                 name: 'Population',
@@ -318,7 +318,7 @@
                     rotation: -90,
                     color: '#FFFFFF',
                     align: 'right',
-                    format: '{point.y:.1f}', // one decimal
+                    format: '{point.y:.0f}', // one decimal
                     y: 10, // 10 pixels down from the top
                     style: {
                         fontSize: '13px',
@@ -415,7 +415,7 @@
                 enabled: false
             },
             tooltip: {
-                pointFormat: '包含股票数量: <b>{point.y:.1f}</b>'
+                pointFormat: '包含股票数量: <b>{point.y:.0f}</b>'
             },
             series: [{
                 name: 'Population',
@@ -425,7 +425,7 @@
                     rotation: -90,
                     color: '#FFFFFF',
                     align: 'right',
-                    format: '{point.y:.1f}', // one decimal
+                    format: '{point.y:.0f}', // one decimal
                     y: 10, // 10 pixels down from the top
                     style: {
                         fontSize: '13px',

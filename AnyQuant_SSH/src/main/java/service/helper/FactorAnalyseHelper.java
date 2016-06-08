@@ -35,7 +35,7 @@ public class FactorAnalyseHelper {
     private List<String> codes;
     private double[] distribution = {0.5, 0.3, 0.1, 0.07, 0.03};
     private int month = 12;
-    private int captial = 100000;
+//    private int captial = 100000;
 
     private enum testFactor {PE, PB, PS, PCF , VOL5 , VOL10 , MA5 , MA10}
 
@@ -215,7 +215,7 @@ public class FactorAnalyseHelper {
     }
 
     /**
-     * 根据因子值分档,返回每档的股票的代号
+     * 根据因子值分档(降序排列),返回每档的股票的代号
      *
      * @param theTestFactor 分档的股票
      * @param factors       股票因子值
@@ -250,13 +250,13 @@ public class FactorAnalyseHelper {
 
     private List<FactorEntity> getUsefulData(List<FactorEntity> factors, int months) {
         List<FactorEntity> result = new ArrayList<>(months);
-        for (int i = 0; i < factors.size(); i++) {
+        for (FactorEntity factor : factors) {
             if (result.size() > 0) {
-                if (result.get(result.size() - 1).getDate().getMonth() != factors.get(i).getDate().getMonth()) {
-                    result.add(factors.get(i));
+                if (result.get(result.size() - 1).getDate().getMonth() != factor.getDate().getMonth()) {
+                    result.add(factor);
                 }
             } else {
-                result.add(factors.get(i));
+                result.add(factor);
             }
 
 
