@@ -1,5 +1,8 @@
 package controller;
 
+import controller.helper.JSONHelper;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,9 +13,7 @@ import util.MyDate;
 import vo.FactorJudgmentVO;
 import vo.ReportVO;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 用户制定策略界面Controller
@@ -26,6 +27,8 @@ public class StrategyController {
 
     @Autowired
     private StrategyService service;
+
+
 
     /**
      * Get the factorJudgement of the giving stocks
@@ -52,11 +55,10 @@ public class StrategyController {
      * @return analysis report
      */
     @RequestMapping("/analyseWithFactor")
-    public ReportVO analyseWithFactor(String codes, MyDate start , MyDate end , Map<String , Double> factorWeight){
+    public ReportVO analyseWithFactor(String codes, String start , String end , JSONObject factorWeight){
         List<String> stockCodes = Arrays.asList(codes.split(Configure.STOCK_SPLITER));
 
-
-        return service.analyseWithFactor(stockCodes , start, end , factorWeight);
+        return service.analyseWithFactor(stockCodes , MyDate.getDateFromString(start) , MyDate.getDateFromString(end), (Map<String, Double>) JSONHelper.convertToMap(factorWeight));
     }
 
 }
