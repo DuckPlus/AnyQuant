@@ -46,10 +46,7 @@ public class StockDetailController {
     public List<NewsVO> getRelatedNewsVO(String code){
         return analyseService.getRelatedNewsVO(code);
     }
-    //----------------
 
-    //以下方法暂不可用
-    //----------------
     /**
      * Get the evaluation of the stock, including mark,suggestion and analysis
      * 获得对某只股票的评价,包括评分、建议、分析等等

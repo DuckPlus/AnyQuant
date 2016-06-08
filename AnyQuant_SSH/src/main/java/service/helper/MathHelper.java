@@ -41,17 +41,18 @@ public class MathHelper {
      * @return point(x 位置, y 总数)
      */
     static Point getRank(double value, double[] values, boolean upOrDown) {
-        System.out.println(Arrays.toString(values));
-        System.out.println(value);
+//        System.out.println(Arrays.toString(values));
+//        System.out.println(value);
         int len = values.length;
-
-        Arrays.sort(values);
+        double[] newValues = values.clone();
+        Arrays.sort(newValues);
+//        System.out.println(Arrays.toString(newValues));
         for (int i = 0; i < len; i++) {
-            if (upOrDown && value < values[i]) {
+            if (upOrDown && value < newValues[i]) {
                 return new Point(i + 1, len);
             }
-            if (!upOrDown && value > values[i]) {
-                return new Point(len - i, len);
+            if (!upOrDown && value < newValues[i]) {
+                return new Point(len - i + 1, len);
             }
         }
 
