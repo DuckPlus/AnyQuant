@@ -101,15 +101,17 @@ public class StockDataDAOImpl implements StockDataDAO {
     @Override
     public List<String> getStockCodeByPE(MyDate date,double low_PE , double high_PE) {
         String hql = "select code from "+tableName+
-                " where pe>= "+low_PE+" and pe<= "+high_PE+" and date = '"+date.DateToString()+"'";
+                " where pe>= "+low_PE+" and pe<= "+high_PE+
+                " and date = '"+date.DateToString()+"'"
+                +"and turnoverValue >10000";
         return (List<String>) baseDAO.getAllList(hql);
     }
 
     @Override
     public double [] getAvgPriceByCodes(List<String> codes, MyDate date) {
 
-        String hql = "select turnoverValue / turnoverVol from "+tableName+" where code = ? and date = '"+date.DateToString()+"'"
-                +" and turnoverVol >0";
+        String hql = "select turnoverValue / turnoverVol from "+tableName+
+                " where code = ? and date = '"+date.DateToString()+"'";
         List result  = baseDAO.batchSingleQuery_Exact(hql,codes);
         double [] prices = new double [codes.size()];
         for(int i=0;i<codes.size();i++){
@@ -131,11 +133,13 @@ public class StockDataDAOImpl implements StockDataDAO {
     }
 
     @Override
-    public List<String> getStockCodeByVolDec(MyDate date, int vol) {
+    public List<String> getStockCodeByVolDec( MyDate start, MyDate end, int vol) {
 
-        String hql = "select code from "
-                +tableName+" where date = '"+date.DateToString()+"'"
-                + "order by turnoverVol asc";
+        String hql = "select distinct code from "
+                +tableName+
+                " where  date between '"+start.DateToString()+"' and '"+end.DateToString()+"'"
+                +" and turnoverVol > 0 and turnoverValue > 100000 "
+                +" order by turnoverVol asc";
         return (List<String>) baseDAO.getAllList(hql,vol);
 
     }
