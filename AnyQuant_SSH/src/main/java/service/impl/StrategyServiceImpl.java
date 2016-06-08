@@ -25,14 +25,16 @@ public class StrategyServiceImpl implements StrategyService {
     @Autowired
     private FactorAnalyseHelper factorAnalyseHelper;
 
+//    @Override
+//    public FactorJudgmentVO getStocksFactorJudgment(List<String> codes) {
+//        return factorAnalyseHelper.report(codes);
+//    }
+
+
     @Override
-    public FactorJudgmentVO getStocksFactorJudgment(List<String> codes) {
-        return factorAnalyseHelper.report(codes);
+    public FactorJudgmentVO getStocksFactorJudgment(List<String> codes, MyDate start, MyDate end , String baseBench) {
+        return factorAnalyseHelper.report(codes ,start , end , baseBench);
     }
-
-
-
-
 
     @Override
     public ReportVO analyseWithFactor(List<String> codes, MyDate start, MyDate end, Map<String, Double> factorWeight) {

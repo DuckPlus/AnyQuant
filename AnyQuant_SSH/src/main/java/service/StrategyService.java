@@ -20,7 +20,7 @@ public interface StrategyService {
      * @param codes the stock universal
      * @return some of the most useful factors , which gives customer suggestions on strategy to analyse
      */
-    FactorJudgmentVO getStocksFactorJudgment(List<String> codes);
+    FactorJudgmentVO getStocksFactorJudgment(List<String> codes , MyDate start , MyDate end, String baseBench);
 
     /**
      * FactorStrategy

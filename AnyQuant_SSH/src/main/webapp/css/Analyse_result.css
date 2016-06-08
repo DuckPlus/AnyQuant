@@ -1,0 +1,51 @@
+#main_content{
+    margin-left: 3%;
+    margin-right:3%;
+    background-color: #2c81ba;
+    height: 700px;
+}
+
+
+
+#title_result{
+    border-bottom: solid 1px rgb(151,151,151);
+    height: 64px;
+    background-color: chocolate;
+    border-bottom: solid 1px rgb(151,151,151);
+}
+#title_result_icon{
+    float: left;
+    width: 96px;
+}
+#title_result_content{
+    background-color: #00CD00;
+    height: 64px;
+    font-size: 30px;
+    line-height: 60px;
+    float: left;
+}
+#used_params{
+    margin-top: 10px;
+}
+#params_left_part{
+    background-color: chocolate;
+    height: 500px;
+    width: 39%;
+    float: left;
+}
+#factor_weight{
+    height: 500px;
+    width: 19%;
+    background-color: #2c81ba;
+    float: left;
+    border:solid 2px rgb(151,151,151);
+    border-radius: 10px;
+}
+#stock_pool{
+    width: 39%;
+    height: 500px;
+    background-color: #1abc9c;
+    float: left;
+    border:solid 2px rgb(151,151,151);
+    border-radius: 10px;
+}

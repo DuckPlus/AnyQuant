@@ -17,7 +17,7 @@ public class Configure {
 
     public static final String HUSHEN300 = "上证综指";//TODO
 
-
+    public static final String STOCK_SPLITER = ",";
     /*
         以下为Error的原因
      */

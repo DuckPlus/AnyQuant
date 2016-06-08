@@ -26,7 +26,7 @@ public class Strategy_VolTest {
     double capital=2000000;
     double taxRate=0.001;
     String baseCode="000300";
-    MyDate start =MyDate.getDateFromString("2015-01-01");
+    MyDate start =MyDate.getDateFromString("2014-01-01");
     MyDate end=MyDate.getDateFromString("2016-01-01");
     int vol=5;
     int interval=60;
