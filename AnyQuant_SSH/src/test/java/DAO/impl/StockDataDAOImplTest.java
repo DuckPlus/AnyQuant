@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import util.DateCalculator;
 import util.MyDate;
 
 import java.util.ArrayList;
@@ -187,7 +188,8 @@ public class StockDataDAOImplTest {
     public void getStockCodeByVolDec() throws Exception{
         MyDate date = MyDate.getDateFromString("2006-01-04");
         int vol = 20;
-        List<String>  codes = dao.getStockCodeByVolDec(date,vol);
+        MyDate start = DateCalculator.getAnotherDay(date,-vol);
+        List<String>  codes = dao.getStockCodeByVolDec(start,date,vol);
         if(codes==null){
             fail("null");
         }else{

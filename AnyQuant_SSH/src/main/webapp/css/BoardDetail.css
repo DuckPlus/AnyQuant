@@ -4,8 +4,57 @@
     /*background-color: #00bdef;*/
 }
 #top_bar{
-    border-radius: 5px;
-    box-shadow: 0 0 2px #333333;
+    border-right: 1px solid rgb(151,151,151);
+    height: 1300px;
+    width: 300px;
+    float: left;
+    margin-top:20px;
+    /*background-color: #00a1cb;*/
+}
+#stockname{
+    height: 50px;
+    font-size: 30px;
+    /*background-color: chocolate;*/
+}
+#increase_item{
+    height: 40px;
+    /*background-color: #00CC99;*/
+}
+#board_info_increase{
+    /*background-color: #1B9AF7;*/
+    float: left;
+}
+#rate,#upNum,#downNum,#stopNum{
+    margin-top:10px;
+    float: right;
+    /*background-color: #2c81ba;*/
+}
+#board_info_increase,#board_info_up_num,#board_info_down_num,#board_info_stop_num{
+    /*background-color: red;*/
+    margin-top: 10px;
+}
+#increase_item,#up_num_item,#down_num_item,#stop_num_item{
+    margin-top: 10px;
+    width: 90%;
+    margin-left: 10px;
+}
+#up_num_item{
+    height: 40px;
+}
+#board_info_up_num{
+    float: left;
+}
+#down_num_item{
+    height: 40px;
+}
+#board_info_down_num{
+    float: left;
+}
+#stop_num_item{
+    height: 40px;
+}
+#board_info_stop_num{
+    float: left;
 }
 #linechart{
     height: 400px;
@@ -19,13 +68,25 @@
     margin: auto;
 
 }
-#compare_window{
-    margin-top: 10px;
-    width: 100%;
-    height: 450px;
+#compare_chart{
+    border: solid 2px rgb(151,151,151);
+    width: 830px;
+    height: 400px;
+    float: left;
+    margin-top:20px;
+    margin-left:20px;
+    border-radius: 10px;
 }
-#constituent_window{
-    margin-top: 10px;
-    width: 100%;
-    height: 650px;
+#consist_chart{
+    border: solid 2px rgb(151,151,151);
+    width: 830px;
+    height: 600px;
+    float: left;
+    margin-left:20px;
+    margin-top:20px;
+    border-radius: 10px;
+}
+.item_icon{
+    width: 40px;
+    float: left;
 }

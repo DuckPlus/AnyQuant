@@ -93,9 +93,9 @@ public interface StockDataDAO {
 
 
     /**
-     * 获取市场上当天成交量最小的vol只股票
+     * 获取市场上某日期段内成交量最小的vol只股票
      */
-    public List<String>  getStockCodeByVolDec(MyDate date , int vol);
+    public List<String>  getStockCodeByVolDec(MyDate start ,MyDate end, int vol);
 
     /**
      * 返回给定日期段内的有效交易日日期

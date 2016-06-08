@@ -23,13 +23,13 @@ public class Strategy_VolTest {
     @Autowired
     Strategy_Vol strategy_Vol;
 
-    double capital=1000000;
+    double capital=2000000;
     double taxRate=0.001;
     String baseCode="000300";
     MyDate start =MyDate.getDateFromString("2015-01-01");
     MyDate end=MyDate.getDateFromString("2016-01-01");
-    int vol=10;
-    int interval=30;
+    int vol=5;
+    int interval=60;
 
 
 

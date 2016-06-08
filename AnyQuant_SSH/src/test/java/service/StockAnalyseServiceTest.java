@@ -108,11 +108,11 @@ public class StockAnalyseServiceTest {
 
     @Test
     public void getMostUsefulFactors() throws Exception {
-        List<FactorWeightVO> factorWeightVOs = stockAnalyseService.getMostUsefulFactors("sh600004" , 70 , FactorJudge.IC );
+        List<FactorWeightVO> factorWeightVOs = stockAnalyseService.getMostUsefulFactors("sh600380" ,70 , FactorJudge.IC );
         for (FactorWeightVO vo : factorWeightVOs){
             System.out.println(vo.judgeFactorValue + " " + vo.name);
         }
-        factorWeightVOs = stockAnalyseService.getMostUsefulFactors("sh600004" , 70 , FactorJudge.IR );
+        factorWeightVOs = stockAnalyseService.getMostUsefulFactors("sh600380" , 70 , FactorJudge.IR );
         for (FactorWeightVO vo : factorWeightVOs){
             System.out.println(vo.judgeFactorValue + " " + vo.name);
         }

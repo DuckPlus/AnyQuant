@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <title>Duck 自选股</title>
     <script src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="http://www.sunsean.com/idTabs/jquery.idTabs.min.js"></script>
     <script src="/js/LogStatusControl.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
     <link rel="stylesheet" type="text/css" href="/css/window.css">
     <link rel="stylesheet" href="/css/duck_optional.css">
-
+    <link rel="stylesheet" href="/css/optional_tab.css">
     <script src="/js/loadingbar.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/loadingbar.css" />
     <!-- DataTables -->
@@ -21,7 +22,7 @@
     <!--tab上的小图标-->
     <link rel="shortcut icon" href="/image/short_cut.png">
 </head>
-<body onload=init()>
+<body onload=init();>
 <!-- navigator begin -->
 <div id="nav_bar">
     <img src="/image/duck_icon_pink.png" style="width: 73px;height: 35px;float: left;margin-top:7px;margin-left: 10px">
@@ -61,30 +62,41 @@
 </div>
 <div id="blank"></div>
 <!-- navigator end -->
+
 <div id="main_content">
+    <!--TAB-->
+    <div id="usual1" class="usual">
 
-    <div class="duck_window" id="optional_stock_window">
-        <div class="duck_title">
-            <div class="duck_title_text">自选股列表</div>
+        <div id="tab_content">
+            <div id="input_space">
+                <input type="text" id="input_text" placeholder="Search..">
+                <img id="search_icon" src="/image/search_icon.png">
+            </div>
+            <ul class="tab_ul">
+                <li id="first_tab" class="left_radium tab_li"><a href="#tab1" class="selected left_radium tab_item" onclick=show_search();>自选</a></li>
+                <li id="second_tab" class="tab_li"><a href="#tab2" class="tab_item" onclick=hide_search();>行业分布</a></li>
+                <li id="third_tab" class="tab_li"><a href="#tab3" class="tab_item" onclick = hide_search();>地域分布</a></li>
+            </ul>
         </div>
-        <div class="duck_content">
-            <table id="stock_list" class="display">
-                <thead>
-                <tr>
-                    <th>股票名称</th>
-                    <th>股票代码</th>
-                    <th>开盘价</th>
-                    <th>最高价</th>
-                    <th>最低价</th>
-                    <th>收盘价</th>
-                    <th>成交量</th>
-                    <th>换手率</th>
-                </tr>
 
-                </thead>
-                <tbody>
-                </tbody>
+        <div id="pointer_div">hh</div>
 
+<<<<<<< HEAD
+        <div id="tab1" style="display: block; ">
+                <div id="optional_table">
+                    <table id="stock_list" class="display">
+                        <thead>
+                        <tr>
+                            <th>股票名称</th>
+                            <th>股票代码</th>
+                            <th>开盘价</th>
+                            <th>最高价</th>
+                            <th>最低价</th>
+                            <th>收盘价</th>
+                            <th>成交量</th>
+                            <th>换手率</th>
+                        </tr>
+=======
                 <tfoot>
                 </tfoot>
             </table>
@@ -103,28 +115,61 @@
             </div>
         </div>
     </div>
+>>>>>>> 02fdeca469d75e4a737e850971b2b2b2410357d3
 
-    <div class="duck_window" id="region_distribution_window">
-        <div class="duck_title">
-            <div class="duck_title_text">地域分布</div>
-        </div>
-        <div class="duck_content">
-            <div id="region_pie_chart"></div>
-            <div id="region_bar_chart"></div>
+                        </thead>
+                        <tbody>
+                        </tbody>
+
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                    <div id="loading">
+                        <br><br>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <p>加载中</p>
+                    </div>
+                </div>
         </div>
 
+        <div id="tab2" style="display: none; ">
+                <div class="pie_bar">
+                    <div id="board_pie_chart"></div>
+                    <div id="board_bar_chart"></div>
+                </div>
+        </div>
+        <div id="tab3" style="display: none">
+
+            <div class="pie_bar">
+                <div id="region_pie_chart"></div>
+                <div id="region_bar_chart"></div>
+            </div>
+
+
+        </div>
     </div>
+    <script>
+        function hide_search() {
+            document.getElementById('input_space').style.visibility = "hidden";
+        }
+        function show_search() {
+            document.getElementById('input_space').style.visibility = "visible";
+        }
+    </script>
+    <!--TAB END-->
 
-    <div class="duck_window" id="board_distribution_window">
-        <div class="duck_title">
-            <div class="duck_title_text">板块分布</div>
-        </div>
-        <div class="duck_content">
-            <div id="board_pie_chart"></div>
-            <div id="board_bar_chart"></div>
-        </div>
 
-    </div>
+
+
+
 
 </div>
 
@@ -137,6 +182,7 @@
     }
     var allStock;
     $(document).ready(function () {
+        $("ul").idTabs();
                 $.ajax({
                     type:'post',
                     url:"/Optional/get",
@@ -158,6 +204,9 @@
         var table = $('#stock_list').DataTable( {
 
             data:allStock,
+            lengthChange:false,
+            pageLength:10,
+            dom: 'lrtip',
             "order":[[1,"asc"]],
             columns:[
                 {data:'name'},
@@ -173,16 +222,16 @@
              *自适应宽度 默认true 关闭可提升性能,同时方便管理布局
              */
             "autoWidth":false,
-            "columnDefs": [
-                // 将name列变为红色
-                {
-                    "targets": [0], // 目标列位置，下标从0开始
-                    "data": "name", // 数据列名
-                    "render": function(data, type, full) { // 返回自定义内容
-                        return "<span style='color:red;'>" + data + "</span>";
-                    }
-                }
-            ],
+//            "columnDefs": [
+//                // 将name列变为红色
+//                {
+//                    "targets": [0], // 目标列位置，下标从0开始
+//                    "data": "name", // 数据列名
+//                    "render": function(data, type, full) { // 返回自定义内容
+//                        return "<span style='color:red;'>" + data + "</span>";
+//                    }
+//                }
+//            ],
             /*
              *自适应宽度 默认true 关闭可提升性能,同时方便管理布局
              */
@@ -216,7 +265,11 @@
             },
         } );
 
-//以下是关于选择行的代码
+        //以下关于自定义搜索框
+        $('#input_text').on('keyup',function () {
+            table.search(this.value).draw();
+        });
+        //以下是关于选择行的代码
 
         $('#stock_list tbody').on( 'click', 'tr', function () {
             table.$('tr.selected').removeClass('selected');

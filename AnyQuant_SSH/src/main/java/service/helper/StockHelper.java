@@ -41,6 +41,7 @@ public class StockHelper {
 
     public static double computeIR(List<StockdataEntity> entities, List<Factor_VO> factor_vos){
         int len = Math.min(entities.size() , factor_vos.size());
+
         int divide = 6;
         List<List<StockdataEntity>> divideEntites = new ArrayList<>();
         List<List<Factor_VO>> divideVos = new ArrayList<>();
@@ -63,9 +64,14 @@ public class StockHelper {
         for (int i = 0; i < divide; i++) {
             ICs[i] = computeIC(divideEntites.get(i) , divideVos.get(i));
         }
+        double mother;
+        if( (mother = Math.sqrt(MathHelper.computeVar(ICs))) == 0){
+            return 0;
+        }else {
+            return MathHelper.computeAverage(ICs)/mother;
+        }
 
 
-        return MathHelper.computeAverage(ICs)/Math.sqrt(MathHelper.computeVar(ICs));
     }
 
     public static double computeTCheck(List<StockdataEntity> entities, List<Factor_VO> factor_vos, List<BenchmarkdataEntity> hushen300){
