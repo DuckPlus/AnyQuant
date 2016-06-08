@@ -181,7 +181,7 @@
     float: left;
     width: 850px;
     margin-left: 20px;
-    /*border: solid 1px #000000;*/
+    height: 400px;
 }
 #divider_ohlc_factor{
     font-size: 30px;
@@ -193,6 +193,7 @@
 #factor_chart{
     float: left;
     width: 850px;
+    height: 400px;
     margin-left:20px;
     /*border: solid 1px #000000;*/
 }
