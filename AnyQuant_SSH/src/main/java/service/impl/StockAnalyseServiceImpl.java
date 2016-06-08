@@ -123,12 +123,12 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
 
             double factorJudgeVal = computeFactorJudgeValue(entities , factor_vos , factorJudge , timeLen);
 
-            if(factor == AnalysisFactor.DAREC || factor == AnalysisFactor.REC){
-                System.out.println("factoe size"+factor_vos.size());
-                for (int i = 0; i < factor_vos.size(); i++) {
-                    System.out.println(factor_vos.get(i).value);
-                }
-            }
+//            if(factor == AnalysisFactor.DAREC || factor == AnalysisFactor.REC){
+//                System.out.println("factoe size"+factor_vos.size());
+//                for (int i = 0; i < factor_vos.size(); i++) {
+//                    System.out.println(factor_vos.get(i).value);
+//                }
+//            }
             factorWeightVOs.add(new FactorWeightVO(factorJudgeVal , factor.chinese , factorJudgeVal > 0 ));
         }
         //进行因子绝对值的简单排序

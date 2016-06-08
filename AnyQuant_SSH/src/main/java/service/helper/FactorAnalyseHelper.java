@@ -8,7 +8,6 @@ import entity.FactorEntity;
 import entity.StockdataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import util.Configure;
 import util.DateCalculator;
 import util.MyDate;
 import util.ReflectHelper;
@@ -41,9 +40,6 @@ public class FactorAnalyseHelper {
 
     private enum testFactor {PE, PB, PS, PCF , VOL5 , VOL10 , MA5 , MA10}
 
-    ;
-    private String baseBench = Configure.HUSHEN300;
-
     @Autowired
     private FactorDAO factorDAO;
     @Autowired
@@ -58,30 +54,35 @@ public class FactorAnalyseHelper {
     }
 
 
-    public FactorJudgmentVO report(List<String> codes) {
-        FactorJudgmentVO result = new FactorJudgmentVO();
-
+    public FactorJudgmentVO report(List<String> codes , MyDate startDate , MyDate endDate , String baseBench) {
+        MyFactorJudgmentVO result = new MyFactorJudgmentVO();
+        if(startDate.getYear() == endDate.getYear()){
+            month = endDate.getMonth() - startDate.getMonth();
+        }else {
+            month = 12 + endDate.getMonth() - startDate.getMonth();
+        }
 
         this.codes = codes;
 
 
         //获得12个月的数据
 
-        MyDate start = DateCalculator.getAnotherDay(-400);
-        start.setDay(1);
+        startDate.setDay(1);
         Map<String, List<FactorEntity>> factors = new HashMap<>(codes.size() * 2);
         Map<String, List<StockdataEntity>> dataEntities = new HashMap<>(codes.size() * 2);
-        List<BenchmarkdataEntity> benchmarkdataEntities = benchMarkDAO.getBenchMarkByTime(baseBench, start, DateCalculator.getToDay());
+        List<BenchmarkdataEntity> benchmarkdataEntities = benchMarkDAO.getBenchMarkByTime(baseBench, startDate, DateCalculator.getToDay());
         for (String code : codes) {
-            factors.put(code, getUsefulData(factorDAO.getFactorBetweenDate(code, start, DateCalculator.getToDay()), month));
-            dataEntities.put(code, stockDataDAO.getStockData(code, start, DateCalculator.getToDay()));
-            System.out.println(factors.get(code).size() + " " + dataEntities.get(code).size());
-            System.out.println(factors.get(code).get(0).getDate().toString() + " " + factors.get(code).get(factors.get(code).size() - 1).getDate().toString());
-            System.out.println(dataEntities.get(code).get(0).getDate().toString() + " " + dataEntities.get(code).get(dataEntities.get(code).size() - 1).getDate().toString());
+
+            factors.put(code, getUsefulData(factorDAO.getFactorBetweenDate(code, startDate, DateCalculator.getToDay()), month));
+            dataEntities.put(code, stockDataDAO.getStockData(code, startDate, DateCalculator.getToDay()));
+//            System.out.println(factors.get(code).size() + " " + dataEntities.get(code).size());
+//            System.out.println(factors.get(code).get(0).getDate().toString() + " " + factors.get(code).get(factors.get(code).size() - 1).getDate().toString());
+//            System.out.println(dataEntities.get(code).get(0).getDate().toString() + " " + dataEntities.get(code).get(dataEntities.get(code).size() - 1).getDate().toString());
+
         }
 
         for (testFactor theTestFactor : testFactor.values()) {
-            MyDate tempStart = start.clone();
+            MyDate tempStart = startDate.clone();
             double[] factorValue = new double[month];
             double[] profit = new double[month];
             double[] benchProfit = new double[month];
@@ -93,27 +94,56 @@ public class FactorAnalyseHelper {
                 benchProfit[i] = computeBenchProfit(benchmarkdataEntities, tempStart);
                 excessProfit[i] = profit[i] - benchProfit[i];
 
-                for (int j = 0; j < codeDistribution.length; j++) {
-                    System.out.println(Arrays.toString(codeDistribution[j]));
-                }
 
-                System.out.println(Arrays.toString(factorValue));
-                System.out.println(Arrays.toString(profit));
-                System.out.println(Arrays.toString(benchProfit));
-                System.out.println(Arrays.toString(excessProfit));
 
                 DateCalculator.getNextMonth(tempStart);
             }
+//            for (int j = 0; j < codeDistribution.length; j++) {
+//                System.out.println(Arrays.toString(codeDistribution[j]));
+//            }
+            System.out.println("*********************Test for factor " + theTestFactor.name() + "*************************");
+            System.out.println("factorValue" +Arrays.toString(factorValue));
+            System.out.println("profit" +Arrays.toString(profit));
+            System.out.println("benchProfit" +Arrays.toString(benchProfit));
+            System.out.println("excessProfit" +Arrays.toString(excessProfit));
+
+
             result.rankIC.put(theTestFactor.name(), AnalysisAlgorithm.computeRelated(factorValue, excessProfit));
             result.rankIR.put(theTestFactor.name(), MathHelper.computeAverage(profit) / Math.sqrt(MathHelper.computeVar(profit)));
             result.rankWinRate.put(theTestFactor.name(), MathHelper.getRank(0, excessProfit, false).getX() / month);
 //            result.rankTCheck.put(theTestFactor.name() , )
-
+            result.rankAvgProfit.put(theTestFactor.name() , MathHelper.computeAverage(excessProfit));
 //            result.rankTCheck
         }
 
+        makeExplanation(result);
+        return sortToUI(result);
+    }
 
-        return result;
+    private static FactorJudgmentVO sortToUI(MyFactorJudgmentVO result) {
+        FactorJudgmentVO vo = new FactorJudgmentVO();
+        vo.sortRankIC = new ArrayList<>(result.rankIC.entrySet());
+        vo.sortRankWinRate = new ArrayList<>(result.rankWinRate.entrySet());
+        vo.sortRankIR = new ArrayList<>(result.rankIR.entrySet());
+        vo.sortAvgProfit = new ArrayList<>(result.rankAvgProfit.entrySet());
+        vo.sort();
+        vo.explanation = result.explanation;
+
+
+        return vo;
+    }
+
+    /**
+     * 根据因子排位情况做出简单的分析
+     * @param result
+     */
+    private void makeExplanation(MyFactorJudgmentVO result) {
+
+
+
+
+
+
     }
 
 //    private void initlizeResult(testFactor theTestFactor, FactorJudgmentVO result) {
@@ -165,7 +195,7 @@ public class FactorAnalyseHelper {
                 }
             } else {
                 if (((entity.getDate().getMonth() + 1) == start.getMonth()) ) {
-                    System.out.println("has find and the date is " + entity.getDate().getMonth());
+//                    System.out.println("has find and the date is " + entity.getDate().getMonth());
                     hasFind = true;
                     startVal = entity.getClose();
                 }
@@ -210,7 +240,7 @@ public class FactorAnalyseHelper {
         double sum = 0;
         for (int i = 0; i < codeDistribution.length; i++) {
             double power = distribution[i];
-            System.out.println("now the sum is " + sum);
+//            System.out.println("now the sum is " + sum);
             sum += MathHelper.computeAverage(Arrays.stream(codeDistribution[i]).mapToDouble(code -> code.value).toArray()) * power;
         }
         return sum;
@@ -279,7 +309,45 @@ public class FactorAnalyseHelper {
 
         @Override
         public String toString() {
-            return code + value;
+            return code + " " + value;
         }
+    }
+
+
+    private class MyFactorJudgmentVO {
+        /**
+         *  每个时点因子在各个股票的值与各股票下期回报的相关系数
+         */
+        Map<String, Double> rankIC;
+        /**
+         * 根据因子选择的投资组合在样本期间的平均年化收益不年化平均标准差的比值
+         ，用于衡量该因子是否具有稳定的收益
+         */
+        Map<String, Double> rankIR;
+        Map<String, Double> rankWinRate;
+        /**
+         * 根据因子选择的投资组合在样本期内的平均超额收益率Δr，用于衡量该因子是
+         * 否具有可持续的收益
+         */
+        Map<String, Double> rankAvgProfit;
+        List<String> explanation;
+
+//    public FactorJudgmentVO(Map<String, Double> rankIC, Map<String, Double> rankIR, Map<String, Double> rankTCheck, Map<String, Double> rankWinRate) {
+//        this.rankIC = rankIC;
+//        this.rankIR = rankIR;
+//        this.rankTCheck = rankTCheck;
+//        this.rankWinRate = rankWinRate;
+//    }
+
+        MyFactorJudgmentVO() {
+            rankIC = new HashMap<>();
+            rankIR = new HashMap<>();
+            rankWinRate = new HashMap<>();
+            rankAvgProfit = new HashMap<>();
+            explanation = new ArrayList<>();
+        }
+
+
+
     }
 }
