@@ -1,5 +1,6 @@
 package service.impl.strategy;
 
+import org.springframework.stereotype.Service;
 import util.MyDate;
 import vo.ReportVO;
 
@@ -8,6 +9,7 @@ import java.util.List;
 /**
  * Created by 67534 on 2016/5/27.
  */
+@Service
 public class Strategy_Vol extends MultiStockStrategy{
 
 
@@ -68,12 +70,11 @@ public class Strategy_Vol extends MultiStockStrategy{
         /**
          * 挑选成交量最小的股票
          */
-        int i=0;
+
         for(String code:codes){
             if(code!=null){
                 stocks.add(code);
                 //System.out.println(code);
-                i++;
             }
         }
         System.out.println("size: "+stocks.size()+"---------------------");
@@ -84,7 +85,7 @@ public class Strategy_Vol extends MultiStockStrategy{
          */
         double [] temp=stockDataDAO.getAvgPriceByCodes(stocks,curTradeDay);
         buy_Prices= new double[vol]; //这里讲买入价格全设为0
-        for( i=0;i<temp.length;i++){
+        for(int i=0;i<temp.length;i++){
             buy_Prices[i]=temp[i];
         }
 
@@ -93,7 +94,7 @@ public class Strategy_Vol extends MultiStockStrategy{
          * 确定每只股票买入的手数
          * 并记录花费
          */
-        for(i=0;i<stocks.size();i++){
+        for(int i=0;i<stocks.size();i++){
             /**
              * 如果买入价格为0，就忽略该股票
              * 把买入手数设为0

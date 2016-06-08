@@ -226,7 +226,7 @@ public class FactorEvaluationHelper {
         }
 
 
-        return new FactorEvaluationVO(analysis , computeMark(positiveMark , negativeMark , 3 ,3));//TODO
+        return new FactorEvaluationVO(analysis , computeMark(positiveMark , negativeMark , 3 ,3));
     }
 
 

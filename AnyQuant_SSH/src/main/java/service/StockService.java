@@ -148,7 +148,7 @@ public interface StockService {
 //	 * 获得包含该股票代码序列的股票的数据
 //	 *
 //	 * @param code
-//	 * @return 注意：最多返回10只搜索到的股票 TODO 后期将支持 中文搜索
+//	 * @return 注意：最多返回10只搜索到的股票
 //	 */
 //	public Iterator<StockVO> getStocksByStockCode(String code);
 //

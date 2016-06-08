@@ -28,9 +28,8 @@ function ifExist(index,num){
     return 0;
 }
 function  initBubble() {
-    alert("initBubble");
     var index=[],length=globalData.length,m=0,i=0;
-    while(i<9){
+    while(i<12){
         var newNum=Math.floor(Math.random()*(length+1));
         if(ifExist(index,newNum)==0){
             index[i]=newNum;
@@ -40,33 +39,33 @@ function  initBubble() {
 
     for(var i=0;i<index.length;i++){
         boards[m]=({ //把板块的泡泡放进去
-            x: 5*i+Math.random(),
-            y: 50+Math.random()*10,
-            z: 50,//大小
+            x: 20*i+Math.random()*10,
+            y: 40+Math.random()*10,
+           z:20,
             ifStock:0,
             name: globalData[index[i]].boardName,
             rate:(globalData[index[i]].boardChangeRate).toFixed(4),
             color:myRed
         });
         if(boards[m].rate<0) boards[m].color=myGreen;
-        if(i<index.length/3){
-            boards[m].x= 5*i+Math.random();
-            boards[m].y=Math.random()*10;
-        }else if(i<2*index.length/3){
-            boards[m].x= (i-index.length/3)*5+Math.random();
-            boards[m].y=70+Math.random()*10;
+        if(i<index.length/3){}
+        else if(i>=index.length/3&&i<2*index.length/3){
+            boards[m].x= (i-index.length/3)*20+Math.random()*10;
+            boards[m].y=20+Math.random()*10;
         }else{
-            boards[m].x= (i-2*index.length/3)*5+Math.random();
-            boards[m].y=150+Math.random()*10;
+            boards[m].x= (i-2*index.length/3)*20+Math.random()*10;
+            boards[m].y=Math.random()*10;
         }
         m++;
         var parBoard=m-1;//记录这一圈股票所属板块的board序号
-        for(var j=0;j<4&&j<globalData[index[i]].stocks.length;j++){
+        var j=0;
+        
+       for(var j=0;j<4&&j<globalData[index[i]].stocks.length;j++){
             //ifshowDataLabel=false;
             boards[m]=({
-                x: boards[parBoard].x-1-Math.random(),
+                x: boards[parBoard].x-10,
                 y: boards[parBoard].y,
-                z: 30,
+                z: 15,
                 ifStock:1,
                 name: globalData[index[i]].stocks[j].name,
                 code:globalData[index[i]].stocks[j].code,
@@ -76,13 +75,13 @@ function  initBubble() {
                 board:boards[parBoard].name
             });
             if(j==1){
-                boards[m].x=boards[parBoard].x+1+Math.random();
+                boards[m].x=boards[parBoard].x+10;
             }else if(j==2){
                 boards[m].x=boards[parBoard].x;
-                boards[m].y=boards[parBoard].y-40-Math.random();
+                boards[m].y=boards[parBoard].y-10;
             }else if(j==3){
                 boards[m].x=boards[parBoard].x;
-                boards[m].y=boards[parBoard].y+40+Math.random();
+                boards[m].y=boards[parBoard].y+10;
             }
             if(boards[m].rate<0) boards[m].color=myGreen;
             else if(boards[m].rate==0) boards[m].color=myGrey;            
@@ -126,15 +125,15 @@ function draw(){
         title: {
             text: ''
         },
-        xAxis: {
+        /*xAxis: {
             visible:false
         },
         yAxis: {
             visible:false
-        },
+        },*/
         plotOptions: {
             bubble:{
-              minSize:30  
+              zMin:15
             },
             series: {
                 //color:"#FFFFFF",
