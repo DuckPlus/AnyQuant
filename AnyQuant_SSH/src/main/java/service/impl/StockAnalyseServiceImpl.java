@@ -19,7 +19,6 @@ import service.helper.StockHelper;
 import util.Configure;
 import util.DateCalculator;
 import util.MyDate;
-import util.StaticMessage;
 import util.enumration.AnalysisFactor;
 import util.enumration.FactorJudge;
 import vo.EvaluationVO;
@@ -64,7 +63,7 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
     @Override
     public EvaluationVO getEvaluation(String stockCode) {
 
-        return FactorEvaluationHelper.evaluateStockByFactor(stockService.getStocksByTime(stockCode , DateCalculator.getAnotherDay( - 50) , DateCalculator.getToDay()) , factorDAO.getFactorByDate(stockCode , DateCalculator.getAnotherDay( - 50) , DateCalculator.getToDay()), factorDAO.getListFactors(stockDAO.getBoardRealatedStockCodes(stockDAO.getStockEntity(stockCode).getBoard())));
+        return FactorEvaluationHelper.evaluateStockByFactor(stockService.getStocksByTime(stockCode , DateCalculator.getAnotherDay( - 50) , DateCalculator.getToDay()) , factorDAO.getFactorBetweenDate(stockCode , DateCalculator.getAnotherDay( - 50) , DateCalculator.getToDay()), factorDAO.getListFactors(stockDAO.getBoardRealatedStockCodes(stockDAO.getStockEntity(stockCode).getBoard())));
     }
 
     @Override

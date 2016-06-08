@@ -8,8 +8,10 @@ import entity.FactorEntity;
 import entity.StockdataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import service.impl.StockServiceImpl;
-import util.*;
+import util.Configure;
+import util.DateCalculator;
+import util.MyDate;
+import util.ReflectHelper;
 import vo.FactorJudgmentVO;
 
 import java.util.*;
@@ -71,7 +73,7 @@ public class FactorAnalyseHelper {
         Map<String, List<StockdataEntity>> dataEntities = new HashMap<>(codes.size() * 2);
         List<BenchmarkdataEntity> benchmarkdataEntities = benchMarkDAO.getBenchMarkByTime(baseBench, start, DateCalculator.getToDay());
         for (String code : codes) {
-            factors.put(code, getUsefulData(factorDAO.getFactorByDate(code, start, DateCalculator.getToDay()), month));
+            factors.put(code, getUsefulData(factorDAO.getFactorBetweenDate(code, start, DateCalculator.getToDay()), month));
             dataEntities.put(code, stockDataDAO.getStockData(code, start, DateCalculator.getToDay()));
             System.out.println(factors.get(code).size() + " " + dataEntities.get(code).size());
             System.out.println(factors.get(code).get(0).getDate().toString() + " " + factors.get(code).get(factors.get(code).size() - 1).getDate().toString());
