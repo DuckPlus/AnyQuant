@@ -7,10 +7,11 @@
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
     <link rel="stylesheet" type="text/css" href="/css/Analyse.css">
     <link rel="stylesheet" href="/css/window.css" type="text/css">
-    <script type="text/javascript" src="http://www.sunsean.com/idTabs/jquery.idTabs.min.js"></script>
+
     <title>Duck 回测参数配置</title>
     <meta charset="UTF-8">
     <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="http://www.sunsean.com/idTabs/jquery.idTabs.min.js"></script>
     <script type="text/javascript" src="/js/datepicker.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
@@ -63,8 +64,6 @@
     </ul>
 
 
-
-
 </div>
 <div id="blank"></div>
 <!-- navigator end -->
@@ -79,15 +78,25 @@
     </div>
     <div id="pointer_div"></div>
     <div id="tab1" style="display: block; ">
-        <span id="recommand_container">
+
+        <div id="recommand_container" class="input_container">
             <div>
-                <label for="basecode" class="middle">基准大盘</label>
-                <select id="basecode" class="middle">
+                <label for="strategy" >策略选择</label>
+                <select id="strategy" onchange="chooseStrategy()">
+                    <option value ="Strategy_PE">Strategy_PE</option>
+                    <option value ="Strategy_VOL">Strategy_VOL</option>
+                </select>
+            </div>
+
+            <div>
+                <div>
+                <label id="basecode_label"for="basecode" >基准大盘</label>
+                <select id="basecode" >
                 </select>
             </div>
             <div>
-                <label for="capital" class="middle">起始资金</label>
-                <select id="capital" class="middle">
+                <label for="capital" >起始资金</label>
+                <select id="capital" >
                     <option value="100000">10万</option>
                     <option value="500000">50万</option>
                     <option value="1000000">100万</option>
@@ -97,7 +106,7 @@
                 </select>
             </div>
             <div>
-                <label for="taxRate" class="middle">交易费率</label>
+                <label for="taxRate" >交易费率</label>
                 <input id="taxRate" type="range" min="0" max="1"  step="0.001"  onchange="getTaxRate()"/>
                 <label id="taxRate_num">0.5</label>
                 <script>
@@ -127,14 +136,44 @@
                 结束<input type="text" id="end" value="2016-6-6"readonly style="height:16px" />
             </span>
 
-        </span>
-        <button id="analysebtn" class="button button-raised button-primary button-pill" onclick="doAnalyse()" >
-    开始回测
-</button>
+            </div>
+
+        </div>
+        <button id="analysebtn" class="button button-glow button-rounded button-raised button-primary" onclick="doAnalyse()" >
+            开始回测
+        </button>
     </div>
     <div id="tab2" style="display: none; ">
-        <div id="diy_container">
-自己配参数~~~~~~~~~~~
+        <div id="diy_container" class="input_container">
+            <div>
+                <label for="stockpool">股票池</label>
+                <select id="stockpool">
+                    <option value="100000">10万</option>
+                    <option value="500000">50万</option>
+                    <option value="1000000">100万</option>
+                    <option value="2000000">200万</option>
+                    <option value="5000000">500万</option>
+                    <option value="10000000">1000万</option>
+                </select>
+            </div>
+
+             <div>
+                <label for="interval_diy" class="middle">调仓间隔</label>
+                <input id="interval_diy" type="text" value="5"placeholder="输入3~70的数字" required/>
+
+            </div>
+
+            <span class="demo" >
+                起始<input type="text" id="start_diy"value="2016-6-1" readonly style="height:16px" />
+            </span>
+            <span class="demo" >
+                结束<input type="text" id="end_diy" value="2016-6-6"readonly style="height:16px" />
+            </span>
+
+        </div>
+        <button id="analysebtn_diy" class="button button-glow button-rounded button-raised button-primary" onclick="doAnalyse_diy()" >
+            开始回测
+        </button>
         </div>
     </div>
 </span>
@@ -151,7 +190,7 @@
 
 <script type="text/javascript">
     $(function(){
-
+      //  $("ul").idTabs();
         $("#start").datepicker({
             showOn: "button",
             buttonImage: "/image/calendar.png",

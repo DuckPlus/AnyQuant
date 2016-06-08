@@ -148,7 +148,7 @@ function initNumbers(data){
     }
     downNum=stockNum-stopNum-upNum;
     rate*=100;
-    rate=Math.floor(rate);
+    rate=rate.toFixed(2);
     if(rate>=0){
         document.getElementById('rate').style.color=myRed;
         document.getElementById('rate').innerHTML="+"+rate+"%";

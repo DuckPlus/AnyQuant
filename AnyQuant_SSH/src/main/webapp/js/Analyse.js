@@ -61,10 +61,21 @@ function initLine(data){
 
 
 }
+
+function doAnalyse_diy(){
+    var startT=document.getElementById("start").value;
+    var endT=document.getElementById("end").value;
+    alert("DIY:"+
+        "\n调仓间隔："+document.getElementById("interval").value+
+        "\n起止时间："+startT+"~"+endT);
+    location.href="Analyse_charts.html";
+}
+
+
 function doAnalyse(){
     var startT=document.getElementById("start").value;
     var endT=document.getElementById("end").value;
-    alert("选择的大盘代号："+document.getElementById("basecode").value+
+    alert("推荐策略：选择的大盘代号："+document.getElementById("basecode").value+
         "\n起始资金："+document.getElementById("capital").value+
         "\n交易费率："+document.getElementById("taxRate").value+
         "\n股票数量："+document.getElementById("numOfStock").value+
@@ -80,8 +91,20 @@ function initBaseCode(data){
         list.options.add(new Option(data[i].name,data[i].code));
     }
 }
-
+function chooseStrategy(){
+    var strategy=document.getElementById("strategy").value;
+    if(strategy=="Strategy_PE"){//TODO 这两个策略的参数差别的fake哒~
+        $("#basecode_label").hide();
+        $("#basecode").hide();
+    }
+    
+    if(strategy=="Strategy_VOL"){//TODO 这两个策略的参数差别的fake哒~
+        $("#basecode_label").show();
+        $("#basecode").show();
+    }
+}
 $(document).ready(function () {
+    $("ul").idTabs();
     myBoardName="氮肥";
     $.getJSON('/Board/getCompareData?boardName='+myBoardName, function (data) {
         initLine(data);
