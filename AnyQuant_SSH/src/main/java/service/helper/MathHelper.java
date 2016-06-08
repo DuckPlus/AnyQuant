@@ -8,12 +8,12 @@ import java.util.Arrays;
  * @date 16/5/22
  */
 public class MathHelper {
-    static double computeAverage(double[] val) {
+    public static double computeAverage(double[] val) {
 
         return computeSum(val) / val.length;
     }
 
-    static double computeSum(double[] val) {
+    public static double computeSum(double[] val) {
         double sum = 0;
         for (double aX : val) {
             sum += aX;
@@ -21,14 +21,24 @@ public class MathHelper {
         return sum;
     }
 
-    static double computeVar(double[] val) {
+    public static double computeVar(double[] val) {
         double avg = computeAverage(val);
         double sum = 0;
         for (double a : val) {
             sum += Math.pow(a - avg, 2);
         }
-        return sum / val.length;
+        return sum / (double)val.length;
 
+    }
+
+
+    public static double computeStandardVar(double[] val) {
+        double avg = computeAverage(val);
+        double sum = 0;
+        for (double a : val) {
+            sum += Math.pow(a - avg, 2);
+        }
+        return Math.sqrt(sum /(double) val.length);
     }
 
 
@@ -40,7 +50,7 @@ public class MathHelper {
      * @param upOrDown 升序or降序
      * @return point(x 位置, y 总数)
      */
-    static Point getRank(double value, double[] values, boolean upOrDown) {
+    public static Point getRank(double value, double[] values, boolean upOrDown) {
         System.out.println(Arrays.toString(values));
         System.out.println(value);
         int len = values.length;
@@ -58,7 +68,7 @@ public class MathHelper {
         return new Point(len, len);
     }
 
-    static boolean checkIfAllSmallOrLarge(double[] x, double[] y, boolean smallOrLarge) {
+    public static boolean checkIfAllSmallOrLarge(double[] x, double[] y, boolean smallOrLarge) {
         int len = Math.min(x.length, y.length);
         for (int i = 0; i < len; i++) {
             if ((smallOrLarge && (x[i] >= y[i])) || (!smallOrLarge && (x[i] <= y[i]))) {
@@ -68,7 +78,7 @@ public class MathHelper {
         return true;
     }
 
-    static boolean checkIfAllSmallOrLarge(double[] x, double standard, boolean smallOrLarge) {
+    public static boolean checkIfAllSmallOrLarge(double[] x, double standard, boolean smallOrLarge) {
         for (double xVal : x) {
             if ((smallOrLarge && (xVal >= standard)) || (!smallOrLarge && (xVal <= standard))) {
                 return false;
@@ -81,7 +91,7 @@ public class MathHelper {
     /**
      * 截取部分数组
      */
-    static double[] getClipFromArray(double[] x, int len) {
+    public static double[] getClipFromArray(double[] x, int len) {
         double[] y = new double[len];
 //        System.out.println(x.length + " " + len);
         System.arraycopy(x, x.length - len, y, 0, len);
@@ -89,7 +99,7 @@ public class MathHelper {
     }
 
 
-    static boolean passThrough(double[] x, double[] y, boolean smallToBig) {
+    public static boolean passThrough(double[] x, double[] y, boolean smallToBig) {
         int len = Math.min(x.length, y.length);
 
         if (!smallToBig) {
