@@ -34,5 +34,4 @@ public interface StrategyService {
     ReportVO analyseWithFactor(List<String> codes, MyDate start , MyDate end , Map<String , Double> factorWeight);
 
 
-
 }
