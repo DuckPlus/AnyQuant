@@ -7,6 +7,8 @@
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
     <link rel="stylesheet" type="text/css" href="/css/Analyse.css">
     <link rel="stylesheet" href="/css/window.css" type="text/css">
+    <link type="text/css" rel="stylesheet" href="/css/main_tab.css"/>
+    <script type="text/javascript" src="http://www.sunsean.com/idTabs/jquery.idTabs.min.js"></script>
     <title>Duck 回测参数配置</title>
     <meta charset="UTF-8">
     <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
@@ -58,11 +60,37 @@
             </a>
         </li>
     </ul>
+
+
+
+
 </div>
 <div id="blank"></div>
 <!-- navigator end -->
 
+<!--TAB-->
+<div id="usual1" class="usual">
 
+    <div id="tab_content">
+        <ul class="tab_ul">
+            <li id="first_tab" class="left_radium tab_li"><a href="#tab1" class="selected left_radium tab_item" >股票</a></li>
+            <li id="second_tab" class="tab_li"><a href="#tab2" class="tab_item">大盘</a></li>
+        </ul>
+    </div>
+
+    <div id="pointer_div"></div>
+    <div id="tab1" style="display: block; ">
+        <div id="stock_container">
+            a
+        </div>
+    </div>
+    <div id="tab2" style="display: none; ">
+        <div id="benchmark_container">
+            b
+        </div>
+    </div>
+</div>
+<!--TAB OVER-->
 <div class="duck_window" id="board_window" style="margin-left: auto;margin-right: auto">
     <div class="duck_title">
         <div class="duck_title_text">
