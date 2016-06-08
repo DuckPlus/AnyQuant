@@ -69,13 +69,13 @@ a.tab_item:hover{
 #second_tab{
     border-right: solid 2px rgb(151,151,151);
 }
-#recommand_container{
+.input_container{
     width: 450px;
     margin-left: auto;
     margin-right: auto;
     text-align: left;
    color:#fff;
-    line-height: 60px;/*行间距*/
+    line-height: 50px;/*行间距*/
 
     background-color: #8B8B7A;
     margin: 20px auto;
@@ -93,6 +93,13 @@ a.tab_item:hover{
     top:300px;
     right: 150px;
 }
+
+#analysebtn_diy{
+    position: absolute;
+    top:300px;
+    right: 150px;
+}
+
 #input_text{
     margin-top: 2px;
     margin-left: 0px;

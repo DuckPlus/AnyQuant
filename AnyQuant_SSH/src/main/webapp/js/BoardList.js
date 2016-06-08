@@ -53,7 +53,7 @@ function  initBubble() {
            z:20,
             ifStock:0,
             name: globalData[index[i]].boardName,
-            rate:(globalData[index[i]].boardChangeRate).toFixed(4),
+            rate:(globalData[index[i]].boardChangeRate).toFixed(4)*100,
             color:myRed
         });
         if(boards[m].rate<0) boards[m].color=myGreen;
@@ -117,7 +117,7 @@ function draw(){
             headerFormat: '<table>',
             pointFormat: 
             '<tr><th colspan="2"><h3>{point.name}</h3></th></tr>'+
-            '<tr><th>板块涨跌：</th><td>{point.rate}</td></tr>'+
+            '<tr><th>板块涨跌：</th><td>{point.rate}%</td></tr>'+
             '<tr><th>x:</th><td>{point.x}</td></tr>' +
             '<tr><th>y:</th><td>{point.y}</td></tr>' +
              '<tr><th>z:</th><td>{point.z}</td></tr>'+
