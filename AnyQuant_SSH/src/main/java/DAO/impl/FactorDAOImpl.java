@@ -30,7 +30,7 @@ public class FactorDAOImpl implements FactorDAO {
 
     @Override
     public List<Factor_VO> getFactors(String stockCode, AnalysisFactor factor, MyDate start, MyDate end) {
-        List<FactorEntity> tempList = getFactorByDate(stockCode,start,end);
+        List<FactorEntity> tempList = getFactorBetweenDate(stockCode,start,end);
         List<Factor_VO> result = new ArrayList<>();
         for(FactorEntity entity:tempList){
             Factor_VO vo = new Factor_VO();
@@ -45,13 +45,27 @@ public class FactorDAOImpl implements FactorDAO {
     }
 
     @Override
-    public List<FactorEntity> getFactorByDate(String stockCode, MyDate start, MyDate end)
+    public List<FactorEntity> getFactorBetweenDate(String stockCode, MyDate start, MyDate end)
     {
 
         String hql = "from "+tableName+
                 " where code = '"+stockCode+"' and date between '"+start.DateToString()+"' and '"+end.DateToString()+"'";
 
         return (List<FactorEntity>) baseDAO.getAllList(hql);
+    }
+
+    @Override
+    public List<FactorEntity> getFactorBetweenDate(List<String> stockCodes, MyDate start, MyDate end) {
+        String hql = "from "+tableName+" where code = ? and date between '"+start.DateToString()+"' and '"+end.DateToString()+"'";
+        List result  = baseDAO.batchSingleQuery(hql, stockCodes);
+        return  result;
+    }
+
+    @Override
+    public List<FactorEntity> getFactorAtDate(List<String> stockCodes, MyDate date) {
+        String hql = "from "+tableName+" where code = ? and date = '"+date.DateToString() +"'";
+        List result  = baseDAO.batchSingleQuery(hql, stockCodes);
+        return  result;
     }
 
     @Override

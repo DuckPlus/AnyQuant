@@ -1,6 +1,7 @@
 package service.impl.strategy;
 
 import DAO.BenchMarkDAO;
+import DAO.FactorDAO;
 import DAO.StockDataDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import util.MyDate;
@@ -19,6 +20,8 @@ public abstract class BaseStrategy  {
     StockDataDAO stockDataDAO;
     @Autowired
     BenchMarkDAO benchMarkDAO;
+    @Autowired
+    FactorDAO factorDAO;
     /**
      * 每手100股
      */
