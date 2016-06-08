@@ -5,7 +5,9 @@
 	margin-left:auto;
 	margin-right:auto;
 }
-
+#stock_container{
+	*font-size:438.6px
+}
 #loading span {
 	height:60px;
 	width:15px;
@@ -13,7 +15,11 @@
 	margin-right:auto;
 	background:#8B8989;
 	display:inline-block;
+	*zoom:1;
+	*display:inline;
+	*vertical-align:middle;
 	animation:loader 1s infinite;
+	top:200px;
 }
 #loading p {
   text-align:center;
@@ -30,12 +36,12 @@
 	50% { height:30px; margin-top:30px; opacity:.5; }
 }
 
-#loading span:nth-child(3) {animation-delay:.05s;}
-#loading span:nth-child(4) {animation-delay:.1s;}
-#loading span:nth-child(5) {animation-delay:.15s;}
-#loading span:nth-child(6) {animation-delay:.2s;}
-#loading span:nth-child(7) {animation-delay:.25s;}
-#loading span:nth-child(8) {animation-delay:.3s;}
-#loading span:nth-child(9) {animation-delay:.35s;}
-#loading span:nth-child(10) {animation-delay:.4s;}
-#loading span:nth-child(11) {animation-delay:.45s;}
+#loading span:nth-child(1) {animation-delay:.05s;}
+#loading span:nth-child(2) {animation-delay:.1s;}
+#loading span:nth-child(3) {animation-delay:.15s;}
+#loading span:nth-child(4) {animation-delay:.2s;}
+#loading span:nth-child(5) {animation-delay:.25s;}
+#loading span:nth-child(6) {animation-delay:.3s;}
+#loading span:nth-child(7) {animation-delay:.35s;}
+#loading span:nth-child(8) {animation-delay:.4s;}
+#loading span:nth-child(9) {animation-delay:.45s;}
