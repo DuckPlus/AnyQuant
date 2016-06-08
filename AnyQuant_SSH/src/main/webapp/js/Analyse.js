@@ -64,7 +64,12 @@ function initLine(data){
 function doAnalyse(){
     var startT=document.getElementById("start").value;
     var endT=document.getElementById("end").value;
-    alert("选择的大盘代号："+document.getElementById("basecode").value+"\n起止时间："+startT+"~"+endT);
+    alert("选择的大盘代号："+document.getElementById("basecode").value+
+        "\n起始资金："+document.getElementById("capital").value+
+        "\n交易费率："+document.getElementById("taxRate").value+
+        "\n股票数量："+document.getElementById("numOfStock").value+
+        "\n调仓间隔"+document.getElementById("interval").value+
+        "\n起止时间："+startT+"~"+endT);
     location.href="Analyse_charts.html";
 }
 
