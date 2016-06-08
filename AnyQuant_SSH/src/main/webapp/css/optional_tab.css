@@ -1,11 +1,3 @@
-#news_window{
-    /*background-color: #5dade2;*/
-    height: 400px;
-    width: 100%;
-    margin-top: 20px;
-    float: left;
-}
-
 li.tab_li{
     text-decoration: none;
     list-style: none;
@@ -69,30 +61,10 @@ a.tab_item:hover{
 #second_tab{
     border-right: solid 2px rgb(151,151,151);
 }
-#recommand_container{
-    width: 450px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
-   color:#fff;
-    line-height: 60px;/*行间距*/
-
-    background-color: #8B8B7A;
-    margin: 20px auto;
-    display: block;
-
-    height: 400px;
-    padding:20px;
-    border-radius: 2px 2px 2px 2px;
-    -webkit-box-shadow: 0 10px 6px -6px #777;
-    -moz-box-shadow: 0 10px 6px -6px #777;
-    box-shadow: 0 10px 6px -6px #777;
+#third_tab{
+    border-right: solid 2px rgb(151,151,151);
 }
-#analysebtn{
-    position: absolute;
-    top:300px;
-    right: 150px;
-}
+
 #input_text{
     margin-top: 2px;
     margin-left: 0px;

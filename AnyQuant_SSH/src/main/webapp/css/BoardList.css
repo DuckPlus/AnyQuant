@@ -6,3 +6,82 @@
     height: 600px;
     width: 80%;
 }
+#bubble_pane{
+    margin-top:20px;
+    /*margin-left: 10px;*/
+    height: 600px;
+    width: 78%;
+    float: right;
+    border: solid 2px rgb(151,151,151);
+    border-radius: 10px;
+}
+#bubble{
+    margin-top:2px;
+    margin-left: 2px;
+    width: 98%;
+    height: 98%;
+}
+#left_pane{
+    margin-top:20px;
+    border-right: 1px solid rgb(151,151,151);
+    /*background-color: #d7d662;*/
+    height: 600px;
+    width: 20%;
+    float: left;
+}
+#left_title{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 80%;
+    font-size: 30px;
+    /*background-color: chocolate;*/
+}
+#searchbtn{
+    color: white;
+    font-size: 20px;
+    background-color: rgb(0,204,153);
+    width: 92%;
+    height: 40px;
+    margin-top:10px;
+}
+#initbtn{
+    color: white;
+    font-size: 20px;
+    background-color: rgb(151,151,151);
+    width: 92%;
+    height: 40px;
+    margin-top:10px;
+}
+#input_space{
+    margin-top:50px;
+    height: 40px;
+    border:solid 2px rgb(151,151,151);
+    border-radius: 10px;
+    width: 90%;
+}
+#tips_info{
+    margin-top: 10px;
+    /*background-color: chocolate;*/
+    height: 20px;
+    float: left;
+    width: 91%;
+    text-align: right;
+}
+#searchCode{
+    margin-top:1px;
+    margin-left:4px;
+    font-size: 22px;
+    border: 0;
+    height: 35px;
+    width: 80%;
+    float: left;
+    outline: none;
+}
+#search_icon{
+    float: right;
+    margin-right:2px;
+    margin-top:4px;
+    width: 15%;
+
+}

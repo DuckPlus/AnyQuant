@@ -13,10 +13,19 @@ $.getJSON('/Board/getAllBoardsAndStockData', function (data) {
 function dosearch() {//TODO 板块不存在 即在当前页面警告
     var boardName=document.getElementById("searchCode").value;
     $.getJSON('/Board/checkBoard?'+'board='+boardName, function (data) {
-     if(data==true)  location.href="BoardDetail.html"+"?name="+boardName;
-     else alert("对不起,不存在该板块");
+     if(data==true){
+         location.href="BoardDetail.html"+"?name="+boardName;
+     }
+     else {
+         document.getElementById('tips_info').innerHTML = "对不起,没有该板块";
+         document.getElementById('tips_info').style.color = "red";
+         setTimeout("clear_tips()",2000);
+     }
      });
 
+}
+function clear_tips() {
+    document.getElementById('tips_info').innerHTML = "";
 }
 //防止重复
 function ifExist(index,num){

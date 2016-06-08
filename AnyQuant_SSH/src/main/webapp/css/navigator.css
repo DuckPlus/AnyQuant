@@ -26,6 +26,7 @@ body{
     line-height: 50px;
     border-bottom: 0px solid #FFFF00;
     -webkit-transition: background .5s;
+    -webkit-transition: color .5s;
 }
 .nav_c:hover{
     /*
@@ -37,6 +38,8 @@ body{
 }
 .nav_c:hover{
     color: #FF8000;
+    /*color: rgb(129,55,56);*/
+    -webkit-transition: color .5s;
 }
 #nav_bar{
     position: fixed;

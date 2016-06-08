@@ -28,25 +28,47 @@ body{
 #region_pie_chart{
     /*background-color: #2f21d4;*/
     float: left;
-    width: 65%;
-    height: 100%;
+    width: 700px;
+    height: 500px;
+    border: solid 2px transparent;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
 }
 #region_bar_chart{
     /*background-color: #7B72E9;*/
     float: right;
-    width: 34%;
-    height: 100%;
+    width: 400px;
+    height: 500px;
+    border: solid 2px transparent;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
 }
 #board_pie_chart{
     /*background-color: #2f21d4;*/
     float: left;
-    width: 65%;
-    height: 100%;
+    width: 700px;
+    height: 500px;
+    border: solid 2px transparent;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
 }
 #board_bar_chart{
     /*background-color: #7B72E9;*/
     float: right;
-    width: 34%;
-    height: 100%;
-
+    width: 400px;
+    height: 500px;
+    border: solid 2px transparent;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+#optional_table{
+    border: solid 2px rgb(151,151,151);
+    height: 500px;
+    border-radius: 10px;
+}
+.pie_bar{
+    height: 505px;
+    /*background-color: chocolate;*/
+    border: solid 2px rgb(151,151,151);
+    border-radius: 10px;
 }

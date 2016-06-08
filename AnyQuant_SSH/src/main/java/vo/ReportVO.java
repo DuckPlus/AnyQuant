@@ -9,4 +9,8 @@ public class ReportVO {
 
     public List<CumRtnVO> cumRtnVOList;
 
+    public List<TradeDataVO> tradeDataVOList;
+
+    public List<String> summary;
+
 }

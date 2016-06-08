@@ -1,6 +1,7 @@
 package service.impl.strategy;
 
 import org.springframework.stereotype.Service;
+import util.DateCalculator;
 import util.MyDate;
 import vo.ReportVO;
 
@@ -64,9 +65,10 @@ public class Strategy_Vol extends MultiStockStrategy{
         */
         stocks.clear();
         /**
-         * 获取市场上当天成交量最小的vol只股票加入股票池
+         * 获取市场上最近interval天内成交量最小的vol只股票加入股票池
          */
-        List<String> codes = stockDataDAO.getStockCodeByVolDec(curTradeDay,vol);
+        MyDate start= DateCalculator.getAnotherDay(curTradeDay,-interval);
+        List<String> codes = stockDataDAO.getStockCodeByVolDec(start,curTradeDay,vol);
         /**
          * 挑选成交量最小的股票
          */

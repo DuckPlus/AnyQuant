@@ -75,41 +75,54 @@
 
 <div id="main_content">
     <div id="top_bar">
-        <span id=stockName style="position:relative;left:30px;font-size:30px"></span>
-        <span style="position:relative;left:60px;">今日板块涨幅：</span>
-        <span id=rate style="position:relative;left:60px;"></span>
-        <span style="position:relative;left:100px;">涨跌个数：</span>
-        <span id=upNum class="red" style="position:relative;left:108px;"></span>
-        <span style="position:relative;left:115px">/</span>
-        <span id=downNum class="green" style="position:relative;left:120px;"></span>
-        <span style="position:relative;left:127px">/</span>
-        <span id=stopNum class="grey" style="position:relative;left:130px;"></span>
-        <input id="searchCode" type="text" class="form-control"  placeholder="输入板块名称" style="position:relative;left:400px;">
-        <button id="searchbtn" class="button button-raised button-primary button-pill" onclick="dosearch()"  style="position:relative;left:420px;">
-            查询
-        </button>
-    </div>
-    <div class="duck_window" id="compare_window">
-        <div class="duck_title">
-            <div class="duck_title_text">
-                与大盘走势比较
-            </div>
+        <div id="stockName"></div>
+        <div id="increase_item">
+            <img class="item_icon" src="/image/board_change_rate.png" alt="涨幅"/>
+             <div id="board_info_increase">今日板块涨幅</div>
+            <div id="rate"></div>
         </div>
-        <div class="duck_content">
-            <div id="linechart" class="linechart"><h2 class="wait"><br>跟大盘比较的图加载需要时间请耐心等待哦~  ^o^</h2></div>
+
+        <div id="up_num_item">
+            <img class="item_icon" src="/image/board_up.png" alt="上升个数">
+            <div id="board_info_up_num">上涨</div>
+            <div id="upNum"></div>
         </div>
+
+        <div id="down_num_item">
+            <img class="item_icon" src="/image/board_down.png" alt="下跌个数">
+            <div id="board_info_down_num">下跌</div>
+            <div id="downNum"></div>
+        </div>
+        <div id="stop_num_item">
+            <img class="item_icon" src="/image/board_no_change.png" alt="持平个数">
+            <div id="board_info_stop_num">持平</div>
+            <div id="stopNum"></div>
+        </div>
+        <!--<span id=stockName style="position:relative;left:30px;font-size:30px"></span>-->
+        <!--<span style="position:relative;left:60px;">今日板块涨幅：</span>-->
+        <!--<span id=rate style="position:relative;left:60px;"></span>-->
+        <!--<span style="position:relative;left:100px;">涨跌个数：</span>-->
+        <!--<span id=upNum class="red" style="position:relative;left:108px;"></span>-->
+        <!--<span style="position:relative;left:115px">/</span>-->
+        <!--<span id=downNum class="green" style="position:relative;left:120px;"></span>-->
+        <!--<span style="position:relative;left:127px">/</span>-->
+        <!--<span id=stopNum class="grey" style="position:relative;left:130px;"></span>-->
+        <!--<input id="searchCode" type="text" class="form-control"  placeholder="输入板块名称" style="position:relative;left:400px;">-->
+        <!--<button id="searchbtn" class="button button-raised button-primary button-pill" onclick="dosearch()"  style="position:relative;left:420px;">-->
+            <!--查询-->
+        <!--</button>-->
     </div>
 
-    <div class="duck_window" id="constituent_window">
-        <div class="duck_title">
-            <div class="duck_title_text">
-                成分股
-            </div>
+
+
+        <div id="compare_chart">
+            <div id="linechart" class="linechart"><h2 class="wait"><br>跟大盘比较的图加载需要时间请耐心等待哦~  ^o^</h2></div>
         </div>
-        <div class="duck_content">
+
+
+        <div id="consist_chart">
             <div id="treechart" class="treechart"><h2 class="wait"><br>成分股分布图加载需要时间请耐心等待哦~  ^o^</h2></div>
         </div>
-    </div>
 
 
 </div>
