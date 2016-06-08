@@ -58,7 +58,7 @@ function  initBubble() {
         }
         m++;
         var parBoard=m-1;//记录这一圈股票所属板块的board序号
-        var j=0;/*
+        var j=0;
         
        for(var j=0;j<4&&j<globalData[index[i]].stocks.length;j++){
             //ifshowDataLabel=false;
@@ -78,16 +78,16 @@ function  initBubble() {
                 boards[m].x=boards[parBoard].x+10;
             }else if(j==2){
                 boards[m].x=boards[parBoard].x;
-                boards[m].y=boards[parBoard].y-40;
+                boards[m].y=boards[parBoard].y-10;
             }else if(j==3){
                 boards[m].x=boards[parBoard].x;
-                boards[m].y=boards[parBoard].y+40;
+                boards[m].y=boards[parBoard].y+10;
             }
             if(boards[m].rate<0) boards[m].color=myGreen;
             else if(boards[m].rate==0) boards[m].color=myGrey;            
             m++;
             
-        }*/
+        }
 
     }
 
