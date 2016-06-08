@@ -14,6 +14,7 @@ public class FactorJudgmentVO {
     public Map<String , Double> rankIR;
     public Map<String , Double> rankWinRate;
     public Map<String , Double> rankTCheck;
+    public List<String> explaination;
 
     public FactorJudgmentVO(Map<String, Double> rankIC, Map<String, Double> rankIR, Map<String, Double> rankTCheck, Map<String, Double> rankWinRate) {
         this.rankIC = rankIC;

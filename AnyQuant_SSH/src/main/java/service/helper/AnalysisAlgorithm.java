@@ -30,7 +30,12 @@ public class AnalysisAlgorithm {
 
 
         }
-        return son/Math.sqrt(temp1*temp2);
+        double mother = Math.sqrt(temp1*temp2);
+        if(mother == 0){
+            return 0;
+        }else {
+            return son/mother;
+        }
     }
 
 
