@@ -1,12 +1,17 @@
 package service.impl.strategy;
 
+import DAO.FactorDAO;
+import DAO.StockDAO;
 import entity.FactorEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.helper.MathHelper;
 import util.MyDate;
 import util.enumration.AnalysisFactor;
 import vo.CumRtnVO;
 import vo.ReportVO;
+import vo.TradeDataVO;
+import vo.TradeDetailVO;
 
 import java.util.*;
 
@@ -19,6 +24,14 @@ import java.util.*;
  */
 @Service
 public class FactorStrategy extends MultiStockStrategy {
+    @Autowired
+    FactorDAO factorDAO;
+    @Autowired
+    StockDAO stockDAO;
+    /**
+     * 用于存储股票代码和名称
+     */
+    Map<String,String>  codeAndNames;
 
     /**
      * 用户选择的因子和比重
@@ -36,7 +49,6 @@ public class FactorStrategy extends MultiStockStrategy {
      */
     double [] investWeight;
 
-    List<String> curStocks;
 
     int numOfLevel;
     /**
@@ -70,11 +82,12 @@ public class FactorStrategy extends MultiStockStrategy {
 
         this.stocks = stocks;
         this.weightedFactors=weightedFactors;
+        this.codeAndNames = new HashMap<>();
         this.investWeight=investWeight;
         this.interval=interval;
         this.numOfLevel=investWeight.length;
         this.gap=stocks.size()/numOfLevel; //每一层的股票数量
-        this.curStocks=new ArrayList<>();
+
 
         this.vol=stocks.size();
         this.lots=new int [vol];
@@ -91,8 +104,12 @@ public class FactorStrategy extends MultiStockStrategy {
     @Override
     public void init() {
         System.out.println("Strategy_Factor init-------");
-        this.curTradeDay=validDates[0];
+        this.curTradeDay=start;
         this.buyStocks();
+        List<String> names = this.stockDAO.getNames(stocks);
+        for(int i=0;i<stocks.size();i++){
+            codeAndNames.put(stocks.get(i),names.get(i));
+        }
 
     }
 
@@ -119,6 +136,8 @@ public class FactorStrategy extends MultiStockStrategy {
      */
     @Override
     protected void buyStocks() {
+        TradeDataVO tradeDataVO = new TradeDataVO();
+        tradeDataVO.tradeDate=curTradeDay;
 
         this.curFactorEntities=this.factorDAO.getFactorAtDate(stocks,curTradeDay);
         List<Map.Entry<String,Double>>  tempMap = getSortedFinal_Factors(curFactorEntities);
@@ -128,7 +147,7 @@ public class FactorStrategy extends MultiStockStrategy {
         this.stocks = new ArrayList<>();
         for(int i=0;i<tempMap.size();i++){
             stocks.add(tempMap.get(i).getKey());
-            System.out.print(tempMap.get(i).getKey()+"  "+tempMap.get(i).getValue());
+          //  System.out.println(tempMap.get(i).getKey()+"  "+tempMap.get(i).getValue());
         }
 
 
@@ -137,20 +156,23 @@ public class FactorStrategy extends MultiStockStrategy {
          * 因为可能会出现返回值不足vol个数据，因此先补充0，再赋值
          */
         double [] temp=stockDataDAO.getAvgPriceByCodes(stocks,curTradeDay);
-        buy_Prices= new double[vol]; //这里讲买入价格全设为0
+        buy_Prices = new double[vol]; //这里讲买入价格全设为0
         for(int i=0;i<temp.length;i++){
             buy_Prices[i]=temp[i];
         }
 
+
+
+        System.out.println(this.curCapital+" can spend");
         /**
          * 遍历各个层
          */
         for(int i=0;i<numOfLevel;i++){
-            double expensePerStock = capital*investWeight[i]/(double)gap;
+            double expensePerStock = curCapital*investWeight[i]/(double)gap;
 
-            System.out.println("该层分配："+capital*investWeight[i]);
-            System.out.println("该层个数："+gap);
-            System.out.println("每股分配："+expensePerStock);
+           // System.out.println("该层分配："+curCapital*investWeight[i]);
+           // System.out.println("该层个数："+gap);
+           // System.out.println("每股分配："+expensePerStock);
 
             /**
              * 对于每一层：
@@ -165,10 +187,21 @@ public class FactorStrategy extends MultiStockStrategy {
                     if(buy_Prices[j]==0){
                         lots[j]=0;
                     }else{
-                        lots[j]= (int) (expensePerStock/(buy_Prices[i]*stocksPerLot));
+                        lots[j]= (int) (expensePerStock/(buy_Prices[j]*stocksPerLot));
+                        expense+=lots[j]*stocksPerLot*buy_Prices[j];
+                    //    System.out.println("buy "+stocks.get(j)+" "+lots[j]*stocksPerLot+" at price: "+buy_Prices[j]);
+
+                        TradeDetailVO detailVO = new TradeDetailVO();
+                        detailVO.code=stocks.get(j);
+                        detailVO.codeName=codeAndNames.get(stocks.get(j));
+                        detailVO.buyOrSell=true;
+                        detailVO.numofTrade=lots[j];
+                        detailVO.tradePrice=buy_Prices[j];
+
+                        tradeDataVO.tradeDetailVOs.add(detailVO);
+
                     }
-                    System.out.println("buy "+stocks.get(j)+" "+lots[j]*stocksPerLot+" at price: "+buy_Prices[j]);
-                    expense+=lots[j]*stocksPerLot*buy_Prices[j];
+
             }
 
         }
@@ -177,6 +210,15 @@ public class FactorStrategy extends MultiStockStrategy {
          * 记录当日的指数价格
          */
         base_BuyPrice=benchMarkDAO.getAvgPrice(this.baseCode,curTradeDay);
+        /**
+         * 更新当前资本
+         */
+        this.curCapital=capital-expense;
+
+        tradeDataVO.nowCapital=curCapital;
+        tradeDataVO.profit=this.profit;
+        this.reportVO.tradeDataVOList.add(tradeDataVO);
+
 
     }
 
@@ -186,6 +228,8 @@ public class FactorStrategy extends MultiStockStrategy {
      */
     @Override
     protected void sellStocks() {
+        TradeDataVO tradeDataVO = new TradeDataVO();
+        tradeDataVO.tradeDate=curTradeDay;
 
         /**
          * 获取当日的股票池的均价
@@ -193,34 +237,50 @@ public class FactorStrategy extends MultiStockStrategy {
         double [] temp=stockDataDAO.getAvgPriceByCodes(stocks,curTradeDay);
 //        System.out.println("temp.size()"+temp.length);
 //        System.out.println(" get sell_Prices"+sell_Prices);
-          sell_Prices= new double[vol];
-        for(int i=0;i<stocks.size();i++){
-            /**
-             * 如果买入价格是0，说明数据出错，
-             * 将卖出价格也设为0，从而忽略这只股票
-             */
-            if(buy_Prices[i]!=0){
+        sell_Prices= new double[vol];
+        for(int j=0;j<this.numOfLevel;j++){
 
+            for(int i=j*gap;i<(j+1)*gap;i++){
                 /**
-                 * 如果卖出价格为0而买入不为0,说明数据出错，
-                 * 把卖出价格设为买入价，从而忽略这只股票
+                 * 如果买入价格是0，说明数据出错，
+                 * 将卖出价格也设为0，从而忽略这只股票
                  */
-                if(temp[i]==0){
-                    sell_Prices[i]=buy_Prices[i];
+                if(buy_Prices[i]!=0){
+
+                    /**
+                     * 如果卖出价格为0而买入不为0,说明数据出错，
+                     * 把卖出价格设为买入价，从而忽略这只股票
+                     */
+                    if(temp[i]==0){
+                        sell_Prices[i]=buy_Prices[i];
+                    }else{
+                        sell_Prices[i]=temp[i];
+                    }
+
                 }else{
-                    sell_Prices[i]=temp[i];
+                    sell_Prices[i]=0;
                 }
+
+
+               // System.out.println("sell "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+sell_Prices[i]);
+
+                TradeDetailVO detailVO = new TradeDetailVO();
+                detailVO.code=stocks.get(i);
+                detailVO.codeName=codeAndNames.get(stocks.get(i));
+                detailVO.buyOrSell=false;
+                detailVO.numofTrade=lots[i];
+                detailVO.tradePrice=sell_Prices[i];
+
+                tradeDataVO.tradeDetailVOs.add(detailVO);
+
+
+                income+=sell_Prices[i]*lots[i]*stocksPerLot;
+                tax+=sell_Prices[i]*lots[i]*stocksPerLot*taxRate;
+
 
             }
 
         }
-
-        for(int i=0;i<stocks.size();i++){
-            System.out.println("sell "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+sell_Prices[i]);
-            income+=sell_Prices[i]*lots[i]*stocksPerLot;
-            tax+=sell_Prices[i]*lots[i]*stocksPerLot*taxRate;
-        }
-        System.out.println("income: "+income);
 
         //stocks.clear();
 
@@ -236,11 +296,21 @@ public class FactorStrategy extends MultiStockStrategy {
 //        base_SellPrice=benchMarkDAO.getAvgPrice(this.baseCode,curTradeDay);
 //        baseRtnRate+=(base_SellPrice-base_BuyPrice-base_SellPrice*taxRate)/base_BuyPrice;
         computeBaseRtnRate();
+
+        /**
+         * 更新当前资本
+         */
+        this.curCapital=this.curCapital-this.tax+this.income;
+        System.out.println("curCapital: "+this.curCapital);
         /**
          * 向结果链表中添加一个元素
          */
         CumRtnVO vo = new CumRtnVO(baseRtnRate,cumRtnRate,curTradeDay);
-        this.cumRtnVOList.add(vo);
+        this.reportVO.cumRtnVOList.add(vo);
+
+        tradeDataVO.nowCapital=curCapital;
+        tradeDataVO.profit=this.profit;
+        this.reportVO.tradeDataVOList.add(tradeDataVO);
     }
 
 
@@ -395,6 +465,7 @@ public class FactorStrategy extends MultiStockStrategy {
          * 遍历每只股票信息，遍历所有因子，计算无量纲化的因子值，累加成finalFactor并添加到map中
          */
         for(int i=0; i<factorEntities.size();i++){
+            final_Factor=0;
             for(Map.Entry<AnalysisFactor,Double>
                     entry: weightedFactors.entrySet()){
 
@@ -403,7 +474,9 @@ public class FactorStrategy extends MultiStockStrategy {
                     case PE:
                         st_pe=getStandardizedFactorValue(factorEntities.get(i).getPe(),
                                avg_pe,svar_pe);
+
                         st_pe=st_pe*entry.getValue();
+                      //  System.out.println("st_pe:"+st_pe);
 
                         final_Factor+=st_pe;
 
@@ -411,44 +484,55 @@ public class FactorStrategy extends MultiStockStrategy {
                     case PB:
                         st_pb=getStandardizedFactorValue(factorEntities.get(i).getPb(),
                                 avg_pb,svar_pb);
-                        st_pb=st_pb*entry.getValue();
 
+                        st_pb=st_pb*entry.getValue();
+                     //   System.out.println("st_pb:"+st_pb);
                         final_Factor+=st_pb;
                         break;
 
                     case PS:
                         st_ps=getStandardizedFactorValue(factorEntities.get(i).getPs(),
                                 avg_ps,svar_ps);
+
                         st_ps=-1*st_ps*entry.getValue();
+                     //   System.out.println("st_ps:"+st_ps);
                         final_Factor+=st_ps;
                         break;
                     case PCF:
                         st_pcf=getStandardizedFactorValue(factorEntities.get(i).getPcf(),
                                 avg_pcf,svar_pcf);
-                        st_pcf=-1*avg_pcf*entry.getValue();
+
+                        st_pcf=-1*st_pcf*entry.getValue();
+                     //   System.out.println("st_pcf:"+st_pcf);
                         final_Factor+=st_pcf;
                         break;
                     case VOL5:
                         st_vol5=getStandardizedFactorValue(factorEntities.get(i).getVol5(),
                                 avg_vol5,svar_vol5);
-                        st_vol5=avg_vol5*entry.getValue();
+
+                        st_vol5=st_vol5*entry.getValue();
+                    //    System.out.println("st_vol5:"+st_vol5);
+
                         final_Factor+=st_vol5;
                         break;
                     case VOL10:
                         st_vol10=getStandardizedFactorValue(factorEntities.get(i).getVol10(),
                                 avg_vol10,svar_vol10);
+
                         st_vol10=st_vol10*entry.getValue();
                         final_Factor+=st_vol10;
                         break;
                     case VOL60:
                         st_vol60=getStandardizedFactorValue(factorEntities.get(i).getVol60(),
                                 avg_vol60,svar_vol60);
+
                         st_vol60=st_vol60*entry.getValue();
                         final_Factor+=st_vol60;
                         break;
                     case VOL120:
                         st_vol120=getStandardizedFactorValue(factorEntities.get(i).getVol120(),
                                 avg_vol120,svar_vol120);
+
                         st_vol120=st_vol120*entry.getValue();
                         final_Factor+=st_vol120;
                         break;
@@ -457,7 +541,7 @@ public class FactorStrategy extends MultiStockStrategy {
 
                 }
             }
-
+          //  System.out.println(factorEntities.get(i).getCode()+"  "+final_Factor);
             resultMap.put(factorEntities.get(i).getCode(),final_Factor);
         }
 

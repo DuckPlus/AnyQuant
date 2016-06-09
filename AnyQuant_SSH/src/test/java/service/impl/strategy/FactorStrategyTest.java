@@ -10,6 +10,8 @@ import util.MyDate;
 import util.enumration.AnalysisFactor;
 import vo.CumRtnVO;
 import vo.ReportVO;
+import vo.TradeDataVO;
+import vo.TradeDetailVO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,20 +41,18 @@ public class FactorStrategyTest {
         String baseCode="000300";
         MyDate start =MyDate.getDateFromString("2015-01-01");
         MyDate end=MyDate.getDateFromString("2016-01-01");
-        String [] codes = {"sh603306","sh600137","sh600858","sh600083","sh600121",
-                "sh600750", "sh600978", "sh600775", "sh600338",
-                "sh601567", "sh600682", "sh600499", "sh601579", "sh600712"};
-
+        String [] codes = {
+                "sh600096", "sh600098", "sh600099",  "sh600103", "sh600105",
+                "sh600108", "sh600110", "sh600114", "sh600117", "sh600121",
+                "sh600123", "sh600125", "sh600130", "sh600137","sh600160"};
         Map< AnalysisFactor,Double> weightedFactors;
         weightedFactors= new HashMap<AnalysisFactor,Double>();
-        weightedFactors.put(AnalysisFactor.PE,0.25);
-        weightedFactors.put(AnalysisFactor.PS,0.25);
-        weightedFactors.put(AnalysisFactor.PCF,0.25);
-        weightedFactors.put(AnalysisFactor.VOL5,0.25);
+        weightedFactors.put(AnalysisFactor.PE,0.5);
+        weightedFactors.put(AnalysisFactor.VOL5,0.5);
 
-        double [] investWeight= {0.4,0.2,0.2,0.1,0.1};
+        double [] investWeight= {0.7,0.1,0.1,0.05,0.05};
 
-        int interval=30;
+        int interval=60;
 
         strategy.setPara_Factor
                 (capital,taxRate,baseCode,start,end,
@@ -88,8 +88,27 @@ public class FactorStrategyTest {
         if(vo==null){
             fail();
         }else{
+            System.out.println("PK-------");
             for(CumRtnVO temp : vo.cumRtnVOList){
                 System.out.println("date: "+temp.date.DateToString()+" test: "+temp.testValue+" base: "+temp.baseValue);
+            }
+
+            System.out.println("Detail-------");
+            for(TradeDataVO tradeDataVO : vo.tradeDataVOList){
+                System.out.print("date: "+tradeDataVO.tradeDate.DateToString());
+                System.out.print("  profit: "+tradeDataVO.profit);
+                System.out.println("  nowCaptial: "+tradeDataVO.nowCapital);
+                for(TradeDetailVO detailVO : tradeDataVO.tradeDetailVOs){
+                    if(detailVO.buyOrSell){
+                        System.out.print("Buy ");
+                    }else{
+                        System.out.print("Sell ");
+                    }
+                    System.out.print(100*detailVO.numofTrade+" lots ");
+                    System.out.print(detailVO.code+"  "+detailVO.codeName+" at");
+                    System.out.println("price: "+detailVO.tradePrice);
+
+                }
             }
         }
     }

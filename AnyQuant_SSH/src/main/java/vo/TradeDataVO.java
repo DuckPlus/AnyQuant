@@ -2,6 +2,7 @@ package vo;
 
 import util.MyDate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +28,11 @@ public class TradeDataVO {
      * 当前总资金
      */
     public double nowCapital;
+
+
+    public TradeDataVO(){
+        this.tradeDetailVOs = new ArrayList<>();
+    }
 
 
 }

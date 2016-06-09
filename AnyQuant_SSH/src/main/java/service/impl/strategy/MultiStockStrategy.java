@@ -131,7 +131,7 @@ public abstract class MultiStockStrategy extends BaseStrategy {
          * 向结果链表中添加一个元素
          */
         CumRtnVO vo = new CumRtnVO(baseRtnRate,cumRtnRate,curTradeDay);
-        this.cumRtnVOList.add(vo);
+        this.reportVO.cumRtnVOList.add(vo);
     }
 
 

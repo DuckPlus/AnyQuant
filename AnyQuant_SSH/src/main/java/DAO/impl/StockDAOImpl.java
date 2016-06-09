@@ -34,6 +34,14 @@ public class StockDAOImpl implements StockDAO {
     }
 
     @Override
+    public List<String> getNames(List<String> codes) {
+        String hql = "select name from "+tableName+
+                " where code = ? ";
+        List result  = baseDAO.batchSingleQuery_Exact(hql,codes);
+        return result;
+    }
+
+    @Override
     public StockEntity getStockEntity(String code)
     {
         return (StockEntity) baseDAO.load(StockEntity.class,code);
