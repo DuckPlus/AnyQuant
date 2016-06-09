@@ -87,7 +87,29 @@
     border: solid 2px rgb(151,151,151);
     border-radius: 10px;
 }
-
+#transaction_and_detail{
+    margin-top:20px;
+    background-color: chocolate;
+    height: 500px;
+}
+#transaction,#transaction_detail{
+    /*display: block;*/
+    height: 450px;
+}
+#transaction{
+    background-color: #2f21d4;
+    border:solid 2px rgb(151,151,151);
+    border-radius: 10px;
+    width: 48%;
+    float: left;
+}
+#transaction_detail{
+    background-color: #00a1cb;
+    border:solid 2px rgb(151,151,151);
+    border-radius: 10px;
+    width: 48%;
+    float: right;
+}
 
 .light_font{
     font-family: "PingFang SC";

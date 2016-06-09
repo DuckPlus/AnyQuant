@@ -88,9 +88,12 @@
     box-shadow: 0 10px 6px -6px #777;
 }
 #pie_factors{
+    border: solid 2px #000000;
+    background-color: #00a1cb;
     position: absolute;
     left: 300px;
-    height:800px;
+    width: 600px;
+    height:600px;
     top:640px;
 }
 #analysebtn_diy{
