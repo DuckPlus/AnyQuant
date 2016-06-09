@@ -2,7 +2,7 @@ package data.update.impl;
 
 
 
-import data.update.factorDataService;
+import data.update.FactorDataService;
 import entity.FactorEntity;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -20,19 +20,21 @@ import java.util.List;
  */
 
 
-public class FactorDSImpl implements factorDataService {
+public class FactorDSImpl implements FactorDataService {
 
 
-    private static factorDataService ds ;
+    private static FactorDataService ds;
 
-    public static factorDataService getFactorDSImpl(){
-          if(ds==null){
-              return new FactorDSImpl();
+    public static FactorDataService getFactorDSImpl() {
+        if (ds == null) {
+            ds = new FactorDSImpl();
 
-          }else{
-              return ds;
-          }
+        }
+            return ds;
+
+
     }
+
     @Override
     public List<FactorEntity> getFactorEntityBetweenDate(String code, MyDate start, MyDate end) {
 

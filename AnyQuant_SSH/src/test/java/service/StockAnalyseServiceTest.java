@@ -58,7 +58,7 @@ public class StockAnalyseServiceTest {
 
     @Test
     public void getEvaluation() throws Exception {
-        //TODO
+
 
         for (int i = 10; i < 90; i++) {
             try {

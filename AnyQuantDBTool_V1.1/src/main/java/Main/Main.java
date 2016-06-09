@@ -36,19 +36,19 @@ public class Main {
         System.out.println("Update completed ---------------");
 
 
-//        Timer timer = new Timer();
-//        timer.schedule(new TimerTask() {
-//            public void run() {
-//                //执行的内
-//                System.out.println("Update benchdata table-----------");
-//                updateblService.updatBenchdataEntities();
-//
-//                System.out.println("Update stockdata table-----------");
-//                updateblService.updateStockdataEntities();
-//
-//                System.out.println("Update compeleted ---------------");
-//            }
-//        },cal.getTime(), 24*60*60*1000);
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run() {
+                //执行的内
+                System.out.println("Update benchdata table-----------");
+                updateblService.updatBenchdataEntities();
+
+                System.out.println("Update stockdata table-----------");
+                updateblService.updateStockdataEntities();
+
+                System.out.println("Update compeleted ---------------");
+            }
+        },cal.getTime(), 24*60*60*1000);
 
 
 
