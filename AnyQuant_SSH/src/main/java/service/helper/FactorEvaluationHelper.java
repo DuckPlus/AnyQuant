@@ -34,7 +34,6 @@ public class FactorEvaluationHelper {
 
 
         vos.add(analyseMA5(entities , factorArrays.get(AnalysisFactor.MA5)));
-
         vos.add(analyseMA10(entities , factorArrays.get(AnalysisFactor.MA10)));
         vos.add(analyseVol5(entities , factorArrays.get(AnalysisFactor.VOL5)));
         vos.add(analysePS( factorArrays.get(AnalysisFactor.PS) , boardsFactor));

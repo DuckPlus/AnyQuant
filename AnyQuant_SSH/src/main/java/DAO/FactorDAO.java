@@ -50,4 +50,8 @@ public interface FactorDAO {
      * @return
      */
     List<FactorEntity> getListFactors(List<String> stockCode);
+
+
+
+
 }
