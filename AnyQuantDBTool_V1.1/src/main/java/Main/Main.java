@@ -25,19 +25,30 @@ public class Main {
         cal.set(Calendar.HOUR_OF_DAY,24);
         cal.set(Calendar.MINUTE,0);
         cal.set(Calendar.SECOND,0);
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            public void run() {
-                //执行的内�?
-                System.out.println("Update benchdata table-----------");
-                updateblService.updatBenchdataEntities();
+        System.out.println("Update benchdata table-----------");
+        updateblService.updatBenchdataEntities();
 
-                System.out.println("Update stockdata table-----------");
-                updateblService.updateStockdataEntities();
+        System.out.println("Update stockdata table-----------");
+        updateblService.updateStockdataEntities();
 
-                System.out.println("Update compeleted ---------------");
-            }
-        },cal.getTime(), 24*60*60*1000);
+        System.out.println("Update factor table-----------");
+        updateblService.updateFactor();
+        System.out.println("Update completed ---------------");
+
+
+//        Timer timer = new Timer();
+//        timer.schedule(new TimerTask() {
+//            public void run() {
+//                //执行的内
+//                System.out.println("Update benchdata table-----------");
+//                updateblService.updatBenchdataEntities();
+//
+//                System.out.println("Update stockdata table-----------");
+//                updateblService.updateStockdataEntities();
+//
+//                System.out.println("Update compeleted ---------------");
+//            }
+//        },cal.getTime(), 24*60*60*1000);
 
 
 

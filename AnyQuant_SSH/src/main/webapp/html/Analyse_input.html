@@ -7,10 +7,14 @@
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
     <link rel="stylesheet" type="text/css" href="/css/Analyse.css">
     <link rel="stylesheet" href="/css/window.css" type="text/css">
-    <script type="text/javascript" src="http://www.sunsean.com/idTabs/jquery.idTabs.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="/css/loadingbar.css" />
     <title>Duck 回测参数配置</title>
     <meta charset="UTF-8">
+    <script src="/js/loadingbar.js"></script>
     <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="http://www.sunsean.com/idTabs/jquery.idTabs.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="/js/datepicker.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
@@ -63,8 +67,6 @@
     </ul>
 
 
-
-
 </div>
 <div id="blank"></div>
 <!-- navigator end -->
@@ -74,20 +76,30 @@
     <div id="tab_content">
         <ul class="tab_ul">
             <li id="first_tab" class="left_radium tab_li"><a href="#tab1" class="selected left_radium tab_item" >推荐策略</a></li>
-            <li id="second_tab" class="tab_li"><a href="#tab2" class="tab_item">参数配置</a></li>
+            <li id="second_tab" class="tab_li"><a href="#tab2" class="tab_item">DIY参数配置</a></li>
         </ul>
     </div>
     <div id="pointer_div"></div>
     <div id="tab1" style="display: block; ">
-        <span id="recommand_container">
+
+        <div id="recommand_container" class="input_container">
             <div>
-                <label for="basecode" class="middle">基准大盘</label>
-                <select id="basecode" class="middle">
+                <label for="strategy" >策略选择</label>
+                <select id="strategy" onchange="chooseStrategy()">
+                    <option value ="Strategy_PE">Strategy_PE</option>
+                    <option value ="Strategy_VOL">Strategy_VOL</option>
+                </select>
+            </div>
+
+            <div>
+                <div>
+                <label id="basecode_label"for="basecode" >基准大盘</label>
+                <select id="basecode" >
                 </select>
             </div>
             <div>
-                <label for="capital" class="middle">起始资金</label>
-                <select id="capital" class="middle">
+                <label for="capital" >起始资金</label>
+                <select id="capital" >
                     <option value="100000">10万</option>
                     <option value="500000">50万</option>
                     <option value="1000000">100万</option>
@@ -97,7 +109,7 @@
                 </select>
             </div>
             <div>
-                <label for="taxRate" class="middle">交易费率</label>
+                <label for="taxRate" >交易费率</label>
                 <input id="taxRate" type="range" min="0" max="1"  step="0.001"  onchange="getTaxRate()"/>
                 <label id="taxRate_num">0.5</label>
                 <script>
@@ -127,21 +139,93 @@
                 结束<input type="text" id="end" value="2016-6-6"readonly style="height:16px" />
             </span>
 
-        </span>
-        <button id="analysebtn" class="button button-raised button-primary button-pill" onclick="doAnalyse()" >
-    开始回测
-</button>
+            </div>
+
+        </div>
+        <button id="analysebtn" class="button button-glow button-rounded button-raised button-primary" onclick="doAnalyse()" >
+            开始回测
+        </button>
     </div>
     <div id="tab2" style="display: none; ">
-        <div id="diy_container">
-自己配参数~~~~~~~~~~~
+        <div id="analyseDiv">
+            <span id="diy_input1"><!--第一块输入区，股票池，起止日期-->
+                <h1>参数Part1</h1>
+
+                <div class="demo" >
+                    起始<input type="text" id="start_diy"value="2016-6-1" readonly style="height:16px" />
+                </div>
+                <div class="demo" >
+                    结束<input type="text" id="end_diy" value="2016-6-6"readonly style="height:16px" />
+                </div>
+               股票池<input type="text" id="search_text_chosen" placeholder="Search..">
+                <div id="chosenStockDiv">
+                    <table id="chosenStocks" class="display">
+                        <thead>
+                        <tr>
+                            <th>股票名称</th>
+                            <th>股票代码</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+
+                        <tfoot>
+                        </tfoot>
+
+                    </table>
+                </div>
+                <button id="helpbtn" class="button button-glow button-rounded button-raised button-primary" onclick="factorAnalyse()" >
+                    分析因子表现
+                </button>
+            </span>
+            <span id="analyseCharts"><!--各因子的4个图-->
+                <span id="allStocksDiv">
+                     <input type="text" id="search_text" placeholder="Search..">
+                    <table id="allstock_list" class="display">
+                        <thead>
+                        <tr>
+                            <th>股票名称</th>
+                            <th>股票代码</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+
+                        <tfoot>
+                        </tfoot>
+
+                    </table>
+                    <div id="loading" class="loading">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <p>股票数据加载中。。。</p>
+                </div>
+                </span>
+                <span id="chart1"></span>
+                <span id="chart2"></span>
+                <span id="chart3"></span>
+                <span id="chart4"></span>
+            </span>
+            <span id="diy_input2"><!--第一块输入区，股票池，起止日期-->
+                <h1>参数Part2</h1>
+
+                <button id="analysebtn_diy" class="button button-glow button-rounded button-raised button-primary" onclick="factorAnalyse()" >
+                    开始回测
+                </button>
+            </span>
+        </div>
+
         </div>
     </div>
 </span>
 <!--TAB OVER-->
-
-
-
 
 
 
@@ -151,7 +235,16 @@
 
 <script type="text/javascript">
     $(function(){
-
+        $("#start_diy").datepicker({
+            showOn: "button",
+            buttonImage: "/image/calendar.png",
+            buttonImageOnly: true
+        });
+        $("#end_diy").datepicker({
+            showOn: "button",
+            buttonImage: "/image/calendar.png",
+            buttonImageOnly: true
+        });
         $("#start").datepicker({
             showOn: "button",
             buttonImage: "/image/calendar.png",

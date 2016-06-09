@@ -12,7 +12,7 @@ public class AnalysisAlgorithm {
     }
 
     //计算相关系数
-    static double computeRelated(double[] x , double[] y){
+    public static double computeRelated(double[] x , double[] y){
 
         int len = Math.min(x.length , y.length);
         double x_avg = MathHelper.computeAverage(x);

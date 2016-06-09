@@ -16,47 +16,47 @@ function dosearch() {
 }
 function initTree(data){
     var myData=[],length=data.length;
-    if(length>=10){
-        for(var i=0;i<5;i++){
+    if(length>=6){
+        for(var i=0;i<6;i++){
             var tt=i+'';
             myData[i]=({
                 id: tt,
                 name: ' ',
             });
         }
-        for(var j=5;j<length+5;j++){
-            var par=j%5+'';
-            if(data[j-5].changeRate>0){
+        for(var j=6;j<length+6;j++){
+            var par=j%6+'';
+            if(data[j-6].changeRate>0){
                 myData[j]= ({
                     parent: par,
-                    code: data[j-5].code,
-                    name: data[j-5].stockName,
-                    price:((data[j-5].open+data[j-5].close)/2).toFixed(2),
-                    value:data[j-5].turnoverVol,
-                    rate:data[j-5].changeRate,
-                    volume:(data[j-5].turnoverVol/10000).toFixed(2),
+                    code: data[j-6].code,
+                    name: data[j-6].stockName,
+                    price:((data[j-6].open+data[j-6].close)/2).toFixed(2),
+                    value:data[j-6].turnoverVol,
+                    rate:data[j-6].changeRate,
+                    volume:(data[j-6].turnoverVol/10000).toFixed(2),
                     color:myRed
                 });
-            }else if(data[j-5].changeRate<0){
+            }else if(data[j-6].changeRate<0){
                 myData[j]= ({
                     parent: par,
-                    code: data[j-5].code,
-                    name: data[j-5].stockName,
-                    price:((data[j-5].open+data[j-5].close)/2).toFixed(2),
-                    value:data[j-5].turnoverVol,
-                    rate:data[j-5].changeRate,
-                    volume:(data[j-5].turnoverVol/10000).toFixed(2),
+                    code: data[j-6].code,
+                    name: data[j-6].stockName,
+                    price:((data[j-6].open+data[j-6].close)/2).toFixed(2),
+                    value:data[j-6].turnoverVol,
+                    rate:data[j-6].changeRate,
+                    volume:(data[j-6].turnoverVol/10000).toFixed(2),
                     color:myGreen
                 });
             }else{
                 myData[j]= ({
                     parent: par,
-                    code: data[j-5].code,
-                    name: data[j-5].stockName,
-                    price:((data[j-5].open+data[j-5].close)/2).toFixed(2),
-                    value:data[j-5].turnoverVol,
-                    rate:data[j-5].changeRate,
-                    volume:(data[j-5].turnoverVol/10000).toFixed(2),
+                    code: data[j-6].code,
+                    name: data[j-6].stockName,
+                    price:((data[j-6].open+data[j-6].close)/2).toFixed(2),
+                    value:data[j-6].turnoverVol,
+                    rate:data[j-6].changeRate,
+                    volume:(data[j-6].turnoverVol/10000).toFixed(2),
                     color:myGrey
                 });
             }
@@ -148,7 +148,7 @@ function initNumbers(data){
     }
     downNum=stockNum-stopNum-upNum;
     rate*=100;
-    rate=Math.floor(rate);
+    rate=rate.toFixed(2);
     if(rate>=0){
         document.getElementById('rate').style.color=myRed;
         document.getElementById('rate').innerHTML="+"+rate+"%";
@@ -233,11 +233,12 @@ $(document).ready(function () {
     $.getJSON('/Board/getBoardDistribution?boardName='+myBoardName, function (data) {
         initNumbers(data);
         initTree(data);
-
+        $("#loading_tree").remove();
     });
     $.getJSON('/Board/getCompareData?boardName='+myBoardName, function (data) {
 
         initLine(data);
+        $("#loading_line").remove();
     });
 
 });

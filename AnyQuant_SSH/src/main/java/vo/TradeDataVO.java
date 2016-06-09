@@ -11,7 +11,9 @@ import java.util.List;
  */
 public class TradeDataVO {
 
-
+    /**
+     * 交易日期
+     */
     public MyDate tradeDate;
     /**
      * 这次交易中具体的每条交易
@@ -22,7 +24,7 @@ public class TradeDataVO {
      */
     public double profit;
     /**
-     * 当前总股本
+     * 当前总资金
      */
     public double nowCapital;
 

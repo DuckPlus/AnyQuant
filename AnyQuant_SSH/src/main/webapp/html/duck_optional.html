@@ -95,11 +95,36 @@
                             <th>成交量</th>
                             <th>换手率</th>
                         </tr>
+<!--<<<<<<< HEAD-->
+
+                        <!--</thead>-->
+                        <!--<tbody>-->
+                        <!--</tbody>-->
+
+                        <!--<tfoot>-->
+                        <!--</tfoot>-->
+                    <!--</table>-->
+                    <!--<div id="loading">-->
+                        <!--<br><br>-->
+                        <!--<span></span>-->
+                        <!--<span></span>-->
+                        <!--<span></span>-->
+                        <!--<span></span>-->
+                        <!--<span></span>-->
+                        <!--<span></span>-->
+                        <!--<span></span>-->
+                        <!--<span></span>-->
+                        <!--<span></span>-->
+                        <!--<p>加载中</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+        <!--</div>-->
+<!--=======-->
                 <tfoot>
                 </tfoot>
             </table>
             <br><br><br><br><br><br>
-            <div id="loading">
+            <div id="loading" class="loading">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -113,6 +138,7 @@
             </div>
         </div>
     </div>
+<!--&gt;>>>>>> 06bea27980a3c1dba6171f62b5d8bbc02e115978-->
 
         <div id="tab2" style="display: none; ">
                 <div class="pie_bar">
@@ -191,20 +217,6 @@
              *自适应宽度 默认true 关闭可提升性能,同时方便管理布局
              */
             "autoWidth":false,
-//            "columnDefs": [
-//                // 将name列变为红色
-//                {
-//                    "targets": [0], // 目标列位置，下标从0开始
-//                    "data": "name", // 数据列名
-//                    "render": function(data, type, full) { // 返回自定义内容
-//                        return "<span style='color:red;'>" + data + "</span>";
-//                    }
-//                }
-//            ],
-            /*
-             *自适应宽度 默认true 关闭可提升性能,同时方便管理布局
-             */
-            "autoWidth":false,
             "columnDefs": [
                 // 将name列变为红色
                 {
@@ -231,7 +243,7 @@
                     "sNext": "后一页",
                     "sLast": "尾页"
                 }
-            },
+            }
         } );
 
         //以下关于自定义搜索框
@@ -306,11 +318,9 @@
                 type: 'column'
             },
             title: {
-                text: 'World\'s largest cities per 2014'
+                text: '地域分布'
             },
-            subtitle: {
-                text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
-            },
+
             xAxis: {
                 type: 'category',
                 labels: {
@@ -413,11 +423,9 @@
                 type: 'column'
             },
             title: {
-                text: 'World\'s largest cities per 2014'
+                text: '行业分布'
             },
-            subtitle: {
-                text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
-            },
+
             xAxis: {
                 type: 'category',
                 labels: {
