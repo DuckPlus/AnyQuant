@@ -174,9 +174,11 @@ function doAnalyse(){
 
 
 function initBaseCode(data){
-    var list=document.getElementById("basecode");
+    var listA=document.getElementById("basecode");
+    var listB=document.getElementById("basecode_diy")
     for(var i=0;i<data.length;i++){
-        list.options.add(new Option(data[i].name,data[i].code));
+        listA.options.add(new Option(data[i].name,data[i].code));
+        listB.options.add(new Option(data[i].name,data[i].code));
     }
 }
 function chooseStrategy(){
@@ -353,7 +355,7 @@ function init_region_bar(data) {
     $('#chart1').highcharts({
         chart: {
             type: 'column',
-            width:500,
+            width:400,
             height:200
         },
         title: {
@@ -404,7 +406,7 @@ function init_region_bar(data) {
     $('#chart2').highcharts({
         chart: {
             type: 'column',
-            width:500,
+            width:400,
             height:200,
             x:100
         },
@@ -456,7 +458,7 @@ function init_region_bar(data) {
     $('#chart3').highcharts({
         chart: {
             type: 'column',
-            width:500,
+            width:400,
             height:200
         },
         title: {
@@ -507,7 +509,7 @@ function init_region_bar(data) {
     $('#chart4').highcharts({
         chart: {
             type: 'column',
-            width:500,
+            width:400,
             height:200
         },
         title: {

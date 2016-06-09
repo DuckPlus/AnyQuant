@@ -14,41 +14,53 @@
 #factor_to_pie_btn{
     weight:17px;
 }
-
+#chosen_label{
+    position: absolute;
+    left:200px;
+    top:50px;
+}
+#search_text_chosen{
+    position: absolute;
+    left:250px;
+    top:50px;
+}
+#taxRate_diy{
+    width: 100px;
+}
 #allStocksDiv{
     position: absolute;
     top:10px;
     width: 600px;
-    left:50px;
+    left:160px;
     display: block;
     height: 450px;
     padding:20px;
 }
 #chart1{
     position: absolute;
-    left:20px;
+    left:160px;
     top:20px;
 }
 #chart2{
     position: absolute;
-    left:550px;
+    left:580px;
     top:20px;
 }
 #chart3{
     position: absolute;
-    left:20px;
+    left:160px;
     top:250px;
 }
 #chart4{
     position: absolute;
-    left:550px;
+    left:580px;
     top:250px;
 }
 #diy_input1{
     position: absolute;
     left: 5px ;
     top:112px;
-    width: 240px;
+    width: 410px;
     color:#fff;
    /* line-height: 50px;/*行间距*/
     background-color: #8B8B7A;
@@ -63,10 +75,10 @@
 #diy_input2{
     position: absolute;
     left: 10px ;
-    top:640px;
+    top:660px;
     width: 240px;
     color:#fff;
-    line-height: 25px;/*行间距*/
+    line-height: 40px;/*行间距*/
     background-color: #8B8B7A;
     display: block;
     height: 350px;
@@ -86,6 +98,10 @@
     left:80px;
 }
 #chosenStockDiv{
+    position: absolute;
+    left:200px;
+    top:90px;
+    width:200px;
     color:#000000;
     min-height: 250px;
     border: solid 2px rgb(151,151,151);
@@ -100,9 +116,6 @@
     top:300px;
     right: 150px;
 }
-
-
-
 #input_text{
     margin-top: 2px;
     margin-left: 0px;
