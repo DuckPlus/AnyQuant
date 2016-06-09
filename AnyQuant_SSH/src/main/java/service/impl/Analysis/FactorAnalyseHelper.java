@@ -1,4 +1,4 @@
-package service.impl.Analysis;
+package service.impl.analysis;
 
 import DAO.BenchMarkDAO;
 import DAO.FactorDAO;
@@ -36,12 +36,15 @@ import java.util.*;
 @Service
 public class FactorAnalyseHelper {
 
-    private List<String> codes;
     private double[] distribution = {0.5, 0.3, 0.1, 0.07, 0.03};
-    private int month = 12;
-//    private int captial = 100000;
+    //    private int captial = 100000;
 
-    private enum testFactor {PE, PB, PS, PCF , VOL5 , VOL10 , MA5 , MA10}
+    private enum testFactor {PE(false), PB(false), PS(true), PCF(true) , VOL5(false) , VOL10(false);
+        boolean upOrDown;
+        testFactor(boolean upOrDown){
+            this.upOrDown = upOrDown;
+        }
+    }
 
     @Autowired
     private FactorDAO factorDAO;
@@ -59,13 +62,12 @@ public class FactorAnalyseHelper {
 
     public FactorJudgmentVO report(List<String> codes , MyDate startDate , MyDate endDate , String baseBench) {
         MyFactorJudgmentVO result = new MyFactorJudgmentVO();
+        int month;
         if(startDate.getYear() == endDate.getYear()){
             month = endDate.getMonth() - startDate.getMonth();
         }else {
             month = 12 + endDate.getMonth() - startDate.getMonth();
         }
-
-        this.codes = codes;
 
 
         //获得12个月的数据
@@ -84,7 +86,7 @@ public class FactorAnalyseHelper {
 
         }
 
-        for (testFactor theTestFactor : testFactor.values()) {
+        for (testFactor theTestFactor : testFactor.values()) {//遍历每一个要进行分析的因子
             MyDate tempStart = startDate.clone();
             double[] factorValue = new double[month];
             double[] profit = new double[month];
@@ -101,22 +103,21 @@ public class FactorAnalyseHelper {
 
                 DateCalculator.getNextMonth(tempStart);
             }
-//            for (int j = 0; j < codeDistribution.length; j++) {
-//                System.out.println(Arrays.toString(codeDistribution[j]));
-//            }
+
             System.out.println("*********************Test for factor " + theTestFactor.name() + "*************************");
+
+
             System.out.println("factorValue" +Arrays.toString(factorValue));
             System.out.println("profit" +Arrays.toString(profit));
             System.out.println("benchProfit" +Arrays.toString(benchProfit));
             System.out.println("excessProfit" +Arrays.toString(excessProfit));
-
+            System.out.println();
 
             result.rankIC.put(theTestFactor.name(), AnalysisAlgorithm.computeRelated(factorValue, excessProfit));
             result.rankIR.put(theTestFactor.name(), MathHelper.computeAverage(profit) / Math.sqrt(MathHelper.computeVar(profit)));
             result.rankWinRate.put(theTestFactor.name(), MathHelper.getRank(0, excessProfit, false).getX() / month);
 //            result.rankTCheck.put(theTestFactor.name() , )
             result.rankAvgProfit.put(theTestFactor.name() , MathHelper.computeAverage(excessProfit));
-//            result.rankTCheck
         }
 
         makeExplanation(result);
@@ -141,7 +142,6 @@ public class FactorAnalyseHelper {
      * @param result
      */
     private void makeExplanation(MyFactorJudgmentVO result) {
-
 
 
 
@@ -263,8 +263,13 @@ public class FactorAnalyseHelper {
         for (String key : factors.keySet()) {
             codes.add(new CodeAndValue(key, (double) ReflectHelper.getValueByAttrName(factors.get(key).get(month), theTestFactor.name())));
         }
-//        codes.sort( (c1 , c2) ->  Double.compare(c1.value , c2.value)   );
-        codes.sort((c1, c2) -> c1.value > c2.value ? -1 : 1);
+
+        if(theTestFactor.upOrDown){
+            codes.sort( (c1 , c2) ->  Double.compare(c1.value , c2.value)   );
+        }else {
+            codes.sort((c1, c2) -> c1.value > c2.value ? -1 : 1);
+        }
+
 
         int onePart = codes.size() / distribution.length;
         CodeAndValue[][] result = new CodeAndValue[distribution.length][];
