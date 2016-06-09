@@ -1,25 +1,25 @@
-package blservice.impl;
+package service.impl;
 
 import DAO.*;
-import blservice.updateBLService;
-import dataservice.StockBasicService;
-import dataservice.impl.BenchMarkDSImpl;
-import dataservice.impl.FactorDSImpl;
-import dataservice.impl.StockBasicDSImpl;
-import dataservice.impl.StockDSImpl;
+import data.update.StockBasicService;
+import data.update.impl.BenchMarkDSImpl;
+import data.update.impl.FactorDSImpl;
+import data.update.impl.StockBasicDSImpl;
+import data.update.impl.StockDSImpl;
 import entity.BenchmarkdataEntity;
 import entity.FactorEntity;
 import entity.StockEntity;
 import entity.StockdataEntity;
-import module.po.BenchMarkPO;
-import module.po.StockBasicInfo;
-import module.po.StockPO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import service.UpdateBLService;
 import util.DateCalculator;
 import util.MyDate;
-import util.helper.FileIOHelper;
-import util.helper.TransferHelper;
+import util.update.helper.FileIOHelper;
+import util.update.helper.TransferHelper;
+import util.update.po.BenchMarkPO;
+import util.update.po.StockBasicInfo;
+import util.update.po.StockPO;
 
 import java.sql.Date;
 import java.util.List;
@@ -29,7 +29,7 @@ import java.util.List;
  */
 
 @Repository
-public class updateBLServiceImpl implements updateBLService {
+public class UpdateBLServiceImpl implements UpdateBLService {
     @Autowired
     BaseDAO baseDAO;
     @Autowired
@@ -40,7 +40,8 @@ public class updateBLServiceImpl implements updateBLService {
     BenchMarkDAO benchMarkDAO;
     @Autowired
     FactorDAO factorDAO;
-
+    @Autowired
+    UpdateDAO updateDAO;
     @Override
     public boolean update() {
         updateFactor();
@@ -122,11 +123,11 @@ public class updateBLServiceImpl implements updateBLService {
     @Override
     public boolean updateFactor() {
 
-        MyDate start = factorDAO.getMaxDate();
+        MyDate start = updateDAO.getFactorMaxDate();
         MyDate end = DateCalculator.getToDay();
         if(start==null){
             System.out.println("start date error!!!!!!!");
-            start=MyDate.getDateFromString("2016-01-01");
+            start= MyDate.getDateFromString("2016-01-01");
         }
 
         System.out.println("max date: "+start.DateToString());
@@ -173,11 +174,11 @@ public class updateBLServiceImpl implements updateBLService {
 
     {
 
-        MyDate start = stockDataDAO.getMaxDate();
+        MyDate start = updateDAO.getStockDataMaxDate();
 
         if(start==null){
             System.out.println("start date error!!!!!!!");
-            start=MyDate.getDateFromString("2016-01-01");
+            start= MyDate.getDateFromString("2016-01-01");
         }
 
         System.out.println("max date: "+start.DateToString());
@@ -217,11 +218,11 @@ public class updateBLServiceImpl implements updateBLService {
     {
 
 
-        MyDate start = benchMarkDAO.getMaxDate();
+        MyDate start = updateDAO.getBenchDataMaxDate();
 
         if(start==null){
             System.out.println("start date error!!!!!!!");
-            start=MyDate.getDateFromString("2016-01-01");
+            start= MyDate.getDateFromString("2016-01-01");
         }
 
         System.out.println("max date: "+start.DateToString());
