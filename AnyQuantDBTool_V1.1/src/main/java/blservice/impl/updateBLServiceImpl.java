@@ -125,6 +125,7 @@ public class updateBLServiceImpl implements updateBLService {
         MyDate start = factorDAO.getMaxDate();
         MyDate end = DateCalculator.getToDay();
         if(start==null){
+            System.out.println("start date error!!!!!!!");
             start=MyDate.getDateFromString("2016-01-01");
         }
 
@@ -172,9 +173,10 @@ public class updateBLServiceImpl implements updateBLService {
 
     {
 
-        MyDate start = benchMarkDAO.getMaxDate();
+        MyDate start = stockDataDAO.getMaxDate();
 
         if(start==null){
+            System.out.println("start date error!!!!!!!");
             start=MyDate.getDateFromString("2016-01-01");
         }
 
@@ -218,6 +220,7 @@ public class updateBLServiceImpl implements updateBLService {
         MyDate start = benchMarkDAO.getMaxDate();
 
         if(start==null){
+            System.out.println("start date error!!!!!!!");
             start=MyDate.getDateFromString("2016-01-01");
         }
 
