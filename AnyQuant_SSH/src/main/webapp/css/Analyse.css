@@ -1,3 +1,117 @@
+#analyseCharts{
+    position: absolute;
+    top:120px;
+    width: 1050px;
+    left:250px;
+    display: block;
+    height: 450px;
+    padding:20px;
+}
+#search_text{
+    border: solid 1px rgb(151,151,151);
+    border-radius: 5px;
+}
+#search_text_chosen{
+    border: solid 1px rgb(151,151,151);
+    border-radius: 5px;
+}
+#allStocksDiv{
+    position: absolute;
+    top:10px;
+    width: 600px;
+    left:50px;
+    display: block;
+    height: 450px;
+    padding:20px;
+}
+#chart1{
+    position: absolute;
+    left:20px;
+    top:20px;
+}
+#chart2{
+    position: absolute;
+    left:550px;
+    top:20px;
+}
+#chart3{
+    position: absolute;
+    left:20px;
+    top:250px;
+}
+#chart4{
+    position: absolute;
+    left:550px;
+    top:250px;
+}
+#diy_input1{
+    margin: 5px ;
+    width: 220px;
+    color:#fff;
+   /* line-height: 50px;/*行间距*/
+    background-color: #8B8B7A;
+    left:10px;
+    display: block;
+    height: 500px;
+    border-radius: 5px 5px 5px 5px;
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    -moz-box-shadow: 0 10px 6px -6px #777;
+    box-shadow: 0 10px 6px -6px #777;
+}
+#chosenStockDiv{
+    color:#000000;
+    min-height: 250px;
+    border: solid 2px rgb(151,151,151);
+    border-radius: 10px;
+}
+#helpbtn{/*TODO 想让这个按钮居中*/
+    margin-right: auto;
+    margin-left: auto;
+}
+#analysebtn{
+    position: absolute;
+    top:300px;
+    right: 150px;
+}
+
+#analysebtn_diy{
+    position: absolute;
+    top:300px;
+    right: 150px;
+}
+
+#input_text{
+    margin-top: 2px;
+    margin-left: 0px;
+    height: 36px;
+    width: 80%;
+    font-size: 23px;
+    border: none;
+    outline: none;
+
+}
+#input_text:focus{
+    box-shadow: #000000;
+}
+
+#input_space{
+    float: right;
+    height: 40px;
+    width: 200px;
+    border-left: solid 2px rgb(151,151,151);
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+#search_icon{
+    width: 30px;
+    height: 30px;
+    float: left;
+    margin-left: 3px;
+    margin-top: 5px;
+}
+
+
+/*下面应该是不会改的*/
 #news_window{
     /*background-color: #5dade2;*/
     height: 400px;
@@ -74,58 +188,15 @@ a.tab_item:hover{
     margin-left: auto;
     margin-right: auto;
     text-align: left;
-   color:#fff;
+    color:#fff;
     line-height: 50px;/*行间距*/
-
     background-color: #8B8B7A;
     margin: 20px auto;
     display: block;
-
     height: 400px;
     padding:20px;
     border-radius: 2px 2px 2px 2px;
     -webkit-box-shadow: 0 10px 6px -6px #777;
     -moz-box-shadow: 0 10px 6px -6px #777;
     box-shadow: 0 10px 6px -6px #777;
-}
-#analysebtn{
-    position: absolute;
-    top:300px;
-    right: 150px;
-}
-
-#analysebtn_diy{
-    position: absolute;
-    top:300px;
-    right: 150px;
-}
-
-#input_text{
-    margin-top: 2px;
-    margin-left: 0px;
-    height: 36px;
-    width: 80%;
-    font-size: 23px;
-    border: none;
-    outline: none;
-
-}
-#input_text:focus{
-    box-shadow: #000000;
-}
-
-#input_space{
-    float: right;
-    height: 40px;
-    width: 200px;
-    border-left: solid 2px rgb(151,151,151);
-    border-bottom-right-radius: 10px;
-    border-top-right-radius: 10px;
-}
-#search_icon{
-    width: 30px;
-    height: 30px;
-    float: left;
-    margin-left: 3px;
-    margin-top: 5px;
 }
