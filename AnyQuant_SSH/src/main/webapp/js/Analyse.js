@@ -191,28 +191,34 @@ function refreshChosenList(data) {
     var code=data.split("&")[1];
     var name=data.split("&")[0];
     var t_chosen=$("#chosenStocks").DataTable();
-    t_chosen.row.add([
-        name,
-        code
-    ]).draw();
+    if(name!="undefined"){
+        t_chosen.row.add([
+            name,
+            code
+        ]).draw(); 
+    }
+    
 }
 function refreshAllList(data){
     var args=[];
     var code=data.split("&")[1];
     var name=data.split("&")[0];
-    var arg={};//TODO
-    var item = new Object();
-    item.name = name;
-    item.code = code;
-    var json_item = JSON.stringify(item);
-    // alert("--->"+json_item);
-    arg["name"]=name;
-    arg["code"]=code;
-    args.push(arg);
-    var jsonString =JSON.stringify(args);
-    var t_all=$("#allstock_list").DataTable();
-    var temp = eval("("+json_item+")");
-    t_all.row.add(temp).draw();
+    var arg={};
+    if(name!="undefined"){
+        var item = new Object();
+        item.name = name;
+        item.code = code;
+        var json_item = JSON.stringify(item);
+        // alert("--->"+json_item);
+        arg["name"]=name;
+        arg["code"]=code;
+        args.push(arg);
+        var jsonString =JSON.stringify(args);
+        var t_all=$("#allstock_list").DataTable();
+        var temp = eval("("+json_item+")");
+        t_all.row.add(temp).draw();
+    }
+
 }
 function initChosenList(){
     var table = $('#chosenStocks').DataTable( {
