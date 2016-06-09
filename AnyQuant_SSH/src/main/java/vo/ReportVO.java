@@ -1,5 +1,6 @@
 package vo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,10 +8,19 @@ import java.util.List;
  */
 public class ReportVO {
 
+
+
     public List<CumRtnVO> cumRtnVOList;
 
     public List<TradeDataVO> tradeDataVOList;
 
     public List<String> summary;
+
+
+    public ReportVO(){
+        this.cumRtnVOList=new ArrayList<>();
+        this.tradeDataVOList = new ArrayList<>();
+        this.summary = new ArrayList<>();
+    }
 
 }

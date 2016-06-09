@@ -1,12 +1,17 @@
 package service.impl.strategy;
 
+import DAO.FactorDAO;
+import DAO.StockDAO;
 import entity.FactorEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.helper.MathHelper;
 import util.MyDate;
 import util.enumration.AnalysisFactor;
 import vo.CumRtnVO;
 import vo.ReportVO;
+import vo.TradeDataVO;
+import vo.TradeDetailVO;
 
 import java.util.*;
 
@@ -19,6 +24,14 @@ import java.util.*;
  */
 @Service
 public class FactorStrategy extends MultiStockStrategy {
+    @Autowired
+    FactorDAO factorDAO;
+    @Autowired
+    StockDAO stockDAO;
+    /**
+     * 用于存储股票代码和名称
+     */
+    Map<String,String>  codeAndNames;
 
     /**
      * 用户选择的因子和比重
@@ -69,6 +82,7 @@ public class FactorStrategy extends MultiStockStrategy {
 
         this.stocks = stocks;
         this.weightedFactors=weightedFactors;
+        this.codeAndNames = new HashMap<>();
         this.investWeight=investWeight;
         this.interval=interval;
         this.numOfLevel=investWeight.length;
@@ -92,6 +106,10 @@ public class FactorStrategy extends MultiStockStrategy {
         System.out.println("Strategy_Factor init-------");
         this.curTradeDay=start;
         this.buyStocks();
+        List<String> names = this.stockDAO.getNames(stocks);
+        for(int i=0;i<stocks.size();i++){
+            codeAndNames.put(stocks.get(i),names.get(i));
+        }
 
     }
 
@@ -118,6 +136,8 @@ public class FactorStrategy extends MultiStockStrategy {
      */
     @Override
     protected void buyStocks() {
+        TradeDataVO tradeDataVO = new TradeDataVO();
+        tradeDataVO.tradeDate=curTradeDay;
 
         this.curFactorEntities=this.factorDAO.getFactorAtDate(stocks,curTradeDay);
         List<Map.Entry<String,Double>>  tempMap = getSortedFinal_Factors(curFactorEntities);
@@ -127,7 +147,7 @@ public class FactorStrategy extends MultiStockStrategy {
         this.stocks = new ArrayList<>();
         for(int i=0;i<tempMap.size();i++){
             stocks.add(tempMap.get(i).getKey());
-            System.out.println(tempMap.get(i).getKey()+"  "+tempMap.get(i).getValue());
+          //  System.out.println(tempMap.get(i).getKey()+"  "+tempMap.get(i).getValue());
         }
 
 
@@ -150,9 +170,9 @@ public class FactorStrategy extends MultiStockStrategy {
         for(int i=0;i<numOfLevel;i++){
             double expensePerStock = curCapital*investWeight[i]/(double)gap;
 
-            System.out.println("该层分配："+curCapital*investWeight[i]);
-            System.out.println("该层个数："+gap);
-            System.out.println("每股分配："+expensePerStock);
+           // System.out.println("该层分配："+curCapital*investWeight[i]);
+           // System.out.println("该层个数："+gap);
+           // System.out.println("每股分配："+expensePerStock);
 
             /**
              * 对于每一层：
@@ -168,13 +188,17 @@ public class FactorStrategy extends MultiStockStrategy {
                         lots[j]=0;
                     }else{
                         lots[j]= (int) (expensePerStock/(buy_Prices[j]*stocksPerLot));
-//                        if(lots[j]<0){
-//                            System.err.print(stocks.get(j)+" error ");
-//                            System.err.print("expensePerStock: "+expensePerStock);
-//                            System.err.println(" buy_Prices: "+buy_Prices[j]);
-//                        }
                         expense+=lots[j]*stocksPerLot*buy_Prices[j];
-                        System.out.println("buy "+stocks.get(j)+" "+lots[j]*stocksPerLot+" at price: "+buy_Prices[j]);
+                    //    System.out.println("buy "+stocks.get(j)+" "+lots[j]*stocksPerLot+" at price: "+buy_Prices[j]);
+
+                        TradeDetailVO detailVO = new TradeDetailVO();
+                        detailVO.code=stocks.get(j);
+                        detailVO.codeName=codeAndNames.get(stocks.get(j));
+                        detailVO.buyOrSell=true;
+                        detailVO.numofTrade=lots[j];
+                        detailVO.tradePrice=buy_Prices[j];
+
+                        tradeDataVO.tradeDetailVOs.add(detailVO);
 
                     }
 
@@ -191,6 +215,10 @@ public class FactorStrategy extends MultiStockStrategy {
          */
         this.curCapital=capital-expense;
 
+        tradeDataVO.nowCapital=curCapital;
+        tradeDataVO.profit=this.profit;
+        this.reportVO.tradeDataVOList.add(tradeDataVO);
+
 
     }
 
@@ -200,6 +228,8 @@ public class FactorStrategy extends MultiStockStrategy {
      */
     @Override
     protected void sellStocks() {
+        TradeDataVO tradeDataVO = new TradeDataVO();
+        tradeDataVO.tradeDate=curTradeDay;
 
         /**
          * 获取当日的股票池的均价
@@ -232,7 +262,17 @@ public class FactorStrategy extends MultiStockStrategy {
                 }
 
 
-                System.out.println("sell "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+sell_Prices[i]);
+               // System.out.println("sell "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+sell_Prices[i]);
+
+                TradeDetailVO detailVO = new TradeDetailVO();
+                detailVO.code=stocks.get(i);
+                detailVO.codeName=codeAndNames.get(stocks.get(i));
+                detailVO.buyOrSell=false;
+                detailVO.numofTrade=lots[i];
+                detailVO.tradePrice=sell_Prices[i];
+
+                tradeDataVO.tradeDetailVOs.add(detailVO);
+
 
                 income+=sell_Prices[i]*lots[i]*stocksPerLot;
                 tax+=sell_Prices[i]*lots[i]*stocksPerLot*taxRate;
@@ -266,7 +306,11 @@ public class FactorStrategy extends MultiStockStrategy {
          * 向结果链表中添加一个元素
          */
         CumRtnVO vo = new CumRtnVO(baseRtnRate,cumRtnRate,curTradeDay);
-        this.cumRtnVOList.add(vo);
+        this.reportVO.cumRtnVOList.add(vo);
+
+        tradeDataVO.nowCapital=curCapital;
+        tradeDataVO.profit=this.profit;
+        this.reportVO.tradeDataVOList.add(tradeDataVO);
     }
 
 

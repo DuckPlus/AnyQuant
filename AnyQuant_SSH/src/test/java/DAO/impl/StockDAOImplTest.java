@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.fail;
@@ -95,6 +96,21 @@ public class StockDAOImplTest {
             }
         }
 
+    }
+
+
+
+    @Test
+    public void getNames() throws  Exception{
+        String [] codes = {"sh603306","sh600137","sh600858","sh600083"};
+        List<String> result = dao.getNames(Arrays.asList(codes));
+        if (result == null) {
+           fail("null-------");
+        }else{
+            for(int i=0;i<codes.length;i++ ){
+                System.out.println(codes[i]+"  "+result.get(i));
+            }
+        }
     }
 
 

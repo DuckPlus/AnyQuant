@@ -13,6 +13,8 @@ public interface StockDAO {
     List<StockEntity> getAllStocks();
     List<String> getAllStockCodes();
 
+    List<String> getNames(List<String>  codes);
+
     StockEntity getStockEntity(String code);
 
     /**

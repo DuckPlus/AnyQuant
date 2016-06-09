@@ -1,14 +1,11 @@
 package service.impl.strategy;
 
 import DAO.BenchMarkDAO;
-import DAO.FactorDAO;
 import DAO.StockDataDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import util.MyDate;
-import vo.CumRtnVO;
 import vo.ReportVO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,8 +17,7 @@ public abstract class BaseStrategy  {
     StockDataDAO stockDataDAO;
     @Autowired
     BenchMarkDAO benchMarkDAO;
-    @Autowired
-    FactorDAO factorDAO;
+
     /**
      * 每手100股
      */
@@ -108,17 +104,12 @@ public abstract class BaseStrategy  {
     protected double baseRtnRate;
 
     /**
-     * 每次调仓时的累积收益率
-     */
-    protected List<CumRtnVO> cumRtnVOList;
-
-
-    /**
      * 存储start--end间的交易日
      */
     protected MyDate[] validDates;
 
 
+    protected ReportVO reportVO;
 
     public BaseStrategy(){
 
@@ -144,7 +135,7 @@ public abstract class BaseStrategy  {
         this.base_BuyPrice=0;
         this.base_SellPrice=0;
         this.baseRtnRate=0;
-        this.cumRtnVOList=new ArrayList<>();
+        this.reportVO=new ReportVO();
 
         this.computeValidDates();
 
@@ -207,16 +198,13 @@ public abstract class BaseStrategy  {
 
     public ReportVO simpleAnalyse(){
         init();
+        this.reportVO = new ReportVO();
         for(int i=interval;i<this.validDates.length;i+=interval){
             curTradeDay=this.validDates[i];
             System.out.println("handle "+i+"th day date: "+curTradeDay.DateToString());
             this.handleData();
         }
         this.sellStocks();
-
-        ReportVO reportVO = new ReportVO();
-        reportVO.cumRtnVOList=this.cumRtnVOList;
-
         return reportVO;
     }
 
