@@ -216,24 +216,24 @@
                 <h1>参数Part2</h1>
                 <table>
                     <tr>
-                        <td>市盈率:</td><td><input type="text" value="5" id="pe_text" onchange="redrawpie"/></td></tr>
+                        <td>市盈率:</td><td><input type="text" value="5" id="pe_text" onkeyup=redrawpie();></td></tr>
                     <tr>
-                        <td>市净率:</td><td><input type="text" value="5" id="pb_text" onchange="redrawpie"/></td></tr>
+                        <td>市净率:</td><td><input type="text" value="5" id="pb_text" onchange=redrawpie();></td></tr>
                     <tr>
-                        <td>5日换手率:</td><td><input type="text" value="5" id="vol5_text" onchange="redrawpie"/></td></tr>
+                        <td>5日换手率:</td><td><input type="text" value="5" id="vol5_text" onchange=redrawpie();></td></tr>
                     <tr>
-                        <td>10日换手率:</td><td><input type="text" value="5" id="vol10_text"/></td></tr>
+                        <td>10日换手率:</td><td><input type="text" value="5" id="vol10_text" onchange=redrawpie();></td></tr>
                     <tr>
-                        <td>60日换手率:</td><td><input type="text" value="5" id="vol60_text"/></td></tr>
+                        <td>60日换手率:</td><td><input type="text" value="5" id="vol60_text" onchange=redrawpie();></td></tr>
                     <tr>
-                        <td>120日换手率:</td><td><input type="text" value="5" id="vol120_text"/></td></tr>
+                        <td>120日换手率:</td><td><input type="text" value="5" id="vol120_text" onchange=redrawpie();></td></tr>
                     <tr>
-                        <td>市销率:</td><td><input type="text" value="5" id="ps_text"/></td></tr>
+                        <td>市销率:</td><td><input type="text" value="5" id="ps_text" onchange=redrawpie();></td></tr>
                     <tr>
-                        <td>市现率:</td><td><input type="text" value="5" id="pcf_text"/></td></tr>
+                        <td>市现率:</td><td><input type="text" value="5" id="pcf_text" onchange=redrawpie();></td></tr>
                 </table>
 
-                <button id="factor_to_pie_btn"class="button button-raised button-action button-circle button-jumbo" onclick="redrawpie()">~~</button><!--TODO讲道理应该实时监听输入框，并自动改变pie图-->
+                <button id="factor_to_pie_btn" class="button button-raised button-action button-circle button-jumbo" onclick="redrawpie()">~~</button><!--TODO讲道理应该实时监听输入框，并自动改变pie图-->
                 <button id="analysebtn_diy" class="button button-glow button-rounded button-raised button-primary" onclick="doAnalyse_diy()" >
                     开始回测
                 </button>

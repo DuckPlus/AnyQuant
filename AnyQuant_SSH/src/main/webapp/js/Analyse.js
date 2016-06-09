@@ -16,13 +16,13 @@ function initpie_factor(){
     chart1 = new Highcharts.Chart({
         colors:['#54FF9F','#46cbee', '#fec157','#CD96CD', '#cfd17d', '#4F94CD', '#FF9655', '#FFF263', '#FF6A6A'] ,//不同组数据的显示背景色，循环引用
         chart: {
-            width:500,
-            height:300,
+            // width:500,
+            // height:500,
             renderTo: 'pie_factors',//画布所在的div id
             // plotBackgroundColor: '#f5f2ec',//画布背景色
             plotBorderWidth: null,//画布边框
             plotShadow: false,
-            margin:[0,0,0,0]//画布外边框
+            margin:[0,100,0,100]//画布外边框
         },
         title: {
             text: ''//画布题目，此处置空
