@@ -30,7 +30,13 @@ public abstract class BaseStrategy  {
     /**
      * 起始资金
      */
-    protected double capital = 100000;
+    protected double capital =0;
+
+
+    /**
+     * 当前剩余资金
+     */
+    protected double curCapital=0;
     /**
      * 交易费率
      */
@@ -122,6 +128,7 @@ public abstract class BaseStrategy  {
                         MyDate start , MyDate end){
 
         this.capital=capital;
+        this.curCapital=capital;
         this.taxRate=taxRate;
         this.baseCode=baseCode;
         this.start=start;
@@ -168,13 +175,25 @@ public abstract class BaseStrategy  {
     public abstract ReportVO analyse();
 
     /**
+     * 抽象的买入方法
+     */
+    protected abstract  void buyStocks();
+
+    /**
+     * 抽象的卖出方法
+     */
+    protected abstract  void sellStocks();
+
+    /**
      * 计算利润
      * @return
      */
     public double computeCumRtnRate(){
-        profit=income-expense-tax;
-        cumRtnRate=profit/expense;
-        System.out.println("profit: " +this.profit+"  "+"expense: "+this.expense);
+        this.profit=income-expense-tax;
+        this.cumRtnRate=profit/expense;
+
+        System.out.println("income: " +this.income+"  "+"expense: "+this.expense+"  "+"tax: "+this.tax);
+        System.out.println("profit: " +this.profit+"  "+"cumRtnRate: "+this.cumRtnRate);
         return cumRtnRate;
 
     }
@@ -193,6 +212,8 @@ public abstract class BaseStrategy  {
             System.out.println("handle "+i+"th day date: "+curTradeDay.DateToString());
             this.handleData();
         }
+        this.sellStocks();
+
         ReportVO reportVO = new ReportVO();
         reportVO.cumRtnVOList=this.cumRtnVOList;
 
