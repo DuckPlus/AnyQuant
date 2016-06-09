@@ -25,20 +25,19 @@
     top:50px;
 }
 #taxRate_diy{
-    width: 100px;
+    width: 80px;
 }
 #allStocksDiv{
     position: absolute;
-    top:10px;
+    top:2px;
     width: 600px;
-    left:160px;
+    left:200px;
     display: block;
     height: 450px;
-    padding:20px;
 }
 #chart1{
     position: absolute;
-    left:160px;
+    left:170px;
     top:20px;
 }
 #chart2{
@@ -48,7 +47,7 @@
 }
 #chart3{
     position: absolute;
-    left:160px;
+    left:170px;
     top:250px;
 }
 #chart4{
@@ -59,14 +58,14 @@
 #diy_input1{
     position: absolute;
     left: 5px ;
-    top:112px;
+    top:120px;
     width: 410px;
     color:#fff;
    /* line-height: 50px;/*行间距*/
     background-color: #8B8B7A;
     left:10px;
     display: block;
-    height: 515px;
+    height: 410px;
     border-radius: 5px 5px 5px 5px;
     -webkit-box-shadow: 0 10px 6px -6px #777;
     -moz-box-shadow: 0 10px 6px -6px #777;
@@ -75,26 +74,25 @@
 #diy_input2{
     position: absolute;
     left: 10px ;
-    top:660px;
-    width: 240px;
+    top:550px;
+    width: 410px;
     color:#fff;
     line-height: 40px;/*行间距*/
     background-color: #8B8B7A;
     display: block;
-    height: 350px;
+    height: 480px;
     border-radius: 5px 5px 5px 5px;
     -webkit-box-shadow: 0 10px 6px -6px #777;
     -moz-box-shadow: 0 10px 6px -6px #777;
     box-shadow: 0 10px 6px -6px #777;
 }
 #pie_factors{
-    border: solid 2px #000000;
-    background-color: #00a1cb;
+
     position: absolute;
-    left: 300px;
+    left: 430px;
     width: 600px;
     height:600px;
-    top:640px;
+    top:570px;
 }
 #analysebtn_diy{
    position: absolute;

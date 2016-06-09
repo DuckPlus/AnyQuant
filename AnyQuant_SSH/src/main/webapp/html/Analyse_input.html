@@ -149,11 +149,11 @@
         <div id="analyseDiv">
             <span id="diy_input1"><!--第一块输入区，股票池，起止日期-->
                 <h1>参数Part1</h1>
-                <span>
+                <div>
                     <label id="basecode_diy_label"for="basecode_diy" >基准大盘</label>
                     <select id="basecode_diy" > </select>
-                </span>
-                <span><label id="chosen_label">股票池</label></span>
+                </div><br>
+                <div><label id="chosen_label">股票池</label></div>
                    <!-- <input type="text" id="search_text_chosen" placeholder="Search.."></span>-->
                 <div>
                     <label for="capital_diy" >起始资金</label>
@@ -165,7 +165,7 @@
                         <option value="5000000">500万</option>
                         <option value="10000000">1000万</option>
                     </select>
-                </div>
+                </div><br>
                 <div>
                     <label for="taxRate_diy" >交易费率</label>
                     <input id="taxRate_diy" type="range" min="0" max="1"  step="0.001"  onchange="getTaxRate()"/>
@@ -176,11 +176,11 @@
                                     document.getElementById("taxRate_diy").value;
                         }
                     </script>
-                </div>
+                </div><br>
                 <div>
                     <label for="numOfStock_diy" >股票数量</label>
                     <input id="numOfStock_diy" type="text" value="10"required/>
-                </div>
+                </div><br>
                  <div>
                     <label for="interval_diy" class="middle">调仓间隔</label>
                     <input id="interval_diy" type="text" value="5"placeholder="输入3~70的数字" required/>
@@ -266,9 +266,7 @@
                     <tr>
                         <td>市现率:</td><td><input type="text" value="5" id="pcf_text" onchange=redrawpie();></td></tr>
                 </table>
-
-                <button id="factor_to_pie_btn" class="button button-raised button-action button-circle button-jumbo" onclick="redrawpie()">~~</button><!--TODO讲道理应该实时监听输入框，并自动改变pie图-->
-                <button id="analysebtn_diy" class="button button-glow button-rounded button-raised button-primary" onclick="doAnalyse_diy()" >
+<button id="analysebtn_diy" class="button button-glow button-rounded button-raised button-primary" onclick="doAnalyse_diy()" >
                     开始回测
                 </button>
             </span>
