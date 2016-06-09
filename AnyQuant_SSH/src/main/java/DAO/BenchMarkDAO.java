@@ -40,4 +40,6 @@ public interface BenchMarkDAO {
 
     double getAvgPrice(String code , MyDate date);
 
+    List<String> getAllBenchMarkCodes();
+
 }

@@ -69,4 +69,10 @@ public class BenchMarkDAOImpl implements BenchMarkDAO {
         Object temp = baseDAO.load(hql);
         return  (temp==null? 0: (double)temp);
     }
+
+    @Override
+    public List<String> getAllBenchMarkCodes() {
+        String hql = "select code from "+ tableName;
+        return (List<String>) baseDAO.getAllList(hql);
+    }
 }

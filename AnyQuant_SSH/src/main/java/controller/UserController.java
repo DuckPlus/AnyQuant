@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/user")
-public class UserController implements InitializingBean{
+public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
@@ -86,15 +86,7 @@ public class UserController implements InitializingBean{
 
 
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        System.out.println("preparing cache");
-        new Thread(() -> {
-            cacheService.prepareCache();
-            System.out.println("Reading cache finish = = =");
-        }).start();
 
-    }
 
 
 }
