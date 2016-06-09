@@ -1,7 +1,8 @@
-package service.helper;
+package service.impl.Analysis;
 
 import entity.FactorEntity;
 import entity.StockdataEntity;
+import service.helper.MathHelper;
 import util.ReflectHelper;
 import util.enumration.AnalysisFactor;
 import util.enumration.Suggestion;
@@ -50,6 +51,7 @@ public class FactorEvaluationHelper {
         int useFulSize = vos.size();
         for (FactorEvaluationVO vo : vos){
             analysis.addAll(vo.analysis);
+            System.out.println("mark is " +vo.mark);
             if (vo.mark == 50){
                 useFulSize--;
             }else {
@@ -206,20 +208,20 @@ public class FactorEvaluationHelper {
         int negativeMark = 0;
 
         double avg = MathHelper.computeAverage(vol5);
-        if (avg < 0.01){
+        if (avg < 0.005){
             negativeMark += 2;
             analysis.add("近期换手率极低,股票交易不活跃");
 
-        }else if(avg < 0.015){
+        }else if(avg < 0.01){
             negativeMark++;
             analysis.add("近期股票换手率较低,交易较为温和");
-        }else if (avg < 0.03){
+        }else if (avg < 0.02){
             //Nothing
-        } else if (avg < 0.04){
+        } else if (avg < 0.025){
             positiveMark++;
             analysis.add("该股票市场交易活跃");
 
-        }else if (avg >= 0.04){
+        }else if (avg >= 0.035){
             positiveMark+= 2;
             analysis.add("该股票近期交易十分活跃,建议密切关注");
         }

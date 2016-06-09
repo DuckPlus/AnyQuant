@@ -1,10 +1,5 @@
 package vo;
 
-import net.sf.json.JSONArray;
-import service.helper.FactorAnalyseHelper;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
