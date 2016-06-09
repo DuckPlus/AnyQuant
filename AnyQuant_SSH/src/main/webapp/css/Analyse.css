@@ -4,17 +4,17 @@
     width: 1050px;
     left:250px;
     display: block;
-    height: 450px;
+    height: 44px;
     padding:20px;
 }
 #search_text{
     border: solid 1px rgb(151,151,151);
     border-radius: 5px;
 }
-#search_text_chosen{
-    border: solid 1px rgb(151,151,151);
-    border-radius: 5px;
+#factor_to_pie_btn{
+    weight:17px;
 }
+
 #allStocksDiv{
     position: absolute;
     top:10px;
@@ -45,18 +45,45 @@
     top:250px;
 }
 #diy_input1{
-    margin: 5px ;
-    width: 220px;
+    position: absolute;
+    left: 5px ;
+    top:112px;
+    width: 240px;
     color:#fff;
    /* line-height: 50px;/*行间距*/
     background-color: #8B8B7A;
     left:10px;
     display: block;
-    height: 500px;
+    height: 515px;
     border-radius: 5px 5px 5px 5px;
     -webkit-box-shadow: 0 10px 6px -6px #777;
     -moz-box-shadow: 0 10px 6px -6px #777;
     box-shadow: 0 10px 6px -6px #777;
+}
+#diy_input2{
+    position: absolute;
+    left: 10px ;
+    top:640px;
+    width: 240px;
+    color:#fff;
+    line-height: 25px;/*行间距*/
+    background-color: #8B8B7A;
+    display: block;
+    height: 350px;
+    border-radius: 5px 5px 5px 5px;
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    -moz-box-shadow: 0 10px 6px -6px #777;
+    box-shadow: 0 10px 6px -6px #777;
+}
+#pie_factors{
+    position: absolute;
+    left: 300px;
+    height:800px;
+    top:640px;
+}
+#analysebtn_diy{
+   position: absolute;
+    left:80px;
 }
 #chosenStockDiv{
     color:#000000;
@@ -74,11 +101,7 @@
     right: 150px;
 }
 
-#analysebtn_diy{
-    position: absolute;
-    top:300px;
-    right: 150px;
-}
+
 
 #input_text{
     margin-top: 2px;

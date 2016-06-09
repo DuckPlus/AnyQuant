@@ -1,14 +1,11 @@
 package service.impl.strategy;
 
 import DAO.BenchMarkDAO;
-import DAO.FactorDAO;
 import DAO.StockDataDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import util.MyDate;
-import vo.CumRtnVO;
 import vo.ReportVO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,8 +17,7 @@ public abstract class BaseStrategy  {
     StockDataDAO stockDataDAO;
     @Autowired
     BenchMarkDAO benchMarkDAO;
-    @Autowired
-    FactorDAO factorDAO;
+
     /**
      * 每手100股
      */
@@ -30,7 +26,13 @@ public abstract class BaseStrategy  {
     /**
      * 起始资金
      */
-    protected double capital = 100000;
+    protected double capital =0;
+
+
+    /**
+     * 当前剩余资金
+     */
+    protected double curCapital=0;
     /**
      * 交易费率
      */
@@ -102,17 +104,12 @@ public abstract class BaseStrategy  {
     protected double baseRtnRate;
 
     /**
-     * 每次调仓时的累积收益率
-     */
-    protected List<CumRtnVO> cumRtnVOList;
-
-
-    /**
      * 存储start--end间的交易日
      */
     protected MyDate[] validDates;
 
 
+    protected ReportVO reportVO;
 
     public BaseStrategy(){
 
@@ -122,6 +119,7 @@ public abstract class BaseStrategy  {
                         MyDate start , MyDate end){
 
         this.capital=capital;
+        this.curCapital=capital;
         this.taxRate=taxRate;
         this.baseCode=baseCode;
         this.start=start;
@@ -137,7 +135,7 @@ public abstract class BaseStrategy  {
         this.base_BuyPrice=0;
         this.base_SellPrice=0;
         this.baseRtnRate=0;
-        this.cumRtnVOList=new ArrayList<>();
+        this.reportVO=new ReportVO();
 
         this.computeValidDates();
 
@@ -168,12 +166,25 @@ public abstract class BaseStrategy  {
     public abstract ReportVO analyse();
 
     /**
+     * 抽象的买入方法
+     */
+    protected abstract  void buyStocks();
+
+    /**
+     * 抽象的卖出方法
+     */
+    protected abstract  void sellStocks();
+
+    /**
      * 计算利润
      * @return
      */
     public double computeCumRtnRate(){
-        profit=income-expense-tax;
-        cumRtnRate=profit/expense;
+        this.profit=income-expense-tax;
+        this.cumRtnRate=profit/expense;
+
+        System.out.println("income: " +this.income+"  "+"expense: "+this.expense+"  "+"tax: "+this.tax);
+        System.out.println("profit: " +this.profit+"  "+"cumRtnRate: "+this.cumRtnRate);
         return cumRtnRate;
 
     }
@@ -187,14 +198,13 @@ public abstract class BaseStrategy  {
 
     public ReportVO simpleAnalyse(){
         init();
+        this.reportVO = new ReportVO();
         for(int i=interval;i<this.validDates.length;i+=interval){
             curTradeDay=this.validDates[i];
             System.out.println("handle "+i+"th day date: "+curTradeDay.DateToString());
             this.handleData();
         }
-        ReportVO reportVO = new ReportVO();
-        reportVO.cumRtnVOList=this.cumRtnVOList;
-
+        this.sellStocks();
         return reportVO;
     }
 

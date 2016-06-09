@@ -1,9 +1,96 @@
 /**
  * Created by Adsn on 2016/5/27.
  */
+var chart1;
+function initpie_factor(){
+    var dataArray= [
+        ['市盈率',5],
+        [ '市净率',5],
+        [ '5日换手率',5],
+        [ '10日换手率',5],
+        [ '60日换手率',5],
+        [ '120日换手率',5],
+        [ '市销率',5],
+        [ '市现率',5]
+    ];
+    chart1 = new Highcharts.Chart({
+        colors:['#54FF9F','#46cbee', '#fec157','#CD96CD', '#cfd17d', '#4F94CD', '#FF9655', '#FFF263', '#FF6A6A'] ,//不同组数据的显示背景色，循环引用
+        chart: {
+            width:500,
+            height:300,
+            renderTo: 'pie_factors',//画布所在的div id
+            // plotBackgroundColor: '#f5f2ec',//画布背景色
+            plotBorderWidth: null,//画布边框
+            plotShadow: false,
+            margin:[0,0,0,0]//画布外边框
+        },
+        title: {
+            text: ''//画布题目，此处置空
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                size:'90%',
+                dataLabels: {
+                    enabled: true,
+                    color: '#666666',
+                    connectorWidth: 1,
+                    //distance: 3,
+                    connectorColor: '#666666',
+                    style:{fontSize:'12px',fontWeight:'normal'},
+                    formatter: function() {
+                        return  this.point.name+ Math.round(this.percentage,2) +' %';
+                    }
+                },
+            }
+        },
+        exporting: {
+            buttons: {
+                exportButton: {
+                    enabled:false //不显示导出icon
+                },
+                printButton: {
+                    enabled:false //不显示打印icon
+                }
+            }
+        },
+        credits:{
+            enabled:false//不显示highcharts网址
+        },
+        tooltip:{
+            enabled:false
+        },
+        series: [{
+            type: 'pie',
+            name: '',
+            data: dataArray
+        }]
+    });
+    /*实时监听因子权重改变*/
+    if(/msie/i.test(navigator.userAgent)){//ie浏览器
+        document.getElementById('pe_text').onpropertychange=redrawpie;
+    }else {//非ie浏览器，比如Firefox
+        document.getElementById('pe_text').addEventListener("onpropertychange",redrawpie, true);
+    }
+}
+function redrawpie(){
+    dataArray=[
+        ['市盈率',parseInt($('#pe_text').val())],
+        [ '市净率',parseInt($('#pb_text').val())],
+        [ '5日换手率',parseInt($('#vol5_text').val())],
+        [ '10日换手率',parseInt($('#vol10_text').val())],
+        [ '60日换手率',parseInt($('#vol60_text').val())],
+        [ '120日换手率',parseInt($('#vol120_text').val())],
+        [ '市销率',parseInt($('#ps_text').val())],
+        [ '市现率',parseInt($('#pcf_text').val())]
+    ];
+    this.chart1.series[0].setData(dataArray);
+    this.chart1.series[0].redraw();
+}
 function initLine(data){
     var boardData=[],benchData=[],length=data.length;
-  
+
     for(var i=0;i<length;i++){
         var date=data[i].date;
         boardData[i]=[
@@ -98,7 +185,7 @@ function chooseStrategy(){
         $("#basecode_label").hide();
         $("#basecode").hide();
     }
-    
+
     if(strategy=="Strategy_VOL"){//TODO 这两个策略的参数差别的fake哒~
         $("#basecode_label").show();
         $("#basecode").show();
@@ -114,6 +201,7 @@ $(document).ready(function () {
         initBaseCode(data);
     });
     initChosenList();
+    initpie_factor();
     $.ajax({
         type:'post',
         url:'/Stock/getStockDataList',
@@ -191,28 +279,34 @@ function refreshChosenList(data) {
     var code=data.split("&")[1];
     var name=data.split("&")[0];
     var t_chosen=$("#chosenStocks").DataTable();
-    t_chosen.row.add([
-        name,
-        code
-    ]).draw();
+    if(name!="undefined"){
+        t_chosen.row.add([
+            name,
+            code
+        ]).draw();
+    }
+
 }
 function refreshAllList(data){
     var args=[];
     var code=data.split("&")[1];
     var name=data.split("&")[0];
-    var arg={};//TODO
-    var item = new Object();
-    item.name = name;
-    item.code = code;
-    var json_item = JSON.stringify(item);
-    // alert("--->"+json_item);
-    arg["name"]=name;
-    arg["code"]=code;
-    args.push(arg);
-    var jsonString =JSON.stringify(args);
-    var t_all=$("#allstock_list").DataTable();
-    var temp = eval("("+json_item+")");
-    t_all.row.add(temp).draw();
+    var arg={};
+    if(name!="undefined"){
+        var item = new Object();
+        item.name = name;
+        item.code = code;
+        var json_item = JSON.stringify(item);
+        // alert("--->"+json_item);
+        arg["name"]=name;
+        arg["code"]=code;
+        args.push(arg);
+        var jsonString =JSON.stringify(args);
+        var t_all=$("#allstock_list").DataTable();
+        var temp = eval("("+json_item+")");
+        t_all.row.add(temp).draw();
+    }
+
 }
 function initChosenList(){
     var table = $('#chosenStocks').DataTable( {
@@ -220,7 +314,7 @@ function initChosenList(){
         lengthChange:false,
         pageLength:5,
         dom: 'lrtip',
-        
+
         "autoWidth":false,
         "oLanguage": {
             "sProcessing": "疯狂加载数据中.",
@@ -253,7 +347,7 @@ function initChosenList(){
         refreshAllList(arg);
         table.row('.selected').remove().draw(false);
     } );
-    
+
 }
 function init_region_bar(data) {
     $('#chart1').highcharts({

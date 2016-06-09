@@ -23,4 +23,14 @@ public class SingleStockStrategy extends BaseStrategy {
     public ReportVO analyse() {
         return null;
     }
+
+    @Override
+    protected void buyStocks() {
+
+    }
+
+    @Override
+    protected void sellStocks() {
+
+    }
 }

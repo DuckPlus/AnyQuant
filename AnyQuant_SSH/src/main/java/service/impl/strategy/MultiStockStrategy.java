@@ -86,7 +86,7 @@ public abstract class MultiStockStrategy extends BaseStrategy {
         double [] temp=stockDataDAO.getAvgPriceByCodes(stocks,curTradeDay);
 //        System.out.println("temp.size()"+temp.length);
 //        System.out.println(" get sell_Prices"+sell_Prices);
-        sell_Prices= new double[vol];
+          sell_Prices= new double[vol];
         for(int i=0;i<temp.length;i++){
             /**
              * 如果买入价格是0，说明数据出错，
@@ -131,7 +131,7 @@ public abstract class MultiStockStrategy extends BaseStrategy {
          * 向结果链表中添加一个元素
          */
         CumRtnVO vo = new CumRtnVO(baseRtnRate,cumRtnRate,curTradeDay);
-        this.cumRtnVOList.add(vo);
+        this.reportVO.cumRtnVOList.add(vo);
     }
 
 
