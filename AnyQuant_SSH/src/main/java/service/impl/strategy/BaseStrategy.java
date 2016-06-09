@@ -174,6 +174,7 @@ public abstract class BaseStrategy  {
     public double computeCumRtnRate(){
         profit=income-expense-tax;
         cumRtnRate=profit/expense;
+        System.out.println("profit: " +this.profit+"  "+"expense: "+this.expense);
         return cumRtnRate;
 
     }

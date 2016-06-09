@@ -1,9 +1,11 @@
 package service.impl.strategy;
 
 import entity.FactorEntity;
+import org.springframework.stereotype.Service;
 import service.helper.MathHelper;
 import util.MyDate;
 import util.enumration.AnalysisFactor;
+import vo.CumRtnVO;
 import vo.ReportVO;
 
 import java.util.*;
@@ -15,6 +17,7 @@ import java.util.*;
  * @author Qiang
  * @date 6/5/16
  */
+@Service
 public class FactorStrategy extends MultiStockStrategy {
 
     /**
@@ -32,6 +35,14 @@ public class FactorStrategy extends MultiStockStrategy {
      * 投资比重
      */
     double [] investWeight;
+
+    List<String> curStocks;
+
+    int numOfLevel;
+    /**
+     * 每层的股票数
+     */
+    int gap;
 
     /**
      * 交易当天的股票因子数据
@@ -61,6 +72,9 @@ public class FactorStrategy extends MultiStockStrategy {
         this.weightedFactors=weightedFactors;
         this.investWeight=investWeight;
         this.interval=interval;
+        this.numOfLevel=investWeight.length;
+        this.gap=stocks.size()/numOfLevel; //每一层的股票数量
+        this.curStocks=new ArrayList<>();
 
         this.vol=stocks.size();
         this.lots=new int [vol];
@@ -71,39 +85,162 @@ public class FactorStrategy extends MultiStockStrategy {
 
 
 
-
+    /**
+     *
+     */
     @Override
     public void init() {
-
-        curTradeDay=validDates[0];
-
-        buyStocks();
+        System.out.println("Strategy_Factor init-------");
+        this.curTradeDay=validDates[0];
+        this.buyStocks();
 
     }
 
+    /**
+     * 调仓日首先平仓，再购买
+     */
     @Override
     public void handleData() {
-
+        sellStocks();
+        buyStocks();
     }
 
     @Override
     public ReportVO analyse() {
-        return null;
+
+        return this.simpleAnalyse();
     }
 
 
+    /**
+     * 先按照因子比重计算股票池中的各个股票的finalFactor
+     * 将股票池按照 finalFactor 排序，分层
+     * 每层根据投资比重的进行买入，每只股票分配的钱相同
+     */
     @Override
     protected void buyStocks() {
 
-        this.curFactorEntities = new ArrayList<>();
+        this.curFactorEntities=this.factorDAO.getFactorAtDate(stocks,curTradeDay);
+        List<Map.Entry<String,Double>>  tempMap = getSortedFinal_Factors(curFactorEntities);
+        /**
+         * 将股票池换成按照综合因子排序后的列表
+         */
+        this.stocks = new ArrayList<>();
+        for(int i=0;i<tempMap.size();i++){
+            stocks.add(tempMap.get(i).getKey());
+            System.out.print(tempMap.get(i).getKey()+"  "+tempMap.get(i).getValue());
+        }
 
 
+        /**
+         * 获取每只股票交易日当天的均价（总交易额/总交易量）
+         * 因为可能会出现返回值不足vol个数据，因此先补充0，再赋值
+         */
+        double [] temp=stockDataDAO.getAvgPriceByCodes(stocks,curTradeDay);
+        buy_Prices= new double[vol]; //这里讲买入价格全设为0
+        for(int i=0;i<temp.length;i++){
+            buy_Prices[i]=temp[i];
+        }
+
+        /**
+         * 遍历各个层
+         */
+        for(int i=0;i<numOfLevel;i++){
+            double expensePerStock = capital*investWeight[i]/(double)gap;
+
+            System.out.println("该层分配："+capital*investWeight[i]);
+            System.out.println("该层个数："+gap);
+            System.out.println("每股分配："+expensePerStock);
+
+            /**
+             * 对于每一层：
+             * 确定每只股票买入的手数
+             * 并记录花费
+             */
+            for(int j=i*gap;j<(i+1)*gap;j++){
+                    /**
+                     * 如果买入价格为0，就忽略该股票
+                     * 把买入手数设为0
+                     */
+                    if(buy_Prices[j]==0){
+                        lots[j]=0;
+                    }else{
+                        lots[j]= (int) (expensePerStock/(buy_Prices[i]*stocksPerLot));
+                    }
+                    System.out.println("buy "+stocks.get(j)+" "+lots[j]*stocksPerLot+" at price: "+buy_Prices[j]);
+                    expense+=lots[j]*stocksPerLot*buy_Prices[j];
+            }
+
+        }
+
+        /**
+         * 记录当日的指数价格
+         */
+        base_BuyPrice=benchMarkDAO.getAvgPrice(this.baseCode,curTradeDay);
 
     }
 
+
+    /**
+     * 简单平仓
+     */
     @Override
     protected void sellStocks() {
 
+        /**
+         * 获取当日的股票池的均价
+         */
+        double [] temp=stockDataDAO.getAvgPriceByCodes(stocks,curTradeDay);
+//        System.out.println("temp.size()"+temp.length);
+//        System.out.println(" get sell_Prices"+sell_Prices);
+          sell_Prices= new double[vol];
+        for(int i=0;i<stocks.size();i++){
+            /**
+             * 如果买入价格是0，说明数据出错，
+             * 将卖出价格也设为0，从而忽略这只股票
+             */
+            if(buy_Prices[i]!=0){
+
+                /**
+                 * 如果卖出价格为0而买入不为0,说明数据出错，
+                 * 把卖出价格设为买入价，从而忽略这只股票
+                 */
+                if(temp[i]==0){
+                    sell_Prices[i]=buy_Prices[i];
+                }else{
+                    sell_Prices[i]=temp[i];
+                }
+
+            }
+
+        }
+
+        for(int i=0;i<stocks.size();i++){
+            System.out.println("sell "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+sell_Prices[i]);
+            income+=sell_Prices[i]*lots[i]*stocksPerLot;
+            tax+=sell_Prices[i]*lots[i]*stocksPerLot*taxRate;
+        }
+        System.out.println("income: "+income);
+
+        //stocks.clear();
+
+        /**
+         * 计算测试股票的累计收益率
+         */
+//        profit=income-expense-tax;
+//        cumRtnRate=profit/expense;
+        computeCumRtnRate();
+        /**
+         * 计算测试指数的累计收益率
+         */
+//        base_SellPrice=benchMarkDAO.getAvgPrice(this.baseCode,curTradeDay);
+//        baseRtnRate+=(base_SellPrice-base_BuyPrice-base_SellPrice*taxRate)/base_BuyPrice;
+        computeBaseRtnRate();
+        /**
+         * 向结果链表中添加一个元素
+         */
+        CumRtnVO vo = new CumRtnVO(baseRtnRate,cumRtnRate,curTradeDay);
+        this.cumRtnVOList.add(vo);
     }
 
 
@@ -112,7 +249,7 @@ public class FactorStrategy extends MultiStockStrategy {
      * @param factorEntities  交易日当天的股票池中各个股票的因子数据
      * @return  各个股票及其综合因子
      */
-    private Map<String,Double>  computeValidFactors(List<FactorEntity> factorEntities){
+    public  List<Map.Entry<String,Double>>  getSortedFinal_Factors(List<FactorEntity> factorEntities){
         Map<String,Double>  resultMap = new HashMap<String,Double>();
         double [] PEs = new double[0];   double avg_pe=0; double svar_pe=0;
         double [] PBs= new double[0];    double avg_pb=0; double svar_pb=0;
@@ -324,17 +461,13 @@ public class FactorStrategy extends MultiStockStrategy {
             resultMap.put(factorEntities.get(i).getCode(),final_Factor);
         }
 
-
-
-
-
-        return new HashMap<>();
+        return sortMap(resultMap);
     }
 
 
     private List<Map.Entry<String,Double>> sortMap(Map<String,Double> map){
         List<Map.Entry<String,Double>> result = new ArrayList<>(map.entrySet());
-        result.sort( (c1 ,c2) -> Double.compare(c1.getValue() , c2.getValue()));
+        result.sort( (c1 ,c2) -> Double.compare(c2.getValue() , c1.getValue()));
         return  result;
     }
 
