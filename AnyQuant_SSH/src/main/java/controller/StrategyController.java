@@ -58,7 +58,7 @@ public class StrategyController {
      * taxRate - 交易费率<br>
      * baseCode - 基准大盘<br>
      * interval - 调仓间隔<br>
-     *
+     * investWeight - 仓位控制<br>
      * @return analysis report
      */
     @RequestMapping(value = "/analyseWithFactor", method = RequestMethod.POST)
@@ -72,9 +72,9 @@ public class StrategyController {
         double taxRate = argument.getDouble("taxRate");
         String baseCode = argument.getString("baseCode");
         int interval = argument.getInt("interval");
+        double[] investWeight = Arrays.stream(argument.getString("investWeight").split(Configure.STOCK_SPLITER)).mapToDouble(Double::parseDouble).toArray();
 
-
-        return service.analyseWithFactor(stockCodes, start, end, factorWeight, capital, taxRate, baseCode, interval);
+        return service.analyseWithFactor(stockCodes, start, end, factorWeight, capital, taxRate, baseCode, interval , investWeight);
     }
 
     /**

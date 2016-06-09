@@ -36,9 +36,10 @@ public interface StrategyService {
      * @param taxRate      交易费率
      * @param baseCode     基准大盘
      * @param interval     调仓间隔
+     * @param investWeight 仓位控制
      * @return analysis report
      */
-    ReportVO analyseWithFactor(List<String> codes, MyDate start, MyDate end, Map<String, Double> factorWeight, int capital, double taxRate, String baseCode, int interval);
+    ReportVO analyseWithFactor(List<String> codes, MyDate start, MyDate end, Map<String, Double> factorWeight, int capital, double taxRate, String baseCode, int interval, double[] investWeight);
 
     /**
      * Strategy VOL
