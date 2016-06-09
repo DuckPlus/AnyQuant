@@ -50,7 +50,7 @@ public class StrategyController {
     /**
      * FactorAnalysis
      * 因子分析<br>
-     * codes - 股票池<br>
+     * codes - 股票池,用逗号隔开的字符串<br>
      * start - 起始日期<br>
      * end - 结束日期<br>
      * factorWeight - 因子及其对应的权重<br>

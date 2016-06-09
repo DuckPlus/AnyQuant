@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.StockAnalyseService;
 import service.StockService;
-import service.helper.FactorEvaluationHelper;
+import service.impl.Analysis.FactorEvaluationHelper;
 import service.helper.StockHelper;
 import util.Configure;
 import util.DateCalculator;

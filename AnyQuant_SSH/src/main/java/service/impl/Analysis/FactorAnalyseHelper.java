@@ -1,4 +1,4 @@
-package service.helper;
+package service.impl.Analysis;
 
 import DAO.BenchMarkDAO;
 import DAO.FactorDAO;
@@ -8,6 +8,9 @@ import entity.FactorEntity;
 import entity.StockdataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import service.helper.AnalysisAlgorithm;
+import service.helper.MathHelper;
+import service.helper.StockHelper;
 import util.DateCalculator;
 import util.MyDate;
 import util.ReflectHelper;
