@@ -1,0 +1,106 @@
+#loginModule{
+    border:solid 0 #000;
+    padding: 0;
+    /*background-color: #00a1cb;*/
+}
+
+#login_frame{
+    background-color: #3c3c3c;
+    height: 300px;
+    width: 500px;
+    /*border:solid 1px transparent;*/
+    border-radius: 10px;
+    float: left;
+    margin-top:100px;
+}
+#user_icon{
+    height: 140px;
+    /*background-color: #1B9AF7;*/
+}
+#account_with_icon,#password_with_icon{
+    /*background-color: chocolate;*/
+    width: 80%;
+    height: 50px;
+    margin-left:auto;
+    margin-right: auto;
+    /*border:solid 1px #000;*/
+}
+
+
+#username,#password{
+    /*background-color: #1abc9c;*/
+    color: #fff;
+    font-size: 20px;
+    float: left;
+    height:40px;
+    width: 80%;
+    background-color: transparent;
+    outline: none;
+    border: solid 0 #000;
+    border-bottom:solid 1px rgb(151,151,151);
+    margin-top:5px;
+    margin-left: 10px;
+}
+#username:focus,#password:focus{
+    /*border-bottom-color: #2f21d4;*/
+    border-bottom: 2px solid #8f7758;
+    -webkit-transition: border-bottom-color .3s;
+}
+#account_icon,#password_icon{
+    float: left;
+    width:40px;
+    margin-top:10px;
+}
+#login_regist{
+    background-color: chocolate;
+    margin-top:20px;
+}
+#login_btn{
+    color: white;
+    height: 15%;
+    width: 80%;
+    background-color: #00CC99;
+    margin-left:0;
+    border: solid 0;
+    float: left;
+    border-bottom-left-radius: 10px;
+    font-size: 25px;
+    font-family: "PingFang SC";
+    font-weight: 100;
+    outline: none;
+    cursor: pointer;
+    -webkit-transition: background-color .3s;
+}
+#login_btn:hover{
+    background-color: #00dca9;
+    -webkit-transition: background-color .3s;
+}
+#login_btn:active{
+    background-color: #00a373;
+    -webkit-transition: background-color .3s;
+}
+#regist_btn{
+    color: white;
+    cursor: pointer;
+    height: 15%;
+    width: 20%;
+    background-color: darkred;
+    float: left;
+    border-bottom-right-radius: 10px;
+    font-size: 25px;
+    text-align: center;
+    line-height: 40px;
+    font-family: "PingFang SC";
+    font-weight: 100;
+    outline: none;
+    border: 0;
+    -webkit-transition: background-color .3s;
+}
+#regist_btn:hover{
+    background-color: #da0000;
+    -webkit-transition: background-color .3s;
+}
+#regist_btn:active{
+    background-color: #810000;
+    -webkit-transition: background-color .3s;
+}

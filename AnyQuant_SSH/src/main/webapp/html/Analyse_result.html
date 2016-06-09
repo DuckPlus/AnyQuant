@@ -67,19 +67,63 @@
 <div id="main_content">
     <div id="title_result">
         <img src="/image/test_icon.png" alt="回测结果" id="title_result_icon">
-        <div id="title_result_content">回测结果</div>
+        <div id="title_result_content" class="light_font">回测结果</div>
     </div>
 
     <div id="used_params">
         <div id="params_left_part">
-            <!--TODO-->
+            <div id="start_fund_item">
+                <div id="param_title_box" class="light_font">
+                    <div class="param_title">起始资金</div>
+                    <div class="param_title">回测起始时间</div>
+                    <div class="param_title">回测结束时间</div>
+                    <div class="param_title">交易费率</div>
+                    <div class="param_title">基准大盘</div>
+                    <div class="param_title">调仓间隔</div>
+                </div>
+
+                <div id="param_value_box" class="light_font">
+                    <div id="start_fund" class="param_value">1000w</div>
+                    <div id="begin_time" class="param_value">2015-01-01</div>
+                    <div id="end_time" class="param_value">2015-12-01</div>
+                    <div id="trade_rate" class="param_value">0.04%</div>
+                    <div id="base_bench" class="param_value">上证180</div>
+                    <div id="interval" class="param_value">7日</div>
+                </div>
+            </div>
         </div>
 
-        <div id="factor_weight"></div>
-        <div id="stock_pool"></div>
+
+        <div id="factor_weight">
+            <table id="factor_weight_table" class="display">
+                <thead>
+                <tr>
+                    <th>因子</th>
+                    <th>权重</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="stock_pool">
+            <table id="stock_pool_table" class="display">
+                <thead>
+                <tr>
+                    <th>股票名称</th>
+                    <th>股票代码</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-
+    <div id="compare_chart"></div>
 </div>
 
 </body>
