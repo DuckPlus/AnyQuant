@@ -8,9 +8,10 @@
     <link rel="stylesheet" type="text/css" href="/css/Analyse.css">
     <link rel="stylesheet" href="/css/window.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
-
+    <link rel="stylesheet" type="text/css" href="/css/loadingbar.css" />
     <title>Duck 回测参数配置</title>
     <meta charset="UTF-8">
+    <script src="/js/loadingbar.js"></script>
     <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="http://www.sunsean.com/idTabs/jquery.idTabs.min.js"></script>
     <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
@@ -148,7 +149,7 @@
     <div id="tab2" style="display: none; ">
         <div id="analyseDiv">
             <span id="diy_input1"><!--第一块输入区，股票池，起止日期-->
-                <br><h1>参数Part1</h1>
+                <h1>参数Part1</h1>
 
                 <div class="demo" >
                     起始<input type="text" id="start_diy"value="2016-6-1" readonly style="height:16px" />
@@ -194,13 +195,31 @@
                         </tfoot>
 
                     </table>
+                    <div id="loading" class="loading">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <p>股票数据加载中。。。</p>
+                </div>
                 </span>
                 <span id="chart1"></span>
                 <span id="chart2"></span>
                 <span id="chart3"></span>
                 <span id="chart4"></span>
             </span>
+            <span id="diy_input2"><!--第一块输入区，股票池，起止日期-->
+                <h1>参数Part2</h1>
 
+                <button id="analysebtn_diy" class="button button-glow button-rounded button-raised button-primary" onclick="factorAnalyse()" >
+                    开始回测
+                </button>
+            </span>
         </div>
 
         </div>

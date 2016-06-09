@@ -45,18 +45,41 @@
     top:250px;
 }
 #diy_input1{
-    margin: 5px ;
+    position: absolute;
+    left: 5px ;
+    top:112px;
     width: 220px;
     color:#fff;
    /* line-height: 50px;/*行间距*/
     background-color: #8B8B7A;
     left:10px;
     display: block;
-    height: 500px;
+    height: 515px;
     border-radius: 5px 5px 5px 5px;
     -webkit-box-shadow: 0 10px 6px -6px #777;
     -moz-box-shadow: 0 10px 6px -6px #777;
     box-shadow: 0 10px 6px -6px #777;
+}
+#diy_input2{
+    position: absolute;
+    left: 1700px ;
+    top:700px;
+    width: 600px;
+    color:#fff;
+    /* line-height: 50px;/*行间距*/
+    background-color: #8B8B7A;
+    left:100px;
+    display: block;
+    height: 300px;
+    border-radius: 5px 5px 5px 5px;
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    -moz-box-shadow: 0 10px 6px -6px #777;
+    box-shadow: 0 10px 6px -6px #777;
+}
+#analysebtn_diy{
+    position: absolute;
+    left: 800px ;
+    top:500px;
 }
 #chosenStockDiv{
     color:#000000;
