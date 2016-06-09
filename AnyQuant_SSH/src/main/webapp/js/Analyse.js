@@ -151,7 +151,7 @@ function initTable_all(allStock) {
         dom: 'lrtp',
         columns:[
             {data:'name'},
-            {data:'code'},
+            {data:'code'}
         ],
         "autoWidth":false,
         "oLanguage": {
@@ -188,8 +188,8 @@ function initTable_all(allStock) {
     } );
 }
 function refreshChosenList(data) {
-    var code=data.split("&")[0];
-    var name=data.split("&")[1];
+    var code=data.split("&")[1];
+    var name=data.split("&")[0];
     var t_chosen=$("#chosenStocks").DataTable();
     t_chosen.row.add([
         name,
@@ -198,21 +198,25 @@ function refreshChosenList(data) {
 }
 function refreshAllList(data){
     var args=[];
-    var code=data.split("&")[0];
-    var name=data.split("&")[1];
+    var code=data.split("&")[1];
+    var name=data.split("&")[0];
     var arg={};//TODO
+    var item = new Object();
+    item.name = name;
+    item.code = code;
+    var json_item = JSON.stringify(item);
+    // alert("--->"+json_item);
     arg["name"]=name;
     arg["code"]=code;
     args.push(arg);
     var jsonString =JSON.stringify(args);
-    
     var t_all=$("#allstock_list").DataTable();
-    alert(jsonString);
-    t_all.row.add(jsonString).draw();
+    var temp = eval("("+json_item+")");
+    t_all.row.add(temp).draw();
 }
 function initChosenList(){
     var table = $('#chosenStocks').DataTable( {
-        "order":[[1,"asc"]],
+        order:[[1,"asc"]],
         lengthChange:false,
         pageLength:5,
         dom: 'lrtip',
@@ -246,7 +250,7 @@ function initChosenList(){
         var code= table.cell(selected_row,1).data();
         var name=table.cell(selected_row,0).data();
         var arg=name+"&"+code;
-        refreshAllList(arg)
+        refreshAllList(arg);
         table.row('.selected').remove().draw(false);
     } );
     
