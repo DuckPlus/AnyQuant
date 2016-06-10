@@ -9,6 +9,7 @@ var taxRate,numOfStock,interval,startT,endT;
 var factorSum=0;
 var codes=[];//股票池
 var peNum=0,pbNum=0,vol5Num=0,vol10Num=0,vol60Num=0,vol120Num=0,psNum=0,pcfNum=0;//各因子权重
+var content_of_analyse_factor_info;
 function doAnalyse_diy(){
     var code_raw=table_chosen.data();
 
@@ -99,17 +100,16 @@ function factorAnalyse(){//分析因子
     
     for(var i=0;i<code_raw.length;i++){
         codes[i]=code_raw[i][1];
-    }alert("DIY"+
-        "\n选择的大盘代号："+basecode+
-        "\n起止时间："+startT+"~"+endT+
-        "\n股票池："+codes);
+    }
+    content_of_analyse_factor_info=document.getElementById("factor_analyse_info_label").innerHTML;
+    document.getElementById("factor_analyse_info_label").innerHTML="计算中。。";
     $.getJSON('/Strategy/getStocksFactorJudgment?'+'codes='+codes+'&start='+startT+'&end='+endT
         +'&baseBench='+basecode,
         function (data) {
             $("#allStocksDiv").remove();
             init_bar(data);
         });
-    
+
     
 
 }
@@ -118,7 +118,7 @@ function initTable_all(allStock) {
         data:allStock,
         "order":[[1,"asc"]],
         lengthChange:false,
-        pageLength:10,
+        pageLength:9,
         dom: 'lrtp',
         columns:[
             {data:'name'},
@@ -266,7 +266,6 @@ function init_bar(data) {
             }
         },
         yAxis: {
-            min: 0,
             title: {
                 text: ''
             }
@@ -308,7 +307,6 @@ function init_bar(data) {
             }
         },
         yAxis: {
-            min: 0,
             title: {
                 text: ''
             }
@@ -350,7 +348,6 @@ function init_bar(data) {
             }
         },
         yAxis: {
-            min: 0,
             title: {
                 text: ''
             }
@@ -402,7 +399,6 @@ function init_bar(data) {
             }
         },
         yAxis: {
-            min: 0,
             title: {
                 text: ''
             }
@@ -424,6 +420,7 @@ function init_bar(data) {
             enabled:false
         }
     });
+    document.getElementById("factor_analyse_info_label").innerHTML="~现在你可以参考着配置因子啦^o^";
 }
 function chooseStrategy(){
     var strategy=document.getElementById("strategy").value;
@@ -435,8 +432,8 @@ function chooseStrategy(){
         // $("#basecode_label").show();
     }
 }
-function initpie_factor(){
-    var dataArray= [
+function initpie(){
+    var dataArrayF= [
         ['市盈率',5],
         [ '市净率',5],
         [ '5日换手率',5],
@@ -446,11 +443,18 @@ function initpie_factor(){
         [ '市销率',5],
         [ '市现率',5]
     ];
+    var dataArrayM= [
+        [ '1档位',5],
+        [ '2档位',5],
+        [ '3档位',5],
+        [ '4档位',5],
+        [ '5档位',5]
+    ];
     chart1 = new Highcharts.Chart({
         colors:['#54FF9F','#46cbee', '#fec157','#CD96CD', '#cfd17d', '#4F94CD', '#FF9655', '#FFF263', '#FF6A6A'] ,//不同组数据的显示背景色，循环引用
         chart: {
-            width:500,
-            height:500,
+            width:450,
+            height:450,
             renderTo: 'pie_factors',//画布所在的div id
             // plotBackgroundColor: '#f5f2ec',//画布背景色
             plotBorderWidth: null,//画布边框
@@ -497,17 +501,65 @@ function initpie_factor(){
         series: [{
             type: 'pie',
             name: '',
-            data: dataArray
+            data: dataArrayF
         }]
     });
-    /*实时监听因子权重改变*/
-    if(/msie/i.test(navigator.userAgent)){//ie浏览器
-        document.getElementById('pe_text').onpropertychange=redrawpie;
-    }else {//非ie浏览器，比如Firefox
-        document.getElementById('pe_text').addEventListener("onpropertychange",redrawpie, true);
-    }
+    chart2 = new Highcharts.Chart({
+        colors:['#54FF9F','#46cbee', '#fec157','#CD96CD', '#cfd17d', '#4F94CD', '#FF9655', '#FFF263', '#FF6A6A'] ,//不同组数据的显示背景色，循环引用
+        chart: {
+            width:450,
+            height:450,
+            renderTo: 'pie_money',//画布所在的div id
+            // plotBackgroundColor: '#f5f2ec',//画布背景色
+            plotBorderWidth: null,//画布边框
+            plotShadow: false,
+            margin:[0,120,0,120]//画布外边框
+        },
+        title: {
+            text: ''//画布题目，此处置空
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                size:'90%',
+                dataLabels: {
+                    enabled: true,
+                    color: '#666666',
+                    connectorWidth: 1,
+                    //distance: 3,
+                    connectorColor: '#666666',
+                    style:{fontSize:'12px',fontWeight:'normal'},
+                    formatter: function() {
+                        return  this.point.name+ Math.round(this.percentage,2) +' %';
+                    }
+                },
+            }
+        },
+        exporting: {
+            buttons: {
+                exportButton: {
+                    enabled:false //不显示导出icon
+                },
+                printButton: {
+                    enabled:false //不显示打印icon
+                }
+            }
+        },
+        credits:{
+            enabled:false//不显示highcharts网址
+        },
+        tooltip:{
+            enabled:false
+        },
+        series: [{
+            type: 'pie',
+            name: '',
+            data: dataArrayM
+        }]
+    });
 }
-function redrawpie(){
+function redrawpie_factor(){
     dataArray=[
         ['市盈率',parseInt($('#pe_text').val())],
         [ '市净率',parseInt($('#pb_text').val())],
@@ -520,6 +572,17 @@ function redrawpie(){
     ];
     this.chart1.series[0].setData(dataArray);
     this.chart1.series[0].redraw();
+}
+function redrawpie_money(){
+    dataArray=[
+        ['1档位',parseInt($('#level1').val())],
+        [ '2档位',parseInt($('#level2').val())],
+        [ '3档位',parseInt($('#level3').val())],
+        [ '4档位',parseInt($('#level4').val())],
+        [ '5档位',parseInt($('#level5').val())]
+    ];
+    this.chart2.series[0].setData(dataArray);
+    this.chart2.series[0].redraw();
 }
 function initBaseCode(data){
     var listA=document.getElementById("basecode");
@@ -537,7 +600,7 @@ $(document).ready(function () {
         initBaseCode(data);
     });
     initChosenList();
-    initpie_factor();
+    initpie();
     $.getJSON('/Stock/getStockDataList',function (data) {
         initTable_all(data);
         $("#loading").hide();

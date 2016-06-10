@@ -193,7 +193,7 @@
                     分析因子表现
                 </button>
                 <br><br>
-                <div>大概要5秒钟左右请耐心等待~^-^</div>
+                <div id="factor_analyse_info_label">分析因子表现<br>大概要5秒钟左右请耐心等待~^-^</div>
             </span>
             <span id="analyseCharts"><!--各因子的4个图-->
                 <span id="allStocksDiv">
@@ -212,6 +212,7 @@
                         </tfoot>
 
                     </table>
+                    <br><br><br>
                     <div id="loading" class="loading">
                     <span></span>
                     <span></span>
@@ -292,33 +293,33 @@
                 <div class="up_line"><b>因子权重配置</b><b id="investweight_title">仓位分配</b>
                     <table>
                     <tr>
-                        <td>市盈率:</td><td><input type="text" value="5" id="pe_text" onchange=redrawpie();></td>
+                        <td>市盈率:</td><td><input type="text" value="5" id="pe_text" onchange=redrawpie_factor();></td>
                    <tr>
-                        <td>市净率:</td><td><input type="text" value="5" id="pb_text" onchange=redrawpie();></td></tr>
+                        <td>市净率:</td><td><input type="text" value="5" id="pb_text" onchange=redrawpie_factor();></td></tr>
                     <tr>
-                        <td>5日换手率:</td><td><input type="text" value="5" id="vol5_text" onchange=redrawpie();></td></tr>
+                        <td>5日换手率:</td><td><input type="text" value="5" id="vol5_text" onchange=redrawpie_factor();></td></tr>
                     <tr>
-                        <td>10日换手率:</td><td><input type="text" value="5" id="vol10_text" onchange=redrawpie();></td></tr>
+                        <td>10日换手率:</td><td><input type="text" value="5" id="vol10_text" onchange=redrawpie_factor();></td></tr>
                     <tr>
-                        <td>60日换手率:</td><td><input type="text" value="5" id="vol60_text" onchange=redrawpie();></td></tr>
+                        <td>60日换手率:</td><td><input type="text" value="5" id="vol60_text" onchange=redrawpie_factor();></td></tr>
                     <tr>
-                        <td>120日换手率:</td><td><input type="text" value="5" id="vol120_text" onchange=redrawpie();></td></tr>
+                        <td>120日换手率:</td><td><input type="text" value="5" id="vol120_text" onchange=redrawpie_factor();></td></tr>
                     <tr>
-                        <td>市销率:</td><td><input type="text" value="5" id="ps_text" onchange=redrawpie();></td></tr>
+                        <td>市销率:</td><td><input type="text" value="5" id="ps_text" onchange=redrawpie_factor();></td></tr>
                     <tr>
-                        <td>市现率:</td><td><input type="text" value="5" id="pcf_text" onchange=redrawpie();></td></tr>
+                        <td>市现率:</td><td><input type="text" value="5" id="pcf_text" onchange=redrawpie_factor();></td></tr>
                 </table>
                     <table id="level_input">
                     <tr>
-                        <td>级别1:</td><td><input type="text" value="5" id="level1" ></td>
+                        <td>1档位:</td><td><input type="text" value="5" id="level1" onchange=redrawpie_money(); ></td>
                    <tr>
-                        <td>级别2:</td><td><input type="text" value="5" id="level2" ></td></tr>
+                        <td>1档位:</td><td><input type="text" value="5" id="level2" onchange=redrawpie_money();></td></tr>
                     <tr>
-                        <td>级别3:</td><td><input type="text" value="5" id="level3" ></td></tr>
+                        <td>3档位:</td><td><input type="text" value="5" id="level3" onchange=redrawpie_money();></td></tr>
                     <tr>
-                        <td>级别4:</td><td><input type="text" value="5" id="level4" ></td></tr>
+                        <td>4档位:</td><td><input type="text" value="5" id="level4" onchange=redrawpie_money();></td></tr>
                     <tr>
-                        <td>级别5:</td><td><input type="text" value="5" id="level5" ></td></tr>
+                        <td>5档位:</td><td><input type="text" value="5" id="level5" onchange=redrawpie_money();></td></tr>
                    </table>
                 </div>
 
@@ -326,7 +327,11 @@
                     开始回测
                 </button>
             </span>
-            <div id="pie_factors"></div>
+            <div id="pies">
+                <div id="pie_factors"></div>
+                <div id="pie_money"></div>
+            </div>
+
         </div>
 
         </div>

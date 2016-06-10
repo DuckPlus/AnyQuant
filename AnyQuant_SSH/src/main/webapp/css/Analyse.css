@@ -28,32 +28,34 @@
     width: 80px;
 }
 #allStocksDiv{
+    border: solid 2px rgb(151,151,151);
+    border-radius: 5px;
     position: absolute;
     top:2px;
     width: 600px;
-    left:200px;
+    left:180px;
     display: block;
-    height: 450px;
+    height: 410px;
 }
 #chart1{
     position: absolute;
-    left:170px;
+    left:175px;
     top:20px;
 }
 #chart2{
     position: absolute;
-    left:580px;
+    left:600px;
     top:20px;
 }
 #chart3{
     position: absolute;
-    left:170px;
-    top:250px;
+    left:175px;
+    top:230px;
 }
 #chart4{
     position: absolute;
-    left:580px;
-    top:250px;
+    left:600px;
+    top:230px;
 }
 #diy_input1{
     position: absolute;
@@ -83,7 +85,7 @@
     line-height: 40px;/*行间距*/
     background-color: #8B8B7A;
     display: block;
-    height: 650px;
+    height: 600px;
     border-radius: 5px 5px 5px 5px;
     -webkit-box-shadow: 0 10px 6px -6px #777;
     -moz-box-shadow: 0 10px 6px -6px #777;
@@ -117,16 +119,34 @@
     left:220px;
     top:250px
 }
-#pie_factors{
+#pies{
+    border: solid 2px rgb(151,151,151);
+    border-radius: 5px;
+    /*background-color: #000000;*/
     position: absolute;
     left: 430px;
-    width: 600px;
-    height:600px;
-    top:570px;
+    top:550px;
+    width: 900px;
+    height:500px;
+}
+#pie_factors{
+    position: absolute;
+    left: 0px;
+    width: 450px;
+    height:400px;
+    top:5px;
+}
+#pie_money{
+    position: absolute;
+    left: 450px;
+    width: 450px;
+    height:400px;
+    top:5px;
 }
 #analysebtn_diy{
    position: absolute;
-    left:80px;
+    left:200px;
+    top:500px;
 }
 #chosenStockDiv{
     position: absolute;
