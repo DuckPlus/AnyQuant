@@ -152,7 +152,13 @@
                 <h1>参数Part1</h1>
                  <div class="hint_demo" id="input1_hint">
                     <div class="help-tip">
-                        <p>aaaaa<br>数字>=0即可<br>另外，输入的数字是相对哒<br>所以不用加和等于100~</p>
+                        <p>*可以点击【分析因子表现】<br>
+                            获取我们提供的因子分析图表<br>
+                            作为配置参数的参考<br>
+                            *也可以自己直接配置后<br>
+                            点击【开始回测】进行回测哦<br>
+                            *但一定要把参数的两个part都填完整<br>
+                            才能开始回测~  ^_^</p>
                     </div>
                 </div>
                 <div>
@@ -256,12 +262,18 @@
                 <h1>参数Part2</h1>
                 <div class="hint_demo" id="input2_hint">
                     <div class="help-tip">
-                        <p>配置各因子权重<br>数字>=0即可<br>另外，输入的数字是相对哒<br>所以不用加和等于100~</p>
+                        <p>*配置各因子权重<br>
+                            数字>=0即可<br>
+                            *另外，输入的数字是相对哒<br>
+                            所以不用加和等于100~<br>
+                            *并且修改数字后回车<br>
+                            可以看到右侧扇形图<br>
+                            对因子权重分配的直观展示</p>
                     </div>
                 </div>
                 <table>
                     <tr>
-                        <td>市盈率:</td><td><input type="text" value="5" id="pe_text" onkeyup=redrawpie();></td></tr>
+                        <td>市盈率:</td><td><input type="text" value="5" id="pe_text" onchange=redrawpie();></td></tr>
                     <tr>
                         <td>市净率:</td><td><input type="text" value="5" id="pb_text" onchange=redrawpie();></td></tr>
                     <tr>

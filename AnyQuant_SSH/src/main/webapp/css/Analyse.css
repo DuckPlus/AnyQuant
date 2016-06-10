@@ -87,6 +87,7 @@
     box-shadow: 0 10px 6px -6px #777;
 }
 #input1_hint{
+    z-index: 9999;
     position: absolute;
     left:400px;
     top:0px
