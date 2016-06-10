@@ -1,6 +1,8 @@
 /**
  * Created by dsn on 2016/5/27.
  */
+var helpbtnState=0;//分析因子的按钮的状态
+var allStock;
 var chart1;
 var factorPart1;
 var table_chosen;
@@ -102,19 +104,25 @@ function factorAnalyse(){//分析因子
     for(var i=0;i<code_raw.length;i++){
         codes[i]=code_raw[i][1];
     }
-    content_of_analyse_factor_info=document.getElementById("factor_analyse_info_label").innerHTML;
+    var codesLength=codes.length;
+    if(codesLength<6){
+        document.getElementById("factor_analyse_info_label").innerHTML="股票池里面最少有6只股票哦"; 
+        return;
+    }
     document.getElementById("factor_analyse_info_label").innerHTML="计算中。。";
     $.getJSON('/Strategy/getStocksFactorJudgment?'+'codes='+codes+'&start='+startT+'&end='+endT
         +'&baseBench='+basecode,
         function (data) {
-            $("#allStocksDiv").remove();
+            $("#allStocksDiv").hide();
             init_bar(data);
         });
 
 
 
 }
-function initTable_all(allStock) {
+function initTable_all() {
+    $("#barCharts").hide();
+    $("#allStocksDiv").show();
     var table = $('#allstock_list').DataTable( {
         data:allStock,
         "order":[[1,"asc"]],
@@ -234,6 +242,7 @@ function initChosenList(){
 
 }
 function init_bar(data) {
+    $("#barCharts").show();
     var ICdata=[],IRdata=[],WinRatedata=[],AvgProfitdata=[];
     for(var x in data.sortRankIC){
         ICdata.push([x,data.sortRankIC[x]]);
@@ -422,6 +431,10 @@ function init_bar(data) {
         }
     });
     document.getElementById("factor_analyse_info_label").innerHTML="~现在你可以参考着配置因子啦^o^";
+    helpbtnState=1;//分析过一次了
+    document.getElementById("helpbtn").innerHTML="重新分析因子表现";
+    document.getElementById("helpbtn").onclick=showAllStock_list;
+
 }
 function chooseStrategy(){
     var strategy=document.getElementById("strategy").value;
@@ -460,6 +473,7 @@ function initpie(){
             // plotBackgroundColor: '#f5f2ec',//画布背景色
             plotBorderWidth: null,//画布边框
             plotShadow: false,
+            type:'pie',
             margin:[0,120,0,120]//画布外边框
         },
         title: {
@@ -481,6 +495,22 @@ function initpie(){
                         return  this.point.name+ Math.round(this.percentage,2) +' %';
                     }
                 },
+                point:{
+                    events:{
+                        click: function(e) {
+                            this.slice(false);
+                            if ( e && e.stopPropagation )//禁止事件冒泡
+                                e.stopPropagation();
+                            else
+                                window.event.cancelBubble = true;
+                            return false;
+                        },
+                        mouseOver: function(evt){
+                            this.slice(false);//禁止选中扇形滑开
+                        },
+                    }
+
+                }
             }
         },
         exporting: {
@@ -535,6 +565,22 @@ function initpie(){
                         return  this.point.name+ Math.round(this.percentage,2) +' %';
                     }
                 },
+                point:{
+                    events:{
+                        click: function(e) {
+                            this.slice(false);
+                            if ( e && e.stopPropagation )//禁止事件冒泡
+                                e.stopPropagation();
+                            else
+                                window.event.cancelBubble = true;
+                            return false;
+                        },
+                        mouseOver: function(evt){
+                            this.slice(false);//禁止选中扇形滑开
+                        },
+                    }
+
+                }
             }
         },
         exporting: {
@@ -608,7 +654,13 @@ function initBaseCode(data){
         listB.options.add(new Option(data[i].name,data[i].code));
     }
 }
-
+function showAllStock_list() {
+    $("#allStocksDiv").show();
+    $("#barCharts").hide();
+    document.getElementById("helpbtn").innerHTML="分析因子表现";
+    document.getElementById("helpbtn").onclick=factorAnalyse;
+    document.getElementById("factor_analyse_info_label").innerHTML="分析因子表现<br>大概要5秒钟左右请耐心等待~^-^";
+}
 $(document).ready(function () {
     $("ul").idTabs();
 
@@ -618,7 +670,8 @@ $(document).ready(function () {
     initChosenList();
     initpie();
     $.getJSON('/Stock/getStockDataList',function (data) {
-        initTable_all(data);
+        allStock=data;
+        initTable_all();
         $("#loading").hide();
     })
 
