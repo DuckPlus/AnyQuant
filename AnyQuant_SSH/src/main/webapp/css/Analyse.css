@@ -86,10 +86,15 @@
     -moz-box-shadow: 0 10px 6px -6px #777;
     box-shadow: 0 10px 6px -6px #777;
 }
+#input1_hint{
+    position: absolute;
+    left:400px;
+    top:0px
+}
 #input2_hint{
     position: absolute;
     left:400px;
-    top:10px
+    top:0px
 }
 #pie_factors{
 
@@ -106,7 +111,7 @@
 #chosenStockDiv{
     position: absolute;
     left:200px;
-    top:90px;
+    top:67px;
     width:200px;
     color:#000000;
     min-height: 250px;
