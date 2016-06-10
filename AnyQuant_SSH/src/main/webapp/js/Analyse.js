@@ -72,12 +72,13 @@ function doAnalyse(){
     capital=document.getElementById("capital").value;
     taxRate=document.getElementById("taxRate").value;
     numOfStock=document.getElementById("numOfStock").value;
+    interval=document.getElementById("interval").value;
     alert("推荐策略："+strategy+
         "\n选择的大盘代号："+basecode+
         "\n起始资金："+capital+
         "\n交易费率："+taxRate+
         "\n股票数量："+numOfStock+
-        "\n调仓间隔："+document.getElementById("interval").value+
+        "\n调仓间隔："+interval+
         "\n起止时间："+startT+"~"+endT);
    
     var params = "strategy="+strategy+"&baseCode="+basecode+"&capital="+capital+
@@ -109,7 +110,6 @@ function factorAnalyse(){//分析因子
     $.getJSON('/Strategy/getStocksFactorJudgment?'+'codes='+codes+'&start='+startT+'&end='+endT
         +'&baseBench='+basecode,
         function (data) {
-            //$("#allstock_list").remove();
             $("#allStocksDiv").remove();
             init_bar(data);
         });
@@ -238,6 +238,7 @@ function initChosenList(){
 }
 function init_bar(data) {    
     var ICdata=[],IRdata=[],WinRatedata=[],AvgProfitdata=[];
+    alert(ICdata.length+" "+IRdata.length+" "+WinRatedata.length+" "+AvgProfitdata.length);
     for(var x in data.sortRankIC){
         
         ICdata.push([x,data.sortRankIC[x]]);
@@ -253,7 +254,7 @@ function init_bar(data) {
         alert(data.sortAvgProfit[0].PS);
         AvgProfitdata.push([x,data.sortAvgProfit[x]]);
     }
-    alert(ICdata.length+" "+IRdata.length+" "+WinRatedata.length+" "+AvgProfitdata.length);
+    
     $('#chart1').highcharts({
         chart: {
             type: 'column',

@@ -166,32 +166,7 @@
                 </div><br>
                 <div><label id="chosen_label">股票池</label></div>
                 <!-- <input type="text" id="search_text_chosen" placeholder="Search.."></span>-->
-                <div>
-                    <label for="capital_diy" >起始资金</label>
-                    <select id="capital_diy" >
-                        <option value="100000">10万</option>
-                        <option value="500000">50万</option>
-                        <option value="1000000">100万</option>
-                        <option value="2000000">200万</option>
-                        <option value="5000000">500万</option>
-                        <option value="10000000">1000万</option>
-                    </select>
-                </div><br>
-                <div>
-                    <label for="taxRate_diy" >交易费率</label>
-                    <input id="taxRate_diy" type="range" min="0" max="0.01"  step="0.0001"  onchange="getTaxRate_diy()"/>
-                    <label id="taxRate_num_diy">0.005</label>
-                    <script>
-                        function getTaxRate_diy(){
-                            document.getElementById("taxRate_num_diy").innerHTML=
-                                    document.getElementById("taxRate_diy").value;
-                        }
-                    </script>
-                </div><br>
-                 <div>
-                    <label for="interval_diy" class="middle">调仓间隔</label>
-                    <input id="interval_diy" type="text" value="5"placeholder="输入3~70的数字" required/>
-                </div>
+
                 <div class="demo" >
                     起始<input type="text" id="start_diy"value="2016-6-1" readonly style="height:16px" />
                 </div>
@@ -266,7 +241,34 @@
                             对因子权重分配的直观展示</p>
                     </div>
                 </div>
-                <table>
+                <div>
+                    <label for="capital_diy" >起始资金</label>
+                    <select id="capital_diy" >
+                        <option value="100000">10万</option>
+                        <option value="500000">50万</option>
+                        <option value="1000000">100万</option>
+                        <option value="2000000">200万</option>
+                        <option value="5000000">500万</option>
+                        <option value="10000000">1000万</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="taxRate_diy" >交易费率</label>
+                    <input id="taxRate_diy" type="range" min="0" max="0.01"  step="0.0001"  onchange="getTaxRate_diy()"/>
+                    <label id="taxRate_num_diy">0.005</label>
+                    <script>
+                        function getTaxRate_diy(){
+                            document.getElementById("taxRate_num_diy").innerHTML=
+                                    document.getElementById("taxRate_diy").value;
+                        }
+                    </script>
+                </div>
+                 <div>
+                    <label for="interval_diy" class="middle">调仓间隔</label>
+                    <input id="interval_diy" type="text" value="5"placeholder="输入3~70的数字" required/>
+                </div>
+                <div class="light_font">
+                    <table>
                     <tr>
                         <td>市盈率:</td><td><input type="text" value="5" id="pe_text" onchange=redrawpie();></td></tr>
                     <tr>
@@ -284,6 +286,8 @@
                     <tr>
                         <td>市现率:</td><td><input type="text" value="5" id="pcf_text" onchange=redrawpie();></td></tr>
                 </table>
+                </div>
+
 <button id="analysebtn_diy" class="button button-glow button-rounded button-raised button-primary" onclick="doAnalyse_diy()" >
                     开始回测
                 </button>
