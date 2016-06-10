@@ -3,9 +3,13 @@ package service.impl.strategy;
 import util.MyDate;
 import vo.CumRtnVO;
 import vo.ReportVO;
+import vo.TradeDataVO;
+import vo.TradeDetailVO;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 67534 on 2016/5/27.
@@ -35,6 +39,11 @@ public abstract class MultiStockStrategy extends BaseStrategy {
      */
     protected double [] sell_Prices;
 
+    /**
+     * 用于存储股票代码和名称
+     */
+    protected Map<String,String> codeAndNames;
+
 
     public MultiStockStrategy()
     {
@@ -51,6 +60,7 @@ public abstract class MultiStockStrategy extends BaseStrategy {
         this.lots=new int [vol];
         this.buy_Prices=new double [vol];
         this.sell_Prices=new double [vol];
+
     }
 
 
@@ -75,11 +85,22 @@ public abstract class MultiStockStrategy extends BaseStrategy {
     protected abstract  void sellStocks();
 
 
+    protected  void fatchNames(){
+        this.codeAndNames = new HashMap<>();
+        List<String> names = this.stockDAO.getNames(stocks);
+        for(int i=0;i<stocks.size();i++){
+            codeAndNames.put(stocks.get(i),names.get(i));
+        }
+    }
 
     /**
      * 简单平仓，并计算累计收益率
      */
     public void simpleSellStocks(){
+
+        TradeDataVO tradeDataVO = new TradeDataVO();
+        tradeDataVO.tradeDate=curTradeDay;
+
         /**
          * 获取当日的股票池的均价
          */
@@ -104,15 +125,17 @@ public abstract class MultiStockStrategy extends BaseStrategy {
                     sell_Prices[i]=temp[i];
                 }
 
+                this.addNewTradeDetailVO(i,false,tradeDataVO);
+
+                //System.out.println("sell "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+sell_Prices[i]);
+
+                income+=sell_Prices[i]*lots[i]*stocksPerLot;
+                tax+=sell_Prices[i]*lots[i]*stocksPerLot*taxRate;
+
             }
 
         }
 
-        for(int i=0;i<stocks.size();i++){
-            System.out.println("sell "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+sell_Prices[i]);
-            income+=sell_Prices[i]*lots[i]*stocksPerLot;
-            tax+=sell_Prices[i]*lots[i]*stocksPerLot*taxRate;
-        }
         stocks.clear();
 
         /**
@@ -127,12 +150,37 @@ public abstract class MultiStockStrategy extends BaseStrategy {
 //        base_SellPrice=benchMarkDAO.getAvgPrice(this.baseCode,curTradeDay);
 //        baseRtnRate+=(base_SellPrice-base_BuyPrice-base_SellPrice*taxRate)/base_BuyPrice;
         computeBaseRtnRate();
+
+        /**
+         * 更新当前资本
+         */
+        this.curCapital=this.curCapital-this.tax+this.income;
+        System.out.println("curCapital: "+this.curCapital);
+
         /**
          * 向结果链表中添加一个元素
          */
         CumRtnVO vo = new CumRtnVO(baseRtnRate,cumRtnRate,curTradeDay);
         this.reportVO.cumRtnVOList.add(vo);
+
+        tradeDataVO.nowCapital=curCapital;
+        tradeDataVO.profit=this.profit;
+        this.reportVO.tradeDataVOList.add(tradeDataVO);
     }
 
+
+
+    protected void addNewTradeDetailVO(int index, boolean buyOrSell, TradeDataVO tradeDataVO){
+
+        TradeDetailVO detailVO = new TradeDetailVO();
+
+        detailVO.code=stocks.get(index);
+        detailVO.codeName=codeAndNames.get(stocks.get(index));
+        detailVO.buyOrSell=buyOrSell;
+        detailVO.numofTrade=lots[index];
+        detailVO.tradePrice=buy_Prices[index];
+
+        tradeDataVO.tradeDetailVOs.add(detailVO);
+    }
 
 }

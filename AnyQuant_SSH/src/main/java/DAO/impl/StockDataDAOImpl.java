@@ -103,7 +103,7 @@ public class StockDataDAOImpl implements StockDataDAO {
         String hql = "select code from "+tableName+
                 " where pe>= "+low_PE+" and pe<= "+high_PE+
                 " and date = '"+date.DateToString()+"'"
-                +"and turnoverValue >10000";
+                +"and turnoverValue >100000";
         return (List<String>) baseDAO.getAllList(hql);
     }
 

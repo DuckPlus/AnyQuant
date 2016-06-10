@@ -3,6 +3,7 @@ package service.impl.strategy;
 import org.springframework.stereotype.Service;
 import util.MyDate;
 import vo.ReportVO;
+import vo.TradeDataVO;
 
 import java.util.List;
 
@@ -28,8 +29,8 @@ public class Strategy_PE extends MultiStockStrategy {
         super.setPara_Mutil(capital,taxRate,baseCode,start,end,vol);
 
         this.interval=interval;
-        this.low_PE=25;
-        this.high_PE=30;
+        this.low_PE=20;
+        this.high_PE=40;
     }
 
 
@@ -67,6 +68,10 @@ public class Strategy_PE extends MultiStockStrategy {
      */
     @Override
     protected void buyStocks(){
+
+
+        TradeDataVO tradeDataVO = new TradeDataVO();
+        tradeDataVO.tradeDate=curTradeDay;
         /**
          * 首先清空股票池
          */
@@ -78,23 +83,24 @@ public class Strategy_PE extends MultiStockStrategy {
 
         /**
          * 挑选vol只股票加入股票池
-         * 其中股票价格处于合理区间内
          */
-        int i=0;
-        for(String code:codes){
-            double price =stockDataDAO.getAvgPriceByCode(code,curTradeDay);
-
-           // if(  low_Price<price & price<high_Price ){
-                stocks.add(code);
-                //System.out.println(code);
-                i++;
-          //  }
-
+        int gap=codes.size()/vol;
+        int i;
+        for( i=0;i<codes.size();i+=gap){
+            stocks.add(codes.get(i));
+            i++;
             if(i==vol){
                 break;
             }
         }
-        System.out.println("size: "+stocks.size()+"---------------------");
+
+
+        /**
+         * 因为这个策略每次的股票池是动态生成的因此，股票名称也要动态获取
+         */
+        this.fatchNames();
+
+        //System.out.println("size: "+stocks.size()+"---------------------");
 
         /**
          * 获取每只股票交易日当天的均价（总交易额/总交易量）
@@ -102,13 +108,14 @@ public class Strategy_PE extends MultiStockStrategy {
          */
         double [] temp=stockDataDAO.getAvgPriceByCodes(stocks,curTradeDay);
         buy_Prices= new double[vol]; //这里讲买入价格全设为0
-        for( i=0;i<temp.length;i++){
+        for( i=0;i<stocks.size();i++){
             buy_Prices[i]=temp[i];
         }
 
 
-
+        double expensePerStock = curCapital/(double)stocks.size();
         /**
+         * 注意stocks是被选中的vol只股票
          * 确定每只股票买入的手数
          * 并记录花费
          */
@@ -120,17 +127,31 @@ public class Strategy_PE extends MultiStockStrategy {
             if(buy_Prices[i]==0){
                 lots[i]=0;
             }else{
-                lots[i]= (int) (capital/vol/(buy_Prices[i]*stocksPerLot));
+
+                lots[i]= (int) (expensePerStock/(buy_Prices[i]*stocksPerLot));
+                //System.out.println("buy "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+buy_Prices[i]);
+
+                expense+=lots[i]*stocksPerLot*buy_Prices[i];
+                super.addNewTradeDetailVO(i,true,tradeDataVO);
+
             }
 
-            System.out.println("buy "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+buy_Prices[i]);
-            expense+=lots[i]*stocksPerLot*buy_Prices[i];
+
         }
 
         /**
          * 记录当日的指数价格
          */
         base_BuyPrice=benchMarkDAO.getAvgPrice(this.baseCode,curTradeDay);
+
+        /**
+         * 更新当前资本
+         */
+        this.curCapital=this.curCapital-this.expense;
+
+        tradeDataVO.nowCapital=curCapital;
+        tradeDataVO.profit=this.profit;
+        this.reportVO.tradeDataVOList.add(tradeDataVO);
     }
 
 
@@ -139,7 +160,7 @@ public class Strategy_PE extends MultiStockStrategy {
      */
     @Override
     protected void sellStocks() {
-        this.simpleSellStocks();
+        super.simpleSellStocks();
     }
 
 

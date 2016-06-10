@@ -56,7 +56,8 @@ public class FactorStrategyTest {
 
         strategy.setPara_Factor
                 (capital,taxRate,baseCode,start,end,
-                        new ArrayList<>(Arrays.asList(codes)),weightedFactors,investWeight,interval);
+                        new ArrayList<>(Arrays.asList(codes)),weightedFactors,
+                        investWeight,interval);
 
         if(strategy!=null){
             System.out.println("capital: "+strategy.capital);
@@ -88,11 +89,6 @@ public class FactorStrategyTest {
         if(vo==null){
             fail();
         }else{
-            System.out.println("PK-------");
-            for(CumRtnVO temp : vo.cumRtnVOList){
-                System.out.println("date: "+temp.date.DateToString()+" test: "+temp.testValue+" base: "+temp.baseValue);
-            }
-
             System.out.println("Detail-------");
             for(TradeDataVO tradeDataVO : vo.tradeDataVOList){
                 System.out.print("date: "+tradeDataVO.tradeDate.DateToString());
@@ -109,6 +105,12 @@ public class FactorStrategyTest {
                     System.out.println(" price: "+detailVO.tradePrice);
 
                 }
+            }
+
+
+            System.out.println("PK-------");
+            for(CumRtnVO temp : vo.cumRtnVOList){
+                System.out.println("date: "+temp.date.DateToString()+" test: "+temp.testValue+" base: "+temp.baseValue);
             }
         }
     }

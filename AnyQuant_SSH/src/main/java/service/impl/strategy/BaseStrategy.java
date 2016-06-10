@@ -1,6 +1,7 @@
 package service.impl.strategy;
 
 import DAO.BenchMarkDAO;
+import DAO.StockDAO;
 import DAO.StockDataDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import util.MyDate;
@@ -13,6 +14,8 @@ import java.util.List;
  */
 public abstract class BaseStrategy  {
 
+    @Autowired
+    StockDAO stockDAO;
     @Autowired
     StockDataDAO stockDataDAO;
     @Autowired
@@ -111,6 +114,7 @@ public abstract class BaseStrategy  {
 
     protected ReportVO reportVO;
 
+
     public BaseStrategy(){
 
     }
@@ -183,7 +187,7 @@ public abstract class BaseStrategy  {
         this.profit=income-expense-tax;
         this.cumRtnRate=profit/expense;
 
-        System.out.println("income: " +this.income+"  "+"expense: "+this.expense+"  "+"tax: "+this.tax);
+//        System.out.println("income: " +this.income+"  "+"expense: "+this.expense+"  "+"tax: "+this.tax);
         System.out.println("profit: " +this.profit+"  "+"test_cumRtnRate: "+this.cumRtnRate);
         return cumRtnRate;
 
@@ -192,8 +196,8 @@ public abstract class BaseStrategy  {
     public double computeBaseRtnRate(){
         base_SellPrice=benchMarkDAO.getAvgPrice(this.baseCode,curTradeDay);
         baseRtnRate+=(base_SellPrice-base_BuyPrice-base_SellPrice*taxRate)/base_BuyPrice;
-        System.out.println("base_SellPrice: "+base_SellPrice+" base_BuyPrice: "+base_BuyPrice);
-        System.out.println("tempRtnRate: "+(base_SellPrice-base_BuyPrice-base_SellPrice*taxRate)/base_BuyPrice);
+//        System.out.println("base_SellPrice: "+base_SellPrice+" base_BuyPrice: "+base_BuyPrice);
+//        System.out.println("tempRtnRate: "+(base_SellPrice-base_BuyPrice-base_SellPrice*taxRate)/base_BuyPrice);
         System.out.println("base_cumRtnRate: "+baseRtnRate);
         return baseRtnRate;
     }
@@ -202,12 +206,15 @@ public abstract class BaseStrategy  {
     public ReportVO simpleAnalyse(){
         init();
         this.reportVO = new ReportVO();
+
         for(int i=interval;i<this.validDates.length;i+=interval){
             curTradeDay=this.validDates[i];
-            System.out.println("handle "+i+"th day date: "+curTradeDay.DateToString());
+           // System.out.println("handle "+i+"th day date: "+curTradeDay.DateToString());
             this.handleData();
         }
-        this.sellStocks();
+
+//        this.curTradeDay=this.validDates[validDates.length-1];
+//        this.sellStocks();
         return reportVO;
     }
 
