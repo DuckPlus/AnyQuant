@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import service.CacheService;
 import service.UserService;
 import util.Configure;
+import vo.ReportVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -83,7 +84,16 @@ public class UserController {
     }
 
 
+    public List<ReportVO> getAllReports(HttpServletRequest request){
+        if(checkIfLogin(request)){
 
+
+
+
+
+        }
+
+    }
 
 
 
