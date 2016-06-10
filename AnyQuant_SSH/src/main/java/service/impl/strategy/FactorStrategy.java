@@ -257,25 +257,28 @@ public class FactorStrategy extends MultiStockStrategy {
                         sell_Prices[i]=temp[i];
                     }
 
+                    // System.out.println("sell "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+sell_Prices[i]);
+
+
+                    TradeDetailVO detailVO = new TradeDetailVO();
+                    detailVO.code=stocks.get(i);
+                    detailVO.codeName=codeAndNames.get(stocks.get(i));
+                    detailVO.buyOrSell=false;
+                    detailVO.numofTrade=lots[i];
+                    detailVO.tradePrice=sell_Prices[i];
+
+                    tradeDataVO.tradeDetailVOs.add(detailVO);
+
+
+                    income+=sell_Prices[i]*lots[i]*stocksPerLot;
+                    tax+=sell_Prices[i]*lots[i]*stocksPerLot*taxRate;
+
                 }else{
                     sell_Prices[i]=0;
                 }
 
 
-               // System.out.println("sell "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+sell_Prices[i]);
 
-                TradeDetailVO detailVO = new TradeDetailVO();
-                detailVO.code=stocks.get(i);
-                detailVO.codeName=codeAndNames.get(stocks.get(i));
-                detailVO.buyOrSell=false;
-                detailVO.numofTrade=lots[i];
-                detailVO.tradePrice=sell_Prices[i];
-
-                tradeDataVO.tradeDetailVOs.add(detailVO);
-
-
-                income+=sell_Prices[i]*lots[i]*stocksPerLot;
-                tax+=sell_Prices[i]*lots[i]*stocksPerLot*taxRate;
 
 
             }

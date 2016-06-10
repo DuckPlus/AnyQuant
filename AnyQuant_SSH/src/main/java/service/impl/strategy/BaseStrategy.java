@@ -184,7 +184,7 @@ public abstract class BaseStrategy  {
         this.cumRtnRate=profit/expense;
 
         System.out.println("income: " +this.income+"  "+"expense: "+this.expense+"  "+"tax: "+this.tax);
-        System.out.println("profit: " +this.profit+"  "+"cumRtnRate: "+this.cumRtnRate);
+        System.out.println("profit: " +this.profit+"  "+"test_cumRtnRate: "+this.cumRtnRate);
         return cumRtnRate;
 
     }
@@ -192,6 +192,9 @@ public abstract class BaseStrategy  {
     public double computeBaseRtnRate(){
         base_SellPrice=benchMarkDAO.getAvgPrice(this.baseCode,curTradeDay);
         baseRtnRate+=(base_SellPrice-base_BuyPrice-base_SellPrice*taxRate)/base_BuyPrice;
+        System.out.println("base_SellPrice: "+base_SellPrice+" base_BuyPrice: "+base_BuyPrice);
+        System.out.println("tempRtnRate: "+(base_SellPrice-base_BuyPrice-base_SellPrice*taxRate)/base_BuyPrice);
+        System.out.println("base_cumRtnRate: "+baseRtnRate);
         return baseRtnRate;
     }
 

@@ -42,7 +42,7 @@ public class FactorStrategyTest {
         MyDate start =MyDate.getDateFromString("2015-01-01");
         MyDate end=MyDate.getDateFromString("2016-01-01");
         String [] codes = {
-                "sh600096", "sh600098", "sh600099",  "sh600103", "sh600105",
+                "sh600004", "sh600010", "sh600099",  "sh600103", "sh600105",
                 "sh600108", "sh600110", "sh600114", "sh600117", "sh600121",
                 "sh600123", "sh600125", "sh600130", "sh600137","sh600160"};
         Map< AnalysisFactor,Double> weightedFactors;
@@ -106,7 +106,7 @@ public class FactorStrategyTest {
                     }
                     System.out.print(100*detailVO.numofTrade+" lots ");
                     System.out.print(detailVO.code+"  "+detailVO.codeName+" at");
-                    System.out.println("price: "+detailVO.tradePrice);
+                    System.out.println(" price: "+detailVO.tradePrice);
 
                 }
             }
