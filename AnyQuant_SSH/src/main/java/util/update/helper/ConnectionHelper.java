@@ -12,7 +12,6 @@ import org.apache.http.util.EntityUtils;
 import util.update.enumeration.API_TYPE;
 import util.update.enumeration.StaticMessage;
 
-
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;

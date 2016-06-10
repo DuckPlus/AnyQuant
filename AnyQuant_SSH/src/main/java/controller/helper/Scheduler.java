@@ -2,14 +2,9 @@ package controller.helper;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import service.CacheService;
 import service.UpdateBLService;
-
-import java.util.Calendar;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * @author Qiang
