@@ -5,6 +5,8 @@ import entity.StockdataEntity;
 import vo.Factor_VO;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
 
 /**
@@ -134,8 +136,11 @@ public class StockHelper {
         for (int i = 0; i < value.length; i++) {
             avg+= value[i]*power[i];
         }
-
-
+//        if(Double.isNaN(avg)){
+//            System.out.println(Arrays.toString(value));
+//            System.out.println(Arrays.toString(power));
+//        }
+//        System.out.println(avg);
         return avg;
     }
 }

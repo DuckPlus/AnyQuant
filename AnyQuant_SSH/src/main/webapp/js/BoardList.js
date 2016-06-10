@@ -6,7 +6,6 @@ var globalData;
 var ifshowDataLabel=true;
 var myRed="#EE2C2C",myGreen="#00CD66",myGrey="#8B7E66"
 $.getJSON('/Board/getAllBoardsAndStockData', function (data) {
-    alert("eee");
     globalData=data;
     initBubble();
 });
@@ -38,7 +37,6 @@ function ifExist(index,num){
     return 0;
 }
 function  initBubble() {
-    alert("initBubble");
     var index=[],length=globalData.length,m=0,i=0;
     while(i<12){
         var newNum=Math.floor(Math.random()*(length+1));
