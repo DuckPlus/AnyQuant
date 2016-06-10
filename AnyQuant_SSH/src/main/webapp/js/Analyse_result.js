@@ -65,6 +65,12 @@ function draw_compare_chart(url_params) {
     data_obj.interval=params[5].split("=")[1];
     data_obj.start=params[6].split("=")[1];
     data_obj.end=params[7].split("=")[1];
+    document.getElementById('start_fund').innerHTML = data_obj.capital;
+    document.getElementById('begin_time').innerHTML = data_obj.start;
+    document.getElementById('end_time').innerHTML = data_obj.end;
+    document.getElementById('trade_rate').innerHTML = data_obj.taxRate;
+    document.getElementById('base_bench').innerHTML = data_obj.baseCode;
+    document.getElementById('interval').innerHTML = data_obj.interval;
     var json_data = JSON.stringify(data_obj);
     alert(json_data);
     test_specific_strategy(json_data);
