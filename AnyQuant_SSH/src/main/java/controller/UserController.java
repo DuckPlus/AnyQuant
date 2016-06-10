@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * c
  *
  * @author Qiang
  * @date 16/5/4
@@ -69,6 +68,12 @@ public class UserController {
         }
 
     }
+
+    @RequestMapping(value = "/register" , method = RequestMethod.POST)
+    public String addNewUser(String userName , String password){
+        return "";
+    }
+
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
     public boolean changePassword(HttpServletRequest request, @RequestParam("old") String old, @RequestParam("new") String newPassword) {
