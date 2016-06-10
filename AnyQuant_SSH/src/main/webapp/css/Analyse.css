@@ -14,47 +14,58 @@
 #factor_to_pie_btn{
     weight:17px;
 }
-
+#chosen_label{
+    position: absolute;
+    left:200px;
+    top:50px;
+}
+#search_text_chosen{
+    position: absolute;
+    left:250px;
+    top:50px;
+}
+#taxRate_diy{
+    width: 80px;
+}
 #allStocksDiv{
     position: absolute;
-    top:10px;
+    top:2px;
     width: 600px;
-    left:50px;
+    left:200px;
     display: block;
     height: 450px;
-    padding:20px;
 }
 #chart1{
     position: absolute;
-    left:20px;
+    left:170px;
     top:20px;
 }
 #chart2{
     position: absolute;
-    left:550px;
+    left:580px;
     top:20px;
 }
 #chart3{
     position: absolute;
-    left:20px;
+    left:170px;
     top:250px;
 }
 #chart4{
     position: absolute;
-    left:550px;
+    left:580px;
     top:250px;
 }
 #diy_input1{
     position: absolute;
     left: 5px ;
-    top:112px;
-    width: 240px;
+    top:120px;
+    width: 410px;
     color:#fff;
    /* line-height: 50px;/*行间距*/
     background-color: #8B8B7A;
     left:10px;
     display: block;
-    height: 515px;
+    height: 410px;
     border-radius: 5px 5px 5px 5px;
     -webkit-box-shadow: 0 10px 6px -6px #777;
     -moz-box-shadow: 0 10px 6px -6px #777;
@@ -63,32 +74,45 @@
 #diy_input2{
     position: absolute;
     left: 10px ;
-    top:640px;
-    width: 240px;
+    top:550px;
+    width: 410px;
     color:#fff;
-    line-height: 25px;/*行间距*/
+    line-height: 40px;/*行间距*/
     background-color: #8B8B7A;
     display: block;
-    height: 350px;
+    height: 480px;
     border-radius: 5px 5px 5px 5px;
     -webkit-box-shadow: 0 10px 6px -6px #777;
     -moz-box-shadow: 0 10px 6px -6px #777;
     box-shadow: 0 10px 6px -6px #777;
 }
-#pie_factors{
-    border: solid 2px #000000;
-    background-color: #00a1cb;
+#input1_hint{
+    z-index: 1;
     position: absolute;
-    left: 300px;
+    left:400px;
+    top:0px
+}
+#input2_hint{
+    position: absolute;
+    left:400px;
+    top:0px
+}
+#pie_factors{
+    position: absolute;
+    left: 430px;
     width: 600px;
     height:600px;
-    top:640px;
+    top:570px;
 }
 #analysebtn_diy{
    position: absolute;
     left:80px;
 }
 #chosenStockDiv{
+    position: absolute;
+    left:200px;
+    top:67px;
+    width:200px;
     color:#000000;
     min-height: 250px;
     border: solid 2px rgb(151,151,151);
@@ -103,9 +127,6 @@
     top:300px;
     right: 150px;
 }
-
-
-
 #input_text{
     margin-top: 2px;
     margin-left: 0px;
