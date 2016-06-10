@@ -1,7 +1,6 @@
 /**
  * Created by dsn on 2016/5/27.
  */
-var helpbtnState=0;//分析因子的按钮的状态
 var allStock;
 var chart1;
 var factorPart1;
@@ -15,16 +14,17 @@ var level1=0,level2=0,level3=0,level4=0,level5=0;
 var content_of_analyse_factor_info;
 function doAnalyse_diy(){
     var code_raw=table_chosen.data();
-
+    alert("马上要跳转啦 看看有多少股票："+code_raw.length);
+    codes=[];
     for(var i=0;i<code_raw.length;i++){
         codes[i]=code_raw[i][1];
     }
-    startT=document.getElementById("start").value;
-    endT=document.getElementById("end").value;
-    basecode=document.getElementById("basecode").value;
-    capital=document.getElementById("capital").value;
-    taxRate=document.getElementById("taxRate").value;
-    interval=document.getElementById("interval").value;
+    startT=document.getElementById("start_diy").value;
+    endT=document.getElementById("end_diy").value;
+    basecode=document.getElementById("basecode_diy").value;
+    capital=document.getElementById("capital_diy").value;
+    taxRate=document.getElementById("taxRate_diy").value;
+    interval=document.getElementById("interval_diy").value;
 
     peNum=parseInt(document.getElementById("pe_text").value);
     pbNum=parseInt(document.getElementById("pb_text").value);
@@ -60,7 +60,7 @@ function doAnalyse_diy(){
         "\n选择的大盘代号："+basecode+
         "\n起始资金："+capital+
         "\n交易费率："+taxRate+
-        "\n调仓间隔："+document.getElementById("interval").value+
+        "\n调仓间隔："+interval+
         "\n起止时间："+startT+"~"+endT+
         "\n因子们："+
         "\nPE:"+peNum+
@@ -113,7 +113,7 @@ function factorAnalyse(){//分析因子
     basecode=document.getElementById("basecode_diy").value;
 
     var code_raw=table_chosen.data();
-
+    codes=[];
     for(var i=0;i<code_raw.length;i++){
         codes[i]=code_raw[i][1];
     }
@@ -444,8 +444,7 @@ function init_bar(data) {
         }
     });
     document.getElementById("factor_analyse_info_label").innerHTML="~现在你可以参考着配置因子啦^o^";
-    helpbtnState=1;//分析过一次了
-    document.getElementById("helpbtn").innerHTML="重新分析因子表现";
+    document.getElementById("helpbtn").innerHTML="重选股票池";
     document.getElementById("helpbtn").onclick=showAllStock_list;
 
 }
