@@ -1,11 +1,13 @@
 package vo;
 
+import java.io.Serializable;
+
 /**
  * 记录某一条交易详情
  * @author Qiang
  * @date 6/6/16
  */
-public class TradeDetailVO {
+public class TradeDetailVO implements Serializable {
 
     public String code;
     public String codeName;

@@ -4,8 +4,7 @@ import javax.persistence.*;
 import java.util.Arrays;
 
 /**
- * @author Qiang
- * @date 6/10/16
+ * Created by 67534 on 2016/6/10.
  */
 @Entity
 @Table(name = "report", schema = "AnyQuant", catalog = "")

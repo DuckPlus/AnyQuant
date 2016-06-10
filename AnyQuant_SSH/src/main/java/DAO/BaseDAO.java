@@ -138,4 +138,12 @@ public interface BaseDAO {
      * @return
      */
 	public List<?> find(String column, String value, Class<?> c);
+
+
+	public byte[] ObjectToBytes(Object ob);
+
+
+	public Object BytesToObject(byte[] bytes);
+
+	public void saveObject(Object object);
 }
