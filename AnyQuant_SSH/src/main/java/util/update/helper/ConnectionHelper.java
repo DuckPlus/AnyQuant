@@ -163,7 +163,6 @@ public class ConnectionHelper {
 			result = EntityUtils.toString(entity);
 	//		System.out.println(result);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
