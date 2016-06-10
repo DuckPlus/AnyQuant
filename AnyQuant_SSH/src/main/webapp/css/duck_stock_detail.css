@@ -2,9 +2,11 @@
 #main_title{
     height: 830px;
     background-color: #ffffff;
+    /*background-color: #00a1cb;*/
+
     /*border-radius: 5px;*/
     /*box-shadow: 0 0 2px #333333;*/
-    width:300px;
+    width:25%;
     float: left;
     border-right: solid 1px rgb(151,151,151);
 }
@@ -17,11 +19,38 @@
     /*background-color: turquoise;*/
 }
 #title_name{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 35px;
     /*background-color: #2b542c;*/
-    /*width: 150px;*/
+    width: 50%;
     /*height: 40px;*/
     float: left;
+}
+#title_open{
+    /*background-color: #5d6d7e;*/
+    width: 25%;
+    font-size: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #d71414;
+    height: 50px;
+    float: left;
+    line-height: 70px;
+}
+#title_changeRate{
+    font-size: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #d71414;
+    height: 50px;
+    float: left;
+    line-height: 70px;
+    width: 25%;
+    /*background-color: #00a1cb;*/
 }
 #title_addBtn_code{
     margin-top: 5px;
@@ -29,7 +58,11 @@
     height: 35px;
 }
 #title_code{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     /*background-color: #2c81ba;*/
+    width: 50%;
     height: 30px;
     float: left;
     font-size: 30px;
@@ -37,79 +70,68 @@
 #add_stock_btn{
     float: right;
     color: #FFFFFF;
-    width: 150px;
+    width: 50%;
     height: 40px;
-    margin-right: 15px;
     background-color: #00CC99;
     font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-#title_open{
-    /*background-color: #5d6d7e;*/
-    font-size: 25px;
-    color: #d71414;
-    height: 50px;
-    float: left;
-    line-height: 70px;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-#title_changeRate{
-    font-size: 25px;
-    color: #d71414;
-    height: 50px;
-    float: left;
-    line-height: 70px;
-    padding-left: 5px;
-    padding-right: 5px;
-    /*background-color: #00a1cb;*/
-}
+
 
 #stock_info_detail{
     /*background-color: #9088ec;*/
 }
 .item_icon{
-    width: 40px;
-    height: 40px;
+    width: 13%;
+    /*height: 40px;*/
     float: left;
     /*background-color: #00a1cb;*/
 }
 #name_item{
     height: 40px;
+    /*background-color: #2f21d4;*/
 }
 #stock_info_name{
     /*background-color: #00a1cb;*/
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     min-height: 30px;
     margin-top: 10px;
     /*margin-bottom: auto;*/
     /*margin-top: 10px;*/
-    /*width: 90%;*/
+    width: 25%;
     word-break: break-all;
     float: left;
 }
 #name_content{
     /*background-color: chartreuse;*/
     float: left;
-    width: 180px;
-    margin-left: 10px;
+    width: 62%;
     text-align: center;
     margin-top: 10px;
 }
 #listDate_item{
     margin-top: 10px;
     height: 40px;
+    /*background-color: firebrick;*/
 }
 #stock_info_listDate{
     /*background-color: #2b542c;*/
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     margin-top: 10px;
-    /*width: 150px;*/
+    width: 25%;
     word-break: break-all;
     float: left;
 }
 #listDate_content{
-    /*background-color: #9088ec;*/
+    /*background-color: chocolate;*/
     float: left;
-    width: 180px;
-    margin-left: 10px;
+    width: 62%;
     text-align: center;
     margin-top: 10px;
 }
@@ -121,13 +143,17 @@
 }
 #totalShare_content{
     /*background-color: #00a1cb;*/
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     float: left;
-    width: 180px;
-    margin-left: 10px;
+    width: 62%;
     text-align: center;
     margin-top: 10px;
 }
 #stock_info_totalShares{
+    /*background-color: #2f21d4;*/
+    width: 25%;
     float: left;
     margin-top: 10px;
     word-break: break-all;
@@ -140,25 +166,24 @@
 #region_content{
     /*background-color: #00a1cb;*/
     float: left;
-    width: 180px;
+    width: 62%;
     margin-top: 10px;
-    margin-left: 10px;
     text-align: center;
-    word-break: normal;
+    word-break: break-all;
 }
 #stock_info_region{
     float: left;
     /*background-color: #2f4b93;*/
-    /*min-height: 30px;*/
-    /*margin-left: auto;*/
-    /*margin-right: auto;*/
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     margin-top: 10px;
-    /*width: 90%;*/
+    width: 25%;
     word-break: break-all;
 }
 #primeOperating_item{
     margin-top:10px;
-    /*background-color: chocolate;*/
+    /*background-color: cadetblue;*/
     height: 500px;
 }
 #primeOperating_content{
@@ -168,33 +193,27 @@
 #stock_info_primeOperating{
     float: left;
     /*background-color: #00bdef;*/
-    /*min-height: 30px;*/
-    /*margin-left: auto;*/
-    /*margin-right: auto;*/
     margin-top: 10px;
-    /*width: 90%;*/
+    width: 87%;
     word-break: break-all;
 
 }
 
 #chart1{
     float: left;
-    width: 850px;
-    margin-left: 20px;
+    width: 74%;
     height: 400px;
 }
 #divider_ohlc_factor{
     font-size: 30px;
-    width: 850px;
-    margin-left: 20px;
+    width: 74%;
     float: left;
     border-bottom: solid 1px rgb(151,151,151);
 }
 #factor_chart{
     float: left;
-    width: 850px;
+    width: 74%;
     height: 400px;
-    margin-left:20px;
     /*border: solid 1px #000000;*/
 }
 
@@ -216,7 +235,8 @@
     font-size: 30px;
 }
 #score{
-    width: 550px;
+    /*background-color: #2f21d4;*/
+    width: 48%;
     float: left;
 }
 #score_chart{
@@ -239,13 +259,13 @@
     width: 1px;
     background-color: rgb(151,151,151);
     margin-top:20px;
-    margin-left:20px;
-    margin-right: 20px;
+    /*margin-left:20px;*/
+    /*margin-right: 20px;*/
     float: left;
 }
 #radar{
     float: left;
-    width: 500px;
+    width: 48%;
     /*border: solid 1px #000000;*/
 }
 #divider_news{

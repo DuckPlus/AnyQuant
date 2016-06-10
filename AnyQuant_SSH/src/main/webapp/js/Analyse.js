@@ -2,153 +2,8 @@
  * Created by Adsn on 2016/5/27.
  */
 var chart1;
-function initpie_factor(){
-    var dataArray= [
-        ['市盈率',5],
-        [ '市净率',5],
-        [ '5日换手率',5],
-        [ '10日换手率',5],
-        [ '60日换手率',5],
-        [ '120日换手率',5],
-        [ '市销率',5],
-        [ '市现率',5]
-    ];
-    chart1 = new Highcharts.Chart({
-        colors:['#54FF9F','#46cbee', '#fec157','#CD96CD', '#cfd17d', '#4F94CD', '#FF9655', '#FFF263', '#FF6A6A'] ,//不同组数据的显示背景色，循环引用
-        chart: {
-            width:500,
-            height:300,
-            renderTo: 'pie_factors',//画布所在的div id
-            // plotBackgroundColor: '#f5f2ec',//画布背景色
-            plotBorderWidth: null,//画布边框
-            plotShadow: false,
-            margin:[0,0,0,0]//画布外边框
-        },
-        title: {
-            text: ''//画布题目，此处置空
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                size:'90%',
-                dataLabels: {
-                    enabled: true,
-                    color: '#666666',
-                    connectorWidth: 1,
-                    //distance: 3,
-                    connectorColor: '#666666',
-                    style:{fontSize:'12px',fontWeight:'normal'},
-                    formatter: function() {
-                        return  this.point.name+ Math.round(this.percentage,2) +' %';
-                    }
-                },
-            }
-        },
-        exporting: {
-            buttons: {
-                exportButton: {
-                    enabled:false //不显示导出icon
-                },
-                printButton: {
-                    enabled:false //不显示打印icon
-                }
-            }
-        },
-        credits:{
-            enabled:false//不显示highcharts网址
-        },
-        tooltip:{
-            enabled:false
-        },
-        series: [{
-            type: 'pie',
-            name: '',
-            data: dataArray
-        }]
-    });
-    /*实时监听因子权重改变*/
-    if(/msie/i.test(navigator.userAgent)){//ie浏览器
-        document.getElementById('pe_text').onpropertychange=redrawpie;
-    }else {//非ie浏览器，比如Firefox
-        document.getElementById('pe_text').addEventListener("onpropertychange",redrawpie, true);
-    }
-}
-function redrawpie(){
-    dataArray=[
-        ['市盈率',parseInt($('#pe_text').val())],
-        [ '市净率',parseInt($('#pb_text').val())],
-        [ '5日换手率',parseInt($('#vol5_text').val())],
-        [ '10日换手率',parseInt($('#vol10_text').val())],
-        [ '60日换手率',parseInt($('#vol60_text').val())],
-        [ '120日换手率',parseInt($('#vol120_text').val())],
-        [ '市销率',parseInt($('#ps_text').val())],
-        [ '市现率',parseInt($('#pcf_text').val())]
-    ];
-    this.chart1.series[0].setData(dataArray);
-    this.chart1.series[0].redraw();
-}
-function initLine(data){
-    var boardData=[],benchData=[],length=data.length;
-
-    for(var i=0;i<length;i++){
-        var date=data[i].date;
-        boardData[i]=[
-            new Date(date.year,date.month-1,date.day+1).getTime(),
-            data[i].boardData
-        ];
-        benchData[i]=[
-            new Date(date.year,date.month-1,date.day+1).getTime(),
-            data[i].huShen300Data
-        ];
-    }
-    $('#linechart').highcharts('StockChart', {
-        legend: {
-            enabled: true,
-            shadow: true
-        },
-        tooltip:{
-            xDateFormat:'%Y-%m-%d'
-        },
-        rangeSelector: {
-            selected: 5
-        },
-        title: {
-            text: '与大盘走势比较'
-        },
-        yAxis:{
-            labels: {
-                align: 'left',
-                x: 0,
-                y: -2
-            },
-            title:{
-                text:"收益率"
-            }
-        },
-        series: [
-            {
-                name: myBoardName,
-                data: boardData,
-                type: 'spline',
-                tooltip: {
-                    valueDecimals: 2
-                }
-            },
-            {
-                name: '沪深300',
-                data: benchData,
-                type: 'spline',
-                tooltip: {
-                    valueDecimals: 2
-                }
-            }
-        ]
-    });
-
-
-}
-
+var factorPart1;
+var table_chosen;
 function doAnalyse_diy(){
     var startT=document.getElementById("start").value;
     var endT=document.getElementById("end").value;
@@ -157,7 +12,6 @@ function doAnalyse_diy(){
         "\n起止时间："+startT+"~"+endT);
     location.href="Analyse_charts.html";
 }
-
 
 function doAnalyse(){
     var startT=document.getElementById("start").value;
@@ -173,62 +27,22 @@ function doAnalyse(){
 }
 
 
-function initBaseCode(data){
-    var list=document.getElementById("basecode");
-    for(var i=0;i<data.length;i++){
-        list.options.add(new Option(data[i].name,data[i].code));
-    }
-}
-function chooseStrategy(){
-    var strategy=document.getElementById("strategy").value;
-    if(strategy=="Strategy_PE"){//TODO 这两个策略的参数差别的fake哒~
-        $("#basecode_label").hide();
-        $("#basecode").hide();
-    }
 
-    if(strategy=="Strategy_VOL"){//TODO 这两个策略的参数差别的fake哒~
-        $("#basecode_label").show();
-        $("#basecode").show();
-    }
-}
-$(document).ready(function () {
-    $("ul").idTabs();
-    myBoardName="氮肥";
-    $.getJSON('/Board/getCompareData?boardName='+myBoardName, function (data) {
-        initLine(data);
-    });
-    $.getJSON('/BenchMark/getBenchList', function (data) {
-        initBaseCode(data);
-    });
-    initChosenList();
-    initpie_factor();
-    $.ajax({
-        type:'post',
-        url:'/Stock/getStockDataList',
-        contentType:'application/json;charset=utf-8',
-        success:function (data){
-            initTable_all(data);
-            $("#loading").remove();
-        },
-        error:function () {
-            alert("请求失败");
-        }
-    });
-
-});
 function factorAnalyse(){//分析因子
-    $.ajax({
-        type:'post',
-        url :'/Optional/getRegionDistribution',
-        success:function (data) {
-            var result=[];
-            for(var x in data){
-                result.push([x,data[x]]);
-            }
+    var code_raw=table_chosen.data();
+    var codes=[];
+    for(var i=0;i<code_raw.length;i++){
+        codes[i]=code_raw[i][1];
+    }
+    alert(codes);
+    $.getJSON('/Strategy/getStocksFactorJudgment?'+'codes='+codes+'&start='+'2016-3-1'+'&end='+'2016-4-1'
+        +'&baseBench='+'000001',
+        function (data) {
+            //$("#allstock_list").remove();
             $("#allStocksDiv").remove();
-            init_region_bar(result);
-        }
-    });
+            init_bar(data);
+        });
+
 }
 function initTable_all(allStock) {
     var table = $('#allstock_list').DataTable( {
@@ -309,7 +123,7 @@ function refreshAllList(data){
 
 }
 function initChosenList(){
-    var table = $('#chosenStocks').DataTable( {
+    table_chosen = $('#chosenStocks').DataTable( {
         order:[[1,"asc"]],
         lengthChange:false,
         pageLength:5,
@@ -334,33 +148,47 @@ function initChosenList(){
     } );
     //以下关于自定义搜索框
     $('#search_text_chosen').on('keyup',function () {
-        table.search(this.value).draw();
+        table_chosen.search(this.value).draw();
     });
     //下面是选择行
     $('#chosenStocks tbody').on( 'click', 'tr', function () {
-        table.$('tr.selected').removeClass('selected');
+        table_chosen.$('tr.selected').removeClass('selected');
         $(this).addClass('selected');
-        var selected_row = table.row('.selected').index();
-        var code= table.cell(selected_row,1).data();
-        var name=table.cell(selected_row,0).data();
+        var selected_row = table_chosen.row('.selected').index();
+        var code= table_chosen.cell(selected_row,1).data();
+        var name=table_chosen.cell(selected_row,0).data();
         var arg=name+"&"+code;
         refreshAllList(arg);
-        table.row('.selected').remove().draw(false);
+        table_chosen.row('.selected').remove().draw(false);
     } );
 
 }
-function init_region_bar(data) {
+function init_bar(data) {    
+    var ICdata=[],IRdata=[],WinRatedata=[],AvgProfitdata=[];
+    for(var x in data.sortRankIC){
+        
+        ICdata.push([x,data.sortRankIC[x]]);
+    }
+    for(var x in data.sortRankWinRate){
+       // alert(data.sortRankWinRate[x][0]);
+        WinRatedata.push([x,data.sortRankWinRate[x]]);
+    }
+    for(var x in data.sortRankIR){
+        IRdata.push([x,data.sortRankIR[x]]);
+    }
+    for(var x in data.sortAvgProfit){
+        alert(data.sortAvgProfit[0].PS);
+        AvgProfitdata.push([x,data.sortAvgProfit[x]]);
+    }
+    alert(ICdata.length+" "+IRdata.length+" "+WinRatedata.length+" "+AvgProfitdata.length);
     $('#chart1').highcharts({
         chart: {
             type: 'column',
-            width:500,
+            width:400,
             height:200
         },
         title: {
-            text: 'World\'s largest cities per 2014'
-        },
-        subtitle: {
-            text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
+            text: 'sortRankIC'
         },
         xAxis: {
             type: 'category',
@@ -386,7 +214,7 @@ function init_region_bar(data) {
         },
         series: [{
             name: 'Population',
-            data: data,
+            data: ICdata,
             dataLabels: {
                 enabled: true,
                 rotation: -90,
@@ -404,15 +232,12 @@ function init_region_bar(data) {
     $('#chart2').highcharts({
         chart: {
             type: 'column',
-            width:500,
+            width:400,
             height:200,
             x:100
         },
         title: {
-            text: 'World\'s largest cities per 2014'
-        },
-        subtitle: {
-            text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
+            text: 'sortRankIR'
         },
         xAxis: {
             type: 'category',
@@ -438,7 +263,7 @@ function init_region_bar(data) {
         },
         series: [{
             name: 'Population',
-            data: data,
+            data: IRdata,
             dataLabels: {
                 enabled: true,
                 rotation: -90,
@@ -456,14 +281,11 @@ function init_region_bar(data) {
     $('#chart3').highcharts({
         chart: {
             type: 'column',
-            width:500,
+            width:400,
             height:200
         },
         title: {
-            text: 'World\'s largest cities per 2014'
-        },
-        subtitle: {
-            text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
+            text: 'sortRankWinRate'
         },
         xAxis: {
             type: 'category',
@@ -489,7 +311,7 @@ function init_region_bar(data) {
         },
         series: [{
             name: 'Population',
-            data: data,
+            data: WinRatedata,
             dataLabels: {
                 enabled: true,
                 rotation: -90,
@@ -507,14 +329,11 @@ function init_region_bar(data) {
     $('#chart4').highcharts({
         chart: {
             type: 'column',
-            width:500,
+            width:400,
             height:200
         },
         title: {
-            text: 'World\'s largest cities per 2014'
-        },
-        subtitle: {
-            text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
+            text: 'sortAvgProfit'
         },
         xAxis: {
             type: 'category',
@@ -540,7 +359,7 @@ function init_region_bar(data) {
         },
         series: [{
             name: 'Population',
-            data: data,
+            data: AvgProfitdata,
             dataLabels: {
                 enabled: true,
                 rotation: -90,
@@ -556,3 +375,123 @@ function init_region_bar(data) {
         }]
     });
 }
+function chooseStrategy(){
+    var strategy=document.getElementById("strategy").value;
+    if(strategy=="Strategy_PE"){//TODO 这两个策略的参数差别 
+        // $("#basecode_label").hide();
+    }
+
+    if(strategy=="Strategy_VOL"){//TODO 这两个策略的参数
+        // $("#basecode_label").show();
+    }
+}
+function initpie_factor(){
+    var dataArray= [
+        ['市盈率',5],
+        [ '市净率',5],
+        [ '5日换手率',5],
+        [ '10日换手率',5],
+        [ '60日换手率',5],
+        [ '120日换手率',5],
+        [ '市销率',5],
+        [ '市现率',5]
+    ];
+    chart1 = new Highcharts.Chart({
+        colors:['#54FF9F','#46cbee', '#fec157','#CD96CD', '#cfd17d', '#4F94CD', '#FF9655', '#FFF263', '#FF6A6A'] ,//不同组数据的显示背景色，循环引用
+        chart: {
+            width:500,
+            height:500,
+            renderTo: 'pie_factors',//画布所在的div id
+            // plotBackgroundColor: '#f5f2ec',//画布背景色
+            plotBorderWidth: null,//画布边框
+            plotShadow: false,
+            margin:[0,120,0,120]//画布外边框
+        },
+        title: {
+            text: ''//画布题目，此处置空
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                size:'90%',
+                dataLabels: {
+                    enabled: true,
+                    color: '#666666',
+                    connectorWidth: 1,
+                    //distance: 3,
+                    connectorColor: '#666666',
+                    style:{fontSize:'12px',fontWeight:'normal'},
+                    formatter: function() {
+                        return  this.point.name+ Math.round(this.percentage,2) +' %';
+                    }
+                },
+            }
+        },
+        exporting: {
+            buttons: {
+                exportButton: {
+                    enabled:false //不显示导出icon
+                },
+                printButton: {
+                    enabled:false //不显示打印icon
+                }
+            }
+        },
+        credits:{
+            enabled:false//不显示highcharts网址
+        },
+        tooltip:{
+            enabled:false
+        },
+        series: [{
+            type: 'pie',
+            name: '',
+            data: dataArray
+        }]
+    });
+    /*实时监听因子权重改变*/
+    if(/msie/i.test(navigator.userAgent)){//ie浏览器
+        document.getElementById('pe_text').onpropertychange=redrawpie;
+    }else {//非ie浏览器，比如Firefox
+        document.getElementById('pe_text').addEventListener("onpropertychange",redrawpie, true);
+    }
+}
+function redrawpie(){
+    dataArray=[
+        ['市盈率',parseInt($('#pe_text').val())],
+        [ '市净率',parseInt($('#pb_text').val())],
+        [ '5日换手率',parseInt($('#vol5_text').val())],
+        [ '10日换手率',parseInt($('#vol10_text').val())],
+        [ '60日换手率',parseInt($('#vol60_text').val())],
+        [ '120日换手率',parseInt($('#vol120_text').val())],
+        [ '市销率',parseInt($('#ps_text').val())],
+        [ '市现率',parseInt($('#pcf_text').val())]
+    ];
+    this.chart1.series[0].setData(dataArray);
+    this.chart1.series[0].redraw();
+}
+function initBaseCode(data){
+    var listA=document.getElementById("basecode");
+    var listB=document.getElementById("basecode_diy")
+    for(var i=0;i<data.length;i++){
+        listA.options.add(new Option(data[i].name,data[i].code));
+        listB.options.add(new Option(data[i].name,data[i].code));
+    }
+}
+
+$(document).ready(function () {
+    $("ul").idTabs();
+    
+    $.getJSON('/BenchMark/getBenchList', function (data) {
+        initBaseCode(data);
+    });
+    initChosenList();
+    initpie_factor();
+    $.getJSON('/Stock/getStockDataList',function (data) {
+        initTable_all(data);
+        $("#loading").hide();
+    })
+
+    
+});

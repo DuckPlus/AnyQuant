@@ -39,6 +39,8 @@ public class FactorAnalyseHelper {
     private double[] distribution = {0.5, 0.3, 0.1, 0.07, 0.03};
     //    private int captial = 100000;
 
+
+
     private enum testFactor {PE(false), PB(false), PS(true), PCF(true) , VOL5(false) , VOL10(false);
         boolean upOrDown;
         testFactor(boolean upOrDown){
