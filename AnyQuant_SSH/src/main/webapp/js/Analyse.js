@@ -60,7 +60,7 @@ function doAnalyse_diy(){
     var params = "strategy="+strategy+"&baseCode="+basecode+"&capital="+capital+
         "&taxRate="+taxRate+"&numOfStock="+numOfStock+"&interval="+interval+
         "&start="+startT+"&end="+endT;
-    alert("params:"+params);
+
     location.href="Analyse_result.html?"+params;
 }
 
@@ -84,7 +84,7 @@ function doAnalyse(){
     var params = "strategy="+strategy+"&baseCode="+basecode+"&capital="+capital+
         "&taxRate="+taxRate+"&numOfStock="+numOfStock+"&interval="+interval+
         "&start="+startT+"&end="+endT;
-    alert("params: "+params);
+
     location.href="Analyse_result.html?"+params;
 }
 
@@ -94,17 +94,13 @@ function factorAnalyse(){//分析因子
     startT=document.getElementById("start_diy").value;
     endT=document.getElementById("end_diy").value;
     basecode=document.getElementById("basecode_diy").value;
-    capital=document.getElementById("capital").value;
-    taxRate=document.getElementById("taxRate").value;
+
     var code_raw=table_chosen.data();
     
     for(var i=0;i<code_raw.length;i++){
         codes[i]=code_raw[i][1];
     }alert("DIY"+
         "\n选择的大盘代号："+basecode+
-        "\n起始资金："+capital+
-        "\n交易费率："+taxRate+
-        "\n调仓间隔："+document.getElementById("interval").value+
         "\n起止时间："+startT+"~"+endT+
         "\n股票池："+codes);
     $.getJSON('/Strategy/getStocksFactorJudgment?'+'codes='+codes+'&start='+startT+'&end='+endT
@@ -238,23 +234,19 @@ function initChosenList(){
 }
 function init_bar(data) {    
     var ICdata=[],IRdata=[],WinRatedata=[],AvgProfitdata=[];
-    alert(ICdata.length+" "+IRdata.length+" "+WinRatedata.length+" "+AvgProfitdata.length);
-    for(var x in data.sortRankIC){
-        
+    for(var x in data.sortRankIC){        
         ICdata.push([x,data.sortRankIC[x]]);
     }
     for(var x in data.sortRankWinRate){
-       // alert(data.sortRankWinRate[x][0]);
         WinRatedata.push([x,data.sortRankWinRate[x]]);
     }
     for(var x in data.sortRankIR){
         IRdata.push([x,data.sortRankIR[x]]);
     }
     for(var x in data.sortAvgProfit){
-        alert(data.sortAvgProfit[0].PS);
         AvgProfitdata.push([x,data.sortAvgProfit[x]]);
     }
-    
+    alert(ICdata.length+" "+IRdata.length+" "+WinRatedata.length+" "+AvgProfitdata.length);
     $('#chart1').highcharts({
         chart: {
             type: 'column',
@@ -277,38 +269,31 @@ function init_bar(data) {
         yAxis: {
             min: 0,
             title: {
-                text: 'Population (millions)'
+                text: ''
             }
         },
         legend: {
             enabled: false
         },
         tooltip: {
-            pointFormat: '包含股票数量: <b>{point.y:.0f}</b>'
+            pointFormat: '包含股票数量: <b>{point.y:.4f}</b>'
         },
         series: [{
-            name: 'Population',
+            name: '',
             data: ICdata,
             dataLabels: {
-                enabled: true,
-                rotation: -90,
-                color: '#FFFFFF',
-                align: 'right',
-                format: '{point.y:.0f}', // one decimal
-                y: 10, // 10 pixels down from the top
-                style: {
-                    fontSize: '13px',
-                    fontFamily: 'Verdana, sans-serif'
-                }
+                enabled: false
             }
-        }]
+        }],
+        credits: {
+            enabled:false
+        }
     });
     $('#chart2').highcharts({
         chart: {
             type: 'column',
             width:400,
             height:200,
-            x:100
         },
         title: {
             text: 'sortRankIR'
@@ -326,31 +311,25 @@ function init_bar(data) {
         yAxis: {
             min: 0,
             title: {
-                text: 'Population (millions)'
+                text: ''
             }
         },
         legend: {
             enabled: false
         },
         tooltip: {
-            pointFormat: '包含股票数量: <b>{point.y:.0f}</b>'
+            pointFormat: '包含股票数量: <b>{point.y:.4f}</b>'
         },
         series: [{
-            name: 'Population',
+            name: '',
             data: IRdata,
             dataLabels: {
-                enabled: true,
-                rotation: -90,
-                color: '#FFFFFF',
-                align: 'right',
-                format: '{point.y:.0f}', // one decimal
-                y: 10, // 10 pixels down from the top
-                style: {
-                    fontSize: '13px',
-                    fontFamily: 'Verdana, sans-serif'
-                }
+                enabled:false
             }
-        }]
+        }],
+        credits: {
+            enabled:false
+        }
     });
     $('#chart3').highcharts({
         chart: {
@@ -374,29 +353,33 @@ function init_bar(data) {
         yAxis: {
             min: 0,
             title: {
-                text: 'Population (millions)'
+                text: ''
             }
         },
         legend: {
             enabled: false
         },
         tooltip: {
-            pointFormat: '包含股票数量: <b>{point.y:.0f}</b>'
+            pointFormat: '包含股票数量: <b>{point.y:.4f}</b>'
+        },
+        credits: {
+            enabled:false
         },
         series: [{
-            name: 'Population',
+            name: '',
             data: WinRatedata,
             dataLabels: {
-                enabled: true,
+                enabled:false
+                /* true,
                 rotation: -90,
                 color: '#FFFFFF',
                 align: 'right',
-                format: '{point.y:.0f}', // one decimal
+                format: '{point.y:.4f}', // one decimal
                 y: 10, // 10 pixels down from the top
                 style: {
                     fontSize: '13px',
                     fontFamily: 'Verdana, sans-serif'
-                }
+                }*/
             }
         }]
     });
@@ -422,31 +405,25 @@ function init_bar(data) {
         yAxis: {
             min: 0,
             title: {
-                text: 'Population (millions)'
+                text: ''
             }
         },
         legend: {
             enabled: false
         },
         tooltip: {
-            pointFormat: '包含股票数量: <b>{point.y:.0f}</b>'
+            pointFormat: '包含股票数量: <b>{point.y:.4f}</b>'
         },
         series: [{
-            name: 'Population',
+            name: '',
             data: AvgProfitdata,
             dataLabels: {
-                enabled: true,
-                rotation: -90,
-                color: '#FFFFFF',
-                align: 'right',
-                format: '{point.y:.0f}', // one decimal
-                y: 10, // 10 pixels down from the top
-                style: {
-                    fontSize: '13px',
-                    fontFamily: 'Verdana, sans-serif'
-                }
+                enabled: false
             }
-        }]
+        }],
+        credits: {
+            enabled:false
+        }
     });
 }
 function chooseStrategy(){

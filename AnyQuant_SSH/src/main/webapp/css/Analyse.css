@@ -72,7 +72,7 @@
     box-shadow: 0 10px 6px -6px #777;
 }
 .down_line{
-
+    border-top: solid 1px #ffffff;
 }
 #diy_input2{
     position: absolute;
@@ -83,7 +83,7 @@
     line-height: 40px;/*行间距*/
     background-color: #8B8B7A;
     display: block;
-    height: 600px;
+    height: 650px;
     border-radius: 5px 5px 5px 5px;
     -webkit-box-shadow: 0 10px 6px -6px #777;
     -moz-box-shadow: 0 10px 6px -6px #777;
@@ -98,7 +98,7 @@
 #input2_hint{
     position: absolute;
     left:400px;
-    top:0px
+    top:190px
 }
 #pie_factors{
     position: absolute;
@@ -159,7 +159,9 @@
     margin-left: 3px;
     margin-top: 5px;
 }
-
+input{
+    width:70px
+}
 
 /*下面应该是不会改的*/
 #news_window{
