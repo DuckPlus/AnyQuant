@@ -1,42 +1,92 @@
 /**
- * Created by Adsn on 2016/5/27.
+ * Created by dsn on 2016/5/27.
  */
 var chart1;
 var factorPart1;
 var table_chosen;
+var strategy,basecode,capital;//起始资金
+var taxRate,numOfStock,interval,startT,endT;
+var factorSum=0;
+var codes=[];//股票池
+var peNum=0,pbNum=0,vol5Num=0,vol10Num=0,vol60Num=0,vol120Num=0,psNum=0,pcfNum=0;//各因子权重
 function doAnalyse_diy(){
-    var startT=document.getElementById("start").value;
-    var endT=document.getElementById("end").value;
+    peNum=parseInt(document.getElementById("pe_text").value);
+    pbNum=parseInt(document.getElementById("pb_text").value);
+    vol5Num=parseInt(document.getElementById("vol5_text").value);
+    vol10Num=parseInt(document.getElementById("vol10_text").value);
+    vol60Num=parseInt(document.getElementById("vol60_text").value);
+    vol120Num=parseInt(document.getElementById("vol120_text").value);
+    psNum=parseInt(document.getElementById("ps_text").value);
+    pcfNum=parseInt(document.getElementById("pcf_text").value);
+    factorSum=peNum+pbNum+vol5Num+vol10Num+vol60Num+vol120Num+psNum+pcfNum;
+    peNum/=factorSum;
+    pbNum/=factorSum;
+    vol5Num/=factorSum;
+    vol10Num/=factorSum;
+    vol60Num/=factorSum;
+    vol120Num/=factorSum;
+    psNum/=factorSum;
+    pcfNum/=factorSum;
+
     alert("DIY:"+
+        "\n选择的大盘代号："+basecode+
+        "\n起始资金："+capital+
+        "\n交易费率："+taxRate+
         "\n调仓间隔："+document.getElementById("interval").value+
-        "\n起止时间："+startT+"~"+endT);
-    location.href="Analyse_charts.html";
+        "\n起止时间："+startT+"~"+endT+
+        "\n因子们："+factorSum+
+        "\nPE:"+peNum+
+        "\nPB:"+pbNum+
+        "\nVOL5:"+vol5Num+
+        "\nVOL10:"+vol10Num+
+        "\nVOL60:"+vol60Num+
+        "\nVOL120:"+vol120Num+
+        "\nPS:"+psNum+
+        "\nPCF:"+pcfNum+
+        "\n股票池："+codes       
+    );
+    location.href="Analyse_result.html";
 }
 
 function doAnalyse(){
-    var startT=document.getElementById("start").value;
-    var endT=document.getElementById("end").value;
-    alert("推荐策略："+document.getElementById("strategy").value+
-        "\n选择的大盘代号："+document.getElementById("basecode").value+
-        "\n起始资金："+document.getElementById("capital").value+
-        "\n交易费率："+document.getElementById("taxRate").value+
-        "\n股票数量："+document.getElementById("numOfStock").value+
+    startT=document.getElementById("start").value;
+    endT=document.getElementById("end").value;
+    strategy=document.getElementById("strategy").value;
+    basecode=document.getElementById("basecode").value;
+    capital=document.getElementById("capital").value;
+    taxRate=document.getElementById("taxRate").value;
+    numOfStock=document.getElementById("numOfStock").value;
+    alert("推荐策略："+strategy+
+        "\n选择的大盘代号："+basecode+
+        "\n起始资金："+capital+
+        "\n交易费率："+taxRate+
+        "\n股票数量："+numOfStock+
         "\n调仓间隔："+document.getElementById("interval").value+
         "\n起止时间："+startT+"~"+endT);
-    location.href="Analyse_charts.html";
+    location.href="Analyse_result.html";
 }
 
 
 
 function factorAnalyse(){//分析因子
+    startT=document.getElementById("start_diy").value;
+    endT=document.getElementById("end_diy").value;
+    basecode=document.getElementById("basecode_diy").value;
+    capital=document.getElementById("capital").value;
+    taxRate=document.getElementById("taxRate").value;
     var code_raw=table_chosen.data();
-    var codes=[];
+    
     for(var i=0;i<code_raw.length;i++){
         codes[i]=code_raw[i][1];
-    }
-    alert(codes);
-    $.getJSON('/Strategy/getStocksFactorJudgment?'+'codes='+codes+'&start='+'2016-3-1'+'&end='+'2016-4-1'
-        +'&baseBench='+'000001',
+    }alert("DIY"+
+        "\n选择的大盘代号："+basecode+
+        "\n起始资金："+capital+
+        "\n交易费率："+taxRate+
+        "\n调仓间隔："+document.getElementById("interval").value+
+        "\n起止时间："+startT+"~"+endT+
+        "\n股票池："+codes);
+    $.getJSON('/Strategy/getStocksFactorJudgment?'+'codes='+codes+'&start='+startT+'&end='+endT
+        +'&baseBench='+basecode,
         function (data) {
             //$("#allstock_list").remove();
             $("#allStocksDiv").remove();
