@@ -6,7 +6,6 @@ import util.update.enumeration.Exchange;
 import util.update.po.StockPO;
 import util.update.po.TimeSharingPO;
 
-
 import java.util.List;
 
 /**

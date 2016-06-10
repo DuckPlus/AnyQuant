@@ -3,7 +3,6 @@ package util.update.helper;
 import entity.BenchmarkdataEntity;
 import entity.FactorEntity;
 import entity.StockdataEntity;
-
 import net.sf.json.JSONObject;
 import util.update.po.BenchMarkPO;
 import util.update.po.StockBasicInfo;
