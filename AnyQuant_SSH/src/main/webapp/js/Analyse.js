@@ -162,14 +162,24 @@ function doAnalyse_diy(){
 function doAnalyse(){
     var startT=document.getElementById("start").value;
     var endT=document.getElementById("end").value;
-    alert("推荐策略："+document.getElementById("strategy").value+
-        "\n选择的大盘代号："+document.getElementById("basecode").value+
-        "\n起始资金："+document.getElementById("capital").value+
-        "\n交易费率："+document.getElementById("taxRate").value+
-        "\n股票数量："+document.getElementById("numOfStock").value+
-        "\n调仓间隔："+document.getElementById("interval").value+
-        "\n起止时间："+startT+"~"+endT);
-    location.href="Analyse_charts.html";
+    var param1 = document.getElementById("strategy").value;
+    var param2 = document.getElementById("basecode").value;
+    var param3 = document.getElementById("capital").value;
+    var param4 = document.getElementById("taxRate").value;
+    var param5 = document.getElementById("numOfStock").value;
+    var param6 = document.getElementById("interval").value;
+    // alert("推荐策略："+document.getElementById("strategy").value+
+    //     "\n选择的大盘代号："+document.getElementById("basecode").value+
+    //     "\n起始资金："+document.getElementById("capital").value+
+    //     "\n交易费率："+document.getElementById("taxRate").value+
+    //     "\n股票数量："+document.getElementById("numOfStock").value+
+    //     "\n调仓间隔："+document.getElementById("interval").value+
+    //     "\n起止时间："+startT+"~"+endT);
+    var params = "strategy="+param1+"&baseCode="+param2+"&capital="+param3+
+        "&taxRate="+param4+"&numOfStock="+param5+"&interval="+param6+
+        "&start="+startT+"&end="+endT;
+    alert("params: "+params);
+    location.href="Analyse_result.html?"+params;
 }
 
 
