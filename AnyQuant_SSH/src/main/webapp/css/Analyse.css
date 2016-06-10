@@ -71,6 +71,9 @@
     -moz-box-shadow: 0 10px 6px -6px #777;
     box-shadow: 0 10px 6px -6px #777;
 }
+.down_line{
+
+}
 #diy_input2{
     position: absolute;
     left: 10px ;
@@ -80,7 +83,7 @@
     line-height: 40px;/*行间距*/
     background-color: #8B8B7A;
     display: block;
-    height: 480px;
+    height: 600px;
     border-radius: 5px 5px 5px 5px;
     -webkit-box-shadow: 0 10px 6px -6px #777;
     -moz-box-shadow: 0 10px 6px -6px #777;
