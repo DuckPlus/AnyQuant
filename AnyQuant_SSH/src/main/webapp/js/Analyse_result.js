@@ -7,51 +7,80 @@ var trasaction_data_all;
 var total_capital;
 $(document).ready(function () {
 
-    var data1 = '{"name":"Strategy_Vol","capital":1000000,"taxRate":0.01,"baseCode":"000010","interval":7,"start":"2015-01-01","end":"2015-06-01","vol":30}';
-    var json_data = JSON.parse(data1);
-    var data2 = '{"codes":"sh6000010,sh6000011,sh6000012,sh6000013,sh6000014","capital":1000000,"taxRate":0.01,"baseCode":"000010","interval":7,"start":"2015-01-01","end":"2015-06-01","factorWeight":"?"}';
-    var json_data2 = JSON.parse(data2);
     var url = location.href.split("?")[1];
-    draw_compare_chart(url);
-    var data=
-        [
-        {
-            "factor":"FACTOR2",
-            "weight":0.2
-        },
-        {
-           "factor":"FACTOR1",
-           "weight":0.5
-        }, 
-            {
-                "factor":"FACTOR3",
-                "weight":0.3
-            }
-    ];
-    var data2 = 
-    [
-        {"stock_name":"stock 1","stock_code":"sh600001"},
-        {"stock_name":"stock 2","stock_code":"sh600002"},
-        {"stock_name":"stock 1","stock_code":"sh600001"},
-        {"stock_name":"stock 2","stock_code":"sh600002"},
-        {"stock_name":"stock 1","stock_code":"sh600001"},
-        {"stock_name":"stock 2","stock_code":"sh600002"},
-        {"stock_name":"stock 1","stock_code":"sh600001"},
-        {"stock_name":"stock 2","stock_code":"sh600002"},
-        {"stock_name":"stock 1","stock_code":"sh600001"},
-        {"stock_name":"stock 2","stock_code":"sh600002"},
-        {"stock_name":"stock 3","stock_code":"sh600003"}
-    ];
-    
-    init_factor_table(data);
-    init_stock_pool_table(data2);
-    // init_transaction_table();
-    init_transaction_detail_table();
-    // $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
-    //     init_compare_chart(data);
-    // });//
-});
+    if(url.split("&")[0].split("=")[1]!="diy") {
+        draw_compare_chart(url);
+        var data =
+            [
+                {
+                    "factor": "FACTOR2",
+                    "weight": 0.2
+                },
+                {
+                    "factor": "FACTOR1",
+                    "weight": 0.5
+                },
+                {
+                    "factor": "FACTOR3",
+                    "weight": 0.3
+                }
+            ];
+        var data2 =
+            [
+                {"stock_name": "stock 1", "stock_code": "sh600001"},
+                {"stock_name": "stock 2", "stock_code": "sh600002"},
+                {"stock_name": "stock 1", "stock_code": "sh600001"},
+                {"stock_name": "stock 2", "stock_code": "sh600002"},
+                {"stock_name": "stock 1", "stock_code": "sh600001"},
+                {"stock_name": "stock 2", "stock_code": "sh600002"},
+                {"stock_name": "stock 1", "stock_code": "sh600001"},
+                {"stock_name": "stock 2", "stock_code": "sh600002"},
+                {"stock_name": "stock 1", "stock_code": "sh600001"},
+                {"stock_name": "stock 2", "stock_code": "sh600002"},
+                {"stock_name": "stock 3", "stock_code": "sh600003"}
+            ];
 
+        init_factor_table(data);
+        init_stock_pool_table(data2);
+        // init_transaction_table();
+        init_transaction_detail_table();
+    }else{
+        //diy part
+        alert("diy");
+        draw_compare_chart_diy(url);
+    }
+});
+function draw_compare_chart_diy(url) {
+    var params = url.split("&");
+    var data_obj = new Object();
+    var factor_map = ["PE","PB","VOL5","VOL10","VOL60","VOL120","PS","PCF"];
+    data_obj.baseCode = params[1].split("=")[1];
+    data_obj.capital = params[2].split("=")[1];
+    data_obj.taxRate = params[3].split("=")[1];
+    data_obj.codes = params[4].split("=")[1];
+    data_obj.interval = params[5].split("=")[1];
+    data_obj.start = params[6].split("=")[1];
+    data_obj.end = params[7].split("=")[1];
+    var factor_weight = {};
+    var factors = params[8].split("=")[1].split(",");
+    for (var i=0;i<factors.length;i++){
+        if(factors[i]!=0){
+            factor_weight[factor_map[i]] = parseFloat(factors[i]);
+        }
+    }
+    data_obj.factorWeight = factor_weight;
+    data_obj.investWeight = params[9].split("=")[1];
+    document.getElementById('start_fund').innerHTML = data_obj.capital;
+    document.getElementById('begin_time').innerHTML = data_obj.start;
+    document.getElementById('end_time').innerHTML = data_obj.end;
+    document.getElementById('trade_rate').innerHTML = data_obj.taxRate;
+    document.getElementById('base_bench').innerHTML = data_obj.baseCode;
+    document.getElementById('interval').innerHTML = data_obj.interval;
+    // alert(JSON.stringify(data_obj));
+    // alert(JSON.stringify(factor_weight));
+    test_strategy_with_factor(JSON.stringify(data_obj));
+
+}
 function draw_compare_chart(url_params) {
     var params = url_params.split("&");
     var data_obj = new Object();
@@ -139,24 +168,18 @@ function test_specific_strategy(json_data) {
     });
 }
 function test_strategy_with_factor(json_data) {
+    alert("params-->"+json_data);
     $.ajax({
         type:'post',
         url:'/Strategy/analyseWithFactor',
         // data:{name:"Strategy_Vol",capital:1000000,
         //     taxRate:0.001,baseCode:"000010",interval:7,start:"2015/01/01",end:"2015/06/01",vol:100},
-        data:json_data,
+        data:{arguments:json_data},
         success:function (data) {
             alert("seccess !");
         },
         error:function (data) {
             alert("error:");
-            var result = [];
-            for(var x in data){
-                result.push([x,data[x]]);
-            }
-            // for(var i=18;i<30;i++) {
-            //     alert(result[i]);
-            // }
         }
     });
 }

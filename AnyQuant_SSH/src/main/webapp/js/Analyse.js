@@ -58,9 +58,10 @@ function doAnalyse_diy(){
         "\nPCF:"+pcfNum+
         "\n股票池："+codes
     );
-    var params = "strategy="+strategy+"&baseCode="+basecode+"&capital="+capital+
-        "&taxRate="+taxRate+"&numOfStock="+numOfStock+"&interval="+interval+
-        "&start="+startT+"&end="+endT;
+    var params = "jump_type=diy"+"&baseCode="+basecode+"&capital="+capital+
+        "&taxRate="+taxRate+"&codes="+codes+"&interval="+interval+
+        "&start="+startT+"&end="+endT+"&factorWeight="+peNum+","+pbNum+","+vol5Num+","+vol10Num+","+vol60Num+","+
+        vol120Num+","+psNum+","+pcfNum+"&investWeight";
 
     location.href="Analyse_result.html?"+params;
 }
