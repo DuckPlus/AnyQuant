@@ -1,12 +1,13 @@
 package vo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by 67534 on 2016/5/25.
  */
-public class ReportVO {
+public class ReportVO implements Serializable {
 
 
 

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -333,5 +333,58 @@ public class BaseDAOImpl implements BaseDAO {
         Criteria criteria = session.createCriteria(c);
         criteria.add(eq(column, value));
         return criteria.list();
+    }
+
+    @Override
+    public byte[] ObjectToBytes(Object ob) {
+
+        try {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            ObjectOutputStream outputStream = new ObjectOutputStream(out);
+            outputStream.writeObject(ob);
+            byte [] bytes = out.toByteArray();
+            outputStream.close();
+            return bytes;
+        } catch (Exception e) {
+            // TODO: handle exception
+
+            System.out.println( " ObjectToBlob " );
+            return null ;
+        }
+
+
+    }
+
+    @Override
+    public Object BytesToObject(byte[] bytes) {
+            try {
+                Object obj = null;
+                ObjectInputStream in =
+                        new ObjectInputStream(new ByteArrayInputStream(bytes));
+                obj = in.readObject();
+                in.close();
+                return obj;
+            } catch (Exception e) {
+                // TODO: handle exception
+
+                System.out.println( " BlobToObject " );
+                e.printStackTrace();
+
+            }
+            return null;
+    }
+
+    @Override
+    public void saveObject(Object object) {
+
+        try {
+            Session session = getNewSession();
+            Transaction tx =session.beginTransaction();
+            session.save(object);
+            tx.commit();
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
