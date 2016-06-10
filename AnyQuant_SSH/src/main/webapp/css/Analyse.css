@@ -87,7 +87,7 @@
     box-shadow: 0 10px 6px -6px #777;
 }
 #input1_hint{
-    z-index: 9999;
+    z-index: 1;
     position: absolute;
     left:400px;
     top:0px
@@ -98,7 +98,6 @@
     top:0px
 }
 #pie_factors{
-
     position: absolute;
     left: 430px;
     width: 600px;

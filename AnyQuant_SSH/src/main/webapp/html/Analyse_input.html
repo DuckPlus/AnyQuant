@@ -110,8 +110,8 @@
             </div>
             <div>
                 <label for="taxRate" >交易费率</label>
-                <input id="taxRate" type="range" min="0" max="1"  step="0.001"  onchange="getTaxRate()"/>
-                <label id="taxRate_num">0.5</label>
+                <input id="taxRate" type="range" min="0" max="0.01"  step="0.0001"  onchange="getTaxRate()"/>
+                <label id="taxRate_num">0.005</label>
                 <script>
                     function getTaxRate(){
                         document.getElementById("taxRate_num").innerHTML=
@@ -166,7 +166,7 @@
                     <select id="basecode_diy" > </select>
                 </div><br>
                 <div><label id="chosen_label">股票池</label></div>
-                   <!-- <input type="text" id="search_text_chosen" placeholder="Search.."></span>-->
+                <!-- <input type="text" id="search_text_chosen" placeholder="Search.."></span>-->
                 <div>
                     <label for="capital_diy" >起始资金</label>
                     <select id="capital_diy" >
@@ -180,10 +180,10 @@
                 </div><br>
                 <div>
                     <label for="taxRate_diy" >交易费率</label>
-                    <input id="taxRate_diy" type="range" min="0" max="1"  step="0.001"  onchange="getTaxRate()"/>
-                    <label id="taxRate_num_diy">0.5</label>
+                    <input id="taxRate_diy" type="range" min="0" max="0.01"  step="0.0001"  onchange="getTaxRate_diy()"/>
+                    <label id="taxRate_num_diy">0.005</label>
                     <script>
-                        function getTaxRate(){
+                        function getTaxRate_diy(){
                             document.getElementById("taxRate_num_diy").innerHTML=
                                     document.getElementById("taxRate_diy").value;
                         }
