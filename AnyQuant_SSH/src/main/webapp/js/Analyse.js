@@ -1,7 +1,6 @@
 /**
  * Created by dsn on 2016/5/27.
  */
-var helpbtnState=0;//分析因子的按钮的状态
 var allStock;
 var chart1;
 var factorPart1;
@@ -14,6 +13,7 @@ var peNum=0,pbNum=0,vol5Num=0,vol10Num=0,vol60Num=0,vol120Num=0,psNum=0,pcfNum=0
 var content_of_analyse_factor_info;
 function doAnalyse_diy(){
     var code_raw=table_chosen.data();
+    alert("马上要跳转啦 看看有多少股票："+code_raw.length);
 
     for(var i=0;i<code_raw.length;i++){
         codes[i]=code_raw[i][1];
@@ -430,7 +430,6 @@ function init_bar(data) {
         }
     });
     document.getElementById("factor_analyse_info_label").innerHTML="~现在你可以参考着配置因子啦^o^";
-    helpbtnState=1;//分析过一次了
     document.getElementById("helpbtn").innerHTML="重新分析因子表现";
     document.getElementById("helpbtn").onclick=showAllStock_list;
 
