@@ -1,7 +1,6 @@
 package service.impl.strategy;
 
 import DAO.FactorDAO;
-import DAO.StockDAO;
 import entity.FactorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,10 @@ import vo.ReportVO;
 import vo.TradeDataVO;
 import vo.TradeDetailVO;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 因子选股策略
@@ -26,12 +28,6 @@ import java.util.*;
 public class FactorStrategy extends MultiStockStrategy {
     @Autowired
     FactorDAO factorDAO;
-    @Autowired
-    StockDAO stockDAO;
-    /**
-     * 用于存储股票代码和名称
-     */
-    Map<String,String>  codeAndNames;
 
     /**
      * 用户选择的因子和比重
@@ -78,21 +74,20 @@ public class FactorStrategy extends MultiStockStrategy {
                               String baseCode , MyDate start , MyDate end,
                                List<String> stocks,  Map  <AnalysisFactor,Double>  weightedFactors,
                                double [] investWeight,int interval){
-        super.setPara(capital,taxRate,baseCode,start,end);
+        super.setPara_Mutil(capital,taxRate,baseCode,start,end,stocks.size());
 
         this.stocks = stocks;
         this.weightedFactors=weightedFactors;
-        this.codeAndNames = new HashMap<>();
         this.investWeight=investWeight;
         this.interval=interval;
         this.numOfLevel=investWeight.length;
         this.gap=stocks.size()/numOfLevel; //每一层的股票数量
 
+        /**
+         * 因为这个策略每次的股票池是固定的，股票名称只要获取一次即可
+         */
+        this.fatchNames();
 
-        this.vol=stocks.size();
-        this.lots=new int [vol];
-        this.buy_Prices=new double [vol];
-        this.sell_Prices=new double [vol];
     }
 
 
@@ -106,11 +101,6 @@ public class FactorStrategy extends MultiStockStrategy {
         System.out.println("Strategy_Factor init-------");
         this.curTradeDay=start;
         this.buyStocks();
-        List<String> names = this.stockDAO.getNames(stocks);
-        for(int i=0;i<stocks.size();i++){
-            codeAndNames.put(stocks.get(i),names.get(i));
-        }
-
     }
 
     /**

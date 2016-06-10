@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import util.DateCalculator;
 import util.MyDate;
 import vo.ReportVO;
+import vo.TradeDataVO;
+import vo.TradeDetailVO;
 
 import java.util.List;
 
@@ -60,6 +62,11 @@ public class Strategy_Vol extends MultiStockStrategy{
      */
     @Override
     protected void buyStocks() {
+
+
+
+        TradeDataVO tradeDataVO = new TradeDataVO();
+        tradeDataVO.tradeDate=curTradeDay;
         /**
         * 首先清空股票池
         */
@@ -79,7 +86,13 @@ public class Strategy_Vol extends MultiStockStrategy{
                 //System.out.println(code);
             }
         }
-        System.out.println("size: "+stocks.size()+"---------------------");
+
+        /**
+         * 因为这个策略每次的股票池是动态生成的因此，股票名称也要动态获取
+         */
+        this.fatchNames();
+
+       // System.out.println("size: "+stocks.size()+"---------------------");
 
         /**
          * 获取每只股票交易日当天的均价（总交易额/总交易量）
@@ -92,6 +105,7 @@ public class Strategy_Vol extends MultiStockStrategy{
         }
 
 
+        double expensePerStock = curCapital/(double)vol;
         /**
          * 确定每只股票买入的手数
          * 并记录花费
@@ -104,17 +118,34 @@ public class Strategy_Vol extends MultiStockStrategy{
             if(buy_Prices[i]==0){
                 lots[i]=0;
             }else{
-                lots[i]= (int) (capital/vol/(buy_Prices[i]*stocksPerLot));
+                lots[i]= (int) (expensePerStock/(buy_Prices[i]*stocksPerLot));
+                //System.out.println("buy "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+buy_Prices[i]);
+                expense+=lots[i]*stocksPerLot*buy_Prices[i];
+                TradeDetailVO detailVO = new TradeDetailVO();
+                detailVO.code=stocks.get(i);
+                detailVO.codeName=codeAndNames.get(stocks.get(i));
+                detailVO.buyOrSell=true;
+                detailVO.numofTrade=lots[i];
+                detailVO.tradePrice=buy_Prices[i];
+
+                tradeDataVO.tradeDetailVOs.add(detailVO);
             }
 
-            System.out.println("buy "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+buy_Prices[i]);
-            expense+=lots[i]*stocksPerLot*buy_Prices[i];
+
         }
 
         /**
          * 记录当日的指数价格
          */
         base_BuyPrice=benchMarkDAO.getAvgPrice(this.baseCode,curTradeDay);
+        /**
+         * 更新当前资本
+         */
+        this.curCapital=this.curCapital-this.expense;
+
+        tradeDataVO.nowCapital=this.curCapital;
+        tradeDataVO.profit=this.profit;
+        this.reportVO.tradeDataVOList.add(tradeDataVO);
     }
 
 
@@ -123,7 +154,7 @@ public class Strategy_Vol extends MultiStockStrategy{
      */
     @Override
     protected void sellStocks() {
-        simpleSellStocks();
+        super.simpleSellStocks();
     }
 
 
