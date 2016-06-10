@@ -106,7 +106,7 @@ public class FactorStrategyTest {
                     }
                     System.out.print(100*detailVO.numofTrade+" lots ");
                     System.out.print(detailVO.code+"  "+detailVO.codeName+" at");
-                    System.out.println("price: "+detailVO.tradePrice);
+                    System.out.println(" price: "+detailVO.tradePrice);
 
                 }
             }
