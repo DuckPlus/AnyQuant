@@ -78,4 +78,9 @@ public interface StrategyService {
      * 保存策略报告
      */
     void saveReport(String userID  ,ReportVO vo);
+
+    /**
+     * 获得用户所有策略报告
+     */
+    List<ReportVO> getAllReports(String userID);
 }

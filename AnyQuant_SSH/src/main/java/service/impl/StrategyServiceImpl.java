@@ -92,5 +92,10 @@ public class StrategyServiceImpl implements StrategyService {
         strategyDAO.saveReport(userID , vo);
     }
 
+    @Override
+    public List<ReportVO> getAllReports(String userID) {
+        return strategyDAO.getAllReports(userID);
+    }
+
 
 }
