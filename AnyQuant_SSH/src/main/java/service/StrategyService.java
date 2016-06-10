@@ -73,4 +73,9 @@ public interface StrategyService {
      * @return analysis report
      */
     ReportVO analyseWithStrategyPE(int vol, int interval, double capital, double taxRate, String baseCode, MyDate start, MyDate end);
+
+    /**
+     * 保存策略报告
+     */
+    void saveReport(String userID  ,ReportVO vo);
 }
