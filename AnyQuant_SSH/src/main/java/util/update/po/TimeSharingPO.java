@@ -17,9 +17,6 @@ public class TimeSharingPO {
 	
 	public double value;
 
-	public TimeSharingPO() {
-		// TODO Auto-generated constructor stub
-	}
 
 	public TimeSharingPO(MyDate nowTime, double nowPrice, long volume, double value) {
 		super();

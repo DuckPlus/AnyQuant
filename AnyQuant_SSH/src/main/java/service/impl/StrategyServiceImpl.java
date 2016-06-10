@@ -1,5 +1,6 @@
 package service.impl;
 
+import DAO.StrategyDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.StrategyService;
@@ -28,6 +29,8 @@ public class StrategyServiceImpl implements StrategyService {
     private FactorAnalyseHelper factorAnalyseHelper;
     @Autowired
     private FactorStrategy factorStrategy;
+    @Autowired
+    private StrategyDAO strategyDAO;
 //    @Override
 //    public FactorJudgmentVO getStocksFactorJudgment(List<String> codes) {
 //        return factorAnalyseHelper.report(codes);
@@ -82,6 +85,16 @@ public class StrategyServiceImpl implements StrategyService {
         strategy_pe.setPara_PE
                 (capital,taxRate,baseCode,start,end,vol,interval);
         return strategy_pe.analyse();
+    }
+
+    @Override
+    public void saveReport(String userID , ReportVO vo) {
+        strategyDAO.saveReport(userID , vo);
+    }
+
+    @Override
+    public List<ReportVO> getAllReports(String userID) {
+        return strategyDAO.getAllReports(userID);
     }
 
 
