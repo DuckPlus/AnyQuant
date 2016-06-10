@@ -92,6 +92,7 @@ function test_specific_strategy(json_data) {
             // alert("->"+data.cumRtnVOList[0].baseValue);
             alert("length->"+data.cumRtnVOList.length);
             var cumRtnVOList = data.cumRtnVOList;
+            var trade_data = data.tradeDataVOList;
             var compare_datas = [];
             var compare_base = [];
             var compare_test = [];
@@ -102,20 +103,30 @@ function test_specific_strategy(json_data) {
                 var date = new Date(str_date).getTime();
                 compare_base.push([date,cumRtnVOList[i].baseValue]);
                 compare_test.push([date,cumRtnVOList[i].testValue]);
-                alert("base "+compare_base+"test "+compare_test);
+                // alert("base "+compare_base+"test "+compare_test);
             }
             compare_datas.push(compare_base);
             compare_datas.push(compare_test);
-            // alert("[test] "+compare_test);
-            // alert("total "+compare_datas);
             init_compare_chart(compare_datas);
+            var trade_table_data;
+            var trade_table_data_item = new Object();
+            document.getElementById('summary').innerHTML= JSON.stringify(trade_data);
+            for (var i=0;i<trade_data.length;i++){
+                var trade_total=0,trade_num=0;
+                for(var j=0;j<trade_data[i].tradeDetailVOs.length;j++){
+                    // alert("trade_num:"+trade_num+"  trade_total:"+trade_total);
+                    trade_num += trade_data[i].tradeDetailVOs[j].numofTrade;
+                    trade_total += (trade_data[i].tradeDetailVOs[j].tradePrice * trade_data[i].tradeDetailVOs[j].numofTrade);
+                }
+                trade_table_data_item.date=trade_data[i].tradeDate.year+"-"+trade_data[i].tradeDate.month+"-"+trade_data[i].tradeDate.day;
+                trade_table_data_item.trade_amount = trade_total;
+                trade_table_data_item.trade_num = trade_num;
+
+                // alert("date"+trade_table_data_item.date+"total"+trade_table_data_item.trade_amount+" num:"+trade_table_data_item.trade_num);
+            }
         },
         error:function (data) {
             alert("error:");
-            // var result = [];
-            // for(var x in data){
-            //     result.push([x,data[x]]);
-            // }
         }
     });
 }
