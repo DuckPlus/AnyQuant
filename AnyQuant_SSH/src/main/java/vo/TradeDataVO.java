@@ -2,6 +2,7 @@ package vo;
 
 import util.MyDate;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * @author Qiang
  * @date 6/6/16
  */
-public class TradeDataVO {
+public class TradeDataVO implements Serializable {
 
     /**
      * 交易日期
