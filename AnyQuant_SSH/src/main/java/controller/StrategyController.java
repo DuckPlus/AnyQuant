@@ -3,6 +3,7 @@ package controller;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,7 +62,7 @@ public class StrategyController {
      * @return analysis report
      */
     @RequestMapping(value = "/analyseWithFactor", method = RequestMethod.POST)
-    public ReportVO analyseWithFactor(String arguments) {
+    public ReportVO analyseWithFactor(@RequestBody String arguments) {
         JSONObject jsonObject = JSONObject.fromObject(arguments);
         System.out.println(arguments);
         System.out.println(jsonObject);
@@ -74,7 +75,13 @@ public class StrategyController {
         String baseCode = jsonObject.getString("baseCode");
         int interval = jsonObject.getInt("interval");
         double[] investWeight = Arrays.stream(jsonObject.getString("investWeight").split(Configure.STOCK_SPLITER)).mapToDouble(Double::parseDouble).toArray();
+
+
+        for (int i = 0; i < stockCodes.size(); i++) {
+            System.out.println(stockCodes.get(i));
+        }
         System.out.println(start.DateToString());
+
         System.out.println(end.DateToString());
         System.out.println(factorWeight);
         for (Map.Entry<String  , Double> entry : factorWeight.entrySet()){
