@@ -94,7 +94,7 @@
 #input1_hint1{
     z-index: 1;
     position: absolute;
-    left:180px;
+    left:165px;
     top:-5px
 }
 #input1_hint2{
@@ -169,7 +169,6 @@
     margin-left: auto;
 }
 #analysebtn{
-    position: absolute;
     width:300px;
     text-align: center;
     top:380px;
@@ -281,9 +280,8 @@ a.tab_item:hover{
     border-right: solid 2px rgb(151,151,151);
 }
 #recommand_container{
-    position: absolute;
-    left: 20px;
-    top:120px;
+    margin-left: auto;
+    margin-right: auto;
     width: 450px;
     text-align: left;
     color:#fff;
