@@ -459,6 +459,7 @@ function initpie(){
             // plotBackgroundColor: '#f5f2ec',//画布背景色
             plotBorderWidth: null,//画布边框
             plotShadow: false,
+            type:'pie',
             margin:[0,120,0,120]//画布外边框
         },
         title: {
@@ -480,6 +481,22 @@ function initpie(){
                         return  this.point.name+ Math.round(this.percentage,2) +' %';
                     }
                 },
+                point:{
+                    events:{
+                        click: function(e) {
+                            this.slice(false);
+                            if ( e && e.stopPropagation )//禁止事件冒泡
+                                e.stopPropagation();
+                            else
+                                window.event.cancelBubble = true;
+                            return false;
+                        },
+                        mouseOver: function(evt){
+                            this.slice(false);//禁止选中扇形滑开
+                        },
+                    }
+
+                }
             }
         },
         exporting: {
@@ -534,6 +551,22 @@ function initpie(){
                         return  this.point.name+ Math.round(this.percentage,2) +' %';
                     }
                 },
+                point:{
+                    events:{
+                        click: function(e) {
+                            this.slice(false);
+                            if ( e && e.stopPropagation )//禁止事件冒泡
+                                e.stopPropagation();
+                            else
+                                window.event.cancelBubble = true;
+                            return false;
+                        },
+                        mouseOver: function(evt){
+                            this.slice(false);//禁止选中扇形滑开
+                        },
+                    }
+
+                }
             }
         },
         exporting: {
