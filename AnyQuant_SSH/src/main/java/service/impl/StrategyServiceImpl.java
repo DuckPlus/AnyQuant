@@ -94,7 +94,7 @@ public class StrategyServiceImpl implements StrategyService {
 
     @Override
     public List<ReportVO> getAllReports(String userID) {
-        return strategyDAO.getAllReports(String userID);
+        return strategyDAO.getAllReports(userID);
     }
 
 
