@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import util.MyDate;
 import vo.ReportVO;
 import vo.TradeDataVO;
-import vo.TradeDetailVO;
 
 import java.util.List;
 
@@ -30,8 +29,8 @@ public class Strategy_PE extends MultiStockStrategy {
         super.setPara_Mutil(capital,taxRate,baseCode,start,end,vol);
 
         this.interval=interval;
-        this.low_PE=25;
-        this.high_PE=30;
+        this.low_PE=20;
+        this.high_PE=40;
     }
 
 
@@ -85,9 +84,10 @@ public class Strategy_PE extends MultiStockStrategy {
         /**
          * 挑选vol只股票加入股票池
          */
-        int i=0;
-        for(String code:codes){
-            stocks.add(code);
+        int gap=codes.size()/vol;
+        int i;
+        for( i=0;i<codes.size();i+=gap){
+            stocks.add(codes.get(i));
             i++;
             if(i==vol){
                 break;
@@ -108,12 +108,12 @@ public class Strategy_PE extends MultiStockStrategy {
          */
         double [] temp=stockDataDAO.getAvgPriceByCodes(stocks,curTradeDay);
         buy_Prices= new double[vol]; //这里讲买入价格全设为0
-        for( i=0;i<temp.length;i++){
+        for( i=0;i<stocks.size();i++){
             buy_Prices[i]=temp[i];
         }
 
 
-        double expensePerStock = curCapital/(double)vol;
+        double expensePerStock = curCapital/(double)stocks.size();
         /**
          * 注意stocks是被选中的vol只股票
          * 确定每只股票买入的手数
@@ -132,14 +132,8 @@ public class Strategy_PE extends MultiStockStrategy {
                 //System.out.println("buy "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+buy_Prices[i]);
 
                 expense+=lots[i]*stocksPerLot*buy_Prices[i];
-                TradeDetailVO detailVO = new TradeDetailVO();
-                detailVO.code=stocks.get(i);
-                detailVO.codeName=codeAndNames.get(stocks.get(i));
-                detailVO.buyOrSell=true;
-                detailVO.numofTrade=lots[i];
-                detailVO.tradePrice=buy_Prices[i];
+                super.addNewTradeDetailVO(i,true,tradeDataVO);
 
-                tradeDataVO.tradeDetailVOs.add(detailVO);
             }
 
 

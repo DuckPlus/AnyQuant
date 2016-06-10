@@ -10,7 +10,6 @@ import util.enumration.AnalysisFactor;
 import vo.CumRtnVO;
 import vo.ReportVO;
 import vo.TradeDataVO;
-import vo.TradeDetailVO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -181,14 +180,7 @@ public class FactorStrategy extends MultiStockStrategy {
                         expense+=lots[j]*stocksPerLot*buy_Prices[j];
                     //    System.out.println("buy "+stocks.get(j)+" "+lots[j]*stocksPerLot+" at price: "+buy_Prices[j]);
 
-                        TradeDetailVO detailVO = new TradeDetailVO();
-                        detailVO.code=stocks.get(j);
-                        detailVO.codeName=codeAndNames.get(stocks.get(j));
-                        detailVO.buyOrSell=true;
-                        detailVO.numofTrade=lots[j];
-                        detailVO.tradePrice=buy_Prices[j];
-
-                        tradeDataVO.tradeDetailVOs.add(detailVO);
+                        super.addNewTradeDetailVO(i,true,tradeDataVO);
 
                     }
 
@@ -249,16 +241,7 @@ public class FactorStrategy extends MultiStockStrategy {
 
                     // System.out.println("sell "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+sell_Prices[i]);
 
-
-                    TradeDetailVO detailVO = new TradeDetailVO();
-                    detailVO.code=stocks.get(i);
-                    detailVO.codeName=codeAndNames.get(stocks.get(i));
-                    detailVO.buyOrSell=false;
-                    detailVO.numofTrade=lots[i];
-                    detailVO.tradePrice=sell_Prices[i];
-
-                    tradeDataVO.tradeDetailVOs.add(detailVO);
-
+                    super.addNewTradeDetailVO(i,false,tradeDataVO);
 
                     income+=sell_Prices[i]*lots[i]*stocksPerLot;
                     tax+=sell_Prices[i]*lots[i]*stocksPerLot*taxRate;

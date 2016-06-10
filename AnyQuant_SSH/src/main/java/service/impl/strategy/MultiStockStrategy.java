@@ -125,14 +125,7 @@ public abstract class MultiStockStrategy extends BaseStrategy {
                     sell_Prices[i]=temp[i];
                 }
 
-                TradeDetailVO detailVO = new TradeDetailVO();
-                detailVO.code=stocks.get(i);
-                detailVO.codeName=codeAndNames.get(stocks.get(i));
-                detailVO.buyOrSell=false;
-                detailVO.numofTrade=lots[i];
-                detailVO.tradePrice=sell_Prices[i];
-
-                tradeDataVO.tradeDetailVOs.add(detailVO);
+                this.addNewTradeDetailVO(i,false,tradeDataVO);
 
                 //System.out.println("sell "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+sell_Prices[i]);
 
@@ -175,5 +168,19 @@ public abstract class MultiStockStrategy extends BaseStrategy {
         this.reportVO.tradeDataVOList.add(tradeDataVO);
     }
 
+
+
+    protected void addNewTradeDetailVO(int index, boolean buyOrSell, TradeDataVO tradeDataVO){
+
+        TradeDetailVO detailVO = new TradeDetailVO();
+
+        detailVO.code=stocks.get(index);
+        detailVO.codeName=codeAndNames.get(stocks.get(index));
+        detailVO.buyOrSell=buyOrSell;
+        detailVO.numofTrade=lots[index];
+        detailVO.tradePrice=buy_Prices[index];
+
+        tradeDataVO.tradeDetailVOs.add(detailVO);
+    }
 
 }

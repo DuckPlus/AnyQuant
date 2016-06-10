@@ -5,7 +5,6 @@ import util.DateCalculator;
 import util.MyDate;
 import vo.ReportVO;
 import vo.TradeDataVO;
-import vo.TradeDetailVO;
 
 import java.util.List;
 
@@ -100,12 +99,12 @@ public class Strategy_Vol extends MultiStockStrategy{
          */
         double [] temp=stockDataDAO.getAvgPriceByCodes(stocks,curTradeDay);
         buy_Prices= new double[vol]; //这里讲买入价格全设为0
-        for(int i=0;i<temp.length;i++){
+        for(int i=0;i<stocks.size();i++){
             buy_Prices[i]=temp[i];
         }
 
 
-        double expensePerStock = curCapital/(double)vol;
+        double expensePerStock = curCapital/(double)stocks.size();
         /**
          * 确定每只股票买入的手数
          * 并记录花费
@@ -121,14 +120,8 @@ public class Strategy_Vol extends MultiStockStrategy{
                 lots[i]= (int) (expensePerStock/(buy_Prices[i]*stocksPerLot));
                 //System.out.println("buy "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+buy_Prices[i]);
                 expense+=lots[i]*stocksPerLot*buy_Prices[i];
-                TradeDetailVO detailVO = new TradeDetailVO();
-                detailVO.code=stocks.get(i);
-                detailVO.codeName=codeAndNames.get(stocks.get(i));
-                detailVO.buyOrSell=true;
-                detailVO.numofTrade=lots[i];
-                detailVO.tradePrice=buy_Prices[i];
 
-                tradeDataVO.tradeDetailVOs.add(detailVO);
+                super.addNewTradeDetailVO(i,true,tradeDataVO);
             }
 
 
