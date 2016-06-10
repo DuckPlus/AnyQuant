@@ -124,7 +124,23 @@ public class FactorStrategy extends MultiStockStrategy {
 
     @Override
     public ReportVO analyse() {
+        System.out.println("capital: "+this.capital);
+        System.out.println("taxRate: "+this.taxRate);
+        System.out.println("baseCode: "+this.baseCode);
+        System.out.println("interval: "+this.interval);
+        System.out.println("start: "+this.start.DateToString());
+        System.out.println("end: "+this.end.DateToString());
+        System.out.println("size of stock pool:"+this.stocks.size());
+        for(Map.Entry<AnalysisFactor,Double> entry:weightedFactors.entrySet()){
+            System.out.println(entry.getKey()+"  "+entry.getValue());
+        }
 
+        System.out.println("investWright: ");
+        for(int i=0 ; i<investWeight.length;i++){
+            System.out.println(investWeight[i]+"  ");
+        }
+
+        System.out.println("numOfLevel: "+this.numOfLevel);
         return this.simpleAnalyse();
     }
 

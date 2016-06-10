@@ -44,13 +44,29 @@ public class StrategyServiceImpl implements StrategyService {
 //        double[] investWeight = {0.5 , 0.2 , 0.2 ,0.1};
         Map<AnalysisFactor , Double> factorDoubleMap = new HashMap<>();
         for (Map.Entry<String , Double> factorWeightEntry : factorWeight.entrySet()){
-            factorDoubleMap.put(AnalysisFactor.getAnalysisFactor(factorWeightEntry.getKey()) , factorWeightEntry.getValue());
+            factorDoubleMap.put(AnalysisFactor.valueOf(factorWeightEntry.getKey()) , factorWeightEntry.getValue());
         }
 
 
-
+        System.out.println("base code: "+baseCode);
         factorStrategy.setPara_Factor(capital , taxRate , baseCode , start , end , codes , factorDoubleMap , investWeight , interval);
+//        System.out.println("capital: "+factorStrategy.capital);
+//        System.out.println("taxRate: "+strategy.taxRate);
+//        System.out.println("baseCode: "+strategy.baseCode);
+//        System.out.println("interval: "+strategy.interval);
+//        System.out.println("start: "+strategy.start.DateToString());
+//        System.out.println("end: "+strategy.end.DateToString());
+//        System.out.println("size of stock pool:"+strategy.stocks.size());
+//        for(Map.Entry<AnalysisFactor,Double> entry:weightedFactors.entrySet()){
+//            System.out.println(entry.getKey()+"  "+entry.getValue());
+//        }
 
+//        System.out.println("investWright: ");
+//        for(int i=0 ; i<investWeight.length;i++){
+//            System.out.println(investWeight[i]+"  ");
+//        }
+//
+//        System.out.println("numOfLevel: "+strategy.numOfLevel);
         return factorStrategy.analyse();
     }
 

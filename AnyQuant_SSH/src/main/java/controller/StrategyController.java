@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import service.StrategyService;
 import util.Configure;
 import util.MyDate;
-import vo.FactorJudgmentVO;
-import vo.ReportVO;
+import vo.*;
 
 import java.util.*;
 
@@ -92,7 +91,32 @@ public class StrategyController {
         System.out.println(baseCode);
         System.out.println(Arrays.toString(investWeight));
 
-        return service.analyseWithFactor(stockCodes, start, end, factorWeight, capital, taxRate, baseCode, interval , investWeight);
+        ReportVO vo  = service.analyseWithFactor(stockCodes, start, end, factorWeight, capital, taxRate, baseCode, interval , investWeight);
+
+        System.out.println("PK-------");
+        for(CumRtnVO temp : vo.cumRtnVOList){
+            System.out.println("date: "+temp.date.DateToString()+" test: "+temp.testValue+" base: "+temp.baseValue);
+        }
+
+        System.out.println("Detail-------");
+        for(TradeDataVO tradeDataVO : vo.tradeDataVOList){
+            System.out.print("date: "+tradeDataVO.tradeDate.DateToString());
+            System.out.print("  profit: "+tradeDataVO.profit);
+            System.out.println("  nowCaptial: "+tradeDataVO.nowCapital);
+            for(TradeDetailVO detailVO : tradeDataVO.tradeDetailVOs){
+                if(detailVO.buyOrSell){
+                    System.out.print("Buy ");
+                }else{
+                    System.out.print("Sell ");
+                }
+                System.out.print(100*detailVO.numofTrade+" lots ");
+                System.out.print(detailVO.code+"  "+detailVO.codeName+" at");
+                System.out.println("price: "+detailVO.tradePrice);
+
+            }
+        }
+
+        return vo;
     }
 
     /**
