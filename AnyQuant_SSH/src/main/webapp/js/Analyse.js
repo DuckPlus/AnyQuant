@@ -18,12 +18,12 @@ function doAnalyse_diy(){
     for(var i=0;i<code_raw.length;i++){
         codes[i]=code_raw[i][1];
     }
-    startT=document.getElementById("start").value;
-    endT=document.getElementById("end").value;
-    basecode=document.getElementById("basecode").value;
-    capital=document.getElementById("capital").value;
-    taxRate=document.getElementById("taxRate").value;
-    interval=document.getElementById("interval").value;
+    startT=document.getElementById("start_diy").value;
+    endT=document.getElementById("end_diy").value;
+    basecode=document.getElementById("basecode_diy").value;
+    capital=document.getElementById("capital_diy").value;
+    taxRate=document.getElementById("taxRate_diy").value;
+    interval=document.getElementById("interval_diy").value;
 
     peNum=parseInt(document.getElementById("pe_text").value);
     pbNum=parseInt(document.getElementById("pb_text").value);
@@ -47,7 +47,7 @@ function doAnalyse_diy(){
         "\n选择的大盘代号："+basecode+
         "\n起始资金："+capital+
         "\n交易费率："+taxRate+
-        "\n调仓间隔："+document.getElementById("interval").value+
+        "\n调仓间隔："+interval+
         "\n起止时间："+startT+"~"+endT+
         "\n因子们："+
         "\nPE:"+peNum+
