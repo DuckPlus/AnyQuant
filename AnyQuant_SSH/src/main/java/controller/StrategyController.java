@@ -62,7 +62,7 @@ public class StrategyController {
      * @return analysis report
      */
     @RequestMapping(value = "/analyseWithFactor", method = RequestMethod.POST)
-    public ReportVO analyseWithFactor(@RequestBody String arguments) {
+    public ReportVO analyseWithFactor(String arguments) {
         JSONObject jsonObject = JSONObject.fromObject(arguments);
         System.out.println(arguments);
         System.out.println(jsonObject);
@@ -122,7 +122,8 @@ public class StrategyController {
      * @return analysis report
      */
     @RequestMapping(value = "/analyseWithSpecificStrategy", method = RequestMethod.POST)
-    public ReportVO analyseWithSpecificStrategy(JSONObject arguments) {
+    public ReportVO analyseWithSpecificStrategy( String arguments) {
+        System.out.println(arguments+"]]");
         JSONObject jsonObject = JSONObject.fromObject(arguments);
         String strategyName = jsonObject.getString("name");
         int capital = jsonObject.getInt("capital");

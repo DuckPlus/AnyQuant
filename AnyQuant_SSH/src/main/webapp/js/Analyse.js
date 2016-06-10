@@ -10,6 +10,18 @@ var factorSum=0;
 var codes=[];//股票池
 var peNum=0,pbNum=0,vol5Num=0,vol10Num=0,vol60Num=0,vol120Num=0,psNum=0,pcfNum=0;//各因子权重
 function doAnalyse_diy(){
+    var code_raw=table_chosen.data();
+
+    for(var i=0;i<code_raw.length;i++){
+        codes[i]=code_raw[i][1];
+    }
+    startT=document.getElementById("start").value;
+    endT=document.getElementById("end").value;
+    basecode=document.getElementById("basecode").value;
+    capital=document.getElementById("capital").value;
+    taxRate=document.getElementById("taxRate").value;
+    interval=document.getElementById("interval").value;
+    
     peNum=parseInt(document.getElementById("pe_text").value);
     pbNum=parseInt(document.getElementById("pb_text").value);
     vol5Num=parseInt(document.getElementById("vol5_text").value);
@@ -45,7 +57,11 @@ function doAnalyse_diy(){
         "\nPCF:"+pcfNum+
         "\n股票池："+codes       
     );
-    location.href="Analyse_result.html";
+    var params = "strategy="+strategy+"&baseCode="+basecode+"&capital="+capital+
+        "&taxRate="+taxRate+"&numOfStock="+numOfStock+"&interval="+interval+
+        "&start="+startT+"&end="+endT;
+    alert("params:"+params);
+    location.href="Analyse_result.html?"+params;
 }
 
 function doAnalyse(){
@@ -63,7 +79,12 @@ function doAnalyse(){
         "\n股票数量："+numOfStock+
         "\n调仓间隔："+document.getElementById("interval").value+
         "\n起止时间："+startT+"~"+endT);
-    location.href="Analyse_result.html";
+   
+    var params = "strategy="+strategy+"&baseCode="+basecode+"&capital="+capital+
+        "&taxRate="+taxRate+"&numOfStock="+numOfStock+"&interval="+interval+
+        "&start="+startT+"&end="+endT;
+    alert("params: "+params);
+    location.href="Analyse_result.html?"+params;
 }
 
 
@@ -92,6 +113,8 @@ function factorAnalyse(){//分析因子
             $("#allStocksDiv").remove();
             init_bar(data);
         });
+    
+    
 
 }
 function initTable_all(allStock) {

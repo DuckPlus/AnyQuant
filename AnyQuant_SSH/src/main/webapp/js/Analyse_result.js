@@ -8,10 +8,12 @@ $(document).ready(function () {
     var json_data = JSON.parse(data1);
     var data2 = '{"codes":"sh6000010,sh6000011,sh6000012,sh6000013,sh6000014","capital":1000000,"taxRate":0.01,"baseCode":"000010","interval":7,"start":"2015-01-01","end":"2015-06-01","factorWeight":"?"}';
     var json_data2 = JSON.parse(data2);
-    alert(json_data.name);
-    test_specific_strategy(data1);
+    var url = location.href.split("?")[1];
+    draw_compare_chart(url);
+    // alert(url);
+    // alert(json_data.name);
+    // test_specific_strategy(data1);
     // test_strategy_with_factor(json_data2);
-    
     // alert("ready");
     var data=
         [
@@ -47,28 +49,66 @@ $(document).ready(function () {
     init_stock_pool_table(data2);
     init_transaction_table();
     init_transaction_detail_table();
-    $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
-        init_compare_chart(data)
-    });//
+    // $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
+    //     init_compare_chart(data);
+    // });//
 });
+
+function draw_compare_chart(url_params) {
+    var params = url_params.split("&");
+    var data_obj = new Object();
+    data_obj.name=params[0].split("=")[1];//strategy name
+    data_obj.baseCode=params[1].split("=")[1];
+    data_obj.capital=params[2].split("=")[1];
+    data_obj.taxRate=params[3].split("=")[1];
+    data_obj.vol=params[4].split("=")[1];//num of stock
+    data_obj.interval=params[5].split("=")[1];
+    data_obj.start=params[6].split("=")[1];
+    data_obj.end=params[7].split("=")[1];
+    var json_data = JSON.stringify(data_obj);
+    alert(json_data);
+    test_specific_strategy(json_data);
+    // for (var i=1;i<params.length;i++){
+    //     alert(params[i]);
+    //    
+    // }
+}
 function test_specific_strategy(json_data) {
     $.ajax({
         type:'post',
         url:'/Strategy/analyseWithSpecificStrategy',
         // data:{name:"Strategy_Vol",capital:1000000,
         //     taxRate:0.001,baseCode:"000010",interval:7,start:"2015/01/01",end:"2015/06/01",vol:100},
-        data:{json_data:json_data},
+        
+        data:{arguments:json_data},
         success:function (data) {
             alert("seccess !");
+            // alert("->"+data.cumRtnVOList[0].baseValue);
+            alert("length->"+data.cumRtnVOList.length);
+            var cumRtnVOList = data.cumRtnVOList;
+            var compare_datas = [];
+            var compare_base = [];
+            var compare_test = [];
+            for(var i=0;i<cumRtnVOList.length;i++){
+                // alert(cumRtnVOList[i].baseValue);
+                var str_date = cumRtnVOList[i].date.year+"-"+cumRtnVOList[i].date.month+"-"+cumRtnVOList[i].date.day;
+                // alert(str_date);
+                var date = new Date(str_date).getTime();
+                compare_base.push([date,cumRtnVOList[i].baseValue]);
+                compare_test.push([date,cumRtnVOList[i].testValue]);
+                alert("base "+compare_base+"test "+compare_test);
+            }
+            compare_datas.push(compare_base);
+            compare_datas.push(compare_test);
+            // alert("[test] "+compare_test);
+            // alert("total "+compare_datas);
+            init_compare_chart(compare_datas);
         },
         error:function (data) {
             alert("error:");
-            var result = [];
-            for(var x in data){
-                result.push([x,data[x]]);
-            }
-            // for(var i=18;i<30;i++) {
-            //     alert(result[i]);
+            // var result = [];
+            // for(var x in data){
+            //     result.push([x,data[x]]);
             // }
         }
     });
@@ -164,7 +204,8 @@ function init_stock_pool_table(allStock) {
     } );
 }
 function init_compare_chart(data) {
-        
+    alert("[0]-->"+data[0]);
+    alert("[1]-->"+data[1]);
             // Create the chart
             $('#compare_chart').highcharts('StockChart', {
 
@@ -177,13 +218,22 @@ function init_compare_chart(data) {
                     text : 'AAPL Stock Price'
                 },
 
-                series : [{
-                    name : 'AAPL',
-                    data : data,
-                    tooltip: {
-                        valueDecimals: 2
+                series : [
+                    {
+                        name : '基准',
+                        data : data[0],
+                        tooltip: {
+                        valueDecimals: 8
+                        }
+                    },
+                    {
+                        name : '回测',
+                        data : data[1],
+                        tooltip: {
+                            valueDecimals: 8
+                        }
                     }
-                }]
+                ]
             });
 }
 function init_transaction_table(allStock) {
