@@ -76,8 +76,9 @@ function draw_compare_chart_diy(url) {
     document.getElementById('trade_rate').innerHTML = data_obj.taxRate;
     document.getElementById('base_bench').innerHTML = data_obj.baseCode;
     document.getElementById('interval').innerHTML = data_obj.interval;
+    alert("invest:"+data_obj.investWeight);
     // alert(JSON.stringify(data_obj));
-    // alert(JSON.stringify(factor_weight));
+    // alert("data: "+JSON.stringify(factor_weight));
     test_strategy_with_factor(JSON.stringify(data_obj));
 
 }
@@ -177,6 +178,7 @@ function test_strategy_with_factor(json_data) {
         data:{arguments:json_data},
         success:function (data) {
             alert("seccess !");
+            document.getElementById("summary").innerHTML = JSON.stringify(data);
         },
         error:function (data) {
             alert("error:");

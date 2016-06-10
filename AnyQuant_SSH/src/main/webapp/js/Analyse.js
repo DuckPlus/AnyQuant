@@ -11,6 +11,7 @@ var taxRate,numOfStock,interval,startT,endT;
 var factorSum=0;
 var codes=[];//股票池
 var peNum=0,pbNum=0,vol5Num=0,vol10Num=0,vol60Num=0,vol120Num=0,psNum=0,pcfNum=0;//各因子权重
+var level1=0,level2=0,level3=0,level4=0,level5=0;
 var content_of_analyse_factor_info;
 function doAnalyse_diy(){
     var code_raw=table_chosen.data();
@@ -33,6 +34,18 @@ function doAnalyse_diy(){
     vol120Num=parseInt(document.getElementById("vol120_text").value);
     psNum=parseInt(document.getElementById("ps_text").value);
     pcfNum=parseInt(document.getElementById("pcf_text").value);
+    level1 = parseInt(document.getElementById("level1").value);
+    level2 = parseInt(document.getElementById("level2").value);
+    level3 = parseInt(document.getElementById("level3").value);
+    level4 = parseInt(document.getElementById("level4").value);
+    level5 = parseInt(document.getElementById("level5").value);
+    var total_level = level1+level2+level3+level4+level5;
+    level1/=total_level;
+    level2/=total_level;
+    level3/=total_level;
+    level4/=total_level;
+    level5/=total_level;
+
     factorSum=peNum+pbNum+vol5Num+vol10Num+vol60Num+vol120Num+psNum+pcfNum;
     peNum/=factorSum;
     pbNum/=factorSum;
@@ -63,7 +76,7 @@ function doAnalyse_diy(){
     var params = "jump_type=diy"+"&baseCode="+basecode+"&capital="+capital+
         "&taxRate="+taxRate+"&codes="+codes+"&interval="+interval+
         "&start="+startT+"&end="+endT+"&factorWeight="+peNum+","+pbNum+","+vol5Num+","+vol10Num+","+vol60Num+","+
-        vol120Num+","+psNum+","+pcfNum+"&investWeight";
+        vol120Num+","+psNum+","+pcfNum+"&investWeight="+level1+","+level2+","+level3+","+level4+","+level5;
 
     location.href="Analyse_result.html?"+params;
 }
