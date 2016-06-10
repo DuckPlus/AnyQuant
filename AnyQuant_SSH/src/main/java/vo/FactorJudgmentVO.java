@@ -1,5 +1,8 @@
 package vo;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +46,28 @@ public class FactorJudgmentVO {
         sortRankWinRate.sort( (c1 , c2) -> Double.compare(c1.getValue() , c2.getValue())  );
         sortAvgProfit.sort( (c1 , c2) -> Double.compare(c1.getValue() , c2.getValue())  );
     }
+
+
+    public JSONObject getJSON(){
+        JSONObject object = new JSONObject();
+        object.put("sortRankIC" , new JSONObject());
+        object.put("sortRankIR" , new JSONObject());
+        object.put("sortRankWinRate" , new JSONObject());
+        object.put("sortAvgProfit" , new JSONObject());
+        object.put("explanation" , explanation);
+        for (int i = 0; i < sortRankIC.size(); i++) {
+            ((JSONObject)object.get("sortRankIC")).put(sortRankIC.get(i).getKey(), sortRankIC.get(i).getValue());
+            ((JSONObject)object.get("sortRankIR")).put(sortRankIR.get(i).getKey(), sortRankIR.get(i).getValue());
+            ((JSONObject)object.get("sortRankWinRate")).put(sortRankWinRate.get(i).getKey(), sortRankWinRate.get(i).getValue());
+            ((JSONObject)object.get("sortAvgProfit")).put(sortAvgProfit.get(i).getKey(), sortAvgProfit.get(i).getValue());
+        }
+        return object;
+    }
+
+
+
+
+
 
 
 }

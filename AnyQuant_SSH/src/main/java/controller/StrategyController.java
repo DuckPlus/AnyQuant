@@ -1,7 +1,5 @@
 package controller;
 
-import controller.helper.JSONHelper;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,10 +39,11 @@ public class StrategyController {
      * @return some of the most useful factors , which gives customer suggestions on strategy to analyse
      */
     @RequestMapping("/getStocksFactorJudgment")
-    public FactorJudgmentVO getStocksFactorJudgment(String codes, String start, String end, String baseBench) {
+    public JSONObject getStocksFactorJudgment(String codes, String start, String end, String baseBench) {
         List<String> stockCodes = Arrays.asList(codes.split(Configure.STOCK_SPLITER));
 
-        return service.getStocksFactorJudgment(stockCodes, MyDate.getDateFromString(start), MyDate.getDateFromString(end), baseBench);
+        FactorJudgmentVO vo =  service.getStocksFactorJudgment(stockCodes, MyDate.getDateFromString(start), MyDate.getDateFromString(end), baseBench);
+        return vo.getJSON();
     }
 
     /**
@@ -58,23 +57,35 @@ public class StrategyController {
      * taxRate - 交易费率<br>
      * baseCode - 基准大盘<br>
      * interval - 调仓间隔<br>
-     *
+     * investWeight - 仓位控制<br>
      * @return analysis report
      */
     @RequestMapping(value = "/analyseWithFactor", method = RequestMethod.POST)
-    public ReportVO analyseWithFactor(JSONObject argument) {
+    public ReportVO analyseWithFactor(String arguments) {
+        JSONObject jsonObject = JSONObject.fromObject(arguments);
+        System.out.println(arguments);
+        System.out.println(jsonObject);
+        List<String> stockCodes = Arrays.asList((jsonObject.getString("codes")).split(Configure.STOCK_SPLITER));
+        MyDate start = MyDate.getDateFromString(jsonObject.getString("start"));
+        MyDate end = MyDate.getDateFromString(jsonObject.getString("end"));
+        Map<String, Double> factorWeight = jsonObject.getJSONObject("factorWeight");
+        int capital = jsonObject.getInt("capital");
+        double taxRate = jsonObject.getDouble("taxRate");
+        String baseCode = jsonObject.getString("baseCode");
+        int interval = jsonObject.getInt("interval");
+        double[] investWeight = Arrays.stream(jsonObject.getString("investWeight").split(Configure.STOCK_SPLITER)).mapToDouble(Double::parseDouble).toArray();
+        System.out.println(start.DateToString());
+        System.out.println(end.DateToString());
+        System.out.println(factorWeight);
+        for (Map.Entry<String  , Double> entry : factorWeight.entrySet()){
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+        System.out.println(capital);
+        System.out.println(taxRate);
+        System.out.println(baseCode);
+        System.out.println(Arrays.toString(investWeight));
 
-        List<String> stockCodes = Arrays.asList((argument.getString("codes")).split(Configure.STOCK_SPLITER));
-        MyDate start = MyDate.getDateFromString(argument.getString("start"));
-        MyDate end = MyDate.getDateFromString(argument.getString("end"));
-        Map<String, Double> factorWeight = argument.getJSONObject("factorWeight");
-        int capital = argument.getInt("capital");
-        double taxRate = argument.getDouble("taxRate");
-        String baseCode = argument.getString("baseCode");
-        int interval = argument.getInt("interval");
-
-
-        return service.analyseWithFactor(stockCodes, start, end, factorWeight, capital, taxRate, baseCode, interval);
+        return service.analyseWithFactor(stockCodes, start, end, factorWeight, capital, taxRate, baseCode, interval , investWeight);
     }
 
     /**
@@ -104,15 +115,16 @@ public class StrategyController {
      * @return analysis report
      */
     @RequestMapping(value = "/analyseWithSpecificStrategy", method = RequestMethod.POST)
-    public ReportVO analyseWithSpecificStrategy(JSONObject argument) {
-        String strategyName = argument.getString("name");
-        int capital = argument.getInt("capital");
-        double taxRate = argument.getDouble("taxRate");
-        String baseCode = argument.getString("baseCode");
-        int interval = argument.getInt("interval");
-        MyDate start = MyDate.getDateFromString(argument.getString("start"));
-        MyDate end = MyDate.getDateFromString(argument.getString("end"));
-        int vol = argument.getInt("vol");
+    public ReportVO analyseWithSpecificStrategy(JSONObject arguments) {
+        JSONObject jsonObject = JSONObject.fromObject(arguments);
+        String strategyName = jsonObject.getString("name");
+        int capital = jsonObject.getInt("capital");
+        double taxRate = jsonObject.getDouble("taxRate");
+        String baseCode = jsonObject.getString("baseCode");
+        int interval = jsonObject.getInt("interval");
+        MyDate start = MyDate.getDateFromString(jsonObject.getString("start"));
+        MyDate end = MyDate.getDateFromString(jsonObject.getString("end"));
+        int vol = jsonObject.getInt("vol");
         switch (strategyName) {
             case "Strategy_Vol":
                 return service.analyseWithStrategyVol(vol, interval, capital, taxRate, baseCode, start, end);

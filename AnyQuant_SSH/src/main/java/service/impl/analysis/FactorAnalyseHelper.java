@@ -39,6 +39,8 @@ public class FactorAnalyseHelper {
     private double[] distribution = {0.5, 0.3, 0.1, 0.07, 0.03};
     //    private int captial = 100000;
 
+
+
     private enum testFactor {PE(false), PB(false), PS(true), PCF(true) , VOL5(false) , VOL10(false);
         boolean upOrDown;
         testFactor(boolean upOrDown){
@@ -77,12 +79,17 @@ public class FactorAnalyseHelper {
         Map<String, List<StockdataEntity>> dataEntities = new HashMap<>(codes.size() * 2);
         List<BenchmarkdataEntity> benchmarkdataEntities = benchMarkDAO.getBenchMarkByTime(baseBench, startDate, DateCalculator.getToDay());
         for (String code : codes) {
-
-            factors.put(code, getUsefulData(factorDAO.getFactorBetweenDate(code, startDate, DateCalculator.getToDay()), month));
+            List<FactorEntity> factorEntites = factorDAO.getFactorBetweenDate(code, startDate, DateCalculator.getToDay());
+            if(factorEntites.isEmpty()){
+//                codes.remove(code);
+                continue;
+            }
+            factors.put(code, getUsefulData(factorEntites , month));
             dataEntities.put(code, stockDataDAO.getStockData(code, startDate, DateCalculator.getToDay()));
-//            System.out.println(factors.get(code).size() + " " + dataEntities.get(code).size());
-//            System.out.println(factors.get(code).get(0).getDate().toString() + " " + factors.get(code).get(factors.get(code).size() - 1).getDate().toString());
-//            System.out.println(dataEntities.get(code).get(0).getDate().toString() + " " + dataEntities.get(code).get(dataEntities.get(code).size() - 1).getDate().toString());
+            System.out.println("*************get code " + code);
+            System.out.println(factors.get(code).size() + " " + dataEntities.get(code).size());
+            System.out.println(factors.get(code).get(0).getDate().toString() + " " + factors.get(code).get(factors.get(code).size() - 1).getDate().toString());
+            System.out.println(dataEntities.get(code).get(0).getDate().toString() + " " + dataEntities.get(code).get(dataEntities.get(code).size() - 1).getDate().toString());
 
         }
 
@@ -289,6 +296,7 @@ public class FactorAnalyseHelper {
 
 
     private List<FactorEntity> getUsefulData(List<FactorEntity> factors, int months) {
+//        System.out.println("size = ="+factors.get(0).getDate().toString() + "  " + factors.get(factors.size() - 1).getDate().toString());
         List<FactorEntity> result = new ArrayList<>(months);
         for (FactorEntity factor : factors) {
             if (result.size() > 0) {
@@ -301,6 +309,11 @@ public class FactorAnalyseHelper {
 
 
         }
+//        System.out.println("size"+result.size() + " month" + months);
+//        for (int i = 0; i < result.size(); i++) {
+//            System.out.println("size = ="+result.get(i).getDate().toString());
+//        }
+//        System.out.println("size"+result.size() + " month" + months);
         return result.subList(0, months);
 
 
