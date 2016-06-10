@@ -77,12 +77,12 @@ public abstract class MultiStockStrategy extends BaseStrategy {
     /**
      * 抽象的买入方法
      */
-    protected abstract  void buyStocks();
+    protected abstract  boolean buyStocks();
 
     /**
      * 抽象的卖出方法
      */
-    protected abstract  void sellStocks();
+    protected abstract  boolean sellStocks();
 
 
     protected  void fatchNames(){
@@ -96,10 +96,15 @@ public abstract class MultiStockStrategy extends BaseStrategy {
     /**
      * 简单平仓，并计算累计收益率
      */
-    public void simpleSellStocks(){
+    public boolean simpleSellStocks(){
+        if(stocks.size()==0){
+            return false;
+        }
 
         TradeDataVO tradeDataVO = new TradeDataVO();
         tradeDataVO.tradeDate=curTradeDay;
+        double tempIncome=0;
+        double tempTax=0;
 
         /**
          * 获取当日的股票池的均价
@@ -130,7 +135,9 @@ public abstract class MultiStockStrategy extends BaseStrategy {
                 //System.out.println("sell "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+sell_Prices[i]);
 
                 income+=sell_Prices[i]*lots[i]*stocksPerLot;
+                tempIncome+=sell_Prices[i]*lots[i]*stocksPerLot;
                 tax+=sell_Prices[i]*lots[i]*stocksPerLot*taxRate;
+                tempTax+=sell_Prices[i]*lots[i]*stocksPerLot*taxRate;
 
             }
 
@@ -154,7 +161,7 @@ public abstract class MultiStockStrategy extends BaseStrategy {
         /**
          * 更新当前资本
          */
-        this.curCapital=this.curCapital-this.tax+this.income;
+        this.curCapital=this.curCapital-tempTax+tempIncome;
         System.out.println("curCapital: "+this.curCapital);
 
         /**
@@ -166,6 +173,8 @@ public abstract class MultiStockStrategy extends BaseStrategy {
         tradeDataVO.nowCapital=curCapital;
         tradeDataVO.profit=this.profit;
         this.reportVO.tradeDataVOList.add(tradeDataVO);
+
+        return true;
     }
 
 

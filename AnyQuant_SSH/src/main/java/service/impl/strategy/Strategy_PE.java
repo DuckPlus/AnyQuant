@@ -67,11 +67,15 @@ public class Strategy_PE extends MultiStockStrategy {
      * 买入PE值在合理区间内的vol只股票
      */
     @Override
-    protected void buyStocks(){
-
+    protected boolean buyStocks(){
+        if(curCapital<=0){
+            return false;
+        }
 
         TradeDataVO tradeDataVO = new TradeDataVO();
         tradeDataVO.tradeDate=curTradeDay;
+
+        double tempExpense=0;
         /**
          * 首先清空股票池
          */
@@ -132,6 +136,7 @@ public class Strategy_PE extends MultiStockStrategy {
                 //System.out.println("buy "+stocks.get(i)+" "+lots[i]*stocksPerLot+" at price: "+buy_Prices[i]);
 
                 expense+=lots[i]*stocksPerLot*buy_Prices[i];
+                tempExpense+=lots[i]*stocksPerLot*buy_Prices[i];
                 super.addNewTradeDetailVO(i,true,tradeDataVO);
 
             }
@@ -147,11 +152,12 @@ public class Strategy_PE extends MultiStockStrategy {
         /**
          * 更新当前资本
          */
-        this.curCapital=this.curCapital-this.expense;
+        this.curCapital=this.curCapital-tempExpense;
 
         tradeDataVO.nowCapital=curCapital;
         tradeDataVO.profit=this.profit;
         this.reportVO.tradeDataVOList.add(tradeDataVO);
+        return true;
     }
 
 
@@ -159,8 +165,9 @@ public class Strategy_PE extends MultiStockStrategy {
      * 简单平仓，并计算累计收益率
      */
     @Override
-    protected void sellStocks() {
-        super.simpleSellStocks();
+    protected boolean sellStocks() {
+
+       return super.simpleSellStocks();
     }
 
 

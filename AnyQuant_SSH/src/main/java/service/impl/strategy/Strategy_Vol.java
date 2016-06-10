@@ -60,9 +60,11 @@ public class Strategy_Vol extends MultiStockStrategy{
      * 买入交易日当天交易量最小的vol只股票
      */
     @Override
-    protected void buyStocks() {
+    protected boolean buyStocks() {
 
-
+        if(curCapital<=0){
+            return false;
+        }
 
         TradeDataVO tradeDataVO = new TradeDataVO();
         tradeDataVO.tradeDate=curTradeDay;
@@ -139,6 +141,7 @@ public class Strategy_Vol extends MultiStockStrategy{
         tradeDataVO.nowCapital=this.curCapital;
         tradeDataVO.profit=this.profit;
         this.reportVO.tradeDataVOList.add(tradeDataVO);
+        return true;
     }
 
 
@@ -146,8 +149,9 @@ public class Strategy_Vol extends MultiStockStrategy{
      * 简单平仓，并计算累计收益率
      */
     @Override
-    protected void sellStocks() {
-        super.simpleSellStocks();
+    protected boolean sellStocks()
+    {
+       return  super.simpleSellStocks();
     }
 
 

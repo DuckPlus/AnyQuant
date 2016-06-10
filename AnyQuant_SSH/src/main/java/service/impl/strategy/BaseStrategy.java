@@ -172,12 +172,12 @@ public abstract class BaseStrategy  {
     /**
      * 抽象的买入方法
      */
-    protected abstract  void buyStocks();
+    protected abstract  boolean buyStocks();
 
     /**
      * 抽象的卖出方法
      */
-    protected abstract  void sellStocks();
+    protected abstract  boolean sellStocks();
 
     /**
      * 计算利润

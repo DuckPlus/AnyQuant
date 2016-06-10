@@ -71,7 +71,7 @@
     -moz-box-shadow: 0 10px 6px -6px #777;
     box-shadow: 0 10px 6px -6px #777;
 }
-.down_line{
+.up_line{
     border-top: solid 1px #ffffff;
 }
 #diy_input2{
@@ -92,13 +92,30 @@
 #input1_hint{
     z-index: 1;
     position: absolute;
-    left:400px;
-    top:0px
+    left:180px;
+    top:-5px
 }
-#input2_hint{
+#input2_hint1{
+    z-index: 1;
     position: absolute;
-    left:400px;
-    top:190px
+    left:122px;
+    top:195px
+}
+#input2_hint2{
+    z-index: 1;
+    position: absolute;
+    left:320px;
+    top:195px
+}
+#investweight_title{
+    position: absolute;
+    left:220px;
+    top:205px
+}
+#level_input{
+    position: absolute;
+    left:220px;
+    top:250px
 }
 #pie_factors{
     position: absolute;

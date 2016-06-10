@@ -46,7 +46,7 @@ function doAnalyse_diy(){
         "\n交易费率："+taxRate+
         "\n调仓间隔："+document.getElementById("interval").value+
         "\n起止时间："+startT+"~"+endT+
-        "\n因子们："+factorSum+
+        "\n因子们："+
         "\nPE:"+peNum+
         "\nPB:"+pbNum+
         "\nVOL5:"+vol5Num+
@@ -246,7 +246,6 @@ function init_bar(data) {
     for(var x in data.sortAvgProfit){
         AvgProfitdata.push([x,data.sortAvgProfit[x]]);
     }
-    alert(ICdata.length+" "+IRdata.length+" "+WinRatedata.length+" "+AvgProfitdata.length);
     $('#chart1').highcharts({
         chart: {
             type: 'column',
