@@ -121,13 +121,13 @@
                 </script>
             </div>
             <div>
-                <label for="numOfStock" class="middle" >股票数量</label>
-                <input id="numOfStock" type="text" value="10"required/>
+                <label for="numOfStock"  >股票数量</label>
+                <input id="numOfStock" type="text" value="10" placeholder="输入10~100的数字"required/>
 
             </div>
 
              <div>
-                <label for="interval" class="middle">调仓间隔</label>
+                <label for="interval" >调仓间隔</label>
                 <input id="interval" type="text" value="5"placeholder="输入3~70的数字" required/>
 
             </div>
@@ -140,11 +140,10 @@
             </span>
 
             </div>
-
+            <button id="analysebtn" class="button button-glow button-rounded button-raised button-primary" onclick="doAnalyse()" >
+                        开始回测</button>
         </div>
-        <button id="analysebtn" class="button button-glow button-rounded button-raised button-primary" onclick="doAnalyse()" >
-            开始回测
-        </button>
+
     </div>
     <div id="tab2" style="display: none; ">
         <div id="analyseDiv">
@@ -189,10 +188,6 @@
                         }
                     </script>
                 </div><br>
-                <div>
-                    <label for="numOfStock_diy" >股票数量</label>
-                    <input id="numOfStock_diy" type="text" value="10"required/>
-                </div><br>
                  <div>
                     <label for="interval_diy" class="middle">调仓间隔</label>
                     <input id="interval_diy" type="text" value="5"placeholder="输入3~70的数字" required/>
@@ -218,7 +213,7 @@
                         </tfoot>
 
                     </table>
-                </div>
+                </div><br><br>
                 <button id="helpbtn" class="button button-glow button-rounded button-raised button-primary" onclick="factorAnalyse()" >
                     分析因子表现
                 </button>

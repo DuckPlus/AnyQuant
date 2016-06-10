@@ -9,6 +9,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import util.MyDate;
 import vo.CumRtnVO;
 import vo.ReportVO;
+import vo.TradeDataVO;
+import vo.TradeDetailVO;
 
 import static org.junit.Assert.fail;
 
@@ -26,7 +28,7 @@ public class Strategy_VolTest {
     double capital=2000000;
     double taxRate=0.001;
     String baseCode="000300";
-    MyDate start =MyDate.getDateFromString("2014-01-01");
+    MyDate start =MyDate.getDateFromString("2015-01-01");
     MyDate end=MyDate.getDateFromString("2016-01-01");
     int vol=5;
     int interval=60;
@@ -58,6 +60,26 @@ public class Strategy_VolTest {
         if(vo==null){
             fail();
         }else{
+            System.out.println("Detail-------");
+            for(TradeDataVO tradeDataVO : vo.tradeDataVOList){
+                System.out.print("date: "+tradeDataVO.tradeDate.DateToString());
+                System.out.print("  profit: "+tradeDataVO.profit);
+                System.out.println("  nowCaptial: "+tradeDataVO.nowCapital);
+                for(TradeDetailVO detailVO : tradeDataVO.tradeDetailVOs){
+                    if(detailVO.buyOrSell){
+                        System.out.print("Buy ");
+                    }else{
+                        System.out.print("Sell ");
+                    }
+                    System.out.print(100*detailVO.numofTrade+" lots ");
+                    System.out.print(detailVO.code+"  "+detailVO.codeName+" at");
+                    System.out.println(" price: "+detailVO.tradePrice);
+
+                }
+            }
+
+
+            System.out.println("PK-------");
             for(CumRtnVO temp : vo.cumRtnVOList){
                 System.out.println("date: "+temp.date.DateToString()+" test: "+temp.testValue+" base: "+temp.baseValue);
             }
