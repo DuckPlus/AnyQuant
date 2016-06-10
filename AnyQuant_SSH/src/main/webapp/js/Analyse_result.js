@@ -79,7 +79,8 @@ function test_specific_strategy(json_data) {
         url:'/Strategy/analyseWithSpecificStrategy',
         // data:{name:"Strategy_Vol",capital:1000000,
         //     taxRate:0.001,baseCode:"000010",interval:7,start:"2015/01/01",end:"2015/06/01",vol:100},
-        data:{json_data:json_data},
+        
+        data:{arguments:json_data},
         success:function (data) {
             alert("seccess !");
             // alert("->"+data.cumRtnVOList[0].baseValue);
