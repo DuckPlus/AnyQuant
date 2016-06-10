@@ -17,7 +17,7 @@
 #chosen_label{
     position: absolute;
     left:200px;
-    top:50px;
+    top:40px;
 }
 #search_text_chosen{
     position: absolute;
@@ -91,11 +91,17 @@
     -moz-box-shadow: 0 10px 6px -6px #777;
     box-shadow: 0 10px 6px -6px #777;
 }
-#input1_hint{
+#input1_hint1{
     z-index: 1;
     position: absolute;
     left:180px;
     top:-5px
+}
+#input1_hint2{
+    z-index: 1;
+    position: absolute;
+    left:290px;
+    top:20px
 }
 #input2_hint1{
     z-index: 1;
@@ -134,14 +140,14 @@
     left: 0px;
     width: 450px;
     height:400px;
-    top:5px;
+    top:50px;
 }
 #pie_money{
     position: absolute;
     left: 450px;
     width: 450px;
     height:400px;
-    top:5px;
+    top:50px;
 }
 #analysebtn_diy{
    position: absolute;
@@ -164,8 +170,10 @@
 }
 #analysebtn{
     position: absolute;
-    top:300px;
-    right: 150px;
+    width:300px;
+    text-align: center;
+    top:380px;
+    left:20px;
 }
 #input_text{
     margin-top: 2px;
@@ -272,10 +280,11 @@ a.tab_item:hover{
 #second_tab{
     border-right: solid 2px rgb(151,151,151);
 }
-.input_container{
+#recommand_container{
+    position: absolute;
+    left: 20px;
+    top:120px;
     width: 450px;
-    margin-left: auto;
-    margin-right: auto;
     text-align: left;
     color:#fff;
     line-height: 50px;/*行间距*/
