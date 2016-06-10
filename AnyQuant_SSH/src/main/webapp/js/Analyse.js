@@ -14,7 +14,7 @@ var content_of_analyse_factor_info;
 function doAnalyse_diy(){
     var code_raw=table_chosen.data();
     alert("马上要跳转啦 看看有多少股票："+code_raw.length);
-
+    codes=[];
     for(var i=0;i<code_raw.length;i++){
         codes[i]=code_raw[i][1];
     }
@@ -99,7 +99,7 @@ function factorAnalyse(){//分析因子
     basecode=document.getElementById("basecode_diy").value;
 
     var code_raw=table_chosen.data();
-
+    codes=[];
     for(var i=0;i<code_raw.length;i++){
         codes[i]=code_raw[i][1];
     }
@@ -430,7 +430,7 @@ function init_bar(data) {
         }
     });
     document.getElementById("factor_analyse_info_label").innerHTML="~现在你可以参考着配置因子啦^o^";
-    document.getElementById("helpbtn").innerHTML="重新分析因子表现";
+    document.getElementById("helpbtn").innerHTML="重选股票池";
     document.getElementById("helpbtn").onclick=showAllStock_list;
 
 }
