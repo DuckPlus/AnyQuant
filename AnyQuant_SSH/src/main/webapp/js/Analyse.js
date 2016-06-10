@@ -2,6 +2,7 @@
  * Created by Adsn on 2016/5/27.
  */
 var chart1;
+var factorPart1;
 function initpie_factor(){
     var dataArray= [
         ['市盈率',5],
@@ -193,44 +194,16 @@ function chooseStrategy(){
         $("#basecode").show();
     }
 }
-$(document).ready(function () {
-    $("ul").idTabs();
-    myBoardName="氮肥";
-    $.getJSON('/Board/getCompareData?boardName='+myBoardName, function (data) {
-        initLine(data);
-    });
-    $.getJSON('/BenchMark/getBenchList', function (data) {
-        initBaseCode(data);
-    });
-    initChosenList();
-    initpie_factor();
-    $.ajax({
-        type:'post',
-        url:'/Stock/getStockDataList',
-        contentType:'application/json;charset=utf-8',
-        success:function (data){
-            initTable_all(data);
-            $("#loading").remove();
-        },
-        error:function () {
-            alert("请求失败");
-        }
-    });
 
-});
 function factorAnalyse(){//分析因子
-    $.ajax({
-        type:'post',
-        url :'/Optional/getRegionDistribution',
-        success:function (data) {
-            var result=[];
-            for(var x in data){
-                result.push([x,data[x]]);
-            }
+    alert("in factorAnalyse()");
+    $.getJSON('/Strategy/getStocksFactorJudgment?'+'codes='+'sh600012'+'&start='+'2016-3-1'+'&end='+'2016-4-1'
+        +'&baseBench='+'000001',
+        function (data) {
+            //$("#allstock_list").remove();
             $("#allStocksDiv").remove();
-            init_region_bar(result);
-        }
-    });
+            init_bar(data);
+    })
 }
 function initTable_all(allStock) {
     var table = $('#allstock_list').DataTable( {
@@ -351,7 +324,22 @@ function initChosenList(){
     } );
 
 }
-function init_region_bar(data) {
+function init_bar(data) {
+    var ICdata=[],IRdata=[],WinRatedata=[],AvgProfitdata=[];
+    for(var x in data.sortRankIC){
+        ICdata.push([x,data.sortRankIC[x]]);
+    }
+    for(var x in data.sortRankWinRate){
+       // alert(data.sortRankWinRate[x][0]);
+        WinRatedata.push([x,data.sortRankWinRate[x]]);
+    }
+    for(var x in data.sortRankIR){
+        IRdata.push([x,data.sortRankIR[x]]);
+    }
+    for(var x in data.sortAvgProfit){
+        AvgProfitdata.push([x,data.sortAvgProfit[x]]);
+    }
+    alert(ICdata.length+" "+IRdata.length+" "+WinRatedata.length+" "+AvgProfitdata.length);
     $('#chart1').highcharts({
         chart: {
             type: 'column',
@@ -359,10 +347,7 @@ function init_region_bar(data) {
             height:200
         },
         title: {
-            text: 'World\'s largest cities per 2014'
-        },
-        subtitle: {
-            text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
+            text: 'sortRankIC'
         },
         xAxis: {
             type: 'category',
@@ -388,7 +373,7 @@ function init_region_bar(data) {
         },
         series: [{
             name: 'Population',
-            data: data,
+            data: ICdata,
             dataLabels: {
                 enabled: true,
                 rotation: -90,
@@ -411,10 +396,7 @@ function init_region_bar(data) {
             x:100
         },
         title: {
-            text: 'World\'s largest cities per 2014'
-        },
-        subtitle: {
-            text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
+            text: 'sortRankIR'
         },
         xAxis: {
             type: 'category',
@@ -440,7 +422,7 @@ function init_region_bar(data) {
         },
         series: [{
             name: 'Population',
-            data: data,
+            data: IRdata,
             dataLabels: {
                 enabled: true,
                 rotation: -90,
@@ -462,10 +444,7 @@ function init_region_bar(data) {
             height:200
         },
         title: {
-            text: 'World\'s largest cities per 2014'
-        },
-        subtitle: {
-            text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
+            text: 'sortRankWinRate'
         },
         xAxis: {
             type: 'category',
@@ -491,7 +470,7 @@ function init_region_bar(data) {
         },
         series: [{
             name: 'Population',
-            data: data,
+            data: WinRatedata,
             dataLabels: {
                 enabled: true,
                 rotation: -90,
@@ -513,10 +492,7 @@ function init_region_bar(data) {
             height:200
         },
         title: {
-            text: 'World\'s largest cities per 2014'
-        },
-        subtitle: {
-            text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
+            text: 'sortAvgProfit'
         },
         xAxis: {
             type: 'category',
@@ -542,7 +518,7 @@ function init_region_bar(data) {
         },
         series: [{
             name: 'Population',
-            data: data,
+            data: AvgProfitdata,
             dataLabels: {
                 enabled: true,
                 rotation: -90,
@@ -558,3 +534,24 @@ function init_region_bar(data) {
         }]
     });
 }
+
+
+$(document).ready(function () {
+    $("ul").idTabs();
+    myBoardName="氮肥";
+    $.getJSON('/Board/getCompareData?boardName='+myBoardName, function (data) {
+        initLine(data);
+    });
+    $.getJSON('/BenchMark/getBenchList', function (data) {
+        initBaseCode(data);
+    });
+    initChosenList();
+    initpie_factor();
+    $.getJSON('/Stock/getStockDataList',function (data) {
+        initTable_all(data);
+        $("#loading").hide();
+    })
+
+    
+});
+

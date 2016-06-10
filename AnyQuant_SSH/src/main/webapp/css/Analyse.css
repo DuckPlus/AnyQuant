@@ -86,6 +86,11 @@
     -moz-box-shadow: 0 10px 6px -6px #777;
     box-shadow: 0 10px 6px -6px #777;
 }
+#input2_hint{
+    position: absolute;
+    left:400px;
+    top:10px
+}
 #pie_factors{
 
     position: absolute;

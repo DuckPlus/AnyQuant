@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/window.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="/css/loadingbar.css" />
+    <link rel="stylesheet" href="/css/hint.css">
     <title>Duck 回测参数配置</title>
     <meta charset="UTF-8">
     <script src="/js/loadingbar.js"></script>
@@ -248,6 +249,11 @@
             </span>
             <span id="diy_input2"><!--第二块输入区，各因子权重-->
                 <h1>参数Part2</h1>
+                <div class="hint_demo" id="input2_hint">
+                    <div class="help-tip">
+                        <p>输入的数字是相对哒<br>所以不用加和等于100~</p>
+                    </div>
+                </div>
                 <table>
                     <tr>
                         <td>市盈率:</td><td><input type="text" value="5" id="pe_text" onkeyup=redrawpie();></td></tr>
