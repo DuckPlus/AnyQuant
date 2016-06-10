@@ -140,9 +140,14 @@ public class FactorStrategy extends MultiStockStrategy {
      * 每层根据投资比重的进行买入，每只股票分配的钱相同
      */
     @Override
-    protected void buyStocks() {
+    protected boolean buyStocks() {
+        if(curCapital<=0){
+            return false;
+        }
+
         TradeDataVO tradeDataVO = new TradeDataVO();
         tradeDataVO.tradeDate=curTradeDay;
+        double tempExpense=0;
 
         this.curFactorEntities=this.factorDAO.getFactorAtDate(stocks,curTradeDay);
         List<Map.Entry<String,Double>>  tempMap = getSortedFinal_Factors(curFactorEntities);
@@ -194,6 +199,7 @@ public class FactorStrategy extends MultiStockStrategy {
                     }else{
                         lots[j]= (int) (expensePerStock/(buy_Prices[j]*stocksPerLot));
                         expense+=lots[j]*stocksPerLot*buy_Prices[j];
+                        tempExpense+=lots[j]*stocksPerLot*buy_Prices[j];
                     //    System.out.println("buy "+stocks.get(j)+" "+lots[j]*stocksPerLot+" at price: "+buy_Prices[j]);
 
                         super.addNewTradeDetailVO(i,true,tradeDataVO);
@@ -211,13 +217,13 @@ public class FactorStrategy extends MultiStockStrategy {
         /**
          * 更新当前资本
          */
-        this.curCapital=capital-expense;
+        this.curCapital=this.curCapital-tempExpense;
 
         tradeDataVO.nowCapital=curCapital;
         tradeDataVO.profit=this.profit;
         this.reportVO.tradeDataVOList.add(tradeDataVO);
 
-
+        return true;
     }
 
 
@@ -225,9 +231,14 @@ public class FactorStrategy extends MultiStockStrategy {
      * 简单平仓
      */
     @Override
-    protected void sellStocks() {
+    protected boolean sellStocks() {
+        if(stocks.size()==0){
+            return false;
+        }
         TradeDataVO tradeDataVO = new TradeDataVO();
         tradeDataVO.tradeDate=curTradeDay;
+        double tempIncome = 0;
+        double tempTax=0;
 
         /**
          * 获取当日的股票池的均价
@@ -260,15 +271,10 @@ public class FactorStrategy extends MultiStockStrategy {
                     super.addNewTradeDetailVO(i,false,tradeDataVO);
 
                     income+=sell_Prices[i]*lots[i]*stocksPerLot;
+                    tempIncome+=sell_Prices[i]*lots[i]*stocksPerLot;
                     tax+=sell_Prices[i]*lots[i]*stocksPerLot*taxRate;
-
-                }else{
-                    sell_Prices[i]=0;
+                    tempTax+=sell_Prices[i]*lots[i]*stocksPerLot*taxRate;
                 }
-
-
-
-
 
             }
 
@@ -292,7 +298,7 @@ public class FactorStrategy extends MultiStockStrategy {
         /**
          * 更新当前资本
          */
-        this.curCapital=this.curCapital-this.tax+this.income;
+        this.curCapital=this.curCapital-tempTax+tempIncome;
         System.out.println("curCapital: "+this.curCapital);
         /**
          * 向结果链表中添加一个元素
@@ -303,6 +309,8 @@ public class FactorStrategy extends MultiStockStrategy {
         tradeDataVO.nowCapital=curCapital;
         tradeDataVO.profit=this.profit;
         this.reportVO.tradeDataVOList.add(tradeDataVO);
+
+        return true;
     }
 
 

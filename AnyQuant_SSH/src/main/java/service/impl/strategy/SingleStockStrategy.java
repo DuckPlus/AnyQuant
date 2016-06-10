@@ -5,7 +5,7 @@ import vo.ReportVO;
 /**
  * Created by 67534 on 2016/6/5.
  */
-public class SingleStockStrategy extends BaseStrategy {
+public abstract class SingleStockStrategy extends BaseStrategy {
 
 
 
@@ -25,12 +25,8 @@ public class SingleStockStrategy extends BaseStrategy {
     }
 
     @Override
-    protected void buyStocks() {
-
-    }
+    protected abstract boolean buyStocks();
 
     @Override
-    protected void sellStocks() {
-
-    }
+    protected abstract boolean sellStocks();
 }
