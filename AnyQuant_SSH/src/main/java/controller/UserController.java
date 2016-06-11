@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- *
  * @author Qiang
  * @date 16/5/4
  */
@@ -49,31 +48,39 @@ public class UserController {
 
         userEntity.setName(username);
         userEntity.setPassword(password);
-        if (addNewUser != null && addNewUser.equals(Configure.BUTTON_CHOSEN)) {
 
-            userService.saveUser(userEntity);
-            return "/index.jsp";
+        String id;
+        if ((id = userService.checkIfValid(userEntity)) != null) {
+            //将用户的ID 写入到 Session中
+            request.getSession().setAttribute(Configure.USERID_KEY, id);
+            System.out.print("用户ID为" + request.getSession().getAttribute(Configure.USERID_KEY));
+            return "redirect:/html/duck_main.html";
         } else {
-            String id;
-            if ((id = userService.checkIfValid(userEntity)) != null) {
-                //将用户的ID 写入到 Session中
-                request.getSession().setAttribute(Configure.USERID_KEY, id);
-                System.out.print("用户ID为" + request.getSession().getAttribute(Configure.USERID_KEY));
-                return "redirect:/html/duck_main.html";
-            } else {
-                return "/index.jsp";
-            }
+            return "/index.jsp";
         }
-
     }
 
-    @RequestMapping(value = "/register" , method = RequestMethod.POST)
-    public String addNewUser(String userName , String password){
-        return "";
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean addNewUser(String userName, String password) {
+        if (userService.checkIfUserNameExist(userName)) {
+            return false;
+        } else {
+            UserEntity userEntity = new UserEntity();
+            userEntity.setName(userName);
+            userEntity.setPassword(password);
+            userService.saveUser(userEntity);
+
+        }
+
+
+        return true;
     }
 
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    @ResponseBody
     public boolean changePassword(HttpServletRequest request, @RequestParam("old") String old, @RequestParam("new") String newPassword) {
         String id = (String) request.getSession().getAttribute(Configure.USERID_KEY);
         UserEntity userEntity = new UserEntity();
