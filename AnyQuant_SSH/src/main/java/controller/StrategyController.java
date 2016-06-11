@@ -64,8 +64,8 @@ public class StrategyController {
     @RequestMapping(value = "/analyseWithFactor", method = RequestMethod.POST)
     public ReportVO analyseWithFactor(String arguments) {
         JSONObject jsonObject = JSONObject.fromObject(arguments);
-        System.out.println(arguments);
-        System.out.println(jsonObject);
+        System.out.println("arguments" +arguments);
+//        System.out.println(jsonObject);
         List<String> stockCodes = Arrays.asList((jsonObject.getString("codes")).split(Configure.STOCK_SPLITER));
         MyDate start = MyDate.getDateFromString(jsonObject.getString("start"));
         MyDate end = MyDate.getDateFromString(jsonObject.getString("end"));
@@ -77,45 +77,46 @@ public class StrategyController {
         double[] investWeight = Arrays.stream(jsonObject.getString("investWeight").split(Configure.STOCK_SPLITER)).mapToDouble(Double::parseDouble).toArray();
 
 
-        for (int i = 0; i < stockCodes.size(); i++) {
-            System.out.println(stockCodes.get(i));
-        }
-        System.out.println(start.DateToString());
-
-        System.out.println(end.DateToString());
-        System.out.println(factorWeight);
-        for (Map.Entry<String  , Double> entry : factorWeight.entrySet()){
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
-        System.out.println(capital);
-        System.out.println(taxRate);
-        System.out.println(baseCode);
-        System.out.println(Arrays.toString(investWeight));
+//        for (int i = 0; i < stockCodes.size(); i++) {
+//            System.out.println("done"+i);
+//            System.out.println(stockCodes.get(i));
+//        }
+//        System.out.println(start.DateToString());
+//
+//        System.out.println(end.DateToString());
+//        System.out.println(factorWeight);
+//        for (Map.Entry<String  , Double> entry : factorWeight.entrySet()){
+//            System.out.println(entry.getKey() + " " + entry.getValue());
+//        }
+//        System.out.println(capital);
+//        System.out.println(taxRate);
+//        System.out.println(baseCode);
+//        System.out.println(Arrays.toString(investWeight));
 
         ReportVO vo  = service.analyseWithFactor(stockCodes, start, end, factorWeight, capital, taxRate, baseCode, interval , investWeight);
 
-        System.out.println("PK-------");
-        for(CumRtnVO temp : vo.cumRtnVOList){
-            System.out.println("date: "+temp.date.DateToString()+" test: "+temp.testValue+" base: "+temp.baseValue);
-        }
-
-        System.out.println("Detail-------");
-        for(TradeDataVO tradeDataVO : vo.tradeDataVOList){
-            System.out.print("date: "+tradeDataVO.tradeDate.DateToString());
-            System.out.print("  profit: "+tradeDataVO.profit);
-            System.out.println("  nowCaptial: "+tradeDataVO.nowCapital);
-            for(TradeDetailVO detailVO : tradeDataVO.tradeDetailVOs){
-                if(detailVO.buyOrSell){
-                    System.out.print("Buy ");
-                }else{
-                    System.out.print("Sell ");
-                }
-                System.out.print(100*detailVO.numofTrade+" lots ");
-                System.out.print(detailVO.code+"  "+detailVO.codeName+" at");
-                System.out.println("price: "+detailVO.tradePrice);
-
-            }
-        }
+//        System.out.println("PK-------");
+//        for(CumRtnVO temp : vo.cumRtnVOList){
+//            System.out.println("date: "+temp.date.DateToString()+" test: "+temp.testValue+" base: "+temp.baseValue);
+//        }
+//
+//        System.out.println("Detail-------");
+//        for(TradeDataVO tradeDataVO : vo.tradeDataVOList){
+//            System.out.print("date: "+tradeDataVO.tradeDate.DateToString());
+//            System.out.print("  profit: "+tradeDataVO.profit);
+//            System.out.println("  nowCaptial: "+tradeDataVO.nowCapital);
+//            for(TradeDetailVO detailVO : tradeDataVO.tradeDetailVOs){
+//                if(detailVO.buyOrSell){
+//                    System.out.print("Buy ");
+//                }else{
+//                    System.out.print("Sell ");
+//                }
+//                System.out.print(100*detailVO.numofTrade+" lots ");
+//                System.out.print(detailVO.code+"  "+detailVO.codeName+" at");
+//                System.out.println("price: "+detailVO.tradePrice);
+//
+//            }
+//        }
 
         return vo;
     }
