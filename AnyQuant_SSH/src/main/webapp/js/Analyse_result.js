@@ -43,12 +43,12 @@ $(document).ready(function () {
                 {"stock_name": "stock 3", "stock_code": "sh600003"}
             ];
 
-        init_factor_table(data);
-        init_stock_pool_table(data2);
+        init_factor_table();
+        init_stock_pool_table();
         // init_transaction_table();
         init_transaction_detail_table();
     }else{
-        // alert("diy");
+        alert("diy");
         init_factor_table();
         init_stock_pool_table();
         //diy part
