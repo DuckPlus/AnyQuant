@@ -8,8 +8,8 @@
     <%--<script src="dist/js/flat-ui.min.js"></script>--%>
     <%--<link rel="stylesheet" type="text/css" href="/css/flat-ui.css">--%>
     <link rel="stylesheet" href="/css/flat_button.css" type="text/css">
-    <link rel="stylesheet" type="text/css" href="/css/login.css">
-           <script src="../js/login.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/login/login.css">
+           <script src="../js/login/login.js"></script>
 </head>
 
 <body>
@@ -39,12 +39,9 @@
                 </div>
 
                 <input type="submit" value="登录" class="flat_button_future flat_button_future_rounded" id="login_btn">
-                <input type="submit" value="注册" class="flat_button_future flat_button_future_rounded" id="signup_btn">
-
             <%--<a href="/user/json">所有账户</a>--%>
-
-
             </form>
+                <input type="submit" value="注册" class="flat_button_future flat_button_future_rounded" id="signup_btn">
                 <button class="flat_button_future flat_button_future_rounded" id="start_btn"onclick="location.href='/html/duck_main.html'">快速进入</button>
 
         </div>

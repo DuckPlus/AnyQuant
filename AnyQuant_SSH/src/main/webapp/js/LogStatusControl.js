@@ -13,7 +13,8 @@ function handle_Login(){
             if(data){
                 //do nothing
             }else{
-                window.location.href = '/jsp/index.jsp';
+                $('.theme-popover-mask').fadeIn(100);
+                $('.theme-popover').slideDown(200);
             }
         }        
     });

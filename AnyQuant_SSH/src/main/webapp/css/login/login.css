@@ -44,7 +44,7 @@
     top: 10%;
 }
 #start_btn{
-    margin-top: 210px;
+    margin-top: 30px;
     /*position: absolute;*/
     /*left:32%;*/
     /*top:82%;*/
@@ -94,7 +94,7 @@
 }
 #signup_btn{
     margin-left: 250px;
-    margin-top: -40px;
+    margin-top: 147px;
     width:65px;
 }
 
@@ -112,6 +112,18 @@
     margin-top: 8px;
 }
 #start_btn_text:hover{
+    cursor: hand;
+}
+#signup_btn_text{
+    /*background-color: #1B9AF7;*/
+    font-size: 30px;
+    font-weight: 100;
+    font-family: "Letter Gothic Std", "Microsoft Sans Serif", sans-serif;
+    float: left;
+    margin-left:20px;
+    margin-top: 8px;
+}
+#signup_btn_text:hover{
     cursor: hand;
 }
 #title{
