@@ -231,7 +231,7 @@ input.btn {
   z-index:9999;
   position:fixed;
   top:50%;
-  left:58%;
+  left:50%;
   width:550px;
   height:360px;
   margin:-180px 0 0 -330px;
