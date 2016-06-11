@@ -99,50 +99,28 @@
                             <th>成交量</th>
                             <th>换手率</th>
                         </tr>
-<!--<<<<<<< HEAD-->
-
-                        <!--</thead>-->
-                        <!--<tbody>-->
-                        <!--</tbody>-->
-
-                        <!--<tfoot>-->
-                        <!--</tfoot>-->
-                    <!--</table>-->
-                    <!--<div id="loading">-->
-                        <!--<br><br>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<p>加载中</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-        <!--</div>-->
-<!--=======-->
                 <tfoot>
                 </tfoot>
             </table>
-            <br><br><br><br><br><br>
-            <div id="loading" class="loading">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <p>加载中</p>
-            </div>
+            <!--<br><br><br><br><br><br>-->
+            <!--<div id="loading" class="loading">-->
+                <!--<span></span>-->
+                <!--<span></span>-->
+                <!--<span></span>-->
+                <!--<span></span>-->
+                <!--<span></span>-->
+                <!--<span></span>-->
+                <!--<span></span>-->
+                <!--<span></span>-->
+                <!--<span></span>-->
+                <!--<p>加载中</p>-->
+            <!--</div>-->
+                    <div class="duck_gear_loading" id="duck_gear_optional_table" style="position: absolute;left: 45%;top: 40%;">
+                        <img src="/image/duck_gear_backup.gif" alt="running" class="duck_gear_icon">
+                        <div class="duck_gear_tips">自选股加载中..</div>
+                    </div>
         </div>
     </div>
-<!--&gt;>>>>>> 06bea27980a3c1dba6171f62b5d8bbc02e115978-->
 
         <div id="tab2" style="display: none; ">
                 <div class="pie_bar">
@@ -220,7 +198,7 @@
                     contentType:'application/json;charset=utf-8',
                     success:function (data){
                         initTable(data);
-                        $("#loading").remove();
+                        $("#duck_gear_optional_table").remove();
                     },
                     error:function () {
                         alert("请求失败");

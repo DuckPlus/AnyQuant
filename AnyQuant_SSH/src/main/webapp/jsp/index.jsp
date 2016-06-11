@@ -41,14 +41,37 @@
                 <input type="submit" value="登录" class="flat_button_future flat_button_future_rounded" id="login_btn">
             <%--<a href="/user/json">所有账户</a>--%>
             </form>
-                <input type="submit" value="注册" class="flat_button_future flat_button_future_rounded" id="signup_btn">
+                <button class="flat_button_future flat_button_future_rounded" id="signup_btn" onclick={hide_login('loginModule');show_login('signupModule');}>注册</button>
                 <button class="flat_button_future flat_button_future_rounded" id="start_btn"onclick="location.href='/html/duck_main.html'">快速进入</button>
+
+        </div>
+        <div id="signupModule">
+            <form action="">
+                <input type="text" name = "username" placeholder="请输入用户名" required class="sign_input">
+                <input type="password" name = "password" placeholder="请设置密码" required class="sign_input">
+                <input type="password" name = "password_again" placeholder="请再次输入密码" required class="sign_input">
+                <button type="submit" value="注册" id="signup_confirm_btn">注册</button>
+            </form>
 
         </div>
 
     </div>
-
-
+        <button onclick=hide_login('loginModule')>hide login</button>
+        <button onclick=show_login('loginModule')>show login</button>
+        <button onclick=show_login('signupModule')>show signup</button>
+        <button onclick=hide_login('signupModule')>hide signup</button>
+    <script>
+        function hide_login(id) {
+            document.getElementById(id).style.opacity = 0;
+            setTimeout(function () {
+                document.getElementById(id).style.visibility = "hidden";
+            },500);
+        }
+        function show_login(id) {
+            document.getElementById(id).style.opacity = 1;
+                document.getElementById(id).style.visibility = "visible";
+        }
+    </script>
 </body>
 
 </html>

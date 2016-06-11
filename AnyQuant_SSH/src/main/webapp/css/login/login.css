@@ -38,6 +38,7 @@
     border-radius: 5px;
     left: 32%;
     top:40%;
+    -webkit-transition: opacity .5s linear;
 }
 #loginModule form{
     position: absolute;
@@ -94,7 +95,7 @@
 }
 #signup_btn{
     margin-left: 250px;
-    margin-top: 147px;
+    margin-top: 167px;
     width:65px;
 }
 
@@ -137,4 +138,54 @@
 #title_top{
     border-bottom: solid 1px;
 
+}
+#signupModule{
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    vertical-align: middle;
+    border:solid 1px antiquewhite;
+    background-color: rgb(60,60,60);
+    width: 400px;
+    height:300px;
+    border-radius: 5px;
+    left: 32%;
+    top:40%;
+    -webkit-transition: opacity .5s linear;
+}
+.sign_input{
+    width: 80%;
+    color: whitesmoke;
+    font-size: 20px;
+    height: 25px;
+    margin-top: 10px;
+    outline: none;
+    background-color: transparent;
+    border: solid 0;
+    border-bottom: solid 1px rgb(151,151,151);
+    -webkit-transition: border-bottom-color .5s;
+}
+.sign_input:focus{
+    border-bottom-color: #2ecc71;
+    -webkit-transition: border-bottom-color .5s;
+}
+#signup_confirm_btn{
+    background-color: #5adf73;
+    cursor: hand;
+    border: 0;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 45px;
+    float: left;
+    outline: none;
+}
+#signup_confirm_btn:hover{
+    background-color: #5EFF79;
+}
+#signup_confirm_btn:active{
+    background-color: #3ca050;
 }

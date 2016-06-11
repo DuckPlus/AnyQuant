@@ -338,7 +338,7 @@ function init_compare_chart(data) {
                 },
 
                 series : [
-                    {
+                    {   color:'#666666',
                         name : '基准',
                         data : data[0],
                         tooltip: {
@@ -346,6 +346,7 @@ function init_compare_chart(data) {
                         }
                     },
                     {
+                        color:'#CC0000',
                         name : '回测',
                         data : data[1],
                         tooltip: {

@@ -27,6 +27,7 @@ function dosearch() {//TODO 板块不存在 即在当前页面警告
 }
 function clear_tips() {
     document.getElementById('tips_info').innerHTML = "";
+    document.getElementById('duck_gear_board_list').style.visibility = "hidden";
 }
 //防止重复
 function ifExist(index,num){
