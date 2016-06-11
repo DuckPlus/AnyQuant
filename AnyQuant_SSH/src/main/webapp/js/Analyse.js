@@ -25,20 +25,8 @@ function doAnalyse_diy(){
     capital=document.getElementById("capital_diy").value;
     taxRate=document.getElementById("taxRate_diy").value;
     interval=document.getElementById("interval_diy").value;
-
-    peNum=parseInt(document.getElementById("pe_text").value);
-    pbNum=parseInt(document.getElementById("pb_text").value);
-    vol5Num=parseInt(document.getElementById("vol5_text").value);
-    vol10Num=parseInt(document.getElementById("vol10_text").value);
-    vol60Num=parseInt(document.getElementById("vol60_text").value);
-    vol120Num=parseInt(document.getElementById("vol120_text").value);
-    psNum=parseInt(document.getElementById("ps_text").value);
-    pcfNum=parseInt(document.getElementById("pcf_text").value);
-    level1 = parseInt(document.getElementById("level1").value);
-    level2 = parseInt(document.getElementById("level2").value);
-    level3 = parseInt(document.getElementById("level3").value);
-    level4 = parseInt(document.getElementById("level4").value);
-    level5 = parseInt(document.getElementById("level5").value);
+   
+    setFactor_moneyValue();
     var total_level = level1+level2+level3+level4+level5;
     level1/=total_level;
     level2/=total_level;
@@ -62,7 +50,7 @@ function doAnalyse_diy(){
         "\n交易费率："+taxRate+
         "\n调仓间隔："+interval+
         "\n起止时间："+startT+"~"+endT+
-        "\n因子们："+
+        "\n因子们："+factorSum+
         "\nPE:"+peNum+
         "\nPB:"+pbNum+
         "\nVOL5:"+vol5Num+
@@ -672,6 +660,21 @@ function showAllStock_list() {
     document.getElementById("helpbtn").innerHTML="分析因子表现";
     document.getElementById("helpbtn").onclick=factorAnalyse;
     document.getElementById("factor_analyse_info_label").innerHTML="分析因子表现<br>大概要5秒钟左右请耐心等待~^-^";
+}
+function setFactor_moneyValue() {
+    if($('#pe_text').val()!="")peNum=parseInt(document.getElementById("pe_text").value);
+    if($('#pb_text').val()!="")pbNum=parseInt(document.getElementById("pb_text").value);
+    if($('#vol5_text').val()!="")vol5Num=parseInt(document.getElementById("vol5_text").value);
+    if($('#vol10_text').val()!="")vol10Num=parseInt(document.getElementById("vol10_text").value);
+    if($('#vol60_text').val()!="")vol60Num=parseInt(document.getElementById("vol60_text").value);
+    if($('#vol120_text').val()!="")vol120Num=parseInt(document.getElementById("vol120_text").value);
+    if($('#ps_text').val()!="")psNum=parseInt(document.getElementById("ps_text").value);
+    if($('#pcf_text').val()!="")pcfNum=parseInt(document.getElementById("pcf_text").value);
+    if($('#level1').val()!="")level1 = parseInt(document.getElementById("level1").value);
+    if($('#level2').val()!="")level2 = parseInt(document.getElementById("level2").value);
+    if($('#level3').val()!="")level3 = parseInt(document.getElementById("level3").value);
+    if($('#level4').val()!="")level4 = parseInt(document.getElementById("level4").value);
+    if($('#level5').val()!="")level5 = parseInt(document.getElementById("level5").value);
 }
 $(document).ready(function () {
     $("ul").idTabs();

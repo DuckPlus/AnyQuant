@@ -8,6 +8,7 @@ var myRed="#EE2C2C",myGreen="#00CD66",myGrey="#8B7E66"
 $.getJSON('/Board/getAllBoardsAndStockData', function (data) {
     globalData=data;
     initBubble();
+    $("#loading").remove();
 });
 
 function dosearch() {//TODO 板块不存在 即在当前页面警告
