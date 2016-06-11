@@ -1,34 +1,82 @@
-body{
-    /*border: 3px solid #90111a;*/
-    /*background-color: #00CC99;*/
-    margin: 0px;
-    background-image: url("/image/HOME_PAGE_1x.png");
+#top_div{
+    background-image: url("/image/login/top_white.png");
+    width: 100%;
+    height:35%;
 }
-
+#down_div{
+    background-image: url("/image/login/down_black.png");
+    width: 100%;
+    height:65%;
+}
+#screen_big{
+    width: 150px;
+    height:23%;
+    top:12.6%;
+    left: 60px;
+    position: absolute;
+}
+#screen_small{
+     width: 110px;
+     height:17%;
+     top:18.6%;
+     left: 240px;
+     position: absolute;
+ }
+#inside{
+    width: 150px;
+    height:23%;
+    top:35.6%;
+    left: 55px;
+    position: absolute;
+}
+#loginModule{
+    position: absolute;
+    vertical-align: middle;
+    width: 400px;
+    height:200px;
+    border: dashed 1px #FFFFFF;
+    border-radius: 5px;
+    left: 32%;
+    top:40%;
+}
+#loginModule form{
+    position: absolute;
+    top: 10%;
+}
+#start_btn{
+    margin-top: 210px;
+    /*position: absolute;*/
+    /*left:32%;*/
+    /*top:82%;*/
+    width: 400px;
+    height: 50px;
+    /*font-size: 20px;*/
+    /*font-weight: 100;*/
+}
 #username{
-    margin-left: 5px;
+    margin-left: 10px;
+    margin-top: -50px;
     height: 40px;
+    width:200px;
     /*background-color: #00CC99;*/
 
 }
 #password{
-    margin-left: 5px;
+    margin-left: 10px;
+    margin-top: -50px;
     height: 40px;
+    width:200px;
     /*background-color: #2c3e50;*/
 }
-#loginModule{
-    width: 230px;
-    border: dashed 1px #FFFFFF;
-    border-radius: 5px;
-}
+
 #account_icon{
-    float: left;
+    margin-left: 70px;
     margin-top: 5px;
     /*background-color: #00a1cb;*/
     width: 30px;
 }
 #password_icon{
-    float: left;
+    margin-left: 70px;
     margin-top: 5px;
     /*background-color: #00a1cb;*/
     width: 30px;
@@ -40,31 +88,20 @@ body{
     margin-top:10px;
 }
 #login_btn{
-    margin-top:  10px;
-    margin-left: 35px;
+    margin-left: 115px;
+    margin-top: 10px;
+    width:125px;
 }
-.home_title{
-    color: #FFFFFF;
-    width: 700px;
-    /*background-color: #5dade2;*/
-    font-size: 50px;
-    font-family:  "Microsoft Sans Serif";
-    font-weight: 100;
-    margin-left:auto;
-    margin-right: auto;
+#signup_btn{
+    margin-left: 250px;
+    margin-top: -40px;
+    width:65px;
 }
+
 .flat_input_text{
     font-size: 15px;
 }
-#start_btn{
-    margin-top:20px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 200px;
-    height: 50px;
-    /*font-size: 20px;*/
-    /*font-weight: 100;*/
-}
+
 #start_btn_text{
     /*background-color: #1B9AF7;*/
     font-size: 30px;
@@ -76,4 +113,16 @@ body{
 }
 #start_btn_text:hover{
     cursor: hand;
+}
+#title{
+    color: #000000;
+    position: absolute;
+    font-size: 35px;
+    font-family:  "Microsoft Sans Serif";
+    font-weight: inherit;
+    right:15px;
+}
+#title_top{
+    border-bottom: solid 1px;
+
 }
