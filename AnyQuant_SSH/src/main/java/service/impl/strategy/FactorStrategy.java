@@ -113,23 +113,6 @@ public class FactorStrategy extends MultiStockStrategy {
 
     @Override
     public ReportVO analyse() {
-        System.out.println("capital: "+this.capital);
-        System.out.println("taxRate: "+this.taxRate);
-        System.out.println("baseCode: "+this.baseCode);
-        System.out.println("interval: "+this.interval);
-        System.out.println("start: "+this.start.DateToString());
-        System.out.println("end: "+this.end.DateToString());
-        System.out.println("size of stock pool:"+this.stocks.size());
-        for(Map.Entry<AnalysisFactor,Double> entry:weightedFactors.entrySet()){
-            System.out.println(entry.getKey()+"  "+entry.getValue());
-        }
-
-        System.out.println("investWright: ");
-        for(int i=0 ; i<investWeight.length;i++){
-            System.out.println(investWeight[i]+"  ");
-        }
-
-        System.out.println("numOfLevel: "+this.numOfLevel);
         return this.simpleAnalyse();
     }
 
@@ -152,13 +135,14 @@ public class FactorStrategy extends MultiStockStrategy {
         this.curFactorEntities=this.factorDAO.getFactorAtDate(stocks,curTradeDay);
         List<Map.Entry<String,Double>>  tempMap = getSortedFinal_Factors(curFactorEntities);
 
+
         /**
          * 将股票池换成按照综合因子排序后的列表
          */
         this.stocks = new ArrayList<>();
         for(int i=0;i<tempMap.size();i++){
             stocks.add(tempMap.get(i).getKey());
-          //  System.out.println(tempMap.get(i).getKey()+"  "+tempMap.get(i).getValue());
+            System.out.println(tempMap.get(i).getKey()+"  "+tempMap.get(i).getValue());
         }
 
 
@@ -178,8 +162,8 @@ public class FactorStrategy extends MultiStockStrategy {
         /**
          * 遍历各个层
          */
-        for(int i=0;i<numOfLevel;i++){
-            double expensePerStock = curCapital*investWeight[i]/(double)gap;
+        for(int j=0;j<numOfLevel;j++){
+            double expensePerStock = curCapital*investWeight[j]/(double)gap;
 
            // System.out.println("该层分配："+curCapital*investWeight[i]);
            // System.out.println("该层个数："+gap);
@@ -190,17 +174,17 @@ public class FactorStrategy extends MultiStockStrategy {
              * 确定每只股票买入的手数
              * 并记录花费
              */
-            for(int j=i*gap;j<(i+1)*gap;j++){
+            for(int i=j*gap;i<(j+1)*gap;i++){
                     /**
                      * 如果买入价格为0，就忽略该股票
                      * 把买入手数设为0
                      */
-                    if(buy_Prices[j]==0){
-                        lots[j]=0;
+                    if(buy_Prices[i]==0){
+                        lots[i]=0;
                     }else{
-                        lots[j]= (int) (expensePerStock/(buy_Prices[j]*stocksPerLot));
-                        expense+=lots[j]*stocksPerLot*buy_Prices[j];
-                        tempExpense+=lots[j]*stocksPerLot*buy_Prices[j];
+                        lots[i]= (int) (expensePerStock/(buy_Prices[i]*stocksPerLot));
+                        expense+=lots[i]*stocksPerLot*buy_Prices[i];
+                        tempExpense+=lots[i]*stocksPerLot*buy_Prices[i];
                     //    System.out.println("buy "+stocks.get(j)+" "+lots[j]*stocksPerLot+" at price: "+buy_Prices[j]);
 
                         super.addNewTradeDetailVO(i,true,tradeDataVO);

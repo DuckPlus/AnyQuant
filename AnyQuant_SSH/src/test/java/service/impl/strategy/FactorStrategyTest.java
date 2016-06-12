@@ -53,7 +53,7 @@ public class FactorStrategyTest {
 
         double [] investWeight= {0.7,0.1,0.1,0.05,0.05};
 
-        int interval=5;
+        int interval=60;
 
         strategy.setPara_Factor
                 (capital,taxRate,baseCode,start,end,
