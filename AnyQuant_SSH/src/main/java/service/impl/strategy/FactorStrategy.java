@@ -151,6 +151,7 @@ public class FactorStrategy extends MultiStockStrategy {
 
         this.curFactorEntities=this.factorDAO.getFactorAtDate(stocks,curTradeDay);
         List<Map.Entry<String,Double>>  tempMap = getSortedFinal_Factors(curFactorEntities);
+
         /**
          * 将股票池换成按照综合因子排序后的列表
          */

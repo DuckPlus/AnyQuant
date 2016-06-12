@@ -42,9 +42,10 @@ public class FactorStrategyTest {
         MyDate start =MyDate.getDateFromString("2015-01-01");
         MyDate end=MyDate.getDateFromString("2016-01-01");
         String [] codes = {
-                "sh600004", "sh600010", "sh600099",  "sh600103", "sh600105"};
-//                "sh600108", "sh600110", "sh600114", "sh600117", "sh600121",
-//                "sh600123", "sh600125", "sh600130", "sh600137","sh600160"};
+                "sh600004", "sh600010", "sh600099",  "sh600103", "sh600105",
+                "sh600108", "sh600110", "sh600114", "sh600117", "sh600121",
+                "sh600123", "sh600125", "sh600130", "sh600137","sh600160"};
+
         Map< AnalysisFactor,Double> weightedFactors;
         weightedFactors= new HashMap<AnalysisFactor,Double>();
         weightedFactors.put(AnalysisFactor.PE,0.5);
@@ -52,7 +53,7 @@ public class FactorStrategyTest {
 
         double [] investWeight= {0.7,0.1,0.1,0.05,0.05};
 
-        int interval=60;
+        int interval=5;
 
         strategy.setPara_Factor
                 (capital,taxRate,baseCode,start,end,

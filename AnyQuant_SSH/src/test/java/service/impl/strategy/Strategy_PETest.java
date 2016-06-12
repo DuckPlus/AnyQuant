@@ -34,7 +34,6 @@ public class Strategy_PETest {
     int interval=60;
 
 
-
     @Before
     public void setUp() throws Exception {
         strategy_pe.setPara_PE
