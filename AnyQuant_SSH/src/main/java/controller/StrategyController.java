@@ -160,16 +160,16 @@ public class StrategyController {
         MyDate end = MyDate.getDateFromString(jsonObject.getString("end"));
         int vol = jsonObject.getInt("vol");
         switch (strategyName) {
-            case "Strategy_Vol":
+            case "Strategy_VOL":
                 return service.analyseWithStrategyVol(vol, interval, capital, taxRate, baseCode, start, end);
             case "Strategy_PE":
                 return service.analyseWithStrategyPE(vol, interval, capital, taxRate, baseCode, start, end);
             default:
-                break;
+                throw new RuntimeException();
+
         }
 
 
-        return null;
     }
 
 
