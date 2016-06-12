@@ -9,7 +9,7 @@
     <%--tab上的小图标--%>
     <link rel="shortcut icon" href="/image/short_cut.png">
     <link rel="stylesheet" type="text/css" href="/css/login_new.css">
-    <script src="../js/login.js"></script>
+    <script src="../js/login/login.js"></script>
 </head>
 
 <body>

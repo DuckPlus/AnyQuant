@@ -233,12 +233,12 @@ $(document).ready(function () {
     $.getJSON('/Board/getBoardDistribution?boardName='+myBoardName, function (data) {
         initNumbers(data);
         initTree(data);
-        $("#loading_tree").remove();
+        $("#duck_gear_board_treechart").remove();
     });
     $.getJSON('/Board/getCompareData?boardName='+myBoardName, function (data) {
 
         initLine(data);
-        $("#loading_line").remove();
+        $("#duck_gear_board_compare").remove();
     });
 
 });

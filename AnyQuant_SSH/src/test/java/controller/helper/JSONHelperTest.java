@@ -5,8 +5,6 @@ import org.junit.Test;
 
 import java.util.Map;
 
-import static org.junit.Assert.*;
-
 /**
  * @author Qiang
  * @date 6/8/16

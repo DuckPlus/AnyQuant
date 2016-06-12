@@ -90,7 +90,6 @@
                     <option value ="Strategy_VOL">Strategy_VOL</option>
                 </select>
             </div>
-
             <div>
                 <div>
                 <label id="basecode_label"for="basecode" >基准大盘</label>
@@ -108,6 +107,12 @@
                     <option value="10000000">1000万</option>
                 </select>
             </div>
+                <span class="demo" >
+                起始<input type="text" id="start"value="2016-1-1" readonly style="height:16px" />
+            </span>
+            <span class="demo" >
+                结束<input type="text" id="end" value="2016-6-6"readonly style="height:16px" />
+            </span>
             <div>
                 <label for="taxRate" >交易费率</label>
                 <input id="taxRate" type="range" min="0" max="0.01"  step="0.0001"  onchange="getTaxRate()"/>
@@ -117,28 +122,18 @@
                         document.getElementById("taxRate_num").innerHTML=
                                 document.getElementById("taxRate").value;
                     }
-
                 </script>
             </div>
             <div>
                 <label for="numOfStock"  >股票数量</label>
-                <input id="numOfStock" type="text" value="10" placeholder="输入10~100的数字"required/>
+                <input id="numOfStock" type="text" value="10" placeholder="输入10~100"required/>
 
             </div>
-
              <div>
                 <label for="interval" >调仓间隔</label>
-                <input id="interval" type="text" value="5"placeholder="输入3~70的数字" required/>
+                <input id="interval" type="text" value="5"placeholder="输入3~70" required/>
 
             </div>
-
-            <span class="demo" >
-                起始<input type="text" id="start"value="2016-6-1" readonly style="height:16px" />
-            </span>
-            <span class="demo" >
-                结束<input type="text" id="end" value="2016-6-6"readonly style="height:16px" />
-            </span>
-
             </div>
             <button id="analysebtn" class="button button-glow button-rounded button-raised button-primary" onclick="doAnalyse()" >
                         开始回测</button>
@@ -149,7 +144,7 @@
         <div id="analyseDiv">
             <span id="diy_input1"><!--第一块输入区，股票池，起止日期-->
                 <h1>参数Part1</h1>
-                 <div class="hint_demo" id="input1_hint">
+                 <div class="hint_demo" id="input1_hint1">
                     <div class="help-tip">
                         <p>*可以点击【分析因子表现】<br>
                             获取我们提供的因子分析图表<br>
@@ -160,6 +155,13 @@
                             才能开始回测~  ^_^</p>
                     </div>
                 </div>
+                <div class="hint_demo" id="input1_hint2">
+                    <div class="help-tip">
+                        <p>*从右边的所有股票单击选择<br>
+                            *股票池中的股票也可单击撤销选择<br>
+                           </p>
+                    </div>
+                </div>
                 <div>
                     <label id="basecode_diy_label"for="basecode_diy" >基准大盘</label>
                     <select id="basecode_diy" > </select>
@@ -168,7 +170,7 @@
                 <!-- <input type="text" id="search_text_chosen" placeholder="Search.."></span>-->
 
                 <div class="demo" >
-                    起始<input type="text" id="start_diy"value="2016-1-1" readonly style="height:16px" />
+                    起始<input type="text" id="start_diy"value="2016-6-1" readonly style="height:16px" />
                 </div>
                 <div class="demo" >
                     结束<input type="text" id="end_diy" value="2016-6-6"readonly style="height:16px" />
@@ -193,7 +195,7 @@
                     分析因子表现
                 </button>
                 <br><br>
-                <div>大概要5秒钟左右请耐心等待~^-^</div>
+                <div id="factor_analyse_info_label">分析因子表现<br>大概要5秒钟左右请耐心等待~^-^</div>
             </span>
             <span id="analyseCharts"><!--各因子的4个图-->
                 <span id="allStocksDiv">
@@ -212,6 +214,7 @@
                         </tfoot>
 
                     </table>
+                    <br><br><br>
                     <div id="loading" class="loading">
                     <span></span>
                     <span></span>
@@ -222,13 +225,15 @@
                     <span></span>
                     <span></span>
                     <span></span>
-                    <p>股票数据加载中。。。</p>
+                    <p>股票加载中。。。</p>
                 </div>
                 </span>
-                <span id="chart1"></span>
-                <span id="chart2"></span>
-                <span id="chart3"></span>
-                <span id="chart4"></span>
+                <span id="barCharts">
+                    <span id="chart1"></span>
+                    <span id="chart2"></span>
+                    <span id="chart3"></span>
+                    <span id="chart4"></span>
+                </span>
             </span>
             <span id="diy_input2"><!--第二块输入区，各因子权重-->
                 <h1>参数Part2</h1>
@@ -252,7 +257,7 @@
                             所以不用加和等于100~<br>
                             *并且修改数字后回车<br>
                             可以看到右侧扇形图<br>
-                            对因子权重分配的直观展示</p>
+                            对资金分配的直观展示</p>
                     </div>
                 </div>
                 <table>
@@ -285,40 +290,40 @@
                     <tr>
                         <td> <label for="interval_diy" class="middle">调仓间隔</label>
                         <td>
-                            <input id="interval_diy" type="text" value="5"placeholder="输入7~30的数字" required/>
+                            <input id="interval_diy" type="text" value="5"placeholder="输入7~30" required/>
                         </td>
                     </tr>
                 </table>
                 <div class="up_line"><b>因子权重配置</b><b id="investweight_title">仓位分配</b>
                     <table>
                     <tr>
-                        <td>市盈率:</td><td><input type="text" value="5" id="pe_text" onchange=redrawpie();></td>
+                        <td>市盈率:</td><td><input type="text" value="5" id="pe_text" onchange=redrawpie_factor();></td>
                    <tr>
-                        <td>市净率:</td><td><input type="text" value="5" id="pb_text" onchange=redrawpie();></td></tr>
+                        <td>市净率:</td><td><input type="text" value="5" id="pb_text" onchange=redrawpie_factor();></td></tr>
                     <tr>
-                        <td>5日换手率:</td><td><input type="text" value="5" id="vol5_text" onchange=redrawpie();></td></tr>
+                        <td>5日换手率:</td><td><input type="text" value="5" id="vol5_text" onchange=redrawpie_factor();></td></tr>
                     <tr>
-                        <td>10日换手率:</td><td><input type="text" value="5" id="vol10_text" onchange=redrawpie();></td></tr>
+                        <td>10日换手率:</td><td><input type="text" value="5" id="vol10_text" onchange=redrawpie_factor();></td></tr>
                     <tr>
-                        <td>60日换手率:</td><td><input type="text" value="5" id="vol60_text" onchange=redrawpie();></td></tr>
+                        <td>60日换手率:</td><td><input type="text" value="5" id="vol60_text" onchange=redrawpie_factor();></td></tr>
                     <tr>
-                        <td>120日换手率:</td><td><input type="text" value="5" id="vol120_text" onchange=redrawpie();></td></tr>
+                        <td>120日换手率:</td><td><input type="text" value="5" id="vol120_text" onchange=redrawpie_factor();></td></tr>
                     <tr>
-                        <td>市销率:</td><td><input type="text" value="5" id="ps_text" onchange=redrawpie();></td></tr>
+                        <td>市销率:</td><td><input type="text" value="5" id="ps_text" onchange=redrawpie_factor();></td></tr>
                     <tr>
-                        <td>市现率:</td><td><input type="text" value="5" id="pcf_text" onchange=redrawpie();></td></tr>
+                        <td>市现率:</td><td><input type="text" value="5" id="pcf_text" onchange=redrawpie_factor();></td></tr>
                 </table>
                     <table id="level_input">
                     <tr>
-                        <td>级别1:</td><td><input type="text" value="5" id="level1" ></td>
+                        <td>1档位:</td><td><input type="text" value="5" id="level1" onchange=redrawpie_money(); ></td>
                    <tr>
-                        <td>级别2:</td><td><input type="text" value="5" id="level2" ></td></tr>
+                        <td>2档位:</td><td><input type="text" value="5" id="level2" onchange=redrawpie_money();></td></tr>
                     <tr>
-                        <td>级别3:</td><td><input type="text" value="5" id="level3" ></td></tr>
+                        <td>3档位:</td><td><input type="text" value="5" id="level3" onchange=redrawpie_money();></td></tr>
                     <tr>
-                        <td>级别4:</td><td><input type="text" value="5" id="level4" ></td></tr>
+                        <td>4档位:</td><td><input type="text" value="5" id="level4" onchange=redrawpie_money();></td></tr>
                     <tr>
-                        <td>级别5:</td><td><input type="text" value="5" id="level5" ></td></tr>
+                        <td>5档位:</td><td><input type="text" value="5" id="level5" onchange=redrawpie_money();></td></tr>
                    </table>
                 </div>
 
@@ -326,7 +331,11 @@
                     开始回测
                 </button>
             </span>
-            <div id="pie_factors"></div>
+            <div id="pies"><h1>权重展示图</h1>
+                <div id="pie_factors"></div>
+                <div id="pie_money"></div>
+            </div>
+
         </div>
 
         </div>

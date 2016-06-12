@@ -140,7 +140,9 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
             List<String> stocks = boardDistribution.get(boardName);
 
             for (StockdataEntity entity  : stockData){
-
+//                if(stocks == null){
+//                    System.out.println(boardName);
+//                }
                 if (stocks.contains(entity.getCode())){
 
                     boardEntities.add(entity);
@@ -154,6 +156,9 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
 //            System.out.println(boardName);
 //            stockdataEntities = stockDataDAO.getStockData(stocks);
 //
+//            if(boardEntities.size() == 0){
+//                continue;
+//            }
             double[] changeRate = new double[boardEntities.size()];
             double[] turnOverVol = new double[boardEntities.size()];
             double sum = 0;
@@ -164,8 +169,14 @@ public class BoardAnalysisServiceImpl implements BoardAnalysisService {
                 sum += turnOverVol[i] = entity.getTurnoverVol();
                 boardStocks.add(makeBoardAndStockVO(entity));
             }
+
             for (int i = 0; i < changeRate.length; i++) {
-                turnOverVol[i] = turnOverVol[i]/sum;
+                if(sum == 0){
+                    turnOverVol[i] = 0;
+                }else {
+                    turnOverVol[i] = turnOverVol[i]/sum;
+                }
+
             }
             board.put("boardChangeRate" ,StockHelper.computeAvgWithPower(changeRate , turnOverVol));
 

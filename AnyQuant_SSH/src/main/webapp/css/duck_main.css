@@ -27,3 +27,11 @@
     border: solid 2px rgb(151,151,151);
     border-radius: 10px;
 }
+/*#stock_list{*/
+    /*float: left;*/
+/*}*/
+.duck_gear_loading{
+    left: 45%;
+    top:45%;
+    position: absolute;
+}

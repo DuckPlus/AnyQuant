@@ -1,5 +1,6 @@
 package service;
 
+import net.sf.json.JSONArray;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +20,34 @@ import java.util.List;
 @ContextConfiguration
         (locations = {"classpath:/META-INF/applicationContext.xml","classpath:/META-INF/infrastructure.xml"})
 public class BoardAnalysisServiceTest {
+    @Test
+    public void setUp1() throws Exception {
+
+    }
+
+    @Test
+    public void getAllBoardName1() throws Exception {
+
+    }
+
+    @Test
+    public void getBoardAndBenchChartData2() throws Exception {
+        JSONArray array = service.getAllBoardAndStockData();
+        for (int i = 0; i < array.size(); i++) {
+            System.out.println(array.get(i));
+        }
+    }
+
+    @Test
+    public void getBoardAndBenchChartData11() throws Exception {
+
+    }
+
+    @Test
+    public void getBoardDistributionChartData1() throws Exception {
+
+    }
+
     @Autowired
     BoardAnalysisService service;
     @Before

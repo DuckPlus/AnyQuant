@@ -73,3 +73,6 @@ body{
 label:hover{
     cursor: pointer;
 }
+#pointer_div{
+    height: 30px;
+}

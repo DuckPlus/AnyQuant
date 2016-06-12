@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Duck 自选股</title>
+    <link rel="stylesheet" href="/css/flat_button.css" type="text/css">
     <script src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="http://www.sunsean.com/idTabs/jquery.idTabs.min.js"></script>
     <script src="/js/LogStatusControl.js"></script>
+    <script src="/js/login/login_force.js"></script>
+    <link rel="stylesheet" href="/css/login/login_force.css">
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
     <link rel="stylesheet" type="text/css" href="/css/window.css">
     <link rel="stylesheet" href="/css/duck_optional.css">
@@ -23,6 +26,7 @@
     <link rel="shortcut icon" href="/image/short_cut.png">
 </head>
 <body onload=init();>
+
 <!-- navigator begin -->
 <div id="nav_bar">
     <img src="/image/duck_icon_pink.png" style="width: 73px;height: 35px;float: left;margin-top:7px;margin-left: 10px">
@@ -95,50 +99,28 @@
                             <th>成交量</th>
                             <th>换手率</th>
                         </tr>
-<!--<<<<<<< HEAD-->
-
-                        <!--</thead>-->
-                        <!--<tbody>-->
-                        <!--</tbody>-->
-
-                        <!--<tfoot>-->
-                        <!--</tfoot>-->
-                    <!--</table>-->
-                    <!--<div id="loading">-->
-                        <!--<br><br>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<p>加载中</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-        <!--</div>-->
-<!--=======-->
                 <tfoot>
                 </tfoot>
             </table>
-            <br><br><br><br><br><br>
-            <div id="loading" class="loading">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <p>加载中</p>
-            </div>
+            <!--<br><br><br><br><br><br>-->
+            <!--<div id="loading" class="loading">-->
+                <!--<span></span>-->
+                <!--<span></span>-->
+                <!--<span></span>-->
+                <!--<span></span>-->
+                <!--<span></span>-->
+                <!--<span></span>-->
+                <!--<span></span>-->
+                <!--<span></span>-->
+                <!--<span></span>-->
+                <!--<p>加载中</p>-->
+            <!--</div>-->
+                    <div class="duck_gear_loading" id="duck_gear_optional_table" style="position: absolute;left: 45%;top: 40%;">
+                        <img src="/image/duck_gear_backup.gif" alt="running" class="duck_gear_icon">
+                        <div class="duck_gear_tips">自选股加载中..</div>
+                    </div>
         </div>
     </div>
-<!--&gt;>>>>>> 06bea27980a3c1dba6171f62b5d8bbc02e115978-->
 
         <div id="tab2" style="display: none; ">
                 <div class="pie_bar">
@@ -168,6 +150,38 @@
 
 </div>
 
+
+<!--自动跳出的登录界面-->
+<div class="theme-popover">
+    <div class="theme-poptit">
+        <a href="duck_main.html" title="关闭" class="close">×</a>
+        <h3>登录才能看到自选股哦~</h3>
+    </div>
+    <div class="theme-popbod dform">
+        <form class="theme-signin" action="/user/login" method="post" autocomplete="off">
+
+            <div id="account_with_icon">
+                <img src="/image/login_white.png" alt="ACC" id="account_icon">
+                <input id="username" name="username" type="text" placeholder="username" class="ipt" required>
+            </div>
+            <div id="password_with_icon">
+                <img src="/image/password_white.png" alt="PAS" id="password_icon">
+                <input id="password" name="password" type="password" placeholder="password" class="ipt" required>
+            </div>
+            <input type="submit" value="登录" class="flat_button_future flat_button_future_rounded" id="login_btn">
+            <input type="submit" value="注册" class="flat_button_future flat_button_future_rounded" id="signup_btn">
+
+        </form>
+        <!--<form class="theme-signin" name="loginform" action="" method="post">-->
+        <!--<ol>-->
+
+        <!--<li><strong>用户名：</strong><input class="ipt" type="text" name="log" value="lanrenzhijia" size="20" /></li>-->
+        <!--<li><strong>密码：</strong><input class="ipt" type="password" name="pwd" value="***" size="20" /></li>-->
+        <!--<li><input class="btn btn-primary" type="submit" name="submit" value=" 登 录 " /></li>-->
+        <!--</ol>-->
+        <!--</form>-->
+    </div>
+</div>
 </body>
 
 <script>
@@ -184,7 +198,7 @@
                     contentType:'application/json;charset=utf-8',
                     success:function (data){
                         initTable(data);
-                        $("#loading").remove();
+                        $("#duck_gear_optional_table").remove();
                     },
                     error:function () {
                         alert("请求失败");
@@ -285,6 +299,9 @@
                 plotShadow: false,
                 type: 'pie'
             },
+            credits: {
+                enabled:false
+            },
             title: {
                 text: '地域分布'
             },
@@ -316,6 +333,9 @@
         $('#region_bar_chart').highcharts({
             chart: {
                 type: 'column'
+            },
+            credits: {
+                enabled:false
             },
             title: {
                 text: '地域分布'
@@ -390,6 +410,9 @@
                 plotShadow: false,
                 type: 'pie'
             },
+            credits: {
+                enabled:false
+            },
             title: {
                 text: '行业分布'
             },
@@ -421,6 +444,9 @@
         $('#board_bar_chart').highcharts({
             chart: {
                 type: 'column'
+            },
+            credits: {
+                enabled:false
             },
             title: {
                 text: '行业分布'

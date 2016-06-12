@@ -8,6 +8,7 @@ var myRed="#EE2C2C",myGreen="#00CD66",myGrey="#8B7E66"
 $.getJSON('/Board/getAllBoardsAndStockData', function (data) {
     globalData=data;
     initBubble();
+    $("#loading").remove();
 });
 
 function dosearch() {//TODO 板块不存在 即在当前页面警告
@@ -26,6 +27,7 @@ function dosearch() {//TODO 板块不存在 即在当前页面警告
 }
 function clear_tips() {
     document.getElementById('tips_info').innerHTML = "";
+    document.getElementById('duck_gear_board_list').style.visibility = "hidden";
 }
 //防止重复
 function ifExist(index,num){
@@ -133,6 +135,12 @@ function draw(){
         },
         title: {
             text: ''
+        },
+        credits: {
+            enabled:false
+        },
+        exporting:{
+            enabled:false
         },
         xAxis: {
             visible:false

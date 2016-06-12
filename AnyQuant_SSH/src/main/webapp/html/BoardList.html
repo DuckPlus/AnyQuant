@@ -9,6 +9,8 @@
     <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
     <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
 
+    <script src="/js/loadingbar.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/loadingbar.css" />
     <link rel="stylesheet" type="text/css" href="/css/navigator.css">
     <link rel="stylesheet" href="/css/window.css" type="text/css">
     <link rel="stylesheet" href="/css/BoardList.css" type="text/css">
@@ -79,73 +81,29 @@
 
 
     <div id="bubble_pane">
-        <div id="bubble"></div>
+        <div id="bubble">
+        <!--<div id="loading" class="loading" >-->
+            <!--<span></span>-->
+            <!--<span></span>-->
+            <!--<span></span>-->
+            <!--<span></span>-->
+            <!--<span></span>-->
+            <!--<span></span>-->
+            <!--<span></span>-->
+            <!--<span></span>-->
+            <!--<span></span>-->
+            <!--<p>加载中</p>-->
+        <!--</div>-->
+            <div class="duck_gear_loading" id="duck_gear_board_list" style="position: absolute;left: 45%;top: 45%;">
+                <img src="/image/duck_gear_backup.gif" alt="running" class="duck_gear_icon">
+                <div class="duck_gear_tips">加载中..请稍后..</div>
+            </div>
     </div>
 </div>
 </body>
 <script>
 
 
-    function initTable() {
-        var table = $('#benchmark_list').DataTable( {
-
-            data:[{
-                1,2,3
-            },
-                {
-                    4,5,6
-                }],
-            columns:[
-                {data:'name'},
-                {data:'code'},
-                {data:'open'},
-                {data:'high'},
-                {data:'low'},
-                {data:'close'},
-                {data:'turnoverVol'},
-            ],
-
-            "autoWidth":false,
-            "columnDefs": [
-                // 将name列变为红色
-                {
-                    "targets": [0], // 目标列位置，下标从0开始
-                    "data": "name", // 数据列名
-                    "render": function(data, type, full) { // 返回自定义内容
-                        return "<span style='color:red;'>" + data + "</span>";
-                    }
-                }
-            ],
-            //国际化
-            "oLanguage": {
-                "sProcessing": "疯狂加载数据中.",
-                "sLengthMenu": "每页显示 _MENU_ 条记录",
-                "sZeroRecords": "抱歉， 没有找到",
-                "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
-                "sInfoEmpty": "没有数据",
-                "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
-                "sZeroRecords": "没有检索到数据",
-                "sSearch": "模糊查询:  ",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "前一页",
-                    "sNext": "后一页",
-                    "sLast": "尾页"
-                }
-            },
-
-
-        } );
-
-//以下是关于选择行的代码
-
-        $('#benchmark_list tbody').on( 'click', 'tr', function () {
-            table.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-            var selected_row = table.row('.selected').index();
-            var value = table.cell(selected_row,1).data();
-        } );
-    }
 
 </script>
 </html>

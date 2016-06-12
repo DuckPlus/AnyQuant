@@ -106,19 +106,23 @@
                         </tfoot>
 
                     </table>
-                    <br><br> <br><br> <br><br>
-                    <div id="loading" class="loading">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <p>加载中</p>
+                    <div class="duck_gear_loading" id="duck_gear_stock" style="position: absolute;left: 45%;top: 45%;">
+                        <img src="/image/duck_gear_backup.gif" alt="running" class="duck_gear_icon">
+                        <div class="duck_gear_tips">加载中..</div>
                     </div>
+                    <!--<br><br> <br><br> <br><br>-->
+                    <!--<div id="loading" class="loading">-->
+                        <!--<span></span>-->
+                        <!--<span></span>-->
+                        <!--<span></span>-->
+                        <!--<span></span>-->
+                        <!--<span></span>-->
+                        <!--<span></span>-->
+                        <!--<span></span>-->
+                        <!--<span></span>-->
+                        <!--<span></span>-->
+                        <!--<p>加载中</p>-->
+                    <!--</div>-->
                 </div>
             </div>
         <div id="tab2" style="display: none; ">
@@ -145,6 +149,7 @@
             </div>
         </div>
     </div>
+
      <!--TAB OVER-->
 
 
@@ -173,6 +178,7 @@
                     contentType:'application/json;charset=utf-8',
                     success:function (data){
 //                alert("success");
+                        document.getElementById('duck_gear_stock').style.visibility ="hidden";
                         initTable(data);
                         $("#loading").remove();
                     },
@@ -204,8 +210,8 @@
                 {data:'turnoverVol'},
                 {data:'changeRate'}
             ],
-            "bProcessing":true,
-            "iDisplayLength" : 40,
+//            "bProcessing":true,
+//            "iDisplayLength" : 40,
             "autoWidth":false,
 //            "columnDefs": [
 //                // 将name列变为红色
