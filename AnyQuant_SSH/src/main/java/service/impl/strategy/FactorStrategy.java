@@ -299,6 +299,12 @@ public class FactorStrategy extends MultiStockStrategy {
     }
 
 
+    @Override
+    protected List<String> getSelectedStocks() {
+        return null;
+    }
+
+
     /**
      *
      * @param factorEntities  交易日当天的股票池中各个股票的因子数据
