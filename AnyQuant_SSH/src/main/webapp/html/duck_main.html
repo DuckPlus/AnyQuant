@@ -110,19 +110,6 @@
                         <img src="/image/duck_gear_backup.gif" alt="running" class="duck_gear_icon">
                         <div class="duck_gear_tips">加载中..</div>
                     </div>
-                    <!--<br><br> <br><br> <br><br>-->
-                    <!--<div id="loading" class="loading">-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<span></span>-->
-                        <!--<p>加载中</p>-->
-                    <!--</div>-->
                 </div>
             </div>
         <div id="tab2" style="display: none; ">
@@ -193,6 +180,10 @@
      *初始化table的方法,包括样式的配置
      */
     function initTable(allStock) {
+        for(var i=0;i<allStock.length;i++){
+            if(allStock[i].changeRate !=0)
+            allStock[i].changeRate = (allStock[i].changeRate*100).toFixed(2)+"%";
+        }
         var table = $('#stock_list').DataTable( {
             data:allStock,
 

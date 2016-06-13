@@ -1,32 +1,38 @@
+body{
+    min-width: 1100px;
+    min-height: 700px;
+    margin:0;
+}
 #top_div{
     background-image: url("/image/login/top_white.png");
     width: 100%;
-    height:35%;
+    height:250px;
+    margin-left:0;
 }
 #down_div{
     background-image: url("/image/login/down_black.png");
     width: 100%;
-    height:65%;
+    height:450px;
 }
 #screen_big{
     width: 150px;
-    height:23%;
-    top:12.6%;
-    left: 60px;
+    /*height:23%;*/
+    top:101px;
+    left: 240px;
     position: absolute;
 }
 #screen_small{
      width: 110px;
-     height:17%;
-     top:18.6%;
-     left: 240px;
+     /*height:17%;*/
+     top:142px;
+     left: 420px;
      position: absolute;
  }
 #inside{
     width: 150px;
-    height:23%;
-    top:35.6%;
-    left: 55px;
+    /*height:101px;*/
+    top:251px;
+    left: 235px;
     position: absolute;
 }
 #loginModule{
@@ -34,50 +40,75 @@
     vertical-align: middle;
     width: 400px;
     height:200px;
-    border: dashed 1px #FFFFFF;
-    border-radius: 5px;
-    left: 32%;
-    top:40%;
+    border: solid 1px #FFFFFF;
+    border-radius: 10px;
+    left: 400px;
+    top:300px;
     -webkit-transition: opacity .5s linear;
 }
-#loginModule form{
+/*#loginModule form{*/
+    /*position: absolute;*/
+    /*top: 10%;*/
+/*}*/
+#signupModule{
+    visibility: hidden;
+    opacity: 0;
     position: absolute;
-    top: 10%;
+    vertical-align: middle;
+    border:solid 1px antiquewhite;
+    background-color: rgb(60,60,60);
+    width: 400px;
+    height:300px;
+    border-radius: 10px;
+    left: 400px;
+    top:300px;
+    -webkit-transition: opacity .5s linear;
 }
 #start_btn{
-    margin-top: 30px;
-    /*position: absolute;*/
-    /*left:32%;*/
-    /*top:82%;*/
+    font-family: "PingFang SC";
+    font-weight: 100;
+    font-size: 25px;
+    margin-top: 135px;
     width: 400px;
     height: 50px;
-    /*font-size: 20px;*/
-    /*font-weight: 100;*/
+}
+#signup_btn{
+    font-family: "PingFang SC";
+    font-weight: 100;
+    font-size: 25px;
+    position: absolute;
+    top:210px;
+    width:400px;
+    height: 50px;
 }
 #username{
     margin-left: 10px;
     margin-top: -50px;
+    border-width: 0 0 1px 0;
+    border-radius: 0;
     height: 40px;
-    width:200px;
+    width:300px;
     /*background-color: #00CC99;*/
 
 }
 #password{
+    border-width: 0 0 1px 0;
+    border-radius: 0;
     margin-left: 10px;
     margin-top: -50px;
     height: 40px;
-    width:200px;
+    width:300px;
     /*background-color: #2c3e50;*/
 }
 
 #account_icon{
-    margin-left: 70px;
+    margin-left: 20px;
     margin-top: 5px;
     /*background-color: #00a1cb;*/
     width: 30px;
 }
 #password_icon{
-    margin-left: 70px;
+    margin-left: 20px;
     margin-top: 5px;
     /*background-color: #00a1cb;*/
     width: 30px;
@@ -89,15 +120,18 @@
     margin-top:10px;
 }
 #login_btn{
-    margin-left: 115px;
+    position: absolute;
+    bottom: 0;
+    font-family: "PingFang SC";
+    font-weight: 100;
+    border-radius: 0 0 10px 10px;
+    border-width: 1px 0 0 0 ;
+    font-size: 25px;
     margin-top: 10px;
-    width:125px;
+    height: 50px;
+    width:100%;
 }
-#signup_btn{
-    margin-left: 250px;
-    margin-top: 167px;
-    width:65px;
-}
+
 
 .flat_input_text{
     font-size: 15px;
@@ -129,36 +163,25 @@
 }
 #title{
     color: #000000;
-    position: absolute;
+    /*position: absolute;*/
     font-size: 35px;
     font-family:  "Microsoft Sans Serif";
     font-weight: inherit;
-    right:15px;
+    float: right;
+    margin-right:15px;
 }
 #title_top{
     border-bottom: solid 1px;
 
 }
-#signupModule{
-    visibility: hidden;
-    opacity: 0;
-    position: absolute;
-    vertical-align: middle;
-    border:solid 1px antiquewhite;
-    background-color: rgb(60,60,60);
-    width: 400px;
-    height:300px;
-    border-radius: 5px;
-    left: 32%;
-    top:40%;
-    -webkit-transition: opacity .5s linear;
-}
+
 .sign_input{
     width: 80%;
     color: whitesmoke;
     font-size: 20px;
     height: 25px;
-    margin-top: 10px;
+    margin-top: 30px;
+    margin-left:20px;
     outline: none;
     background-color: transparent;
     border: solid 0;
@@ -167,25 +190,66 @@
 }
 .sign_input:focus{
     border-bottom-color: #2ecc71;
+    margin-left:40px;
+    -webkit-transition: margin-left .5s;
     -webkit-transition: border-bottom-color .5s;
 }
 #signup_confirm_btn{
     background-color: #5adf73;
+    color: white;
+    font-family: "PingFang SC";
+    font-weight: 100;
+    font-size: 25px;
     cursor: hand;
     border: 0;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-bottom-left-radius: 10px;
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%;
+    width: 70%;
     height: 45px;
     float: left;
     outline: none;
+    -webkit-transition: background-color .5s;
 }
+#back_btn{
+    color: white;
+    font-family: "PingFang SC";
+    font-weight: 100;
+    font-size: 25px;
+    cursor: hand;
+    border: 0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 45px;
+    outline: none;
+    -webkit-transition: background-color .5s;
+    background-color: #717181;
+    border-bottom-right-radius: 10px;
+    width: 30%;
+    float: left;
+}
+
 #signup_confirm_btn:hover{
     background-color: #5EFF79;
+    -webkit-transition: background-color .5s;
 }
 #signup_confirm_btn:active{
     background-color: #3ca050;
+}
+#back_btn:hover{
+    -webkit-transition: background-color .5s;
+    background-color: #9292a2;
+}
+#back_btn:active{
+    background-color: #535362;
+}
+#tip{
+    color: white;
+    font-size: 20px;
+    width: 80%;
+    height: 30px;
+    margin-left:20px;
+    margin-top:30px;
 }

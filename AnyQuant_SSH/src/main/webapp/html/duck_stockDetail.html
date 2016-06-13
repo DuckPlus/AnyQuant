@@ -24,7 +24,7 @@
     <!--tab上的小图标-->
     <link rel="shortcut icon" href="/image/short_cut.png">
 </head>
-<body>
+<body style="visibility: hidden;" id="main_hidden">
 <!-- navigator begin -->
 <div id="nav_bar">
     <img src="/image/duck_icon_pink.png" style="width: 73px;height: 35px;float: left;margin-top:7px;margin-left: 10px">
@@ -338,6 +338,7 @@
     function initOHLC_Chart(code) {
         $.getJSON('/Stock/getStockDataListByTime/?code='+code+'&start=2013-01-01&end=2015-01-30', function (data) {
             // split the data set into ohlc and volume
+            document.getElementById('main_hidden').style.visibility = "visible";
             var ohlc = [],
                     volume = [],
                     dataLength = data.length,
