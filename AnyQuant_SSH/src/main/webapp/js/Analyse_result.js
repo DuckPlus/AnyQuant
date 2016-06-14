@@ -7,8 +7,38 @@ var trasaction_data_all;
 var trasaction_detail_data_all;
 var total_capital;
 var is_diy = false;
-$(document).ready(function () {
 
+var c=0;
+var t;
+var speed = 150;
+function up(){
+    speed = 1;
+}
+function load_finish(){
+    up();
+    
+}
+
+function timedCount(){
+    var bar = document.getElementById('process');
+    document.getElementById('process').style.width = c*0.1+"%";
+    document.getElementById('info').innerHTML = Math.floor(c*0.1)+"%";
+    c=c+1;
+    if(c>300)bar.style.backgroundColor = "#F2CD31";
+    if(c>500)bar.style.backgroundColor = "#50E3C2";
+    if(c>700)bar.style.backgroundColor = "#7ED321";
+    if(c>900)bar.style.backgroundColor = "#B8E986";
+
+    if(c==1001){ //progress finish
+        $("#process_bar").remove();
+        document.getElementById('main_content').style.visibility = "visible";
+    }
+    if(c<1001){
+        t=setTimeout("timedCount()",speed);
+    }
+}
+$(document).ready(function () {
+    timedCount();
     var url = location.href.split("?")[1];
     if(url.split("&")[0].split("=")[1]!="diy") {
         is_diy = false;
@@ -48,7 +78,7 @@ $(document).ready(function () {
         // init_transaction_table();
         init_transaction_detail_table();
     }else{
-        alert("diy");
+        // alert("diy");
         init_factor_table();
         init_stock_pool_table();
         //diy part
@@ -106,9 +136,7 @@ function draw_compare_chart_diy(url) {
     document.getElementById('trade_rate').innerHTML = data_obj.taxRate;
     document.getElementById('base_bench').innerHTML = data_obj.baseCode;
     document.getElementById('interval').innerHTML = data_obj.interval;
-    alert("invest:"+data_obj.investWeight);
-    // alert(JSON.stringify(data_obj));
-    // alert("data: "+JSON.stringify(factor_weight));
+    
     test_strategy_with_factor(JSON.stringify(data_obj));
 
 }
@@ -133,7 +161,7 @@ function draw_compare_chart(url_params) {
     document.getElementById('base_bench').innerHTML = data_obj.baseCode;
     document.getElementById('interval').innerHTML = data_obj.interval;
     var json_data = JSON.stringify(data_obj);
-    alert(json_data);
+    // alert(json_data);
     test_specific_strategy(json_data);
     // for (var i=1;i<params.length;i++){
     //     alert(params[i]);
@@ -149,8 +177,9 @@ function test_specific_strategy(json_data) {
         
         data:{arguments:json_data},
         success:function (data) {
+            load_finish();
             trasaction_data_all = data;
-            alert("seccess !");
+            // alert("seccess !");
             // alert("->"+data.cumRtnVOList[0].baseValue);
             // alert("length->"+data.cumRtnVOList.length);
             var cumRtnVOList = data.cumRtnVOList;
@@ -172,7 +201,7 @@ function test_specific_strategy(json_data) {
             init_compare_chart(compare_datas);
             var trade_table_data = [];
             var trade_table_data_item;
-            document.getElementById('summary').innerHTML= JSON.stringify(trasaction_data_all);
+            // document.getElementById('summary').innerHTML= JSON.stringify(trasaction_data_all);
             for (var i=0;i<trade_data.length;i++){
                 trade_table_data_item = new Object();
                 var trade_total=0,trade_num=0;
@@ -199,7 +228,7 @@ function test_specific_strategy(json_data) {
     });
 }
 function test_strategy_with_factor(json_data) {
-    alert("params-->"+json_data);
+    // alert("params-->"+json_data);
     $.ajax({
         type:'post',
         url:'/Strategy/analyseWithFactor',
@@ -207,8 +236,9 @@ function test_strategy_with_factor(json_data) {
         //     taxRate:0.001,baseCode:"000010",interval:7,start:"2015/01/01",end:"2015/06/01",vol:100},
         data:{arguments:json_data},
         success:function (data) {
+            load_finish();
             trasaction_detail_data_all = data;
-            alert("seccess !");
+            // alert("seccess !");
             var cumRtnVOList = data.cumRtnVOList;
             var trade_data = data.tradeDataVOList;
             var compare_datas = [];
@@ -228,7 +258,7 @@ function test_strategy_with_factor(json_data) {
             init_compare_chart(compare_datas);
             var trade_table_data = [];
             var trade_table_data_item;
-            document.getElementById('summary').innerHTML= JSON.stringify(trasaction_detail_data_all);
+            // document.getElementById('summary').innerHTML= JSON.stringify(trasaction_detail_data_all);
             for (var i=0;i<trade_data.length;i++){
                 trade_table_data_item = new Object();
                 var trade_total=0,trade_num=0;

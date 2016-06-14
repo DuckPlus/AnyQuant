@@ -157,7 +157,8 @@
 <script>
     var allStock;
     $(document).ready(function () {
-
+//        document.getElementById("stock_list").style.backgroundColor = "black";
+//        initTable();
         $("ul").idTabs();
         $.ajax({
                     type:'post',
@@ -167,6 +168,8 @@
 //                alert("success");
                         document.getElementById('duck_gear_stock').style.visibility ="hidden";
                         initTable(data);
+
+//                        $("#stock_list").DataTable().rows.add(JSON.parse(JSON.stringify(data))).draw();
                         $("#loading").remove();
                     },
                     error:function () {
@@ -186,7 +189,6 @@
         }
         var table = $('#stock_list').DataTable( {
             data:allStock,
-
             "order":[[1,"asc"]],
             lengthChange:false,
             pageLength:10,
