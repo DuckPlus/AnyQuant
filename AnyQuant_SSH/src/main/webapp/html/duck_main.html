@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="/css/duck_main.css">
     <link type="text/css" rel="stylesheet" href="/css/main_tab.css"/>
     <script type="text/javascript" src="http://www.sunsean.com/idTabs/jquery.idTabs.min.js"></script>
+    <script src="/js/login/get_user.js"></script>
     <!-- DataTables -->
     <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
 
@@ -59,7 +60,7 @@
         <li class="nav_item">
             <a class="nav_c" href="#">
                 <img id= "user_icon" src="/image/user.png">
-                <label class="nav_item_name" id="user_name_label">用户</label>
+                <label class="nav_item_name" id="navigator_user_name">用户</label>
             </a>
         </li>
     </ul>
@@ -143,21 +144,17 @@
 </div>
 </body>
 
-<script>
-    function setUser() {
-        alert("begin");
-        $('#user_name_label').style.backgroundColor="red";
-        alert("set done");
-    }
-    window.onload = function () {
-        document.getElementById('user_name_label').innerHTML = "一朵野花";
-    }
+<!--<script>-->
+    <!--window.onload = function () {-->
+        <!--document.getElementById('user_name_label').innerHTML = "一朵野花";-->
+    <!--}-->
 
-</script>
+<!--</script>-->
 <script>
     var allStock;
     $(document).ready(function () {
-
+//        document.getElementById("stock_list").style.backgroundColor = "black";
+//        initTable();
         $("ul").idTabs();
         $.ajax({
                     type:'post',
@@ -167,6 +164,8 @@
 //                alert("success");
                         document.getElementById('duck_gear_stock').style.visibility ="hidden";
                         initTable(data);
+
+//                        $("#stock_list").DataTable().rows.add(JSON.parse(JSON.stringify(data))).draw();
                         $("#loading").remove();
                     },
                     error:function () {
@@ -186,7 +185,6 @@
         }
         var table = $('#stock_list').DataTable( {
             data:allStock,
-
             "order":[[1,"asc"]],
             lengthChange:false,
             pageLength:10,

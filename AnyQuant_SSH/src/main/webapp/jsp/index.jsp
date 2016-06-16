@@ -59,10 +59,10 @@
         </div>
 
     </div>
-        <button onclick=hide_login('loginModule')>hide login</button>
-        <button onclick=show_login('loginModule')>show login</button>
-        <button onclick=show_login('signupModule')>show signup</button>
-        <button onclick=hide_login('signupModule')>hide signup</button>
+        <%--<button onclick=hide_login('loginModule')>hide login</button>--%>
+        <%--<button onclick=show_login('loginModule')>show login</button>--%>
+        <%--<button onclick=show_login('signupModule')>show signup</button>--%>
+        <%--<button onclick=hide_login('signupModule')>hide signup</button>--%>
     <script>
         function hide_login(id) {
             document.getElementById(id).style.opacity = 0;

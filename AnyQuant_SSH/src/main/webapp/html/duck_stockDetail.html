@@ -11,6 +11,7 @@
     <!-- highcharts -->
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
     <script src="/js/echarts.min.js"></script>
+    <script src="/js/login/get_user.js"></script>
     <!--for evaluation chart-->
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
@@ -57,7 +58,7 @@
         <li class="nav_item">
             <a class="nav_c" href="#">
                 <img id= "user_icon" src="/image/user.png">
-                <label class="nav_item_name">用户</label>
+                <label class="nav_item_name" id="navigator_user_name">用户</label>
             </a>
         </li>
     </ul>
@@ -72,8 +73,8 @@
             <div id="title_part1">
                 <div id="title_part1_name_open_change">
                     <div id="title_name"></div>
-                    <div id="title_open">19.01</div>
-                    <div id="title_changeRate">+0.38%</div>
+                    <div id="title_open">--</div>
+                    <div id="title_changeRate">--</div>
                 </div>
 
                 <div id="title_addBtn_code">
@@ -140,31 +141,6 @@
 
 
     <div id="divider_mark">评分</div>
-    <!--<div class="duck_window" id="stockfactor_window">-->
-        <!--<div class="duck_title">-->
-            <!--<div class="duck_title_text">股票因子走势图</div>-->
-        <!--</div>-->
-        <!--<div class="duck_content">-->
-            <!--<select name="factor_type" id="factor_type" onchange=selectChange()>-->
-                <!--<option value="市盈率">市盈率</option>-->
-                <!--<option value="市净率">市净率</option>-->
-                <!--<option value="五日换手率">五日换手率</option>-->
-                <!--<option value="十日换手率">十日换手率</option>-->
-                <!--<option value="120日换手率">120日换手率</option>-->
-                <!--<option value="5日均线">5日均线</option>-->
-                <!--<option value="10日均线">10日均线</option>-->
-                <!--<option value="60日均线">60日均线</option>-->
-                <!--<option value="120日均线">120日均线</option>-->
-                <!--<option value="市销率">市销率</option>-->
-                <!--<option value="市现率">市现率</option>-->
-                <!--<option value="心理线指标">心理线指标</option>-->
-                <!--<option value="分析师推荐评级">分析师推荐评级</option>-->
-                <!--<option value="分析师推荐评级变化">分析师推荐评级变化</option>-->
-
-            <!--</select>-->
-            <!--<div id="factor_chart"></div>-->
-        <!--</div>-->
-    <!--</div>-->
 
     <div id="score_and_radar">
             <div id="score">
@@ -185,7 +161,12 @@
             <!--<div class="duck_title_text">相关新闻</div>-->
         <!--</div>-->
     <div id="divider_news">相关新闻</div>
-        <div id="news_board"></div>
+        <div id="news_board">
+            <div class="duck_gear_loading" id="duck_gear_detail_news" style="margin-left: 40%">
+                <img src="/image/duck_gear_backup.gif" alt="running" class="duck_gear_icon">
+                <div class="duck_gear_tips"style="font-family: 'PingFang SC'">新闻加载中..</div>
+            </div>
+        </div>
     <!--</div>-->
 
 </div>
@@ -231,11 +212,23 @@
             var region = data.officeAddr;
             var primeOperating = data.primeOperating;
             var totalShare = (data.totalShares/10000)+" 万股";
+            var close_price = data.close;
+            var changeRate = data.changeRate;
             document.getElementById('name_content').innerHTML = company_name;
             document.getElementById('listDate_content').innerHTML = listDate;
             document.getElementById('region_content').innerHTML = region;
             document.getElementById('totalShare_content').innerHTML = totalShare;
             document.getElementById('primeOperating_content').innerHTML = primeOperating;
+            document.getElementById('title_changeRate').innerHTML = changeRate;
+            document.getElementById('title_open').innerHTML = close_price;
+            if(changeRate<0){
+                document.getElementById('title_changeRate').style.color = "#339933";
+                document.getElementById('title_open').style.color = "#339933";
+            }
+            if(changeRate>0){
+                document.getElementById('title_changeRate').style.color = "#CC0033";
+                document.getElementById('title_open').style.color = "#CC0033";
+            }
 
         }, function () {
             alert("fail");
@@ -691,6 +684,7 @@
        data:{code:getCode()},
        success:function (data) {
            var len = data.length;
+           $("#duck_gear_detail_news").remove();
 //           alert(data[0].summary);
            for(var i=0;i<len;i++){
                 load_news(data[i].title,data[i].publishDate,data[i].summary);
@@ -699,25 +693,6 @@
     });
     function load_news(title,date,summary){
 
-//        var board = document.getElementById('news_board');
-//        var item_bar = document.createElement("div");
-//        item_bar.style.width = "90%";
-//        item_bar.style.marginRight = "auto";
-//        item_bar.style.marginLeft = "auto";
-//        item_bar.style.marginTop = "20px";
-////        item_bar.style.backgroundColor="#CCCCCC";
-//        var title_div = document.createElement("div");
-//        title_div.appendChild(document.createTextNode("标题: "+title));
-//        title_div.style.fontSize="25px";
-//        var date_div = document.createElement("div");
-//        date_div.appendChild(document.createTextNode("日期: "+date));
-//        var summary_div = document.createElement("div");
-//        summary_div.appendChild(document.createTextNode("内容："+summary));
-//
-//        item_bar.appendChild(title_div);
-//        item_bar.appendChild(date_div);
-//        item_bar.appendChild(summary_div);
-//        board.appendChild(item_bar);
         var news_page = document.createElement("div");
         news_page.style.minHeight = "140px";
         news_page.style.marginTop = "20px";

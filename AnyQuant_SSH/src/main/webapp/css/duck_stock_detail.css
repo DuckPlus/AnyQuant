@@ -35,7 +35,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: #d71414;
+    color: rgb(151,151,151);
     height: 50px;
     float: left;
     line-height: 70px;
@@ -45,7 +45,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: #d71414;
+    color: rgb(151,151,151);
     height: 50px;
     float: left;
     line-height: 70px;
