@@ -97,7 +97,7 @@
                             <th>最低价</th>
                             <th>收盘价</th>
                             <th>成交量</th>
-                            <th>换手率</th>
+                            <th>涨跌幅</th>
                         </tr>
                 <tfoot>
                 </tfoot>
@@ -231,16 +231,16 @@
              *自适应宽度 默认true 关闭可提升性能,同时方便管理布局
              */
             "autoWidth":false,
-            "columnDefs": [
-                // 将name列变为红色
-                {
-                    "targets": [0], // 目标列位置，下标从0开始
-                    "data": "name", // 数据列名
-                    "render": function(data, type, full) { // 返回自定义内容
-                        return "<span style='color:red;'>" + data + "</span>";
-                    }
-                }
-            ],
+//            "columnDefs": [
+//                // 将name列变为红色
+//                {
+//                    "targets": [0], // 目标列位置，下标从0开始
+//                    "data": "name", // 数据列名
+//                    "render": function(data, type, full) { // 返回自定义内容
+//                        return "<span style='color:red;'>" + data + "</span>";
+//                    }
+//                }
+//            ],
             //国际化
             "oLanguage": {
                 "sProcessing": "疯狂加载数据中.",
