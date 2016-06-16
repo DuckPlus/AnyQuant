@@ -19,6 +19,7 @@
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/treemap.js"></script>
+    <script src="/js/login/get_user.js"></script>
     <script src="/js/BoardDetail.js" type="text/javascript" language="javascript"charset="gbk"></script>
 
 </head>
@@ -68,7 +69,7 @@
         <li class="nav_item">
             <a class="nav_c" href="#">
                 <img id= "user_icon" src="/image/user.png">
-                <label class="nav_item_name">用户</label>
+                <label class="nav_item_name" id="navigator_user_name">用户</label>
             </a>
         </li>
     </ul>
@@ -101,38 +102,14 @@
             <div id="board_info_stop_num">持平</div>
             <div id="stopNum"></div>
         </div>
-        <!--<span id=stockName style="position:relative;left:30px;font-size:30px"></span>-->
-        <!--<span style="position:relative;left:60px;">今日板块涨幅：</span>-->
-        <!--<span id=rate style="position:relative;left:60px;"></span>-->
-        <!--<span style="position:relative;left:100px;">涨跌个数：</span>-->
-        <!--<span id=upNum class="red" style="position:relative;left:108px;"></span>-->
-        <!--<span style="position:relative;left:115px">/</span>-->
-        <!--<span id=downNum class="green" style="position:relative;left:120px;"></span>-->
-        <!--<span style="position:relative;left:127px">/</span>-->
-        <!--<span id=stopNum class="grey" style="position:relative;left:130px;"></span>-->
-        <!--<input id="searchCode" type="text" class="form-control"  placeholder="输入板块名称" style="position:relative;left:400px;">-->
-        <!--<button id="searchbtn" class="button button-raised button-primary button-pill" onclick="dosearch()"  style="position:relative;left:420px;">-->
-            <!--查询-->
-        <!--</button>-->
+
     </div>
 
 
 
         <div id="compare_chart">
             <div id="linechart" class="linechart" style="float: left;width: 100%">
-                <!--<br><br><br><br><br><br>-->
-                <!--<div id="loading_line" class="loading">-->
-                    <!--<span></span>-->
-                    <!--<span></span>-->
-                    <!--<span></span>-->
-                    <!--<span></span>-->
-                    <!--<span></span>-->
-                    <!--<span></span>-->
-                    <!--<span></span>-->
-                    <!--<span></span>-->
-                    <!--<span></span>-->
-                    <!--<p>加载中</p>-->
-                <!--</div>-->
+
                 <div class="duck_gear_loading" id="duck_gear_board_compare" style="float: left;margin-left: 43%;margin-top: 150px;">
                     <img src="/image/duck_gear_backup.gif" alt="running" class="duck_gear_icon">
                     <div class="duck_gear_tips">走势比较加载中..</div>
@@ -143,18 +120,7 @@
 
         <div id="consist_chart">
             <div id="treechart" class="treechart" style="float: left;width: 100%">
-                <!--<div id="loading_tree" class="loading">-->
-                    <!--<span></span>-->
-                    <!--<span></span>-->
-                    <!--<span></span>-->
-                    <!--<span></span>-->
-                    <!--<span></span>-->
-                    <!--<span></span>-->
-                    <!--<span></span>-->
-                    <!--<span></span>-->
-                    <!--<span></span>-->
-                    <!--<p>加载中</p>-->
-                <!--</div>-->
+
 
             </div>
             <div class="duck_gear_loading" id="duck_gear_board_treechart" style="float: left;margin-left: 45%;margin-top: -400px;">

@@ -24,10 +24,13 @@ function timedCount(){
     document.getElementById('process').style.width = c*0.1+"%";
     document.getElementById('info').innerHTML = Math.floor(c*0.1)+"%";
     c=c+1;
-    if(c>300)bar.style.backgroundColor = "#F2CD31";
-    if(c>500)bar.style.backgroundColor = "#50E3C2";
-    if(c>700)bar.style.backgroundColor = "#7ED321";
-    if(c>900)bar.style.backgroundColor = "#B8E986";
+    if(c>2)bar.style.backgroundColor = "rgb(218,95,95)";
+    // if(c>140)bar.style.backgroundColor = "rgb(238,188,115)";
+    if(c>280)bar.style.backgroundColor = "rgb(230,187,72)";
+    // if(c>520)bar.style.backgroundColor = "rgb(221,20,41)";
+    if(c>460)bar.style.backgroundColor = "rgb(182,218,96)";
+    // if(c>800)bar.style.backgroundColor = "rgb(110,220,236)";
+    if(c>750)bar.style.backgroundColor = "rgb(33,186,69)";
 
     if(c==1001){ //progress finish
         $("#process_bar").remove();
