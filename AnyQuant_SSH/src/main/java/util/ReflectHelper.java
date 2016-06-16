@@ -35,5 +35,18 @@ public class ReflectHelper {
         return method.invoke(p);
     }
 
+    public static Object getValueWithoutLower(Object ob , String attrName) {
+
+        Field field = null;
+        try {
+            field = ob.getClass().getDeclaredField(attrName);
+            return getValueByProperty(ob, field.getName());
+        } catch (NoSuchFieldException | IntrospectionException | InvocationTargetException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
 
 }

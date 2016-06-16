@@ -1,13 +1,18 @@
 package controller;
 
+import data.StockDataService;
 import entity.StockEntity;
 import entity.StockdataEntity;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.StockAnalyseService;
 import service.StockService;
+import util.DateCalculator;
+import util.MyDate;
+import util.ReflectHelper;
 import util.enumration.AnalysisFactor;
 import util.enumration.FactorJudge;
 import vo.EvaluationVO;
@@ -15,6 +20,8 @@ import vo.FactorWeightVO;
 import vo.Factor_VO;
 import vo.NewsVO;
 
+import java.lang.reflect.Field;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -34,9 +41,34 @@ public class StockDetailController {
      * Return all the detail message(non-real-time)
      * 返回单只股票详细信息(非实时数据)
      */
+//    @RequestMapping("/description")
+//    public StockEntity getStockDescription(String code){
+//        return stockService.getStockDescription(code);
+//    }
+
     @RequestMapping("/description")
-    public StockEntity getStockDescription(String code){
-        return stockService.getStockDescription(code);
+    public JSONObject getStockDescriptionWithData(String code) throws ClassNotFoundException {
+        StockEntity entity = stockService.getStockDescription(code);
+        JSONObject object = new JSONObject();
+
+        Class<?> stockEntityClass = Class.forName("entity.StockEntity");
+
+        Field[] fields = stockEntityClass.getDeclaredFields();
+        for (Field field : fields){
+//            System.out.println(field.getName());
+            if(field.getName().equalsIgnoreCase("listDate")){
+//                object.put("listDate" , DateCalculator.SQLDateToMyDate(entity.getListDate()));
+            }else {
+                object.put(field.getName() , ReflectHelper.getValueWithoutLower(entity , field.getName()));
+            }
+
+        }
+        StockdataEntity stockdataEntity = stockService.getTodayStockVO(code);
+        object.put("close" , stockdataEntity.getClose());
+        object.put("changeRate" , stockdataEntity.getChangeRate());
+        return  object;
+
+
     }
 
     /**

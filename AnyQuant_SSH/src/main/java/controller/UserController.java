@@ -95,12 +95,30 @@ public class UserController {
     }
 
     @RequestMapping("/getAllReports")
+    @ResponseBody
     public List<ReportVO> getAllReports(HttpServletRequest request) {
         if (checkIfLogin(request)) {
             return strategyService.getAllReports((String) request.getSession().getAttribute(Configure.USERID_KEY));
         } else {
             return null;
         }
+    }
+
+    @RequestMapping("/getUserName")
+    @ResponseBody
+    public String getUserName(HttpServletRequest request){
+        if(checkIfLogin(request)){
+            int id = Integer.valueOf((String)request.getSession().getAttribute(Configure.USERID_KEY));
+            List<UserEntity> users = userService.getAllUsernames();
+            for (UserEntity entity : users){
+                if(entity.getId() == id){
+                    return entity.getName();
+                }
+            }
+        }
+
+        return null;
+
     }
 
 
