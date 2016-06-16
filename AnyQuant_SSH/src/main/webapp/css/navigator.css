@@ -67,6 +67,9 @@ body{
     float: left;
     margin-top: 10px;
 }
+#user_icon:hover{
+    cursor: pointer;
+}
 .nav_item_name{
     float: left;
 }

@@ -286,7 +286,8 @@ a.tab_item:hover{
     text-align: left;
     color:#fff;
     line-height: 50px;/*行间距*/
-    background-color: #8B8B7A;
+    /*background-color: #8B8B7A;*/
+    background-color: rgb(151,151,151);
     margin: 20px auto;
     display: block;
     height: 400px;
