@@ -219,7 +219,7 @@
             document.getElementById('region_content').innerHTML = region;
             document.getElementById('totalShare_content').innerHTML = totalShare;
             document.getElementById('primeOperating_content').innerHTML = primeOperating;
-            document.getElementById('title_changeRate').innerHTML = changeRate;
+            document.getElementById('title_changeRate').innerHTML = (changeRate*100).toFixed(2) + "%";
             document.getElementById('title_open').innerHTML = close_price;
             if(changeRate<0){
                 document.getElementById('title_changeRate').style.color = "#339933";
