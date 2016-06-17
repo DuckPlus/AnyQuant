@@ -3,6 +3,7 @@
     margin-right:3%;
     /*background-color: #2c81ba;*/
     height: 700px;
+    min-width: 1100px;
 }
 
 
@@ -118,4 +119,11 @@
 .lighter_font{
     font-family: "PingFang SC";
     font-weight: 100;
+}
+#test_back_pic{
+    width: 430px;
+    position: absolute;
+    left: 720px;
+    top:150px;
+    visibility: hidden;
 }

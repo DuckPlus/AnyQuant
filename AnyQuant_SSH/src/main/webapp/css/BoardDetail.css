@@ -1,8 +1,10 @@
-#main_content{
+#main_content_board_detail{
     margin-left: 3%;
     margin-right: 3%;
-    /*background-color: #00bdef;*/
+    min-width: 1100px;
+    border-right: 2px solid rgb(151,151,151);
 }
+
 #top_bar{
     border-right: 1px solid rgb(151,151,151);
     height: 1300px;

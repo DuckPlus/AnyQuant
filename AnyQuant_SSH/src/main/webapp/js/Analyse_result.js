@@ -35,6 +35,11 @@ function timedCount(){
     if(c==1001){ //progress finish
         $("#process_bar").remove();
         document.getElementById('main_content').style.visibility = "visible";
+        if(!is_diy){
+            document.getElementById("test_back_pic").style.visibility = "visible";
+            document.getElementById("factor_weight").style.visibility = "hidden";
+            document.getElementById("stock_pool").style.visibility = "hidden";
+        }
     }
     if(c<1001){
         t=setTimeout("timedCount()",speed);
@@ -46,36 +51,7 @@ $(document).ready(function () {
     if(url.split("&")[0].split("=")[1]!="diy") {
         is_diy = false;
         draw_compare_chart(url);
-        var data =
-            [
-                {
-                    "factor": "FACTOR2",
-                    "weight": 0.2
-                },
-                {
-                    "factor": "FACTOR1",
-                    "weight": 0.5
-                },
-                {
-                    "factor": "FACTOR3",
-                    "weight": 0.3
-                }
-            ];
-        var data2 =
-            [
-                {"stock_name": "stock 1", "stock_code": "sh600001"},
-                {"stock_name": "stock 2", "stock_code": "sh600002"},
-                {"stock_name": "stock 1", "stock_code": "sh600001"},
-                {"stock_name": "stock 2", "stock_code": "sh600002"},
-                {"stock_name": "stock 1", "stock_code": "sh600001"},
-                {"stock_name": "stock 2", "stock_code": "sh600002"},
-                {"stock_name": "stock 1", "stock_code": "sh600001"},
-                {"stock_name": "stock 2", "stock_code": "sh600002"},
-                {"stock_name": "stock 1", "stock_code": "sh600001"},
-                {"stock_name": "stock 2", "stock_code": "sh600002"},
-                {"stock_name": "stock 3", "stock_code": "sh600003"}
-            ];
-
+        
         init_factor_table();
         init_stock_pool_table();
         // init_transaction_table();
@@ -367,7 +343,7 @@ function init_compare_chart(data) {
                 },
 
                 title : {
-                    text : 'AAPL Stock Price'
+                    text : '基准/大盘回测对比'
                 },
 
                 series : [

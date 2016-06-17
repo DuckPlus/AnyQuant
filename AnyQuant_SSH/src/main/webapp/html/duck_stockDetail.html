@@ -66,27 +66,27 @@
 <div id="blank"></div>
 <!-- navigator end -->
 <!--承载所有股票信息内容元素,控制两侧缩进-->
-<div class="main_content">
+<div class="main_content light_font" >
 
     <div id="ohlc_factor_info_div">
         <div id="main_title">
             <div id="title_part1">
-                <div id="title_part1_name_open_change">
+                <div id="title_part1_name_open_change" class="light_font">
                     <div id="title_name"></div>
                     <div id="title_open">--</div>
                     <div id="title_changeRate">--</div>
                 </div>
 
                 <div id="title_addBtn_code">
-                    <div id="title_code"></div>
-                    <button id="add_stock_btn" class="button button-rounded button-tiny">加入自选股</button>
+                    <div id="title_code" class="light_font"></div>
+                    <button id="add_stock_btn" class="button button-rounded button-tiny light_font">加入自选股</button>
                 </div>
             </div>
 
-            <div id="stock_info_detail">
+            <div id="stock_info_detail" class="light_font">
                 <div id="name_item">
                     <img class="item_icon" src="/image/inc_name.png" alt="公司名称">
-                    <div id="stock_info_name">公司名称</div>
+                    <div id="stock_info_name" class="light_font">公司名称</div>
                     <div id="name_content"></div>
                 </div>
 
@@ -118,7 +118,7 @@
         <div id="chart1"></div>
 
         <div id="divider_ohlc_factor">因子走势</div>
-        <select name="factor_type" id="factor_type" onchange=selectChange();>
+        <select name="factor_type" id="factor_type" style="margin-left:20px;" onchange=selectChange();>
             <option value="市盈率">市盈率</option>
             <option value="市净率">市净率</option>
             <option value="五日换手率">五日换手率</option>
@@ -151,8 +151,8 @@
             <div id="divider_score_radar"></div>
             <div id="radar">
                 <div id="radar_chart" style="width: 100%;height: 400px"></div>
-                <input id="xinxixishu" type="radio" checked="checked" name="radar_type" value="信息系数" onclick="change_radar_type()">因子系数<br>
-                <input id="xinxibi" type="radio" name="radar_type" value="信息比" onclick="change_radar_type()">信息比<br>
+                <!--<input id="xinxixishu" type="radio" checked="checked" name="radar_type" value="信息系数" onclick="change_radar_type()">因子系数<br>-->
+                <!--<input id="xinxibi" type="radio" name="radar_type" value="信息比" onclick="change_radar_type()">信息比<br>-->
             </div>
     </div>
 
@@ -208,7 +208,7 @@
 //            document.getElementById('title_open').innerHTML = data.open;
 
             var company_name = data.name;
-            var listDate = data.listDate;
+            var listDate = data.listDate.year+"-"+data.listDate.month+"-"+data.listDate.day;
             var region = data.officeAddr;
             var primeOperating = data.primeOperating;
             var totalShare = (data.totalShares/10000)+" 万股";
@@ -366,14 +366,17 @@
             $('#chart1').highcharts('StockChart', {
                 plotOptions: {
                     candlestick: {
-                        color: myGreen,
-                        upColor: myRed
+                        color: "rgb(0,204,153)",
+                        upColor: '#CC0033'
                     }
                 },
                 tooltip: {
 
                     xDateFormat:'%Y-%m-%d'
 
+                },
+                credits: {
+                    enabled: false
                 },
                 rangeSelector: {
                     selected: 0
@@ -432,34 +435,34 @@
     };
 </script>
 <!-- relationship chart -->
-<script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('chart2'));
+<!--<script type="text/javascript">-->
+    <!--// 基于准备好的dom，初始化echarts实例-->
+    <!--var myChart = echarts.init(document.getElementById('chart2'));-->
 
-    // 指定图表的配置项和数据
-    var option = {
-        title: {
-            text: 'ECharts 入门示例'
-        },
-        tooltip: {},
-        legend: {
-            data:['销量']
-        },
-        xAxis: {
-            data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-        },
-        yAxis: {},
-        series: [{
-            name: '销量',
-            type: 'bar',
-            data: [5, 20, 36, 10, 10, 20]
-        }]
-    };
+    <!--// 指定图表的配置项和数据-->
+    <!--var option = {-->
+        <!--title: {-->
+            <!--text: 'ECharts 入门示例'-->
+        <!--},-->
+        <!--tooltip: {},-->
+        <!--legend: {-->
+            <!--data:['销量']-->
+        <!--},-->
+        <!--xAxis: {-->
+            <!--data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]-->
+        <!--},-->
+        <!--yAxis: {},-->
+        <!--series: [{-->
+            <!--name: '销量',-->
+            <!--type: 'bar',-->
+            <!--data: [5, 20, 36, 10, 10, 20]-->
+        <!--}]-->
+    <!--};-->
 
-    // 使用刚指定的配置项和数据显示图表。
+    <!--// 使用刚指定的配置项和数据显示图表。-->
 
-    myChart.setOption(option);
-</script>
+    <!--myChart.setOption(option);-->
+<!--</script>-->
 
 <script type="text/javascript">
     function init_factor_chart(factor) {
@@ -487,16 +490,18 @@
                         selected : 1
                     },
 
-                    title : {
-                        text : 'STOCK FACTOR'
-                    },
+//                    title : {
+//                        text : 'STOCK FACTOR'
+//                    },
                     yAxis:{
                         crosshair:{//color:myRed
-                        },
+                        }
                     },
-
+                    credits: {
+                        enabled: false
+                    },
                     series : [{
-                        name : 'factor name',
+                        name : '因子值',
                         data : dataset,
                         tooltip: {
                             valueDecimals: 2
@@ -585,10 +590,10 @@
         $('#score_chart').highcharts(Highcharts.merge(gaugeOptions, {
             yAxis: {
                 min: 0,
-                max: 100,
-                title: {
-                    text: 'Evaluation'
-                }
+                max: 100
+//                title: {
+//                    text: 'Evaluation'
+//                }
             },
 
             credits: {
@@ -637,8 +642,8 @@
             },
 
             title: {
-                text: 'Budget vs spending',
-                x: -80
+                text: '最具价值因子对比',
+                x: -100
             },
 
             pane: {
@@ -656,10 +661,12 @@
                 lineWidth: 0,
                 min: 0
             },
-
+            credits: {
+                enabled: false
+            },
             tooltip: {
                 shared: true,
-                pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y}</b><br/>'
+                pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y}</b><br/>'
             },
 
             legend: {
