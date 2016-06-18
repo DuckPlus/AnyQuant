@@ -93,9 +93,7 @@ public class Strategy_PE extends MultiStockStrategy {
         /**
          * 挑选vol只股票加入股票池
          */
-        int gap=codes.size()/vol;
-        int i;
-        for( i=0;i<codes.size();i+=gap){
+        for(int i=0;i<codes.size();i++){
 
             selectedCodes.add(codes.get(i));
             i++;
