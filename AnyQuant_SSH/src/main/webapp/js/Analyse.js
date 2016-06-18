@@ -16,8 +16,10 @@ function doAnalyse_diy(){
     var code_raw=table_chosen.data();
     alert("马上要跳转啦 看看有多少股票："+code_raw.length);
     codes=[];
+    codes_name=[];
     for(var i=0;i<code_raw.length;i++){
         codes[i]=code_raw[i][1];
+        codes_name[i]=code_raw[i][0];
     }
     startT=document.getElementById("start_diy").value;
     endT=document.getElementById("end_diy").value;
@@ -59,10 +61,10 @@ function doAnalyse_diy(){
         "\nVOL120:"+vol120Num+
         "\nPS:"+psNum+
         "\nPCF:"+pcfNum+
-        "\n股票池："+codes
+        "\n股票池："+codes+codes_name
     );
     var params = "jump_type=diy"+"&baseCode="+basecode+"&capital="+capital+
-        "&taxRate="+taxRate+"&codes="+codes+"&interval="+interval+
+        "&taxRate="+taxRate+"&codes="+codes+"&name="+codes_name+"&interval="+interval+
         "&start="+startT+"&end="+endT+"&factorWeight="+peNum+","+pbNum+","+vol5Num+","+vol10Num+","+vol60Num+","+
         vol120Num+","+psNum+","+pcfNum+"&investWeight="+level1+","+level2+","+level3+","+level4+","+level5;
 
