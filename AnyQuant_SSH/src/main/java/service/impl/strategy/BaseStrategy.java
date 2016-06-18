@@ -185,7 +185,7 @@ public abstract class BaseStrategy  {
      */
     public double computeCumRtnRate(){
         this.profit=income-expense-tax;
-        this.cumRtnRate=profit/expense;
+        this.cumRtnRate=profit/capital;
 
 //        System.out.println("income: " +this.income+"  "+"expense: "+this.expense+"  "+"tax: "+this.tax);
         System.out.println("profit: " +this.profit+"  "+"test_cumRtnRate: "+this.cumRtnRate);

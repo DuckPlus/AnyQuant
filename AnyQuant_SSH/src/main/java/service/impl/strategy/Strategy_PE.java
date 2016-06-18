@@ -40,6 +40,7 @@ public class Strategy_PE extends MultiStockStrategy {
     @Override
     public void init()
     {
+        super.init();
         System.out.println("Strategy_PE init-------");
         this.curTradeDay=start;
         this.buyStocks();

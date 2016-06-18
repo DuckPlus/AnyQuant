@@ -65,7 +65,12 @@ public abstract class MultiStockStrategy extends BaseStrategy {
 
 
     @Override
-    public abstract void init();
+    public  void init(){
+        /**
+         * 记录最初的指数价格
+         */
+        base_BuyPrice=benchMarkDAO.getAvgPrice(this.baseCode,start);
+    }
 
     @Override
     public abstract void handleData();
@@ -155,10 +160,6 @@ public abstract class MultiStockStrategy extends BaseStrategy {
 
         }
 
-        /**
-         * 记录当日的指数价格
-         */
-        base_BuyPrice=benchMarkDAO.getAvgPrice(this.baseCode,curTradeDay);
 
         /**
          * 更新当前资本

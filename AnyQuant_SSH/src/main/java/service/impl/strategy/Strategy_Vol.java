@@ -33,6 +33,7 @@ public class Strategy_Vol extends MultiStockStrategy{
      */
     @Override
     public void init() {
+        super.init();
         System.out.println("Strategy_VOL init-------");
         this.curTradeDay=start;
         this.buyStocks();
