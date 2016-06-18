@@ -79,12 +79,13 @@ function draw_compare_chart_diy(url) {
     data_obj.taxRate = params[3].split("=")[1];
     data_obj.codes = params[4].split("=")[1];
     var code_data = data_obj.codes.split(",");
+    var code_name = data_obj.codes_name.split(",");
     var code_table_data = [];
     var code_table_data_item;
     for(var i=0;i<code_data.length;i++){
         code_table_data_item = new Object();
         code_table_data_item.code = code_data[i];
-        code_table_data_item.name = "name";
+        code_table_data_item.name = code_name[i];
         code_table_data.push(code_table_data_item);
     }
     $('#stock_pool_table').DataTable().rows.add(JSON.parse(JSON.stringify(code_table_data))).draw();

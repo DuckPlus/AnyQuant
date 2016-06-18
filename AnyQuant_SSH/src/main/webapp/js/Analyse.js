@@ -270,7 +270,7 @@ function init_bar(data) {
             height:200
         },
         title: {
-            text: 'sortRankIC'
+            text: 'IC'
         },
         xAxis: {
             type: 'category',
@@ -311,7 +311,7 @@ function init_bar(data) {
             height:200,
         },
         title: {
-            text: 'sortRankIR'
+            text: 'IR'
         },
         xAxis: {
             type: 'category',
@@ -352,7 +352,7 @@ function init_bar(data) {
             height:200
         },
         title: {
-            text: 'sortRankWinRate'
+            text: '胜率'
         },
         xAxis: {
             type: 'category',
@@ -403,7 +403,7 @@ function init_bar(data) {
             height:200
         },
         title: {
-            text: 'sortAvgProfit'
+            text: '平均收益'
         },
         xAxis: {
             type: 'category',
