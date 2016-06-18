@@ -1,11 +1,15 @@
-#main_content{
+#main_content_board_detail{
     margin-left: 3%;
     margin-right: 3%;
-    /*background-color: #00bdef;*/
+    min-width: 1200px;
+    border-right: 2px solid rgb(151,151,151);
+    /*background-color: #2f21d4;*/
+    height: 1100px;
 }
+
 #top_bar{
     border-right: 1px solid rgb(151,151,151);
-    height: 1300px;
+    height: 1100px;
     width: 300px;
     float: left;
     margin-top:20px;

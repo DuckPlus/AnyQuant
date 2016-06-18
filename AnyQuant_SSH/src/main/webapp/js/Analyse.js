@@ -14,7 +14,7 @@ var level1=0,level2=0,level3=0,level4=0,level5=0;
 var content_of_analyse_factor_info;
 function doAnalyse_diy(){
     var code_raw=table_chosen.data();
-    alert("马上要跳转啦 看看有多少股票："+code_raw.length);
+    // alert("马上要跳转啦 看看有多少股票："+code_raw.length);
     codes=[];
     codes_name=[];
     for(var i=0;i<code_raw.length;i++){
@@ -45,7 +45,6 @@ function doAnalyse_diy(){
     vol120Num/=factorSum;
     psNum/=factorSum;
     pcfNum/=factorSum;
-
     alert("DIY:"+
         "\n选择的大盘代号："+basecode+
         "\n起始资金："+capital+
@@ -80,13 +79,13 @@ function doAnalyse(){
     taxRate=document.getElementById("taxRate").value;
     numOfStock=document.getElementById("numOfStock").value;
     interval=document.getElementById("interval").value;
-    alert("推荐策略："+strategy+
-        "\n选择的大盘代号："+basecode+
-        "\n起始资金："+capital+
-        "\n交易费率："+taxRate+
-        "\n股票数量："+numOfStock+
-        "\n调仓间隔："+interval+
-        "\n起止时间："+startT+"~"+endT);
+    // alert("推荐策略："+strategy+
+    //     "\n选择的大盘代号："+basecode+
+    //     "\n起始资金："+capital+
+    //     "\n交易费率："+taxRate+
+    //     "\n股票数量："+numOfStock+
+    //     "\n调仓间隔："+interval+
+    //     "\n起止时间："+startT+"~"+endT);
 
     var params = "strategy="+strategy+"&baseCode="+basecode+"&capital="+capital+
         "&taxRate="+taxRate+"&numOfStock="+numOfStock+"&interval="+interval+
@@ -134,7 +133,11 @@ function initTable_all() {
         dom: 'lrtp',
         columns:[
             {data:'name'},
-            {data:'code'}
+            {data:'code'},
+            {data:'open'},
+            {data:'high'},
+            {data:'low'},
+            {data:'close'}
         ],
         "autoWidth":false,
         "oLanguage": {
@@ -183,6 +186,7 @@ function refreshChosenList(data) {
 
 }
 function refreshAllList(data){
+
     var args=[];
     var code=data.split("&")[1];
     var name=data.split("&")[0];
@@ -469,14 +473,14 @@ function initpie(){
     chart1 = new Highcharts.Chart({
         colors:['#54FF9F','#46cbee', '#fec157','#CD96CD', '#4F94CD', '#FF9655', '#FFF263','#cfd17d','#FF6A6A'] ,//不同组数据的显示背景色，循环引用
         chart: {
-            width:450,
-            height:450,
+            width:400,
+            height:400,
             renderTo: 'pie_factors',//画布所在的div id
             // plotBackgroundColor: '#f5f2ec',//画布背景色
             plotBorderWidth: null,//画布边框
             plotShadow: false,
             type:'pie',
-            margin:[0,120,0,120]//画布外边框
+            margin:[-150,120,0,120]//画布外边框
         },
         title: {
             text: ''//画布题目，此处置空
@@ -540,8 +544,8 @@ function initpie(){
     chart2 = new Highcharts.Chart({
         colors:['#54FF9F','#46cbee', '#fec157','#CD96CD', '#cfd17d', '#4F94CD', '#FF9655', '#FFF263', '#FF6A6A'] ,//不同组数据的显示背景色，循环引用
         chart: {
-            width:450,
-            height:450,
+            width:400,
+            height:300,
             renderTo: 'pie_money',//画布所在的div id
             // plotBackgroundColor: '#f5f2ec',//画布背景色
             plotBorderWidth: null,//画布边框

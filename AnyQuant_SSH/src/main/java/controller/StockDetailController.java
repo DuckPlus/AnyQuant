@@ -57,7 +57,7 @@ public class StockDetailController {
         for (Field field : fields){
 //            System.out.println(field.getName());
             if(field.getName().equalsIgnoreCase("listDate")){
-//                object.put("listDate" , DateCalculator.SQLDateToMyDate(entity.getListDate()));
+                object.put("listDate" , DateCalculator.SQLDateToMyDate(entity.getListDate()));
             }else {
                 object.put(field.getName() , ReflectHelper.getValueWithoutLower(entity , field.getName()));
             }

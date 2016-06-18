@@ -1,10 +1,11 @@
 body{
-    /*background-color: ;*/
+    /*background-color: chocolate;*/
 }
 #main_content{
     /*background-color: #2f21d4;*/
     margin-left: 3%;
     margin-right: 3%;
+    min-width: 1100px;
 }
 #optional_stock_window{
     width: 100%;
