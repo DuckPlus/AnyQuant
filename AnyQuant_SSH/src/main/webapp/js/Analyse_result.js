@@ -10,7 +10,7 @@ var is_diy = false;
 
 var c=0;
 var t;
-var speed = 150;
+var speed = 250;
 function up(){
     speed = 1;
 }
