@@ -153,6 +153,7 @@ public abstract class MultiStockStrategy extends BaseStrategy {
 
                 expense+=lots[i]*stocksPerLot*buy_Prices[i];
                 tempExpense+=lots[i]*stocksPerLot*buy_Prices[i];
+
                 addNewTradeDetailVO(i,true,tradeDataVO);
 
             }
@@ -264,7 +265,12 @@ public abstract class MultiStockStrategy extends BaseStrategy {
         detailVO.codeName=codeAndNames.get(stocks.get(index));
         detailVO.buyOrSell=buyOrSell;
         detailVO.numofTrade=lots[index];
-        detailVO.tradePrice=buy_Prices[index];
+        if(buyOrSell){
+            detailVO.tradePrice=buy_Prices[index];
+        }else{
+            detailVO.tradePrice=sell_Prices[index];
+        }
+
 
         tradeDataVO.tradeDetailVOs.add(detailVO);
     }
