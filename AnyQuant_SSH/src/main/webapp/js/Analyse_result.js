@@ -78,25 +78,28 @@ function draw_compare_chart_diy(url) {
     data_obj.capital = params[2].split("=")[1];
     data_obj.taxRate = params[3].split("=")[1];
     data_obj.codes = params[4].split("=")[1];
+    data_obj.names = params[5].split("=")[1];
     var code_data = data_obj.codes.split(",");
     var code_name = data_obj.names.split(",");
     var code_table_data = [];
     var code_table_data_item;
+    // alert("push begin");
     for(var i=0;i<code_data.length;i++){
         code_table_data_item = new Object();
         code_table_data_item.code = code_data[i];
-        code_table_data_item.name = code_name[i];
+        code_table_data_item.name = decodeURI(code_name[i]);
         code_table_data.push(code_table_data_item);
     }
+    // alert("push done");
     $('#stock_pool_table').DataTable().rows.add(JSON.parse(JSON.stringify(code_table_data))).draw();
-    data_obj.interval = params[5].split("=")[1];
-    data_obj.start = params[6].split("=")[1];
-    data_obj.end = params[7].split("=")[1];
+    data_obj.interval = params[6].split("=")[1];
+    data_obj.start = params[7].split("=")[1];
+    data_obj.end = params[8].split("=")[1];
     total_capital = data_obj.capital;
     var factor_weight = {};
     var factor_table_data=[];
     var factor_table_data_item;
-    var factors = params[8].split("=")[1].split(",");
+    var factors = params[9].split("=")[1].split(",");
     for (var i=0;i<factors.length;i++){
         if(factors[i]!=0){
             factor_table_data_item = new Object();
@@ -109,7 +112,7 @@ function draw_compare_chart_diy(url) {
     }
     $('#factor_weight_table').DataTable().rows.add(JSON.parse(JSON.stringify(factor_table_data))).draw();
     data_obj.factorWeight = factor_weight;
-    data_obj.investWeight = params[9].split("=")[1];
+    data_obj.investWeight = params[10].split("=")[1];
     document.getElementById('start_fund').innerHTML = data_obj.capital;
     document.getElementById('begin_time').innerHTML = data_obj.start;
     document.getElementById('end_time').innerHTML = data_obj.end;
