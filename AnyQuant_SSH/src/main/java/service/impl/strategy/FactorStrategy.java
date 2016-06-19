@@ -97,10 +97,14 @@ public class FactorStrategy extends MultiStockStrategy {
      */
     @Override
     public void init() {
-        super.init();
+
         System.out.println("Strategy_Factor init-------");
         this.curTradeDay=start;
         this.buyStocks();
+        /**
+         * 记录最初的指数价格
+         */
+        base_BuyPrice=benchMarkDAO.getAvgPrice(this.baseCode,start);
     }
 
     /**
