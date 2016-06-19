@@ -45,7 +45,7 @@ function doAnalyse_diy(){
     vol120Num/=factorSum;
     psNum/=factorSum;
     pcfNum/=factorSum;
-    alert("DIY:"+
+  /*  alert("DIY:"+
         "\n选择的大盘代号："+basecode+
         "\n起始资金："+capital+
         "\n交易费率："+taxRate+
@@ -61,7 +61,7 @@ function doAnalyse_diy(){
         "\nPS:"+psNum+
         "\nPCF:"+pcfNum+
         "\n股票池："+codes+codes_name
-    );
+    );*/
     var params = "jump_type=diy"+"&baseCode="+basecode+"&capital="+capital+
         "&taxRate="+taxRate+"&codes="+codes+"&names="+codes_name+"&interval="+interval+
         "&start="+startT+"&end="+endT+"&factorWeight="+peNum+","+pbNum+","+vol5Num+","+vol10Num+","+vol60Num+","+
