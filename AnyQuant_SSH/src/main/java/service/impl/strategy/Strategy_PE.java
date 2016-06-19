@@ -40,9 +40,14 @@ public class Strategy_PE extends MultiStockStrategy {
     @Override
     public void init()
     {
+
         System.out.println("Strategy_PE init-------");
         this.curTradeDay=start;
         this.buyStocks();
+        /**
+         * 记录最初的指数价格
+         */
+        base_BuyPrice=benchMarkDAO.getAvgPrice(this.baseCode,start);
     }
 
     /**
@@ -92,16 +97,9 @@ public class Strategy_PE extends MultiStockStrategy {
         /**
          * 挑选vol只股票加入股票池
          */
-        int gap=codes.size()/vol;
-        int i;
-        for( i=0;i<codes.size();i+=gap){
 
+        for(int i=0;i<vol;i++){
             selectedCodes.add(codes.get(i));
-            i++;
-
-            if(i==vol){
-                break;
-            }
         }
 
         return selectedCodes;

@@ -67,6 +67,7 @@ public abstract class MultiStockStrategy extends BaseStrategy {
     @Override
     public abstract void init();
 
+
     @Override
     public abstract void handleData();
 
@@ -148,6 +149,7 @@ public abstract class MultiStockStrategy extends BaseStrategy {
 
                 expense+=lots[i]*stocksPerLot*buy_Prices[i];
                 tempExpense+=lots[i]*stocksPerLot*buy_Prices[i];
+
                 addNewTradeDetailVO(i,true,tradeDataVO);
 
             }
@@ -155,10 +157,6 @@ public abstract class MultiStockStrategy extends BaseStrategy {
 
         }
 
-        /**
-         * 记录当日的指数价格
-         */
-        base_BuyPrice=benchMarkDAO.getAvgPrice(this.baseCode,curTradeDay);
 
         /**
          * 更新当前资本
@@ -263,7 +261,12 @@ public abstract class MultiStockStrategy extends BaseStrategy {
         detailVO.codeName=codeAndNames.get(stocks.get(index));
         detailVO.buyOrSell=buyOrSell;
         detailVO.numofTrade=lots[index];
-        detailVO.tradePrice=buy_Prices[index];
+        if(buyOrSell){
+            detailVO.tradePrice=buy_Prices[index];
+        }else{
+            detailVO.tradePrice=sell_Prices[index];
+        }
+
 
         tradeDataVO.tradeDetailVOs.add(detailVO);
     }
