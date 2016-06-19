@@ -139,6 +139,7 @@ function initTable_all() {
             {data:'low'},
             {data:'close'}
         ],
+
         "autoWidth":false,
         "oLanguage": {
             "sProcessing": "疯狂加载数据中.",
