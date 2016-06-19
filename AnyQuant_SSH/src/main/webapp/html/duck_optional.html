@@ -229,6 +229,16 @@
                 {data:'turnoverVol'},
                 {data:'changeRate'}
             ],
+            "aoColumnDefs": [ {
+                "aTargets": [7],
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    if ( sData < "0" ) {
+                        $(nTd).css('color', 'green')
+                    }else{
+                        $(nTd).css('color', 'red')
+                    }
+                }
+            }],
             /*
              *自适应宽度 默认true 关闭可提升性能,同时方便管理布局
              */

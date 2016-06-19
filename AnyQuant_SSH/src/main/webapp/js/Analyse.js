@@ -63,7 +63,7 @@ function doAnalyse_diy(){
         "\n股票池："+codes+codes_name
     );
     var params = "jump_type=diy"+"&baseCode="+basecode+"&capital="+capital+
-        "&taxRate="+taxRate+"&codes="+codes+"&name="+codes_name+"&interval="+interval+
+        "&taxRate="+taxRate+"&codes="+codes+"&names="+codes_name+"&interval="+interval+
         "&start="+startT+"&end="+endT+"&factorWeight="+peNum+","+pbNum+","+vol5Num+","+vol10Num+","+vol60Num+","+
         vol120Num+","+psNum+","+pcfNum+"&investWeight="+level1+","+level2+","+level3+","+level4+","+level5;
 

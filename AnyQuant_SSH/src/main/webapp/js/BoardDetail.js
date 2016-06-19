@@ -161,6 +161,9 @@ function initNumbers(data){
     document.getElementById('upNum').innerHTML="+"+upNum;
     document.getElementById('downNum').innerHTML="-"+downNum;
     document.getElementById('stopNum').innerHTML=stopNum;
+    
+    document.getElementById('upNum').style.color=myRed;
+    document.getElementById('downNum').style.color=myGreen;
 }
 function initLine(data){
     var boardData=[],benchData=[],length=data.length;

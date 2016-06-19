@@ -152,6 +152,7 @@
 <!--</script>-->
 <script>
     var allStock;
+    var ifHigher=0;//1=red,0=green
     $(document).ready(function () {
 //        document.getElementById("stock_list").style.backgroundColor = "black";
 //        initTable();
@@ -199,9 +200,22 @@
                 {data:'turnoverVol'},
                 {data:'changeRate'}
             ],
+            "aoColumnDefs": [ {
+                "aTargets": [7],
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    if ( sData < "0" ) {
+                        ifHigher=0;
+                        $(nTd).css('color', 'green')
+                    }else{
+                        ifHigher=1
+                        $(nTd).css('color', 'red')
+                    }
+                }
+            }],
 //            "bProcessing":true,
 //            "iDisplayLength" : 40,
             "autoWidth":false,
+
 //            "columnDefs": [
 //                // 将name列变为红色
 //                {

@@ -79,7 +79,7 @@ function draw_compare_chart_diy(url) {
     data_obj.taxRate = params[3].split("=")[1];
     data_obj.codes = params[4].split("=")[1];
     var code_data = data_obj.codes.split(",");
-    var code_name = data_obj.codes_name.split(",");
+    var code_name = data_obj.names.split(",");
     var code_table_data = [];
     var code_table_data_item;
     for(var i=0;i<code_data.length;i++){

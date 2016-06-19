@@ -55,7 +55,7 @@ function  initBubble() {
            z:20,
             ifStock:0,
             name: globalData[index[i]].boardName,
-            rate:(globalData[index[i]].boardChangeRate).toFixed(4)*100,
+            rate:((globalData[index[i]].boardChangeRate)*100).toFixed(2),
             color:myRed
         });
         if(boards[m].rate<0) boards[m].color=myGreen;
@@ -80,7 +80,7 @@ function  initBubble() {
                 ifStock:1,
                 name: globalData[index[i]].stocks[j].name,
                 code:globalData[index[i]].stocks[j].code,
-                rate:(globalData[index[i]].stocks[j].changeRate).toFixed(6),
+                rate:((globalData[index[i]].stocks[j].changeRate)*100).toFixed(2),
                 color:myRed,
                 volume:globalData[index[i]].stocks[j].turnoverVol,
                 board:boards[parBoard].name
@@ -101,9 +101,7 @@ function  initBubble() {
         }
 
     }
-
     draw();
-
 }
 
 
@@ -118,13 +116,10 @@ function draw(){
             useHTML: true,
             headerFormat: '<table>',
             pointFormat: 
-            '<tr><th colspan="2"><h3>{point.name}</h3></th></tr>'+
-            '<tr><th>板块涨跌：</th><td>{point.rate}%</td></tr>'+
-            '<tr><th>x:</th><td>{point.x}</td></tr>' +
-            '<tr><th>y:</th><td>{point.y}</td></tr>' +
-             '<tr><th>z:</th><td>{point.z}</td></tr>'+
-                '<tr><th>成交量:</th><td>{point.volume}</td></tr>'+
-            '<tr><th>所属板块:</th><td>{point.board}</td></tr>'
+            '<tr><th colspan="2"><h3>{point.name}</h3></th><td>{point.code}</td></tr>'+
+            '<tr><th>涨跌幅：</th><td>{point.rate}%</td></tr>'
+           /* '<tr><th>成交量:</th><td>{point.volume}</td></tr>'
+            '<tr><th>所属板块:</th><td>{point.board}</td></tr>'*/
             ,
 
             footerFormat: '</table>',
@@ -169,7 +164,7 @@ function draw(){
                     }
                 },
                 dataLabels: {
-                    enabled: true,//TODO 先暂时改成false
+                    enabled: true,
                     format: '{point.name}',
                     allowOverlap:true
                 }
