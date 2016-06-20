@@ -41,24 +41,24 @@ public class StrategyDAOImplTest {
 
     }
 
-    @Test
-    public void getAllReports() throws Exception {
-        String userID="1";
-        List<ReportVO> voList = strategyDAO.getAllReports(userID);
-        if(voList==null){
-            fail("null");
-        }else{
-            System.out.println("size: "+voList.size());
-            int i=0;
-            for(ReportVO reportVO : voList ){
-                System.out.println("the "+i+" th reportvo");
-                i++;
-                for(TradeDataVO tradeDataVO:reportVO.tradeDataVOList){
-                    System.out.println("profit: "+tradeDataVO.profit);
-                    System.out.println("curCapital: "+tradeDataVO.nowCapital);
-                }
-            }
-        }
-    }
+//    @Test
+//    public void getAllReports() throws Exception {
+//        String userID="1";
+//        List<ReportVO> voList = strategyDAO.getAllReports(userID);
+//        if(voList==null){
+//            fail("null");
+//        }else{
+//            System.out.println("size: "+voList.size());
+//            int i=0;
+//            for(ReportVO reportVO : voList ){
+//                System.out.println("the "+i+" th reportvo");
+//                i++;
+//                for(TradeDataVO tradeDataVO:reportVO.tradeDataVOList){
+//                    System.out.println("profit: "+tradeDataVO.profit);
+//                    System.out.println("curCapital: "+tradeDataVO.nowCapital);
+//                }
+//            }
+//        }
+//    }
 
 }
