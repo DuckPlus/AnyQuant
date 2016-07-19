@@ -29,11 +29,11 @@
 ----------
 #By：DuckPlus#
 
-![](http://ww2.sinaimg.cn/large/005L5iMGjw1f2e0i50ic7j30dw0dxdgk.jpg)
+![](ScreenShots/icon.jpg)
 
-  [1]: http://ww2.sinaimg.cn/mw690/005L5iMGgw1f3dminrn12j31kw13eh21.jpg
-  [2]: http://ww4.sinaimg.cn/mw690/005L5iMGgw1f3dmi457f6j31kw13s7e1.jpg
-  [3]: http://ww4.sinaimg.cn/mw690/005L5iMGgw1f3dmh5fly9j31kw13edsn.jpg
-  [4]: http://ww4.sinaimg.cn/mw690/005L5iMGgw1f3dmgdngaaj31kw13sdpa.jpg
-  [5]: http://ww1.sinaimg.cn/mw690/005L5iMGgw1f3dmf3tdrzj31kw13sam1.jpg
-  [6]: http://ww1.sinaimg.cn/mw690/005L5iMGgw1f3dmhhm7c2j31kw13enc2.jpg
+  [1]: ScreenShots/StockList.jpg
+  [2]: ScreenShots/BoardDistribution.jpg
+  [3]: ScreenShots/KLine.jpg
+  [4]: ScreenShots/TimeSharing.jpg
+  [5]: ScreenShots/turnoverChart.jpg
+  [6]: ScreenShots/OptionCompare.jpg
