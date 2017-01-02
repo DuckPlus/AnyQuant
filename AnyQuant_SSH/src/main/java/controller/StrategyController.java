@@ -26,8 +26,12 @@ import java.util.Map;
 @ResponseBody
 public class StrategyController {
 
+    private final StrategyService service;
+
     @Autowired
-    private StrategyService service;
+    public StrategyController(StrategyService service) {
+        this.service = service;
+    }
 
 
     /**

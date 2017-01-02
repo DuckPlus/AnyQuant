@@ -81,7 +81,7 @@ public class StockAnalyseServiceImpl implements StockAnalyseService {
     @Transactional
     public List<StockdataEntity> getRegionRelatedStockMessage(String stockCode) {
         String region = getStockFullMessage(stockCode).getRegion();
-        List<String> relatedStockCodes = stockDAO.getRegionRealatedStockCodes(region);
+        List<String> relatedStockCodes = stockDAO.getRegionRelatedStockCodes(region);
 
         return stockDataDAO.getStockData(relatedStockCodes);
 

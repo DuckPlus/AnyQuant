@@ -262,7 +262,9 @@ public class DateCalculator {
 	}
 
 	public static MyDate SQLDateToMyDate(java.sql.Date sqlDate){
-
+		if (sqlDate == null) {
+			return new MyDate(2014,1,1);
+		}
 		MyDate myDate = MyDate.getDateFromString(sqlDate.toString());
 		return myDate;
 	}

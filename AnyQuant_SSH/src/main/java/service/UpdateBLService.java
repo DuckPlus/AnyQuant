@@ -23,7 +23,7 @@ public interface UpdateBLService {
     boolean updateStockdataEntities();
 
 
-    boolean updatBenchdataEntities();
+    boolean updateBenchdataEntities();
 
 
 }

@@ -63,7 +63,7 @@ public class StockDAOImpl implements StockDAO {
         return (List<StockEntity>) baseDAO.getAllList(hql);
     }
     @Override
-    public List<String> getRegionRealatedStockCodes(String region) {
+    public List<String> getRegionRelatedStockCodes(String region) {
         String hql = "select code from "+tableName+" where region = '"+ region +"'" ;
 
         return (List<String>) baseDAO.getAllList(hql);

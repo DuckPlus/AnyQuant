@@ -14,14 +14,14 @@
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">
         <!-- MySQL5 -->
-        <property name="driverClass" value="${driverClassName}"></property>
-        <property name="jdbcUrl" value="${url}"></property>
-        <property name="user" value="${username}"></property>
-        <property name="password" value="${password}"></property>
-        <property name="maxPoolSize" value="40"></property>
-        <property name="minPoolSize" value="1"></property>
-        <property name="initialPoolSize" value="1"></property>
-        <property name="maxIdleTime" value="20"></property>
+        <property name="driverClass" value="${driverClassName}"/>
+        <property name="jdbcUrl" value="${url}"/>
+        <property name="user" value="${username}"/>
+        <property name="password" value="${password}"/>
+        <property name="maxPoolSize" value="40"/>
+        <property name="minPoolSize" value="1"/>
+        <property name="initialPoolSize" value="1"/>
+        <property name="maxIdleTime" value="20"/>
     </bean>
 
     <!-- session工厂 -->
@@ -37,8 +37,8 @@
                 <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
                 <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
                 <prop key="hibernate.connection.autocommit">true</prop>
-                <prop key="hibernate.connection.url">jdbc:mysql://115.159.157.163:3306/AnyQuant</prop>
-                <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
+                <prop key="hibernate.connection.url">${url}</prop>
+                <prop key="hibernate.connection.driver_class">${driverClassName}</prop>
 
 
             </props>
@@ -47,7 +47,7 @@
     </bean>
     <bean id="transactionManager"
           class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"></property>
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager" />

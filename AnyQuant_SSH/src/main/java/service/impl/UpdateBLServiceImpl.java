@@ -45,7 +45,7 @@ public class UpdateBLServiceImpl implements UpdateBLService {
     @Override
     public boolean update() {
         updateFactor();
-        updatBenchdataEntities();
+        updateBenchdataEntities();
         updateStockdataEntities();
         return false;
     }
@@ -214,7 +214,7 @@ public class UpdateBLServiceImpl implements UpdateBLService {
     }
 
     @Override
-    public boolean updatBenchdataEntities()
+    public boolean updateBenchdataEntities()
     {
 
 
